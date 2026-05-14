@@ -579,7 +579,7 @@ let rotX=0.35, rotY=-0.77;
 let isDragging=false, lastX=0, lastY=0;
 let velX=0.0002, velY=0;
 let scale, cx, cy;
-let selectedISO=null, hoveredISO=null;
+var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
 
 function resize(){
@@ -803,10 +803,8 @@ function openCountry(iso){
   document.getElementById('tab-threats').innerHTML=intel.threats?.length
     ?'<div class="sec-label">ACTIVE THREAT VECTORS</div>'+intel.threats.map(t=>`<div class="threat-item"><div class="threat-head"><span class="threat-type">${t.type.toUpperCase()}</span><span class="threat-sev" style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span></div><p class="threat-desc">${t.description}</p></div>`).join('')
     :'<p class="no-data">No active threats recorded.</p>';
-  // News / Intel
-  document.getElementById('tab-news').innerHTML=intel.news?.length
-    ?'<div class="sec-label">CURRENT INTELLIGENCE ITEMS</div>'+intel.news.map(n=>`<div class="news-item"><p class="news-title">${n}</p></div>`).join('')
-    :'<p class="no-data">No intelligence items available.</p>';
+  // News — show embedded items immediately, then fetch live
+  renderNewsTab(iso, intel.news||[], false);
   // Conflicts
   const cfs=CONFLICTS.filter(c=>c.from===iso||c.to===iso).map(c=>({
     ...c,fromName:COUNTRIES[c.from]?.name||c.from,toName:COUNTRIES[c.to]?.name||c.to
@@ -817,9 +815,101 @@ function openCountry(iso){
   document.getElementById('p-updated').textContent='Updated: '+new Date().toLocaleTimeString();
   document.getElementById('panel').classList.add('open');
   showTab('summary');
+  // Kick off live fetch (non-blocking)
+  fetchLiveNews(iso);
+}
+
+/* ── Live news via GDELT + Reddit (no API key required) ── */
+let refreshTimer=null;
+const liveCache={};
+
+function renderNewsTab(iso,items,isLive){
+  const label=isLive
+    ?'<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>LIVE INTELLIGENCE FEED</span><span style="color:#22c55e;font-size:9px;animation:blink 1.2s step-start infinite">● LIVE</span></div>'
+    :'<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>INTEL ITEMS</span><span style="color:#475569;font-size:9px">● CACHED</span></div>';
+  const refreshBtn='<button onclick="fetchLiveNews(selectedISO,true)" style="width:100%;margin-bottom:10px;padding:6px;background:rgba(30,58,95,.3);border:1px solid #1e3a5f;border-radius:4px;color:#94a3b8;font-family:\'Courier New\',monospace;font-size:9px;cursor:pointer;letter-spacing:.1em">↻ REFRESH FEED</button>';
+  if(!items||items.length===0){
+    document.getElementById('tab-news').innerHTML=label+refreshBtn+'<p class="no-data">No live news — click refresh to try again.</p>';
+    return;
+  }
+  const html=items.map(n=>{
+    if(typeof n==='string')return`<div class="news-item"><p class="news-title">${n}</p></div>`;
+    const age=n.published?timeAgo(n.published):'';
+    return`<div class="news-item">
+      <div class="news-meta"><span class="news-src">${n.source||'FEED'}</span><span class="news-time">${age}</span></div>
+      ${n.url?`<a href="${n.url}" target="_blank" rel="noopener" class="news-title" style="color:#e2e8f0;text-decoration:none">${n.title}</a>`
+              :`<p class="news-title">${n.title}</p>`}
+    </div>`;
+  }).join('');
+  document.getElementById('tab-news').innerHTML=label+refreshBtn+html;
+}
+
+async function fetchLiveNews(iso, force=false){
+  if(!iso)return;
+  if(!force&&liveCache[iso]&&Date.now()-liveCache[iso].ts<300000){
+    renderNewsTab(iso,liveCache[iso].items,true);return;
+  }
+  const countryName=COUNTRIES[iso]?.name||iso;
+  const results=[];
+  // Try GDELT (free, no key, browser CORS ok)
+  try{
+    const q=encodeURIComponent(`"${countryName}" conflict OR war OR military OR tension OR sanctions`);
+    const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=10&format=json&timespan=1week`;
+    const res=await fetch(url,{signal:AbortSignal.timeout(6000)});
+    if(res.ok){
+      const data=await res.json();
+      if(data.articles){
+        results.push(...data.articles.slice(0,6).map(a=>({
+          title:a.title,url:a.url,source:'GDELT',
+          published:a.seendatetime?a.seendatetime.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,'$1-$2-$3T$4:$5:$6Z'):''
+        })));
+      }
+    }
+  }catch{}
+  // Try Reddit JSON API (no key, CORS ok)
+  try{
+    const q=encodeURIComponent(countryName);
+    const url=`https://www.reddit.com/r/worldnews+geopolitics+MiddleEast/search.json?q=${q}&sort=new&limit=5&restrict_sr=false&t=week`;
+    const res=await fetch(url,{headers:{'Accept':'application/json'},signal:AbortSignal.timeout(5000)});
+    if(res.ok){
+      const data=await res.json();
+      const posts=data?.data?.children||[];
+      results.push(...posts.slice(0,4).map(p=>({
+        title:p.data.title,
+        url:`https://reddit.com${p.data.permalink}`,
+        source:`r/${p.data.subreddit}`,
+        published:new Date(p.data.created_utc*1000).toISOString()
+      })));
+    }
+  }catch{}
+  // Deduplicate
+  const seen=new Set();
+  const unique=results.filter(r=>{if(seen.has(r.title))return false;seen.add(r.title);return true;});
+  if(unique.length>0){
+    liveCache[iso]={items:unique,ts:Date.now()};
+    renderNewsTab(iso,unique,true);
+    document.getElementById('p-updated').textContent='Live: '+new Date().toLocaleTimeString();
+  } else {
+    // Fallback to embedded
+    renderNewsTab(iso,(INTEL[iso]?.news||[]).map(n=>({title:n,source:'Intel Base',url:''})),false);
+  }
+  // Auto-refresh every 5 min while panel open
+  clearTimeout(refreshTimer);
+  refreshTimer=setTimeout(()=>{if(selectedISO===iso)fetchLiveNews(iso,true);},300000);
+}
+
+function timeAgo(dateStr){
+  if(!dateStr)return'';
+  const d=Date.now()-new Date(dateStr).getTime();
+  if(isNaN(d))return'';
+  const h=Math.floor(d/3600000);
+  if(h<1)return Math.floor(d/60000)+'m ago';
+  if(h<24)return h+'h ago';
+  return Math.floor(h/24)+'d ago';
 }
 
 function closePanel(){
+  clearTimeout(refreshTimer);
   document.getElementById('panel').classList.remove('open');
   document.getElementById('h-status').textContent='Click any highlighted country for Intel Report';
   selectedISO=null;showArcs=false;updateConnBtn();
@@ -844,6 +934,8 @@ function showTab(name){
   document.querySelectorAll('.tab-btn').forEach(b=>{if(b.textContent.toLowerCase()===name||b.textContent.toLowerCase()==='intel'&&name==='news')b.classList.add('active');});
 }
 function tick(){document.getElementById('h-time').textContent=new Date().toUTCString().slice(0,25)+' UTC';setTimeout(tick,1000);}
+// Expose for refresh button onclick attribute
+window.fetchLiveNews=fetchLiveNews;
 
 resize();tick();animate();
 </script>
