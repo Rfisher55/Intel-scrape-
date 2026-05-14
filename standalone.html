@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Intel Globe — Middle East</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050c1a;--panel:#080f1e;--panel2:#0d1929;
+  --border:#1e3a5f;--border2:#162d4a;
+  --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --accent:#3b82f6;--mono:'Courier New',monospace;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
+
+/* ── Header ── */
+#header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px;
+  background:linear-gradient(180deg,rgba(5,12,26,.95) 0%,transparent 100%);
+  border-bottom:1px solid rgba(30,58,95,.4);
+  backdrop-filter:blur(4px);
+}
+.h-logo{display:flex;align-items:center;gap:10px}
+.h-icon{font-size:20px;color:var(--accent);animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 6px rgba(59,130,246,.8)}50%{text-shadow:0 0 18px rgba(59,130,246,1)}}
+.h-title{font-size:16px;font-weight:bold;letter-spacing:.15em;color:#93c5fd}
+.h-region{font-size:11px;color:var(--dim);border-left:1px solid var(--border);padding-left:14px}
+.h-middle{flex:1;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.08em}
+.h-right{display:flex;align-items:center;gap:16px}
+.h-live{display:flex;align-items:center;gap:6px;font-size:11px;color:#22c55e}
+.h-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink 1.2s step-start infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.h-time{font-size:10px;color:var(--muted)}
+
+/* ── Globe canvas ── */
+#globe-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+canvas{cursor:grab;display:block}
+canvas.dragging{cursor:grabbing}
+
+/* ── Legend ── */
+#legend{
+  position:fixed;bottom:30px;left:20px;z-index:50;
+  background:rgba(5,12,26,.88);border:1px solid var(--border);
+  border-radius:6px;padding:12px 14px;min-width:130px;
+  backdrop-filter:blur(6px);
+}
+.leg-title{font-size:9px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px}
+.leg-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim);margin-bottom:5px}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.leg-div{border-top:1px solid var(--border2);margin:8px 0}
+
+/* ── Tooltip ── */
+#tooltip{
+  position:fixed;z-index:200;pointer-events:none;
+  background:rgba(5,12,26,.92);border:1px solid rgba(59,130,246,.5);
+  border-radius:4px;padding:6px 10px;font-size:12px;
+  opacity:0;transition:opacity .15s;
+}
+#tooltip .tt-name{font-weight:bold;color:#93c5fd}
+#tooltip .tt-alert{font-size:10px;margin-top:2px}
+
+/* ── Intel Panel ── */
+#panel{
+  position:fixed;top:56px;right:0;bottom:0;width:400px;z-index:200;
+  background:linear-gradient(180deg,rgba(8,15,30,.98),rgba(5,12,26,.98));
+  border-left:1px solid var(--border);
+  display:none;flex-direction:column;
+  animation:slideIn .25s ease-out;
+  backdrop-filter:blur(12px);
+}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+#panel.open{display:flex}
+
+.p-head{padding:16px;border-bottom:1px solid var(--border2);background:rgba(13,25,41,.6)}
+.p-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.p-name{font-size:20px;font-weight:bold;color:#93c5fd;letter-spacing:.05em}
+.p-cap{font-size:11px;color:var(--muted);margin-top:3px}
+.p-controls{display:flex;align-items:center;gap:10px}
+.alert-badge{font-size:10px;font-weight:bold;letter-spacing:.12em;padding:3px 8px;border-radius:3px;border:1px solid}
+.p-close{background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 9px;border-radius:4px;font-size:12px;transition:all .2s}
+.p-close:hover{border-color:#ef4444;color:#ef4444}
+
+/* Connect button */
+.connect-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:9px 14px;background:rgba(30,58,95,.3);border:1px solid var(--border);
+  border-radius:5px;color:var(--dim);font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;cursor:pointer;transition:all .2s;
+}
+.connect-btn:hover{background:rgba(59,130,246,.15);border-color:var(--accent);color:var(--text)}
+.connect-btn.active{background:rgba(239,68,68,.12);border-color:#ef4444;color:#fca5a5;
+  animation:arcPulse 2s ease-in-out infinite}
+@keyframes arcPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}50%{box-shadow:0 0 12px 2px rgba(239,68,68,.3)}}
+
+/* Tabs */
+.p-tabs{display:flex;border-bottom:1px solid var(--border2)}
+.tab-btn{flex:1;padding:9px 4px;background:none;border:none;border-bottom:2px solid transparent;
+  color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:.1em;cursor:pointer;transition:all .15s}
+.tab-btn:hover{color:var(--dim)}
+.tab-btn.active{color:#93c5fd;border-bottom-color:var(--accent);background:rgba(59,130,246,.06)}
+
+/* Content */
+.p-content{flex:1;overflow-y:auto;padding:16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.p-content::-webkit-scrollbar{width:4px}
+.p-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.p-loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px 0;color:var(--dim);font-size:12px}
+.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.sec-label{font-size:9px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px;border-bottom:1px solid var(--border2);padding-bottom:4px}
+.summary-text{font-size:12px;line-height:1.7;color:var(--dim)}
+.actors-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.actor-chip{font-size:10px;padding:3px 8px;background:rgba(30,58,95,.4);border:1px solid var(--border2);border-radius:3px;color:#7dd3fc}
+.econ-text{font-size:12px;color:#86efac;line-height:1.6}
+.no-data{font-size:12px;color:var(--muted);font-style:italic;text-align:center;padding:20px 0}
+
+.threat-item{background:rgba(13,25,41,.6);border:1px solid var(--border2);border-radius:5px;padding:10px 12px;margin-bottom:8px}
+.threat-head{display:flex;justify-content:space-between;margin-bottom:5px}
+.threat-type{font-size:10px;font-weight:bold;color:#93c5fd;letter-spacing:.1em}
+.threat-sev{font-size:10px;font-weight:bold}
+.threat-desc{font-size:11px;color:var(--dim);line-height:1.5}
+
+.news-item{background:rgba(13,25,41,.5);border:1px solid var(--border2);border-left:2px solid #1d4ed8;border-radius:4px;padding:9px 12px;margin-bottom:8px;transition:border-left-color .2s}
+.news-item:hover{border-left-color:var(--accent)}
+.news-meta{display:flex;justify-content:space-between;margin-bottom:5px}
+.news-src{font-size:9px;letter-spacing:.1em;color:#7dd3fc}
+.news-time{font-size:9px;color:var(--muted)}
+.news-title{font-size:12px;color:var(--text);text-decoration:none;line-height:1.45;display:block}
+.news-title:hover{color:#93c5fd;text-decoration:underline}
+.news-title.plain{color:var(--dim)}
+.news-sum{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}
+
+.conflict-item{background:rgba(13,25,41,.6);border:1px solid var(--border2);border-radius:5px;padding:10px 12px;margin-bottom:8px}
+.cf-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.cf-countries{font-size:11px;color:#93c5fd;font-weight:bold}
+.cf-sev{font-size:9px;font-weight:bold;letter-spacing:.1em;padding:2px 6px;border-radius:3px}
+.cf-sev.critical{background:rgba(127,29,29,.4);color:#fca5a5}
+.cf-sev.high{background:rgba(124,45,18,.4);color:#fdba74}
+.cf-sev.medium{background:rgba(120,53,15,.4);color:#fcd34d}
+.cf-sev.low{background:rgba(20,83,45,.4);color:#86efac}
+.cf-meta{display:flex;gap:8px;align-items:center}
+.cf-type{font-size:9px;padding:2px 6px;background:rgba(30,58,95,.5);border:1px solid var(--border2);border-radius:3px;color:#7dd3fc;white-space:nowrap}
+.cf-label{font-size:11px;color:var(--dim)}
+
+/* Panel footer */
+.p-foot{display:flex;justify-content:space-between;padding:8px 16px;border-top:1px solid var(--border2);font-size:9px;color:var(--muted);background:rgba(5,12,26,.5)}
+
+/* Tabs content sections */
+.tab-section{display:none}
+.tab-section.active{display:block}
+
+@media(max-width:600px){#panel{width:100%;top:50%}.h-right{display:none}}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div id="header">
+  <div class="h-logo">
+    <span class="h-icon">◎</span>
+    <span class="h-title">INTEL GLOBE</span>
+    <span class="h-region">Middle East Theatre</span>
+  </div>
+  <div class="h-middle" id="h-status">Click any highlighted country for Intel Report</div>
+  <div class="h-right">
+    <span class="h-live"><span class="h-dot"></span>LIVE FEED</span>
+    <span class="h-time" id="h-time"></span>
+  </div>
+</div>
+
+<!-- Globe -->
+<div id="globe-wrap">
+  <canvas id="globe"></canvas>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div></div>
+
+<!-- Legend -->
+<div id="legend">
+  <div class="leg-title">ALERT LEVEL</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#b91c1c"></span>CRITICAL</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#dc2626"></span>HIGH</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#ea580c"></span>MEDIUM</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#16a34a"></span>LOW</div>
+  <div class="leg-div" id="arc-legend" style="display:none">
+    <div class="leg-title" style="margin-top:8px">ARCS</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#ef4444"></span>War/Conflict</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Proxy/Support</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#a855f7"></span>Influence</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#3b82f6"></span>Diplomatic</div>
+  </div>
+</div>
+
+<!-- Intel Panel -->
+<div id="panel">
+  <div class="p-head">
+    <div class="p-row">
+      <div>
+        <div class="p-name" id="p-name">—</div>
+        <div class="p-cap" id="p-cap">Capital: —</div>
+      </div>
+      <div class="p-controls">
+        <span class="alert-badge" id="p-badge">—</span>
+        <button class="p-close" onclick="closePanel()">✕</button>
+      </div>
+    </div>
+    <button class="connect-btn" id="connect-btn" onclick="toggleArcs()">
+      <span id="conn-icon">◎</span> <span id="conn-text">CONNECT — Show Relationships</span>
+    </button>
+  </div>
+  <div class="p-tabs">
+    <button class="tab-btn active" onclick="showTab('summary')">SUMMARY</button>
+    <button class="tab-btn" onclick="showTab('threats')">THREATS</button>
+    <button class="tab-btn" onclick="showTab('news')">NEWS</button>
+    <button class="tab-btn" onclick="showTab('conflicts')">CONFLICTS</button>
+  </div>
+  <div class="p-content">
+    <div class="tab-section active" id="tab-summary"></div>
+    <div class="tab-section" id="tab-threats"></div>
+    <div class="tab-section" id="tab-news"></div>
+    <div class="tab-section" id="tab-conflicts"></div>
+  </div>
+  <div class="p-foot">
+    <span id="p-updated">—</span>
+    <span>SOURCE: Intel Base v1.0</span>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════════════════ */
+const COUNTRIES = {
+  ISR:{iso:'ISR',name:'Israel',capital:'Jerusalem',alertLevel:'HIGH',lat:31.5,lng:34.75,
+    poly:[[33.27,35.67],[32.7,35.17],[32.35,34.96],[31.52,34.58],[29.5,34.9],[29.5,35.01],[30.89,35.44],[31.99,35.44],[33.27,35.67]]},
+  PSE:{iso:'PSE',name:'Palestine',capital:'Ramallah',alertLevel:'CRITICAL',lat:31.9,lng:35.2,
+    poly:[[32.55,35.54],[31.97,35.54],[31.48,34.93],[31.35,34.5],[31.21,34.21],[31.52,34.58],[32.7,35.17],[32.55,35.54]]},
+  LBN:{iso:'LBN',name:'Lebanon',capital:'Beirut',alertLevel:'HIGH',lat:33.9,lng:35.5,
+    poly:[[34.64,36.48],[33.09,35.65],[33.27,35.67],[33.55,35.37],[33.9,35.92],[34.64,36.48]]},
+  SYR:{iso:'SYR',name:'Syria',capital:'Damascus',alertLevel:'HIGH',lat:33.5,lng:36.3,
+    poly:[[37.38,42.35],[36.83,38.77],[36.5,37.19],[36.08,36.61],[35.17,36.15],[33.66,35.84],[33.1,35.8],[33.09,35.65],[34.64,36.48],[33.23,36.53],[32.67,38.99],[33.05,39.98],[37.38,42.35]]},
+  IRN:{iso:'IRN',name:'Iran',capital:'Tehran',alertLevel:'HIGH',lat:35.7,lng:51.4,
+    poly:[[39.78,44.77],[38.85,47.24],[38.33,47.88],[36.7,49.46],[36.64,51.37],[37.54,56.11],[37.03,58.05],[36.38,60.04],[35.07,60.58],[31.4,61.66],[27.72,60.88],[25.03,57.34],[26.68,55.76],[27.18,54.22],[27.59,52.16],[27.84,50.47],[29.52,48.99],[30.99,48.0],[32.42,47.42],[33.07,46.03],[33.64,44.54],[34.48,42.74],[36.04,42.28],[37.41,42.4],[39.78,44.77]]},
+  IRQ:{iso:'IRQ',name:'Iraq',capital:'Baghdad',alertLevel:'MEDIUM',lat:33.3,lng:44.4,
+    poly:[[37.38,42.35],[36.04,42.28],[34.48,42.74],[33.64,44.54],[33.07,46.03],[32.42,47.42],[30.99,48.0],[29.52,48.99],[29.1,47.18],[29.2,47.0],[30.0,47.97],[31.0,47.1],[32.15,47.63],[33.05,39.98],[32.67,38.99],[33.23,36.53],[37.38,42.35]]},
+  SAU:{iso:'SAU',name:'Saudi Arabia',capital:'Riyadh',alertLevel:'MEDIUM',lat:24.7,lng:46.7,
+    poly:[[32.0,37.0],[29.19,39.3],[27.96,35.14],[22.57,37.11],[19.0,40.97],[15.5,42.5],[17.5,49.0],[19.0,52.5],[22.6,55.6],[24.0,56.4],[25.7,56.3],[26.1,56.2],[25.8,55.8],[26.12,51.59],[25.52,50.7],[24.5,51.5],[24.5,51.6],[25.0,49.8],[28.9,47.4],[29.1,47.18],[29.52,48.99],[32.0,47.0],[32.0,37.0]]},
+  YEM:{iso:'YEM',name:'Yemen',capital:"Sana'a",alertLevel:'HIGH',lat:15.4,lng:44.2,
+    poly:[[17.5,49.0],[15.5,42.5],[14.0,42.6],[12.6,43.5],[11.9,44.1],[12.0,45.0],[11.9,50.2],[12.5,52.0],[14.0,53.1],[16.0,52.0],[17.5,49.0]]},
+  TUR:{iso:'TUR',name:'Turkey',capital:'Ankara',alertLevel:'MEDIUM',lat:39.9,lng:32.9,
+    poly:[[42.0,43.0],[41.5,41.5],[41.5,36.5],[40.7,35.0],[39.0,26.4],[37.0,28.0],[36.5,36.1],[36.08,36.61],[37.38,42.35],[40.0,43.0],[42.0,43.0]]},
+  JOR:{iso:'JOR',name:'Jordan',capital:'Amman',alertLevel:'LOW',lat:31.9,lng:35.9,
+    poly:[[33.38,38.98],[32.67,38.99],[33.23,36.53],[32.53,36.0],[31.97,35.44],[30.89,35.44],[29.5,35.01],[29.18,39.3],[33.38,38.98]]},
+  EGY:{iso:'EGY',name:'Egypt',capital:'Cairo',alertLevel:'LOW',lat:30.1,lng:31.2,
+    poly:[[31.67,25.0],[31.67,32.87],[31.12,33.78],[30.0,32.5],[29.93,34.3],[27.5,34.0],[22.0,36.87],[22.0,24.98],[31.67,25.0]]},
+  ARE:{iso:'ARE',name:'UAE',capital:'Abu Dhabi',alertLevel:'LOW',lat:24.5,lng:54.4,
+    poly:[[26.12,51.59],[25.52,50.7],[24.5,51.5],[22.6,55.6],[24.0,56.4],[25.7,56.3],[26.12,56.2],[25.8,55.8],[26.12,51.59]]},
+  QAT:{iso:'QAT',name:'Qatar',capital:'Doha',alertLevel:'LOW',lat:25.3,lng:51.5,
+    poly:[[25.52,50.7],[24.5,51.5],[24.5,50.8],[25.0,50.7],[26.15,51.2],[25.52,51.59],[25.52,50.7]]},
+  KWT:{iso:'KWT',name:'Kuwait',capital:'Kuwait City',alertLevel:'LOW',lat:29.4,lng:47.6,
+    poly:[[30.1,46.5],[29.1,47.18],[28.5,47.78],[28.5,48.43],[29.5,48.43],[30.1,47.57],[30.1,46.5]]},
+  BHR:{iso:'BHR',name:'Bahrain',capital:'Manama',alertLevel:'LOW',lat:26.2,lng:50.6,
+    poly:[[26.28,50.3],[26.0,50.4],[26.1,50.62],[26.28,50.7],[26.28,50.3]]},
+  OMN:{iso:'OMN',name:'Oman',capital:'Muscat',alertLevel:'LOW',lat:23.6,lng:58.6,
+    poly:[[24.0,56.4],[22.6,55.6],[17.5,49.0],[18.0,53.1],[20.0,57.5],[22.0,59.8],[24.5,58.3],[24.5,56.8],[24.0,56.4]]},
+};
+
+const CONFLICTS = [
+  {from:'ISR',to:'PSE',type:'war',label:'Gaza Conflict',severity:'critical'},
+  {from:'ISR',to:'LBN',type:'conflict',label:'Hezbollah Confrontation',severity:'high'},
+  {from:'ISR',to:'IRN',type:'proxy_war',label:'Shadow War',severity:'high'},
+  {from:'ISR',to:'SYR',type:'airstrike',label:'Israeli Airstrikes on Syria',severity:'medium'},
+  {from:'IRN',to:'SAU',type:'rivalry',label:'Regional Rivalry',severity:'medium'},
+  {from:'IRN',to:'YEM',type:'proxy',label:'Houthi Proxy Support',severity:'high'},
+  {from:'IRN',to:'LBN',type:'support',label:'Hezbollah Arming',severity:'high'},
+  {from:'IRN',to:'IRQ',type:'influence',label:'Iranian Influence',severity:'medium'},
+  {from:'IRN',to:'PSE',type:'support',label:'Hamas Support',severity:'high'},
+  {from:'SAU',to:'YEM',type:'war',label:'Coalition Campaign',severity:'high'},
+  {from:'TUR',to:'SYR',type:'conflict',label:'Border Ops / Kurdish',severity:'medium'},
+  {from:'EGY',to:'PSE',type:'border',label:'Rafah Border Crisis',severity:'medium'},
+  {from:'JOR',to:'ISR',type:'border',label:'Border Security',severity:'low'},
+  {from:'ARE',to:'IRN',type:'rivalry',label:'Gulf Tensions',severity:'low'},
+];
+
+const ARC_COLORS = {
+  war:'rgba(239,68,68',conflict:'rgba(249,115,22',proxy_war:'rgba(220,38,38',
+  proxy:'rgba(245,158,11',rivalry:'rgba(234,179,8',influence:'rgba(168,85,247',
+  support:'rgba(251,191,36',airstrike:'rgba(239,68,68',diplomatic:'rgba(59,130,246',
+  border:'rgba(107,114,128',
+};
+
+const ALERT_COLORS = {CRITICAL:'rgba(185,28,28,.9)',HIGH:'rgba(220,38,38,.82)',MEDIUM:'rgba(234,88,12,.78)',LOW:'rgba(22,163,74,.72)'};
+const ALERT_SEV = {critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'};
+
+/* ═══════════════════════════════════════════════════════════════════
+   GLOBE RENDERER
+═══════════════════════════════════════════════════════════════════ */
+const canvas = document.getElementById('globe');
+const ctx    = canvas.getContext('2d');
+
+let rotX = 0.35, rotY = -0.77; // radians — centered on Middle East
+let isDragging = false, lastX = 0, lastY = 0;
+let velX = 0.0002, velY = 0; // auto-rotate
+let scale, cx, cy;
+let selectedISO = null, hoveredISO = null;
+let showArcs = false;
+let animFrame;
+
+// Continent outlines (very simplified, just for visual context)
+const CONTINENTS = [
+  // Africa (simplified)
+  [[37.1,22.0],[11.8,15.0],[4.8,-7.8],[-34.5,18.5],[-26.5,32.9],[1.0,43.0],[11.5,43.7],[20.0,39.0],[23.0,37.5],[27.0,33.5],[33.0,32.0],[37.1,22.0]],
+  // Europe (very rough)
+  [[71,28],[60,24],[55,28],[52,20],[46,10],[44,15],[40,28],[36,36],[37.0,22.0],[40,22],[44,21],[47,26],[52,24],[56,21],[60,20],[64,26],[71,28]],
+  // Asia east (very rough patch near Iran/India)
+  [[60,57],[36,57],[35,60],[25,67],[22,80],[12,80],[8,78],[10,77],[25,90],[38,75],[45,70],[52,60],[60,57]],
+  // Arabian context hints
+];
+
+function resize() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  scale = Math.min(canvas.width, canvas.height) * 0.42;
+  cx    = canvas.width  / 2;
+  cy    = canvas.height / 2;
+}
+
+// Convert lat/lng to 3D point, then rotate, then project
+function project(lat, lng) {
+  const phi = lat * Math.PI / 180;
+  const lam = lng * Math.PI / 180;
+  // 3D unit sphere
+  let x = Math.cos(phi) * Math.cos(lam);
+  let y = Math.sin(phi);
+  let z = Math.cos(phi) * Math.sin(lam);
+  // Rotate Y (longitude)
+  const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+  let x1 = x * cosY - z * sinY;
+  let z1 = x * sinY + z * cosY;
+  // Rotate X (tilt)
+  const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+  let y2 = y * cosX - z1 * sinX;
+  let z2 = y * sinX + z1 * cosX;
+  return { px: cx + x1 * scale, py: cy - y2 * scale, z: z2, visible: z2 > 0 };
+}
+
+function drawGlobe() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Globe sphere background
+  const grad = ctx.createRadialGradient(cx - scale*0.15, cy - scale*0.15, scale*0.05, cx, cy, scale);
+  grad.addColorStop(0, '#0f1f3d');
+  grad.addColorStop(0.6, '#071324');
+  grad.addColorStop(1, '#020810');
+  ctx.beginPath();
+  ctx.arc(cx, cy, scale, 0, Math.PI*2);
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Atmosphere glow
+  const atm = ctx.createRadialGradient(cx, cy, scale*0.97, cx, cy, scale*1.08);
+  atm.addColorStop(0, 'rgba(50,120,255,0.15)');
+  atm.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.arc(cx, cy, scale*1.08, 0, Math.PI*2);
+  ctx.fillStyle = atm;
+  ctx.fill();
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(59,130,246,0.08)';
+  ctx.lineWidth = 0.5;
+  for (let lat = -80; lat <= 80; lat += 20) drawParallel(lat);
+  for (let lng = -180; lng <= 180; lng += 20) drawMeridian(lng);
+
+  // Draw simplified continent background shapes
+  ctx.strokeStyle = 'rgba(30,50,90,0.4)';
+  ctx.lineWidth = 0.8;
+  for (const cont of CONTINENTS) drawCountryPoly(cont, null, false, false);
+
+  // Draw non-ME country outlines (simplified lat/lng grid cells)
+  drawWorldBackground();
+
+  // Draw ME countries
+  for (const [iso, c] of Object.entries(COUNTRIES)) {
+    const isSelected = iso === selectedISO;
+    const isHovered  = iso === hoveredISO;
+    drawMECountry(c, isSelected, isHovered);
+  }
+
+  // Draw conflict arcs
+  if (showArcs) drawArcs();
+
+  // Globe border
+  ctx.beginPath();
+  ctx.arc(cx, cy, scale, 0, Math.PI*2);
+  ctx.strokeStyle = 'rgba(59,130,246,0.2)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+}
+
+function drawParallel(lat) {
+  ctx.beginPath();
+  let first = true;
+  for (let lng = -180; lng <= 180; lng += 3) {
+    const p = project(lat, lng);
+    if (!p.visible) { first = true; continue; }
+    first ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
+    first = false;
+  }
+  ctx.stroke();
+}
+
+function drawMeridian(lng) {
+  ctx.beginPath();
+  let first = true;
+  for (let lat = -90; lat <= 90; lat += 3) {
+    const p = project(lat, lng);
+    if (!p.visible) { first = true; continue; }
+    first ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
+    first = false;
+  }
+  ctx.stroke();
+}
+
+function drawCountryPoly(poly, fillColor, stroke, fill) {
+  let segments = [];
+  let current  = [];
+  for (const [lat, lng] of poly) {
+    const p = project(lat, lng);
+    if (p.visible) {
+      current.push(p);
+    } else if (current.length > 1) {
+      segments.push(current);
+      current = [];
+    } else {
+      current = [];
+    }
+  }
+  if (current.length > 1) segments.push(current);
+
+  for (const seg of segments) {
+    ctx.beginPath();
+    ctx.moveTo(seg[0].px, seg[0].py);
+    for (let i = 1; i < seg.length; i++) ctx.lineTo(seg[i].px, seg[i].py);
+    if (fill && fillColor) { ctx.closePath(); ctx.fillStyle = fillColor; ctx.fill(); }
+    if (stroke) ctx.stroke();
+  }
+}
+
+function drawMECountry(c, isSelected, isHovered) {
+  // Visibility check: is the country center facing us?
+  const center = project(c.lat, c.lng);
+
+  let fill = ALERT_COLORS[c.alertLevel] || 'rgba(30,50,80,.7)';
+  if (isSelected) fill = 'rgba(200,220,255,.95)';
+  else if (isHovered) fill = 'rgba(150,180,240,.88)';
+
+  ctx.strokeStyle = isSelected ? 'rgba(255,255,255,0.9)' :
+                    isHovered  ? 'rgba(150,200,255,0.7)' :
+                                 'rgba(100,150,220,0.3)';
+  ctx.lineWidth = isSelected ? 1.5 : 0.8;
+
+  drawCountryPoly(c.poly, fill, true, true);
+
+  // Label if center is visible
+  if (center.visible) {
+    const labelColor = isSelected ? '#050c1a' : (isHovered ? '#050c1a' : '#93c5fd');
+    ctx.font = 'bold 10px Courier New';
+    ctx.fillStyle = labelColor;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const labelText = c.name.length > 8 ? c.iso : c.name;
+    ctx.fillText(labelText, center.px, center.py);
+  }
+}
+
+function drawWorldBackground() {
+  // Draw some simplified non-ME shapes just for geographic context
+  // These are very rough bounding polygons for visual reference only
+  const regions = [
+    // Indian subcontinent rough
+    [[37,66],[22,66],[8,76],[8,80],[12,80],[23,90],[26,92],[28,80],[36,74],[37,66]],
+    // Horn of Africa
+    [[12,45],[8,41],[4,41],[0,42],[2,45],[11,50],[11,45],[12,45]],
+    // East Africa coast
+    [[-5,39],[-10,40],[-17,35],[-20,35],[-26,32],[0,42],[4,41],[-5,39]],
+  ];
+  ctx.strokeStyle = 'rgba(20,40,70,0.5)';
+  ctx.lineWidth = 0.6;
+  for (const r of regions) drawCountryPoly(r, null, true, false);
+}
+
+function drawArcs() {
+  const filtered = selectedISO
+    ? CONFLICTS.filter(c => c.from === selectedISO || c.to === selectedISO)
+    : CONFLICTS;
+
+  for (const arc of filtered) {
+    const from = COUNTRIES[arc.from];
+    const to   = COUNTRIES[arc.to];
+    if (!from || !to) continue;
+
+    const p1 = project(from.lat, from.lng);
+    const p2 = project(to.lat,   to.lng);
+    if (!p1.visible && !p2.visible) continue;
+
+    const baseColor = ARC_COLORS[arc.type] || 'rgba(239,68,68';
+    const t = (Date.now() % 3000) / 3000; // 0→1 animation progress
+
+    // Draw bezier arc
+    const midX = (p1.px + p2.px) / 2;
+    const midY = (p1.py + p2.py) / 2;
+    const dx   = p2.px - p1.px;
+    const dy   = p2.py - p1.py;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const offX = -dy * 0.3;
+    const offY =  dx * 0.3;
+    const cpX  = midX + offX;
+    const cpY  = midY + offY;
+
+    // Glow
+    ctx.beginPath();
+    ctx.moveTo(p1.px, p1.py);
+    ctx.quadraticCurveTo(cpX, cpY, p2.px, p2.py);
+    ctx.strokeStyle = `${baseColor},.15)`;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // Animated dashed line
+    ctx.beginPath();
+    ctx.setLineDash([12, 8]);
+    ctx.lineDashOffset = -t * 60;
+    ctx.moveTo(p1.px, p1.py);
+    ctx.quadraticCurveTo(cpX, cpY, p2.px, p2.py);
+    ctx.strokeStyle = `${baseColor},.8)`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Dot at midpoint
+    const tmid = 0.5;
+    const dotX = (1-tmid)*(1-tmid)*p1.px + 2*(1-tmid)*tmid*cpX + tmid*tmid*p2.px;
+    const dotY = (1-tmid)*(1-tmid)*p1.py + 2*(1-tmid)*tmid*cpY + tmid*tmid*p2.py;
+    ctx.beginPath();
+    ctx.arc(dotX, dotY, 3, 0, Math.PI*2);
+    ctx.fillStyle = `${baseColor},.9)`;
+    ctx.fill();
+  }
+}
+
+function animate() {
+  if (!isDragging) {
+    rotY += velX;
+    if (velY) { rotX += velY; velY *= 0.95; }
+  }
+  drawGlobe();
+  animFrame = requestAnimationFrame(animate);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOUSE / TOUCH INTERACTION
+═══════════════════════════════════════════════════════════════════ */
+function screenToSphere(x, y) {
+  const dx = (x - cx) / scale;
+  const dy = (cy - y) / scale;
+  const r2 = dx*dx + dy*dy;
+  if (r2 > 1) return null;
+  return { x: dx, y: dy, z: Math.sqrt(1 - r2) };
+}
+
+function sphereToLatLng(pt) {
+  // Undo rotations
+  const cosX = Math.cos(-rotX), sinX = Math.sin(-rotX);
+  let y2 = pt.y * cosX - pt.z * sinX;
+  let z2 = pt.y * sinX + pt.z * cosX;
+  const cosY = Math.cos(-rotY), sinY = Math.sin(-rotY);
+  let x2 = pt.x * cosY - z2 * sinY;
+  let z3 = pt.x * sinY + z2 * cosY;
+  const lat = Math.asin(Math.max(-1, Math.min(1, y2))) * 180 / Math.PI;
+  const lng = Math.atan2(z3, x2) * 180 / Math.PI;
+  return { lat, lng };
+}
+
+function pointInPolygon(lat, lng, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length-1; i < poly.length; j = i++) {
+    const [yi, xi] = poly[i], [yj, xj] = poly[j];
+    if (((yi > lat) !== (yj > lat)) && lng < (xj-xi)*(lat-yi)/(yj-yi)+xi)
+      inside = !inside;
+  }
+  return inside;
+}
+
+function hitTest(screenX, screenY) {
+  const sp = screenToSphere(screenX, screenY);
+  if (!sp) return null;
+  const { lat, lng } = sphereToLatLng(sp);
+  for (const [iso, c] of Object.entries(COUNTRIES)) {
+    if (pointInPolygon(lat, lng, c.poly)) return iso;
+  }
+  return null;
+}
+
+canvas.addEventListener('mousemove', e => {
+  if (isDragging) {
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    rotY += dx * 0.005;
+    rotX += dy * 0.005;
+    rotX  = Math.max(-1.3, Math.min(1.3, rotX));
+    velX  = dx * 0.0008;
+    velY  = dy * 0.0008;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    return;
+  }
+  const hit = hitTest(e.clientX, e.clientY);
+  if (hit !== hoveredISO) {
+    hoveredISO = hit;
+    canvas.style.cursor = hit ? 'pointer' : 'grab';
+  }
+  if (hit) {
+    const c = COUNTRIES[hit];
+    document.getElementById('tt-name').textContent  = c.name;
+    document.getElementById('tt-alert').textContent = `Alert: ${c.alertLevel}`;
+    document.getElementById('tt-alert').style.color = ALERT_SEV[c.alertLevel.toLowerCase()] || '#94a3b8';
+    const tt = document.getElementById('tooltip');
+    tt.style.left    = (e.clientX + 14) + 'px';
+    tt.style.top     = (e.clientY - 10) + 'px';
+    tt.style.opacity = '1';
+  } else {
+    document.getElementById('tooltip').style.opacity = '0';
+  }
+});
+
+canvas.addEventListener('mousedown', e => {
+  isDragging = true;
+  canvas.classList.add('dragging');
+  lastX = e.clientX;
+  lastY = e.clientY;
+  velX  = 0; velY = 0;
+});
+
+canvas.addEventListener('mouseup', e => {
+  if (!isDragging) return;
+  isDragging = false;
+  canvas.classList.remove('dragging');
+  const dx = e.clientX - lastX, dy = e.clientY - lastY;
+  if (Math.abs(dx) < 3 && Math.abs(dy) < 3) {
+    // Click
+    const hit = hitTest(e.clientX, e.clientY);
+    if (hit) selectCountry(hit);
+  }
+});
+
+canvas.addEventListener('mouseleave', () => {
+  isDragging = false;
+  canvas.classList.remove('dragging');
+  document.getElementById('tooltip').style.opacity = '0';
+  hoveredISO = null;
+});
+
+// Touch support
+canvas.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  isDragging = true; lastX = t.clientX; lastY = t.clientY; velX = 0; velY = 0;
+  e.preventDefault();
+}, {passive:false});
+
+canvas.addEventListener('touchmove', e => {
+  const t = e.touches[0];
+  const dx = t.clientX - lastX, dy = t.clientY - lastY;
+  rotY += dx * 0.005; rotX += dy * 0.005;
+  rotX = Math.max(-1.3, Math.min(1.3, rotX));
+  velX = dx * 0.0008; velY = dy * 0.0008;
+  lastX = t.clientX; lastY = t.clientY;
+  e.preventDefault();
+}, {passive:false});
+
+canvas.addEventListener('touchend', e => {
+  isDragging = false;
+  if (e.changedTouches.length) {
+    const t = e.changedTouches[0];
+    const hit = hitTest(t.clientX, t.clientY);
+    if (hit) selectCountry(hit);
+  }
+});
+
+window.addEventListener('resize', () => { resize(); });
+
+/* ═══════════════════════════════════════════════════════════════════
+   UI / PANEL
+═══════════════════════════════════════════════════════════════════ */
+const ALERT_BADGE = {
+  CRITICAL:{bg:'#7f1d1d',color:'#fca5a5',border:'#ef4444'},
+  HIGH:    {bg:'#7c2d12',color:'#fdba74',border:'#f97316'},
+  MEDIUM:  {bg:'#78350f',color:'#fcd34d',border:'#f59e0b'},
+  LOW:     {bg:'#14532d',color:'#86efac',border:'#22c55e'},
+};
+
+let currentIntel = null;
+
+async function selectCountry(iso) {
+  selectedISO = iso;
+  showArcs    = false;
+  updateConnectBtn();
+
+  const c = COUNTRIES[iso];
+  document.getElementById('p-name').textContent = c.name;
+  document.getElementById('p-cap').textContent  = `Capital: ${c.capital}`;
+  document.getElementById('h-status').innerHTML =
+    `VIEWING: <strong style="color:#93c5fd">${c.name.toUpperCase()}</strong>`;
+  document.getElementById('panel').classList.add('open');
+  showTab('summary');
+
+  // Show loader
+  for (const id of ['tab-summary','tab-threats','tab-news','tab-conflicts'])
+    document.getElementById(id).innerHTML = '<div class="p-loader"><div class="spinner"></div><span>Fetching intel…</span></div>';
+
+  try {
+    const res = await fetch(`/api/intel/${iso}`);
+    const data = await res.json();
+    currentIntel = data;
+    renderPanel(data);
+  } catch {
+    // Backend not running — use embedded mock data
+    currentIntel = buildMockResponse(iso);
+    renderPanel(currentIntel);
+  }
+}
+
+function buildMockResponse(iso) {
+  const c = COUNTRIES[iso];
+  return {
+    iso, ...c,
+    alertLevel: c.alertLevel,
+    summary: 'Backend not running. Start server.py for full intel feed. This is a static demo.',
+    threats: [], keyActors: [], recentEvents: ['Start server.py for live data'],
+    liveNews: [{title:'Start server.py for live intel feed',source:'System',published:''}],
+    conflicts: CONFLICTS.filter(cf => cf.from === iso || cf.to === iso).map(cf => ({
+      ...cf,
+      fromName: COUNTRIES[cf.from]?.name || cf.from,
+      toName:   COUNTRIES[cf.to]?.name   || cf.to,
+    })),
+    economicIndicator: 'Run: python3 server.py',
+    lastUpdated: new Date().toISOString(),
+  };
+}
+
+function renderPanel(data) {
+  // Badge
+  const badge = ALERT_BADGE[data.alertLevel] || ALERT_BADGE.LOW;
+  const b = document.getElementById('p-badge');
+  b.textContent       = data.alertLevel;
+  b.style.background  = badge.bg;
+  b.style.color       = badge.color;
+  b.style.borderColor = badge.border;
+
+  // Summary tab
+  document.getElementById('tab-summary').innerHTML = `
+    <div class="sec-label">SITUATION ASSESSMENT</div>
+    <p class="summary-text">${data.summary || '—'}</p>
+    ${data.keyActors?.length ? `
+      <div class="sec-label" style="margin-top:20px">KEY ACTORS</div>
+      <div class="actors-list">${data.keyActors.map(a=>`<span class="actor-chip">${a}</span>`).join('')}</div>
+    ` : ''}
+    ${data.economicIndicator ? `
+      <div class="sec-label" style="margin-top:20px">ECONOMIC INDICATOR</div>
+      <p class="econ-text">${data.economicIndicator}</p>
+    ` : ''}
+  `;
+
+  // Threats tab
+  document.getElementById('tab-threats').innerHTML = data.threats?.length
+    ? '<div class="sec-label">ACTIVE THREAT VECTORS</div>' + data.threats.map(t=>`
+      <div class="threat-item">
+        <div class="threat-head">
+          <span class="threat-type">${t.type.toUpperCase()}</span>
+          <span class="threat-sev" style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span>
+        </div>
+        <p class="threat-desc">${t.description}</p>
+      </div>`).join('')
+    : '<p class="no-data">No active threats recorded.</p>';
+
+  // News tab
+  document.getElementById('tab-news').innerHTML = data.liveNews?.length
+    ? '<div class="sec-label">LIVE INTELLIGENCE FEED</div>' + data.liveNews.map(n=>`
+      <div class="news-item">
+        <div class="news-meta"><span class="news-src">${n.source||'FEED'}</span><span class="news-time">${timeAgo(n.published)}</span></div>
+        ${n.url && n.url.startsWith('http')
+          ? `<a href="${n.url}" target="_blank" rel="noopener" class="news-title">${n.title}</a>`
+          : `<p class="news-title plain">${n.title}</p>`}
+        ${n.summary ? `<p class="news-sum">${n.summary}</p>` : ''}
+      </div>`).join('')
+    : '<p class="no-data">No live news. Configure NEWS_API_KEY in .env.</p>';
+
+  // Conflicts tab
+  document.getElementById('tab-conflicts').innerHTML = data.conflicts?.length
+    ? '<div class="sec-label">CONFLICT RELATIONSHIPS</div>' + data.conflicts.map(c=>`
+      <div class="conflict-item">
+        <div class="cf-head">
+          <span class="cf-countries">${c.fromName} → ${c.toName}</span>
+          <span class="cf-sev ${c.severity}">${c.severity?.toUpperCase()}</span>
+        </div>
+        <div class="cf-meta">
+          <span class="cf-type">${c.type.replace(/_/g,' ').toUpperCase()}</span>
+          <span class="cf-label">${c.label}</span>
+        </div>
+      </div>`).join('')
+    : '<p class="no-data">No active conflicts recorded.</p>';
+
+  // Footer
+  document.getElementById('p-updated').textContent = `Updated: ${new Date(data.lastUpdated).toLocaleTimeString()}`;
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('h-status').textContent = 'Click any highlighted country for Intel Report';
+  selectedISO = null;
+  showArcs    = false;
+  updateConnectBtn();
+  document.getElementById('arc-legend').style.display = 'none';
+}
+
+function toggleArcs() {
+  showArcs = !showArcs;
+  updateConnectBtn();
+  document.getElementById('arc-legend').style.display = showArcs ? '' : 'none';
+}
+
+function updateConnectBtn() {
+  const btn = document.getElementById('connect-btn');
+  const icon = document.getElementById('conn-icon');
+  const text = document.getElementById('conn-text');
+  btn.classList.toggle('active', showArcs);
+  icon.textContent = showArcs ? '◉' : '◎';
+  text.textContent = showArcs ? 'HIDE CONNECTIONS' : 'CONNECT — Show Relationships';
+}
+
+function showTab(name) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.textContent.toLowerCase() === name) b.classList.add('active');
+  });
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const d = Date.now() - new Date(dateStr).getTime();
+  const h = Math.floor(d / 3600000);
+  if (h < 1)  return Math.floor(d/60000) + 'm ago';
+  if (h < 24) return h + 'h ago';
+  return Math.floor(h/24) + 'd ago';
+}
+
+// Clock
+function tick() {
+  document.getElementById('h-time').textContent = new Date().toUTCString().slice(0,25) + ' UTC';
+  setTimeout(tick, 1000);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════════ */
+resize();
+tick();
+animate();
+</script>
+</body>
+</html>
