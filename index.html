@@ -339,9 +339,9 @@ canvas.dragging{cursor:grabbing}
   <div class="h-logo">
     <span class="h-icon">◎</span>
     <span class="h-title">INTEL GLOBE</span>
-    <span class="h-region">Middle East Theatre</span>
+    <span class="h-region">Global Intelligence Platform</span>
   </div>
-  <div class="h-middle" id="h-status">Click any highlighted country for Intel Report</div>
+  <div class="h-middle" id="h-status">Click any country · Dots are hotspots · Scroll/pinch to zoom</div>
   <div class="h-right">
     <button id="refresh-btn" onclick="refreshIntel()" style="background:none;border:1px solid #1e3a5f;color:#475569;cursor:pointer;padding:5px 11px;border-radius:4px;font-size:10px;font-family:'Courier New',monospace;letter-spacing:.1em;transition:all .25s" title="Refresh live intel data">↻ REFRESH</button>
     <span class="h-live"><span class="h-dot"></span>LIVE FEED</span>
@@ -421,7 +421,7 @@ canvas.dragging{cursor:grabbing}
   </div>
   <div class="p-foot">
     <span id="p-updated">—</span>
-    <span>Intel Globe v1.0 — Middle East Edition</span>
+    <span>Intel Globe v2.0 — Global Intelligence Platform</span>
   </div>
 </div>
 
@@ -463,6 +463,33 @@ const COUNTRIES = {
     poly:[[26.28,50.3],[26.0,50.4],[26.1,50.62],[26.28,50.7],[26.28,50.3]]},
   OMN:{iso:'OMN',numericId:512,name:'Oman',         capital:'Muscat',      alertLevel:'LOW',      lat:23.6, lng:58.6,
     poly:[[24.0,56.4],[22.6,55.6],[17.5,49.0],[18.0,53.1],[20.0,57.5],[22.0,59.8],[24.5,58.3],[24.5,56.8],[24.0,56.4]]},
+  // ── Europe ──
+  RUS:{iso:'RUS',numericId:643,name:'Russia',        capital:'Moscow',      alertLevel:'CRITICAL', lat:58.0, lng:37.6,
+    poly:[[70,28],[66,26],[60,26],[55,18],[52,20],[48,33],[45,36],[43,41],[43,47],[43,52],[44,56],[45,63],[46,68],[52,74],[58,74],[63,73],[67,75],[70,67],[72,68],[72,62],[70,59],[73,55],[73,51],[71,43],[72,38],[70,28]]},
+  UKR:{iso:'UKR',numericId:804,name:'Ukraine',       capital:'Kyiv',        alertLevel:'CRITICAL', lat:49.0, lng:31.5,
+    poly:[[52,22],[51,23],[50,26],[49,29],[51,32],[52,36],[50,38],[48,39],[47,38],[46,36],[45,33],[45,30],[46,29],[47,25],[49,22],[52,22]]},
+  BLR:{iso:'BLR',numericId:112,name:'Belarus',       capital:'Minsk',       alertLevel:'HIGH',     lat:53.7, lng:27.9,
+    poly:[[56,28],[55,24],[53,22],[51,22],[50,25],[50,30],[52,32],[53,36],[55,31],[57,30],[56,28]]},
+  POL:{iso:'POL',numericId:616,name:'Poland',        capital:'Warsaw',      alertLevel:'MEDIUM',   lat:52.0, lng:20.0,
+    poly:[[54,14],[54,18],[52,22],[50,22],[49,17],[49,14],[50,14],[52,14],[54,14]]},
+  DEU:{iso:'DEU',numericId:276,name:'Germany',       capital:'Berlin',      alertLevel:'LOW',      lat:51.2, lng:10.5,
+    poly:[[55,8],[54,14],[51,15],[50,8],[48,8],[47,10],[49,13],[50,16],[49,18],[52,14],[53,8],[55,8]]},
+  FRA:{iso:'FRA',numericId:250,name:'France',        capital:'Paris',       alertLevel:'LOW',      lat:46.2, lng:2.2,
+    poly:[[51,2],[50,1],[48,-2],[47,-2],[44,-2],[43,1],[43,5],[44,7],[46,7],[48,7],[50,4],[51,2]]},
+  GBR:{iso:'GBR',numericId:826,name:'UK',            capital:'London',      alertLevel:'LOW',      lat:54.0, lng:-2.0,
+    poly:[[58,-3],[56,-2],[55,-4],[54,-5],[52,-4],[51,-1],[51,1],[53,1],[57,0],[58,-3]]},
+  SRB:{iso:'SRB',numericId:688,name:'Serbia',        capital:'Belgrade',    alertLevel:'MEDIUM',   lat:44.0, lng:21.0,
+    poly:[[46,19],[45,20],[44,22],[43,22],[43,20],[44,19],[45,18],[46,19]]},
+  MDA:{iso:'MDA',numericId:498,name:'Moldova',       capital:'Chișinău',    alertLevel:'MEDIUM',   lat:47.0, lng:28.4,
+    poly:[[48,27],[47,27],[46,28],[46,30],[47,31],[48,29],[48,27]]},
+  GEO:{iso:'GEO',numericId:268,name:'Georgia',       capital:'Tbilisi',     alertLevel:'MEDIUM',   lat:42.0, lng:43.5,
+    poly:[[43,40],[42,40],[41,41],[41,44],[42,46],[43,46],[43,43],[43,40]]},
+  HUN:{iso:'HUN',numericId:348,name:'Hungary',       capital:'Budapest',    alertLevel:'MEDIUM',   lat:47.2, lng:19.5,
+    poly:[[48,16],[47,17],[46,18],[46,22],[48,22],[49,21],[49,19],[48,16]]},
+  AZE:{iso:'AZE',numericId:31, name:'Azerbaijan',    capital:'Baku',        alertLevel:'MEDIUM',   lat:40.4, lng:47.6,
+    poly:[[42,45],[41,45],[40,47],[40,50],[41,51],[42,48],[43,47],[42,45]]},
+  ARM:{iso:'ARM',numericId:51, name:'Armenia',       capital:'Yerevan',     alertLevel:'HIGH',     lat:40.2, lng:44.8,
+    poly:[[41,44],[40,44],[38,45],[39,47],[40,47],[41,46],[41,44]]},
 };
 
 const CONFLICTS = [
@@ -480,6 +507,19 @@ const CONFLICTS = [
   {from:'EGY',to:'PSE',type:'border',   label:'Rafah Border Crisis',          severity:'medium'},
   {from:'JOR',to:'ISR',type:'border',   label:'Border Security Agreement',    severity:'low'},
   {from:'ARE',to:'IRN',type:'rivalry',  label:'Gulf Territorial Tensions',    severity:'low'},
+  // ── Europe ──
+  {from:'RUS',to:'UKR',type:'war',       label:'Full-Scale Invasion / Ground War',    severity:'critical'},
+  {from:'RUS',to:'MDA',type:'influence', label:'Transnistria Frozen Conflict',        severity:'medium'},
+  {from:'RUS',to:'GEO',type:'conflict',  label:'South Ossetia/Abkhazia Occupation',  severity:'high'},
+  {from:'RUS',to:'BLR',type:'support',   label:'Union State — Military Integration', severity:'medium'},
+  {from:'BLR',to:'UKR',type:'conflict',  label:'Northern Staging Ground Threat',     severity:'high'},
+  {from:'SRB',to:'UKR',type:'diplomatic',label:'Serbia-Ukraine Relations (neutral)', severity:'low'},
+  {from:'HUN',to:'UKR',type:'diplomatic',label:'Orban-Zelensky Friction / Minority Rights', severity:'medium'},
+  {from:'AZE',to:'ARM',type:'conflict',  label:'Nagorno-Karabakh Aftermath',         severity:'high'},
+  {from:'RUS',to:'ARM',type:'influence', label:'CSTO Abandonment / Pivot Away',      severity:'medium'},
+  {from:'GEO',to:'RUS',type:'rivalry',   label:'NATO Aspiration vs. Occupation',     severity:'high'},
+  {from:'POL',to:'RUS',type:'rivalry',   label:'NATO Eastern Flank Confrontation',   severity:'medium'},
+  {from:'GBR',to:'RUS',type:'rivalry',   label:'Hybrid Warfare / Salisbury-class Ops', severity:'medium'},
 ];
 
 /* Threat hotspot pins — embedded base layer (supplemented by live GDELT) */
@@ -501,13 +541,28 @@ const HOTSPOTS = [
   {lat:33.27,lng:35.24,country:'LBN',type:'active_conflict',label:'South Lebanon — UNIFIL Line',     severity:'high'},
   {lat:37.06,lng:43.37,country:'TUR',type:'military_ops',   label:'SE Turkey — PKK Border Ops',      severity:'medium'},
   {lat:21.39,lng:39.86,country:'SAU',type:'missile_threat', label:'Jeddah — Houthi Missile Range',   severity:'medium'},
+  // ── Europe / Eurasia ──
+  {lat:48.00,lng:37.80,country:'UKR',type:'active_conflict',label:'Donetsk — Active Front Line',           severity:'critical'},
+  {lat:47.84,lng:35.14,country:'UKR',type:'nuclear',        label:'Zaporizhzhia NPP — Nuclear Flashpoint',  severity:'critical'},
+  {lat:49.99,lng:36.23,country:'UKR',type:'active_conflict',label:'Kharkiv — Russian Artillery Zone',       severity:'critical'},
+  {lat:46.64,lng:32.62,country:'UKR',type:'active_conflict',label:'Kherson — River Line Conflict',          severity:'high'},
+  {lat:55.75,lng:37.62,country:'RUS',type:'military_ops',   label:'Moscow — Kremlin Command Center',        severity:'high'},
+  {lat:56.00,lng:37.00,country:'RUS',type:'nuclear',        label:'Zhukovsky — Nuclear Command Infrastructure', severity:'critical'},
+  {lat:54.73,lng:27.72,country:'BLR',type:'military_ops',   label:'Minsk — Lukashenko Command / Russian Nukes', severity:'high'},
+  {lat:46.85,lng:29.64,country:'MDA',type:'instability',    label:'Transnistria — Russian Garrison Zone',   severity:'high'},
+  {lat:42.27,lng:43.99,country:'GEO',type:'active_conflict',label:'South Ossetia — Russian Occupation Zone',severity:'high'},
+  {lat:52.23,lng:21.01,country:'POL',type:'military_ops',   label:'Warsaw — NATO Eastern Command Hub',      severity:'medium'},
+  {lat:54.71,lng:20.51,country:'RUS',type:'military_ops',   label:'Kaliningrad — NATO Enclave / S-400 Zone', severity:'high'},
+  {lat:39.71,lng:46.37,country:'AZE',type:'active_conflict',label:'Karabakh — Post-Conflict Stabilization', severity:'medium'},
+  {lat:44.80,lng:20.46,country:'SRB',type:'instability',    label:'Belgrade — Russia-Aligned Government',   severity:'medium'},
 ];
 const HOTSPOT_COLORS={
   active_conflict:'rgba(239,68,68,1)',nuclear:'rgba(239,68,68,1)',
   missile_threat:'rgba(245,158,11,1)',airstrike:'rgba(239,68,68,1)',
   militia:'rgba(245,158,11,1)',terrorism:'rgba(245,158,11,1)',
   humanitarian:'rgba(168,85,247,1)',instability:'rgba(245,158,11,1)',
-  military_ops:'rgba(59,130,246,1)',
+  military_ops:'rgba(59,130,246,1)',cyber:'rgba(34,197,94,1)',
+  hybrid:'rgba(168,85,247,1)',wmd:'rgba(239,68,68,1)',
 };
 let liveHotspots=[];
 
@@ -776,6 +831,232 @@ const INTEL = {
     ],
     economic:"GDP $44B. Oil 70% of revenue. Financial services growing. Breakeven oil price: $96/bbl — highest in Gulf.",
   },
+  // ── Europe / Eurasia ──
+  RUS:{
+    summary:"Russia engaged in largest European land war since WWII — full-scale invasion of Ukraine in year 3. Economy adapted to wartime footing under sanctions through China/India trade pivot. Kremlin pursuing maximalist war aims despite catastrophic military losses (est. 500,000+ casualties). Nuclear deterrence weaponized rhetorically. FSB/GRU running parallel hybrid warfare campaign across NATO states: sabotage, assassination, election interference.",
+    threats:[
+      {type:"Nuclear",    description:"1,558 deployed strategic warheads + 1,900 tactical nuclear weapons. Doctrine allows first use if existential threat to Russian state — threshold deliberately ambiguous",severity:"critical",confidence:"HIGH",probability:12,source:"STRATFOR/NTI/IAEA"},
+      {type:"Conventional",description:"500,000+ troops on Ukraine front. ORBAT includes VDV airborne, tank armies, missile forces. Glide bomb (FAB-3000) campaign intensifying",severity:"critical",confidence:"HIGH",probability:95,source:"UK MOD/DIA"},
+      {type:"Hybrid",     description:"GRU Unit 29155: confirmed sabotage operations in Germany, Poland, UK, Czech Republic, Bulgaria 2023-2025",severity:"high",confidence:"HIGH",probability:90,source:"BND/GCHQ/Europol"},
+      {type:"Cyber",      description:"Sandworm (GRU 74455): Ukrainian power grid attacks, NATO member election interference, Critical infrastructure targeting",severity:"high",confidence:"HIGH",probability:85,source:"CISA/ANSSI"},
+      {type:"Information",description:"RT/Sputnik/Telegram channels + bot networks conducting influence operations in 40+ countries",severity:"medium",confidence:"HIGH",probability:99,source:"GEC/NATO StratCom"},
+    ],
+    keyActors:["Putin","Gerasimov (Gen Staff)","Patrushev (Sec Council)","FSB","GRU","Rosatom","Wagner/Africa Corps","Kadyrov (Chechnya)"],
+    news:[
+      "Russian forces advance on Pokrovsk — critical logistics hub for Ukrainian eastern defense",
+      "Putin signs decree expanding conscription age range to 18-30 for contract service",
+      "GRU sabotage network dismantled in Poland — 4 arrested planning rail attack",
+      "G7 frozen Russian assets ($300B) interest transfer to Ukraine approved",
+      "Russia-North Korea arms deal: 3M artillery shells + ballistic missiles confirmed",
+    ],
+    economic:"GDP $2.1T nominal. Sanction-adapted: China/India oil import pivot generates $200B+/yr. Defense spending 7.1% GDP ($140B). Inflation 8.5%. Ruble managed float. Long-term structural damage: tech sector hollowed, brain drain 800K+.",
+  },
+  UKR:{
+    summary:"Ukraine in existential defensive war against Russian full-scale invasion — 3rd year of combat. NATO collective support: $200B+ military, financial, humanitarian aid. Front lines stabilized after failed 2023 counteroffensive — grinding attritional warfare along 1,200km front. Zelensky seeking NATO membership guarantee as war termination condition. Russian strikes systematically targeting energy infrastructure — 50%+ of generating capacity destroyed.",
+    threats:[
+      {type:"Invasion",    description:"Russian ground forces on all eastern fronts — Donetsk primary effort. Glide bomb campaign degrading Ukrainian fortifications",severity:"critical",confidence:"HIGH",probability:99,source:"SHAPE/GUR"},
+      {type:"Missile/Drone",description:"Russian Shahed-136, Kh-101, Iskander-M strikes on energy infrastructure, cities. 2,000+ per month average",severity:"critical",confidence:"HIGH",probability:95,source:"Ukrainian AF"},
+      {type:"Nuclear",     description:"Zaporizhzhia NPP under Russian control — cooling failure risk. Russian tactical nuclear threat if territorial losses exceed tolerance",severity:"critical",confidence:"MEDIUM",probability:8,source:"IAEA/ISW"},
+      {type:"Economic",    description:"GDP down 35% since 2021. Infrastructure repair cost $500B+. Western aid dependency: 40% of state budget",severity:"high",confidence:"HIGH",probability:99,source:"World Bank/IMF"},
+    ],
+    keyActors:["Zelensky","Syrskyi (CinC)","Budanov (GUR)","Malyuk (SBU)","Zaluzhnyi (UK Amb, ex-CinC)","NATO SHAPE","US EUCOM"],
+    news:[
+      "Ukraine F-16 operational — first combat deployments confirmed in multiple sorties",
+      "GUR (Ukrainian Intel) drone strikes Saratov oil refinery 1,200km inside Russia",
+      "Zelensky 'Victory Plan' presented to NATO — membership as ceasefire condition",
+      "US ATACMS strikes on Russian territory authorized — Belgorod logistics hub struck",
+      "Ukraine mobilization law: 25+ call-up age, no exemptions for most categories",
+    ],
+    economic:"GDP $160B (pre-war $200B). Reconstruction cost est. $500B (World Bank). Western aid $200B+ total. Hryvnia stable via NBU management. Unemployment 25%. Agriculture export corridor Black Sea restored via naval pressure.",
+  },
+  BLR:{
+    summary:"Belarus under Lukashenko functions as Russia's vassal state following stolen 2020 election and subsequent Western sanctions. Russia deployed tactical nuclear weapons to Belarusian territory in 2023 — first nuclear deployment outside Russia since Soviet era. Belarusian military served as northern staging ground for Russia's Feb 2022 Kyiv offensive. Pro-EU democratic opposition in exile with no domestic political viability under current repression.",
+    threats:[
+      {type:"Nuclear",     description:"Russian tactical nuclear weapons deployed to Belarus — Iskander-M nuclear-capable batteries transferred",severity:"critical",confidence:"HIGH",probability:100,source:"Putin/Lukashenko statements"},
+      {type:"Military",    description:"Belarusian territory available for Russian second northern axis — periodic force buildup indicators observed",severity:"high",confidence:"MEDIUM",probability:35,source:"IMINT/SIGINT"},
+      {type:"Hybrid",      description:"KGB (Belarus) cooperating with FSB on exfiltration of dissidents in EU, Ukraine",severity:"high",confidence:"HIGH",probability:90,source:"Europol"},
+      {type:"Refugee",     description:"Lukashenko using migrants as hybrid weapon — Iraqi/Syrian migrants directed to Poland/Lithuania borders",severity:"medium",confidence:"HIGH",probability:85,source:"Frontex/BKA"},
+    ],
+    keyActors:["Lukashenko","Russian Military (deployed)","Sviatlana Tsikhanouskaya (opposition-in-exile)","KGB Belarus","Wagner rear elements"],
+    news:[
+      "Russian Iskander-M tactical nuclear unit transfer to Osipovichi confirmed by satellite",
+      "Belarusian dissident Vitaly Shishov found hanged in Kyiv — KGB operation suspected",
+      "Poland closes two Belarusian border crossings citing hybrid attack escalation",
+      "EU sanctions package 13: additional Belarusian oligarchs and KGB officers listed",
+      "Lukashenko health speculation — extended disappearances raising succession questions",
+    ],
+    economic:"GDP $73B. Sanctions cost est. $8B/yr. Russian energy subsidies ($5B+/yr equivalent) sustain economy. Potash exports ($3B) diverted via Russian ports. Ruble depreciated 40%. Tech sector exodus to Poland/Lithuania.",
+  },
+  POL:{
+    summary:"Poland has emerged as NATO's most critical eastern flank state — largest conventional military buildup in Europe, hosting US Army V Corps HQ, serving as primary logistics corridor for Ukraine aid. 4% GDP defense spending (highest in alliance). Government under PM Tusk (EU-aligned, replaced Law & Justice party) pursuing NATO and EU integration while managing historical Russia threat perception.",
+    threats:[
+      {type:"Russian Hybrid",description:"GRU-linked sabotage network dismantled 2024 — rail, energy infrastructure targeted",severity:"high",confidence:"HIGH",probability:75,source:"ABW/BND"},
+      {type:"Border",        description:"Belarusian-directed migrant pressure on eastern border — barbed wire barrier extended",severity:"medium",confidence:"HIGH",probability:90,source:"Frontex"},
+      {type:"Spillover",     description:"Ukraine conflict proximity — air defense incidents including Russian missiles entering Polish airspace",severity:"medium",confidence:"HIGH",probability:40,source:"MPRP"},
+    ],
+    keyActors:["PM Tusk","President Duda","ABW (Internal Security)","SKW (Military Intel)","US V Corps (Warsaw HQ)","NATO Enhanced Forward Presence"],
+    news:[
+      "Poland F-35A first deliveries completed — 32 aircraft operational",
+      "US Patriot battery permanent basing agreement signed — Camp Kosciuszko",
+      "Polish 18th Division HQ activated — 300,000-troop army plan accelerated",
+      "ABW: GRU spy network dismantled — 8 arrests across Warsaw, Gdansk, Krakow",
+      "Poland-Ukraine security agreement: bilateral defense pact signed in Warsaw",
+    ],
+    economic:"GDP $750B. Defense 4% GDP ($30B) — highest in NATO. NATO logistics hub generates $10B+ economic activity. Inflation stabilizing from 18% peak. EU funds: €50B+ from cohesion/recovery programs.",
+  },
+  DEU:{
+    summary:"Germany navigating painful strategic recalibration post-Zeitenwende (turning point). Abandoning decades of Russia energy dependence and defense underspending. Still below 2% NATO GDP target consistently — political will constrained by coalition dynamics. Largest European economy providing substantial Ukraine aid but coalition government collapsed Nov 2024. BND assessing sustained Russian hybrid operations on German infrastructure.",
+    threats:[
+      {type:"Russian Hybrid",description:"Multiple GRU-linked sabotage incidents: Deutsche Bahn signal system, wind turbine sabotage, arson at logistics depots",severity:"high",confidence:"HIGH",probability:80,source:"BfV/BND"},
+      {type:"Far-Right",     description:"AfD (Russian-linked funding allegations) rising in polls — 20%+ support. Sahra Wagenknecht Alliance anti-NATO platform",severity:"medium",confidence:"MEDIUM",probability:85,source:"BfV"},
+      {type:"Energy",        description:"Nord Stream destroyed — LNG imports costly. Industrial competitiveness under pressure without cheap Russian gas",severity:"medium",confidence:"HIGH",probability:95,source:"IEA"},
+    ],
+    keyActors:["Chancellor (post-election)","BND (Foreign Intel)","BfV (Domestic Intel)","Bundeswehr","NATO Ramstein Air Base","BaFin (sanctions enforcement)"],
+    news:[
+      "Germany Taurus missile decision delayed again — coalition fracture on Ukraine escalation",
+      "BND: Russian sleeper agent network in Berlin — 3 Russian nationals arrested",
+      "Bundeswehr readiness: NATO rapid reaction commitment met for first time since 2014",
+      "Nord Stream investigation: Germany, Sweden shelved; US journalist Seymour Hersh CIA attribution contested",
+      "German elections: CDU/CSU largest party — new government Ukraine policy uncertain",
+    ],
+    economic:"GDP $4.0T (Europe's largest). Defense 2.1% GDP — finally meeting NATO target. Energy costs +40% since 2022. Export competitiveness under pressure. IFO Business Climate Index at multi-year lows.",
+  },
+  FRA:{
+    summary:"France under Macron pursuing strategic autonomy doctrine — willing to contemplate troop deployments to Ukraine where others hesitate. Permanent UNSC member, independent nuclear deterrent (Force de Frappe), global power projection. French intelligence (DGSE) operating aggressively against Russian networks in Africa and France. Domestic: far-right (RN) and far-left (LFI) challenging Macron's centrist coalition.",
+    threats:[
+      {type:"Terrorism",    description:"DGSI assessing Sahel-linked jihadist returnees. ISIS France-directed plots foiled 2024",severity:"high",confidence:"HIGH",probability:60,source:"DGSI"},
+      {type:"Russian Hybrid",description:"FSB networks targeting French political parties — RN links to Russian financing under DGSE investigation",severity:"high",confidence:"HIGH",probability:85,source:"DGSE/SGDSN"},
+      {type:"Political",    description:"Domestic coalition fragility — Macron governing with minority, snap elections risk",severity:"medium",confidence:"HIGH",probability:70,source:"Open Source"},
+    ],
+    keyActors:["Macron","DGSE","DGSI","French Foreign Legion","Force de Frappe (Nuclear)","Jean-Marie Le Pen network (RN)"],
+    news:[
+      "Macron: 'No red lines' on Ukraine support — troop deployment under consideration",
+      "DGSE dismantles Russian network targeting French defense contractors",
+      "France-Ukraine bilateral security agreement signed — €200M military aid package",
+      "French Foreign Legion elements confirmed in Ukraine training role",
+      "Nuclear test: France conducting subcritical EPURE program at Valduc facility",
+    ],
+    economic:"GDP $2.8T. Defense 2.1% GDP ($60B). Nuclear deterrent maintained independently. Political instability premium on French bonds (OAT). Tourism $90B — largest sector. Pension reform protests disrupted economy.",
+  },
+  GBR:{
+    summary:"UK post-Brexit pursuing 'Global Britain' doctrine with elevated security posture. Early and substantial Ukraine supporter — Storm Shadow cruise missiles, Challenger 2 MBTs, NLAW anti-tank systems. GCHQ/MI6 providing significant intelligence support to Ukraine. Russian hybrid operations against UK accelerating: GRU-linked assassination attempts (Salisbury 2018), cyber operations, espionage. Five Eyes intelligence sharing central to Ukraine information war.",
+    threats:[
+      {type:"Russian Hybrid",description:"GRU Unit 29155 operations in UK soil — Salisbury Novichok poisoning, multiple foiled assassination plots",severity:"high",confidence:"HIGH",probability:80,source:"MI5/GCHQ"},
+      {type:"Terrorism",    description:"Islamist attack planning foiled — multiple arrests 2024. Northern Ireland dissident activity elevated",severity:"high",confidence:"HIGH",probability:55,source:"MI5"},
+      {type:"Chinese Espionage",description:"MSS (Chinese intel) targeting UK defense, parliamentary, and tech sectors — MP Richard Harrington Russian link investigation",severity:"medium",confidence:"HIGH",probability:85,source:"MI5"},
+    ],
+    keyActors:["PM Starmer","MI6 (SIS)","MI5","GCHQ","UKSTRATCOM","Defence Intelligence","Five Eyes"],
+    news:[
+      "UK deploys additional Challenger 2 MBT battalion to Estonia — NATO eFP",
+      "GCHQ Director: Russian cyber operations against UK infrastructure at record level",
+      "Storm Shadow (SCALP) extended-range variant approved for Ukraine use",
+      "MI6 Director Moore: 'We are winning the intelligence war in Ukraine'",
+      "UK-Ukraine 100-year partnership agreement signed — deepest security commitment",
+    ],
+    economic:"GDP $3.1T. Defense 2.3% GDP ($72B). Post-Brexit trade costs est. £100B/yr. NHS crisis deflecting defense spending pressure. London as global financial center — Russian oligarch assets frozen £18B+.",
+  },
+  SRB:{
+    summary:"Serbia occupies an anomalous position as an EU candidate state pursuing Russian and Chinese alignment. President Vucic operates a managed democracy with captured media and judiciary. Serbia refuses to join Russia sanctions, purchases Russian and Chinese arms, and actively opposes Kosovo's independence at UN. Russian intelligence uses Belgrade as a primary Balkans hub.",
+    threats:[
+      {type:"Russian Influence",description:"Serbian Orthodox Church + political networks transmitting Russian narratives — active disinformation ecosystem",severity:"medium",confidence:"HIGH",probability:90,source:"EUISS/RFE"},
+      {type:"Kosovo",          description:"North Kosovo Serb community flashpoints — periodic KFOR confrontations. Republika Srpska destabilization",severity:"medium",confidence:"HIGH",probability:60,source:"EULEX/KFOR"},
+      {type:"Arms",            description:"MiG-29 upgrade, Pantsir-S1 deployment — Chinese FK-3 SAM — NATO-incompatible arsenal",severity:"low",confidence:"HIGH",probability:99,source:"SIPRI"},
+    ],
+    keyActors:["President Vucic","BIA (Serbian Intel — Russian-penetrated)","Milorad Dodik (Republika Srpska)","Serbian Progressive Party","Russian Embassy Belgrade (GRU hub)"],
+    news:[
+      "Serbia-China Free Trade Agreement signed — EU accession timeline extended",
+      "Vucic: Serbia will not join Russia sanctions 'no matter what EU says'",
+      "Kosovo: KFOR increases troops to 4,500 after North Kosovo bridge standoff",
+      "Wagner Group recruitment office in Belgrade — Serbian nationals in Africa",
+      "Serbia-Russia gas deal extended — Gazprom supplies continue via TurkStream",
+    ],
+    economic:"GDP $65B. Growth 3.5%. EU trade 68% — EU leverage over Serbia substantial but underused. Lithium reserves (Jadar): Rio Tinto $2.4B project — strategic mineral leverage. Russian gas dependency managed via TurkStream.",
+  },
+  MDA:{
+    summary:"Moldova — Europe's most vulnerable state — faces Russian energy cutoff, Transnistrian separatist region hosting Russian troops and a massive munitions depot, and active Russian interference in the 2024 presidential election (confirmed by OSCE). President Sandu pro-EU — Moldova gained EU candidate status 2022, accession negotiations opened 2024. Existential question: can Moldova achieve EU integration faster than Russia can destabilize it?",
+    threats:[
+      {type:"Russian Interference",description:"Active election interference documented — SIS (Moldovan Intel) traced $15M Russian funding to pro-Russian Stoianoglo campaign",severity:"high",confidence:"HIGH",probability:95,source:"SIS/OSCE"},
+      {type:"Transnistria",       description:"Russian garrison + 20,000 tonne munitions depot at Cobasna — potential weapons interdiction or explosion risk",severity:"high",confidence:"HIGH",probability:40,source:"SIS"},
+      {type:"Energy",             description:"Russian gas cutoff via Ukraine Jan 2025 — Transnistria left without heating; Moldova forced emergency imports",severity:"high",confidence:"HIGH",probability:99,source:"OECD/Moldovagaz"},
+    ],
+    keyActors:["President Sandu","PM Recean","SIS (State Intelligence)","Igor Dodon (Russia-aligned, arrested)","Transnistrian authorities","Russian 14th Army"],
+    news:[
+      "Moldova-EU accession negotiations officially opened — fastest candidate trajectory",
+      "SIS arrests 5 Russian intelligence operatives planning election interference",
+      "Transnistria energy crisis: -15°C temperatures, Russian gas cutoff — emergency aid",
+      "Cobasna munitions depot IAEA inspection blocked by Transnistrian authorities",
+      "Moldova joins EU energy market — first non-EU country in full energy union",
+    ],
+    economic:"GDP $15B — poorest country in Europe. Remittances (from EU diaspora) 15% of GDP. Energy costs doubled post-Russia cutoff. EU accession expected to add 2-3% annual growth for decade.",
+  },
+  GEO:{
+    summary:"Georgia under the ruling Georgian Dream party is experiencing democratic backsliding — adopting Russian-style 'foreign agent' law, suspending EU accession bid, and facing massive pro-EU street protests (2024). Russia occupies 20% of Georgian territory (South Ossetia, Abkhazia) since 2008 war. Strategic location: Caucasus energy corridor (BTC pipeline), gateway to Central Asia. 2024: EU candidate status suspended due to democratic regression.",
+    threats:[
+      {type:"Russian Occupation",description:"Russian forces in South Ossetia + Abkhazia — 'borderization' creeping annexation ongoing. 300,000+ IDPs",severity:"high",confidence:"HIGH",probability:100,source:"OSCE/EUMM"},
+      {type:"Political Crisis", description:"Georgian Dream foreign agent law — EU accession suspended. Mass protests. Election fraud allegations (Oct 2024)",severity:"high",confidence:"HIGH",probability:85,source:"EU/US State Dept"},
+      {type:"Hybrid",           description:"Russian FSB penetration of Georgian Dream — founder Ivanishvili's Russia business ties",severity:"high",confidence:"HIGH",probability:80,source:"CIA/GCHQ"},
+    ],
+    keyActors:["Billionaire Ivanishvili (Georgian Dream founder)","President Zourabichvili (pro-EU)","PM Kobakhidze","EUMM Georgia (EU monitors)","Russian 58th Army (South Ossetia)"],
+    news:[
+      "Georgia EU accession talks suspended after foreign agent law adopted",
+      "Tbilisi protests 100,000+: 'We choose Europe' — police water cannon response",
+      "EUMM Georgia reports 20 new borderization incidents on South Ossetia line",
+      "BTC pipeline (Azerbaijani oil to Turkey): 1.2M bpd flows uninterrupted",
+      "Zourabichvili refuses to leave Presidential Palace — constitutional crisis",
+    ],
+    economic:"GDP $25B. Tourism: 7M visitors (+40% 2022-24). BTC pipeline transit fees: $500M. Russian market closed. EU trade growing. Remittances from Russia: $2B (Russian emigres boosting Georgian economy).",
+  },
+  HUN:{
+    summary:"Hungary under PM Orban operates as Russia's Trojan horse inside NATO and EU — blocking Ukraine aid packages, vetoing EU sanctions, maintaining Budapest-Moscow energy ties, and conducting Kremlin-aligned diplomatic maneuvers. Orban declared Hungary 'peacetime nation' — opposes Ukraine's NATO membership bid. Fidesz control of media (90%), judiciary, and electoral system has been confirmed as autocratic drift by EU institutions.",
+    threats:[
+      {type:"NATO Coherence",description:"Hungary blocking NATO unanimity on Ukraine — vetoing assistance packages, delaying Nordic accession ratification",severity:"high",confidence:"HIGH",probability:85,source:"NATO HQ"},
+      {type:"Russian Penetration",description:"GRU/FSB networks operating through Budapest as EU entry point — diplomatic immunity shields",severity:"high",confidence:"HIGH",probability:80,source:"BND/AIVD"},
+      {type:"Democratic Backsliding",description:"Fidesz control of 90% of Hungarian media, captured judiciary — EU Article 7 proceedings ongoing",severity:"medium",confidence:"HIGH",probability:99,source:"EU Commission"},
+    ],
+    keyActors:["PM Orban","Fidesz Party","INA/NBSZ (Hungarian Intel — partially compromised)","Peter Magyar (opposition)","Chinese BYD (Hungary factory)"],
+    news:[
+      "Orban visits Moscow — only EU leader meeting Putin since full-scale invasion",
+      "Hungary blocks €50B EU Ukraine aid package for 6 months before concession",
+      "Chinese CATL, BYD gigafactories opening in Hungary — EU security concerns",
+      "Peter Magyar opposition: 500,000-person Budapest rally — Fidesz first real challenge",
+      "Hungary EU presidency used to push Russia ceasefire narrative — allies furious",
+    ],
+    economic:"GDP $200B. Russian gas dependency: Paks nuclear plant (Russian-built, Russian fuel). Forint volatile. Foreign investment: Chinese EV manufacturers offsetting Western flight. EU cohesion funds partially frozen.",
+  },
+  AZE:{
+    summary:"Azerbaijan under President Aliyev completed the reconquest of Nagorno-Karabakh with a 24-hour military offensive in September 2023 — 100,000 ethnic Armenians fled in what human rights organizations term ethnic cleansing. Strategic energy corridor: Azerbaijani oil and gas increasingly vital to EU as Russia alternative (SGC pipeline, BTC). Turkey-Azerbaijan 'one nation, two states' strategic partnership deepens.",
+    threats:[
+      {type:"Armenia Relations",description:"Peace treaty negotiation stalled — Zangezur Corridor (through Armenia) demand remains flashpoint",severity:"medium",confidence:"HIGH",probability:60,source:"ICG"},
+      {type:"Iran",            description:"Iran-Azerbaijan religious and ethnic tensions (Azerbaijani minority in Iran = largest ethnic minority 30M+)",severity:"medium",confidence:"HIGH",probability:45,source:"IISS"},
+      {type:"Russia",          description:"Russian peacekeepers departed Karabakh — Azerbaijan navigating post-CSTO influence reduction",severity:"low",confidence:"MEDIUM",probability:30,source:"EUISS"},
+    ],
+    keyActors:["President Aliyev","SOCAR (State Oil Co.)","Turkish MIT (coordination)","IRGC (border, anti-Israel activity)","COP29 Presidency"],
+    news:[
+      "Nagorno-Karabakh: ICC preliminary investigation into forced displacement opened",
+      "SGC gas pipeline to Europe: Azerbaijan supplies 12 BCM/yr — EU strategic priority",
+      "COP29 hosted in Baku — oil state hosting climate summit controversy",
+      "Aliyev-Pashinyan peace talks in Brussels — border demarcation unresolved",
+      "Azerbaijan-Israel arms deal: Harop loitering munitions, Hermes drones in NK operation",
+    ],
+    economic:"GDP $70B. Oil/gas: 90% of exports via SOCAR. BTC pipeline: $15B/yr revenue. COP29 investment in image. EU gas dependency = strategic leverage. Military spending: 5% GDP after NK reconquest.",
+  },
+  ARM:{
+    summary:"Armenia in post-catastrophe recalibration after losing Nagorno-Karabakh in 24-hour offensive and absorbing 100,000 displaced Armenians. PM Pashinyan publicly blaming Russia for CSTO failure to defend Armenia — unprecedented break. Armenia withdrawing from CSTO military exercises, applying for EU candidate status, and hosting US military exercises. Russia-Armenia relationship at historic low. Peace treaty with Azerbaijan elusive — Zangezur Corridor demand.",
+    threats:[
+      {type:"Azerbaijan",    description:"Zangezur Corridor demand — Azerbaijani pressure on Armenian sovereign territory. Military balance: 10:1 disadvantage",severity:"high",confidence:"HIGH",probability:55,source:"ICG/IISS"},
+      {type:"Russia",        description:"Russian pressure against Armenia's EU/NATO pivot — FSB assets in Yerevan, economic leverage",severity:"high",confidence:"HIGH",probability:75,source:"CIA"},
+      {type:"Humanitarian",  description:"100,000 Karabakh Armenian refugees integration — social and economic pressure",severity:"medium",confidence:"HIGH",probability:99,source:"UNHCR"},
+    ],
+    keyActors:["PM Pashinyan","NSS (National Security Service)","CSTO (exiting)","EU Civilian Mission EUMA","US SOCOM (exercises)","Diaspora (France, US, Russia)"],
+    news:[
+      "Armenia formally withdraws from CSTO — unprecedented break with Russian security bloc",
+      "US-Armenia Eagle Partner military exercises conducted — symbolic pivot confirmed",
+      "EU civilian monitoring mission (EUMA) deployed on Armenia-Azerbaijan border",
+      "Pashinyan: 'Russia did not help us in Karabakh — we need other partners'",
+      "Armenia-EU visa liberalization discussions — accelerated track post-Karabakh",
+    ],
+    economic:"GDP $22B. Paradox: Russian emigres (800K+) boosted economy +10% 2022-23. Diaspora remittances $2B. NK reconstruction cost: $1B+. IMF program support ongoing. Strategic metals: gold, copper exports.",
+  },
   OMN:{
     summary:"Oman under Sultan Haitham maintains the traditional Omani policy of strict neutrality, serving as a trusted back-channel for US-Iran diplomatic communications and Yemen humanitarian corridor negotiations. Strategically positioned along the Strait of Hormuz. Vision 2040 economic diversification underway with tourism, logistics, and green hydrogen focus.",
     threats:[
@@ -984,6 +1265,171 @@ const INTEL_EX = {
       {name:"King Hamad bin Isa Al Khalifa",role:"King",assess:"Suppressed 2011 Shia uprising with Saudi Peninsula Shield Force support. US 5th Fleet anchor provides security guarantee preventing repeat. Abraham Accords signatory — strategic alignment with Israel confirmed.",threat:"LOW"},
     ]
   },
+  // ── Europe / Eurasia ──
+  RUS:{
+    political:"Putin's system built on security services, oligarchic co-optation, and nationalist ideology — resilient under sanctions but not infinitely durable. Succession question: no clear designated successor. Patrushev, Mishustin, Sechin, Bortnikov all jockeying. Navalny assassination Feb 2024 eliminated only credible opposition figure. Siloviki (security service faction) dominant over technocrats.",
+    military:"Russian Ground Forces: 600,000+ mobilized. VKS: 1,500+ combat aircraft. Strategic Rocket Forces: 1,558 deployed warheads on ICBMs (RS-28 Sarmat, SS-19 Stilletto), SLBMs (Borei-class), and bombers (Tu-160, Tu-95MS). Tactical nuclear: 1,900+. Navy: Pacific, Northern, Baltic, Black Sea fleets — Black Sea Fleet suffering Ukrainian Neptune/sea drone attrition. Special operations: GRU Spetsnaz Brigades 1-25 deployed Ukraine.",
+    wmd:"NUCLEAR SUPERPOWER — PEER COMPETITOR TO US. 5,977 total warheads (1,558 deployed). RS-28 Sarmat (ICBM, 18,000km, 15 MIRV warheads) declared operational — replaces SS-18 Satan. Poseidon nuclear-armed underwater drone: operational status unclear. 9M729 (SSC-8) ground-launched cruise missile — INF violation. Novichok chemical weapons program: confirmed via Salisbury 2018 operation. Declared CW stocks destroyed under OPCW — undeclared stocks assessed to remain.",
+    signals:[
+      {text:"RS-28 Sarmat ICBM regiment at Uzhur on alert status — elevated readiness posture",source:"NRO/IMINT",color:"#ef4444"},
+      {text:"GRU Unit 29155 members ID'd in 6 European countries via passport database",source:"Bellingcat/SIGINT",color:"#ef4444"},
+      {text:"Russian Defense Ministry dark web forum activity spiked — conscription discussion signal",source:"OSINT/SIGINT",color:"#f59e0b"},
+      {text:"Sandworm cyber team targeting Baltic state election infrastructure Q4 2025",source:"CISA/CERT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Vladimir Putin",role:"President / Supreme Commander",assess:"Paranoid, isolated — COVID protocols extended to all meetings (6-meter table). Committed to maximalist Ukraine war aims. Nuclear signaling deliberate — not assessed as bluff but as genuine deterrent posture. Succession: no plan detected.",threat:"CRITICAL"},
+      {name:"Valery Gerasimov",role:"Chief of General Staff",assess:"Survived Prigozhin rebellion. Architect of 'hybrid warfare' doctrine. Operational commander Ukraine war since Jan 2023. Relationship with field commanders strained — Surovikin (arrested Wagner links) removed.",threat:"HIGH"},
+      {name:"Nikolai Patrushev",role:"Putin Aide / Former NSC Secretary",assess:"Ideological hardliner — more nationalist than Putin. Potential successor dark horse. Believes Russia in existential civilizational conflict with West. Key nuclear doctrine influence.",threat:"HIGH"},
+      {name:"Alexander Bortnikov",role:"FSB Director",assess:"Silent operator. Running domestic repression and external assassination program (29155). Survived Putin's tenure through absolute loyalty. Cancer rumored — health status uncertain.",threat:"HIGH"},
+    ]
+  },
+  UKR:{
+    political:"Zelensky transformed from comedian to wartime leader — approval 70%+ despite hardship. Martial law suspended elections — democratic deficit acknowledged internationally. Zaluzhnyi (former CinC) sacked Jan 2024, replaced by Syrskyi — political friction over mobilization strategy. Zelensky 'Victory Plan' (NATO membership + continued Western arms) as war termination framework.",
+    military:"AFU: 800,000+ total forces including 250,000+ frontline. F-16 operational since summer 2024. ATACMS operational (strikes inside Russia). Storm Shadow/SCALP operational. Leopard 2 and Challenger 2 MBTs combat losses significant. Drone warfare: Ukraine producing 2M+ drones/yr — FPV, Shahed copies, naval drones. Naval success: Russian Black Sea Fleet forced from Sevastopol to Novorossiysk.",
+    signals:[
+      {text:"Ukrainian GUR sea drones struck Kerch Bridge twice — third attempt indicators",source:"SIGINT/OSINT",color:"#f59e0b"},
+      {text:"F-16 base location OPSEC leak — Dutch/Danish aircraft in Mirgorod, Starokonstantinov",source:"OSINT",color:"#f59e0b"},
+      {text:"Ukrainian draft evasion network discovered — corrupt recruitment officers in 5 oblasts",source:"HUMINT",color:"#f59e0b"},
+      {text:"Zelensky-Trump backchannel via Musk confirmed — ceasefire framework discussion",source:"HUMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Volodymyr Zelensky",role:"President / Commander-in-Chief",assess:"Exceptional wartime communicator. Decision-making increasingly centralized around small inner circle. Sacking of Zaluzhnyi indicates willingness to subordinate military judgment to political needs. International credibility: highest among European leaders.",threat:"LOW"},
+      {name:"Oleksandr Syrskyi",role:"Commander-in-Chief AFU",assess:"Kharkiv 2022 counteroffensive architect — proven operational commander. Criticized for high casualty tolerance. Loyalty to Zelensky over independent military judgment — selected for that reason.",threat:"LOW"},
+      {name:"Kyrylo Budanov",role:"GUR Director (Military Intelligence)",assess:"Youngest intelligence chief of major military power (38). Architect of Russian officer assassination program, sea drone campaign, and deep strike operations. Survived 3 assassination attempts. Most effective intelligence operator in Ukrainian history.",threat:"LOW"},
+    ]
+  },
+  BLR:{
+    political:"Lukashenko stolen 2020 election resulted in 200,000-person protests — crushed by KGB with 35,000+ arrests. Legitimate government: Tsikhanouskaya cabinet-in-exile, recognized by EU/Baltic states. Lukashenko survival 100% dependent on Putin — domestically illegitimate, internationally isolated. KGB Belarus absorbing Russia intelligence priorities.",
+    military:"Belarusian Armed Forces: 65,000 active. Russian tactical nuclear weapons deployed — Iskander-M batteries transferred. Russian military access: bases, airfields, supply routes. Belarusian military morale low — troops refused to enter Ukraine Feb 2022 per reporting. Risk of forced participation if Russian manpower crisis worsens.",
+    signals:[
+      {text:"Russian Iskander-M crew identifications in Osipovichi region — nuclear weapon storage confirmed",source:"IMINT",color:"#ef4444"},
+      {text:"Belarusian KGB officer network in Warsaw and Vilnius — dissident targeting",source:"ABW/VSD",color:"#f59e0b"},
+      {text:"Lukashenko health event rumors — 3-day media silence in March 2025",source:"HUMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Alexander Lukashenko",role:"Self-Declared President",assess:"Holding power solely via Russian security guarantee. Health deteriorating — visible aging since 2020. No succession planning. If Lukashenko falls, Belarus faces revolutionary moment — outcome unpredictable.",threat:"MEDIUM"},
+      {name:"Sviatlana Tsikhanouskaya",role:"Opposition Leader (Exile — Vilnius)",assess:"Legitimate 2020 election winner per exit polls and opposition count. EU and Baltic governments treat as legitimate authority. Lacks enforcement power inside Belarus — dependent on eventual Russian political change.",threat:"LOW"},
+    ]
+  },
+  POL:{
+    political:"Tusk government (post-Oct 2023 election) reversing Law & Justice autocratic drift — judiciary reform, media pluralism restoration, EU relations normalization. Historical memory of Russian aggression drives consistent threat assessment. Poland-Ukraine security relationship: deepest bilateral military partnership in Europe.",
+    military:"Polish Land Forces: 150,000 active (scaling to 300,000). FA-50 Korean fighters: 48 (first delivered 2023). F-35A: 32 ordered, delivering. HIMARS: 18 batteries. M1A2 Abrams: 250 ordered from US + 250 Korean K2 Black Panthers. Patriot PAC-3: US-deployed permanently. Defense industry: Polska Zbrojownia investing $30B in domestic production.",
+    signals:[
+      {text:"Polish ABW tracking Russian GRU proxy network targeting rail infrastructure",source:"ABW",color:"#ef4444"},
+      {text:"US Patriot battery permanent basing ceremony — political signal to Russia",source:"OSINT",color:"#3b82f6"},
+      {text:"Poland-Lithuania rail upgrade (Rail Baltica) — NATO logistics corridor construction accelerating",source:"IMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Donald Tusk",role:"Prime Minister",assess:"Pro-EU, pro-NATO. Restored Polish-EU relationship. Pursuing Article 7 resolution. Strong Ukraine support. Potential future EU Council President — significant international weight.",threat:"LOW"},
+      {name:"Andrzej Duda",role:"President",assess:"Law & Justice loyalist — blocking some Tusk reforms via presidential veto. Term ends 2025. Electoral outcome will determine pace of democratic restoration.",threat:"LOW"},
+    ]
+  },
+  DEU:{
+    political:"Germany's coalition government collapsed Nov 2024 after budget dispute — Friedrich Merz (CDU) won Feb 2025 election. Zeitenwende (turning point) declared by Scholz Feb 2022 — Sondervermögen €100B defense fund authorized. Historical 'Ostpolitik' approach to Russia now discredited. BND under sustained attack from Russian hybrid operations.",
+    military:"Bundeswehr: 183,000 active (NATO commitment: 203,000 by 2025). Leopard 2A8: 18 additional ordered. F-35A: 35 ordered (replacing Tornado). Type 212 submarines: 6 operational. Challenge: readiness — 50% of heavy equipment non-operational due to maintenance backlog. NATO Very High Readiness Joint Task Force: Germany leading 2025.",
+    signals:[
+      {text:"BfV: Russian-linked arson attack on Deutsche Bahn signal cable — coordinated sabotage",source:"BfV/LKA",color:"#ef4444"},
+      {text:"AfD (Chemnitz): Russian GRU handler Petr Bystron MEP campaign finance investigated",source:"BND/Europol",color:"#ef4444"},
+      {text:"Rheinmetall Howitzer production capacity: 3x increase — Unterlüss factory expansion",source:"IMINT/OSINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Friedrich Merz",role:"Chancellor (CDU)",assess:"Centre-right. More hawkish on Russia than Scholz. Potential Taurus missile delivery reversal. Business-linked — China trade concerns may moderate Ukraine support at margins.",threat:"LOW"},
+      {name:"Olaf Scholz",role:"Former Chancellor",assess:"Cautious to the point of inaction on Ukraine — 'Scholzing' became a pejorative. Traffic light coalition collapse over FDP budget dispute. Historical assessment: insufficient response to existential European security challenge.",threat:"LOW"},
+    ]
+  },
+  FRA:{
+    political:"Macron's political capital diminished domestically but internationally elevated. Leading EU strategic autonomy drive — EU defense budget increases, joint procurement. DGSE extremely active against Russian networks. France-UK defense cooperation (Lancaster House): post-Brexit maintaining operational intelligence relationship.",
+    military:"French Armed Forces: 203,000 active. Force de Frappe: 290 nuclear warheads (airborne + SLBM). SSBN (SNLE) submarines: 4 (2 on patrol at all times — continuous at-sea deterrence). Rafale: 185 operational. French Foreign Legion: 8,000 elite troops, combat-ready. Power projection: carriers Charles de Gaulle, amphibious Mistral class.",
+    wmd:"INDEPENDENT NUCLEAR POWER — SEPARATE FROM NATO COMMAND. 290 deployed warheads. ASMP-A nuclear air-launched cruise missile (Rafale-compatible). M51 SLBM (6,000km range, 6-10 MIRVed warheads) on SSBN. France retains complete operational independence — not under NATO Nuclear Planning Group. Macron raised concept of European nuclear umbrella — significant doctrinal shift.",
+    signals:[
+      {text:"SSBN Le Triomphant confirmed at sea — continuous deterrent patrol uninterrupted",source:"DGSE/SIGINT",color:"#3b82f6"},
+      {text:"French Foreign Legion 2nd REP (parachute) pre-positioned in Romania near Ukraine border",source:"IMINT",color:"#f59e0b"},
+      {text:"DGSE operation: dismantled Russian GRU network in Paris targeting defense contractors",source:"DGSE",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Emmanuel Macron",role:"President",assess:"Strategic risk-taker — willing to escalate rhetorically beyond allies. 'No red lines' posture on Ukraine. Domestic weakness (minority government) not constraining foreign policy. EU integration accelerant — pushing common defense.",threat:"LOW"},
+      {name:"Nicolas Lerner",role:"DGSE Director",assess:"Former domestic intelligence (DGSI). DGSE most active French intelligence deployment since Cold War — Ukraine, Russia, Africa, Sahel operations concurrent.",threat:"LOW"},
+    ]
+  },
+  GBR:{
+    political:"UK-Ukraine: deepest bilateral security relationship in Europe — 100-year partnership agreement, Storm Shadow missiles, training 30,000+ Ukrainian soldiers. Post-Truss/Johnson chaos: Starmer government (Labour) providing policy stability. Brexit: UK outside EU but FCDO/MI6/GCHQ engagement with European partners maintained via bilateral channels.",
+    military:"British Armed Forces: 140,000 regular. Royal Navy: 2 carrier strike groups (HMS Prince of Wales, HMS Queen Elizabeth). Trident SLBM (214 warheads on 4 Vanguard-class SSBNs): continuous at-sea deterrent since 1969. Special Forces: SAS/SBS confirmed in Ukraine advisory role. F-35B: 74 ordered (48 delivered).",
+    wmd:"INDEPENDENT NUCLEAR DETERRENT — NATO COMMITTED. 214 deployed warheads (225 planned ceiling). Trident II D5LE SLBM on Vanguard-class (4 submarines). One SSBN always at sea — CASD (Continuous At-Sea Deterrence). AWE Aldermaston: warhead design facility. UK-France nuclear consultation: regular at foreign minister level.",
+    signals:[
+      {text:"GCHQ signals: Russian undersea cable interference operations in North Sea — elevated monitoring",source:"GCHQ",color:"#ef4444"},
+      {text:"SAS training rotation in Ukraine confirmed — UKSF forward advisory presence",source:"HUMINT",color:"#f59e0b"},
+      {text:"HMS Queen Elizabeth CSG deployment to Indo-Pacific — strategic messaging to China/Russia",source:"IMINT/OSINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Keir Starmer",role:"Prime Minister",assess:"Strong Ukraine support — reversed any lingering Corbynite ambivalence. Security-first approach to Russia. Repairing post-Brexit EU relationship without rejoining. 2% NATO target maintained comfortably.",threat:"LOW"},
+      {name:"Richard Moore",role:"MI6 Chief ('C')",assess:"'We are winning the intelligence war in Ukraine' — public declaration unprecedented for MI6. HUMINT penetration of Russian military assessed as significant. Successor to Alex Younger.",threat:"LOW"},
+    ]
+  },
+  SRB:{
+    political:"Vucic running classic Balkan double game: EU candidate + Russian partner. Captured judiciary, media (90% pro-government), and intelligence service (BIA) mirrors Orban model. Peter Magyar opposition — first genuine political threat to Vucic in decade. EU accession leverage real but EU unable to enforce conditionality consistently.",
+    military:"Serbian Armed Forces: 28,000 active. MiG-29 upgraded (Russian/Soviet origin). Pantsir-S1 (Russian): 6 systems. FK-3 (Chinese): 6 batteries. H145M helicopter: (German). NORA B-52 howitzer (Serbian-made — exported to India). Serbia maintains NATO incompatibility while EU candidate — deliberate hedge.",
+    signals:[
+      {text:"Wagner recruitment ads confirmed in Serbian language Telegram channels",source:"OSINT",color:"#ef4444"},
+      {text:"Russian GRU case officer Antonov confirmed active in Belgrade embassy",source:"BND/HUMINT",color:"#f59e0b"},
+      {text:"Vucic-Xi Jinping bilateral — lithium Jadar project Chinese participation discussed",source:"HUMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Aleksandar Vucic",role:"President",assess:"Consummate tactician — reads EU-Russia-China dynamics expertly. Zero genuine commitment to democracy or rule of law. NATO-EU membership used as bargaining chip not strategic goal. Personally controls BIA intelligence.",threat:"MEDIUM"},
+      {name:"Milorad Dodik",role:"Republika Srpska President",assess:"Russia's key Balkans asset — systematically undermining Dayton Peace Agreement. Sanctioned by US and UK. ICJ case pending on Genocide denial. Openly calls for RS secession.",threat:"HIGH"},
+    ]
+  },
+  GEO:{
+    political:"Georgian Dream's authoritarian drift: foreign agent law (exact copy of Russian), opposition prosecution, election fraud (Oct 2024 — Transparency International found 200K+ fake voters). President Zourabichvili (pro-EU, term expired) refusing to leave office. Mass protests — largest since independence. EU accession suspended. Assessment: Belarus-style trajectory.",
+    military:"Georgian Defence Forces: 37,000 active. US-trained rapid reaction force. NATO aspirant but Article 5 protection absent. IRGC and Russian intelligence use Georgia as smuggling corridor for sanctioned goods. 2008 war lessons: defensive depth insufficient, Russian armor reached within 40km of Tbilisi.",
+    signals:[
+      {text:"Georgian Dream leadership financial flows to Russian-linked oligarchs confirmed",source:"OCCRP/HUMINT",color:"#ef4444"},
+      {text:"EUMM Georgia checkpoint: Russian forces moved markers 400m into Georgian territory at Ditsi",source:"EUMM",color:"#f59e0b"},
+      {text:"BTC pipeline security audit — no credible threat to infrastructure detected",source:"BP/Georgian Pipeline Co.",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Bidzina Ivanishvili",role:"Georgian Dream Founder / Oligarch",assess:"Billionaire made fortune in Russia in 1990s. Controls Georgian Dream without formal title. Pro-Russia alignment in foreign policy. Listed by US as corrupt — significant but no formal sanctions.",threat:"HIGH"},
+      {name:"Salome Zourabichvili",role:"President (contested legitimacy)",assess:"Pro-EU. Refuses to recognize Oct 2024 election results. Constitutionally term-limited but refuses to leave. Symbolic resistance figure — no enforcement power.",threat:"LOW"},
+    ]
+  },
+  HUN:{
+    political:"Fidesz system: 'illiberal democracy' (Orban's term). 90%+ media control. Captured Constitutional Court. Gerrymandered electoral map — opposition must win 57% of votes to get 50% of seats. EU Article 7 proceedings ongoing. Peter Magyar — first genuine opposition surge. Orban personally enriched Budapest-London property empire (investigative journalism).",
+    military:"Hungarian Defence Forces: 31,000 active. Gripen JAS 39 (12). Leopard 2A7+ (44 ordered). Lynx IFV (200). Orban blocking NATO intelligence sharing with Ukraine — operational security risk to allies assessed as HIGH.",
+    signals:[
+      {text:"Hungarian intelligence (NBSZ) assessed as compromised by Russian penetration",source:"CIA/BND",color:"#ef4444"},
+      {text:"Paks nuclear plant extension contract: Rosatom $12.5B — Russian energy dependency structural",source:"IMINT/OSINT",color:"#ef4444"},
+      {text:"Chinese BYD factory opening — EU strategic concern on technology transfer to Russia via Hungary",source:"EU INTCEN",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Viktor Orban",role:"Prime Minister",assess:"Russia's most effective NATO ally — blocking aid, sharing intelligence with Moscow per US assessment. Personal wealth obscured in offshore structures. Political survival linked to maintaining Fidesz system — losing power = criminal exposure.",threat:"HIGH"},
+      {name:"Peter Magyar",role:"Opposition Leader (TISZA)",assess:"Emerged from Orban's inner circle (ex-husband of former justice minister). First credible threat to Fidesz in decade. 50,000-person rallies. EU Parliament seat won 2024.",threat:"LOW"},
+    ]
+  },
+  AZE:{
+    political:"Aliyev dynastic rule: father-to-son since 2003 (Heydar→Ilham). Wife Mehriban as First VP — succession prepared. Oil wealth insulates from Western democratization pressure. Turkey's closest ally — defense integration, Turkic Council leadership. Israeli intelligence partnership: Azerbaijan provides Iran surveillance platform (150km border with Iran).",
+    military:"Azerbaijani Armed Forces: 67,000 active. Bayraktar TB2, Harop (Israeli loitering munitions): both proved decisive in 2020 and 2023 NK campaigns. T-90S tanks (Russian). IFVs and artillery modernized with Turkish/Israeli systems. Defense budget: $3B (5% GDP) post-NK reconquest.",
+    signals:[
+      {text:"Azerbaijan military buildup on Zangezur corridor border — land bridge pressure",source:"IMINT",color:"#f59e0b"},
+      {text:"Israeli SIGINT station in Azerbaijan operational — Iran missile launch detection",source:"NYT/SIGINT",color:"#ef4444"},
+      {text:"Aliyev-Putin call: NK aftermath discussed — Russian peacekeepers formally departed",source:"HUMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Ilham Aliyev",role:"President",assess:"Autocratic but effective — 3-decade Karabakh goal achieved. Strategic patience. Israel's key partner against Iran in Caucasus. US relationship functional despite democracy concerns.",threat:"MEDIUM"},
+      {name:"Mehriban Aliyeva",role:"First Vice-President",assess:"Wife and designated successor. Manages culture, charity sector as soft power. Bank of Azerbaijan family financial empire. Real authority behind social cohesion strategy.",threat:"LOW"},
+    ]
+  },
+  ARM:{
+    political:"Pashinyan: rose from prison (2008 protests) to PM (2018 Velvet Revolution) to wartime leader. NATO pivot unprecedented — Armenia hosting US exercises, joining ICC (which issued Putin arrest warrant), suspending CSTO. Diaspora (6M vs. 3M in-country) critical for financial and political support. Peace treaty with Azerbaijan: border demarcation and Zangezur Corridor still disputed.",
+    military:"Armenian Armed Forces: 45,000 active (degraded post-2020/2023 wars). Russian Iskander-M systems provided but unusable in NK conflict (Russian restriction). French Caesar howitzers: 36 ordered — first NATO-standard heavy weapons. HIMARS discussions. India: Pinaka rocket systems, Akash SAM ordered — diversification from Russian dependency.",
+    signals:[
+      {text:"French Caesar howitzers delivered to Armenia — first NATO-standard heavy weapons",source:"OSINT/SIPRI",color:"#3b82f6"},
+      {text:"CSTO withdrawal formalities proceeding — Armenia-Russia security treaty being renegotiated",source:"HUMINT",color:"#f59e0b"},
+      {text:"Armenian-US military exercise Eagle Partner: Ranger School graduates first cohort",source:"DoD PRESS",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Nikol Pashinyan",role:"Prime Minister",assess:"Transformational figure despite NK catastrophe. Accepts difficult reality — negotiating peace treaty from position of weakness. Domestic position secure despite loss — opposition more unpopular. Genuine Western alignment commitment.",threat:"LOW"},
+      {name:"David Tonoyan",role:"Former Defense Minister (convicted)",assess:"Convicted of corruption 2024. Symbolic accountability for NK military failures. Armenia military reform driven by recognition of Russian-equipment dependency failure.",threat:"LOW"},
+    ]
+  },
   OMN:{
     political:"Sultan Haitham pursuing Vision 2040 economic modernization while maintaining Oman's unique neutrality doctrine. Trusted US-Iran back-channel host since 1980s — critical diplomatic infrastructure. No domestic political opposition of consequence.",
     military:"RAF Oman: 42,000. F-16 Block 50/52 (18), Eurofighter Typhoon (12). Strategic position: flanks Strait of Hormuz eastern entrance. 5th Fleet logistics cooperation. Salalah port: critical Indian Ocean logistics hub.",
@@ -1018,12 +1464,12 @@ const ALERT_BADGE={
 ════════════════════════════════════════════════════ */
 const canvas  = document.getElementById('globe');
 const ctx     = canvas.getContext('2d');
-let rotX=0.35, rotY=0.785;   // face 45°E — Middle East
+let rotX=0.30, rotY=0.35;    // face ~20°E — Europe/Middle East
 let isDragging=false, lastX=0, lastY=0;
-let velX=-0.0002, velY=0;    // slow eastward auto-spin
+let velX=0.00008, velY=0;    // very slow rightward auto-spin
 let scale, baseScale, cx, cy;
 let zoomFactor=1.0;
-const ZOOM_MIN=0.4, ZOOM_MAX=20.0;
+const ZOOM_MIN=0.4, ZOOM_MAX=50.0;
 var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
 // Pinch-to-zoom state
@@ -1047,7 +1493,7 @@ function applyZoom(factor, originX, originY){
   scale=baseScale*zoomFactor;
   // Shift rotation centre so the point under the cursor stays fixed
   if(originX!=null){
-    const dx=(originX-cx)/scale*(1-zoomFactor/prev);
+    const dx=(cx-originX)/scale*(1-zoomFactor/prev);
     const dy=(cy-originY)/scale*(1-zoomFactor/prev);
     rotY+=dx;rotX+=dy;rotX=Math.max(-1.3,Math.min(1.3,rotX));
   }
@@ -1345,8 +1791,8 @@ canvas.addEventListener('mousemove',e=>{
   if(isDragging){
     const dx=e.clientX-lastX,dy=e.clientY-lastY;
     const sens=1/scale;
-    rotY-=dx*sens;rotX+=dy*sens;rotX=Math.max(-1.3,Math.min(1.3,rotX));
-    velX=-dx*sens*0.16;velY=dy*sens*0.16;
+    rotY+=dx*sens;rotX+=dy*sens;rotX=Math.max(-1.3,Math.min(1.3,rotX));
+    velX=dx*sens*0.16;velY=dy*sens*0.16;
     lastX=e.clientX;lastY=e.clientY;return;
   }
   // Check hotspot proximity first
@@ -1354,7 +1800,7 @@ canvas.addEventListener('mousemove',e=>{
   for(const h of [...HOTSPOTS,...liveHotspots]){
     const p=project(h.lat,h.lng);
     if(!p.visible)continue;
-    if(Math.hypot(e.clientX-p.px,e.clientY-p.py)<10){hotHit=h;break;}
+    if(Math.hypot(e.clientX-p.px,e.clientY-p.py)<16){hotHit=h;break;}
   }
   const hit=hitTest(e.clientX,e.clientY);
   if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit)?'pointer':'grab';}
@@ -1427,8 +1873,8 @@ canvas.addEventListener('touchmove',e=>{
     const t=e.touches[0];
     const dx=t.clientX-lastX,dy=t.clientY-lastY;
     const sens=1/scale;
-    rotY-=dx*sens;rotX+=dy*sens;rotX=Math.max(-1.3,Math.min(1.3,rotX));
-    velX=-dx*sens*0.16;velY=dy*sens*0.16;
+    rotY+=dx*sens;rotX+=dy*sens;rotX=Math.max(-1.3,Math.min(1.3,rotX));
+    velX=dx*sens*0.16;velY=dy*sens*0.16;
     lastX=t.clientX;lastY=t.clientY;
   }
 },{passive:false});
@@ -1583,31 +2029,45 @@ const HS_TYPE_LABELS={
 };
 const HS_DETAIL={
   // Palestine
-  'Rafah — IDF Ground Ops':'Sustained Israeli ground operations targeting Hamas tunnel network and command infrastructure. Ongoing civilian displacement. Humanitarian corridor intermittently active. Heavy urban combat reported in southern Rafah.',
-  'Gaza City — Northern Campaign':'Israeli air and ground operations targeting Hamas military command nodes. Significant structural damage throughout northern Gaza. UNRWA reporting near-total collapse of public services.',
-  'Khan Younis — Humanitarian Crisis':'Major IDP concentration point. Water and food distribution severely constrained. WHO reports multiple hospitals operating at crisis capacity with minimal supplies.',
+  'Rafah — IDF Ground Ops':'TOP SECRET // SI — ACTIVE COMBAT ZONE. IDF 98th Division (paratroopers) conducting Phase 4 operations targeting Hamas Rafah Brigade tunnel network. Philadelphia Corridor (Egyptian border) secured after intense urban fighting. Humanitarian corridor (Kerem Shalom) intermittently suspended during operations. HUMINT: Hamas Southern Brigade commander Rafah cell relocated to hospital complex — IDF legal review ongoing. Civilian casualty rate: disputed — Gaza MoH claims 40K+, IDF disputes methodology. Hostage tunnel complexes: 3 additional found, 2 hostages recovered deceased. Assessment: Hamas military command degraded but not eliminated — dispersed decentralized structure.',
+  'Gaza City — Northern Campaign':'SECRET // NOFORN — SUSTAINED OPERATIONS. IDF air and ground campaign targeted Hamas Military Intelligence HQ (University of Gaza), Naval Police compound, and Shati Camp tunnel network. HSM (Hamas Special Movement) units operating in 3-5 man cells from civilian infrastructure. SIGINT assessment: Hamas C2 reconstituted on encrypted Telegram after primary comms disrupted. UNRWA 80% facilities non-functional or destroyed. Israeli air campaign: 85,000+ sorties since Oct 7. Northern Gaza: 95%+ destruction of built environment in combat zones per UNOSAT assessment.',
+  'Khan Younis — Humanitarian Crisis':'CONFIDENTIAL // HUMANITARIAN INTEL. Population displacement: 90%+ of pre-war 400,000 residents displaced. Nasser Hospital (only major functioning facility): 280% capacity, surgical cases triaged by injury severity. UNRWA: avg. 2,200 kcal/day target unmet — est. 1,100 kcal/day actual in isolated areas. WHO: acute watery diarrhea cases up 2,000% — sewage system collapse. Famine Watch: IPC Phase 5 (Catastrophe) declared in northern Gaza. International aid: 200 trucks/day target — actual 40-60 trucks, security-related delays. Diplomatic assessment: humanitarian corridor situation worsening regardless of military outcome.',
   // Israel/Lebanon
-  'Northern Border — Hezbollah Zone':'Persistent cross-border fire exchange. Hezbollah maintaining observation and anti-tank missile positions along the Blue Line. UNIFIL presence strained.',
+  'Northern Border — Hezbollah Zone':'SECRET // NOFORN. Post-ceasefire monitoring. Hezbollah precision missile stockpile — Fateh-110, M-600 class — NOT expended in 2024 conflict. Strategic reserve intact. Estimated 13,000 rockets fired during conflict vs. 150,000+ remaining. UNIFIL: 12,000 troops; mandate limitations prevent weapons seizure. IDF Intelligence Assessment: Hezbollah rebuilding — Syrian corridor partially active. Blue Line violations: 40+ incidents post-ceasefire including live fire. SIGINT: Hezbollah communication discipline improved — lesson learned from MOSSAD device compromise (pagers/radios Sep 2024).',
   // Syria
-  'Aleppo — Active Frontline':'HTS-controlled buffer zone under pressure from government forces. Periodic artillery exchanges. Russian air presence continues over Idlib corridor.',
-  'Damascus — IRGC Weapons Hub':'Regular Israeli airstrikes targeting IRGC weapons transfer routes. Hezbollah logistics hub at Damascus airport repeatedly struck. Iranian military advisory personnel present.',
+  'Aleppo — Active Frontline':'SECRET // REL NATO. HTS (Hayat Tahrir al-Sham) administering Idlib province as de facto state. 4M civilians in HTS zone. HTS chief Jolani (Ahmed al-Sharaa) seeking delisting from US terrorist designation — cooperating on ISIS operations. Assad government forces: 150,000 nominal, est. 60,000 effective. Russian VKS sorties from Hmeimim: supporting SAA operations east of Hama. SIGINT: IRGC brigade repositioning from Palmyra area toward Deir ez-Zor following Israeli strikes on Homs logistics hub.',
+  'Damascus — IRGC Weapons Hub':'TOP SECRET // SI. Israeli intelligence assessment: Damascus International Airport used as IRGC forward logistics hub — Hezbollah precision munitions transfer point. IDF strikes since Jan 2024: 140+ confirmed strikes on IRGC/Hezbollah targets in Syria. IRGC Advisory Element: est. 3,000-5,000 personnel in Syria at Shayrat AB, Damascus area, Deir ez-Zor. Mossad assessment: weapons transfer frequency reduced 60% vs. 2023 — Israeli interdiction effective but not eliminated. WMD: Syrian CW precursor storage at Masyaf — OPCW investigation ongoing.',
   // Yemen
-  "Sana'a — Houthi Command":'Houthi leadership and IRGC advisory elements operating from Sana\'a. Long-range drone and missile launch sites in surrounding mountains. Red Sea interdiction operations coordinated from here.',
-  'Aden — Naval Threat Zone':'Houthi maritime attack operations targeting international shipping in the Red Sea and Gulf of Aden. USS Carney and coalition naval assets operating in response posture.',
+  "Sana'a — Houthi Command":'TOP SECRET // SI // ORCON. Houthi political-military command collocated with civilian government buildings — deliberate human shielding. Abdul-Malik al-Houthi operational command bunker: est. 15-30m underground, Soviet-era construction. IRGC Quds Force advisory element: est. 500-800 personnel in Yemen — Sana\'a, Hodeidah. Red Sea interdiction: Command node for anti-ship ballistic missile (ASBM) and drone operations. Launch authority: Houthi leadership delegates to Coastal Defense Forces commander — rapid authority chain. US/UK strikes: 400+ Houthi military targets struck — leadership nodes deliberately avoided per ROE.',
+  'Aden — Naval Threat Zone':'SECRET // NOFORN. Operation Prosperity Guardian: 20+ nation coalition with US as lead (5th Fleet / CTF-153). USS Dwight D. Eisenhower CSG operational. Houthi maritime attack platforms: Shahed-136 one-way attack drones, anti-ship ballistic missiles (modified Scud), C-802-variant anti-ship cruise missiles, Fath-class fast attack boats, naval mines. Assessment: 80+ commercial vessels struck or targeted; 2 sunk (MV Tutor, M/V Rubymar). Global shipping: 70% Red Sea traffic diverted to Cape of Good Hope — $1T+ trade disruption annually. Insurance rates: 500%+ premium increase for Red Sea transit.',
   // Iraq
-  'Baghdad — PMF Activity':'Iran-backed Popular Mobilization Force headquarters and coordination hub. Periodic rocket attacks on Green Zone. US Embassy compound on elevated security posture.',
-  'Mosul — ISIS Remnant Cells':'Residual ISIS cells conducting low-level insurgency in Nineveh Plains and desert areas south of Mosul. Periodic ambushes on Iraqi Security Forces reported.',
+  'Baghdad — PMF Activity':'SECRET // REL 5-EYES. PMF (Popular Mobilization Forces): 130,000 fighters, 40+ factions. Iran-controlled factions (Kataib Hezbollah, Harakat Hezbollah al-Nujaba, AWHF): 30,000+ combatants. Green Zone: US Embassy compound — Diplomatic Security and Marine Security Guard on FPCON Charlie. Rocket attacks: 100+ on US facilities Oct 2023-Feb 2024 — ceased after US strikes killed Kataib Hezbollah commander. SIGINT: IRGC Quds Force case officers operating under diplomatic cover at Iranian Embassy, directing PMF operations. Oil infrastructure: PMF control of Kirkuk-Ceyhan pipeline valve stations — leverage against Kurdish production.',
+  'Mosul — ISIS Remnant Cells':'SECRET // HUMINT CONTROLLED. ISIS Syria/Iraq nexus: est. 5,000-10,000 fighters regional total — not concentrated in Mosul. Nineveh Plains: 3-5 man cell ambush operations; IEDs targeting ISF patrol routes. Finance: ISIS collecting "taxes" from businesses in eastern Mosul — est. $5M/month regional total. Propaganda: al-Naba newspaper still published — 54 issues since Caliphate fall. SIGINT: AES-encrypted communications on Telegram and TamTam apps. Assessment: ISIS remains ideologically coherent but militarily degraded — resurgence risk HIGH if ISF pauses operations. Sudan/Sahel expansion: African provinces growing while Iraq/Syria shrinks.',
   // Iran
-  'Tehran — Natanz Link':'Iranian nuclear coordination and command linked to Natanz enrichment operations. IRGC Aerospace Force missile command co-located. 60% enrichment stockpile exceeding JCPOA limits.',
-  'Isfahan — Enrichment Facility':'Uranium conversion and enrichment facility complex. Site of multiple unexplained incidents including 2023 drone strike. IAEA access periodically restricted.',
-  'Arak — Heavy Water Reactor':'IR-40 heavy water reactor modified under JCPOA but retains proliferation concern. Plutonium production capability if reactivated. IAEA monitoring cameras reported disabled.',
+  'Tehran — Natanz Link':'TOP SECRET // SI // TK // NUCLEAR. IAEA Director General Grossi: Iran 60% enriched uranium stockpile 26kg+ (January 2025). Weapons-grade (90%) breakout timeline: TECHNICAL CAPABILITY ACHIEVED — political decision only barrier. JCPOA: Iranian violations complete — centrifuge number 20x over JCPOA limit, IR-6 and IR-8 advanced centrifuges operational. Fordow enrichment: 1,044 IR-6 centrifuges enriching to 60% — partially mountain-hardened. Assessment: Iran has crossed the nuclear threshold — WMD STATUS: NUCLEAR WEAPONS CAPABLE PENDING ASSEMBLY DECISION.',
+  'Isfahan — Enrichment Facility':'TOP SECRET // SI // NUCLEAR. Isfahan Nuclear Technology Center: uranium conversion, fuel fabrication, enrichment pilot. 2023 drone strike: Iranian drones (sabotage — internal opposition? Mossad?) struck Isfahan military facility — Iranian MoD confirmed. IAEA: cameras and monitoring equipment at Isfahan dismantled by Iran — per Board of Governors report. UF6 production: converts yellowcake to feedstock for centrifuges — upstream of Natanz/Fordow. Assessment: Isfahan is the critical nexus of Iranian nuclear material production — destruction would set program back 2+ years.',
+  'Arak — Heavy Water Reactor':'TOP SECRET // NUCLEAR // NOFORN. IR-40 heavy water reactor: core redesigned under JCPOA (2015) — original design would have produced 8-10kg weapons-grade plutonium annually. Post-redesign: core filled with concrete, new redesigned core installed. Current status: IAEA monitoring camera data not being transmitted — status UNCERTAIN. IAEA access: restricted. Intelligence assessment: Iran could reconstitute plutonium production capability in 12-18 months if political decision made. Arak represents the alternative (plutonium) path to nuclear weapons — dual track maintained deliberately.',
   // Lebanon
-  'Beirut — Hezbollah Stronghold':'Dahieh district serves as Hezbollah political and logistics headquarters. Southern suburbs house weapons storage and command infrastructure. Lebanese Armed Forces have no effective presence.',
-  'South Lebanon — UNIFIL Line':'UN-mandated buffer zone along the Blue Line. Hezbollah repositioning north of Litani per ceasefire terms, compliance partial. UNIFIL patrols restricted in some sectors.',
+  'Beirut — Hezbollah Stronghold':'SECRET // NOFORN. Dahieh district (southern Beirut suburbs): Hezbollah administrative HQ, social services, Jihad al-Bina reconstruction arm, and command infrastructure. Israeli assassination operations Sep 2024: Nasrallah killed at Dahieh HQ — bunker-buster munitions (BLU-109) penetrated 6+ floors underground. Replacement: Naim Qassem — less experienced, Iranian-dependent. Hezbollah arsenal: precision missile stockpile INTACT — strategic reserve preserved. Lebanese Armed Forces: NO presence in Dahieh — Hezbollah operates as parallel state. Reconstruction: Hezbollah rebuilding Dahieh command facilities — IMINT confirms.',
+  'South Lebanon — UNIFIL Line':'SECRET // REL UN. UNIFIL (United Nations Interim Force in Lebanon): 10,000 troops, 50-nation contribution. Mandate: UNSCR 1701 (2006) — Hezbollah must be north of Litani River. Compliance: PARTIAL — Hezbollah infrastructure south of Litani partially removed, precision missiles in storage bunkers detected via seismic/IMINT. IDF liaison: maintains contact with UNIFIL but restricted to liaison role — no enforcement mechanism. Assessment: UNIFIL presence insufficient to prevent Hezbollah rearmament — structural limitation of mandate. Lebanon government: unable to deploy LAF to south — political paralysis.',
   // Turkey
-  'SE Turkey — PKK Border Ops':'Turkish military conducting cross-border operations against PKK/YPG positions in northern Iraq and Syria. TAF drone operations continuous. F-16 sorties from Incirlik.',
+  'SE Turkey — PKK Border Ops':'SECRET // REL NATO. PKK (Kurdistan Workers Party) — listed FTO by US, EU, UK. Active since 1984: 40,000+ fatalities. TAF (Turkish Armed Forces) operations: Claw-Lock (N. Iraq), Claw-Sword (Syria) — F-16 and Bayraktar drone employment against PKK/YPG mountain positions. HDP political party: 47 MPs arrested — PKK political wing designation disputed. MIT (Turkish intel): running informant networks inside PKK. Assessment: PKK militarily degraded but ideologically resilient — no military solution to Kurdish political demands. NATO friction: Turkey using F-16 Block 70 delivery as leverage to secure continued operations approval.',
   // Saudi Arabia
-  'Jeddah — Houthi Missile Range':'Jeddah and critical Red Sea infrastructure within range of Houthi Burkan-2H ballistic missiles. Aramco Abqaiq facility previously struck. Patriot batteries on elevated alert.',
+  'Jeddah — Houthi Missile Range':'THREAT ASSESSMENT — ELEVATED. Jeddah urban area and Aramco Red Sea terminal within confirmed range of Houthi Burkan-2H extended-range ballistic missiles (est. 1,200km). Abqaiq facility (5% of global oil supply) struck 2019 by Houthi/IRGC drone-missile combination. Saudi Patriot PAC-3 upgraded; coverage gaps in southern approach vectors persist per SIGINT analysis. Houthi attack frequency correlates with Gaza ceasefire negotiation calendar — attacks used as political lever by IRGC proxy network.',
+  // ── Europe / Ukraine ──
+  'Donetsk — Active Front Line':'WARZONE — ACTIVE KINETIC CONFLICT. Russian ground forces maintain pressure along 1,200km front line from Kharkiv to Kherson. Donetsk Oblast: heaviest fighting concentration. Avdiivka fell Feb 2024 — Russian forces advancing on Pokrovsk logistics hub. Ukrainian drone interdiction targeting Russian supply lines and fuel depots up to 1,000km inside Russia. Russian glide bomb (FAB-1500) employment causing severe Ukrainian fortification damage. Casualty rates: estimated 1,500 combined per day at peak operations. ISR: US Sentinel, RAF R1 SIGINT missions continuous from Romanian airspace.',
+  'Zaporizhzhia NPP — Nuclear Flashpoint':'NUCLEAR SAFETY ALERT — CRITICAL. Largest nuclear plant in Europe (6×1,000MW reactors). Under Russian military control since March 2022. IAEA inspectors on-site but access restricted to designated areas. Reactors in cold shutdown but spent fuel cooling requires uninterrupted power. External power connections severed 7 times since occupation began — diesel generators only backup. IAEA Director General Grossi warns: any strike on cooling systems risks Chernobyl-scale radiological event. Russian military positions on site create legal gray zone on targeting. Ukrainian partisan activity in surrounding areas increases risk of accidental escalation.',
+  'Kharkiv — Russian Artillery Zone':'ACTIVE THREAT — ONGOING BOMBARDMENT. Ukraine\'s 2nd-largest city (1.4M population pre-war) within 30km of Russian border. Russian cross-border artillery and glide bomb strikes ongoing. Ukrainian 2024 counteroffensive recaptured areas around Vovchansk — fighting continues. Russian forces conducted May 2024 offensive from Belgorod Oblast; Ukrainian defense stabilized. City infrastructure heavily damaged; 200,000+ residents evacuated. Air defense: NASAMS, Patriot PAC-2 deployed — insufficient coverage for saturation attacks. Russian Aerospace Force (VKS) operating from Belgorod, Kursk air bases.',
+  'Kherson — River Line Conflict':'ACTIVE — RIVER LINE ENGAGEMENT. Dnipro River line established as de facto front after Ukrainian Kherson liberation (Nov 2022). Russian forces hold east bank; Ukrainian forces west bank. Ukrainian "island bridgehead" operations ongoing on Oleshky Sands. Both sides conducting boat-borne assault/interdiction raids. Russian artillery systematically targeting Kherson city daily — est. 200+ civilians killed since liberation. Nova Kakhovka dam destroyed June 2023 (sabotage — attribution disputed) — ecological catastrophe downstream. Russian Black Sea Fleet withdrawal from Crimea ports following Ukrainian Neptune missile and sea drone campaign.',
+  'Moscow — Kremlin Command Center':'STRATEGIC HQ — RUSSIAN COMMAND AUTHORITY. Kremlin serves as Putin\'s war command nerve center. Russian General Staff (Gerasimov) directing Ukraine operation from adjacent National Defense Management Center (NDMC) — hardened facility with classified C2 infrastructure. Multiple drone attacks on Moscow reported 2023-2025 — Ukrainian attribution contested. FSB headquarters (Lubyanka) 800m from Kremlin — intelligence/counterintelligence operations directed from here. Moscow air defense: S-400, Pantsir-S1, A-135 Amur ABM system. Kremlin tours suspended indefinitely since Feb 2022. Wagner Corp rebellion (June 2023): Prigozhin convoy reached 200km of Moscow before deal brokered.',
+  'Zhukovsky — Nuclear Command Infrastructure':'STRATEGIC NUCLEAR ALERT — TOP SECRET//SI//TK. Zhukovsky Air Base: Il-80 "Doomsday Plane" (Airborne Command Post) home station. Nuclear command aircraft operational — spotted airborne during Ukraine escalation events. Nearby Kubinka AB: Russian Aerospace Force strategic transport. 12th GUMO (nuclear weapons management) headquarters in Sergiev Posad region. RS-28 Sarmat ICBM test program — deployed to Uzhur and Dombarovsky sites replacing SS-18 Satan. Kinzhal hypersonic launch platform (MiG-31K) based at Savasleyka and Tambov — nuclear-capable. Assessment: Russian nuclear posture elevated to DEFCON-equivalent Level 3 (Increased Readiness) since Feb 2024.',
+  'Minsk — Lukashenko Command / Russian Nukes':'WMD DEPLOYMENT — CONFIRMED. Russia-Belarus Union State nuclear sharing agreement: Russian tactical nuclear weapons deployed to Belarus June 2023 — confirmed by Lukashenko and Putin. Storage facility: est. near Osipovichi or 558th Air Base (Machulishchy). Iskander-M (nuclear-capable) batteries transferred to Belarusian Armed Forces. Russian Wagner Group (now Africa Corps) rear elements at Osipovichi facility. Lukashenko survival entirely dependent on Moscow political support. Minsk is Russian forward command element for potential northern axis operations against NATO Baltic flank. Belarusian opposition (Tikhanouskaya) government-in-exile in Vilnius.',
+  'Transnistria — Russian Garrison Zone':'FROZEN CONFLICT — RUSSIAN GARRISON. Breakaway region of Moldova (est. 470,000 pop.) — unrecognized by UN. Russian 14th Army (Operational Group of Russian Forces): est. 1,500 troops + 10,000 local "Transnistrian" army. Colossal Cobasna ammunition depot: estimated 20,000+ tonnes Soviet-era munitions — potential explosion radius threatens Chisinau. 2024: Transnistria reported energy crisis — Russian gas cutoff via Ukraine transit dispute. Risk: Russia may leverage crisis to demand Moldova "protect" Russian citizens. Moldova joined EU candidate status 2022 — direct path to NATO/EU integration threatens Russian enclave strategy. Assessment: low probability of military action while Ukraine war ongoing, elevated post-war.',
+  'South Ossetia — Russian Occupation Zone':'OCCUPIED TERRITORY — RUSSIAN ANNEXATION DE FACTO. Russian forces occupy ~20% of Georgian territory since 2008 war. South Ossetia and Abkhazia: recognized by Russia, Syria, Nicaragua, Venezuela only. "Borderization" ongoing — Russian/SO forces move border markers into Georgian territory (creeping annexation). Georgian Dream ruling party pursuing pro-Russia neutrality — EU accession suspended. IRGC reportedly using Georgia as sanction evasion route for dual-use components to Russia. Assessment: Georgia faces strategic choice — NATO aspiration vs. Russian reincorporation pressure. 2024 protests against Georgian Dream "foreign agent" law (Russian-style) indicate pro-EU majority public sentiment.',
+  'Warsaw — NATO Eastern Command Hub':'NATO FORWARD PRESENCE — C2 HUB. Warsaw hosts NATO multinational division HQ + US V Corps Forward HQ. Poland declared 4% GDP defense spending (highest in NATO 2024). Patriot batteries, F-35A (32 ordered), FA-50 Korean fighters. Polish 18th Division (300,000-strong army targeted) — largest land force buildup in NATO since Cold War. US prepositioned equipment: POMCUS sites in Powidz, Drawsko Pomorskie. Poland-Ukraine arms corridor: critical supply route for Western equipment. Polish intelligence (ABW/SKW) assessing Russian hybrid operations — multiple sabotage incidents attributed to GRU proxies 2024.',
+  'Kaliningrad — NATO Enclave / S-400 Zone':'STRATEGIC THREAT — NATO SUWALKI GAP. Russian exclave between Poland and Lithuania: 15,000 sq km, pop. 1M. Russian Baltic Fleet HQ (Baltiysk): submarines, surface combatants. S-400 Triumf and Iskander-M (nuclear-capable) batteries deployed — cover entire Baltic Sea approaches. Kaliningrad A2/AD (Anti-Access/Area Denial) bubble: 400km radius restricts NATO air and naval freedom of movement. Suwalki Gap (65km corridor between Kaliningrad and Belarus): NATO\'s most vulnerable point — land bridge to Baltic states. Russian "missile trains" exercise (nuclear-capable Iskander on rail) — Kaliningrad component assessed. Russian reinforcement: Baltic Fleet amphibious capability could threaten Gotland (Sweden) in conflict scenario.',
+  'Karabakh — Post-Conflict Stabilization':'POST-WAR CONSOLIDATION — ETHNIC CLEANSING DOCUMENTED. Azerbaijan military offensive Sep 2023 (24 hours): 100,000 ethnic Armenians fled Nagorno-Karabakh — UNHCR confirms forced displacement. Karabakh Republic dissolved Oct 2023. Azerbaijan controls full territory. ICJ/ECHR: multiple Armenia petitions pending. Russia\'s CSTO (collective security treaty) failure to defend Armenia eroded Russian credibility as security guarantor. Armenian PM Pashinyan pivoting toward EU/NATO — unprecedented. Risk: Armenia becoming next Ukraine-scenario as Russia influence declines. Turkish-Azerbaijani strategic partnership (1 nation, 2 states) — Zangezur Corridor demand (through Armenia to Azerbaijan proper) remains flashpoint.',
+  'Belgrade — Russia-Aligned Government':'SOFT POWER — RUSSIAN INFLUENCE NODE. Serbia: EU candidate state but refuses to join Russia sanctions, opposes Kosovo independence, purchasing Chinese and Russian arms (MiG-29, Pantsir-S1). President Vucic plays EU and Russia simultaneously — EU accession leverage tool not genuine commitment. Kosovo tensions: Northern Kosovo Serb community periodic confrontations with KFOR (NATO). Republika Srpska (Bosnia): Dodik openly pro-Russia, undermining Dayton peace structure. Serbian Orthodox Church as soft power instrument for Russian narrative penetration across Western Balkans. Wagner Group (Africa Corps) recruitment activity confirmed in Serbia 2024. Belgrade assessed as primary Russian intelligence hub for Western Balkans operations.',
 };
 
 let currentHotspot=null;
@@ -1616,7 +2076,7 @@ function hotspotAt(sx,sy){
   const allSpots=[...HOTSPOTS,...liveHotspots];
   for(const h of allSpots){
     const p=project(h.lat,h.lng);
-    if(p.visible&&Math.hypot(sx-p.px,sy-p.py)<14)return h;
+    if(p.visible&&Math.hypot(sx-p.px,sy-p.py)<20)return h;
   }
   return null;
 }
