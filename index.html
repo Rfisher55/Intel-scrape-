@@ -5251,6 +5251,29 @@ function drawHotspots(){
   }
 }
 
+/* ── Draw a small clickable ◈ marker at the bezier midpoint ── */
+function drawArcMarker(p1,p2,offFactor,color,label){
+  if(!p1.visible&&!p2.visible)return;
+  const mid=arcMid(p1,p2,offFactor);
+  // Outer ring
+  ctx.beginPath();ctx.arc(mid.px,mid.py,7,0,Math.PI*2);
+  ctx.strokeStyle=color.replace(/[\d.]+\)$/,'0.35)');ctx.lineWidth=1;ctx.stroke();
+  // Inner dot
+  ctx.beginPath();ctx.arc(mid.px,mid.py,3.5,0,Math.PI*2);
+  ctx.fillStyle=color;ctx.fill();
+  // Short label
+  if(label){
+    ctx.save();
+    ctx.font='bold 8px monospace';
+    ctx.fillStyle='rgba(226,232,240,0.85)';
+    ctx.textAlign='center';
+    const maxW=60;
+    const short=label.length>22?label.slice(0,21)+'…':label;
+    ctx.fillText(short,mid.px,mid.py-11);
+    ctx.restore();
+  }
+}
+
 function drawArcs(){
   const arcs=selectedISO
     ?CONFLICTS.filter(c=>c.from===selectedISO||c.to===selectedISO)
@@ -5275,6 +5298,8 @@ function drawArcs(){
     ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
     ctx.strokeStyle=`${base},.85)`;ctx.lineWidth=1.5;ctx.stroke();
     ctx.setLineDash([]);
+    // Clickable midpoint marker
+    drawArcMarker(p1,p2,0.35,`${base},.9)`,arc.label);
   }
 }
 
@@ -5315,6 +5340,7 @@ function drawTroopMovements(){
       arrowHead(p2.px,p2.py,Math.atan2(dy,dx),9,`${sev},.9)`);
     }
     if(p1.visible){ctx.beginPath();ctx.arc(p1.px,p1.py,3.5,0,Math.PI*2);ctx.fillStyle=`${sev},.85)`;ctx.fill();}
+    drawArcMarker(p1,p2,0.32,`${sev},.9)`,m.label);
   }
 }
 
@@ -5327,6 +5353,7 @@ function drawArmsFlows(){
     drawCurvedArc(p1,p2,'rgba(245,158,11',.06,5,null,null);
     drawCurvedArc(p1,p2,'rgba(245,158,11',.8,1.2,[6,5],-t*35);
     if(p2.visible){arrowHead(p2.px,p2.py,Math.atan2(p2.py-p1.py,p2.px-p1.px),8,'rgba(245,158,11,.9)');}
+    drawArcMarker(p1,p2,0.32,'rgba(245,158,11,.9)',a.label);
   }
 }
 
@@ -5362,6 +5389,7 @@ function drawFinancialFlows(){
       ctx.beginPath();ctx.arc(mx,my,2.5,0,Math.PI*2);
       ctx.fillStyle=(f.color||'rgba(168,85,247')+', .9)';ctx.fill();
     }
+    drawArcMarker(p1,p2,0.32,(f.color||'rgba(168,85,247')+', .9)',f.label);
   }
 }
 
@@ -5373,6 +5401,7 @@ function drawRefugeeFlows(){
     drawCurvedArc(p1,p2,'rgba(251,191,36',.05,6,null,null);
     drawCurvedArc(p1,p2,'rgba(251,191,36',.65,1.5,[5,7],-t*20);
     if(p2.visible){arrowHead(p2.px,p2.py,Math.atan2(p2.py-p1.py,p2.px-p1.px),7,'rgba(251,191,36,.85)');}
+    drawArcMarker(p1,p2,0.32,'rgba(251,191,36,.9)',r.label);
   }
 }
 
@@ -5466,11 +5495,12 @@ canvas.addEventListener('mousemove',e=>{
   // Check tracking layer hover
   let layerHit=null;
   if(!hotHit){
-    if(activeLayers.naval){const n=navalAssetAt(e.clientX,e.clientY);if(n)layerHit={label:n.label,sub:n.type+' · '+n.country,color:'#22c55e'};}
-    if(!layerHit&&activeLayers.troops){const m=troopMovAt(e.clientX,e.clientY);if(m)layerHit={label:m.label,sub:m.status,color:'#ef4444'};}
-    if(!layerHit&&activeLayers.arms){const a=armsFlowAt(e.clientX,e.clientY);if(a)layerHit={label:a.label,sub:a.value+' · click for detail',color:'#f59e0b'};}
-    if(!layerHit&&activeLayers.money){const f=financialFlowAt(e.clientX,e.clientY);if(f)layerHit={label:f.label,sub:f.value+' · click for detail',color:'#a855f7'};}
-    if(!layerHit&&activeLayers.refugees){const r=refugeeFlowAt(e.clientX,e.clientY);if(r)layerHit={label:r.label,sub:r.value+' displaced · click',color:'#fbbf24'};}
+    if(activeLayers.conflicts||showArcs){const c=conflictAt(e.clientX,e.clientY);if(c)layerHit={label:c.label,sub:c.type.replace(/_/g,' ').toUpperCase()+' · click for intel',color:'#ef4444'};}
+    if(!layerHit&&activeLayers.naval){const n=navalAssetAt(e.clientX,e.clientY);if(n)layerHit={label:n.label,sub:n.type+' · '+n.country,color:'#22c55e'};}
+    if(!layerHit&&activeLayers.troops){const m=troopMovAt(e.clientX,e.clientY);if(m)layerHit={label:m.label,sub:m.status+' · click for intel',color:'#ef4444'};}
+    if(!layerHit&&activeLayers.arms){const a=armsFlowAt(e.clientX,e.clientY);if(a)layerHit={label:a.label,sub:a.value+' · click for intel',color:'#f59e0b'};}
+    if(!layerHit&&activeLayers.money){const f=financialFlowAt(e.clientX,e.clientY);if(f)layerHit={label:f.label,sub:f.value+' · click for intel',color:'#a855f7'};}
+    if(!layerHit&&activeLayers.refugees){const r=refugeeFlowAt(e.clientX,e.clientY);if(r)layerHit={label:r.label,sub:r.value+' displaced · click for intel',color:'#fbbf24'};}
   }
   const hit=hitTest(e.clientX,e.clientY);
   if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit||layerHit)?'pointer':'grab';}
@@ -5516,6 +5546,10 @@ canvas.addEventListener('mouseup',e=>{
         setTimeout(()=>{tt.style.opacity='0';},1400);
       }
       return;
+    }
+    if(activeLayers.conflicts||showArcs){
+      const cf=conflictAt(e.clientX,e.clientY);
+      if(cf){openConflictBrief(cf);return;}
     }
     if(activeLayers.naval){
       const na=navalAssetAt(e.clientX,e.clientY);
@@ -5621,6 +5655,10 @@ canvas.addEventListener('touchend',e=>{
           lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=t.clientX;lastClickHSPY=t.clientY;
           if(isDbl){openHotspot(hs);}
           return;
+        }
+        if(activeLayers.conflicts||showArcs){
+          const cf=conflictAt(t.clientX,t.clientY);
+          if(cf){openConflictBrief(cf);return;}
         }
         if(activeLayers.naval){
           const na=navalAssetAt(t.clientX,t.clientY);
@@ -6233,6 +6271,37 @@ function buildIntelBrief(data){
   document.getElementById('track-modal').style.display='flex';
 }
 
+function openConflictBrief(cf){
+  const fromC=COUNTRIES[cf.from],toC=COUNTRIES[cf.to];
+  const fromIntel=INTEL[cf.from]||{}, toIntel=INTEL[cf.to]||{};
+  const sevColor={critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'}[cf.severity]||'#60a5fa';
+  const news=[];
+  if(fromIntel.news) news.push(...fromIntel.news.slice(0,2));
+  if(toIntel.news)   news.push(...toIntel.news.slice(0,2));
+  const actors=[...new Set([...(fromIntel.keyActors||[]).slice(0,2),...(toIntel.keyActors||[]).slice(0,2)])];
+  buildIntelBrief({
+    category:'CONFLICT INTELLIGENCE',
+    dotColor:sevColor,
+    title:cf.label,
+    fromISO:cf.from,
+    toISO:cf.to,
+    badges:[
+      {text:cf.type.replace(/_/g,' ').toUpperCase(),style:'blue'},
+      {text:cf.severity.toUpperCase(),style:cf.severity},
+    ],
+    stats:[
+      {val:fromC?.name||cf.from,   key:'ACTOR A'},
+      {val:toC?.name||cf.to,       key:'ACTOR B'},
+      {val:cf.severity.toUpperCase(),key:'SEVERITY'},
+    ],
+    detail:`Conflict relationship: ${fromC?.name||cf.from} ↔ ${toC?.name||cf.to}. `+
+      `Type: ${cf.type.replace(/_/g,' ')}. `+
+      (fromIntel.summary?fromIntel.summary.slice(0,220)+'…':'No summary available.'),
+    actors,
+    news,
+  });
+}
+
 function openArmsFlowBrief(af){
   const fromIntel=INTEL[af.from], toIntel=INTEL[af.to];
   const fromActors=fromIntel?.keyActors||[];
@@ -6327,24 +6396,62 @@ function closeTrackModal(){
   document.getElementById('track-modal').style.display='none';
 }
 
+/* ── Arc hit-test helpers ─────────────────────────────────────────────── */
+// Returns the bezier control point for a standard curved arc between p1 and p2
+function arcCP(p1,p2,offFactor){
+  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
+  const dx=p2.px-p1.px,dy=p2.py-p1.py;
+  const len=Math.sqrt(dx*dx+dy*dy)||1;
+  const off=len*offFactor;
+  return{cpX:mx-dy/len*off,cpY:my+dx/len*off};
+}
+// Sample 9 evenly-spaced points along a quadratic bezier and return the closest distance to (sx,sy)
+function arcMinDist(sx,sy,p1,p2,offFactor){
+  const {cpX,cpY}=arcCP(p1,p2,offFactor);
+  let minD=Infinity;
+  for(let i=0;i<=8;i++){
+    const t=i/8;
+    const bx=(1-t)*(1-t)*p1.px+2*(1-t)*t*cpX+t*t*p2.px;
+    const by=(1-t)*(1-t)*p1.py+2*(1-t)*t*cpY+t*t*p2.py;
+    const d=Math.hypot(sx-bx,sy-by);
+    if(d<minD)minD=d;
+  }
+  return minD;
+}
+// Returns the screen midpoint of a curved arc (at t=0.5)
+function arcMid(p1,p2,offFactor){
+  const {cpX,cpY}=arcCP(p1,p2,offFactor);
+  const bx=0.25*p1.px+0.5*cpX+0.25*p2.px;
+  const by=0.25*p1.py+0.5*cpY+0.25*p2.py;
+  return{px:bx,py:by};
+}
+
 /* ── Canvas hit-test for tracking items — respects selectedISO filter ── */
+function conflictAt(sx,sy){
+  const list=selectedISO?CONFLICTS.filter(c=>c.from===selectedISO||c.to===selectedISO):CONFLICTS;
+  for(const c of list){
+    const from=COUNTRIES[c.from],to=COUNTRIES[c.to];if(!from||!to)continue;
+    const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
+    if(!p1.visible&&!p2.visible)continue;
+    if(arcMinDist(sx,sy,p1,p2,0.35)<20)return c;
+  }
+  return null;
+}
 function navalAssetAt(sx,sy){
   const list=selectedISO?NAVAL_ASSETS.filter(n=>n.country===selectedISO||n.country==='NATO'):NAVAL_ASSETS;
   for(const n of list){
     const p=project(n.lat,n.lng);
     if(!p.visible)continue;
-    if(Math.hypot(sx-p.px,sy-p.py)<18)return n;
+    if(Math.hypot(sx-p.px,sy-p.py)<20)return n;
   }
   return null;
 }
 function troopMovAt(sx,sy){
   const list=selectedISO?TROOP_MOVEMENTS.filter(m=>m.country===selectedISO):TROOP_MOVEMENTS;
   for(const m of list){
-    const p1=project(m.fromLat,m.fromLng);
-    const p2=project(m.toLat,m.toLng);
+    const p1=project(m.fromLat,m.fromLng),p2=project(m.toLat,m.toLng);
     if(!p1.visible&&!p2.visible)continue;
-    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.22;
-    if(Math.hypot(sx-mx,sy-my)<22)return m;
+    if(arcMinDist(sx,sy,p1,p2,0.32)<20)return m;
   }
   return null;
 }
@@ -6354,8 +6461,7 @@ function armsFlowAt(sx,sy){
     const from=COUNTRIES[a.from],to=COUNTRIES[a.to];if(!from||!to)continue;
     const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
     if(!p1.visible&&!p2.visible)continue;
-    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.25;
-    if(Math.hypot(sx-mx,sy-my)<24)return a;
+    if(arcMinDist(sx,sy,p1,p2,0.32)<20)return a;
   }
   return null;
 }
@@ -6365,8 +6471,7 @@ function financialFlowAt(sx,sy){
     const from=COUNTRIES[f.from],to=COUNTRIES[f.to];if(!from||!to)continue;
     const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
     if(!p1.visible&&!p2.visible)continue;
-    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.25;
-    if(Math.hypot(sx-mx,sy-my)<24)return f;
+    if(arcMinDist(sx,sy,p1,p2,0.32)<20)return f;
   }
   return null;
 }
@@ -6375,8 +6480,7 @@ function refugeeFlowAt(sx,sy){
   for(const r of list){
     const p1=project(r.fromLat,r.fromLng),p2=project(r.toLat,r.toLng);
     if(!p1.visible&&!p2.visible)continue;
-    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.25;
-    if(Math.hypot(sx-mx,sy-my)<24)return r;
+    if(arcMinDist(sx,sy,p1,p2,0.32)<20)return r;
   }
   return null;
 }
