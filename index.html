@@ -8,6 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Intel Globe"/>
 <title>Intel Globe — Middle East</title>
+<!-- TopoJSON → GeoJSON converter (served from CDN at runtime) -->
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -273,6 +275,7 @@ canvas.dragging{cursor:grabbing}
 
 <div id="globe-wrap"><canvas id="globe"></canvas></div>
 <div id="zoom-hint">Scroll to zoom · Drag to spin · Pinch on mobile</div>
+<div id="geo-loading" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none">Loading world borders…</div>
 
 <div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div></div>
 
@@ -334,37 +337,37 @@ canvas.dragging{cursor:grabbing}
 ════════════════════════════════════════════════════ */
 
 const COUNTRIES = {
-  ISR:{iso:'ISR',name:'Israel',       capital:'Jerusalem',   alertLevel:'HIGH',     lat:31.5, lng:34.75,
+  ISR:{iso:'ISR',numericId:376,name:'Israel',       capital:'Jerusalem',   alertLevel:'HIGH',     lat:31.5, lng:34.75,
     poly:[[33.27,35.67],[32.7,35.17],[32.35,34.96],[31.52,34.58],[29.5,34.9],[29.5,35.01],[30.89,35.44],[31.99,35.44],[33.27,35.67]]},
-  PSE:{iso:'PSE',name:'Palestine',    capital:'Ramallah',    alertLevel:'CRITICAL', lat:31.9, lng:35.2,
+  PSE:{iso:'PSE',numericId:275,name:'Palestine',    capital:'Ramallah',    alertLevel:'CRITICAL', lat:31.9, lng:35.2,
     poly:[[32.55,35.54],[31.97,35.54],[31.48,34.93],[31.35,34.5],[31.21,34.21],[31.52,34.58],[32.7,35.17],[32.55,35.54]]},
-  LBN:{iso:'LBN',name:'Lebanon',      capital:'Beirut',      alertLevel:'HIGH',     lat:33.9, lng:35.5,
+  LBN:{iso:'LBN',numericId:422,name:'Lebanon',      capital:'Beirut',      alertLevel:'HIGH',     lat:33.9, lng:35.5,
     poly:[[34.64,36.48],[33.09,35.65],[33.27,35.67],[33.55,35.37],[33.9,35.92],[34.64,36.48]]},
-  SYR:{iso:'SYR',name:'Syria',        capital:'Damascus',    alertLevel:'HIGH',     lat:33.5, lng:36.3,
+  SYR:{iso:'SYR',numericId:760,name:'Syria',        capital:'Damascus',    alertLevel:'HIGH',     lat:33.5, lng:36.3,
     poly:[[37.38,42.35],[36.83,38.77],[36.5,37.19],[36.08,36.61],[35.17,36.15],[33.66,35.84],[33.1,35.8],[33.09,35.65],[34.64,36.48],[33.23,36.53],[32.67,38.99],[33.05,39.98],[37.38,42.35]]},
-  IRN:{iso:'IRN',name:'Iran',         capital:'Tehran',      alertLevel:'HIGH',     lat:35.7, lng:51.4,
+  IRN:{iso:'IRN',numericId:364,name:'Iran',         capital:'Tehran',      alertLevel:'HIGH',     lat:35.7, lng:51.4,
     poly:[[39.78,44.77],[38.85,47.24],[38.33,47.88],[36.7,49.46],[36.64,51.37],[37.54,56.11],[37.03,58.05],[36.38,60.04],[35.07,60.58],[31.4,61.66],[27.72,60.88],[25.03,57.34],[26.68,55.76],[27.18,54.22],[27.59,52.16],[27.84,50.47],[29.52,48.99],[30.99,48.0],[32.42,47.42],[33.07,46.03],[33.64,44.54],[34.48,42.74],[36.04,42.28],[37.41,42.4],[39.78,44.77]]},
-  IRQ:{iso:'IRQ',name:'Iraq',         capital:'Baghdad',     alertLevel:'MEDIUM',   lat:33.3, lng:44.4,
+  IRQ:{iso:'IRQ',numericId:368,name:'Iraq',         capital:'Baghdad',     alertLevel:'MEDIUM',   lat:33.3, lng:44.4,
     poly:[[37.38,42.35],[36.04,42.28],[34.48,42.74],[33.64,44.54],[33.07,46.03],[32.42,47.42],[30.99,48.0],[29.52,48.99],[29.1,47.18],[29.2,47.0],[30.0,47.97],[31.0,47.1],[32.15,47.63],[33.05,39.98],[32.67,38.99],[33.23,36.53],[37.38,42.35]]},
-  SAU:{iso:'SAU',name:'Saudi Arabia', capital:'Riyadh',      alertLevel:'MEDIUM',   lat:24.7, lng:46.7,
+  SAU:{iso:'SAU',numericId:682,name:'Saudi Arabia', capital:'Riyadh',      alertLevel:'MEDIUM',   lat:24.7, lng:46.7,
     poly:[[32.0,37.0],[29.19,39.3],[27.96,35.14],[22.57,37.11],[19.0,40.97],[15.5,42.5],[17.5,49.0],[19.0,52.5],[22.6,55.6],[24.0,56.4],[25.7,56.3],[26.1,56.2],[25.8,55.8],[26.12,51.59],[25.52,50.7],[24.5,51.5],[24.5,51.6],[25.0,49.8],[28.9,47.4],[29.1,47.18],[29.52,48.99],[32.0,47.0],[32.0,37.0]]},
-  YEM:{iso:'YEM',name:'Yemen',        capital:"Sana'a",      alertLevel:'HIGH',     lat:15.4, lng:44.2,
+  YEM:{iso:'YEM',numericId:887,name:'Yemen',        capital:"Sana'a",      alertLevel:'HIGH',     lat:15.4, lng:44.2,
     poly:[[17.5,49.0],[15.5,42.5],[14.0,42.6],[12.6,43.5],[11.9,44.1],[12.0,45.0],[11.9,50.2],[12.5,52.0],[14.0,53.1],[16.0,52.0],[17.5,49.0]]},
-  TUR:{iso:'TUR',name:'Turkey',       capital:'Ankara',      alertLevel:'MEDIUM',   lat:39.9, lng:32.9,
+  TUR:{iso:'TUR',numericId:792,name:'Turkey',       capital:'Ankara',      alertLevel:'MEDIUM',   lat:39.9, lng:32.9,
     poly:[[42.0,43.0],[41.5,41.5],[41.5,36.5],[40.7,35.0],[39.0,26.4],[37.0,28.0],[36.5,36.1],[36.08,36.61],[37.38,42.35],[40.0,43.0],[42.0,43.0]]},
-  JOR:{iso:'JOR',name:'Jordan',       capital:'Amman',       alertLevel:'LOW',      lat:31.9, lng:35.9,
+  JOR:{iso:'JOR',numericId:400,name:'Jordan',       capital:'Amman',       alertLevel:'LOW',      lat:31.9, lng:35.9,
     poly:[[33.38,38.98],[32.67,38.99],[33.23,36.53],[32.53,36.0],[31.97,35.44],[30.89,35.44],[29.5,35.01],[29.18,39.3],[33.38,38.98]]},
-  EGY:{iso:'EGY',name:'Egypt',        capital:'Cairo',       alertLevel:'LOW',      lat:30.1, lng:31.2,
+  EGY:{iso:'EGY',numericId:818,name:'Egypt',        capital:'Cairo',       alertLevel:'LOW',      lat:30.1, lng:31.2,
     poly:[[31.67,25.0],[31.67,32.87],[31.12,33.78],[30.0,32.5],[29.93,34.3],[27.5,34.0],[22.0,36.87],[22.0,24.98],[31.67,25.0]]},
-  ARE:{iso:'ARE',name:'UAE',          capital:'Abu Dhabi',   alertLevel:'LOW',      lat:24.5, lng:54.4,
+  ARE:{iso:'ARE',numericId:784,name:'UAE',          capital:'Abu Dhabi',   alertLevel:'LOW',      lat:24.5, lng:54.4,
     poly:[[26.12,51.59],[25.52,50.7],[24.5,51.5],[22.6,55.6],[24.0,56.4],[25.7,56.3],[26.12,56.2],[25.8,55.8],[26.12,51.59]]},
-  QAT:{iso:'QAT',name:'Qatar',        capital:'Doha',        alertLevel:'LOW',      lat:25.3, lng:51.5,
+  QAT:{iso:'QAT',numericId:634,name:'Qatar',        capital:'Doha',        alertLevel:'LOW',      lat:25.3, lng:51.5,
     poly:[[25.52,50.7],[24.5,51.5],[24.5,50.8],[25.0,50.7],[26.15,51.2],[25.52,51.59],[25.52,50.7]]},
-  KWT:{iso:'KWT',name:'Kuwait',       capital:'Kuwait City', alertLevel:'LOW',      lat:29.4, lng:47.6,
+  KWT:{iso:'KWT',numericId:414,name:'Kuwait',       capital:'Kuwait City', alertLevel:'LOW',      lat:29.4, lng:47.6,
     poly:[[30.1,46.5],[29.1,47.18],[28.5,47.78],[28.5,48.43],[29.5,48.43],[30.1,47.57],[30.1,46.5]]},
-  BHR:{iso:'BHR',name:'Bahrain',      capital:'Manama',      alertLevel:'LOW',      lat:26.2, lng:50.6,
+  BHR:{iso:'BHR',numericId:48, name:'Bahrain',      capital:'Manama',      alertLevel:'LOW',      lat:26.2, lng:50.6,
     poly:[[26.28,50.3],[26.0,50.4],[26.1,50.62],[26.28,50.7],[26.28,50.3]]},
-  OMN:{iso:'OMN',name:'Oman',         capital:'Muscat',      alertLevel:'LOW',      lat:23.6, lng:58.6,
+  OMN:{iso:'OMN',numericId:512,name:'Oman',         capital:'Muscat',      alertLevel:'LOW',      lat:23.6, lng:58.6,
     poly:[[24.0,56.4],[22.6,55.6],[17.5,49.0],[18.0,53.1],[20.0,57.5],[22.0,59.8],[24.5,58.3],[24.5,56.8],[24.0,56.4]]},
 };
 
@@ -699,6 +702,10 @@ var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
 // Pinch-to-zoom state
 let lastPinchDist=null;
+// Real-world GeoJSON borders (loaded at runtime from CDN)
+let worldFeatures=[];
+const numericToISO={};
+let geoReady=false;
 
 function resize(){
   canvas.width =window.innerWidth;
@@ -769,6 +776,61 @@ function drawMeridian(lng){
   ctx.stroke();
 }
 
+/* ── Real-world GeoJSON border rendering ── */
+async function loadWorldData(){
+  try{
+    const res=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+    const topo=await res.json();
+    const geo=topojson.feature(topo,topo.objects.countries);
+    worldFeatures=geo.features;
+    for(const[iso,c]of Object.entries(COUNTRIES))if(c.numericId)numericToISO[c.numericId]=iso;
+    geoReady=true;
+    document.getElementById('geo-loading').style.display='none';
+  }catch(e){
+    document.getElementById('geo-loading').style.display='none';
+  }
+}
+
+function drawGeoFeature(feature,fill,stroke,doFill){
+  const geom=feature.geometry;if(!geom)return;
+  const polys=geom.type==='Polygon'?[geom.coordinates]:geom.type==='MultiPolygon'?geom.coordinates:[];
+  for(const poly of polys){
+    for(const ring of poly){
+      let segs=[],cur=[];
+      for(const[lng,lat]of ring){  // GeoJSON = [lng,lat]
+        const p=project(lat,lng);
+        if(p.visible){cur.push(p);}
+        else if(cur.length>1){segs.push(cur);cur=[];}
+        else cur=[];
+      }
+      if(cur.length>1)segs.push(cur);
+      for(const seg of segs){
+        ctx.beginPath();ctx.moveTo(seg[0].px,seg[0].py);
+        for(let i=1;i<seg.length;i++)ctx.lineTo(seg[i].px,seg[i].py);
+        if(doFill&&fill){ctx.closePath();ctx.fillStyle=fill;ctx.fill();}
+        if(stroke)ctx.stroke();
+      }
+    }
+  }
+}
+
+function pipGeo(lat,lng,ring){
+  // ring entries are [lng,lat] (GeoJSON format)
+  let inside=false;
+  for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+    const[xi,yi]=ring[i],[xj,yj]=ring[j];  // xi=lng,yi=lat
+    if(((yi>lat)!==(yj>lat))&&lng<(xj-xi)*(lat-yi)/(yj-yi)+xi)inside=!inside;
+  }
+  return inside;
+}
+
+function pointInGeoFeature(lat,lng,feature){
+  const geom=feature.geometry;if(!geom)return false;
+  const polys=geom.type==='Polygon'?[geom.coordinates]:geom.type==='MultiPolygon'?geom.coordinates:[];
+  for(const poly of polys){if(poly[0]&&pipGeo(lat,lng,poly[0]))return true;}
+  return false;
+}
+
 const CONTINENT_HINTS=[
   [[37,22],[12,15],[4,-8],[-34,18],[-26,33],[1,43],[12,44],[20,39],[23,38],[27,34],[33,32],[37,22]],
   [[71,28],[60,24],[55,28],[52,20],[46,10],[44,15],[40,28],[36,36],[37,22],[40,22],[44,21],[47,26],[56,21],[60,20],[64,26],[71,28]],
@@ -791,27 +853,54 @@ function draw(){
   ctx.strokeStyle='rgba(59,130,246,.07)';ctx.lineWidth=.5;
   for(let lat=-80;lat<=80;lat+=20)drawParallel(lat);
   for(let lng=-180;lng<=180;lng+=20)drawMeridian(lng);
-  // Continent hints
-  ctx.strokeStyle='rgba(25,50,90,.55)';ctx.lineWidth=.8;
-  for(const c of CONTINENT_HINTS)drawPoly(c,null,true,false);
-  // ME countries
-  for(const[iso,c]of Object.entries(COUNTRIES)){
-    const isSel=iso===selectedISO, isHov=iso===hoveredISO;
-    const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
-    ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':'rgba(100,150,220,.3)';
-    ctx.lineWidth=isSel?1.5:.8;
-    drawPoly(c.poly,fill,true,true);
-    const ctr=project(c.lat,c.lng);
-    if(ctr.visible){
-      ctx.font='bold 10px Courier New';
-      ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
+
+  if(geoReady){
+    // Pass 1: all non-ME world countries (dim land)
+    ctx.strokeStyle='rgba(25,50,90,.55)';ctx.lineWidth=.5;
+    for(const feature of worldFeatures){
+      const iso=numericToISO[parseInt(feature.id)];
+      if(!iso)drawGeoFeature(feature,'rgba(14,30,58,.75)',true,true);
+    }
+    // Pass 2: ME countries on top with alert colours
+    for(const feature of worldFeatures){
+      const iso=numericToISO[parseInt(feature.id)];
+      if(!iso)continue;
+      const c=COUNTRIES[iso];
+      const isSel=iso===selectedISO,isHov=iso===hoveredISO;
+      const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
+      ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':'rgba(100,150,220,.5)';
+      ctx.lineWidth=isSel?1.5:.9;
+      drawGeoFeature(feature,fill,true,true);
+      const ctr=project(c.lat,c.lng);
+      if(ctr.visible){
+        ctx.font='bold 10px Courier New';
+        ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
+        ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
+      }
+    }
+  } else {
+    // Fallback until GeoJSON loads
+    ctx.strokeStyle='rgba(25,50,90,.55)';ctx.lineWidth=.8;
+    for(const c of CONTINENT_HINTS)drawPoly(c,null,true,false);
+    for(const[iso,c]of Object.entries(COUNTRIES)){
+      const isSel=iso===selectedISO,isHov=iso===hoveredISO;
+      const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
+      ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':'rgba(100,150,220,.3)';
+      ctx.lineWidth=isSel?1.5:.8;
+      drawPoly(c.poly,fill,true,true);
+      const ctr=project(c.lat,c.lng);
+      if(ctr.visible){
+        ctx.font='bold 10px Courier New';
+        ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
+        ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
+      }
     }
   }
-  // Arcs
+
   if(showArcs)drawArcs();
-  // Border
+  // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
   ctx.strokeStyle='rgba(59,130,246,.2)';ctx.lineWidth=1;ctx.stroke();
 }
@@ -874,6 +963,13 @@ function pip(lat,lng,poly){
 function hitTest(sx,sy){
   const sp=spherePoint(sx,sy);if(!sp)return null;
   const{lat,lng}=unrotate(sp);
+  if(geoReady){
+    for(const feature of worldFeatures){
+      const iso=numericToISO[parseInt(feature.id)];
+      if(iso&&pointInGeoFeature(lat,lng,feature))return iso;
+    }
+    return null;
+  }
   for(const[iso,c]of Object.entries(COUNTRIES))if(pip(lat,lng,c.poly))return iso;
   return null;
 }
@@ -1187,7 +1283,7 @@ function tick(){document.getElementById('h-time').textContent=new Date().toUTCSt
 // Expose for refresh button onclick attribute
 window.fetchLiveNews=fetchLiveNews;
 
-resize();tick();animate();
+resize();tick();animate();loadWorldData();
 </script>
 </body>
 </html>
