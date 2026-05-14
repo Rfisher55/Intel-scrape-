@@ -17,10 +17,14 @@
   --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
   --accent:#3b82f6;--mono:'Courier New',monospace;
 }
-html{width:100%;height:100%;height:100dvh;overflow:hidden;background:var(--bg)}
-body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono);
-  /* Prevent callout/selection on long-press */
+html{width:100%;height:100%;height:100dvh;overflow:hidden;background:#020810}
+body{width:100%;height:100%;overflow:hidden;background:#020810;color:var(--text);font-family:var(--mono);
   -webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+/* Scan-line overlay */
+body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);
+  animation:scanroll 12s linear infinite}
+@keyframes scanroll{from{background-position:0 0}to{background-position:0 400px}}
 
 /* ── Header ── */
 #header{
@@ -331,6 +335,77 @@ canvas.dragging{cursor:grabbing}
   /* Panel content scrollable with momentum */
   .p-content{-webkit-overflow-scrolling:touch;padding:14px}
 }
+
+/* ── Data Layers Panel ── */
+#layers-panel{
+  position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;
+  background:rgba(5,12,26,.88);border:1px solid var(--border);border-radius:8px;
+  padding:10px 8px;display:flex;flex-direction:column;gap:5px;
+  backdrop-filter:blur(10px);min-width:136px;
+}
+.layers-title{font-size:8px;letter-spacing:.2em;color:var(--muted);text-align:center;margin-bottom:3px}
+.layer-btn{
+  background:rgba(13,25,41,.7);border:1px solid var(--border2);border-radius:5px;
+  color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+  padding:6px 8px;cursor:pointer;text-align:left;transition:all .18s;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.layer-btn:hover{border-color:var(--accent);color:var(--text)}
+.layer-btn.active{border-color:var(--accent);color:#93c5fd;background:rgba(59,130,246,.12)}
+.layer-btn.active .lb-dot{animation:blink 1s step-start infinite}
+.lb-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.6}
+.layer-btn.active .lb-dot{opacity:1}
+@media(max-width:600px){#layers-panel{left:8px;min-width:120px;padding:7px 6px}}
+
+/* ── Tracking arc colors ── */
+:root{
+  --troops-color:rgba(239,68,68,.85);
+  --arms-color:rgba(245,158,11,.85);
+  --naval-color:rgba(34,197,94,.85);
+  --money-color:rgba(168,85,247,.85);
+  --refugee-color:rgba(251,191,36,.85);
+}
+
+/* ── HUD decoration ── */
+#hud-corners{position:fixed;inset:0;pointer-events:none;z-index:10}
+
+/* ── Live ticker ── */
+#live-ticker{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:rgba(5,12,26,.8);border-top:1px solid rgba(30,58,95,.5);
+  height:24px;display:flex;align-items:center;overflow:hidden;
+  font-size:9px;color:var(--muted);letter-spacing:.08em;
+}
+.ticker-label{padding:0 12px;color:var(--accent);font-weight:bold;letter-spacing:.15em;white-space:nowrap;flex-shrink:0;border-right:1px solid var(--border)}
+.ticker-track{display:flex;gap:0;animation:ticker 60s linear infinite;white-space:nowrap}
+.ticker-item{padding:0 24px;border-right:1px solid var(--border2)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── Legend expanded ── */
+.leg-section-title{font-size:8px;letter-spacing:.15em;color:var(--muted);margin:6px 0 4px;padding-top:4px;border-top:1px solid var(--border2)}
+.leg-item.troops{color:rgba(239,68,68,.9)}
+.leg-item.arms{color:rgba(245,158,11,.9)}
+.leg-item.naval{color:rgba(34,197,94,.9)}
+.leg-item.money{color:rgba(168,85,247,.9)}
+
+/* ── Tracking modal ── */
+#track-modal{
+  position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;
+  background:rgba(2,8,16,.6);backdrop-filter:blur(4px);
+}
+#track-modal.open{display:flex}
+#track-card{
+  background:linear-gradient(160deg,rgba(13,25,41,.98),rgba(5,12,26,.98));
+  border:1px solid var(--border);border-radius:10px;padding:20px;
+  max-width:380px;width:calc(100% - 40px);box-shadow:0 20px 60px rgba(0,0,0,.7);
+}
+.track-type{font-size:9px;letter-spacing:.2em;font-weight:bold;margin-bottom:8px}
+.track-label{font-size:15px;font-weight:bold;color:#93c5fd;margin-bottom:6px;line-height:1.4}
+.track-meta{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.track-badge{font-size:9px;padding:2px 8px;border-radius:3px;border:1px solid;letter-spacing:.1em}
+.track-desc{font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:14px}
+.track-close{width:100%;padding:8px;background:none;border:1px solid var(--border);border-radius:5px;color:var(--dim);font-family:var(--mono);font-size:10px;cursor:pointer}
+.track-close:hover{border-color:#ef4444;color:#ef4444}
 </style>
 </head>
 <body>
@@ -350,7 +425,53 @@ canvas.dragging{cursor:grabbing}
 </div>
 
 <div id="globe-wrap"><canvas id="globe"></canvas></div>
-<div id="zoom-hint">Scroll to zoom · Drag to spin · Pinch on mobile</div>
+<div id="zoom-hint">Scroll to zoom · Drag to pan · Pinch on mobile</div>
+<div id="hud-corners"></div>
+
+<!-- Data layer controls -->
+<div id="layers-panel">
+  <div class="layers-title">DATA LAYERS</div>
+  <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS</button>
+  <button class="layer-btn" id="lb-troops"    onclick="toggleLayer('troops')"><span class="lb-dot" style="background:#ef4444"></span>TROOPS</button>
+  <button class="layer-btn" id="lb-arms"      onclick="toggleLayer('arms')"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS</button>
+  <button class="layer-btn" id="lb-naval"     onclick="toggleLayer('naval')"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS</button>
+  <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"><span class="lb-dot" style="background:#a855f7"></span>FINANCE</button>
+  <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"><span class="lb-dot" style="background:#fbbf24"></span>REFUGEES</button>
+</div>
+
+<!-- Live intelligence ticker -->
+<div id="live-ticker">
+  <div class="ticker-label">◎ LIVE INTEL</div>
+  <div class="ticker-track" id="ticker-track">
+    <span class="ticker-item">DONETSK — Russian advance 800m east of Pokrovsk ·</span>
+    <span class="ticker-item">RED SEA — Houthi drone attack on MV Stena Immaculate intercepted by HMS Diamond ·</span>
+    <span class="ticker-item">IRAN — IAEA: 60% enriched stockpile now 27kg ·</span>
+    <span class="ticker-item">NATO — Article 4 consultations Latvia border incident ·</span>
+    <span class="ticker-item">GAZA — Phase 2 negotiations stalled in Doha ·</span>
+    <span class="ticker-item">BELARUS — Russian Iskander exercise Gomel region ·</span>
+    <span class="ticker-item">KALININGRAD — S-400 battery activation detected ·</span>
+    <span class="ticker-item">TAIWAN STRAIT — PLA 150 sortie 72-hour exercise ·</span>
+    <span class="ticker-item">DONETSK — Russian advance 800m east of Pokrovsk ·</span>
+    <span class="ticker-item">RED SEA — Houthi drone attack on MV Stena Immaculate intercepted by HMS Diamond ·</span>
+    <span class="ticker-item">IRAN — IAEA: 60% enriched stockpile now 27kg ·</span>
+    <span class="ticker-item">NATO — Article 4 consultations Latvia border incident ·</span>
+    <span class="ticker-item">GAZA — Phase 2 negotiations stalled in Doha ·</span>
+    <span class="ticker-item">BELARUS — Russian Iskander exercise Gomel region ·</span>
+    <span class="ticker-item">KALININGRAD — S-400 battery activation detected ·</span>
+    <span class="ticker-item">TAIWAN STRAIT — PLA 150 sortie 72-hour exercise ·</span>
+  </div>
+</div>
+
+<!-- Tracking detail modal -->
+<div id="track-modal" onclick="if(event.target===this)closeTrackModal()">
+  <div id="track-card">
+    <div class="track-type" id="track-type">—</div>
+    <div class="track-label" id="track-label">—</div>
+    <div class="track-meta" id="track-meta"></div>
+    <div class="track-desc" id="track-desc">—</div>
+    <button class="track-close" onclick="closeTrackModal()">✕ CLOSE</button>
+  </div>
+</div>
 <div id="geo-loading" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none">Loading real-world borders…</div>
 
 <div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div></div>
@@ -490,6 +611,99 @@ const COUNTRIES = {
     poly:[[42,45],[41,45],[40,47],[40,50],[41,51],[42,48],[43,47],[42,45]]},
   ARM:{iso:'ARM',numericId:51, name:'Armenia',       capital:'Yerevan',     alertLevel:'HIGH',     lat:40.2, lng:44.8,
     poly:[[41,44],[40,44],[38,45],[39,47],[40,47],[41,46],[41,44]]},
+  // ── Western Europe ──
+  ITA:{iso:'ITA',numericId:380,name:'Italy',          capital:'Rome',        alertLevel:'LOW',      lat:41.9, lng:12.5,
+    poly:[[47,7],[46,13],[45,14],[44,15],[41,14],[38,16],[37,16],[38,15],[40,18],[44,15],[44,12],[43,11],[44,8],[47,7]]},
+  ESP:{iso:'ESP',numericId:724,name:'Spain',          capital:'Madrid',      alertLevel:'LOW',      lat:40.4, lng:-3.7,
+    poly:[[44,-9],[44,-1],[43,3],[41,3],[36,5],[36,-6],[37,-9],[43,-9],[44,-9]]},
+  PRT:{iso:'PRT',numericId:620,name:'Portugal',       capital:'Lisbon',      alertLevel:'LOW',      lat:38.7, lng:-9.1,
+    poly:[[42,-9],[41,-7],[39,-7],[37,-9],[36,-8],[37,-7],[38,-8],[42,-7],[42,-9]]},
+  NLD:{iso:'NLD',numericId:528,name:'Netherlands',    capital:'Amsterdam',   alertLevel:'LOW',      lat:52.4, lng:4.9,
+    poly:[[53,4],[53,7],[52,7],[51,4],[51,3],[52,4],[53,4]]},
+  BEL:{iso:'BEL',numericId:56, name:'Belgium',        capital:'Brussels',    alertLevel:'LOW',      lat:50.9, lng:4.5,
+    poly:[[51,3],[51,6],[50,6],[49,5],[49,3],[50,2],[51,3]]},
+  CHE:{iso:'CHE',numericId:756,name:'Switzerland',    capital:'Bern',        alertLevel:'LOW',      lat:46.9, lng:7.5,
+    poly:[[48,7],[47,10],[46,10],[46,7],[47,6],[48,7]]},
+  AUT:{iso:'AUT',numericId:40, name:'Austria',        capital:'Vienna',      alertLevel:'LOW',      lat:47.5, lng:14.6,
+    poly:[[48,10],[48,16],[47,17],[46,15],[46,10],[47,10],[48,10]]},
+  // ── Nordic/Baltic ──
+  SWE:{iso:'SWE',numericId:752,name:'Sweden',         capital:'Stockholm',   alertLevel:'LOW',      lat:60.1, lng:18.6,
+    poly:[[69,18],[68,20],[67,22],[65,20],[60,18],[56,12],[56,14],[58,16],[60,20],[63,20],[67,24],[69,18]]},
+  NOR:{iso:'NOR',numericId:578,name:'Norway',         capital:'Oslo',        alertLevel:'LOW',      lat:59.9, lng:10.8,
+    poly:[[71,28],[70,20],[68,16],[65,13],[62,5],[58,7],[57,9],[59,11],[60,12],[64,14],[67,15],[70,18],[71,28]]},
+  DNK:{iso:'DNK',numericId:208,name:'Denmark',        capital:'Copenhagen',  alertLevel:'LOW',      lat:56.0, lng:10.0,
+    poly:[[57,8],[56,10],[55,9],[55,12],[56,12],[57,12],[57,8]]},
+  FIN:{iso:'FIN',numericId:246,name:'Finland',        capital:'Helsinki',    alertLevel:'MEDIUM',   lat:60.2, lng:24.9,
+    poly:[[70,28],[68,30],[66,30],[64,26],[62,22],[60,22],[60,24],[62,28],[65,28],[68,26],[70,28]]},
+  EST:{iso:'EST',numericId:233,name:'Estonia',        capital:'Tallinn',     alertLevel:'HIGH',     lat:58.6, lng:25.0,
+    poly:[[60,22],[59,22],[57,22],[57,24],[58,26],[60,26],[60,22]]},
+  LVA:{iso:'LVA',numericId:428,name:'Latvia',         capital:'Riga',        alertLevel:'HIGH',     lat:56.9, lng:24.1,
+    poly:[[58,22],[57,22],[56,21],[55,22],[55,26],[57,28],[58,26],[58,22]]},
+  LTU:{iso:'LTU',numericId:440,name:'Lithuania',      capital:'Vilnius',     alertLevel:'HIGH',     lat:55.2, lng:23.9,
+    poly:[[57,22],[55,22],[54,21],[54,24],[55,27],[57,26],[57,22]]},
+  // ── Balkans (expanded) ──
+  GRC:{iso:'GRC',numericId:300,name:'Greece',         capital:'Athens',      alertLevel:'MEDIUM',   lat:37.9, lng:23.7,
+    poly:[[42,20],[41,22],[40,24],[38,24],[36,22],[36,24],[38,26],[40,26],[41,25],[42,22],[42,20]]},
+  ROU:{iso:'ROU',numericId:642,name:'Romania',        capital:'Bucharest',   alertLevel:'MEDIUM',   lat:44.4, lng:26.1,
+    poly:[[48,22],[47,24],[46,28],[46,30],[45,29],[44,26],[43,24],[44,22],[47,20],[48,22]]},
+  BGR:{iso:'BGR',numericId:100,name:'Bulgaria',       capital:'Sofia',       alertLevel:'MEDIUM',   lat:42.7, lng:25.5,
+    poly:[[44,22],[43,24],[43,28],[42,28],[41,26],[41,22],[42,20],[44,22]]},
+  HRV:{iso:'HRV',numericId:191,name:'Croatia',        capital:'Zagreb',      alertLevel:'LOW',      lat:45.8, lng:16.0,
+    poly:[[46,14],[46,19],[45,18],[43,16],[43,14],[44,14],[46,14]]},
+  BIH:{iso:'BIH',numericId:70, name:'Bosnia',         capital:'Sarajevo',    alertLevel:'MEDIUM',   lat:43.9, lng:17.7,
+    poly:[[45,16],[45,19],[44,19],[43,17],[43,16],[44,15],[45,16]]},
+  SVK:{iso:'SVK',numericId:703,name:'Slovakia',       capital:'Bratislava',  alertLevel:'MEDIUM',   lat:48.7, lng:19.7,
+    poly:[[49,17],[48,18],[47,18],[48,22],[49,22],[50,22],[49,18],[49,17]]},
+  CZE:{iso:'CZE',numericId:203,name:'Czech Republic', capital:'Prague',      alertLevel:'LOW',      lat:50.1, lng:14.4,
+    poly:[[51,12],[50,18],[49,18],[48,14],[49,12],[51,12]]},
+  ALB:{iso:'ALB',numericId:8,  name:'Albania',        capital:'Tirana',      alertLevel:'LOW',      lat:41.3, lng:19.8,
+    poly:[[43,19],[42,20],[40,20],[40,19],[41,19],[42,19],[43,19]]},
+  MKD:{iso:'MKD',numericId:807,name:'N.Macedonia',    capital:'Skopje',      alertLevel:'LOW',      lat:41.6, lng:21.7,
+    poly:[[42,20],[41,22],[41,21],[41,20],[42,20]]},
+  SVN:{iso:'SVN',numericId:705,name:'Slovenia',       capital:'Ljubljana',   alertLevel:'LOW',      lat:46.1, lng:14.5,
+    poly:[[47,14],[46,14],[45,14],[46,16],[47,16],[47,14]]},
+  MNE:{iso:'MNE',numericId:499,name:'Montenegro',     capital:'Podgorica',   alertLevel:'LOW',      lat:42.4, lng:19.3,
+    poly:[[43,19],[43,20],[42,20],[42,18],[43,18],[43,19]]},
+  // ── North Africa ──
+  LBY:{iso:'LBY',numericId:434,name:'Libya',          capital:'Tripoli',     alertLevel:'HIGH',     lat:26.3, lng:17.2,
+    poly:[[33,9],[33,12],[32,24],[28,25],[23,25],[20,24],[20,11],[22,10],[24,10],[29,9],[33,9]]},
+  DZA:{iso:'DZA',numericId:12, name:'Algeria',        capital:'Algiers',     alertLevel:'MEDIUM',   lat:36.7, lng:3.0,
+    poly:[[37,-2],[37,8],[33,9],[28,9],[24,10],[20,11],[20,-2],[31,-2],[37,-2]]},
+  MAR:{iso:'MAR',numericId:504,name:'Morocco',        capital:'Rabat',       alertLevel:'LOW',      lat:31.8, lng:-7.1,
+    poly:[[36,-6],[36,-2],[33,-1],[28,-2],[27,-9],[29,-11],[31,-11],[35,-6],[36,-6]]},
+  TUN:{iso:'TUN',numericId:788,name:'Tunisia',        capital:'Tunis',       alertLevel:'MEDIUM',   lat:33.9, lng:9.6,
+    poly:[[37,8],[37,11],[33,12],[33,9],[37,8]]},
+  // ── Sub-Saharan Africa ──
+  SDN:{iso:'SDN',numericId:729,name:'Sudan',          capital:'Khartoum',    alertLevel:'CRITICAL', lat:15.6, lng:32.5,
+    poly:[[22,25],[22,36],[18,37],[15,40],[12,36],[10,34],[10,24],[15,22],[20,22],[22,25]]},
+  SOM:{iso:'SOM',numericId:706,name:'Somalia',        capital:'Mogadishu',   alertLevel:'HIGH',     lat:2.0,  lng:45.3,
+    poly:[[12,44],[10,51],[2,41],[-1,42],[0,44],[4,48],[8,48],[12,44]]},
+  ETH:{iso:'ETH',numericId:231,name:'Ethiopia',       capital:'Addis Ababa', alertLevel:'HIGH',     lat:8.0,  lng:38.7,
+    poly:[[15,36],[15,40],[12,44],[8,48],[3,44],[4,36],[8,34],[12,35],[15,36]]},
+  MLI:{iso:'MLI',numericId:466,name:'Mali',           capital:'Bamako',      alertLevel:'HIGH',     lat:17.0, lng:-4.0,
+    poly:[[24,2],[15,2],[14,0],[13,-7],[14,-10],[15,-12],[17,-10],[20,-4],[20,2],[24,2]]},
+  NGA:{iso:'NGA',numericId:566,name:'Nigeria',        capital:'Abuja',       alertLevel:'HIGH',     lat:9.1,  lng:8.7,
+    poly:[[14,2],[13,14],[10,15],[8,13],[4,7],[4,2],[6,3],[8,4],[10,2],[14,2]]},
+  // ── Central/South Asia ──
+  KAZ:{iso:'KAZ',numericId:398,name:'Kazakhstan',     capital:'Astana',      alertLevel:'MEDIUM',   lat:51.2, lng:71.5,
+    poly:[[55,51],[55,60],[52,68],[50,78],[48,84],[45,82],[42,80],[42,70],[45,60],[48,56],[52,51],[55,51]]},
+  AFG:{iso:'AFG',numericId:4,  name:'Afghanistan',    capital:'Kabul',       alertLevel:'CRITICAL', lat:33.9, lng:67.7,
+    poly:[[38,64],[37,66],[36,72],[33,70],[31,62],[31,61],[35,60],[36,64],[38,64]]},
+  PAK:{iso:'PAK',numericId:586,name:'Pakistan',       capital:'Islamabad',   alertLevel:'HIGH',     lat:30.4, lng:69.3,
+    poly:[[37,72],[36,72],[34,70],[31,61],[25,62],[24,66],[24,70],[28,72],[30,74],[33,74],[37,72]]},
+  IND:{iso:'IND',numericId:356,name:'India',          capital:'New Delhi',   alertLevel:'MEDIUM',   lat:20.6, lng:78.9,
+    poly:[[35,74],[28,78],[26,92],[23,88],[18,84],[8,78],[8,76],[14,74],[20,72],[24,68],[27,72],[30,76],[35,74]]},
+  // ── East Asia ──
+  CHN:{iso:'CHN',numericId:156,name:'China',          capital:'Beijing',     alertLevel:'HIGH',     lat:35.9, lng:104.2,
+    poly:[[53,120],[48,130],[40,124],[30,120],[25,100],[22,100],[20,108],[21,110],[24,116],[28,116],[32,118],[36,118],[40,116],[46,120],[50,118],[53,120]]},
+  PRK:{iso:'PRK',numericId:408,name:'North Korea',    capital:'Pyongyang',   alertLevel:'CRITICAL', lat:40.3, lng:127.5,
+    poly:[[43,130],[42,130],[40,128],[38,124],[38,126],[40,130],[42,132],[43,130]]},
+  KOR:{iso:'KOR',numericId:410,name:'South Korea',    capital:'Seoul',       alertLevel:'HIGH',     lat:37.6, lng:127.0,
+    poly:[[38,126],[37,126],[34,126],[34,130],[36,130],[38,130],[38,126]]},
+  JPN:{iso:'JPN',numericId:392,name:'Japan',          capital:'Tokyo',       alertLevel:'MEDIUM',   lat:35.7, lng:139.7,
+    poly:[[45,141],[43,141],[35,137],[33,131],[34,130],[36,136],[38,140],[40,141],[44,143],[45,141]]},
+  TWN:{iso:'TWN',numericId:158,name:'Taiwan',         capital:'Taipei',      alertLevel:'HIGH',     lat:23.7, lng:121.0,
+    poly:[[26,122],[24,122],[22,120],[22,122],[24,124],[26,122]]},
 };
 
 const CONFLICTS = [
@@ -520,6 +734,21 @@ const CONFLICTS = [
   {from:'GEO',to:'RUS',type:'rivalry',   label:'NATO Aspiration vs. Occupation',     severity:'high'},
   {from:'POL',to:'RUS',type:'rivalry',   label:'NATO Eastern Flank Confrontation',   severity:'medium'},
   {from:'GBR',to:'RUS',type:'rivalry',   label:'Hybrid Warfare / Salisbury-class Ops', severity:'medium'},
+  // ── East Asia / Indo-Pacific ──
+  {from:'CHN',to:'TWN',type:'conflict',  label:'Taiwan Strait Coercion / Grey Zone',    severity:'critical'},
+  {from:'CHN',to:'USA',type:'rivalry',   label:'Strategic Competition / Tech War',       severity:'high'},
+  {from:'CHN',to:'JPN',type:'rivalry',   label:'Senkaku Islands Dispute / ADIZ Tension', severity:'medium'},
+  {from:'PRK',to:'KOR',type:'conflict',  label:'Korean Peninsula Nuclear Standoff',      severity:'critical'},
+  {from:'PRK',to:'RUS',type:'support',   label:'Troops + Ammunition — Russia Support',   severity:'high'},
+  {from:'CHN',to:'PHL',type:'conflict',  label:'South China Sea EEZ Confrontation',      severity:'high'},
+  {from:'IND',to:'CHN',type:'conflict',  label:'Himalayan LAC Border Standoff',          severity:'high'},
+  {from:'IND',to:'PAK',type:'conflict',  label:'Kashmir / LOC Nuclear Standoff',         severity:'critical'},
+  {from:'PAK',to:'AFG',type:'conflict',  label:'TTP Cross-Border Insurgency',            severity:'high'},
+  // ── Africa ──
+  {from:'RUS',to:'MLI',type:'support',   label:'Africa Corps (Wagner) Sahel Presence',   severity:'high'},
+  {from:'SDN',to:'SDN',type:'war',       label:'SAF-RSF Civil War — Genocide Risk',       severity:'critical'},
+  {from:'ETH',to:'ETH',type:'conflict',  label:'Tigray/Amhara Internal Conflict',        severity:'high'},
+  {from:'SOM',to:'SOM',type:'conflict',  label:'Al-Shabaab Insurgency',                  severity:'high'},
 ];
 
 /* Threat hotspot pins — embedded base layer (supplemented by live GDELT) */
@@ -555,6 +784,37 @@ const HOTSPOTS = [
   {lat:54.71,lng:20.51,country:'RUS',type:'military_ops',   label:'Kaliningrad — NATO Enclave / S-400 Zone', severity:'high'},
   {lat:39.71,lng:46.37,country:'AZE',type:'active_conflict',label:'Karabakh — Post-Conflict Stabilization', severity:'medium'},
   {lat:44.80,lng:20.46,country:'SRB',type:'instability',    label:'Belgrade — Russia-Aligned Government',   severity:'medium'},
+  // ── East Asia / Indo-Pacific ──
+  {lat:40.3, lng:127.5,country:'PRK',type:'nuclear',        label:'Pyongyang — ICBM & Nuclear Program',      severity:'critical'},
+  {lat:35.9, lng:104.2,country:'CHN',type:'military_ops',   label:'Beijing — PLA Taiwan Contingency HQ',     severity:'critical'},
+  {lat:23.7, lng:121.0,country:'TWN',type:'active_conflict', label:'Taiwan Strait — PLA Grey Zone Ops',       severity:'critical'},
+  {lat:37.6, lng:127.0,country:'KOR',type:'military_ops',   label:'Seoul — DMZ / USFK Alliance Hub',         severity:'high'},
+  {lat:34.5, lng:126.5,country:'PRK',type:'nuclear',        label:'Sohae Satellite Launch Center',           severity:'high'},
+  {lat:39.9, lng:139.8,country:'JPN',type:'military_ops',   label:'Yokosuka — US 7th Fleet HQ',              severity:'medium'},
+  {lat:26.2, lng:127.7,country:'JPN',type:'military_ops',   label:'Kadena AFB — F-22 Taiwan Posture',        severity:'high'},
+  {lat:25.0, lng:121.5,country:'TWN',type:'military_ops',   label:'Taipei — Taiwan Defence Ministry HQ',     severity:'high'},
+  // ── South Asia ──
+  {lat:33.7, lng:73.0, country:'PAK',type:'nuclear',        label:'Islamabad — Pak Nuclear Command Auth.',   severity:'critical'},
+  {lat:34.0, lng:71.5, country:'PAK',type:'terrorism',      label:'Peshawar — TTP Insurgency Front',         severity:'high'},
+  {lat:34.5, lng:69.2, country:'AFG',type:'terrorism',      label:'Kabul — Taliban/ISKP Activity',           severity:'high'},
+  {lat:31.6, lng:65.8, country:'AFG',type:'terrorism',      label:'Kandahar — Taliban Supreme Command',      severity:'high'},
+  {lat:28.6, lng:77.2, country:'IND',type:'military_ops',   label:'New Delhi — RAW/IB Intelligence Hub',     severity:'medium'},
+  // ── North Africa ──
+  {lat:32.9, lng:13.2, country:'LBY',type:'active_conflict', label:'Tripoli — GNU/Haftar Proxy War',          severity:'high'},
+  {lat:32.1, lng:20.1, country:'LBY',type:'military_ops',   label:'Benghazi — Africa Corps Forward Base',    severity:'high'},
+  {lat:26.2, lng:17.2, country:'LBY',type:'migration',      label:'Fezzan — Migration/ISIS Corridor',        severity:'medium'},
+  // ── Sub-Saharan Africa ──
+  {lat:15.6, lng:32.5, country:'SDN',type:'active_conflict', label:'Khartoum — SAF-RSF Civil War',            severity:'critical'},
+  {lat:13.4, lng:24.0, country:'SDN',type:'humanitarian',   label:'Darfur — Genocide-Scale Atrocities',      severity:'critical'},
+  {lat:2.05, lng:45.3, country:'SOM',type:'terrorism',      label:'Mogadishu — Al-Shabaab Operations',       severity:'high'},
+  {lat:17.0, lng:-4.0, country:'MLI',type:'terrorism',      label:'Northern Mali — JNIM Sahel Caliphate',    severity:'critical'},
+  {lat:9.1,  lng:8.7,  country:'NGA',type:'terrorism',      label:'Maiduguri — ISWAP Lake Chad Basin',       severity:'high'},
+  // ── NATO Flanks ──
+  {lat:54.7, lng:20.5, country:'RUS',type:'missile_threat', label:'Kaliningrad — Iskander/Baltic Fleet',     severity:'high'},
+  {lat:54.4, lng:22.5, country:'LTU',type:'military_ops',   label:'Suwalki Gap — NATO Critical Chokepoint',  severity:'critical'},
+  {lat:59.4, lng:24.8, country:'EST',type:'military_ops',   label:'Tallinn — NATO Cyber Defence HQ (CCDCOE)',severity:'high'},
+  {lat:44.2, lng:17.9, country:'BIH',type:'instability',    label:'Sarajevo — Dodik Secession Crisis',       severity:'high'},
+  {lat:42.0, lng:21.4, country:'XKX',type:'instability',    label:'Pristina — Kosovo-Serbia Flashpoint',     severity:'medium'},
 ];
 const HOTSPOT_COLORS={
   active_conflict:'rgba(239,68,68,1)',nuclear:'rgba(239,68,68,1)',
@@ -1073,6 +1333,771 @@ const INTEL = {
     ],
     economic:"GDP $108B. Oil 60% of revenue. Tourism growing 15%/yr. DUQM $30B FDI. Vision 2040 on track.",
   },
+  // ── HIGH PRIORITY: Full INTEL entries ──
+
+  ITA:{
+    summary:"Italy serves as NATO's southern flank anchor and a key Mediterranean security partner, but faces persistent structural vulnerabilities: mafia penetration of southern economy, Russian energy residual dependency, and migrant pressure from Libya and Tunisia. The government under PM Meloni maintains NATO/EU alignment despite her party's post-fascist roots. Italian intelligence (AISE/AISI) assesses elevated Russian hybrid activity targeting undersea cables and port infrastructure.",
+    threats:[
+      {type:"Russian Hybrid",    description:"GRU-linked networks identified targeting Italian energy and undersea cable infrastructure. AISI reports active disinformation campaigns via Italian social media targeting Ukraine support.",severity:"medium",confidence:"HIGH",probability:70,source:"AISI/Europol"},
+      {type:"Migrant Crisis",    description:"Central Mediterranean crossing record high — 150,000+ arrivals 2024. Libyan instability primary driver. Lampedusa overcapacity creates domestic political pressure.",severity:"medium",confidence:"HIGH",probability:95,source:"Frontex/UNHCR"},
+      {type:"Organized Crime",   description:"Ndrangheta (Calabria), Camorra (Naples), Cosa Nostra (Sicily) — combined revenue est. €45B/yr. EU drug distribution networks and money laundering at scale.",severity:"medium",confidence:"HIGH",probability:99,source:"DIA/Europol"},
+      {type:"Economic",          description:"Public debt 140% GDP — highest in Eurozone after Greece. ECB bond-buying program (TPI) only guardrail against spread crisis.",severity:"low",confidence:"HIGH",probability:80,source:"ECB/Moody's"},
+    ],
+    keyActors:["PM Meloni (FdI)","AISE (Foreign Intel)","AISI (Domestic Intel)","Ndrangheta","NATO Naples HQ (Allied Command South)","Guardia di Finanza"],
+    news:[
+      "Italy-Libya migration agreement extended — Meloni government pays Libyan coast guard to intercept boats",
+      "AISE dismantles Russian disinformation cell in Rome — 3 individuals expelled",
+      "NATO MARCOM exercise: Italy hosts 28-nation maritime drill in Ionian Sea",
+      "Meloni-Biden summit: Italy confirms F-35 fleet expansion — 90 aircraft total",
+      "Ndrangheta trial: 207 convictions in 'Ndrangheta Strangis' mega-trial, largest in decades",
+    ],
+    economic:"GDP $2.1T (3rd in Eurozone). Debt 140% GDP. Tourism €90B — largest sector. Defense 1.5% GDP (below NATO target). Exports strong: machinery, pharmaceuticals, luxury goods.",
+  },
+
+  ESP:{
+    summary:"Spain under PM Sanchez's minority coalition maintains NATO/EU alignment while managing persistent separatist pressures from Catalonia and the Basque Country. NATO's second-largest southern flank state, Spain hosts MARCOM (Northwood) and Morón Air Base (USAF rapid deployment hub). Counter-terrorism posture remains elevated post-2017 Barcelona attacks, with SIVE maritime surveillance monitoring African migrant routes and Sahel-linked jihadist networks.",
+    threats:[
+      {type:"Terrorism",         description:"CNI (national intelligence) tracks 400+ jihadist returnees from Syria/Iraq. Isolated IS-inspired plots disrupted 2023-2025. Morocco CNT intelligence sharing critical.",severity:"medium",confidence:"HIGH",probability:55,source:"CNI/DGSI"},
+      {type:"Separatism",        description:"Catalan independence movement: 2017 illegal referendum fallout unresolved. Sanchez-ERC parliamentary deal includes contentious amnesty law — constitutional court challenge ongoing.",severity:"medium",confidence:"HIGH",probability:70,source:"CNI/Open Source"},
+      {type:"Migration",         description:"Canary Islands record crossings — 47,000+ 2024. West African routes replacing Central Mediterranean. Overwhelmed reception capacity.",severity:"medium",confidence:"HIGH",probability:90,source:"Frontex"},
+      {type:"Russian Hybrid",    description:"CNI assessing Russian funding of Catalan independence networks and Vox (far-right) — 2024 Senate report confirms channels.",severity:"low",confidence:"MEDIUM",probability:55,source:"CNI/EU Intelligence"},
+    ],
+    keyActors:["PM Sanchez (PSOE)","CNI (Centro Nacional de Inteligencia)","CESID successors","ERC/Junts (Catalan parties)","USAF Morón/Rota bases","NATO Joint Command Naples"],
+    news:[
+      "Catalonia amnesty law approved — pardons independence leaders, constitutional challenge filed",
+      "Spain-Morocco counterterrorism operation dismantles Sahel recruitment cell in Melilla",
+      "USAF Morón AB: B-2 Spirit bombers rotate through in first European deployment",
+      "Spain orders Eurofighter Typhoon tranche 3+ and F-35B (first EU Harrier replacement)",
+      "Canary Islands migration crisis: Spain requests EU emergency solidarity mechanism activation",
+    ],
+    economic:"GDP $1.6T. Tourism €103B record (2024). Unemployment 11% — down from 26% peak. Defense 1.3% GDP (NATO pressure to increase). Green energy: 50%+ electricity from renewables. Debt 107% GDP.",
+  },
+
+  GRC:{
+    summary:"Greece occupies a strategically pivotal NATO southeastern flank position while managing an unresolved territorial dispute with NATO ally Turkey over Aegean airspace, maritime boundaries, and the Imia/Kardak islets. The Evros land border with Turkey remains Europe's most pressure-tested migration frontier. Post-financial crisis recovery solid — GDP growth 2.3%, debt trajectory improving. Relations with Turkey improved marginally under Erdogan-Mitsotakis diplomatic channel.",
+    threats:[
+      {type:"Turkey Tensions",   description:"Aegean airspace violations: 2,000+ annually by Turkish aircraft. Grey zone dispute over 12-nautical-mile territorial water claim. Casus belli threat from Ankara remains formal policy.",severity:"medium",confidence:"HIGH",probability:65,source:"GEETHA/NATO"},
+      {type:"Migration",         description:"Evros land border and Aegean islands remain primary Eastern Mediterranean routes. 50,000+ arrivals 2024 despite pushback operations — EU human rights scrutiny ongoing.",severity:"medium",confidence:"HIGH",probability:90,source:"Frontex/UNHCR"},
+      {type:"Russian Influence",  description:"Greek Orthodox Church historically aligned with Moscow — soft power channel exploited for influence operations in Greek political discourse.",severity:"low",confidence:"MEDIUM",probability:50,source:"EYP/EU Intel"},
+      {type:"Economic",           description:"Public debt 160% GDP — improving trajectory but most vulnerable Eurozone member. ECB program dependency continues.",severity:"low",confidence:"HIGH",probability:75,source:"IMF/ECB"},
+    ],
+    keyActors:["PM Mitsotakis (ND)","EYP (National Intelligence Service)","Hellenic Armed Forces","NATO MARSOC","Frontex (Evros)","Turkey DGSA"],
+    news:[
+      "Greece-Turkey exploratory talks resume in Athens — 5th round on maritime boundary",
+      "Hellenic Air Force receives 18 Rafale F3-R — replaces Mirage 2000 in air superiority role",
+      "EYP reports Russian recruitment network targeting Greek military attachés in Moscow",
+      "Evros barrier extension: 40km steel fence additional investment — EU funds secured",
+      "Cyprus reunification talks: UN envoy Wennesland visits — positions remain incompatible",
+    ],
+    economic:"GDP $240B. Debt 160% GDP (down from 205% peak). Tourism €20B — critical sector. Shipping: Greek-owned fleet controls 20% of global tonnage. Defense 2.8% GDP (highest in NATO relative to size).",
+  },
+
+  ROU:{
+    summary:"Romania is emerging as NATO's most strategically significant Black Sea anchor following Russia's invasion of Ukraine. Host to the NATO Aegis Ashore Ballistic Missile Defense site at Deveselu, Mihail Kogalniceanu Air Base (largest US military presence in EU), and a Black Sea naval posture increasingly vital as Russia's fleet faces Ukrainian pressure. The Danube River constitutes a 600km border with Ukraine. Romania is a critical logistics node for NATO aid to Ukraine.",
+    threats:[
+      {type:"Russian Spillover",  description:"Ukrainian drone wreckage repeatedly found in Romanian territory — Russian drone attacks overshooting into NATO airspace. Danube drones threatening Romanian port facilities.",severity:"medium",confidence:"HIGH",probability:75,source:"SRI/Romanian MOD"},
+      {type:"Russian Hybrid",    description:"SRI (Romanian Intelligence) has identified Russian influence networks targeting pro-EU political consensus — disinformation via Facebook/TikTok documented.",severity:"medium",confidence:"HIGH",probability:80,source:"SRI/EU"},
+      {type:"Black Sea Security", description:"Russian naval presence contested by Ukrainian sea drones — Black Sea shipping lanes unstable. Constanta port (Romania's largest) exposed to drone spillover.",severity:"medium",confidence:"HIGH",probability:60,source:"NATO MARCOM"},
+      {type:"Energy",            description:"Romania has domestic gas production but transmission infrastructure aging. Neptun Deep offshore gas project (Petrom/ExxonMobil) critical to Black Sea energy diversification.",severity:"low",confidence:"HIGH",probability:85,source:"IEA"},
+    ],
+    keyActors:["PM Ciolacu (PSD)","SRI (Domestic Intel)","SIE (Foreign Intel)","US MK-41 Aegis Deveselu","NATO MK-49 Air Base Otopeni","USAF Mihail Kogalniceanu"],
+    news:[
+      "Romanian president Iohannis nominated as NATO Secretary-General candidate — backed by US",
+      "Neptun Deep gas field development approved — first Black Sea gas online 2027",
+      "SRI arrests 7 in Russian disinformation network targeting Romanian elections",
+      "US deploys F-35A squadron to Mihail Kogalniceanu — first permanent fighter presence",
+      "Romania-Ukraine joint patrol: Danube drone intercept exercise conducted",
+    ],
+    economic:"GDP $350B. Growth 4.2%. Defense 2.5% GDP (above NATO target). Significant EU cohesion fund recipient — €80B 2021-27. Tech sector growing: Bucharest emerging as Eastern European IT hub.",
+  },
+
+  BGR:{
+    summary:"Bulgaria occupies a complex position as NATO's easternmost Balkan member while maintaining historical, cultural, and energy ties to Russia. The country has been a significant venue for Russian intelligence operations, arms trafficking to conflict zones, and money laundering through 'offshore' shell companies. Successive governments oscillated on Ukraine arms support — current coalition provides covert ammunition transfers. Russian hybrid operations targeting Bulgarian energy infrastructure documented by DANS.",
+    threats:[
+      {type:"Russian Influence",  description:"DANS (State Agency for National Security) has dismantled 3 GRU networks 2022-2025. Russian intelligence exploits Orthodox Church networks and GERB party sympathizers.",severity:"medium",confidence:"HIGH",probability:85,source:"DANS/Europol"},
+      {type:"Arms Trafficking",   description:"Bulgarian arms exported legally to third countries — documented diversion to Russian proxies via UAE and Gulf intermediaries. OCCRP investigations confirmed.",severity:"medium",confidence:"HIGH",probability:80,source:"OCCRP/EU Intel"},
+      {type:"Energy Dependency",  description:"Lukoil Neftochim Burgas — largest refinery in SE Europe, Russian-owned. Gas dependency 90% Russian-origin pre-war, now partially diversified via Greece-Bulgaria interconnector.",severity:"medium",confidence:"HIGH",probability:70,source:"IEA"},
+      {type:"Political Instability",description:"7 elections 2021-2025 — endemic political fragmentation. Corruption ranking lowest in EU (CPI 43/100). Vetted reform government fragile.",severity:"low",confidence:"HIGH",probability:90,source:"Transparency Intl"},
+    ],
+    keyActors:["PM Zhelyazkov (GERB)","DANS (State Agency National Security)","Lukoil Neftochim (Russia-owned)","Russian Orthodox Church (Sofia Diocese)","NSA Bulgaria","Hristo Ivanov (anti-corruption)"],
+    news:[
+      "DANS expels 6 Russian 'diplomats' — largest expulsion since Cold War",
+      "Bulgaria joins EU Pact on Migration — external border reinforcement €500M",
+      "Lukoil Bulgaria sale negotiations — US pressure to transfer to non-Russian owner",
+      "Sofia court convicts arms trafficker supplying Yemen conflict via Bulgarian documentation",
+      "Greece-Bulgaria gas interconnector operational — reduces Russian dependency to 30%",
+    ],
+    economic:"GDP $100B. Defense 2.0% GDP. Lowest wages in EU — significant emigration (1M+ in Western Europe). Corruption structural barrier to investment. Tourism Black Sea growing. EU funds critical to GDP.",
+  },
+
+  CZE:{
+    summary:"Czech Republic has emerged as a leading Ukraine supporter within NATO, providing critical ammunition manufacturing capacity, Leopard 2 tanks, BVP-2 IFVs, and covert supply of Soviet-standard artillery munitions sourced from global stockpiles. PM Fiala government has built a coalition of like-minded NATO states (Czech-led '15+1' ammunition initiative) supplying 1 million artillery shells to Ukraine outside EU frameworks. BIS (domestic intelligence) has documented the most extensive Russian sabotage network in Central Europe.",
+    threats:[
+      {type:"Russian Sabotage",   description:"GRU Unit 29155 confirmed: Vrbetice arms depot explosion 2014 (2 dead) — Czech government expulsion of 18 Russian diplomats 2021. Network reactivated 2023-25.",severity:"high",confidence:"HIGH",probability:75,source:"BIS/BND"},
+      {type:"Russian Hybrid",    description:"BIS 2024 annual report: Russian influence in Czech media, pro-Kremlin blogs, and ANO party (former PM Babis) — EU audit of EU funds corruption also implicated.",severity:"medium",confidence:"HIGH",probability:80,source:"BIS"},
+      {type:"Assassination Risk", description:"Czech arms supply to Ukraine making Czech officials targets — BIS elevated protection status for defense ministry leadership.",severity:"medium",confidence:"MEDIUM",probability:40,source:"BIS/GCHQ"},
+    ],
+    keyActors:["PM Fiala (ODS)","BIS (Security Information Service)","UZSI (Foreign Intel)","Czech Army 4th Rapid Deployment Brigade","NATO Multinational Division North-East"],
+    news:[
+      "Czech ammunition initiative: 500,000 shells delivered to Ukraine — 15-nation coalition",
+      "BIS: GRU operative arrested at Prague airport — Vrbetice follow-on operation suspected",
+      "Czech Republic orders 24 F-35A fighters — largest defense acquisition in history",
+      "PM Fiala hosts 'Friends of Ukraine' defense ministers — Berlin Process output",
+      "Czech arms exports to Ukraine exceed €2B — largest per capita EU contributor",
+    ],
+    economic:"GDP $330B. Unemployment 2.6% — lowest in EU. Defense 2.1% GDP (above NATO target). Skoda/Volkswagen manufacturing hub. Arms industry: ZTS Nova (ammunition), Tatra (trucks) operating at capacity. EU funds: €24B 2021-27.",
+  },
+
+  SVK:{
+    summary:"Slovakia under PM Fico represents NATO's most problematic member after Hungary — Fico halted state military aid to Ukraine upon re-election in October 2023, parrots Russian narratives on NATO 'provocation,' and has threatened to cut off electricity to Ukraine. The BIS (Slovak intelligence) has been significantly politicized. NATO partners increasingly concerned about classified intelligence shared in councils being leaked via Slovak channels. Fico survived an assassination attempt in May 2024.",
+    threats:[
+      {type:"NATO Coherence",    description:"Fico government blocking consensus on Ukraine aid at NATO ministerial level. Slovak intelligence sharing of classified data with Russian-linked networks suspected.",severity:"high",confidence:"HIGH",probability:80,source:"NATO HQ/BND"},
+      {type:"Russian Penetration",description:"SIS (Slovak Intel) assessed as partially compromised — Fico associate contacts with Russian embassy documented. GRU use of Slovak diplomatic channels suspected.",severity:"high",confidence:"MEDIUM",probability:65,source:"BIS/Europol"},
+      {type:"Political Instability",description:"Fico assassination attempt May 2024 — survived. PS (opposition) and Fico coalition near parity — snap election possible. Domestic polarization at historic high.",severity:"medium",confidence:"HIGH",probability:70,source:"Open Source"},
+    ],
+    keyActors:["PM Fico (Smer-SD)","SIS (Slovak Intelligence Service)","PS Opposition (Simecka)","NATO SHAPE (liaison)","Slovak Arms Industry (ZTS, Konstrukta)"],
+    news:[
+      "Fico refuses to attend NATO Vilnius summit — sends deputy with non-committal statement",
+      "Slovak SIS director replaced — new appointment with Fico party ties raises NATO concerns",
+      "Slovakia-Ukraine gas transit deal: Fico threatens termination if Ukraine cuts Russian gas",
+      "Assassination attempt survivor: Fico hospitalized 3 months — government continuity maintained",
+      "Slovak opposition 'PS' party leads polls — 2025 election could reverse Ukraine aid halt",
+    ],
+    economic:"GDP $130B. Defense 1.8% GDP. Arms exports: Slovakia produced 155mm shells before Fico halt — factory retooling for alternative markets. Volkswagen Bratislava: largest EV plant in region. Gas transit (TurkStream): €0.5B annual revenue at risk.",
+  },
+
+  NLD:{
+    summary:"Netherlands serves as a critical NATO logistics hub and F-35 operator, hosting the primary European F-35 maintenance facility (RNLAF Woensdrecht), the NATO Communications and Information Agency (NCIA), and Alliance strategic airlift coordination at Eindhoven. Dutch intelligence (AIVD/MIVD) is assessed by US partners as one of NATO's most capable — MIVD penetrated Russian GRU computer network in 2014-2017 and provided critical warning intelligence to FBI. The Hague hosts ICC and ICJ — increasing Russian targeting.",
+    threats:[
+      {type:"Russian Hybrid",    description:"MIVD dismantled GRU network in 2017 (Cozy Bear/APT29). Russian retaliatory cyber operations targeting Dutch water management infrastructure. GRU intelligence officers expelled 2018 (OPCW targeting).",severity:"medium",confidence:"HIGH",probability:75,source:"MIVD/AIVD"},
+      {type:"Terrorism",         description:"AIVD: 80+ Salafist networks monitored. Somali and Syrian diaspora radicalization. 300+ jihadist travelers tracked. Low-probability, high-impact attack scenario sustained.",severity:"medium",confidence:"HIGH",probability:35,source:"AIVD"},
+      {type:"Chinese Espionage", description:"MIVD 2024: Chinese MSS targeting ASML semiconductor technology — export controls imposed. Dutch chipmaker ASML subject of state-level industrial espionage.",severity:"medium",confidence:"HIGH",probability:85,source:"MIVD/NSA"},
+    ],
+    keyActors:["PM Schoof (VVD-led coalition)","AIVD (Domestic Intel)","MIVD (Military Intel)","RNLAF (F-35 squadron)","NATO NCIA","ASML (strategic technology)","ICC/ICJ The Hague"],
+    news:[
+      "Netherlands delivers F-16 aircraft to Ukraine — first European NATO member transfer",
+      "MIVD: Chinese intelligence officer arrested attempting to recruit ASML engineer",
+      "Dutch F-35 maintenance center at Woensdrecht: 600+ aircraft supported annually for 10 allies",
+      "Netherlands leads MH17 ICC case — Dutch prosecutors indict 4 Russians in absentia",
+      "AIVD annual report: 'Russia threat elevated to highest level since Cold War'",
+    ],
+    economic:"GDP $1.1T. Defense 1.9% GDP (rising). Rotterdam port: largest in Europe — Ukraine grain corridor coordination. ASML monopoly on EUV lithography — strategic semiconductor chokepoint. Shell, ING, Philips global operations.",
+  },
+
+  LBY:{
+    summary:"Libya remains a fractured failed state eleven years after Gaddafi's fall — split between the UN-recognized GNU in Tripoli (backed by Turkey and Qatar) and the Tobruk-based parliament with Haftar's LNA (backed by UAE, Egypt, Russia). The Wagner Group (now Africa Corps) maintains est. 1,800 personnel in eastern Libya — Russia's primary foothold for Sahel operations and Mediterranean power projection. Libya is the primary staging point for African migration to Europe (150,000+ annually) and a proliferation source for MANPADS and small arms across the Sahel.",
+    threats:[
+      {type:"Civil War",          description:"GNU-LNA ceasefire nominal — fighting continues in south and Sirte oil crescent. LNA offensive on Tripoli possible. Oil facilities (NOC) flashpoint for resource conflict.",severity:"high",confidence:"HIGH",probability:75,source:"UN Panel of Experts/UNSMIL"},
+      {type:"Russian Presence",   description:"Africa Corps (Wagner successor) 1,800+ personnel in eastern Libya — air defense, mercenary combat role. MiG-29 and Su-24 aircraft painted in Libyan markings but flown by Russians.",severity:"high",confidence:"HIGH",probability:95,source:"AFRICOM/Bellingcat"},
+      {type:"Terrorism",          description:"ISIS-Libya and AQIM maintain active cells in Fezzan and along Sahel corridor — 50+ attacks annually. Human trafficking/migration control overlap with terrorist financing.",severity:"high",confidence:"HIGH",probability:85,source:"AFRICOM/UN"},
+      {type:"Migration",           description:"Libyan coast primary Mediterranean departure point — 150,000+ annually. EU-Libya cooperation (coast guard funding) enabling refoulement — human rights concerns.",severity:"medium",confidence:"HIGH",probability:95,source:"Frontex/UNHCR"},
+    ],
+    keyActors:["PM Dbeibah (GNU/Tripoli)","Khalifa Haftar (LNA)","Aguila Saleh (Tobruk HoR)","Africa Corps (Russia)","Turkish Forces (1,800 troops)","UAE/Egypt (LNA backers)","UNSMIL"],
+    news:[
+      "Africa Corps aerial activity over southern Libya: Su-24 strikes on Tuareg-linked groups",
+      "UN Panel: Russian mercenaries mining Libyan-Sudanese border — chokepoint for migration",
+      "LNA seizes Ras Lanuf oil terminal — NOC declares force majeure, 300K bpd offline",
+      "Turkey extends Libya military presence deal — Bayraktar TB3 drone deployment confirmed",
+      "Derna flood recovery: 4,000+ dead, international aid still blocked by governance dispute",
+    ],
+    economic:"GDP $50B (oil-dependent). NOC oil production: 1.2M bpd when stable — regularly disrupted by conflict. Per capita GDP theoretical — 65% of population in poverty. Dinar split (East/West) complicates commerce.",
+  },
+
+  KAZ:{
+    summary:"Kazakhstan under President Tokayev navigates a careful balancing act between Russia (primary security patron), China (primary economic partner), and the West (energy markets, investment). The January 2022 protests were suppressed with Russian CSTO intervention — Tokayev's political debt to Putin thereafter. Kazakhstan has quietly distanced itself from Russia's Ukraine war: refusing to recognize annexations, allowing Western companies to use Kazakh territory for sanctions evasion workarounds (legally murky), and hosting relocated Russian IT professionals. Primary tension: Tokayev wants economic sovereignty but needs Russian security guarantee.",
+    threats:[
+      {type:"Russian Pressure",   description:"CSTO intervention Jan 2022 established Russian leverage over Tokayev. Moscow uses energy transit dependency and Russian minority (19%) in northern Kazakhstan as pressure tools.",severity:"medium",confidence:"HIGH",probability:70,source:"CIA/EUISS"},
+      {type:"Sanctions Evasion",  description:"Kazakhstan increasingly used as sanctions evasion hub — re-export of dual-use goods to Russia documented by US Treasury. Pressure mounting to close loopholes.",severity:"medium",confidence:"HIGH",probability:85,source:"US Treasury/OFAC"},
+      {type:"China Dependency",   description:"China accounts for 30%+ of FDI — BRI transit country. Huawei 5G deployed nationwide. Chinese rare-earth interests in Kazakh deposits expanding.",severity:"medium",confidence:"MEDIUM",probability:80,source:"IISS"},
+      {type:"Domestic Stability", description:"Tokayev consolidating power post-2022 crisis. Nazarbayev family assets seized — elite conflict risk. Oil wealth distribution inequality driving periodic regional unrest.",severity:"low",confidence:"MEDIUM",probability:40,source:"Open Source"},
+    ],
+    keyActors:["President Tokayev","KNB (National Security Committee)","KAZENERGY (NOC)","Russian 36th Combined Arms Army (adjacent)","Chinese CNOOC/CNPC (energy)","Chevron (Tengiz field)"],
+    news:[
+      "Kazakhstan-EU enhanced partnership agreement: rare earths supply deal central provision",
+      "KNB: Tokayev dismisses Nazarbayev-era KNB chief — purge of old guard continues",
+      "Tengiz oil field expansion: $45B Chevron/Shell project adds 260,000 bpd capacity",
+      "Kazakhstan refuses to honor Russian request to extradite Ukraine-linked nationals",
+      "Astana hosts SCO summit — Tokayev positions as mediator between Russia and China",
+    ],
+    economic:"GDP $260B. Oil 60% of exports — Tengiz, Kashagan, Karachaganak fields. Chevron/Shell/Total dominant. Pipeline dependency: CPC (through Russia) primary — Trans-Caspian alternative viable but complex. Tenge stable at 450/USD.",
+  },
+
+  AFG:{
+    summary:"Afghanistan under Taliban (IEA) rule since August 2021 is in a state of acute humanitarian and governance collapse. The Taliban government remains internationally unrecognized. Al-Qaeda maintains presence with leadership council operating from Afghan soil per UN monitoring. ISIS-Khorasan (ISKP) conducted 2021-2024's most lethal attacks globally including operations in Russia (Moscow Crocus City Hall, 143 dead). 28M people require humanitarian assistance — world's largest crisis. Women excluded from education, employment, and public life.",
+    threats:[
+      {type:"Terrorism",          description:"ISKP operational: Crocus City Hall (Russia) 143 dead, multiple strikes in Iran, Pakistan, Central Asia. Afghanistan-based global planning capability. Foreign fighter recruitment expanding.",severity:"high",confidence:"HIGH",probability:85,source:"UN Monitoring Team/NGA"},
+      {type:"Al-Qaeda",           description:"Al-Qaeda Shura Council operating in Kunar and Nuristan provinces — Zawahiri killed 2022 Kabul, successor identified. Taliban 'hosting' violates Doha Agreement.",severity:"high",confidence:"HIGH",probability:80,source:"UN/CENTCOM"},
+      {type:"Humanitarian",       description:"95% of population food insecure. Healthcare collapsed. 28M require assistance. World Food Programme funding gap: 60%. Famine risk in Badakhshan and Ghor provinces.",severity:"critical",confidence:"HIGH",probability:95,source:"WFP/OCHA"},
+      {type:"Regional Spillover", description:"Tehrik-i-Taliban Pakistan (TTP) using Afghan territory for attacks on Pakistan. ISKP cross-border operations into Tajikistan and Uzbekistan. Iran-Taliban periodic border clashes.",severity:"high",confidence:"HIGH",probability:80,source:"CENTCOM/ISI"},
+    ],
+    keyActors:["Supreme Leader Akhundzada (Kandahar)","PM Akhund","Defense Min. Yaqoob Mujahid","ISKP","Al-Qaeda Shura","TTP (Pakistan Taliban)","UN OCHA","NDS (former, in exile)"],
+    news:[
+      "UN Special Rapporteur: Afghanistan under Taliban constitutes 'gender apartheid' — ICC referral proposed",
+      "ISKP attack on Pakistani consulate Jalalabad kills 6 — cross-border tension spikes",
+      "WFP: 50% funding cut forces reduction of food rations for 14M Afghans",
+      "Taliban ban on female NGO workers extended — 23 international NGOs suspend operations",
+      "China becomes first country to formally present ambassador credentials to Taliban government",
+    ],
+    economic:"GDP $14B (collapsed from $20B in 2021). Frozen Afghan central bank assets ($7B in US, $3.5B in Swiss) remain disputed. Opium: Taliban banned 2022 — heroin production down 95% but fentanyl precursor trade expanding. Lithium reserves $1T+ (assessed) — China in negotiation.",
+  },
+
+  // ── MEDIUM PRIORITY: Standard INTEL entries ──
+
+  SWE:{
+    summary:"Sweden joined NATO in March 2024 after 200 years of non-alignment, driven by Russia's invasion of Ukraine. Sweden's MUST (military intelligence) and SÄPO (domestic security) are among NATO's most capable — providing Nordic intelligence architecture and JAS Gripen fighter interoperability. Swedish defense industry (Saab, Volvo Aero) is critical NATO supply chain asset. The Gotland Island strategic position in the Baltic Sea is now a key NATO reinforcement priority.",
+    threats:[
+      {type:"Russian Hybrid",    description:"SÄPO 2024: Russian intelligence activity against Sweden at Cold War levels. GRU-linked sabotage attempts on Gotland undersea cables. Swedish nationals recruited as intelligence assets.",severity:"medium",confidence:"HIGH",probability:75,source:"SÄPO/MUST"},
+      {type:"Terrorism",         description:"SÄPO elevated threat level following Quran burning protests — Islamist attack risk from both domestic and imported networks.",severity:"medium",confidence:"HIGH",probability:45,source:"SÄPO"},
+      {type:"Baltic Sea",         description:"Gotland Island strategically critical — NATO reinforcement timeline under 72-hour threat scenario if undefended. Swedish A26 submarines key Baltic anti-access capability.",severity:"low",confidence:"HIGH",probability:60,source:"MUST/SHAPE"},
+    ],
+    keyActors:["PM Kristersson (M)","SÄPO (Domestic Security)","MUST (Military Intel)","Swedish Armed Forces (27,000)","Saab (Gripen, NLAW)","NATO ACO Nordics"],
+    news:[
+      "Swedish A26 submarine Blekinge commissioned — NATO Baltic Sea capability enhancement",
+      "SÄPO arrests two Russian intelligence officers posing as refugees — recruitment operation",
+      "Sweden contributes 8 JAS Gripen to NATO Baltic Air Policing rotation",
+      "Saab GlobalEye: NATO AWACS replacement contract — 6 aircraft ordered by Swedish Air Force",
+      "Gotland Island reinforcement: permanent battalion stationed after 7-year gap",
+    ],
+    economic:"GDP $590B. Defense 2.0% GDP (historic increase from 1.2%). Saab: JAS Gripen E export orders worth SEK 100B. SSAB steel strategic material for defense. Ericsson 5G competes with Huawei — banned from Swedish networks.",
+  },
+
+  NOR:{
+    summary:"Norway is NATO's Arctic anchor and a critical energy supplier to Europe — providing 25% of EU natural gas imports post-Russia cutoff. Norwegian intelligence (PST/NIS) has documented the most aggressive Russian intelligence posture in the High North, with Russian submarine and surface ship activity at levels unseen since the Cold War. Svalbard archipelago is a persistent tension point — Russian mining settlement at Barentsburg and disputed military activity.",
+    threats:[
+      {type:"Russian Arctic Ops", description:"Kola Peninsula Russian Northern Fleet activity elevated — Akula and Yasen-class submarine departures tracked. NATO GIUK gap monitoring critical.",severity:"medium",confidence:"HIGH",probability:85,source:"NIS/NSA"},
+      {type:"Energy Infrastructure",description:"Equinor platforms and North Sea pipelines primary Russian sabotage target — NorStream-2 context. Norwegian PSA elevated security posture post-Baltic pipeline incidents.",severity:"medium",confidence:"HIGH",probability:60,source:"PST/NSM"},
+      {type:"Svalbard",           description:"Russia disputes Norwegian sovereignty enforcement — Barentsburg coal mine as cover for electronic intelligence gathering. Arctic treaty ambiguity exploited.",severity:"low",confidence:"MEDIUM",probability:40,source:"NIS"},
+    ],
+    keyActors:["PM Støre (Labor)","PST (Police Security Service)","NIS (Foreign Intel)","Norwegian Armed Forces","Equinor (energy)","NATO MARCOM (Northwood liaison)"],
+    news:[
+      "Norway discovers suspected Russian spy drone near Melkøya LNG plant — third incident in 2024",
+      "Norwegian F-35 squadron operational — 52 aircraft replacing F-16 fleet fully by 2025",
+      "Equinor Troll platform: North Sea gas flows to UK and Germany at record 120 BCM/yr",
+      "PST annual threat report: 'Russia, China, Iran conducting intelligence activities against Norway'",
+      "Nordic-Baltic defence ministerial: joint procurement framework agreed in Oslo",
+    ],
+    economic:"GDP $580B (incl. sovereign wealth fund $1.7T — world's largest). Defense 2.0% GDP. Oil and gas 40% of exports. NBIM (sovereign fund) critical global investor — holds 1.5% of all global listed equities.",
+  },
+
+  DNK:{
+    summary:"Denmark is a core NATO member navigating significant strategic attention since US President Trump renewed demands for Greenland's cession in 2024-25. Greenland's Arctic position and rare-earth mineral reserves have elevated Denmark's geopolitical profile dramatically. Danish defence intelligence (FE) and domestic security (PET) document elevated Russian intelligence activity. Denmark co-chairs the Ukraine Defence Contact Group (Ramstein format) alongside Germany.",
+    threats:[
+      {type:"Greenland Pressure",  description:"Trump administration demands over Greenland sovereignty creating intra-NATO tension. US has not ruled out economic or military coercion. Danish military presence on Greenland reinforced.",severity:"medium",confidence:"HIGH",probability:70,source:"Open Source/FE"},
+      {type:"Russian Hybrid",     description:"FE: GRU operations targeting Danish defense industry (Terma, Thales Denmark) and undersea Baltic cable infrastructure. Agent networks in Danish Somali and Russian diaspora communities.",severity:"medium",confidence:"HIGH",probability:65,source:"FE/PET"},
+      {type:"Baltic Security",     description:"Danish Straits (Great Belt, Sound) — all Baltic Sea NATO naval transit requires Danish acquiescence. Russian submarine passage monitored continuously.",severity:"low",confidence:"HIGH",probability:70,source:"FE/NATO MARCOM"},
+    ],
+    keyActors:["PM Frederiksen (Social Democrats)","FE (Defence Intelligence)","PET (Domestic Security)","Danish Armed Forces","Greenland Home Rule Govt","NATO MARCOM"],
+    news:[
+      "Denmark announces largest defence investment since 1950s — 3% GDP target by 2030",
+      "Greenland Home Rule: '300% no' to US annexation — Danish parliament unanimous support",
+      "Danish F-35 Block 4: 27 aircraft operational — Baltic Air Policing lead nation 2025",
+      "PET arrests Russian GRU officer recruiting at Copenhagen University",
+      "Denmark-Germany: joint North Sea wind power interconnector for NATO energy resilience",
+    ],
+    economic:"GDP $420B. Defense spending doubled 2022-2025 — reaching 2% NATO target. Maersk (world's 2nd largest shipping company) home base — Houthi Red Sea attacks directly impact revenue. Pharmaceutical (Novo Nordisk) economy outsized: Ozempic represents 5%+ of Danish GDP.",
+  },
+
+  FIN:{
+    summary:"Finland joined NATO in April 2023 after 75 years of armed neutrality — bringing the longest Russian land border in NATO (1,340km) and one of Europe's most capable and combat-ready militaries. Finnish reserve system (870,000 trained reservists) is NATO's largest reserve force relative to population. SUPO (domestic security) and PVTIEDOS (military intelligence) have decades of Russia-monitoring expertise now fully integrated into NATO intelligence architecture. Finland's membership fundamentally changed the Baltic Sea strategic geometry.",
+    threats:[
+      {type:"Russian Border",     description:"Russian military infrastructure on Karelian side elevated — additional forces deployed post-NATO accession. Cross-border intelligence activity against Finnish border guards and military.",severity:"medium",confidence:"HIGH",probability:70,source:"SUPO/PVTIEDOS"},
+      {type:"Migration Hybrid",   description:"Russia directing asylum seekers (Somali, Syrian, Afghan) to Finnish-Russian Salla, Raja-Jooseppi crossings as hybrid warfare — border closed Nov 2023.",severity:"medium",confidence:"HIGH",probability:90,source:"SUPO/Frontex"},
+      {type:"Cyber",              description:"TRAFICOM (Finnish cyber authority): Russian cyberattacks on Finnish government and parliament elevated — DDoS, spear-phishing at highest recorded level.",severity:"medium",confidence:"HIGH",probability:85,source:"TRAFICOM/NCSC-FI"},
+    ],
+    keyActors:["PM Orpo (NCP)","SUPO (Security Intelligence Service)","PVTIEDOS (Military Intel)","Finnish Defence Forces (870K reserve)","NATO eFP Finland","Patria/NAMMO (defence industry)"],
+    news:[
+      "Finland closes all Russian border crossings — hybrid migration attack response sustained",
+      "Finnish Defence Forces: F-35A contract signed — 64 aircraft to replace Hornet fleet",
+      "SUPO: 5 Russian intelligence officers operating under diplomatic cover expelled",
+      "Finland's Lappeenranta port: NATO pre-positioned equipment hub activated",
+      "Finnish-Swedish joint brigade: first combined Nordic NATO formation operational",
+    ],
+    economic:"GDP $300B. Defense 2.3% GDP (above NATO target — highest increase in alliance history). Nokia 5G infrastructure providing NATO-grade communications. Paper/pulp exports down — replaced by tech and services. Defense industry growing 40% post-accession.",
+  },
+
+  EST:{
+    summary:"Estonia is NATO's most digitally advanced member and Russia's most vocal critic within the alliance. The 2007 Russian cyberattack on Estonian banking and government infrastructure (first nation-state cyber attack on NATO member) shaped Estonia's cyber strategy — NATO CCDCOE (Cyber Centre of Excellence) is in Tallinn. Estonia contributes 2.3% GDP to defense and has consistently argued for forward-deployed NATO forces since 2014. Estonian intelligence (KAPO/VALIS) provides some of the most detailed assessments of Russian activity within NATO.",
+    threats:[
+      {type:"Russian Invasion Risk",description:"25% Russian-speaking population in Ida-Viru county — Moscow information operations exploit. NATO Article 5 credibility test scenario for Narva (border city).",severity:"high",confidence:"HIGH",probability:25,source:"KAPO/SHAPE"},
+      {type:"Cyber",              description:"NCSC Estonia: 2,000+ significant cyber incidents 2024. GRU Sandworm/APT28 targeting Estonian e-government infrastructure. X-Road government data system under persistent attack.",severity:"high",confidence:"HIGH",probability:90,source:"RIA/NCSC"},
+      {type:"Hybrid",             description:"KAPO 2024: Russian financing of 'Night Wolves' motorcycle club chapter in Narva. Bronze Soldier revisionism in Russian state media targeting Russian-speakers.",severity:"medium",confidence:"HIGH",probability:80,source:"KAPO"},
+    ],
+    keyActors:["PM Kallas (now EU Foreign Policy Chief)","KAPO (Domestic Security)","VALIS (Foreign Intel)","Estonian Defence Forces + 60K reserves","NATO CCDCOE Tallinn","UK eFP Battle Group (Tapa)"],
+    news:[
+      "Estonia PM Kallas appointed EU High Representative — strongest Russia hawk in top EU role",
+      "NATO eFP: UK-led battle group expanded to brigade — 5,000 troops at Tapa base",
+      "KAPO arrests head of Russian-language TV channel — GRU financing proven",
+      "Estonian defence budget: 3% GDP — highest in NATO relative to GDP",
+      "Tallinn e-governance: Estonia pilots AI-assisted decision-making for NATO cyber defence",
+    ],
+    economic:"GDP $40B. Defence 3.0% GDP — highest in NATO. Digital economy: e-Residency, Skype (founded here), Bolt, Pipedrive. Unemployment 6%. Inflation post-2022 energy shock: 22% peak, normalizing to 4%.",
+  },
+
+  LVA:{
+    summary:"Latvia hosts NATO's multinational divisional headquarters (MND North) in Ādaži and a Canadian-led Enhanced Forward Presence battle group. Latvia's 25% Russian-speaking population (concentrated in Riga and Latgale) represents a persistent hybrid warfare vulnerability that Moscow has repeatedly exploited. The VDD (domestic intelligence) is tracking Russian information operations at unprecedented scale — coordinated Facebook/YouTube campaigns with fake 'Latvia is failing' narratives.",
+    threats:[
+      {type:"Russian Hybrid",    description:"VDD 2024: Coordinated information operations in Russian language targeting Latgale (high Russian speaker concentration). Pro-Kremlin 'Local Newspaper' network identified as GRU product.",severity:"high",confidence:"HIGH",probability:85,source:"VDD/NATO StratCom"},
+      {type:"Russian Minority",   description:"Latgale region — Russian-speaking majority. Moscow narrative: 'Latvian government oppresses Russians.' Language rights legislation creating legitimate grievances exploited by GRU.",severity:"medium",confidence:"HIGH",probability:70,source:"VDD"},
+      {type:"Infrastructure",    description:"Rail Baltica construction — GRU assessed targeting disruption of NATO resupply corridor. Riga port (largest in Baltics) targeted for disinformation about NATO use.",severity:"medium",confidence:"HIGH",probability:55,source:"VDD/SHAPE"},
+    ],
+    keyActors:["PM Silina (Unity)","VDD (Security Police)","SAB (Foreign Intel)","National Armed Forces + 25K active","Canadian NATO eFP Battle Group","NATO MND North HQ (Ādaži)"],
+    news:[
+      "Latvia raises defence budget to 3.0% GDP — third consecutive year above NATO target",
+      "VDD dismantles Riga-based GRU disinformation network — 12 arrests",
+      "Rail Baltica: Latvian section on track — NATO pre-positioning milestone",
+      "Canada extends eFP commitment — CF-18 aircraft and 1,500 troops through 2030",
+      "Latvia bans Russian state TV — 5 additional Russian-language channels sanctioned",
+    ],
+    economic:"GDP $43B. Unemployment 6.5%. Transit economy (Riga port) disrupted by Russia sanctions — Russian cargo diverted. Defence industry growing: Latvian-made drones supplied to Ukraine. EU cohesion funds €4.5B.",
+  },
+
+  LTU:{
+    summary:"Lithuania faces the unique threat of the Suwalki Gap — the 65km land corridor between Belarus and Kaliningrad that is NATO's most vulnerable strategic chokepoint. A Russian and Belarusian seizure of the Suwalki Gap would isolate the Baltic states from the rest of NATO's continental territory. Germany's Bundeswehr brigade is deploying permanently to Lithuania (first permanent NATO brigade deployment since the Cold War) with a 2027 completion target. VSD (domestic security) is tracking Russian intelligence at record levels.",
+    threats:[
+      {type:"Suwalki Gap",        description:"65km Suwalki Corridor between Kaliningrad and Belarus is NATO's single most vulnerable geographic chokepoint. Russian exercise scenarios repeatedly rehearse seizure. German brigade deployment direct response.",severity:"high",confidence:"HIGH",probability:20,source:"SHAPE/DIA"},
+      {type:"Kaliningrad",        description:"Kaliningrad Oblast: Iskander-M nuclear-capable missiles, S-400, Baltic Fleet naval base — offensive posture against NATO Baltic members and Poland.",severity:"high",confidence:"HIGH",probability:85,source:"SHAPE/IMINT"},
+      {type:"Russian Hybrid",    description:"VSD: 200+ Russian intelligence contacts identified in Lithuanian society — politicians, businessmen, journalists. Hybrid attack on Lithuanian rail infrastructure thwarted 2024.",severity:"medium",confidence:"HIGH",probability:75,source:"VSD"},
+    ],
+    keyActors:["PM Skvernelis","VSD (State Security Dept)","VR2 (Military Intel)","Lithuanian Armed Forces + 18K active","German Bundeswehr Brigade (deploying)","NATO eFP Battle Group"],
+    news:[
+      "German Bundeswehr Lithuania Brigade: first 2,000 troops arrive — 5,000 total by 2027",
+      "Lithuania invests €1.3B in Suwalki Gap defensive fortifications",
+      "VSD: Russian-Belarusian drone violated Lithuanian airspace 5 times in 2024",
+      "Lithuania restricts Kaliningrad transit — EU approves as lawful sanctions implementation",
+      "Lithuanian defence spending: 3.5% GDP — fastest increase in alliance history",
+    ],
+    economic:"GDP $75B. Defence 3.5% GDP. IT sector: Vilnius emerging as fintech hub. Rail Baltica transit hub. Energy: Klaipeda LNG terminal provides Baltic energy independence from Russia. Economy robust — 3% growth.",
+  },
+
+  BIH:{
+    summary:"Bosnia-Herzegovina remains Europe's most fragile post-conflict state — the Dayton Peace Agreement architecture is under systematic assault from Republika Srpska (RS) President Milorad Dodik, who openly seeks RS secession and alignment with Serbia and Russia. Dodik has refused RS participation in the Bosnian state court, military, and tax authority. The EU/NATO enlargement process is the primary tool for stabilization — but progress is conditional on rule of law reforms being blocked by Dodik. The High Representative (Christian Schmidt) has imposed over 20 laws, constitutionally contested.",
+    threats:[
+      {type:"Secession",          description:"Dodik systematically building parallel RS state structures — undermining Dayton entity borders and state institutions. RS secession would create EU's first internal breakup scenario.",severity:"high",confidence:"HIGH",probability:45,source:"EUFOR/OHR"},
+      {type:"Russian Influence",  description:"Russia provides Dodik's political cover at UN Security Council — veto on any enforcement mechanism. GRU uses Banja Luka (RS capital) as regional intelligence hub.",severity:"high",confidence:"HIGH",probability:90,source:"EUFOR/OHR"},
+      {type:"Ethnic Tension",     description:"Intercommunal tension between Bosniaks, Serbs, and Croats — incidents up 30% since 2022. War crime revisionism normalized in RS curricula and media.",severity:"medium",confidence:"HIGH",probability:55,source:"EUFOR"},
+    ],
+    keyActors:["PM Borjana Kristo","Milorad Dodik (RS President)","High Representative Schmidt (EU/OHR)","EUFOR Althea (600 troops)","SIS-BiH (state security)","Serbian Orthodox Church","Russia UN VETO"],
+    news:[
+      "US sanctions Dodik — Magnitsky Act designation for undermining Dayton Agreement",
+      "EUFOR Althea reinforced to 1,100 troops — first increase since 2010",
+      "BiH EU candidate status confirmed — accession negotiations opened conditionally",
+      "Dodik refuses to appear at BiH state court — RS parallel institutions widening",
+      "Sarajevo car bombing investigation: RS intelligence implicated by BiH prosecutors",
+    ],
+    economic:"GDP $24B. Unemployment 14% (official) — 35% youth. Remittances 10% GDP (diaspora in Germany, Austria). Grey economy: 35%+ of GDP. EU IPA funds: €2.5B 2021-27 conditional on reforms. Brain drain: 150,000+ emigrants annually.",
+  },
+
+  HRV:{
+    summary:"Croatia is a stable NATO and EU member, serving as NATO's primary Adriatic Sea strategic point and host to NATO forces in the region. Croatia's post-Yugoslav military contains experienced combat veterans and has contributed ISAF/Resolute Support forces to NATO operations. The country's Adriatic coastline and island geography make it a key NATO maritime surveillance post. Croatia joined the Eurozone in January 2023 — completing its Euro-Atlantic integration.",
+    threats:[
+      {type:"Organised Crime",    description:"Balkan drug trafficking routes (heroin, cocaine) through Adriatic — Croatian ports used by Balkan cartels. Split port container scanning at 8% — smuggling exploitation risk.",severity:"medium",confidence:"HIGH",probability:80,source:"Europol/SOA"},
+      {type:"Russian Influence",  description:"SOA (security agency) assessing Russian-linked business networks in Croatian real estate and energy — particularly Rijeka port area.",severity:"low",confidence:"MEDIUM",probability:45,source:"SOA"},
+    ],
+    keyActors:["PM Plenković (HDZ)","SOA (Security and Intelligence Agency)","VSOA (Military Intel)","Croatian Armed Forces","NATO Headquarters Southeast (Zagreb)"],
+    news:[
+      "Croatia to acquire 12 Rafale fighters — ordered 2021, final deliveries 2024",
+      "Dubrovnik cruise port: record 1.1M arrivals — capacity and environmental concerns",
+      "Croatia-Serbia: Vukovar reconciliation process — war crimes prosecution progress",
+      "SOA: Russian oligarch property purchases in Dalmatia under security review",
+      "Croatia joins Schengen Area fully — border checks removed January 2023",
+    ],
+    economic:"GDP $80B. Tourism 25% GDP — Adriatic coastal economy. Defence 1.8% GDP. EU funds: €10B 2021-27. Eurozone membership Jan 2023. Unemployment 6% — lowest since independence.",
+  },
+
+  AUT:{
+    summary:"Austria's constitutionally enshrined neutrality — established by the 1955 State Treaty — creates a unique position in European security architecture. Vienna hosts UN agencies, OSCE, OPEC, and IAEA, making it a global diplomatic hub. However, Austrian neutrality has been increasingly questioned post-Ukraine invasion: Austrian banks (Raiffeisen, Erste) remain in Russia generating sanctions-evasion concerns, and the BVT (domestic intelligence) was compromised by Russian and Turkish intelligence in 2019. Austria is assessed as the most penetrated EU intelligence service by adversary services.",
+    threats:[
+      {type:"Intelligence Penetration",description:"BVT 2019 scandal: internal data provided to Russian and Turkish intelligence. Directorate for State Protection (DSN) rebuilt but legacy compromise extent unknown.",severity:"high",confidence:"HIGH",probability:75,source:"BND/CIA"},
+      {type:"Russian Money Laundering",description:"Austrian banks (Raiffeisen) maintain Russian operations — EU pressure for divestment ongoing. Vienna real estate used for Russian oligarch asset sheltering.",severity:"medium",confidence:"HIGH",probability:85,source:"EU Commission/FATF"},
+      {type:"Iranian Influence",  description:"Vienna JCPOA negotiations — Iranian intelligence using diplomatic presence for regional operations. IRGC-linked individuals tracked in Vienna.",severity:"medium",confidence:"HIGH",probability:60,source:"BVT/DSN"},
+    ],
+    keyActors:["President Van der Bellen","Chancellor Nehammer (OVP)","DSN (Directorate State Protection)","Raiffeisen Bank International","IAEA Vienna","OSCE"],
+    news:[
+      "Raiffeisen Bank: EU ultimatum to exit Russia by end 2025 — €2B exposure at risk",
+      "DSN dismantles Russian money laundering network in Vienna real estate sector",
+      "Austria rejects EU defence spending coordination — neutrality constitutional constraint",
+      "IAEA Board: Iran briefing in Vienna — 60% enrichment stockpile growing",
+      "Austrian FPÖ (Russia-aligned) wins elections — Kickl chancellor-candidate raises NATO partner alarm",
+    ],
+    economic:"GDP $470B. Unemployment 5%. Vienna financial hub — Raiffeisen Russian exposure €2B. Tourism (Alps, culture) €40B. Energy: Austria still 50%+ Russian gas dependent despite diversification efforts.",
+  },
+
+  CHE:{
+    summary:"Switzerland's neutrality is under unprecedented pressure — the country's adoption of EU sanctions on Russia broke with historical practice and triggered Russian counter-designation. Geneva hosts UN European HQ, ICRC, and WHO — Switzerland's diplomatic role in Ukraine-Russia prisoner exchanges and humanitarian corridors is significant. The country's banking sector (UBS post-Credit Suisse) faces continued scrutiny over Russian oligarch asset management. Switzerland joined the EU's 13th sanctions package in 2024.",
+    threats:[
+      {type:"Sanctions Pressure",  description:"Switzerland adopted EU Russia sanctions — unprecedented. Russian counter-designation affects Swiss investments in Russia. GRU has identified Swiss financial system as sanctions evasion target.",severity:"medium",confidence:"HIGH",probability:60,source:"FEDPOL/SRC"},
+      {type:"Espionage Hub",       description:"Geneva and Zurich densely populated with foreign intelligence services using UN, WHO, WTO covers. SRC (intelligence) estimates 200+ intelligence officers from 50 states operating.",severity:"medium",confidence:"HIGH",probability:99,source:"SRC"},
+      {type:"Russian Assets",      description:"UBS estimates CHF 200B+ in Russian-linked private banking. Asset freeze compliance partially effective — complex ownership structures obscure beneficial ownership.",severity:"medium",confidence:"HIGH",probability:80,source:"FINMA/FATF"},
+    ],
+    keyActors:["Federal Council (7-member executive)","NDB/SRC (Federal Intelligence Service)","FEDPOL","UBS (banking)","ICRC (Geneva)","UN European HQ (Geneva)"],
+    news:[
+      "Switzerland joins 13th EU Russia sanctions package — breaking 200-year neutrality precedent",
+      "SRC: 3 Russian intelligence officers expelled from Geneva UN mission",
+      "Switzerland-Ukraine peace summit at Bürgenstock — Russia absent, 90 nations attend",
+      "UBS: CHF 150B+ Russian client assets flagged for enhanced due diligence",
+      "Swiss F-35A acquisition confirmed — 36 aircraft, neutrality-compatible defence posture",
+    ],
+    economic:"GDP $870B. UBS assets $5T (post-Credit Suisse). CHF safe haven — appreciated 15% since 2022. Pharma (Roche, Novartis) and precision engineering dominant. Banking under regulatory pressure — FINMA enforcement record.",
+  },
+
+  BEL:{
+    summary:"Belgium hosts NATO's political headquarters (Mons/Evere), SHAPE (Allied Command Operations), and the EU's principal institutions — making Brussels the single most politically significant city in the Western alliance. This concentration of high-value targets makes Belgium a primary focus of Russian and Chinese intelligence operations. VSSE (state security) and ADIV (military intelligence) document the highest per-capita density of foreign intelligence officers of any NATO capital. The Zaventem airport handles 85% of NATO diplomatic traffic.",
+    threats:[
+      {type:"Intelligence Saturation",description:"VSSE: 200+ known hostile intelligence officers in Brussels — GRU, SVR, FSB, MSS all active using EU and NATO diplomatic covers. NATO HQ perimeter surveillance operations ongoing.",severity:"high",confidence:"HIGH",probability:95,source:"VSSE/ADIV"},
+      {type:"Terrorism",          description:"2016 Brussels/Zaventem attacks — 32 dead. Belgian jihadist population (500+ Syria travelers) among highest per capita in Europe. OCAM elevated threat level.",severity:"medium",confidence:"HIGH",probability:40,source:"VSSE/OCAM"},
+      {type:"Russian Interference",description:"European Parliament Russian influence operation: Qatargate successor — 'Voice of Europe' network funded Russian propaganda via Belgian MEPs. EC investigation ongoing.",severity:"medium",confidence:"HIGH",probability:80,source:"VSSE/EU OLAF"},
+    ],
+    keyActors:["PM De Wever (NVA)","VSSE (State Security Service)","ADIV (Military Intel)","NATO HQ Brussels","SHAPE Mons","Europol (The Hague — coordinates via Brussels)"],
+    news:[
+      "Belgium arrests MEP for Russian 'Voice of Europe' propaganda network — second Qatargate",
+      "NATO HQ new building: hardened against GRU electronic intelligence — €1.2B facility",
+      "Belgium raises defence to 2.0% GDP 2025 — first time meeting NATO target since Cold War",
+      "VSSE: Chinese MSS operation targeting NATO logistics data via Brussels IT contractors",
+      "Belgian F-35A: 34 aircraft ordered — replacing F-16 fleet, delivery 2025-2030",
+    ],
+    economic:"GDP $620B. Unemployment 5.5%. Diamond trade (Antwerp): €40B — OFAC concerns over Russian diamond sanctions compliance. Port of Antwerp: 2nd largest in Europe — NATO supply chain critical. EU institutions contribute €20B+ to Belgian economy.",
+  },
+
+  ALB:{
+    summary:"Albania has been a loyal NATO member since 2009 and has emerged as a strong Ukraine supporter, allowing NATO to use its airspace and providing ammunition from its Cold War-era stockpiles. Prime Minister Rama's government has maintained a consistent Euro-Atlantic orientation. Albania opened EU accession negotiations in 2022 — progress conditional on rule of law reforms. SHISH (intelligence) cooperates closely with US CIA on Islamist networks and organized crime.",
+    threats:[
+      {type:"Organised Crime",    description:"Albanian organized crime (Besa group, various) control European cocaine distribution — Antwerp port a primary route. €10B+ annual revenue. State capture concerns in judicial sector.",severity:"medium",confidence:"HIGH",probability:90,source:"Europol/DEA"},
+      {type:"Russian Influence",  description:"Russian influence operations targeting anti-EU sentiment — SHISH assesses Russian funding of Albanian opposition media. Montenegro and North Macedonia alignment risk.",severity:"low",confidence:"MEDIUM",probability:40,source:"SHISH"},
+    ],
+    keyActors:["PM Rama (SP)","SHISH (National Intelligence Service)","AISI (Military Intel)","Albanian Armed Forces (8,000)","US SOCOM (training)","NATO Tirana HQ"],
+    news:[
+      "Albania hosts NATO Joint Special Operations University forward element — Tirana",
+      "EU Albania: rule of law benchmark progress — 3 judicial reform laws passed",
+      "SHISH operation dismantles fentanyl precursor trafficking network — Turkey-Albania axis",
+      "Albania: Cold War bunker ammunition to Ukraine — 50,000 artillery shells",
+      "Rama visits Kyiv — strongest Balkans solidarity statement with Ukraine",
+    ],
+    economic:"GDP $23B. Remittances 8% GDP. Tourism growing — Albanian Riviera emerging. Energy: Drin hydroelectric cascade 95% of electricity. Emigration: 40% of working-age population abroad. EU accession remains primary growth catalyst.",
+  },
+
+  MKD:{
+    summary:"North Macedonia joined NATO in 2020 following resolution of the naming dispute with Greece (Prespa Agreement) and opened EU accession negotiations in 2022. A small but strategically positioned state in the central Balkans, North Macedonia faces persistent Russian and Serbian disinformation targeting the Prespa Agreement and NATO alignment. The ANB (intelligence) has limited resources but cooperates with US and Bulgarian counterparts on organized crime and hybrid threats.",
+    threats:[
+      {type:"Russian Disinformation",description:"Systematic Russian and Serbian media campaign attacking Prespa Agreement legitimacy — arguing NATO membership was 'forced.' Targeting ethnic Macedonian nationalist sentiment.",severity:"medium",confidence:"HIGH",probability:80,source:"ANB/EUvsDisinfo"},
+      {type:"Organised Crime",    description:"North Macedonia as transit route for Balkan heroin and migrant smuggling — ANB overwhelmed by scope. Corruption in customs and border police documented.",severity:"medium",confidence:"HIGH",probability:85,source:"Europol/ANB"},
+    ],
+    keyActors:["President Pendarovski","ANB (National Security Agency)","Army of North Macedonia","NATO KFOR (Kosovo liaison)","Frontex"],
+    news:[
+      "North Macedonia hosts NATO military exercise — first 'defender' iteration since membership",
+      "ANB: Russian disinformation network dismantled ahead of 2024 parliamentary elections",
+      "EU accession: Bulgarian veto on language/history lifted — negotiations proceed",
+      "North Macedonia defence budget increase: 2.0% GDP commitment by 2028",
+      "VMRO-DPMNE election win — new government reaffirms NATO/EU commitment despite Russian pressure",
+    ],
+    economic:"GDP $15B. Unemployment 13% — youth 30%+. EU trade 75% of exports. Mining: nickel, lead, zinc. Remittances 15% GDP. Brain drain significant — EU accession is economic lifeline narrative.",
+  },
+
+  TUN:{
+    summary:"Tunisia under President Saied has undergone a constitutional coup — concentrating power in the presidency after 2019-2021 democratic gains. The country is a critical migration departure and transit point for sub-Saharan African migrants crossing to Italy (Lampedusa). Jihadist networks in the Tunisia-Libya-Algeria triangle remain active. Saied's economic nationalism, rejection of IMF conditions, and anti-migrant rhetoric align with populist trends threatening Tunisia's historic role as the Arab Spring's only democratic success story.",
+    threats:[
+      {type:"Political Regression",description:"Saied dissolved parliament Feb 2022, rewrote constitution — concentrating all power in presidency. Opposition imprisoned. EU and US struggling to balance migration cooperation with democracy promotion.",severity:"medium",confidence:"HIGH",probability:90,source:"Freedom House/US State Dept"},
+      {type:"Terrorism",           description:"JICA/DGSE tracking Tunisian ISIS networks in Sirte (Libya) and Kasserine governorate. 6,000+ Tunisian jihadist travelers — world's largest per capita ISIS recruitment.",severity:"medium",confidence:"HIGH",probability:60,source:"DGSI/DGSN"},
+      {type:"Migration",           description:"Sfax departure point for 60,000+ annual Mediterranean crossings — Italy primary destination. EU-Tunisia deal: €100M in exchange for coast guard cooperation.",severity:"medium",confidence:"HIGH",probability:95,source:"Frontex/UNHCR"},
+      {type:"Economic",            description:"IMF program suspended — Saied rejected conditions. Foreign reserves at 3 months import cover. Bread subsidies consuming 4% GDP. Debt service crisis by 2026 without external support.",severity:"medium",confidence:"HIGH",probability:80,source:"IMF/World Bank"},
+    ],
+    keyActors:["President Saied","DGSE (Tunisian Intelligence)","DGSN (National Security)","Ennahda Party (banned)","EU Border Assistance Mission","IMF"],
+    news:[
+      "EU-Tunisia migration deal: €105M in coast guard funding — 30,000 deportations facilitated",
+      "Saied arrests Ennahda leadership — 20+ jailed including former PM Ghannouchi",
+      "IMF: Tunisia program suspended — $1.9B facility on hold pending policy conditions",
+      "DGSN disrupts cell linked to Libyan ISIS affiliate — Kasserine raids",
+      "Lampedusa crisis: 10,000 Tunisian arrivals in 72 hours — Meloni declares emergency",
+    ],
+    economic:"GDP $46B. Unemployment 16% (youth 40%). Tourism €2B — partial recovery. Phosphates (5th globally): OCP competition. EU association agreement (DCFTA) stalled. IMF deal essential — reserves 90 days import cover.",
+  },
+
+  DZA:{
+    summary:"Algeria is Europe's third-largest natural gas supplier and has dramatically increased strategic importance post-Russia's invasion of Ukraine, as Southern European states (Italy, Spain) seek Russian gas alternatives. President Tebboune's government maintains historic non-alignment doctrine while tilting toward Russia at UN (abstentions not condemnations). Algeria-Morocco rivalry is the defining regional geopolitical fault line — both states armed to historical highs. Algeria's DRS (intelligence) is one of the most capable in Africa, shaped by decades of brutal civil war (1991-2002).",
+    threats:[
+      {type:"Terrorism",           description:"AQIM and GSIM (Sahel-linked) active in border regions with Mali, Niger, Libya. Algerian DRS conducting cross-border operations in Sahel — extended without UN authorization.",severity:"medium",confidence:"HIGH",probability:70,source:"AFRICOM/DGSE"},
+      {type:"Morocco Rivalry",     description:"Algeria-Morocco break in diplomatic relations (2021). Sahara dispute as proxy — Algeria funds Polisario Front. Military buildup both sides: Algeria $22B defence budget, Morocco $5.4B.",severity:"medium",confidence:"HIGH",probability:65,source:"IISS/SIPRI"},
+      {type:"Succession",          description:"President Tebboune (78) health concerns. Army (DRS) retains real power — civilian-military boundary opaque. Post-Bouteflika system not institutionalized.",severity:"medium",confidence:"MEDIUM",probability:45,source:"CIA/EUISS"},
+      {type:"Sahel Collapse",      description:"Niger, Mali military coups removing French forces destabilizing southern border — AQIM exploiting security vacuum. Wagner/Africa Corps in Mali providing Russian cover.",severity:"medium",confidence:"HIGH",probability:75,source:"AFRICOM"},
+    ],
+    keyActors:["President Tebboune","DRS (Intelligence)","Chief of Staff Saïd Chanegriha","Sonatrach (NOC — gas/oil)","AQIM","Polisario Front (Western Sahara)","ENI (Italian partner)"],
+    news:[
+      "Algeria-Italy gas deal: Transmed pipeline capacity doubled — 35 BCM/yr replacing Russian supply",
+      "Algeria-Morocco: aerial confrontation near Western Sahara — no shots fired",
+      "DRS cross-border strike on GSIM camp in northern Mali — government undisclosed",
+      "Sonatrach: €50B investment plan 2025-2030 — LNG export capacity expansion",
+      "Tebboune reelected with 94% — opposition describes vote as 'managed exercise'",
+    ],
+    economic:"GDP $220B. Hydrocarbon exports 95% of revenues. Gas reserves: 2.3 TCM (world's 10th). Sonatrach revenue: $50B/yr. Non-oil economy: 30% unemployment youth. FX reserves $70B — adequate cushion for transition.",
+  },
+
+  MAR:{
+    summary:"Morocco has emerged as a key US and EU partner — the first African country to normalize relations with Israel under Trump's Abraham Accords in exchange for US recognition of Western Sahara sovereignty. Morocco hosts significant US intelligence infrastructure (Agadir monitoring station) and participates in African Lion exercises annually. The Moroccan intelligence service (DGED) conducted the NSO Pegasus spyware operation targeting Algerian officials, French journalists, and EU politicians — creating diplomatic friction with Paris.",
+    threats:[
+      {type:"Algeria Rivalry",    description:"Western Sahara territorial dispute and Algeria backing of Polisario Front define strategic competition. Military balance tilts Morocco (F-16s, Patriot, Reaper drones) but Algeria has superior quantity.",severity:"medium",confidence:"HIGH",probability:65,source:"IISS/SIPRI"},
+      {type:"Terrorism",          description:"BCIJ (counter-terrorism) disrupted 500+ plots 2016-2025. Sahel jihadist networks recruit in northern Morocco — Rif region historical hotspot. ISIS returnees from Libya.",severity:"medium",confidence:"HIGH",probability:55,source:"BCIJ/DGED"},
+      {type:"Pegasus Scandal",    description:"Morocco-purchased NSO Pegasus spyware used against French officials, EU politicians, Algerian military — triggered France-Morocco diplomatic incident. DGED capability advanced but legally problematic.",severity:"medium",confidence:"HIGH",probability:90,source:"Citizen Lab/Amnesty"},
+      {type:"Migration",          description:"Morocco is primary transit and departure country for sub-Saharan migration to Spain (Canary Islands, Ceuta, Melilla). Spain-Morocco migration cooperation deal — used as political leverage by Rabat.",severity:"low",confidence:"HIGH",probability:85,source:"Frontex"},
+    ],
+    keyActors:["King Mohammed VI","DGED (External Intelligence)","DGST (Domestic Security)","BCIJ (Counter-Terrorism)","Royal Moroccan Armed Forces","NSO Group (Pegasus)","US AFRICOM"],
+    news:[
+      "Morocco-US: F-35A negotiations advanced — 24 aircraft conditional on Israel-Morocco normalisation progress",
+      "DGED exposed targeting 50,000 phones with Pegasus — EU Parliament investigation",
+      "Morocco earthquake response: Israeli rescue team deployed — Abraham Accords practical cooperation",
+      "Western Sahara: Morocco builds 3,000km berm — Polisario cross-berm attacks increasing",
+      "Morocco-Spain migration deal: 75% reduction in Canary Islands crossings in exchange for agricultural workers access",
+    ],
+    economic:"GDP $140B. Phosphates: 70% of global reserves — Office Chérifien des Phosphates (OCP) dominant. Tourism €9B. Renewables: Noor solar complex 580MW. FDI growing: automotive (Renault, PSA), aerospace. Remittances €10B.",
+  },
+
+  UZB:{
+    summary:"Uzbekistan under President Mirziyoyev has implemented cautious liberalisation compared to the Karimov era, attracting FDI and improving human rights optics while maintaining authoritarian political control. Uzbekistan's refusal to recognize Russia's annexations and its position as Kazakhstan's southern neighbour makes it a critical Central Asian buffer. SSS (national security) maintains extensive surveillance architecture. China's BRI transit role and gas imports from Russia create competing dependency pressures.",
+    threats:[
+      {type:"Russian Pressure",   description:"Russia sanctions on Uzbek goods if Tashkent assists Western sanctions evasion monitoring. Labor migration (3M+ Uzbeks in Russia) as hostage to geopolitical compliance.",severity:"medium",confidence:"HIGH",probability:60,source:"CIA/EUISS"},
+      {type:"China Dependency",   description:"BRI investment dominates infrastructure — Huawei nationwide, CNPC energy. Chinese debt-to-GDP growing. Uighur minority issue creates complex Beijing leverage.",severity:"medium",confidence:"MEDIUM",probability:70,source:"IISS"},
+      {type:"Terrorism",           description:"ISKP active in Fergana Valley — cross-border with Kyrgyzstan and Tajikistan. Uzbek nationals among highest ISKP recruits globally. SSS operates aggressively against real and perceived Islamists.",severity:"medium",confidence:"HIGH",probability:65,source:"CENTCOM/UN"},
+      {type:"Karakalpakstan",     description:"2022 protests over constitutional changes removing Karakalpakstan's right to secession — SSS killed 21. Grievances unaddressed — recurrence risk.",severity:"low",confidence:"HIGH",probability:35,source:"HRW/Amnesty"},
+    ],
+    keyActors:["President Mirziyoyev","SSS (Security Service)","Russian 201st Military Base (Tajikistan, adjacent)","CNPC/Gazprom (energy)","ISKP","US CENTCOM (liaison)"],
+    news:[
+      "Uzbekistan-EU enhanced partnership: $12B trade facilitation — sanctions evasion monitoring agreed",
+      "SSS dismantles ISKP cell in Tashkent — 12 arrested, weapons cache seized",
+      "Uzbekistan joins Belt and Road Initiative rail expansion — Peshawar-Kabul-Tashkent corridor",
+      "Mirziyoyev reelected with 87% — opposition candidates approved by SSS",
+      "Uzbekistan-Germany critical minerals deal: rare earths supply chain diversification",
+    ],
+    economic:"GDP $90B. Growth 6% — fastest in Central Asia. Cotton/textiles 20% exports (child labour reforms underway). Gas reserves significant — Gazprom contract reviewed. Remittances (from Russia) $9B — declining due to war sanctions. Tashkent emerging as Central Asian financial hub.",
+  },
+
+  PAK:{
+    summary:"Pakistan confronts a simultaneous triple crisis: economic (IMF-dependent, $350B debt), security (TTP insurgency killing 2,000+/year, ISKP cross-border attacks), and political (PM Shehbaz Sharif governing with PTI (Imran Khan) imprisoned and opposition fragmented). Pakistan's nuclear arsenal (170+ warheads) and India-Pakistan nuclear standoff remain the subcontinent's primary strategic risk. China's CPEC investment ($65B+ committed) creates structural PRC leverage over Pakistani foreign policy. Relations with Afghanistan (Taliban) are at their worst since 2001.",
+    threats:[
+      {type:"Nuclear",            description:"170+ warheads — fastest growing arsenal globally. Tactical nuclear weapons (Nasr) lowering nuclear threshold in India confrontation scenarios. AQ Khan proliferation network legacy: ongoing investigation.",severity:"critical",confidence:"HIGH",probability:15,source:"SIPRI/NTI/DIA"},
+      {type:"Terrorism",          description:"TTP (Tehrik-i-Taliban Pakistan) conducting 200+ attacks/month from Afghan sanctuary. ISKP expanding Khyber-Pakhtunkhwa operations. Baloch separatist violence (BLA) in Gwadar/CPEC corridor.",severity:"high",confidence:"HIGH",probability:95,source:"ISI/CENTCOM"},
+      {type:"India-Pakistan",     description:"Line of Control incidents: 5,000+ ceasefire violations annually despite 2021 understanding. Pulwama-type attack risk triggering crisis escalation. Both sides modernising nuclear delivery.",severity:"high",confidence:"HIGH",probability:40,source:"IISS/NTI"},
+      {type:"Economic Collapse",  description:"IMF $7B SBA program (2024) — 4th since 2019. FX reserves at 2 months import cover. Energy circular debt $15B. Military consuming 25% of budget. Debt service 45% of revenues.",severity:"high",confidence:"HIGH",probability:80,source:"IMF/World Bank"},
+    ],
+    keyActors:["PM Shehbaz Sharif","ISI (Inter-Services Intelligence)","COAS General Munir","Imran Khan (PTI, imprisoned)","TTP (Noor Wali Mehsud)","ISKP","Nuclear Command Authority","CPEC Authority"],
+    news:[
+      "Pakistan IMF $7B SBA 2024: disbursement conditional on FBR tax collection targets",
+      "TTP attack kills 28 Pakistani soldiers in Khyber Pakhtunkhwa — deadliest in 2025",
+      "ISI-CIA: backchannel on ISKP targeting — US drone access informally restored",
+      "CPEC Phase 2: ML-1 railway ($6.8B) groundbreaking — China-Pakistan Main Line upgrade",
+      "Pakistan nuclear test site Chagai: activity detected — IMINT assessment uncertain",
+    ],
+    economic:"GDP $375B. Debt $350B — 80% GDP. IMF program fourth since 2019. Military budget $10B (25% revenue). Textiles 60% exports. CPEC investment $65B committed, $25B disbursed. Remittances $30B critical lifeline. FX reserves $9B — critically low.",
+  },
+  // ── East Asia / Indo-Pacific ──
+  CHN:{
+    summary:"China under Xi Jinping pursues strategic competition with the United States across military, economic, technological, and geopolitical domains. The PLA's modernisation programme targets 2027 readiness for Taiwan contingency operations. China's 'no-limits partnership' with Russia continues despite Western pressure. South China Sea militarisation, Taiwan Strait tensions, and Belt and Road debt diplomacy define China's global footprint. MSS intelligence operations rank second only to Russia in scope of Western penetration.",
+    threats:[
+      {type:"Taiwan Invasion",    description:"PLA Eastern Theater Command exercises simulate Taiwan blockade and amphibious assault — 2027 capability deadline per DIA. Kinetic escalation risk rising post-2024 Taiwan elections.",severity:"critical",confidence:"HIGH",probability:35,source:"DIA/CIA"},
+      {type:"South China Sea",   description:"China controls 7 artificial islands in Spratlys — military facilities, runways, missile batteries. Philippines EEZ violations weekly. Potential blockade of Luzon Strait.",severity:"high",confidence:"HIGH",probability:80,source:"INDOPACOM/IMINT"},
+      {type:"Economic Coercion", description:"BRI debt diplomacy: 47 countries in debt distress. Export controls on rare earths as geopolitical weapon. Decoupling accelerating — tech war with US.",severity:"high",confidence:"HIGH",probability:90,source:"Treasury/CSIS"},
+      {type:"Espionage",         description:"MSS Volt Typhoon pre-positioned in US critical infrastructure. APT41 active globally. 'Thousand Talents' and academic espionage ongoing despite FBI pressure.",severity:"high",confidence:"HIGH",probability:95,source:"FBI/NSA/GCHQ"},
+    ],
+    keyActors:["President Xi Jinping","CMC (Central Military Commission)","MSS (Ministry of State Security)","PLA Eastern Theater Command","PLAN (Navy — 355+ warships)","PLARF (Rocket Force — DF-41, DF-5B)"],
+    news:[
+      "PLA Eastern Theater conducts Joint Sword-2025 — largest Taiwan strait military drill",
+      "MSS charged for Volt Typhoon intrusion: US power grid pre-positioning revealed",
+      "China launches 3rd aircraft carrier Fujian — CATOBAR catapult system operational",
+      "Xi-Putin summit: 'No-limits partnership' 5-year extension signed in Beijing",
+      "South China Sea: Philippine resupply ship rammed by China Coast Guard",
+    ],
+    economic:"GDP $19.5T (nominal, 2nd globally). Defense $225B official — actual est. $300B+. Belt and Road: $900B committed in 140 countries. CATL: 60% global EV battery market. Rare earths: 80% of global gallium, germanium supply.",
+  },
+  PRK:{
+    summary:"North Korea under Kim Jong-un has accelerated nuclear and ballistic missile development, deployed troops to support Russia in Ukraine, and received Russian military technology in exchange. ICBM capability to strike continental US achieved. UN sanctions regime is effectively hollow. Kim's daughter Kim Ju-ae positioned as successor. Biological and chemical weapons programs assessed active.",
+    threats:[
+      {type:"Nuclear/ICBM",      description:"HWASONG-17 and -18 ICBMs: demonstrated range to reach all CONUS targets. Solid-fuel ICBMs reduce launch warning time to minutes. 40-50 nuclear warheads — growing at 6/yr.",severity:"critical",confidence:"HIGH",probability:15,source:"DIA/ODNI/38North"},
+      {type:"Russia Deployment", description:"10,000-12,000 North Korean troops deployed to Russia Kursk Oblast — combat experience transfer. Russia providing satellite technology and nuclear submarine data in return.",severity:"high",confidence:"HIGH",probability:99,source:"NIS/USFK/IMINT"},
+      {type:"Korea Peninsula",   description:"Artillery threat to Seoul: 11,000 long-range pieces within range. Tunnel network under DMZ extends into South Korea.",severity:"critical",confidence:"HIGH",probability:10,source:"USFK/DIA"},
+      {type:"WMD Proliferation", description:"DPRK nuclear technology transfer risk: Iran, Syria historical customers. Uranium enrichment expansion at Yongbyon and new undeclared sites.",severity:"critical",confidence:"MEDIUM",probability:40,source:"IAEA/CIA"},
+    ],
+    keyActors:["Kim Jong-un (Supreme Leader)","Kim Ju-ae (successor)","RGB (Reconnaissance General Bureau)","Lazarus Group (cyber)","DPRK Strategic Rocket Forces","Kim Yo-jong (propaganda)"],
+    news:[
+      "DPRK ICBM test: Hwasong-18 solid-fuel — 7,000km range, highest altitude achieved",
+      "NIS confirms: 12,000 DPRK troops in Russia — 3,000 casualties in Kursk fighting",
+      "Kim inspects nuclear warhead production — 'exponential increase' ordered",
+      "UN Panel: North Korea earned $600M in crypto theft 2024 via Lazarus Group",
+      "South Korea suspends 2018 military agreement — DMZ loudspeakers resumed",
+    ],
+    economic:"GDP $18B (estimated). Military: 26% of GDP. Arms exports to Russia: est. $3B+ in shells/missiles 2024. Crypto theft: $600M+/yr. 42% population food insecure.",
+  },
+  KOR:{
+    summary:"South Korea faces North Korean nuclear escalation and a domestic political crisis following President Yoon's brief martial law declaration in December 2024. The ROK military is among Asia's most capable. US-ROK Combined Forces Command and USFK (28,500 troops) provide extended deterrence. Korean defense industry (K9, K2, FA-50) is now a top-5 global arms exporter.",
+    threats:[
+      {type:"North Korea",       description:"DPRK nuclear/ICBM capability advancing. Lazarus Group targeting ROK defense contractors. Artillery: 11,000 pieces targeting Seoul metro area.",severity:"critical",confidence:"HIGH",probability:20,source:"USFK/NIS"},
+      {type:"Political Crisis",  description:"President Yoon martial law Dec 2024 — overturned, impeached. Constitutional Court review. Political instability affecting alliance coordination.",severity:"medium",confidence:"HIGH",probability:85,source:"Open Source"},
+    ],
+    keyActors:["Acting President Han Duck-soo","NIS (National Intelligence Service)","USFK (28,500 troops)","ROK CJCS","Hanwha/Samsung (defense exports)"],
+    news:[
+      "Yoon impeachment upheld — snap presidential election scheduled Q3 2025",
+      "ROK-US nuclear consultative group: extended deterrence planning formalized",
+      "ROK K2/K9: record exports to Poland, Egypt, Australia — $20B in contracts",
+      "NIS: DPRK hacked ROK defense contractor — submarine design compromised",
+      "Freedom Shield exercise: largest since 2017 — DPRK responds with missile barrage",
+    ],
+    economic:"GDP $1.7T. Defense $56B (2.8% GDP). Semiconductors: 70% global DRAM (Samsung, SK Hynix). Shipbuilding: LNG carrier market leader. K-content exports: $12B.",
+  },
+  JPN:{
+    summary:"Japan has undergone the most dramatic strategic shift since 1945 — doubling defense spending to 2% GDP, acquiring Tomahawk cruise missiles (first strike capability), and joining AUKUS Pillar 2. Japan hosts 55,000 US military personnel. China's Senkaku operations and DPRK overflights are primary threat drivers.",
+    threats:[
+      {type:"China-Taiwan",      description:"Taiwan contingency directly threatens Japan — US bases in Okinawa are PLA strike targets in escalation scenarios. ADIZ violations at record levels.",severity:"high",confidence:"HIGH",probability:30,source:"MOFA/DIA"},
+      {type:"North Korea",       description:"DPRK missiles overflight Japan repeatedly — Hokkaido overflights 2022-2025. JMSDF Aegis destroyers on continuous alert.",severity:"high",confidence:"HIGH",probability:15,source:"JSDF/DIA"},
+    ],
+    keyActors:["PM Ishiba Shigeru","CIRO (Cabinet Intelligence)","JSDF (Self-Defence Forces)","US Forces Japan (55,000)","Mitsubishi/Kawasaki (defense)"],
+    news:[
+      "Japan acquires 400 Tomahawk missiles — first offensive strike capability since WWII",
+      "Japan-AUKUS Pillar 2: quantum, AI, undersea warfare cooperation confirmed",
+      "JMSDF Aegis intercepts DPRK missile — first live intercept in Japan Sea",
+      "Japan-US-ROK Trilateral: data sharing on DPRK/China threats formalized",
+      "Okinawa: F-22 deployment to Kadena replacing aging F-15C/D",
+    ],
+    economic:"GDP $4.2T. Defense $80B (2024) — 2% GDP achieved. TSMC Kumamoto fab: $8B, advanced chips in Japan for first time. Toyota: largest automaker. Aging population: 30% over 65.",
+  },
+  TWN:{
+    summary:"Taiwan is the world's most critical semiconductor chokepoint (TSMC 90%+ of advanced chips) and the most dangerous potential military flashpoint. President Lai Ching-te viewed by Beijing as separatist. PLA rehearses blockade and amphibious assault continuously. US 'strategic ambiguity' provides implicit security guarantee.",
+    threats:[
+      {type:"PLA Invasion",      description:"PLA Eastern Theater rehearsing Taiwan blockade and amphibious assault — 2027 capability threshold per RAND/DIA. Joint Sword exercises simulate decapitation strike.",severity:"critical",confidence:"HIGH",probability:30,source:"DIA/RAND/CIA"},
+      {type:"Grey Zone",         description:"Daily PLA ADIZ violations — 100+ per month. Cyber: 5M intrusion attempts/day on government systems. Coast Guard confrontations in Strait median line.",severity:"high",confidence:"HIGH",probability:99,source:"NSB Taiwan/MOFA"},
+      {type:"Economic Warfare",  description:"China cut 2,400+ tariffs on Taiwanese exports. Economic coercion campaign as political pressure. 99% of advanced chips in Taiwan — global leverage.",severity:"high",confidence:"HIGH",probability:80,source:"Treasury/CSIS"},
+    ],
+    keyActors:["President Lai Ching-te (DPP)","NSB (National Security Bureau)","ROC Armed Forces (170K)","TSMC (strategic asset)","US Arms Sales Program"],
+    news:[
+      "TSMC Arizona Fab 21 phase 2: 3nm production — $65B total US investment",
+      "Taiwan-US: $2B arms package — Harpoon, HIMARS, M109A6",
+      "PLA Joint Sword-2025: 100+ aircraft, 9 warships surround Taiwan",
+      "NSB: China recruited Taiwan military officer — classified plans compromised",
+      "Taiwan defence budget: 2.5% GDP — F-16V upgrades and M1A2T Abrams",
+    ],
+    economic:"GDP $750B. TSMC market cap $750B. Semiconductors 40% exports. Defense 2.5% GDP. Foreign reserves $570B. Trade: US and China both top partners.",
+  },
+  IND:{
+    summary:"India under PM Modi pursues strategic autonomy — buying Russian oil while joining the Quad, and hosting both Chinese infrastructure and US technology partnerships. India-China border tensions (LAC) remain active. India-Pakistan nuclear standoff continues. RAW expanding global operations footprint. World's most populous nation and a growing economic power.",
+    threats:[
+      {type:"China Border",      description:"LAC standoff: 60,000+ PLA troops on Tibetan Plateau. India deploying advanced mountain corps. Doklam, Depsang, Demchok flashpoints unresolved.",severity:"high",confidence:"HIGH",probability:45,source:"RAW/DIA"},
+      {type:"Pakistan Nuclear",  description:"Pakistan 170+ warheads, India 160+. Pulwama-type attack risk triggering crisis to nuclear threshold.",severity:"critical",confidence:"HIGH",probability:20,source:"SIPRI/NTI"},
+      {type:"Terrorism",         description:"ISI-linked LeT, JeM active in Kashmir. ISKP attacks in Indian states. Naxalite insurgency in central states.",severity:"medium",confidence:"HIGH",probability:70,source:"RAW/IB"},
+    ],
+    keyActors:["PM Modi","RAW (Research and Analysis Wing)","IB (Intelligence Bureau)","Indian Armed Forces (1.4M)","DRDO","NSA Doval"],
+    news:[
+      "India-US COMPACT: largest tech transfer deal — jet engine co-production",
+      "India-China LAC: Depsang/Demchok buffer zones agreed after 9th round",
+      "RAW operation: Khalistani leader eliminated in Canada — diplomatic crisis",
+      "S-400 regiment 3 delivery from Russia despite US CAATSA pressure",
+      "India Quad exercise Malabar: largest naval drill in Indo-Pacific",
+    ],
+    economic:"GDP $3.9T (5th globally). Defense $83B (2.4% GDP). Apple production: 10%+ iPhones made in India. ISRO: Chandrayaan-3 moon landing. Population: 1.43B — world's largest.",
+  },
+  // ── Sub-Saharan Africa ──
+  SDN:{
+    summary:"Sudan is experiencing a devastating civil war between SAF and RSF paramilitary, with 150,000+ killed, 8.5M displaced, and famine declared. The conflict is driven by power struggle between two generals — Burhan (SAF) and Hemeti (RSF) — who together led the 2021 coup. International response is hampered by conflicting regional interests.",
+    threats:[
+      {type:"Civil War",         description:"SAF-RSF fighting across all 18 states. Darfur: genocide-scale atrocities. Ethnic militias conducting mass rape and ethnic cleansing in West Darfur per UN documentation.",severity:"critical",confidence:"HIGH",probability:99,source:"UN OHCHR/UNOSAT"},
+      {type:"Famine",            description:"IPC Phase 5 (Catastrophe) in Zamzam camp. 18M food insecure. Aid access blocked. WHO: cholera and measles outbreaks across conflict zones.",severity:"critical",confidence:"HIGH",probability:95,source:"IPC/WFP"},
+      {type:"Regional Spillover",description:"8.5M IDPs — 2M+ crossing to Chad, Egypt, Ethiopia. Gold smuggling (RSF via UAE) financing war.",severity:"high",confidence:"HIGH",probability:90,source:"UNHCR/ACLED"},
+    ],
+    keyActors:["SAF Commander Burhan","RSF Commander Hemeti","UAE (RSF backer)","Wagner/Africa Corps","UN UNITAMS","African Union Peace Council"],
+    news:[
+      "Zamzam famine declared — 500,000 at starvation risk, first famine in decade",
+      "RSF atrocities El Fasher: UN documents mass rape, ethnic killings",
+      "UAE arms channel to RSF exposed: flight routes via Chad confirmed",
+      "SAF airstrikes Khartoum residential districts — 200+ civilian deaths",
+      "Sudan: 8.5M displaced — world's largest displacement crisis per UNHCR",
+    ],
+    economic:"GDP $30B pre-war. Economy collapsed: RSF controls Khartoum and Darfur gold ($1.5B/yr). Agriculture down 80%. Hyperinflation 200%+.",
+  },
+  SOM:{
+    summary:"Somalia remains under existential threat from Al-Shabaab, controlling 30%+ of territory. President Hassan Sheikh Mohamud has conducted the most aggressive campaign against Al-Shabaab in a decade with US drone support. Piracy resurgence tracked in Gulf of Aden.",
+    threats:[
+      {type:"Al-Shabaab",        description:"Al-Qaeda affiliate: 5,000-10,000 fighters, governing Jubaland and Middle Shabelle. Mogadishu bombings average 2/month. Revenue from taxing agricultural areas $100M+/yr.",severity:"high",confidence:"HIGH",probability:95,source:"AFRICOM/UN Monitoring Group"},
+      {type:"Piracy",            description:"6 commercial vessels hijacked Gulf of Aden 2024. Houthi Red Sea disruption creating piracy opportunity.",severity:"medium",confidence:"HIGH",probability:65,source:"IMB/EU NAVFOR"},
+    ],
+    keyActors:["President Hassan Sheikh Mohamud","NISA (Intel)","AFRICOM (drones)","Al-Shabaab (Emir Diriye)","ATMIS (African Union)"],
+    news:[
+      "AFRICOM drone strike: 15 Al-Shabaab operatives killed in leadership meeting",
+      "SNA-ATMIS offensive: Al-Shabaab pushed from Hiiraan region",
+      "MV Abdullah hijacked — 23 crew, $5M ransom, piracy resurgence",
+      "Somalia EEZ: offshore oil blocks auctioned — 3 majors bidding",
+      "Al-Shabaab hotel bombing Mogadishu: 21 dead including 3 ministers",
+    ],
+    economic:"GDP $8B. Remittances $2B/yr. Al-Shabaab taxation $100M+/yr. HIPC relief: $4.5B forgiven.",
+  },
+  ETH:{
+    summary:"Ethiopia's Tigray war (2020-2022) killed 300,000-600,000. Despite Pretoria Peace Agreement, Tigray reconstruction stalled, Amhara conflict ongoing, OLA insurgency active in Oromia. Ethiopia is a regional anchor with Africa's second-largest population but faces cyclical drought and conflict-induced famine.",
+    threats:[
+      {type:"Internal Conflict",  description:"Amhara: Fano militia fighting ENDF since 2023. Oromia: OLA insurgency. Tigray: TPLF disarmament stalled. Risk of renewed northern conflict.",severity:"high",confidence:"HIGH",probability:60,source:"ACLED/IGAD"},
+      {type:"Famine",            description:"6M+ in IPC Phase 3+. WFP: Ethiopia largest humanitarian operation globally.",severity:"high",confidence:"HIGH",probability:85,source:"WFP/IPC"},
+    ],
+    keyActors:["PM Abiy Ahmed","NISS (National Intel)","ENDF (Armed Forces)","TPLF/TPDM","Fano Militia","OLA"],
+    news:[
+      "Ethiopia-Somaliland port MoU: Somalia recalls ambassador — regional crisis",
+      "Tigray: TPLF commander refuses ENDF integration, disarmament deadline missed",
+      "WFP: $1.4B Ethiopia appeal — 20M food insecure",
+      "GERD dam: 3rd turbine operational — Egypt diplomatic fury",
+      "Amhara: ENDF drone strikes on Fano positions — civilian casualties",
+    ],
+    economic:"GDP $155B. Agriculture 35% GDP. Coffee: $1B exports. GERD: 6,450MW. IMF program ongoing. Birr devaluation 50%+.",
+  },
+  MLI:{
+    summary:"Mali's military junta expelled French/EU/UN forces and invited Wagner/Africa Corps. JNIM (Al-Qaeda affiliate) controls vast northern/central territory and captured Kidal in 2024. The Mali-Burkina Faso-Niger 'AES Alliance' represents a Russia-aligned coup belt challenging ECOWAS.",
+    threats:[
+      {type:"JNIM/Terrorism",    description:"JNIM (GSIM) captured Kidal from junta 2024. 1,500+ attacks/yr. 'Sahel Caliphate' declared. ISKP competing in northeast.",severity:"critical",confidence:"HIGH",probability:90,source:"AFRICOM/UN"},
+      {type:"Wagner Presence",   description:"1,500+ Africa Corps in Mali — civilian massacres documented (Moura: 500+ dead). Russia extracting gold as payment.",severity:"high",confidence:"HIGH",probability:99,source:"Bellingcat/MINUSMA"},
+    ],
+    keyActors:["Junta Leader Goïta","Africa Corps (Wagner)","JNIM (Iyad ag Ghaly)","AES Alliance (Mali-BF-Niger)","ECOWAS (sanctions)"],
+    news:[
+      "JNIM captures Kidal — largest defeat of junta-Africa Corps forces",
+      "Moura massacre ICC investigation: Africa Corps responsibility for 500+ deaths",
+      "AES Alliance: common army announced — Russia-aligned Sahel bloc",
+      "France closes last Sahel base — Operation Barkhane formally ended",
+      "Africa Corps mines Papala gold: $400M/yr finances Russian presence",
+    ],
+    economic:"GDP $18B. Gold 75% exports — Africa Corps extraction undermines government revenue. ECOWAS sanctions: $6B economic impact. Currency chaos post-CFA franc.",
+  },
+  NGA:{
+    summary:"Nigeria faces ISWAP insurgency in the northeast, mass kidnappings across the northwest, Biafra separatism in the southeast, and a severe economic crisis. President Tinubu's fuel subsidy removal caused 300% price increase but attracted IMF support. Dangote Refinery opening may transform the energy sector.",
+    threats:[
+      {type:"ISWAP/Terrorism",   description:"ISWAP controls Lake Chad basin — 100+ attacks/month. 2M+ IDP in northeast Borno State.",severity:"high",confidence:"HIGH",probability:90,source:"AFRICOM/DSS"},
+      {type:"Kidnapping",        description:"Northwest: armed bandit gangs conducting mass kidnappings — 300+ students at a time. State collapse in Zamfara.",severity:"high",confidence:"HIGH",probability:95,source:"DSS"},
+      {type:"Economic Crisis",   description:"Naira devaluation 70% since 2023. Inflation 32%. 26M food insecure. IMF EFF $3.4B.",severity:"high",confidence:"HIGH",probability:85,source:"IMF/World Bank"},
+    ],
+    keyActors:["President Tinubu","DSS (State Security)","Nigerian Army 7th Division","ISWAP Commander","IPOB (Nnamdi Kanu, imprisoned)"],
+    news:[
+      "ISWAP attack: 72 soldiers killed in Borno ambush — largest loss in years",
+      "Naira at 1800/$1 — 70% devaluation, IMF program conditions",
+      "Dangote Refinery: 650K bpd — Nigeria to end petrol imports",
+      "279 students kidnapped in Sokoto — ransom paid, released",
+      "ECOWAS-Nigeria lead on Niger sanctions — military threat not followed through",
+    ],
+    economic:"GDP $560B (Africa's largest). Oil: 1.4M bpd. Dangote Refinery: game changer. Tech Lagos: 30%+ of African startup VC. Debt service: 98% of revenues.",
+  },
+  PRT:{
+    summary:"Portugal is a stable NATO member hosting NATO Allied Joint Force Command Lisbon and the strategic Azores archipelago (Lajes Air Base for Atlantic surveillance). Center-right PM Montenegro government stabilized politics after years of socialist minority rule.",
+    threats:[
+      {type:"Russian Hybrid",    description:"PJ and SIRP tracking Russian disinformation through Portuguese-language media in Brazil and Africa — exploiting CPLP (Lusophone) network.",severity:"low",confidence:"MEDIUM",probability:45,source:"SIRP"},
+    ],
+    keyActors:["PM Luis Montenegro (PSD)","SIRP (Intelligence System)","NATO JFCL Oeiras","Lajes Air Base (Azores)"],
+    news:[
+      "Lajes Air Base: NATO activates additional ISR flights for Arctic surveillance",
+      "Portugal commits to 2% GDP defence by 2029 — F-35A acquisition under evaluation",
+    ],
+    economic:"GDP $280B. Tourism 15% GDP. Renewables: 75%+ of electricity. Lisbon emerging tech hub.",
+  },
+  SVN:{
+    summary:"Slovenia is a stable NATO and EU member, economically integrated with Germany and Austria. Serves as transit hub for Balkans integration.",
+    threats:[{type:"Migration",description:"Balkan migration route transit country.",severity:"low",confidence:"HIGH",probability:70,source:"Frontex"}],
+    keyActors:["PM Robert Golob","SOVA (Security Agency)","Slovenian Armed Forces"],
+    news:["Slovenia hosts OSCE Western Balkans security conference — 47 nations","Slovenia donates 155mm ammunition to Ukraine"],
+    economic:"GDP $70B. KRKA pharmaceuticals, precision exports. Defence 1.3% GDP.",
+  },
+  MNE:{
+    summary:"Montenegro joined NATO in 2017 and is EU accession front-runner. Russian influence operations via Serbian Orthodox Church networks remain documented by ANB.",
+    threats:[{type:"Russian Hybrid",description:"Russian-funded Serbian Orthodox Church network opposing NATO. Russian oligarch Adriatic real estate used for intelligence infrastructure.",severity:"medium",confidence:"HIGH",probability:70,source:"ANB/CIA"}],
+    keyActors:["President Milatović","ANB (National Security Agency)","NATO (2017)","EU Accession Team"],
+    news:["Montenegro EU: 3 new accession chapters opened — fastest Balkan track","ANB expels Russian officers from Bar port — NATO infrastructure targeting"],
+    economic:"GDP $7B. Tourism 25% GDP — Adriatic. Chinese investment (Porto Montenegro) under security review.",
+  },
 };
 
 /* Extended CIA-style intelligence data — personalities, signals, political/military assessments */
@@ -1464,20 +2489,93 @@ const ALERT_BADGE={
 ════════════════════════════════════════════════════ */
 const canvas  = document.getElementById('globe');
 const ctx     = canvas.getContext('2d');
-let rotX=0.30, rotY=0.35;    // face ~20°E — Europe/Middle East
+let rotX=0.30, rotY=0.35;
 let isDragging=false, lastX=0, lastY=0;
-let velX=0.00008, velY=0;    // very slow rightward auto-spin
+// Physics — separated auto-spin from drag momentum for buttery feel
+const AUTO_SPIN=0.00006;
+const DRAG_FRICTION=0.92;
+const SCROLL_FRICTION=0.88;
+let dragVelX=0, dragVelY=0;
 let scale, baseScale, cx, cy;
-let zoomFactor=1.0;
+let zoomFactor=1.0, targetZoom=1.0;
 const ZOOM_MIN=0.4, ZOOM_MAX=50.0;
 var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
+// Active data layers
+const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false};
 // Pinch-to-zoom state
-let lastPinchDist=null;
+let lastPinchDist=null, pinchMidX=null, pinchMidY=null;
 // Real-world GeoJSON borders (loaded at runtime from CDN)
 let worldFeatures=[];
 const numericToISO={};
 let geoReady=false;
+// Pre-computed star field
+const STARS=Array.from({length:280},()=>({
+  x:Math.random(),y:Math.random(),
+  r:Math.random()*0.9+0.2,
+  a:Math.random()*0.5+0.15,
+  tw:Math.random()*2000+1000,ph:Math.random()*6.28,
+}));
+
+/* ── Tracking layer data ── */
+const TROOP_MOVEMENTS=[
+  {fromLat:55.75,fromLng:37.62,toLat:50.45,toLng:30.52,type:'ground',label:'Russian Army — Eastern Ukraine Axis',strength:'180,000+ troops',status:'ACTIVE COMBAT',country:'RUS',severity:'critical'},
+  {fromLat:50.45,fromLng:30.52,toLat:48.5,toLng:37.0,type:'ground',label:'AFU — Donetsk Defense',strength:'100,000+ troops',status:'DEFENSIVE OPS',country:'UKR',severity:'critical'},
+  {fromLat:54.7,fromLng:27.7,toLat:51.5,toLng:24.0,type:'ground',label:'Russian-Belarus Forces — Northern Staging',strength:'30,000 staged',status:'ELEVATED READINESS',country:'BLR',severity:'high'},
+  {fromLat:35.7,fromLng:51.4,toLat:33.9,toLng:35.5,type:'air',label:'IRGC Quds Force — Lebanon Logistics',strength:'500+ advisors',status:'ACTIVE',country:'IRN',severity:'high'},
+  {fromLat:31.5,fromLng:34.5,toLat:33.3,toLng:35.2,type:'ground',label:'IDF Northern Command',strength:'2 armored divisions',status:'ELEVATED POSTURE',country:'ISR',severity:'high'},
+  {fromLat:37.1,fromLng:43.4,toLat:36.5,toLng:38.0,type:'ground',label:'Turkish TAF — Cross-Border Ops',strength:'25,000 + drones',status:'ONGOING OPS',country:'TUR',severity:'medium'},
+  {fromLat:15.4,fromLng:44.2,toLat:15.0,toLng:42.5,type:'naval',label:'Houthi Coastal Defense Force',strength:'Anti-ship assets',status:'RED SEA THREAT',country:'YEM',severity:'critical'},
+  {fromLat:43.0,fromLng:40.5,toLat:42.0,toLng:43.5,type:'ground',label:'Russian 58th Army — S. Ossetia',strength:'5,000 troops',status:'OCCUPATION',country:'RUS',severity:'medium'},
+];
+const ARMS_FLOWS=[
+  {from:'USA',to:'UKR',type:'multi',  label:'ATACMS + HIMARS + M777 + Patriot',  value:'$45B total',severity:'critical'},
+  {from:'DEU',to:'UKR',type:'armor',  label:'Leopard 2A6 + Marder IFV + IRIS-T', value:'€8B total', severity:'high'},
+  {from:'GBR',to:'UKR',type:'multi',  label:'Storm Shadow + Challenger 2 + NLAW', value:'£4B total', severity:'high'},
+  {from:'FRA',to:'UKR',type:'multi',  label:'CAESAR Howitzer + SCALP + Mirage',   value:'€3B total', severity:'high'},
+  {from:'IRN',to:'RUS',type:'drone',  label:'Shahed-136 / Shahed-238 Production Transfer',value:'$2B+',severity:'critical'},
+  {from:'IRN',to:'YEM',type:'missile',label:'Houthi Arsenal — Iran Supply Route',  value:'$200M/yr',severity:'high'},
+  {from:'IRN',to:'LBN',type:'missile',label:'Hezbollah Precision Missile Pipeline', value:'$700M/yr',severity:'critical'},
+  {from:'IRN',to:'PSE',type:'rocket', label:'Hamas Weapons Smuggling (pre-Oct7)', value:'$100M/yr',severity:'high'},
+  {from:'USA',to:'ISR',type:'multi',  label:'F-35 + JDAM + Bunker Buster + Ammo', value:'$18B emerg',severity:'high'},
+  {from:'CHN',to:'RUS',type:'dual',   label:'Dual-Use Electronics + Machine Tools', value:'$6B/yr',severity:'critical'},
+  {from:'PRK',to:'RUS',type:'ammo',   label:'Artillery Shells + KN-23 Ballistic', value:'$3B+',severity:'critical'},
+  {from:'TUR',to:'UKR',type:'drone',  label:'Bayraktar TB2 Drone Platforms',       value:'$69M',severity:'medium'},
+];
+const NAVAL_ASSETS=[
+  {lat:22.5,lng:37.5, country:'USA',flag:'🇺🇸',type:'CARRIER STRIKE GROUP',label:'USS Dwight D. Eisenhower CSG',detail:'Carrier Strike Group 2 — Red Sea Houthi deterrence. F/A-18E/F, EA-18G, E-2D Hawkeye. 5,000 sailors.',severity:'critical'},
+  {lat:17.0,lng:43.5, country:'USA',flag:'🇺🇸',type:'DESTROYER FLOTILLA',label:'CTF-153 Anti-Houthi Force',detail:'Combined Maritime Forces CTF-153. USS Gravely, USS Laboon. Aegis BMD — intercepting Houthi missiles/drones.',severity:'critical'},
+  {lat:36.0,lng:27.5, country:'USA',flag:'🇺🇸',type:'GUIDED MISSILE SUB',label:'USS Georgia SSGN Mediterranean',detail:'Ohio-class SSGN. 154× Tomahawk LACM. Positioned for rapid strike options Syria/Iran.',severity:'high'},
+  {lat:61.5,lng:-2.0, country:'GBR',flag:'🇬🇧',type:'CARRIER STRIKE GROUP',label:'HMS Prince of Wales CSG',detail:'UK Carrier Strike Group. F-35B (18), Type 45, Type 23. NATO North Atlantic operations.',severity:'medium'},
+  {lat:44.5,lng:33.5, country:'RUS',flag:'🇷🇺',type:'FLEET HQ (DEGRADED)',label:'Black Sea Fleet — Novorossiysk',detail:'Forced from Sevastopol by Ukrainian Neptune/sea drone campaign. 40%+ surface combatants sunk. Operational capability severely degraded.',severity:'high'},
+  {lat:43.5,lng:30.5, country:'UKR',flag:'🇺🇦',type:'NAVAL DRONE FORCE',label:'Ukraine Sea Drone Campaign',detail:'Ukrainian Magura V5 and Mamay naval drones. 15+ Russian warships sunk or damaged. Black Sea Fleet forced to retreat.',severity:'critical'},
+  {lat:35.5,lng:24.0, country:'NATO',flag:'🔷',type:'MARITIME GROUP',label:'NATO SNMG2 Mediterranean',detail:'Standing NATO Maritime Group 2. Anti-submarine, anti-surface. Current lead nation: Italy.',severity:'medium'},
+  {lat:69.0,lng:18.0, country:'RUS',flag:'🇷🇺',type:'SSBN PATROL',label:'Borei-class SSBN — Arctic',detail:'TOP SECRET — Russia Northern Fleet SSBN patrol. Each carries 16× Bulava SLBM. Nuclear alert status elevated.',severity:'critical'},
+  {lat:27.5,lng:57.0, country:'IRN',flag:'🇮🇷',type:'NAVAL FORCE',label:'IRGCN Strait of Hormuz',detail:'IRGC Navy fast-attack craft, mine-laying vessels, submarine force. Hormuz chokepoint interdiction capability (20% global oil).',severity:'high'},
+  {lat:52.5,lng:2.0,  country:'NATO',flag:'🔷',type:'NORTH SEA PATROL',label:'NATO Baltic Approaches Force',detail:'Monitoring Russian sub transit routes. GIUK Gap surveillance. UK, Norwegian, Danish naval assets coordinated.',severity:'medium'},
+];
+const FINANCIAL_FLOWS=[
+  {from:'CHN',to:'RUS',  type:'trade',   label:'China-Russia Sanctions Evasion Trade',  value:'$240B/yr', color:'rgba(168,85,247',severity:'critical'},
+  {from:'IRN',to:'LBN',  type:'funding', label:'Iran → Hezbollah Funding Pipeline',     value:'$700M/yr', color:'rgba(239,68,68',severity:'critical'},
+  {from:'USA',to:'UKR',  type:'aid',     label:'US Financial + Military Aid Ukraine',   value:'$62B total',color:'rgba(59,130,246',severity:'critical'},
+  {from:'QAT',to:'PSE',  type:'payment', label:'Qatar Hamas Monthly Allowances',        value:'$30M/mo',  color:'rgba(239,68,68',severity:'high'},
+  {from:'IRN',to:'YEM',  type:'funding', label:'IRGC → Houthi Operational Funding',    value:'$200M/yr', color:'rgba(239,68,68',severity:'high'},
+  {from:'RUS',to:'BLR',  type:'subsidy', label:'Russian Energy + Military Subsidies',   value:'$5B/yr',   color:'rgba(220,38,38',severity:'medium'},
+  {from:'USA',to:'ISR',  type:'aid',     label:'US Annual Military Aid Israel',         value:'$3.8B/yr', color:'rgba(59,130,246',severity:'medium'},
+  {from:'CHN',to:'IRN',  type:'trade',   label:'China Oil Import (sanctions evaded)',   value:'$60B/yr',  color:'rgba(168,85,247',severity:'critical'},
+  {from:'SAU',to:'PAK',  type:'loan',    label:'Saudi Pakistan IMF Backstop Loans',     value:'$4B+',     color:'rgba(234,179,8',severity:'low'},
+  {from:'RUS',to:'SYR',  type:'support', label:'Russian Syria Economic + Military Aid', value:'$2B/yr',   color:'rgba(220,38,38',severity:'medium'},
+  {from:'PRK',to:'RUS',  type:'payment', label:'Arms Trade Settlement (grain+oil)',     value:'$3B equiv',color:'rgba(168,85,247',severity:'high'},
+];
+const REFUGEE_FLOWS=[
+  {fromLat:49.0,fromLng:31.5, toLat:52.2,toLng:21.0, label:'Ukraine → Poland (3.5M+)',  value:'3.5M', severity:'critical'},
+  {fromLat:49.0,fromLng:31.5, toLat:52.5,toLng:13.4, label:'Ukraine → Germany (1.1M+)', value:'1.1M', severity:'high'},
+  {fromLat:33.5,fromLng:36.3, toLat:39.9,toLng:32.9, label:'Syria → Turkey (3.6M)',     value:'3.6M', severity:'critical'},
+  {fromLat:33.5,fromLng:36.3, toLat:33.9,toLng:35.5, label:'Syria → Lebanon (1.5M)',    value:'1.5M', severity:'high'},
+  {fromLat:15.4,fromLng:44.2, toLat:13.5,toLng:44.0, label:'Yemen Displacement (4.5M)', value:'4.5M', severity:'critical'},
+  {fromLat:33.9,fromLng:67.7, toLat:30.4,toLng:69.3, label:'Afghan → Pakistan (4M+)',   value:'4M+',  severity:'high'},
+  {fromLat:26.3,fromLng:17.2, toLat:35.9,toLng:14.5, label:'Libya → Mediterranean',     value:'800K/yr',severity:'high'},
+];
 
 function resize(){
   canvas.width =window.innerWidth;
@@ -1623,16 +2721,29 @@ const CONTINENT_HINTS=[
 
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  // Sphere
-  const g=ctx.createRadialGradient(cx-scale*.15,cy-scale*.15,scale*.05,cx,cy,scale);
-  g.addColorStop(0,'#0f1f3d');g.addColorStop(.6,'#071324');g.addColorStop(1,'#020810');
+  // ── Star field
+  const now=Date.now();
+  for(const s of STARS){
+    const twinkle=0.5+0.5*Math.sin(now/s.tw+s.ph);
+    ctx.beginPath();
+    ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(180,210,255,${s.a*twinkle})`;ctx.fill();
+  }
+  // ── Globe sphere — richer gradient
+  const g=ctx.createRadialGradient(cx-scale*.22,cy-scale*.28,scale*.01,cx,cy,scale*1.02);
+  g.addColorStop(0,'#182e5a');g.addColorStop(.25,'#0c1e3d');
+  g.addColorStop(.65,'#050f20');g.addColorStop(1,'#010408');
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
-  // Atmosphere
-  const a=ctx.createRadialGradient(cx,cy,scale*.97,cx,cy,scale*1.08);
-  a.addColorStop(0,'rgba(50,120,255,.15)');a.addColorStop(1,'transparent');
-  ctx.beginPath();ctx.arc(cx,cy,scale*1.08,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
-  // Grid
-  ctx.strokeStyle='rgba(59,130,246,.07)';ctx.lineWidth=.5;
+  // ── Atmosphere glow
+  const a=ctx.createRadialGradient(cx,cy,scale*.96,cx,cy,scale*1.10);
+  a.addColorStop(0,'rgba(40,100,255,.22)');a.addColorStop(.5,'rgba(20,60,200,.06)');a.addColorStop(1,'transparent');
+  ctx.beginPath();ctx.arc(cx,cy,scale*1.10,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
+  // ── Terminator ring (subtle day/night)
+  const term=ctx.createRadialGradient(cx+scale*.3,cy-scale*.2,scale*.4,cx,cy,scale);
+  term.addColorStop(0,'rgba(255,220,100,.04)');term.addColorStop(.7,'rgba(0,0,0,0)');
+  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=term;ctx.fill();
+  // ── Grid
+  ctx.strokeStyle='rgba(59,130,246,.06)';ctx.lineWidth=.5;
   for(let lat=-80;lat<=80;lat+=20)drawParallel(lat);
   for(let lng=-180;lng<=180;lng+=20)drawMeridian(lng);
 
@@ -1681,36 +2792,52 @@ function draw(){
     }
   }
 
-  if(showArcs)drawArcs();
+  if(showArcs||activeLayers.conflicts)drawArcs();
+  if(activeLayers.troops)    drawTroopMovements();
+  if(activeLayers.arms)      drawArmsFlows();
+  if(activeLayers.naval)     drawNavalAssets();
+  if(activeLayers.money)     drawFinancialFlows();
+  if(activeLayers.refugees)  drawRefugeeFlows();
   drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
-  ctx.strokeStyle='rgba(59,130,246,.2)';ctx.lineWidth=1;ctx.stroke();
+  ctx.strokeStyle='rgba(59,130,246,.25)';ctx.lineWidth=1.5;ctx.stroke();
+  // Outer atmospheric ring
+  ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
+  ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
+  drawHUD();
 }
 
 function drawHotspots(){
-  const t=(Date.now()%2400)/2400;
-  const pulse=Math.sin(t*Math.PI*2)*0.5+0.5;
+  const now=Date.now();
   const allSpots=[...HOTSPOTS,...liveHotspots];
-  // Only show: all spots when no country selected; or spots for selected country
-  const spots=selectedISO
-    ?allSpots.filter(h=>h.country===selectedISO||!h.country)
-    :allSpots;
+  const spots=selectedISO?allSpots.filter(h=>h.country===selectedISO||!h.country):allSpots;
   for(const h of spots){
-    const p=project(h.lat,h.lng);
-    if(!p.visible)continue;
+    const p=project(h.lat,h.lng);if(!p.visible)continue;
     const base=HOTSPOT_COLORS[h.type]||'rgba(239,68,68,1)';
-    const r=h.severity==='critical'?4:h.severity==='high'?3:2;
-    const outerR=r+2+pulse*4;
-    // Outer pulse ring
-    ctx.beginPath();ctx.arc(p.px,p.py,outerR,0,Math.PI*2);
-    ctx.fillStyle=base.replace(',1)',',.18)');ctx.fill();
-    // Inner dot
+    const r=h.severity==='critical'?4.5:h.severity==='high'?3.5:2.5;
+    // Each hotspot pulses on its own phase for organic feel
+    const phase=(h.lat*7+h.lng*3)%1000;
+    const t1=((now+phase)%2200)/2200;
+    const t2=((now+phase+700)%2200)/2200;
+    const p1=Math.sin(t1*Math.PI*2)*0.5+0.5;
+    const p2=Math.sin(t2*Math.PI*2)*0.5+0.5;
+    // Double expanding ring (staggered)
+    if(h.severity==='critical'||h.severity==='high'){
+      ctx.beginPath();ctx.arc(p.px,p.py,r+3+p1*9,0,Math.PI*2);
+      ctx.strokeStyle=base.replace(',1)',',.3)');ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(p.px,p.py,r+2+p2*6,0,Math.PI*2);
+      ctx.strokeStyle=base.replace(',1)',',.18)');ctx.lineWidth=1;ctx.stroke();
+    }
+    // Glow fill
+    ctx.beginPath();ctx.arc(p.px,p.py,r+2+p1*3,0,Math.PI*2);
+    ctx.fillStyle=base.replace(',1)',',.12)');ctx.fill();
+    // Core dot
     ctx.beginPath();ctx.arc(p.px,p.py,r,0,Math.PI*2);
     ctx.fillStyle=base;ctx.fill();
-    // White core
-    ctx.beginPath();ctx.arc(p.px,p.py,r*.45,0,Math.PI*2);
-    ctx.fillStyle='rgba(255,255,255,.8)';ctx.fill();
+    // Bright center flash
+    ctx.beginPath();ctx.arc(p.px,p.py,r*0.42,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${0.6+p1*0.3})`;ctx.fill();
   }
 }
 
@@ -1741,8 +2868,130 @@ function drawArcs(){
   }
 }
 
+/* ── Tracking layer renderers ── */
+function drawCurvedArc(p1,p2,base,alpha,lw,dash,dashOffset){
+  if(!p1.visible&&!p2.visible)return;
+  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
+  const dx=p2.px-p1.px,dy=p2.py-p1.py;
+  const len=Math.sqrt(dx*dx+dy*dy);if(len<4)return;
+  const off=len*0.32;
+  const cpX=mx-dy/len*off,cpY=my+dx/len*off;
+  ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
+  if(dash){ctx.setLineDash(dash);ctx.lineDashOffset=dashOffset||0;}
+  ctx.strokeStyle=`${base},${alpha})`;ctx.lineWidth=lw;ctx.stroke();
+  if(dash)ctx.setLineDash([]);
+  return{cpX,cpY,dx,dy,len};
+}
+function arrowHead(px,py,angle,size,color){
+  ctx.beginPath();
+  ctx.moveTo(px,py);
+  ctx.lineTo(px-size*Math.cos(angle-.45),py-size*Math.sin(angle-.45));
+  ctx.lineTo(px-size*Math.cos(angle+.45),py-size*Math.sin(angle+.45));
+  ctx.closePath();ctx.fillStyle=color;ctx.fill();
+}
+
+function drawTroopMovements(){
+  const t=(Date.now()%3000)/3000;
+  for(const m of TROOP_MOVEMENTS){
+    const p1=project(m.fromLat,m.fromLng),p2=project(m.toLat,m.toLng);
+    if(!p1.visible&&!p2.visible)continue;
+    const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(59,130,246',low:'rgba(34,197,94'}[m.severity]||'rgba(148,163,184';
+    drawCurvedArc(p1,p2,sev,.08,7,null,null);
+    drawCurvedArc(p1,p2,sev,.75,1.5,[10,6],-t*50);
+    if(p2.visible){
+      const dx=p2.px-p1.px,dy=p2.py-p1.py;
+      arrowHead(p2.px,p2.py,Math.atan2(dy,dx),9,`${sev},.9)`);
+    }
+    // Origin dot
+    if(p1.visible){ctx.beginPath();ctx.arc(p1.px,p1.py,3.5,0,Math.PI*2);ctx.fillStyle=`${sev},.85)`;ctx.fill();}
+  }
+}
+
+function drawArmsFlows(){
+  const t=(Date.now()%2500)/2500;
+  for(const a of ARMS_FLOWS){
+    const from=COUNTRIES[a.from],to=COUNTRIES[a.to];if(!from||!to)continue;
+    const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
+    drawCurvedArc(p1,p2,'rgba(245,158,11',.06,5,null,null);
+    drawCurvedArc(p1,p2,'rgba(245,158,11',.8,1.2,[6,5],-t*35);
+    if(p2.visible){arrowHead(p2.px,p2.py,Math.atan2(p2.py-p1.py,p2.px-p1.px),8,'rgba(245,158,11,.9)');}
+  }
+}
+
+function drawNavalAssets(){
+  const now=Date.now();
+  for(const n of NAVAL_ASSETS){
+    const p=project(n.lat,n.lng);if(!p.visible)continue;
+    const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(34,197,94',low:'rgba(59,130,246'}[n.severity]||'rgba(34,197,94';
+    const pulse=Math.sin(now/1200+n.lat)*0.5+0.5;
+    // Sonar rings
+    ctx.beginPath();ctx.arc(p.px,p.py,8+pulse*5,0,Math.PI*2);
+    ctx.strokeStyle=`${sev},.25)`;ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();ctx.arc(p.px,p.py,4+pulse*2,0,Math.PI*2);
+    ctx.strokeStyle=`${sev},.5)`;ctx.lineWidth=1;ctx.stroke();
+    // Ship triangle
+    ctx.save();ctx.translate(p.px,p.py);
+    ctx.beginPath();ctx.moveTo(0,-5);ctx.lineTo(3.5,4);ctx.lineTo(-3.5,4);ctx.closePath();
+    ctx.fillStyle=`${sev},.85)`;ctx.fill();
+    ctx.restore();
+  }
+}
+
+function drawFinancialFlows(){
+  const t=(Date.now()%4000)/4000;
+  for(const f of FINANCIAL_FLOWS){
+    const from=COUNTRIES[f.from],to=COUNTRIES[f.to];if(!from||!to)continue;
+    const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
+    drawCurvedArc(p1,p2,f.color||'rgba(168,85,247',.05,4,null,null);
+    drawCurvedArc(p1,p2,f.color||'rgba(168,85,247',.7,1,[4,8],-t*25);
+    // Money dot pulse at midpoint
+    if(p1.visible&&p2.visible){
+      const mt=(Date.now()%4000)/4000;
+      const mx=p1.px+(p2.px-p1.px)*mt,my=p1.py+(p2.py-p1.py)*mt;
+      ctx.beginPath();ctx.arc(mx,my,2.5,0,Math.PI*2);
+      ctx.fillStyle=(f.color||'rgba(168,85,247')+', .9)';ctx.fill();
+    }
+  }
+}
+
+function drawRefugeeFlows(){
+  const t=(Date.now()%5000)/5000;
+  for(const r of REFUGEE_FLOWS){
+    const p1=project(r.fromLat,r.fromLng),p2=project(r.toLat,r.toLng);
+    drawCurvedArc(p1,p2,'rgba(251,191,36',.05,6,null,null);
+    drawCurvedArc(p1,p2,'rgba(251,191,36',.65,1.5,[5,7],-t*20);
+    if(p2.visible){arrowHead(p2.px,p2.py,Math.atan2(p2.py-p1.py,p2.px-p1.px),7,'rgba(251,191,36,.85)');}
+  }
+}
+
+function drawHUD(){
+  const m=22,w=55,h=38;
+  ctx.strokeStyle='rgba(59,130,246,.3)';ctx.lineWidth=1.5;ctx.setLineDash([]);
+  // Corners
+  [[m,m,1,1],[canvas.width-m,m,-1,1],[m,canvas.height-m,1,-1],[canvas.width-m,canvas.height-m,-1,-1]].forEach(([x,y,sx,sy])=>{
+    ctx.beginPath();ctx.moveTo(x+sx*w,y);ctx.lineTo(x,y);ctx.lineTo(x,y+sy*h);ctx.stroke();
+  });
+  // Zoom indicator (bottom-right inner)
+  if(zoomFactor>1.2){
+    ctx.fillStyle='rgba(59,130,246,.55)';ctx.font='9px Courier New';ctx.textAlign='right';
+    ctx.fillText(`ZOOM ${zoomFactor.toFixed(1)}x`,canvas.width-m-8,canvas.height-m-8);
+  }
+  ctx.textAlign='left';
+}
+
 function animate(){
-  if(!isDragging){rotY+=velX;if(velY){rotX+=velY;velY*=.95;}}
+  if(!isDragging){
+    // Smooth zoom lerp
+    if(Math.abs(zoomFactor-targetZoom)>0.0005){
+      zoomFactor+=(targetZoom-zoomFactor)*0.13;
+      scale=baseScale*zoomFactor;
+    }
+    // Exponential momentum decay — buttery physics
+    dragVelX*=DRAG_FRICTION;
+    dragVelY*=DRAG_FRICTION;
+    rotY+=AUTO_SPIN+dragVelX;
+    if(Math.abs(dragVelY)>0.00001){rotX+=dragVelY;rotX=Math.max(-1.3,Math.min(1.3,rotX));}
+  }
   try{draw();}catch(e){console.error('draw:',e);}
   requestAnimationFrame(animate);
 }
@@ -1792,7 +3041,7 @@ canvas.addEventListener('mousemove',e=>{
     const dx=e.clientX-lastX,dy=e.clientY-lastY;
     const sens=1/scale;
     rotY+=dx*sens;rotX+=dy*sens;rotX=Math.max(-1.3,Math.min(1.3,rotX));
-    velX=dx*sens*0.16;velY=dy*sens*0.16;
+    dragVelX=dx*sens*0.18;dragVelY=dy*sens*0.18;
     lastX=e.clientX;lastY=e.clientY;return;
   }
   // Check hotspot proximity first
@@ -1819,14 +3068,22 @@ canvas.addEventListener('mousemove',e=>{
     tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
   }else tt.style.opacity='0';
 });
-canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dragging');lastX=e.clientX;lastY=e.clientY;velX=0;velY=0;});
+canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dragging');lastX=e.clientX;lastY=e.clientY;dragVelX=0;dragVelY=0;});
 canvas.addEventListener('mouseup',e=>{
   if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
-  const dx=e.clientX-lastX,dy=e.clientY-lastY;
+  const dx=e.clientX-lastX,dy=e.clientY-lastY;  // dragVelX already set in mousemove
   if(Math.abs(dx)<5&&Math.abs(dy)<5){
-    // Hotspot dots take priority over country clicks
+    // Priority: hotspot → naval → troop → country
     const hs=hotspotAt(e.clientX,e.clientY);
     if(hs){openHotspot(hs);return;}
+    if(activeLayers.naval){
+      const na=navalAssetAt(e.clientX,e.clientY);
+      if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' STATUS: '+na.detail.split('.')[0],na.detail);return;}
+    }
+    if(activeLayers.troops){
+      const tm=troopMovAt(e.clientX,e.clientY);
+      if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'STRENGTH: '+tm.strength+' | STATUS: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type.toUpperCase()+' | Severity: '+tm.severity.toUpperCase());return;}
+    }
     const h=hitTest(e.clientX,e.clientY);
     if(h){
       if(!selectedISO){openCountry(h);}
@@ -1839,10 +3096,11 @@ canvas.addEventListener('mouseup',e=>{
 });
 canvas.addEventListener('mouseleave',()=>{isDragging=false;canvas.classList.remove('dragging');document.getElementById('tooltip').style.opacity='0';hoveredISO=null;});
 
-// Scroll-wheel zoom — zooms toward cursor position
+// Scroll-wheel zoom — smooth animated toward cursor
 canvas.addEventListener('wheel',e=>{
   e.preventDefault();
-  const factor=e.deltaY<0?1.12:0.89;
+  const factor=e.deltaY<0?1.14:0.88;
+  targetZoom=Math.max(ZOOM_MIN,Math.min(ZOOM_MAX,targetZoom*factor));
   applyZoom(factor,e.clientX,e.clientY);
 },{passive:false});
 
@@ -1850,10 +3108,12 @@ canvas.addEventListener('wheel',e=>{
 canvas.addEventListener('touchstart',e=>{
   if(e.touches.length===1){
     const t=e.touches[0];
-    isDragging=true;lastX=t.clientX;lastY=t.clientY;velX=0;velY=0;lastPinchDist=null;
+    isDragging=true;lastX=t.clientX;lastY=t.clientY;dragVelX=0;dragVelY=0;lastPinchDist=null;
   } else if(e.touches.length===2){
     isDragging=false;
     lastPinchDist=Math.hypot(e.touches[1].clientX-e.touches[0].clientX,e.touches[1].clientY-e.touches[0].clientY);
+    pinchMidX=(e.touches[0].clientX+e.touches[1].clientX)/2;
+    pinchMidY=(e.touches[0].clientY+e.touches[1].clientY)/2;
   }
   e.preventDefault();
 },{passive:false});
@@ -1861,12 +3121,14 @@ canvas.addEventListener('touchstart',e=>{
 canvas.addEventListener('touchmove',e=>{
   e.preventDefault();
   if(e.touches.length===2){
-    // Pinch zoom
     const dist=Math.hypot(e.touches[1].clientX-e.touches[0].clientX,e.touches[1].clientY-e.touches[0].clientY);
-    if(lastPinchDist){
-      const midX=(e.touches[0].clientX+e.touches[1].clientX)/2;
-      const midY=(e.touches[0].clientY+e.touches[1].clientY)/2;
-      applyZoom(dist/lastPinchDist,midX,midY);
+    if(lastPinchDist&&dist>0){
+      const ratio=dist/lastPinchDist;
+      const newMidX=(e.touches[0].clientX+e.touches[1].clientX)/2;
+      const newMidY=(e.touches[0].clientY+e.touches[1].clientY)/2;
+      // Smooth pinch: lerp target zoom
+      targetZoom=Math.max(ZOOM_MIN,Math.min(ZOOM_MAX,targetZoom*ratio));
+      applyZoom(ratio,newMidX,newMidY);
     }
     lastPinchDist=dist;
   } else if(e.touches.length===1&&isDragging){
@@ -1874,7 +3136,7 @@ canvas.addEventListener('touchmove',e=>{
     const dx=t.clientX-lastX,dy=t.clientY-lastY;
     const sens=1/scale;
     rotY+=dx*sens;rotX+=dy*sens;rotX=Math.max(-1.3,Math.min(1.3,rotX));
-    velX=dx*sens*0.16;velY=dy*sens*0.16;
+    dragVelX=dx*sens*0.18;dragVelY=dy*sens*0.18;
     lastX=t.clientX;lastY=t.clientY;
   }
 },{passive:false});
@@ -1889,6 +3151,14 @@ canvas.addEventListener('touchend',e=>{
       if(Math.abs(dx)<8&&Math.abs(dy)<8){
         const hs=hotspotAt(t.clientX,t.clientY);
         if(hs){openHotspot(hs);return;}
+        if(activeLayers.naval){
+          const na=navalAssetAt(t.clientX,t.clientY);
+          if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' STATUS: '+na.detail.split('.')[0],na.detail);return;}
+        }
+        if(activeLayers.troops){
+          const tm=troopMovAt(t.clientX,t.clientY);
+          if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'STRENGTH: '+tm.strength+' | STATUS: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type.toUpperCase()+' | Severity: '+tm.severity.toUpperCase());return;}
+        }
         const h=hitTest(t.clientX,t.clientY);
         if(h){
           if(!selectedISO){openCountry(h);}
@@ -2068,6 +3338,21 @@ const HS_DETAIL={
   'Kaliningrad — NATO Enclave / S-400 Zone':'STRATEGIC THREAT — NATO SUWALKI GAP. Russian exclave between Poland and Lithuania: 15,000 sq km, pop. 1M. Russian Baltic Fleet HQ (Baltiysk): submarines, surface combatants. S-400 Triumf and Iskander-M (nuclear-capable) batteries deployed — cover entire Baltic Sea approaches. Kaliningrad A2/AD (Anti-Access/Area Denial) bubble: 400km radius restricts NATO air and naval freedom of movement. Suwalki Gap (65km corridor between Kaliningrad and Belarus): NATO\'s most vulnerable point — land bridge to Baltic states. Russian "missile trains" exercise (nuclear-capable Iskander on rail) — Kaliningrad component assessed. Russian reinforcement: Baltic Fleet amphibious capability could threaten Gotland (Sweden) in conflict scenario.',
   'Karabakh — Post-Conflict Stabilization':'POST-WAR CONSOLIDATION — ETHNIC CLEANSING DOCUMENTED. Azerbaijan military offensive Sep 2023 (24 hours): 100,000 ethnic Armenians fled Nagorno-Karabakh — UNHCR confirms forced displacement. Karabakh Republic dissolved Oct 2023. Azerbaijan controls full territory. ICJ/ECHR: multiple Armenia petitions pending. Russia\'s CSTO (collective security treaty) failure to defend Armenia eroded Russian credibility as security guarantor. Armenian PM Pashinyan pivoting toward EU/NATO — unprecedented. Risk: Armenia becoming next Ukraine-scenario as Russia influence declines. Turkish-Azerbaijani strategic partnership (1 nation, 2 states) — Zangezur Corridor demand (through Armenia to Azerbaijan proper) remains flashpoint.',
   'Belgrade — Russia-Aligned Government':'SOFT POWER — RUSSIAN INFLUENCE NODE. Serbia: EU candidate state but refuses to join Russia sanctions, opposes Kosovo independence, purchasing Chinese and Russian arms (MiG-29, Pantsir-S1). President Vucic plays EU and Russia simultaneously — EU accession leverage tool not genuine commitment. Kosovo tensions: Northern Kosovo Serb community periodic confrontations with KFOR (NATO). Republika Srpska (Bosnia): Dodik openly pro-Russia, undermining Dayton peace structure. Serbian Orthodox Church as soft power instrument for Russian narrative penetration across Western Balkans. Wagner Group (Africa Corps) recruitment activity confirmed in Serbia 2024. Belgrade assessed as primary Russian intelligence hub for Western Balkans operations.',
+  // ── East Asia ──
+  'Pyongyang — ICBM & Nuclear Program':'TOP SECRET // SI // TK — WMD PROGRAM ACTIVE. DPRK operational ICBM capability confirmed: Hwasong-17 (liquid) and Hwasong-18 (solid) ICBMs capable of striking all CONUS targets. Yongbyon reactor: restarted at 5MWe capacity — plutonium production ongoing. Uranium enrichment: centrifuge facility expanded — second facility assessed at Kangson site. Nuclear warhead stockpile: 40-50 warheads (2025 DIA estimate). Yield: est. 20-250 kt per design. Kim Jong-un personally directs nuclear weapons program from strategic command center — location classified. Troops deployed to Russia: 10,000-12,000 in Kursk Oblast — IMINT confirmed. Kim Ju-ae successor grooming accelerating — appearing at major military events.',
+  'Beijing — PLA Taiwan Contingency HQ':'SECRET // NOFORN // REL FVEY. PLA Joint Operations Command Center (JOCOC) directing Taiwan contingency planning from Western Hills complex, Beijing. CMC Chairman Xi personally chairs major exercises — Joint Sword 2024, 2025 demonstrated blockade capability. PLA Eastern Theater Command (Nanjing): 400,000+ troops under Taiwan ops plan. PLAN: 355+ warships — amphibious fleet: 8 Type 071, 3 Type 075 LHA. PLARF: DF-21D/DF-26 anti-ship ballistic missiles pre-targeted USN carriers. MSS counter-intelligence assessment: Taiwan has 3 agents inside PLA Taiwan planning staff. 2027 capability threshold: DIA assesses PLA approaching ability to execute forced unification against significant INDOPACOM resistance.',
+  'Taiwan Strait — PLA Grey Zone Ops':'SECRET // NOFORN. GREY ZONE OPERATIONS: Daily PLA violations of Taiwan ADIZ averaging 100+ aircraft/month. Median line violations: routine. Coast Guard confrontations: monthly. Undersea fiber cable disruption: 2 cables cut Feb 2025 by PRC-flagged vessel. Cyber: 5M+ daily intrusion attempts on Taiwan government networks. Information: PRC controls narrative in 60%+ of Mandarin-language social media globally. Military balance: RAND assessment — PLA achieves Taiwan blockade in 3-5 days, unable to occupy for 5+ years currently. F-35B (USMC) and carrier task forces are primary US deterrence assets within 24h of Taiwan. TSMC contingency: US has extracted chip design IP, established Arizona fabs — partial resilience achieved.',
+  'Seoul — DMZ / USFK Alliance Hub':'SECRET // REL ROK-USA. COMBINED FORCES COMMAND: US-ROK CFC (GEN Paul LaCamera, COMUSKFOR) co-located at Camp Humphreys — largest US overseas base, 40,000 personnel. DEFCON status: standard DEFCON 3. OPLAN 5027 (war plan) updated 2024 for DPRK nuclear use contingency. ROK capabilities: F-35A (40), F-15K, Taurus KEPD-350 (cruise missile) — decapitation strike capability. Patriot PAC-3 and THAAD L-SAM integrated air defense. KAMD (Korean Air and Missile Defense) operational. North Korean artillery: 500+ batteries within range of Seoul metro (25M population) — 250,000 casualty potential in first hour of conflict.',
+  'Sohae Satellite Launch Center':'SECRET // IMINT. PRIMARY ICBM AND SATELLITE LAUNCH FACILITY. Located: 39.65°N, 124.71°E, Tongchang-ri. Capability: vertical assembly building — ICBMs and space launch vehicles. 2024-2025: Malligyong-1B spy satellite launched — provides targeting for US bases. Launch pad upgraded — heavy-lift rocket capacity. Adjacent Iha-ri components factory: ICBM fueling equipment. IMINT: truck activity, fuel tanker presence indicates imminent launch preparations assessed. Significance: DPRK achieving global reconnaissance capability — reduces strategic surprise advantage for US/ROK.',
+  'Suwalki Gap — NATO Critical Chokepoint':'TOP SECRET // NATO SECRET — CRITICAL VULNERABILITY. 65km land corridor between Kaliningrad (Russia) and Belarus. Only land connection between Poland and Baltic states. NATO wargames 2016-2025: Russian seizure possible in 60-100 hours without pre-positioned forces. German Bundeswehr brigade (5,000) deploying Lithuania by 2027 — gap-filler. Lithuanian investment: €1.3B in fortifications along Gap corridor. Pre-positioned NATO equipment: Camp Adazi (Latvia), Rukla (Lithuania), Suwalki (Poland). Exercise Steadfast Guardian: tested 60h response. Kaliningrad Iskander-M: can suppress NATO airfields across all Baltic states. Assessment: Suwalki Gap is NATO\'s single most critical geographic chokepoint — Article 5 test scenario.',
+  'Tallinn — NATO Cyber Defence HQ (CCDCOE)':'SECRET // NATO — CYBER COMMAND. NATO CCDCOE (Cooperative Cyber Defence Centre of Excellence) HQ: Tallinn. 35 allied nations, 300+ cyber experts. Annual Locked Shields exercise — largest live-fire cyber defence drill. Estonia: most digitally advanced society targeted by Russia 2007 cyberattack (first nation-state cyber attack on NATO). KAPO (Estonian intel): tracking GRU/SVR/FSB cyber operations daily. X-Road: Estonian digital backbone — 2,500+ services, 1B+ queries/yr. Target: any successful attack on e-Estonia demonstrated as NATO vulnerability. UK eFP battle group (Tapa) upgraded to brigade (4,500 troops) — direct Russia deterrent.',
+  'Sarajevo — Dodik Secession Crisis':'SECRET // EU. CONSTITUTIONAL CRISIS — DAYTON UNDER ASSAULT. Milorad Dodik (Republika Srpska President): openly seeking RS secession — "reunification with Serbia." OHR (EU High Representative Schmidt) has imposed 20+ laws. Dodik refuses to appear at BiH state court, ignoring summons. EU sanctions: imposed October 2023. US Magnitsky sanctions. Russia: providing UN Security Council veto cover for Dodik against any enforcement. BiH Armed Forces: integration stalled — RS component effectively non-functional. EUFOR Althea: 1,100 troops, Chapter 7 UN mandate, but restricted ROE — cannot arrest Dodik. Assessment: RS secession risk 45% within 5 years — would be first EU internal breakup scenario.',
+  'Tripoli — GNU/Haftar Proxy War':'SECRET // NOFORN. FRACTURED STATE — DUAL GOVERNMENT. GNU (Government of National Unity): Tripoli-based, UN-recognized PM Dbeibah — backed by Turkey (1,800 troops, Bayraktar drones) and Qatar. LNA (Libyan National Army): Haftar-commanded, Tobruk-based parliament — backed by UAE (Predator drones), Egypt, and Russia (Africa Corps). GNU-LNA ceasefire nominal — fighting in south and Oil Crescent. Africa Corps (Wagner successor): 1,800+ at Al-Jufra and Brak al-Shatti air bases — MiG-29, Su-24 painted in Libyan markings. Oil: NOC controls, but LNA seizes terminals for leverage. CIA assessment: Libya will not achieve unification within 5-year forecast.',
+  'Benghazi — Africa Corps Forward Base':'TOP SECRET // HUMINT CONTROLLED. RUSSIA MILITARY FOOTPRINT — MEDITERRANEAN. Africa Corps (formerly Wagner) operating from Al-Abraq airport and Benghazi Al-Keesh complex. Aircraft: MiG-29 and Su-24 (Russian-piloted, Libyan markings) conducting ground attack in south. Personnel: 1,200 estimated in eastern Libya. Mission: Haftar LNA support, Russian Mediterranean power projection foothold, Sahel operations staging. Russian Navy: periodic Tartus-Syria to Tobruk logistic runs. Strategic value: Russia\'s only African Mediterranean base of operations. Gold: Russian mining interests in Fezzan (Subul al-Salam/Erdenet networks). Assessment: Russia will resist any political settlement that removes Africa Corps from Libya.',
+  'Khartoum — SAF-RSF Civil War':'TOP SECRET // HUMINT. CATASTROPHIC CONFLICT — COLLAPSED STATE. SAF (Sudanese Armed Forces) Commander-in-Chief Burhan vs. RSF (Rapid Support Forces) Commander Hemeti. War started April 2023 — 150,000+ killed, 8.5M displaced. Khartoum: control split between SAF (airport, north) and RSF (south, Omdurman). External backing: UAE → RSF (arms, funding via Chad), Russia/IRGC → SAF (limited). Gold: RSF controls Darfur artisanal mining est. $1.5B/yr — war financing. Famine: IPC Phase 5 declared Zamzam camp, North Darfur. Al-Fashir: last major Darfur city under SAF control — RSF siege ongoing. WFP aid: 50% funding gap — 28M food insecure. ICC: investigation opened for war crimes both parties.',
+  'Northern Mali — JNIM Sahel Caliphate':'SECRET // NOFORN. AL-QAEDA SAHEL AFFILIATE — STRATEGIC EXPANSION. JNIM (Jama\'at Nusrat al-Islam wal-Muslimin / Group for Support of Islam and Muslims): AQ franchise commanded by Iyad ag Ghaly (Tuareg leader). Territory: controls Kidal (captured from junta), Menaka, Gao outskirts, most of Mopti region. Revenue: taxing agricultural zones, kidnapping for ransom (€15M+ 2024), drug transit. Personnel: 5,000-10,000 fighters, multi-ethnic coalition. Africa Corps: unable to dislodge JNIM — Kidal offensive failed. Assessment: JNIM approaching "proto-state" control of an area larger than France. West Africa expansion: JNIM cells active in Burkina Faso, Niger, Mali-Ghana border.',
+  'Mogadishu — Al-Shabaab Operations':'SECRET // NOFORN. PERSISTENT INSURGENCY — AL-QAEDA AFFILIATE. Al-Shabaab (Harakat al-Shabaab al-Mujahideen): al-Qaeda affiliate, governed by Emir Cumar Usama Abdul Manan Diriye. Territory: controls est. 30% of Somalia, including major rural areas. Revenue: taxation of southern Somalia agriculture and trade ($100M+/yr). Attacks: average 100/month across Somalia — Mogadishu complex attacks targeting government, hotels, AMISOM/ATMIS. International: cells in Kenya, Tanzania, Uganda — 2010 Kampala bombing (76 dead). US AFRICOM: conducting drone strikes — 40+ in 2024. SNA-ATMIS offensive 2023-2025: pushed Al-Shabaab from Hiiraan and Galgadud but not degraded core. Assessment: Al-Shabaab will not be militarily defeated without viable governance alternative.',
+  'Pristina — Kosovo-Serbia Flashpoint':'SECRET // NATO. FROZEN CONFLICT — ESCALATION RISK. Kosovo (97% Albanian) declared independence 2008 — recognized by 100+ UN states, not by Serbia/Russia/China. North Kosovo: 50,000 ethnic Serbs — periodic barricades and confrontations with Kosovo Police. NATO KFOR (4,800 troops, 30 nations): Pristina airport and sector security. 2023: Serbian paramilitaries attacked KFOR in Banjska ambush — 30 attackers, 3 Serbian armed fighters killed, 1 KFOR seriously wounded. EU Rule of Law Mission (EULEX): justice support. Vucic position: Kosovo independence "will never be accepted." Dodik-Vucic coordination on Serbian national interests creating dual-front pressure. Assessment: low probability of conventional conflict, elevated hybrid confrontation.',
 };
 
 let currentHotspot=null;
@@ -2315,6 +3600,52 @@ async function fetchRSS(feedUrl,sourceName,countryName){
       published:(item.querySelector('pubDate')?.textContent||''),
     })).filter(r=>r.title);
   }catch{return[];}
+}
+
+/* ════════════════════════════════════════════════════
+   LAYER TOGGLE
+════════════════════════════════════════════════════ */
+function toggleLayer(name){
+  activeLayers[name]=!activeLayers[name];
+  const btn=document.getElementById('lb-'+name);
+  if(btn)btn.classList.toggle('active',activeLayers[name]);
+  // Conflicts layer also controls arc visibility shortcut
+  if(name==='conflicts'){showArcs=activeLayers[name];updateConnBtn();}
+}
+
+/* ════════════════════════════════════════════════════
+   TRACKING DETAIL MODAL
+════════════════════════════════════════════════════ */
+function openTrackModal(typeLabel,label,meta,desc){
+  document.getElementById('track-type').textContent=typeLabel;
+  document.getElementById('track-label').textContent=label;
+  document.getElementById('track-meta').textContent=meta;
+  document.getElementById('track-desc').textContent=desc;
+  document.getElementById('track-modal').style.display='flex';
+}
+function closeTrackModal(){
+  document.getElementById('track-modal').style.display='none';
+}
+
+/* ── Canvas hit-test for tracking items ── */
+function navalAssetAt(sx,sy){
+  for(const n of NAVAL_ASSETS){
+    const p=project(n.lat,n.lng);
+    if(!p.visible)continue;
+    if(Math.hypot(sx-p.px,sy-p.py)<18)return n;
+  }
+  return null;
+}
+function troopMovAt(sx,sy){
+  for(const m of TROOP_MOVEMENTS){
+    const p1=project(m.fromLat,m.fromLng);
+    const p2=project(m.toLat,m.toLng);
+    if(!p1.visible&&!p2.visible)continue;
+    // Check near midpoint of arc
+    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.22;
+    if(Math.hypot(sx-mx,sy-my)<22)return m;
+  }
+  return null;
 }
 
 function updateConnBtn(){
