@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Intel Globe"/>
 <title>Intel Globe — Middle East</title>
-<!-- TopoJSON → GeoJSON converter (served from CDN at runtime) -->
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<!-- TopoJSON → GeoJSON converter (async so it never blocks page render) -->
+<script async src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -294,7 +294,7 @@ canvas.dragging{cursor:grabbing}
 
 <div id="globe-wrap"><canvas id="globe"></canvas></div>
 <div id="zoom-hint">Scroll to zoom · Drag to spin · Pinch on mobile</div>
-<div id="geo-loading" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none">Loading world borders…</div>
+<div id="geo-loading" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none;transition:opacity .4s">Loading real-world borders…</div>
 
 <div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div></div>
 
@@ -827,16 +827,29 @@ function drawMeridian(lng){
 
 /* ── Real-world GeoJSON border rendering ── */
 async function loadWorldData(){
+  const hide=()=>{const el=document.getElementById('geo-loading');if(el)el.style.display='none';};
   try{
-    const res=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+    // Wait up to 6 s for the async topojson script to finish loading
+    if(typeof topojson==='undefined'){
+      await new Promise(resolve=>{
+        const deadline=Date.now()+6000;
+        (function poll(){typeof topojson!=='undefined'?resolve():Date.now()<deadline?setTimeout(poll,80):resolve();}());
+      });
+    }
+    if(typeof topojson==='undefined'){hide();return;}  // CDN failed — use fallback polys
+
+    // Fetch world-atlas with a hard 12-second timeout
+    const res=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json',
+      {signal:AbortSignal.timeout(12000)});
+    if(!res.ok)throw new Error('HTTP '+res.status);
     const topo=await res.json();
     const geo=topojson.feature(topo,topo.objects.countries);
     worldFeatures=geo.features;
     for(const[iso,c]of Object.entries(COUNTRIES))if(c.numericId)numericToISO[c.numericId]=iso;
     geoReady=true;
-    document.getElementById('geo-loading').style.display='none';
+    hide();
   }catch(e){
-    document.getElementById('geo-loading').style.display='none';
+    hide();  // silently fall back to embedded simplified polygons
   }
 }
 
