@@ -520,6 +520,7 @@ canvas.dragging{cursor:grabbing}
   <button class="layer-btn" id="lb-naval"     onclick="toggleLayer('naval')"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS<span class="lb-count">10</span></button>
   <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span></button>
   <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span></button>
+  <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
 </div>
 
 <!-- Live intelligence ticker -->
@@ -3455,22 +3456,22 @@ const FINANCIAL_FLOWS=[
   {from:'IND',to:'NPL',  type:'aid',     label:'India Nepal Infrastructure Investment',   value:'$1.7B',    color:'rgba(59,130,246',severity:'low'},
 ];
 const REFUGEE_FLOWS=[
-  {fromLat:49.0,fromLng:31.5, toLat:52.2,toLng:21.0, label:'Ukraine → Poland (3.5M+)',  value:'3.5M', severity:'critical'},
-  {fromLat:49.0,fromLng:31.5, toLat:52.5,toLng:13.4, label:'Ukraine → Germany (1.1M+)', value:'1.1M', severity:'high'},
-  {fromLat:33.5,fromLng:36.3, toLat:39.9,toLng:32.9, label:'Syria → Turkey (3.6M)',     value:'3.6M', severity:'critical'},
-  {fromLat:33.5,fromLng:36.3, toLat:33.9,toLng:35.5, label:'Syria → Lebanon (1.5M)',    value:'1.5M', severity:'high'},
-  {fromLat:15.4,fromLng:44.2, toLat:13.5,toLng:44.0, label:'Yemen Displacement (4.5M)', value:'4.5M', severity:'critical'},
-  {fromLat:33.9,fromLng:67.7, toLat:30.4,toLng:69.3, label:'Afghan → Pakistan (4M+)',   value:'4M+',  severity:'high'},
-  {fromLat:26.3,fromLng:17.2, toLat:35.9,toLng:14.5, label:'Libya → Mediterranean',     value:'800K/yr',severity:'high'},
+  {fromISO:'UKR',toISO:'POL',fromLat:49.0,fromLng:31.5, toLat:52.2,toLng:21.0, label:'Ukraine → Poland (3.5M+)',  value:'3.5M', severity:'critical'},
+  {fromISO:'UKR',toISO:'DEU',fromLat:49.0,fromLng:31.5, toLat:52.5,toLng:13.4, label:'Ukraine → Germany (1.1M+)', value:'1.1M', severity:'high'},
+  {fromISO:'SYR',toISO:'TUR',fromLat:33.5,fromLng:36.3, toLat:39.9,toLng:32.9, label:'Syria → Turkey (3.6M)',     value:'3.6M', severity:'critical'},
+  {fromISO:'SYR',toISO:'LBN',fromLat:33.5,fromLng:36.3, toLat:33.9,toLng:35.5, label:'Syria → Lebanon (1.5M)',    value:'1.5M', severity:'high'},
+  {fromISO:'YEM',toISO:'YEM',fromLat:15.4,fromLng:44.2, toLat:13.5,toLng:44.0, label:'Yemen Displacement (4.5M)', value:'4.5M', severity:'critical'},
+  {fromISO:'AFG',toISO:'PAK',fromLat:33.9,fromLng:67.7, toLat:30.4,toLng:69.3, label:'Afghan → Pakistan (4M+)',   value:'4M+',  severity:'high'},
+  {fromISO:'LBY',toISO:'TUN',fromLat:26.3,fromLng:17.2, toLat:35.9,toLng:14.5, label:'Libya → Mediterranean',     value:'800K/yr',severity:'high'},
   // Sahel / Africa
-  {fromLat:17.6,fromLng:8.1,  toLat:35.7,toLng:10.1,  label:'Niger → Mediterranean (Migration)',value:'300K/yr',severity:'high'},
-  {fromLat:15.5,fromLng:32.6, toLat:15.5,toLng:18.7,  label:'Sudan Civil War → Chad (Refugees)', value:'700K+',  severity:'critical'},
-  {fromLat:17.1,fromLng:96.9, toLat:23.7,toLng:90.4,  label:'Myanmar → Bangladesh (Rohingya)',   value:'1.1M',   severity:'critical'},
-  {fromLat:6.4, fromLng:-66.6,toLat:4.7, toLng:-74.1, label:'Venezuela → Colombia (Migrants)',   value:'2.7M',   severity:'critical'},
-  {fromLat:6.4, fromLng:-66.6,toLat:0.5, toLng:-76.5, label:'Venezuela → Ecuador (Migrants)',    value:'500K',   severity:'high'},
-  {fromLat:18.9,fromLng:-72.3,toLat:25.8,toLng:-80.2, label:'Haiti → US (Boat Migration)',       value:'250K/yr',severity:'high'},
-  {fromLat:9.1, fromLng:-79.5,toLat:25.8,toLng:-80.2, label:'Darién Gap → US Border (Migrants)', value:'500K/yr',severity:'critical'},
-  {fromLat:12.4,fromLng:-1.6, toLat:35.7,toLng:5.3,   label:'Burkina Faso Displacement (IDP)',   value:'2.1M',   severity:'critical'},
+  {fromISO:'NER',toISO:'DZA',fromLat:17.6,fromLng:8.1,  toLat:35.7,toLng:10.1,  label:'Niger → Mediterranean (Migration)',value:'300K/yr',severity:'high'},
+  {fromISO:'SDN',toISO:'TCD',fromLat:15.5,fromLng:32.6, toLat:15.5,toLng:18.7,  label:'Sudan Civil War → Chad (Refugees)', value:'700K+',  severity:'critical'},
+  {fromISO:'MMR',toISO:'BGD',fromLat:17.1,fromLng:96.9, toLat:23.7,toLng:90.4,  label:'Myanmar → Bangladesh (Rohingya)',   value:'1.1M',   severity:'critical'},
+  {fromISO:'VEN',toISO:'COL',fromLat:6.4, fromLng:-66.6,toLat:4.7, toLng:-74.1, label:'Venezuela → Colombia (Migrants)',   value:'2.7M',   severity:'critical'},
+  {fromISO:'VEN',toISO:'ECU',fromLat:6.4, fromLng:-66.6,toLat:0.5, toLng:-76.5, label:'Venezuela → Ecuador (Migrants)',    value:'500K',   severity:'high'},
+  {fromISO:'HTI',toISO:'USA',fromLat:18.9,fromLng:-72.3,toLat:25.8,toLng:-80.2, label:'Haiti → US (Boat Migration)',       value:'250K/yr',severity:'high'},
+  {fromISO:'PAN',toISO:'USA',fromLat:9.1, fromLng:-79.5,toLat:25.8,toLng:-80.2, label:'Darién Gap → US Border (Migrants)', value:'500K/yr',severity:'critical'},
+  {fromISO:'BFA',toISO:'DZA',fromLat:12.4,fromLng:-1.6, toLat:35.7,toLng:5.3,   label:'Burkina Faso Displacement (IDP)',   value:'2.1M',   severity:'critical'},
 ];
 
 function resize(){
@@ -3788,24 +3789,26 @@ function arrowHead(px,py,angle,size,color){
 
 function drawTroopMovements(){
   const t=(Date.now()%3000)/3000;
-  for(const m of TROOP_MOVEMENTS){
+  const list=selectedISO?TROOP_MOVEMENTS.filter(m=>m.country===selectedISO):TROOP_MOVEMENTS;
+  for(const m of list){
     const p1=project(m.fromLat,m.fromLng),p2=project(m.toLat,m.toLng);
     if(!p1.visible&&!p2.visible)continue;
     const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(59,130,246',low:'rgba(34,197,94'}[m.severity]||'rgba(148,163,184';
-    drawCurvedArc(p1,p2,sev,.08,7,null,null);
-    drawCurvedArc(p1,p2,sev,.75,1.5,[10,6],-t*50);
+    const alpha=selectedISO?1:1;
+    drawCurvedArc(p1,p2,sev,.08*alpha,7,null,null);
+    drawCurvedArc(p1,p2,sev,.75*alpha,1.5,[10,6],-t*50);
     if(p2.visible){
       const dx=p2.px-p1.px,dy=p2.py-p1.py;
       arrowHead(p2.px,p2.py,Math.atan2(dy,dx),9,`${sev},.9)`);
     }
-    // Origin dot
     if(p1.visible){ctx.beginPath();ctx.arc(p1.px,p1.py,3.5,0,Math.PI*2);ctx.fillStyle=`${sev},.85)`;ctx.fill();}
   }
 }
 
 function drawArmsFlows(){
   const t=(Date.now()%2500)/2500;
-  for(const a of ARMS_FLOWS){
+  const list=selectedISO?ARMS_FLOWS.filter(a=>a.from===selectedISO||a.to===selectedISO):ARMS_FLOWS;
+  for(const a of list){
     const from=COUNTRIES[a.from],to=COUNTRIES[a.to];if(!from||!to)continue;
     const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
     drawCurvedArc(p1,p2,'rgba(245,158,11',.06,5,null,null);
@@ -3816,16 +3819,15 @@ function drawArmsFlows(){
 
 function drawNavalAssets(){
   const now=Date.now();
-  for(const n of NAVAL_ASSETS){
+  const list=selectedISO?NAVAL_ASSETS.filter(n=>n.country===selectedISO||n.country==='NATO'):NAVAL_ASSETS;
+  for(const n of list){
     const p=project(n.lat,n.lng);if(!p.visible)continue;
     const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(34,197,94',low:'rgba(59,130,246'}[n.severity]||'rgba(34,197,94';
     const pulse=Math.sin(now/1200+n.lat)*0.5+0.5;
-    // Sonar rings
     ctx.beginPath();ctx.arc(p.px,p.py,8+pulse*5,0,Math.PI*2);
     ctx.strokeStyle=`${sev},.25)`;ctx.lineWidth=1;ctx.stroke();
     ctx.beginPath();ctx.arc(p.px,p.py,4+pulse*2,0,Math.PI*2);
     ctx.strokeStyle=`${sev},.5)`;ctx.lineWidth=1;ctx.stroke();
-    // Ship triangle
     ctx.save();ctx.translate(p.px,p.py);
     ctx.beginPath();ctx.moveTo(0,-5);ctx.lineTo(3.5,4);ctx.lineTo(-3.5,4);ctx.closePath();
     ctx.fillStyle=`${sev},.85)`;ctx.fill();
@@ -3835,12 +3837,12 @@ function drawNavalAssets(){
 
 function drawFinancialFlows(){
   const t=(Date.now()%4000)/4000;
-  for(const f of FINANCIAL_FLOWS){
+  const list=selectedISO?FINANCIAL_FLOWS.filter(f=>f.from===selectedISO||f.to===selectedISO):FINANCIAL_FLOWS;
+  for(const f of list){
     const from=COUNTRIES[f.from],to=COUNTRIES[f.to];if(!from||!to)continue;
     const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
     drawCurvedArc(p1,p2,f.color||'rgba(168,85,247',.05,4,null,null);
     drawCurvedArc(p1,p2,f.color||'rgba(168,85,247',.7,1,[4,8],-t*25);
-    // Money dot pulse at midpoint
     if(p1.visible&&p2.visible){
       const mt=(Date.now()%4000)/4000;
       const mx=p1.px+(p2.px-p1.px)*mt,my=p1.py+(p2.py-p1.py)*mt;
@@ -3852,7 +3854,8 @@ function drawFinancialFlows(){
 
 function drawRefugeeFlows(){
   const t=(Date.now()%5000)/5000;
-  for(const r of REFUGEE_FLOWS){
+  const list=selectedISO?REFUGEE_FLOWS.filter(r=>r.fromISO===selectedISO||r.toISO===selectedISO):REFUGEE_FLOWS;
+  for(const r of list){
     const p1=project(r.fromLat,r.fromLng),p2=project(r.toLat,r.toLng);
     drawCurvedArc(p1,p2,'rgba(251,191,36',.05,6,null,null);
     drawCurvedArc(p1,p2,'rgba(251,191,36',.65,1.5,[5,7],-t*20);
@@ -4175,8 +4178,7 @@ window.addEventListener('resize',()=>{resize();});
    PANEL UI
 ════════════════════════════════════════════════════ */
 function openCountry(iso){
-  selectedISO=iso;showArcs=false;updateConnBtn();
-  // Always open fresh — clear minimized/fullscreen from previous view
+  selectedISO=iso;showArcs=false;updateConnBtn();updateLayerFilterHint();
   const panel=document.getElementById('panel');
   panel.classList.remove('minimized','fullscreen');
   document.getElementById('p-minimize').textContent='▼';
@@ -4507,7 +4509,7 @@ function closePanel(){
   document.getElementById('p-expand').textContent='⤢';
   document.getElementById('p-minimize').textContent='▼';
   document.getElementById('h-status').textContent='Click any highlighted country for Intel Report';
-  selectedISO=null;showArcs=false;updateConnBtn();
+  selectedISO=null;showArcs=false;updateConnBtn();updateLayerFilterHint();
   document.getElementById('leg-div').style.display='none';
   document.getElementById('leg-arc-section').style.display='none';
 }
@@ -4589,8 +4591,25 @@ function toggleLayer(name){
   activeLayers[name]=!activeLayers[name];
   const btn=document.getElementById('lb-'+name);
   if(btn)btn.classList.toggle('active',activeLayers[name]);
-  // Conflicts layer also controls arc visibility shortcut
   if(name==='conflicts'){showArcs=activeLayers[name];updateConnBtn();}
+  updateLayerFilterHint();
+}
+
+function updateLayerFilterHint(){
+  const anyActive=Object.values(activeLayers).some(Boolean);
+  const hint=document.getElementById('layers-filter-hint');
+  if(hint){
+    if(anyActive&&selectedISO){
+      const name=COUNTRIES[selectedISO]?.name||selectedISO;
+      hint.textContent='⬡ FILTERED: '+name;
+      hint.style.display='block';
+    } else if(anyActive){
+      hint.textContent='⬡ GLOBAL VIEW';
+      hint.style.display='block';
+    } else {
+      hint.style.display='none';
+    }
+  }
 }
 
 /* ════════════════════════════════════════════════════
@@ -4759,9 +4778,10 @@ function closeTrackModal(){
   document.getElementById('track-modal').style.display='none';
 }
 
-/* ── Canvas hit-test for tracking items ── */
+/* ── Canvas hit-test for tracking items — respects selectedISO filter ── */
 function navalAssetAt(sx,sy){
-  for(const n of NAVAL_ASSETS){
+  const list=selectedISO?NAVAL_ASSETS.filter(n=>n.country===selectedISO||n.country==='NATO'):NAVAL_ASSETS;
+  for(const n of list){
     const p=project(n.lat,n.lng);
     if(!p.visible)continue;
     if(Math.hypot(sx-p.px,sy-p.py)<18)return n;
@@ -4769,7 +4789,8 @@ function navalAssetAt(sx,sy){
   return null;
 }
 function troopMovAt(sx,sy){
-  for(const m of TROOP_MOVEMENTS){
+  const list=selectedISO?TROOP_MOVEMENTS.filter(m=>m.country===selectedISO):TROOP_MOVEMENTS;
+  for(const m of list){
     const p1=project(m.fromLat,m.fromLng);
     const p2=project(m.toLat,m.toLng);
     if(!p1.visible&&!p2.visible)continue;
@@ -4779,7 +4800,8 @@ function troopMovAt(sx,sy){
   return null;
 }
 function armsFlowAt(sx,sy){
-  for(const a of ARMS_FLOWS){
+  const list=selectedISO?ARMS_FLOWS.filter(a=>a.from===selectedISO||a.to===selectedISO):ARMS_FLOWS;
+  for(const a of list){
     const from=COUNTRIES[a.from],to=COUNTRIES[a.to];if(!from||!to)continue;
     const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
     if(!p1.visible&&!p2.visible)continue;
@@ -4789,7 +4811,8 @@ function armsFlowAt(sx,sy){
   return null;
 }
 function financialFlowAt(sx,sy){
-  for(const f of FINANCIAL_FLOWS){
+  const list=selectedISO?FINANCIAL_FLOWS.filter(f=>f.from===selectedISO||f.to===selectedISO):FINANCIAL_FLOWS;
+  for(const f of list){
     const from=COUNTRIES[f.from],to=COUNTRIES[f.to];if(!from||!to)continue;
     const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
     if(!p1.visible&&!p2.visible)continue;
@@ -4799,7 +4822,8 @@ function financialFlowAt(sx,sy){
   return null;
 }
 function refugeeFlowAt(sx,sy){
-  for(const r of REFUGEE_FLOWS){
+  const list=selectedISO?REFUGEE_FLOWS.filter(r=>r.fromISO===selectedISO||r.toISO===selectedISO):REFUGEE_FLOWS;
+  for(const r of list){
     const p1=project(r.fromLat,r.fromLng),p2=project(r.toLat,r.toLng);
     if(!p1.visible&&!p2.visible)continue;
     const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.25;
