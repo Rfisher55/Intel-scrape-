@@ -4912,87 +4912,78 @@ async function fetchUnverifiedSignals(){
   const now=Date.now();
   if(unverifiedFetchTime&&now-unverifiedFetchTime<UNVERIFIED_REFRESH_MS)return;
   unverifiedFetchTime=now;
-  document.getElementById('lbc-unverified').textContent='…';
+  const el=document.getElementById('lbc-unverified');
+  if(el)el.textContent='…';
 
-  const countMap={}; // iso → [{title,url,sub,time,score}]
-  const cutoff=Date.now()-3*60*60*1000; // last 3 hours
+  const countMap={}; // iso → [posts]
+  function addPost(iso,post){
+    if(!COUNTRIES[iso])return;
+    if(!countMap[iso])countMap[iso]=[];
+    if(!countMap[iso].find(x=>x.title===post.title))countMap[iso].push(post);
+  }
+  function digestPosts(children,sourceLabel){
+    for(const child of children){
+      const p=child.data||child;
+      if(!p.title)continue;
+      const isos=extractISOs(p.title);
+      const ts=p.created_utc?new Date(p.created_utc*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+      for(const iso of isos){
+        addPost(iso,{
+          title:p.title.slice(0,130),
+          url:p.permalink?'https://reddit.com'+p.permalink:(p.url||'#'),
+          sub:p.subreddit_name_prefixed||sourceLabel,
+          time:ts,
+          score:p.score||0,
+          source:sourceLabel
+        });
+      }
+    }
+  }
 
-  // Source 1: Reddit broad geopolitics feed
+  // Fetch each subreddit separately — avoids multi-reddit CORS/quarantine failures
+  const SUBS=['worldnews','geopolitics','military','ukraine','middleeast','europe','news','worldpolitics'];
+  const fetches=SUBS.map(async sub=>{
+    try{
+      const ctrl=new AbortController();
+      setTimeout(()=>ctrl.abort(),7000);
+      const r=await fetch(`https://www.reddit.com/r/${sub}/hot.json?limit=25`,{signal:ctrl.signal});
+      if(!r.ok)return;
+      const d=await r.json();
+      digestPosts(d.data?.children||[],`r/${sub}`);
+    }catch(e){}
+  });
+  await Promise.allSettled(fetches);
+
+  // Wikipedia Recent Changes — CORS-safe, country article edits signal news activity
   try{
-    const subs='worldnews+ukraine+UkrainianConflict+middleeast+geopolitics+military+europe+news+CombatFootage+GlobalNews+war';
-    const ctrl=new AbortController();const tid=setTimeout(()=>ctrl.abort(),8000);
-    const r=await fetch(`https://www.reddit.com/r/${subs}/new.json?limit=100`,{signal:ctrl.signal});
-    clearTimeout(tid);
+    const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),6000);
+    const r=await fetch('https://en.wikipedia.org/w/api.php?action=query&list=recentchanges&rctype=edit&rcnamespace=0&rclimit=50&rcprop=title|timestamp|comment&format=json&origin=*',{signal:ctrl.signal});
     if(r.ok){
       const d=await r.json();
-      for(const child of d.data?.children||[]){
-        const p=child.data;
-        if((p.created_utc*1000)<cutoff)continue;
-        const isos=extractISOs(p.title+(p.selftext?(' '+p.selftext.slice(0,200)):''));
+      for(const rc of d.query?.recentchanges||[]){
+        const isos=extractISOs(rc.title+' '+(rc.comment||''));
+        const ts=rc.timestamp?new Date(rc.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
         for(const iso of isos){
-          if(!countMap[iso])countMap[iso]=[];
-          countMap[iso].push({
-            title:p.title.slice(0,120),
-            url:'https://reddit.com'+p.permalink,
-            sub:'r/'+p.subreddit,
-            time:new Date(p.created_utc*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
-            score:p.score,
-            source:'Reddit'
-          });
+          addPost(iso,{title:`[Wikipedia edit] ${rc.title}`,url:`https://en.wikipedia.org/wiki/${encodeURIComponent(rc.title)}`,sub:'Wikipedia',time:ts,score:0,source:'Wikipedia'});
         }
       }
     }
-  }catch(e){/* network error */}
+  }catch(e){}
 
-  // Source 2: Reddit live/breaking feed
-  try{
-    const ctrl2=new AbortController();const tid2=setTimeout(()=>ctrl2.abort(),6000);
-    const r2=await fetch('https://www.reddit.com/r/worldnews+military+europe/hot.json?limit=50',{signal:ctrl2.signal});
-    clearTimeout(tid2);
-    if(r2.ok){
-      const d2=await r2.json();
-      for(const child of d2.data?.children||[]){
-        const p=child.data;
-        const isos=extractISOs(p.title);
-        for(const iso of isos){
-          if(!countMap[iso])countMap[iso]=[];
-          // Avoid exact duplicates
-          if(!countMap[iso].find(x=>x.title===p.title.slice(0,120))){
-            countMap[iso].push({
-              title:p.title.slice(0,120),
-              url:'https://reddit.com'+p.permalink,
-              sub:'r/'+p.subreddit,
-              time:new Date(p.created_utc*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
-              score:p.score,
-              source:'Reddit'
-            });
-          }
-        }
-      }
-    }
-  }catch(e){/* network error */}
-
-  // Build signals — threshold: 3+ unique posts about same country
+  // Build signals — threshold: 1 unique mention = signal (let volume tell the story)
   unverifiedSignals=[];
   for(const [iso,posts] of Object.entries(countMap)){
-    if(posts.length<2)continue;
-    // Deduplicate by title
-    const seen=new Set();
-    const unique=posts.filter(p=>{if(seen.has(p.title))return false;seen.add(p.title);return true;});
-    if(unique.length<2)continue;
-    const topPosts=unique.sort((a,b)=>b.score-a.score).slice(0,10);
-    const sources=[...new Set(topPosts.map(p=>p.sub))];
+    const unique=posts.slice(0,12);
     unverifiedSignals.push({
       iso,
       country:COUNTRIES[iso]?.name||iso,
       count:unique.length,
-      posts:topPosts,
-      sources,
+      posts:unique.sort((a,b)=>b.score-a.score),
+      sources:[...new Set(unique.map(p=>p.sub))],
       lastUpdate:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
     });
   }
   unverifiedSignals.sort((a,b)=>b.count-a.count);
-  const el=document.getElementById('lbc-unverified');
   if(el)el.textContent=unverifiedSignals.length||'0';
 }
 
@@ -6153,7 +6144,8 @@ function closeHotspot(){
   currentHotspot=null;
 }
 function hsOpenCountry(){
-  if(currentHotspot?.country){closeHotspot();openCountry(currentHotspot.country);}
+  const iso=currentHotspot?.country;
+  if(iso){closeHotspot();openCountry(iso);}
 }
 
 /* ── Live news via GDELT + Reddit (no API key required) ── */
