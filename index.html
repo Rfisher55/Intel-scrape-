@@ -153,6 +153,36 @@ canvas.dragging{cursor:grabbing}
 .cf-label{font-size:11px;color:var(--dim)}
 
 .p-foot{display:flex;justify-content:space-between;padding:8px 16px;border-top:1px solid var(--border2);font-size:9px;color:var(--muted);background:rgba(5,12,26,.5)}
+
+/* ── CIA-style intelligence elements ── */
+.class-banner{background:rgba(185,28,28,.13);border-top:2px solid rgba(239,68,68,.6);border-bottom:1px solid rgba(185,28,28,.3);
+  padding:4px 16px;text-align:center;font-size:8px;letter-spacing:.3em;color:#fca5a5;font-weight:bold;flex-shrink:0}
+.report-meta{display:flex;justify-content:space-between;padding:5px 0 8px;font-size:9px;color:var(--muted);letter-spacing:.06em;border-bottom:1px solid var(--border2);margin-bottom:10px}
+.conf-badge{font-size:8px;font-weight:bold;letter-spacing:.1em;padding:2px 6px;border-radius:2px;display:inline-block;vertical-align:middle}
+.conf-badge.high{background:rgba(20,83,45,.5);color:#86efac;border:1px solid #16a34a}
+.conf-badge.medium{background:rgba(120,53,15,.5);color:#fcd34d;border:1px solid #f59e0b}
+.conf-badge.low{background:rgba(100,30,30,.5);color:#fca5a5;border:1px solid #dc2626}
+.prob-bar-wrap{margin-top:6px}
+.prob-label{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px}
+.prob-bar{height:3px;border-radius:2px;background:rgba(30,58,95,.5)}
+.prob-fill{height:100%;border-radius:2px}
+.person-card{background:rgba(8,20,40,.7);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:4px;padding:9px 12px;margin-bottom:7px;position:relative}
+.person-name{font-size:12px;font-weight:bold;color:#93c5fd;margin-bottom:1px}
+.person-role{font-size:9px;color:var(--muted);letter-spacing:.08em;margin-bottom:5px}
+.person-assess{font-size:11px;color:var(--dim);line-height:1.5}
+.person-threat{font-size:8px;font-weight:bold;letter-spacing:.1em;position:absolute;top:9px;right:10px}
+.signal-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)}
+.signal-item:last-child{border-bottom:none}
+.signal-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.signal-text{font-size:11px;color:var(--dim);line-height:1.5;flex:1}
+.signal-src{font-size:9px;color:var(--muted);margin-top:2px;letter-spacing:.06em}
+.wmd-box{background:rgba(127,29,29,.12);border:1px solid rgba(185,28,28,.4);border-radius:5px;padding:10px 12px;margin-bottom:10px}
+.wmd-title{font-size:9px;letter-spacing:.2em;color:#fca5a5;font-weight:bold;margin-bottom:6px}
+.wmd-text{font-size:11px;color:#fda4af;line-height:1.65}
+.political-text{font-size:11px;color:var(--dim);line-height:1.65;margin-bottom:8px}
+.military-text{font-size:11px;color:#7dd3fc;line-height:1.65}
+.source-line{font-size:9px;color:var(--muted);margin-top:12px;letter-spacing:.06em;border-top:1px solid var(--border2);padding-top:6px}
+
 .tab-section{display:none}
 .tab-section.active{display:block}
 
@@ -166,6 +196,7 @@ canvas.dragging{cursor:grabbing}
 
 /* Minimized panel — shows only the header strip */
 #panel.minimized .p-handle,
+#panel.minimized .class-banner,
 #panel.minimized .connect-btn,
 #panel.minimized .p-tabs,
 #panel.minimized .p-content,
@@ -358,6 +389,7 @@ canvas.dragging{cursor:grabbing}
 
 <div id="panel">
   <div class="p-handle" id="p-handle"></div>
+  <div class="class-banner" id="class-banner">SECRET // NOFORN // INTEL GLOBE ASSESSMENT ENGINE</div>
   <div class="p-head">
     <div class="p-row">
       <div>
@@ -759,6 +791,209 @@ const INTEL = {
       "Green hydrogen MOU with Germany — 1GW facility at DUQM by 2030",
     ],
     economic:"GDP $108B. Oil 60% of revenue. Tourism growing 15%/yr. DUQM $30B FDI. Vision 2040 on track.",
+  },
+};
+
+/* Extended CIA-style intelligence data — personalities, signals, political/military assessments */
+const INTEL_EX = {
+  ISR:{
+    political:"Netanyahu coalition under sustained pressure from hostage families, judicial reform opponents, and ICC arrest warrant proceedings. War cabinet fragile — Gantz resigned June 2024. Elections anticipated post-ceasefire. Domestic political survival incentivizing conflict extension.",
+    military:"IDF: 169,500 active, 465,000 reserve. Multi-front posture active: Gaza ground operations, northern Hezbollah deterrence, Jordanian airspace coordination. F-35I 'Adir' squadron operational. Arrow-3 exo-atmospheric BMD providing strategic cover against Iranian ballistic missiles.",
+    signals:[
+      {text:"Iron Dome intercept saturation tactics observed — Hezbollah shifting to simultaneous salvo launches",source:"SIGINT",color:"#ef4444"},
+      {text:"IDF northern command reserve rotation indicates sustained posture — no drawdown indicators",source:"IMINT",color:"#f59e0b"},
+      {text:"Mossad operation tempo increased — confirmed foreign-country actions in 3 jurisdictions",source:"HUMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Benjamin Netanyahu",role:"Prime Minister / War Cabinet Chair",assess:"Politically motivated to extend conflict — coalition collapse and ICC proceedings create personal incentive to avoid ceasefire. Resistant to Gaza post-war governance planning.",threat:"HIGH"},
+      {name:"Yoav Gallant",role:"Defense Minister",assess:"Increasing friction with PM over Rafah scope. Supports hostage deal Phase 2. Professional military background — less politically constrained than PM.",threat:"MEDIUM"},
+      {name:"Herzi Halevi",role:"IDF Chief of Staff",assess:"Operationally focused. Accountable for Oct 7 intelligence failure alongside Shin Bet. Expected resignation post-conflict. Credible military professional.",threat:"LOW"},
+    ]
+  },
+  PSE:{
+    political:"Hamas-PA split irreconcilable under current leadership. Abbas (89) faces imminent succession crisis — no designated heir, PA governance fragile. Hamas hardened negotiating position post-Sinwar assassination. Day-after governance framework entirely absent.",
+    military:"Hamas military wing significantly degraded: brigade command structure dismantled, senior commanders eliminated. Est. 15,000-18,000 fighters remain (from pre-war 30,000+). Tunnel network 60-70% destroyed per IDF estimates. Iran resupply severely constrained by IDF maritime interdiction.",
+    signals:[
+      {text:"Hamas reconstruction activity detected in Netzarim corridor — tunnel boring equipment signals",source:"SIGINT",color:"#ef4444"},
+      {text:"PIJ operating independently from Hamas in ceasefire talks — coordination breakdown indicator",source:"HUMINT",color:"#f59e0b"},
+      {text:"UNRWA aid diversion to Hamas documented — multiple UN internal audit findings",source:"HUMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Yahya Sinwar (KIA Oct 2024)",role:"Hamas Gaza Commander",assess:"Mastermind of Oct 7 operation. Eliminated by IDF. His death did not produce political collapse as anticipated — command transferred intact.",threat:"ELIMINATED"},
+      {name:"Mohammed Sinwar",role:"Acting Hamas Gaza Commander",assess:"Brother of Yahya. Fiercely committed. Limited HUMINT on personality. Known hardliner — likely to reject compromised ceasefire terms.",threat:"HIGH"},
+      {name:"Mahmoud Abbas",role:"Palestinian Authority President",assess:"Age 89. Politically irrelevant in Gaza. Fragile West Bank authority. No succession plan creates PA collapse risk upon death.",threat:"LOW"},
+    ]
+  },
+  IRN:{
+    political:"Khamenei health declining per HUMINT — succession management opaque, IRGC factions competing for post-Khamenei influence. President Pezeshkian constrained to domestic reformist issues only. IRGC effectively controls foreign and nuclear policy independent of elected government.",
+    military:"IRGC: 125,000 + 300,000 Basij paramilitary. Ballistic missile arsenal: 3,000+ systems. Hypersonic Fattah-1 (Mach 13-15) declared operational. Shahed-136 drone production: est. 3,000+/month capacity. Strait of Hormuz asymmetric naval capability: fast-attack craft, submarine, mine-laying.",
+    wmd:"ACTIVE NUCLEAR WEAPONS PROGRAM — THRESHOLD STATE ASSESSMENT. 60% U-235 enrichment at Fordow/Natanz. Weapons-grade (90%) breakout timeline: 1-2 weeks if ordered. Warhead design: assessed COMPLETE based on IAEA PMD investigation findings. Delivery: Shahab-3, Emad, Sejil all nuclear-capable. Est. material for 3-5 devices if decision made.",
+    signals:[
+      {text:"Fordow enrichment hall expansion confirmed via satellite — capacity increase est. 40%",source:"IMINT/IAEA",color:"#ef4444"},
+      {text:"IRGC Aerospace Force elevated alert — missile battery repositioning in western Iran",source:"SIGINT",color:"#ef4444"},
+      {text:"Quds Force financial transfers to Hezbollah increased 30% since Gaza Oct 7",source:"FININT",color:"#f59e0b"},
+      {text:"APT33/34 escalating cyber operations against Israeli water and energy SCADA systems",source:"SIGINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Ali Khamenei",role:"Supreme Leader",assess:"Ultimate authority on nuclear and military decisions. Health degrading — accelerating IRGC succession competition. Anti-US ideologically absolute. Nuclear program non-negotiable under his leadership. Succession could shift policy unpredictably.",threat:"CRITICAL"},
+      {name:"Mohammad Bagheri",role:"IRGC Chief of Staff",assess:"Coordinates proxy war architecture across 4 countries. Direct link to Hezbollah, Hamas, Houthi command. Reports to Khamenei, bypasses elected government entirely.",threat:"HIGH"},
+      {name:"Esmail Qaani",role:"Quds Force Commander",assess:"Replaced Soleimani post-assassination. Less charismatic but operationally effective. Manages est. $1B+ annual proxy funding pipeline across Iraq-Lebanon-Yemen-Gaza.",threat:"HIGH"},
+    ]
+  },
+  IRQ:{
+    political:"PM Sudani navigating impossible balance: US presence vs. Iran-PMF domination. Baghdad government infiltrated at ministry level by Iranian assets. Kurdish oil revenue dispute ($7B/year) blocking federal budget. US withdrawal timeline 18-month proposal under negotiation.",
+    military:"ISF: 250,000 active. PMF (Popular Mobilization Forces): 130,000 — majority Iran-controlled, formally integrated into state structure. IRGC advisory presence: est. 5,000+ personnel embedded at PMF brigade level. US bases: Ain al-Assad, Al-Harir, Baghdad International.",
+    signals:[
+      {text:"Kataib Hezbollah IED cache discovered near Ain al-Assad perimeter — attack preparation indicator",source:"HUMINT",color:"#ef4444"},
+      {text:"PMF drone launch site expansion in Anbar — new hardened shelters observed",source:"IMINT",color:"#f59e0b"},
+      {text:"ISIS financial network reactivation — Mosul hawala transfers to Syria increasing",source:"SIGINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Mohammed Shia al-Sudani",role:"Prime Minister",assess:"US-aligned public posture, Iran-constrained private reality. Seeking strategic autonomy but lacks leverage over PMF. Key interlocutor for US force presence negotiations.",threat:"LOW"},
+      {name:"Falih Alfayyadh",role:"PMF Commission Chair",assess:"Nominally government official, operationally IRGC-coordinated. Manages PMF financing and political cover. US Treasury-designated 2019.",threat:"HIGH"},
+    ]
+  },
+  SYR:{
+    political:"Assad regime legitimacy near zero outside security apparatus. Arab League readmission not translating to reconstruction funding — Western sanctions blocking $400B+ need. HTS administering Idlib as functioning proto-state with courts, taxation, civil service.",
+    military:"SAA: est. 150,000 active (degraded from 325,000 pre-war). Russian air support essential for regime survival. IRGC advisors embedded at brigade level. HTS: 15,000+ fighters — US-designated FTO. SDF/YPG: 60,000 northeast, US-partnered.",
+    signals:[
+      {text:"Russian Hmeimim Su-34 sortie rate increased — Idlib frontline pressure indicator",source:"IMINT",color:"#f59e0b"},
+      {text:"IRGC Damascus-Beirut weapons convoy — 3x weekly frequency confirmed",source:"SIGINT",color:"#ef4444"},
+      {text:"HTS expanding civil administration into Aleppo countryside — governance consolidation",source:"HUMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Bashar al-Assad",role:"President",assess:"Survival entirely dependent on Russian/Iranian military support. Controls major cities and coastal strip only. Sanctions relief non-starter until political transition — which he refuses.",threat:"MEDIUM"},
+      {name:"Abu Mohammed al-Jolani",role:"HTS Leader (Idlib)",assess:"Rebranded as Ahmed al-Sharaa seeking international legitimacy. Enforcing social order. US still designates HTS as FTO — limits diplomatic engagement.",threat:"MEDIUM"},
+    ]
+  },
+  LBN:{
+    political:"Presidential vacancy since Oct 2022 — 30+ failed election rounds. Hezbollah bloc blocking candidates unacceptable to Iran. IMF bailout conditional on banking reform — protected depositor interests blocking. France-Saudi mediation deadlocked.",
+    military:"Hezbollah Islamic Resistance: est. 100,000+ fighters, 130,000-150,000 rockets/missiles. Precision missile stockpile (Fateh-110 class) intact — NOT deployed in 2024 conflict. Post-ceasefire repositioning north of Litani partial. LAF: 80,000 — underfunded, equipment critically degraded.",
+    signals:[
+      {text:"Hezbollah precision missile stockpile confirmed intact — strategic reserve preserved",source:"SIGINT",color:"#ef4444"},
+      {text:"Syria corridor weapons transfer resumed post-ceasefire at reduced frequency",source:"IMINT",color:"#ef4444"},
+      {text:"Dahieh district construction activity — Hezbollah command infrastructure rebuilding",source:"IMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Hassan Nasrallah (KIA Sept 2024)",role:"Hezbollah Secretary-General",assess:"Eliminated by IDF airstrike on Dahieh HQ. 30-year architect of Hezbollah military capability. Movement survived — organizational resilience demonstrated.",threat:"ELIMINATED"},
+      {name:"Naim Qassem",role:"Hezbollah Secretary-General (current)",assess:"Deputy who rose post-assassination. More cautious than Nasrallah. Focused on political consolidation. Fully Iranian-dependent — less independent judgment.",threat:"HIGH"},
+    ]
+  },
+  SAU:{
+    political:"MBS consolidating absolute authority — Vision 2030 is political legitimacy vehicle and personal legacy. King Salman health fragile. MBS succession not yet formalized as King. Saudi-Iran normalization (China-brokered 2023) under Gaza strain.",
+    military:"RSLF: 250,000. RSAF: 400+ aircraft including F-15SA advanced variant. Patriot PAC-3 batteries covering Riyadh, Jeddah, ARAMCO facilities. THAAD system deployed. Yemen campaign: ongoing RSAF air operations via coalition.",
+    signals:[
+      {text:"ARAMCO Abqaiq Patriot battery upgraded to PAC-3 MSE — elevated Houthi threat assessment",source:"IMINT",color:"#f59e0b"},
+      {text:"Saudi-US F-35 acquisition discussions advanced — conditional on Israeli concessions",source:"HUMINT",color:"#3b82f6"},
+      {text:"MBS private channel to Hamas via Qatar — direct communication established",source:"HUMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Mohammed bin Salman",role:"Crown Prince / Prime Minister",assess:"Absolute power consolidated. Vision 2030 is legacy project. Pragmatic — normalized with Iran while retaining US alliance. Israel normalization the biggest prize — Gaza is the obstacle.",threat:"LOW"},
+      {name:"Prince Khalid bin Salman",role:"Defense Minister",assess:"MBS's brother. Oversees Yemen campaign and military modernization. Less experienced than predecessors — loyalty over competence selection.",threat:"LOW"},
+    ]
+  },
+  YEM:{
+    political:"Houthis control 70% of population in north. PLC (Presidential Leadership Council): 8 factions, competing agendas. UAE supports Southern Transitional Council separatist agenda. UN envoy Grundberg mediating — minimal progress. Saudi secret salary payments to Houthis indicate informal ceasefire management.",
+    military:"Houthi arsenal: Iranian Shahed-136 drones, Burkan-2H ballistic missiles (1,200km range), C-802-variant anti-ship missiles, underwater drones (confirmed). US/UK strikes degraded launch capacity but not eliminated. Red Sea attack capability: 80+ vessels struck 2023-2025.",
+    signals:[
+      {text:"Houthi underwater drone capability confirmed — anti-ship threat in shallow Red Sea waters",source:"SIGINT/IMINT",color:"#ef4444"},
+      {text:"IRGC trainers at Houthi missile assembly sites confirmed via satellite imagery",source:"IMINT",color:"#ef4444"},
+      {text:"Houthi attack frequency tracks Gaza ceasefire negotiation calendar — political weapon indicator",source:"SIGINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Abdul-Malik al-Houthi",role:"Houthi Supreme Leader",assess:"Ideologically committed anti-Israel/anti-US posture. IRGC-directed on strategic decisions. Controls political and military command. Red Sea attacks serve both propaganda and Iran's strategic interest.",threat:"HIGH"},
+    ]
+  },
+  TUR:{
+    political:"Erdogan dominant post-2023 election despite economic crisis. CHP opposition controls major cities — checks Erdogan domestic agenda. NATO role increasingly transactional: used as leverage for F-16 delivery, Sweden bid. EU accession effectively dead.",
+    military:"TAF: 450,000 active — NATO's 2nd largest standing army. Bayraktar TB2/Akinci drone fleet: export leader, combat proven. F-16 Block 70 (40 aircraft) delivery confirmed. Active operations: Iraq (Claw-Lock), Syria (multiple occupation zones). Incirlik AB: critical NATO/US asset.",
+    signals:[
+      {text:"TAF troop buildup Silopi district — expanded Iraqi Kurdistan operation indicators",source:"IMINT",color:"#f59e0b"},
+      {text:"MIT intelligence cooperation with Hamas — hostage location information sharing confirmed",source:"HUMINT",color:"#3b82f6"},
+      {text:"Turkish drone sales to Ukraine continuing despite sustained Russian diplomatic pressure",source:"HUMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Recep Tayyip Erdogan",role:"President",assess:"Dominant domestic position. Plays all sides: NATO member, Russia gas customer, Hamas patron, Ukraine arms supplier. Pro-Hamas rhetoric serves domestic Islamic constituency.",threat:"MEDIUM"},
+      {name:"Hakan Fidan",role:"Foreign Minister (former MIT Chief)",assess:"Former intelligence director — highly capable, secretive. Maintains simultaneous channels to Hamas, Russia, Iran. Key architect of Turkey's multi-vector foreign policy.",threat:"LOW"},
+    ]
+  },
+  JOR:{
+    political:"King Abdullah navigating domestic Palestinian solidarity pressure against US/Israel alliance imperative. 70% Palestinian-origin population. Israeli settler extremism and Gaza campaign eroding Hashemite legitimacy. Muslim Brotherhood electoral gains possible.",
+    military:"JAF: 100,000 active. F-16 fleet (operational). Intercepted Iranian drones in Jordanian airspace April 2024 assisting Israeli air defense — politically contentious domestically, strategically essential.",
+    signals:[
+      {text:"Jordan-Israel intelligence sharing on Iran drone routes remains active despite Gaza tensions",source:"HUMINT",color:"#3b82f6"},
+      {text:"Muslim Brotherhood Jordan increased political activity — election campaign groundwork",source:"HUMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"King Abdullah II",role:"Head of State",assess:"Sophisticated Western-educated diplomat. Balancing act increasingly untenable as Gaza continues. Critical US partner — Camp Judson, CENTCOM logistics access essential. Succession: Crown Prince Hussein.",threat:"LOW"},
+    ]
+  },
+  EGY:{
+    political:"Sisi authority absolute but economic crisis testing social contract. Military controls 40%+ of formal economy — structural conflict of interest blocking IMF reforms. Gaza crisis provides external focus deflecting domestic frustration. Presidential term extended to 2030 via constitutional amendment.",
+    military:"EAF: 450,000 active — region's largest army. 220 F-16s, 20 Rafales (delivery ongoing). 1,130 M1A1 Abrams. Sinai force-limitation zone (Camp David) constrains deployment density — IDF exemption coordination ongoing.",
+    signals:[
+      {text:"Egyptian military buffer zone enforcement at Rafah crossing — troop increase observed",source:"IMINT",color:"#f59e0b"},
+      {text:"GERD 7th fill complete — Egypt Nile flow reduced below treaty minimum threshold",source:"SIGINT",color:"#ef4444"},
+      {text:"Cairo-Hamas governance coordination channel active — post-war administration planning",source:"HUMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Abdel Fattah el-Sisi",role:"President",assess:"Military-backed consolidated power since 2013. Pragmatic — mediating Gaza ceasefire while suppressing Palestinian solidarity protests domestically. IMF compliance forced by fiscal desperation ($8B lifeline).",threat:"LOW"},
+    ]
+  },
+  ARE:{
+    political:"MBZ driving pragmatic foreign policy — Abraham Accords architect. Withdrew from Yemen 2019 — strategic discipline distinguishes UAE from Saudi approach. UAE-Israel relationship under Emirati domestic pressure from Gaza but strategic interest prevails.",
+    military:"UAEAF: 65,000. F-16E/F Block 60 (80), Mirage 2000-9 (63), Rafale delivery ongoing (80 ordered). US Al Dhafra base: F-35A, MQ-9, B-52 rotations. THAAD deployed. Advanced cyber capability: NSO Pegasus procurement confirmed.",
+    signals:[
+      {text:"UAE-Iran maritime confidence-building measures progressing — islands dispute de-escalation track",source:"HUMINT",color:"#3b82f6"},
+      {text:"G42 AI data center construction acceleration — intelligence capability expansion indicator",source:"IMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Mohammed bin Zayed",role:"President (MBZ)",assess:"Most strategically sophisticated Gulf leader. Distrusts political Islam — drove Qatar blockade, supports Haftar in Libya. Values stable governance over democracy. Quiet diplomacy with Iran on maritime issues.",threat:"LOW"},
+    ]
+  },
+  QAT:{
+    political:"Emir Tamim leverages Hamas bureau hosting as strategic asset — indispensable mediator role insulates Qatar from Western expulsion pressure. US Al Udeid relationship provides security guarantee. LNG wealth ($60B+/year) enables foreign policy independence.",
+    military:"QAF: 12,000. F-15QA (36 delivered). Rafale (24 ordered). US Al Udeid: 10,000 US troops, CAOC for CENTCOM, B-52 rotations, E-8C JSTARS. Hub for Operation Inherent Resolve coordination.",
+    signals:[
+      {text:"Hamas Political Bureau leadership movements from Doha tracked — secure comms monitored",source:"SIGINT",color:"#f59e0b"},
+      {text:"Qatar-Hamas financial transfers: est. $100M/year pre-Oct 7 — post-Oct 7 status unclear",source:"FININT",color:"#ef4444"},
+    ],
+    personalities:[
+      {name:"Emir Tamim bin Hamad Al Thani",role:"Emir",assess:"Values Qatar's outsized role. Hamas bureau is strategic asset despite Western criticism. Al Udeid is his insurance policy. LNG wealth provides diplomatic independence from GCC pressure.",threat:"LOW"},
+      {name:"Mohammed bin Abdulrahman Al Thani",role:"Prime Minister / Foreign Affairs",assess:"Key Gaza ceasefire negotiator. Direct line to Hamas Political Bureau and Mossad simultaneously. Trusted by all parties as credible mediator.",threat:"LOW"},
+    ]
+  },
+  KWT:{
+    political:"Parliamentary-government gridlock paralyzed economic reform for a decade. New Emir Sheikh Mishal dissolved parliament (4th dissolution in 6 years) seeking constitutional amendment to limit parliament. Succession consolidated — no rival faction challenge.",
+    military:"KAF: 15,000. F/A-18 Super Hornet (28). US Camp Arifjan: 13,500 troops, prepositioned armor. Ali Al Salem AB: USAF hub, A-10 Warthog and C-17 operations.",
+    signals:[
+      {text:"KIA sovereign fund reviewing GCC exposure — UAE/Saudi diversification strategy shift",source:"FININT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"Emir Mishal Al-Ahmad Al-Sabah",role:"Emir",assess:"Conservative. Dissolved parliament to break reform gridlock. Consolidating authority with measured approach — no MBS-style confrontational consolidation. US relationship anchor of security.",threat:"LOW"},
+    ]
+  },
+  BHR:{
+    political:"Al Khalifa monarchy under dual pressure: Shia majority (est. 70%) political rights demands and Iranian interference through Shia political networks. Opposition figures (Al Wefaq) imprisoned or exiled since 2011 suppression. No political reform pathway visible.",
+    military:"BDF: 10,000. F-16C/D (22). US 5th Fleet (Mina Salman): 7,000+ naval personnel. Hub for coalition maritime operations (Combined Maritime Forces) against Houthi Red Sea attacks and Iranian interdiction.",
+    signals:[
+      {text:"Iran-linked social media disinformation targeting Bahraini Shia community — OPSEC degradation",source:"SIGINT",color:"#ef4444"},
+      {text:"5th Fleet Mina Salman expansion approved — new pier capacity doubling by 2026",source:"HUMINT",color:"#3b82f6"},
+    ],
+    personalities:[
+      {name:"King Hamad bin Isa Al Khalifa",role:"King",assess:"Suppressed 2011 Shia uprising with Saudi Peninsula Shield Force support. US 5th Fleet anchor provides security guarantee preventing repeat. Abraham Accords signatory — strategic alignment with Israel confirmed.",threat:"LOW"},
+    ]
+  },
+  OMN:{
+    political:"Sultan Haitham pursuing Vision 2040 economic modernization while maintaining Oman's unique neutrality doctrine. Trusted US-Iran back-channel host since 1980s — critical diplomatic infrastructure. No domestic political opposition of consequence.",
+    military:"RAF Oman: 42,000. F-16 Block 50/52 (18), Eurofighter Typhoon (12). Strategic position: flanks Strait of Hormuz eastern entrance. 5th Fleet logistics cooperation. Salalah port: critical Indian Ocean logistics hub.",
+    signals:[
+      {text:"Iran-US nuclear proximity talks in Muscat — 7th round scheduled, both sides participating",source:"HUMINT",color:"#3b82f6"},
+      {text:"Houthi-Saudi backchannel via Muscat — Saudi salary payment confirmation channel active",source:"HUMINT",color:"#f59e0b"},
+    ],
+    personalities:[
+      {name:"Sultan Haitham bin Tariq",role:"Sultan",assess:"Pragmatic modernizer continuing Qaboos neutrality doctrine. Vision 2040 focused on economic transformation from oil dependence. Critical mediator role — both US and Iran trust Omani discretion.",threat:"LOW"},
+    ]
   },
 };
 
@@ -1292,16 +1527,32 @@ function openCountry(iso){
   const badge=ALERT_BADGE[c.alertLevel]||ALERT_BADGE.LOW;
   const b=document.getElementById('p-badge');
   b.textContent=c.alertLevel;b.style.background=badge.bg;b.style.color=badge.color;b.style.borderColor=badge.border;
-  // Summary
+  // Summary — CIA briefing format
+  const ex=INTEL_EX[iso]||{};
+  const rptId='WNINTEL-'+iso+'-'+new Date().toISOString().slice(0,10).replace(/-/g,'');
+  const dtg=new Date().toUTCString().slice(5,25).toUpperCase()+' UTC';
   document.getElementById('tab-summary').innerHTML=`
+    <div class="report-meta"><span>REPORT: ${rptId}</span><span>DTG: ${dtg}</span></div>
     <div class="sec-label">SITUATION ASSESSMENT</div>
     <p class="summary-text">${intel.summary||'No data available.'}</p>
-    ${intel.keyActors?.length?`<div class="sec-label">KEY ACTORS</div><div class="actors-list">${intel.keyActors.map(a=>`<span class="actor-chip">${a}</span>`).join('')}</div>`:''}
+    ${ex.political?`<div class="sec-label">POLITICAL ANALYSIS</div><p class="political-text">${ex.political}</p>`:''}
+    ${ex.military?`<div class="sec-label">MILITARY POSTURE</div><p class="military-text">${ex.military}</p>`:''}
+    ${intel.keyActors?.length?`<div class="sec-label">KEY ACTORS & ORGANIZATIONS</div><div class="actors-list">${intel.keyActors.map(a=>`<span class="actor-chip">${a}</span>`).join('')}</div>`:''}
     ${intel.economic?`<div class="sec-label">ECONOMIC INDICATOR</div><p class="econ-text">${intel.economic}</p>`:''}
+    ${ex.signals?.length?`<div class="sec-label">SIGNALS &amp; INDICATORS</div><div>${ex.signals.map(s=>`<div class="signal-item"><span class="signal-dot" style="background:${s.color||'#f59e0b'}"></span><div><p class="signal-text">${s.text}</p><p class="signal-src">SOURCE: ${s.source||'HUMINT/SIGINT'}</p></div></div>`).join('')}</div>`:''}
+    ${ex.personalities?.length?`<div class="sec-label">KEY PERSONALITIES</div>${ex.personalities.map(p=>{const tc=p.threat==='CRITICAL'?'#ef4444':p.threat==='HIGH'?'#f97316':p.threat==='MEDIUM'?'#f59e0b':p.threat==='ELIMINATED'?'#94a3b8':'#22c55e';return`<div class="person-card"><span class="person-threat" style="color:${tc}">${p.threat}</span><div class="person-name">${p.name}</div><div class="person-role">${p.role}</div><p class="person-assess">${p.assess}</p></div>`}).join('')}`:''}
+    <p class="source-line">CLASSIFICATION: SECRET // NOFORN — Intel Globe Assessment Engine — For Authorized Use Only</p>
   `;
-  // Threats
+  // Threats — with confidence badges and probability bars
   document.getElementById('tab-threats').innerHTML=intel.threats?.length
-    ?'<div class="sec-label">ACTIVE THREAT VECTORS</div>'+intel.threats.map(t=>`<div class="threat-item"><div class="threat-head"><span class="threat-type">${t.type.toUpperCase()}</span><span class="threat-sev" style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span></div><p class="threat-desc">${t.description}</p></div>`).join('')
+    ?`${ex.wmd?`<div class="sec-label">WMD / CBRN ASSESSMENT</div><div class="wmd-box"><div class="wmd-title">⚠ WMD PROGRAM STATUS</div><p class="wmd-text">${ex.wmd}</p></div>`:''}
+      <div class="sec-label">ACTIVE THREAT VECTORS</div>`+intel.threats.map(t=>{
+      const conf=t.confidence||(t.severity==='critical'?'HIGH':t.severity==='high'?'HIGH':'MEDIUM');
+      const prob=t.probability||(t.severity==='critical'?85:t.severity==='high'?70:t.severity==='medium'?45:20);
+      const confClass=conf==='HIGH'?'high':conf==='LOW'?'low':'medium';
+      const probColor=prob>=75?'#ef4444':prob>=50?'#f97316':'#22c55e';
+      return`<div class="threat-item"><div class="threat-head"><span class="threat-type">${t.type.toUpperCase()}</span><div style="display:flex;gap:6px;align-items:center"><span class="conf-badge ${confClass}">${conf}</span><span class="threat-sev" style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span></div></div><p class="threat-desc">${t.description}</p>${t.source?`<p class="signal-src" style="margin-top:4px">SOURCE: ${t.source}</p>`:''}<div class="prob-bar-wrap"><div class="prob-label"><span>PROBABILITY OF ACTION</span><span style="color:${probColor};font-weight:bold">${prob}%</span></div><div class="prob-bar"><div class="prob-fill" style="width:${prob}%;background:${probColor}"></div></div></div></div>`;
+    }).join('')
     :'<p class="no-data">No active threats recorded.</p>';
   // News — show embedded items immediately, then fetch live
   renderNewsTab(iso, intel.news||[], false);
