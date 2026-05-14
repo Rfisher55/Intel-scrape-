@@ -161,6 +161,20 @@ canvas.dragging{cursor:grabbing}
 .p-expand{background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 9px;border-radius:4px;font-size:12px;transition:all .2s;line-height:1}
 .p-expand:hover{border-color:var(--accent);color:#93c5fd}
 
+/* Minimize button */
+.p-minimize{background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 9px;border-radius:4px;font-size:11px;transition:all .2s;line-height:1}
+.p-minimize:hover{border-color:#f59e0b;color:#fbbf24}
+
+/* Minimized panel — shows only the header strip */
+#panel.minimized .p-handle,
+#panel.minimized .connect-btn,
+#panel.minimized .p-tabs,
+#panel.minimized .p-content,
+#panel.minimized .p-foot,
+#panel.minimized .p-expand{display:none!important}
+#panel.minimized .p-row{margin-bottom:0}
+#panel.minimized .p-head{padding:10px 16px;border-bottom:none}
+
 /* Fullscreen panel */
 #panel.fullscreen{
   top:0;left:0;right:0;bottom:0;width:100%;
@@ -228,6 +242,10 @@ canvas.dragging{cursor:grabbing}
   #panel.fullscreen{
     height:calc(96dvh - env(safe-area-inset-top));
     border-radius:0;
+  }
+  #panel.minimized{
+    height:auto;
+    border-radius:18px 18px 0 0;
   }
 
   /* Show drag handle on mobile */
@@ -305,6 +323,7 @@ canvas.dragging{cursor:grabbing}
       </div>
       <div class="p-controls">
         <span class="alert-badge" id="p-badge">—</span>
+        <button class="p-minimize" id="p-minimize" onclick="toggleMinimize()" title="Minimize panel">▼</button>
         <button class="p-expand" id="p-expand" onclick="toggleFullscreen()" title="Expand to full screen">⤢</button>
         <button class="p-close" onclick="closePanel()">✕</button>
       </div>
@@ -1001,7 +1020,18 @@ canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dr
 canvas.addEventListener('mouseup',e=>{
   if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
   const dx=e.clientX-lastX,dy=e.clientY-lastY;
-  if(Math.abs(dx)<5&&Math.abs(dy)<5){const h=hitTest(e.clientX,e.clientY);if(h)openCountry(h);}
+  if(Math.abs(dx)<5&&Math.abs(dy)<5){
+    const h=hitTest(e.clientX,e.clientY);
+    if(h){
+      if(!selectedISO){openCountry(h);}
+      else if(h===selectedISO){
+        // Tap same country — restore if minimized
+        const p=document.getElementById('panel');
+        if(p.classList.contains('minimized'))toggleMinimize();
+      }
+      // Different country while one is locked: ignored
+    }
+  }
 });
 canvas.addEventListener('mouseleave',()=>{isDragging=false;canvas.classList.remove('dragging');document.getElementById('tooltip').style.opacity='0';hoveredISO=null;});
 
@@ -1053,7 +1083,16 @@ canvas.addEventListener('touchend',e=>{
     if(e.changedTouches.length){
       const t=e.changedTouches[0];
       const dx=t.clientX-lastX,dy=t.clientY-lastY;
-      if(Math.abs(dx)<8&&Math.abs(dy)<8){const h=hitTest(t.clientX,t.clientY);if(h)openCountry(h);}
+      if(Math.abs(dx)<8&&Math.abs(dy)<8){
+        const h=hitTest(t.clientX,t.clientY);
+        if(h){
+          if(!selectedISO){openCountry(h);}
+          else if(h===selectedISO){
+            const p=document.getElementById('panel');
+            if(p.classList.contains('minimized'))toggleMinimize();
+          }
+        }
+      }
     }
   }
 });
@@ -1116,6 +1155,11 @@ window.addEventListener('resize',()=>{resize();});
 ════════════════════════════════════════════════════ */
 function openCountry(iso){
   selectedISO=iso;showArcs=false;updateConnBtn();
+  // Always open fresh — clear minimized/fullscreen from previous view
+  const panel=document.getElementById('panel');
+  panel.classList.remove('minimized','fullscreen');
+  document.getElementById('p-minimize').textContent='▼';
+  document.getElementById('p-expand').textContent='⤢';
   const c=COUNTRIES[iso];
   document.getElementById('p-name').textContent=c.name;
   document.getElementById('p-cap').textContent='Capital: '+c.capital;
@@ -1244,9 +1288,24 @@ function timeAgo(dateStr){
   return Math.floor(h/24)+'d ago';
 }
 
+function toggleMinimize(){
+  const panel=document.getElementById('panel');
+  const btn=document.getElementById('p-minimize');
+  const isMin=panel.classList.toggle('minimized');
+  // Minimized and fullscreen are mutually exclusive
+  if(isMin){panel.classList.remove('fullscreen');document.getElementById('p-expand').textContent='⤢';}
+  btn.textContent=isMin?'▲':'▼';
+  btn.title=isMin?'Restore panel':'Minimize panel';
+}
+
 function toggleFullscreen(){
   const panel=document.getElementById('panel');
   const btn=document.getElementById('p-expand');
+  // Fullscreen and minimized are mutually exclusive
+  if(panel.classList.contains('minimized')){
+    panel.classList.remove('minimized');
+    document.getElementById('p-minimize').textContent='▼';
+  }
   const isFS=panel.classList.toggle('fullscreen');
   btn.textContent=isFS?'⤡':'⤢';
   btn.title=isFS?'Exit full screen':'Expand to full screen';
@@ -1255,8 +1314,9 @@ function toggleFullscreen(){
 function closePanel(){
   clearTimeout(refreshTimer);
   const panel=document.getElementById('panel');
-  panel.classList.remove('open','fullscreen');
+  panel.classList.remove('open','fullscreen','minimized');
   document.getElementById('p-expand').textContent='⤢';
+  document.getElementById('p-minimize').textContent='▼';
   document.getElementById('h-status').textContent='Click any highlighted country for Intel Report';
   selectedISO=null;showArcs=false;updateConnBtn();
   document.getElementById('leg-div').style.display='none';
