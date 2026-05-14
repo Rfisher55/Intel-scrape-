@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#050c1a"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Intel Globe"/>
 <title>Intel Globe — Middle East</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -12,13 +16,17 @@
   --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
   --accent:#3b82f6;--mono:'Courier New',monospace;
 }
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
+html{width:100%;height:100%;height:100dvh;overflow:hidden;background:var(--bg)}
+body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono);
+  /* Prevent callout/selection on long-press */
+  -webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
 
 /* ── Header ── */
 #header{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:10px 20px;
+  padding-top:calc(10px + env(safe-area-inset-top));
   background:linear-gradient(180deg,rgba(5,12,26,.95) 0%,transparent 100%);
   border-bottom:1px solid rgba(30,58,95,.4);
   backdrop-filter:blur(4px);
@@ -37,7 +45,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 
 /* ── Globe canvas ── */
 #globe-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-canvas{cursor:grab;display:block}
+canvas{cursor:grab;display:block;touch-action:none}
 canvas.dragging{cursor:grabbing}
 
 /* ── Tooltip ── */
@@ -73,6 +81,14 @@ canvas.dragging{cursor:grabbing}
 }
 #panel.open{display:flex;animation:slideIn .25s ease-out}
 @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ── Panel drag handle (mobile only) ── */
+.p-handle{
+  display:none;
+  width:36px;height:4px;border-radius:2px;
+  background:rgba(100,130,180,.35);
+  margin:10px auto 4px;flex-shrink:0;
+}
 
 .p-head{padding:16px;border-bottom:1px solid var(--border2);background:rgba(13,25,41,.6)}
 .p-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
@@ -163,10 +179,80 @@ canvas.dragging{cursor:grabbing}
   pointer-events:none;
 }
 
+/* ══════════════════════════════════════
+   IPHONE / MOBILE  (≤ 600px)
+══════════════════════════════════════ */
 @media(max-width:600px){
-  #panel{width:100%;top:55%}
+
+  /* Header — compact, notch-aware */
+  #header{padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top))}
   .h-right,.h-region{display:none}
-  #panel.fullscreen{top:0}
+  .h-title{font-size:13px;letter-spacing:.1em}
+  .h-icon{font-size:17px}
+  .h-middle{font-size:10px}
+
+  /* Legend — compact bottom-left */
+  #legend{bottom:calc(16px + env(safe-area-inset-bottom));left:10px;padding:8px 10px;min-width:110px}
+  .leg-title{font-size:8px}.leg-item{font-size:10px;margin-bottom:3px}.leg-dot{width:7px;height:7px}
+
+  /* Zoom hint — hidden (replaced by in-globe hint) */
+  #zoom-hint{display:none}
+
+  /* ── Bottom sheet panel ── */
+  #panel{
+    /* Reset desktop layout */
+    top:auto;right:0;width:100%;left:0;
+    /* Sit at bottom, initially hidden below screen */
+    bottom:0;
+    height:62dvh;
+    border-left:none;
+    border-top:1px solid var(--border);
+    border-radius:18px 18px 0 0;
+    /* Account for iPhone home bar */
+    padding-bottom:env(safe-area-inset-bottom);
+    /* Slide-up transition instead of slide-in-from-right */
+    transform:translateY(100%);
+    transition:transform .32s cubic-bezier(.32,.72,0,1);
+    will-change:transform;
+    animation:none;
+    display:flex;  /* always flex so transition works */
+    visibility:hidden;
+  }
+  #panel.open{
+    transform:translateY(0);
+    visibility:visible;
+    animation:none;
+  }
+  #panel.fullscreen{
+    height:calc(96dvh - env(safe-area-inset-top));
+    border-radius:0;
+  }
+
+  /* Show drag handle on mobile */
+  .p-handle{display:block}
+
+  /* Bigger tap targets */
+  .tab-btn{padding:13px 4px;font-size:10px;letter-spacing:.08em}
+  .p-close,.p-expand{min-width:40px;min-height:40px;font-size:14px;display:flex;align-items:center;justify-content:center}
+  .connect-btn{padding:12px;font-size:11px}
+  .p-head{padding:10px 14px 12px}
+
+  /* Larger readable text */
+  .summary-text{font-size:13px;line-height:1.8}
+  .threat-desc{font-size:12px;line-height:1.6}
+  .news-title{font-size:13px}
+  .cf-label{font-size:12px}
+  .p-name{font-size:18px}
+  .p-cap{font-size:11px}
+  .actor-chip{font-size:11px;padding:4px 10px}
+
+  /* Full-screen intel enlargement */
+  #panel.fullscreen .summary-text{font-size:15px}
+  #panel.fullscreen .threat-desc{font-size:14px}
+  #panel.fullscreen .news-title{font-size:14px}
+
+  /* Panel content scrollable with momentum */
+  .p-content{-webkit-overflow-scrolling:touch;padding:14px}
 }
 </style>
 </head>
@@ -207,6 +293,7 @@ canvas.dragging{cursor:grabbing}
 </div>
 
 <div id="panel">
+  <div class="p-handle" id="p-handle"></div>
   <div class="p-head">
     <div class="p-row">
       <div>
@@ -875,7 +962,58 @@ canvas.addEventListener('touchend',e=>{
   }
 });
 
+canvas.addEventListener('touchcancel',()=>{
+  isDragging=false;lastPinchDist=null;canvas.classList.remove('dragging');
+});
+
 window.addEventListener('resize',()=>{resize();});
+
+/* ══════════════════════════════════════
+   PANEL SWIPE (mobile bottom sheet)
+══════════════════════════════════════ */
+(function(){
+  const panel=document.getElementById('panel');
+  const handle=document.getElementById('p-handle');
+  let sheetStartY=0, sheetDragging=false;
+
+  function onHandleStart(e){
+    sheetDragging=true;
+    sheetStartY=e.touches?e.touches[0].clientY:e.clientY;
+    panel.style.transition='none';  // disable for live drag feel
+  }
+  function onHandleMove(e){
+    if(!sheetDragging)return;
+    const y=e.touches?e.touches[0].clientY:e.clientY;
+    const dy=y-sheetStartY;
+    // Only allow downward drag (closing direction)
+    if(dy>0)panel.style.transform=`translateY(${dy}px)`;
+    if(e.cancelable)e.preventDefault();
+  }
+  function onHandleEnd(e){
+    if(!sheetDragging)return;
+    sheetDragging=false;
+    panel.style.transition='';  // restore CSS transition
+    const y=e.changedTouches?e.changedTouches[0].clientY:e.clientY;
+    const dy=y-sheetStartY;
+    if(dy<-50){
+      // Swipe UP → fullscreen
+      panel.style.transform='';
+      panel.classList.add('fullscreen');
+      document.getElementById('p-expand').textContent='⤡';
+    } else if(dy>90){
+      // Swipe DOWN → close
+      panel.style.transform='';
+      closePanel();
+    } else {
+      // Snap back
+      panel.style.transform='';
+    }
+  }
+
+  handle.addEventListener('touchstart',onHandleStart,{passive:true});
+  handle.addEventListener('touchmove',onHandleMove,{passive:false});
+  handle.addEventListener('touchend',onHandleEnd,{passive:true});
+}());
 
 /* ════════════════════════════════════════════════════
    PANEL UI
@@ -911,7 +1049,11 @@ function openCountry(iso){
     ?'<div class="sec-label">CONFLICT RELATIONSHIPS</div>'+cfs.map(c=>`<div class="conflict-item"><div class="cf-head"><span class="cf-countries">${c.fromName} → ${c.toName}</span><span class="cf-sev ${c.severity}">${c.severity.toUpperCase()}</span></div><div class="cf-meta"><span class="cf-type">${c.type.replace(/_/g,' ').toUpperCase()}</span><span class="cf-label">${c.label}</span></div></div>`).join('')
     :'<p class="no-data">No active conflict relationships.</p>';
   document.getElementById('p-updated').textContent='Updated: '+new Date().toLocaleTimeString();
-  document.getElementById('panel').classList.add('open');
+  const panel=document.getElementById('panel');
+  panel.classList.remove('fullscreen');  // reset any prior fullscreen
+  document.getElementById('p-expand').textContent='⤢';
+  panel.style.transform='';             // clear any drag offset
+  panel.classList.add('open');
   showTab('summary');
   // Kick off live fetch (non-blocking)
   fetchLiveNews(iso);
