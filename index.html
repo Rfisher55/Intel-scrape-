@@ -891,6 +891,25 @@ const HOTSPOTS = [
   {lat:59.4, lng:24.8, country:'EST',type:'military_ops',   label:'Tallinn — NATO Cyber Defence HQ (CCDCOE)',severity:'high'},
   {lat:44.2, lng:17.9, country:'BIH',type:'instability',    label:'Sarajevo — Dodik Secession Crisis',       severity:'high'},
   {lat:42.0, lng:21.4, country:'XKX',type:'instability',    label:'Pristina — Kosovo-Serbia Flashpoint',     severity:'medium'},
+  // ── Southeast Asia ──
+  {lat:17.1, lng:96.2, country:'MMR',type:'active_conflict', label:'Myanmar — Military Junta vs Resistance',   severity:'critical'},
+  {lat:14.1, lng:100.5,country:'THA',type:'instability',    label:'Bangkok — Political Polarisation',          severity:'medium'},
+  {lat:-6.2, lng:106.8,country:'IDN',type:'instability',    label:'Papua — Independence Movement',             severity:'medium'},
+  {lat:14.6, lng:121.0,country:'PHL',type:'active_conflict', label:'West Philippine Sea — China Standoff',      severity:'high'},
+  {lat:8.5,  lng:124.7,country:'PHL',type:'terrorism',       label:'Mindanao — Abu Sayyaf/BIFF Activity',       severity:'high'},
+  // ── Latin America ──
+  {lat:18.9, lng:-72.3,country:'HTI',type:'active_conflict', label:'Port-au-Prince — Gang War Collapse',        severity:'critical'},
+  {lat:4.7,  lng:-74.1,country:'COL',type:'active_conflict', label:'Colombia — FARC Dissident Conflict',        severity:'high'},
+  {lat:10.6, lng:-71.6,country:'VEN',type:'instability',    label:'Venezuela — Maduro Authoritarian Crisis',    severity:'high'},
+  {lat:15.5, lng:-88.0,country:'HND',type:'instability',    label:'Central America — MS-13/Barrio 18 Violence', severity:'high'},
+  {lat:13.7, lng:-89.2,country:'SLV',type:'instability',    label:'El Salvador — Bukele Security Crackdown',    severity:'medium'},
+  {lat:15.5, lng:-90.5,country:'GTM',type:'instability',    label:'Guatemala — Cartel Corridor Violence',       severity:'high'},
+  // ── Africa ──
+  {lat:-1.7, lng:29.2, country:'COD',type:'active_conflict', label:'Eastern DRC — M23/FDLR Conflict',           severity:'critical'},
+  {lat:4.9,  lng:18.6, country:'CAF',type:'active_conflict', label:'CAR — Wagner vs Armed Groups',              severity:'critical'},
+  {lat:6.9,  lng:31.6, country:'SSD',type:'active_conflict', label:'South Sudan — Civil War Resurgence',        severity:'critical'},
+  {lat:5.0,  lng:37.1, country:'ETH',type:'active_conflict', label:'Amhara — Fano Militia Conflict',            severity:'high'},
+  {lat:-13.3,lng:35.0, country:'MOZ',type:'terrorism',       label:'Cabo Delgado — ISKP Mozambique',            severity:'high'},
 ];
 const HOTSPOT_COLORS={
   active_conflict:'rgba(239,68,68,1)',nuclear:'rgba(239,68,68,1)',
@@ -2173,6 +2192,369 @@ const INTEL = {
     keyActors:["President Milatović","ANB (National Security Agency)","NATO (2017)","EU Accession Team"],
     news:["Montenegro EU: 3 new accession chapters opened — fastest Balkan track","ANB expels Russian officers from Bar port — NATO infrastructure targeting"],
     economic:"GDP $7B. Tourism 25% GDP — Adriatic. Chinese investment (Porto Montenegro) under security review.",
+  },
+  // ── Southeast Asia ──
+  THA:{
+    summary:"Thailand under PM Paetongtarn Shinawatra (Pheu Thai) balances military establishment influence, constitutional constraints, and growing regional tensions. The southern insurgency in the three Malay-Muslim provinces continues. Thailand serves as a critical regional trade hub and US treaty ally, though China is now its largest trading partner.",
+    threats:[
+      {type:"Political Instability",description:"Move Forward party dissolved by Constitutional Court Aug 2024 — 11 executives banned. Pro-democracy movement re-organizing. Military establishment retains constitutional veto power.",severity:"medium",confidence:"HIGH",probability:65,source:"Reuters/AP"},
+      {type:"Southern Insurgency",description:"BRN-Koordinasi: 7,000+ dead since 2004 in Pattani, Yala, Narathiwat provinces. Peace talks stalled — BRN refusal to meet Thai preconditions. Average 1 attack/day.",severity:"high",confidence:"HIGH",probability:90,source:"ICG/ACLED"},
+      {type:"China Dependency",description:"China accounts for 25% of Thai trade and 30% of FDI. BRI high-speed rail project negotiations ongoing. Huawei 5G contracted despite US pressure.",severity:"medium",confidence:"HIGH",probability:75,source:"World Bank"},
+    ],
+    keyActors:["PM Paetongtarn Shinawatra","NSC (National Security Council)","Royal Thai Armed Forces","BRN (southern insurgency)","Move Forward successor (People's Party)"],
+    news:["Move Forward dissolved: Constitutional Court finds charter violation — 11 executives banned 10 years","Thailand southern peace talks: 5th round in Kuala Lumpur, BRN demands 'homeland' status","Thai-China rail deal: $5.6B Phase 1 approved — Bangkok to Nong Khai","Royal Thai Air Force acquires F-35A — 8 aircraft in first Indochinese F-35 purchase","PM Paetongtarn: Thaksin returns from exile — political dynamics shifting"],
+    economic:"GDP $500B. Tourism $35B (2024 recovery). Auto manufacturing: Thailand 10th globally — EV shift challenge. Rice and rubber exports. China BRI investment $12B. Defense 1.3% GDP.",
+  },
+  MMR:{
+    summary:"Myanmar under military junta (SAC) since February 2021 coup is experiencing a multi-front civil war with resistance forces controlling 60%+ of territory. The Brotherhood Alliance captured Lashio (capital of Shan State) in 2024. ASEAN's 5-Point Consensus has failed. The junta is increasingly dependent on China and Russia for arms and diplomatic cover.",
+    threats:[
+      {type:"Civil War",description:"Tatmadaw fighting PDFs and 20+ ethnic armed organizations simultaneously. Brotherhood Alliance (MNDAA, TNLA, AA): offensive captured Lashio, Kokang, Chin State advances. Junta controls urban centers only.",severity:"critical",confidence:"HIGH",probability:95,source:"ACLED/ICG"},
+      {type:"Humanitarian",description:"2.7M+ internally displaced. 18.6M food insecure. Airstrikes on IDP camps documented by OHCHR. Healthcare system collapsed.",severity:"critical",confidence:"HIGH",probability:99,source:"OCHA/UNHCR"},
+      {type:"Russian/China Support",description:"Russia supplying jet fuel, weapons (Yak-130 jets, artillery) to Tatmadaw. China mediating while supplying both sides via proxies.",severity:"high",confidence:"HIGH",probability:90,source:"UN Panel/Bellingcat"},
+    ],
+    keyActors:["SAC Chairman Min Aung Hlaing","NUG (National Unity Government, exile)","PDF (People's Defence Force)","Brotherhood Alliance (MNDAA/TNLA/AA)","ASEAN Chair"],
+    news:["Brotherhood Alliance captures Lashio — Shan State capital falls to resistance forces","Tatmadaw airstrike kills 30 at IDPs camp in Sagaing — UN condemns","ASEAN Summit: SAC excluded for 3rd year — 5-Point Consensus 'failing'","Myanmar: 18.6M food insecure per WFP — worst since independence","NUG controls 60% of territory per resistance assessment — UN disputed"],
+    economic:"GDP $65B (pre-coup $80B). Economy contracted 18% post-coup. Kyat devaluation 60%. Gas exports (China pipeline) main revenue for junta. Informal economy (jade, timber, drugs) financing conflict parties.",
+  },
+  VNM:{
+    summary:"Vietnam under Communist Party General Secretary Tô Lâm balances pragmatic relations with both the US (elevated to Comprehensive Strategic Partner 2023) and China ('comrades and brothers'). South China Sea tensions with China persist. Vietnam is a major beneficiary of US-China decoupling with manufacturing investment surging.",
+    threats:[
+      {type:"South China Sea",description:"China occupying Vietnamese-claimed Paracel and Spratly Islands. CSIS: Chinese dredging activity near Vietnamese-controlled features. Vietnamese Coast Guard confrontations with CCG ongoing.",severity:"high",confidence:"HIGH",probability:85,source:"CSIS/Reuters"},
+      {type:"Political",description:"Anti-corruption campaign (Blazing Furnace): 4 presidents and 1 PM removed since 2023 — political instability at leadership level despite single-party rule stability.",severity:"medium",confidence:"HIGH",probability:70,source:"AP/Reuters"},
+    ],
+    keyActors:["General Secretary Tô Lâm","Ministry of Public Security","VPA (Vietnam People's Army)","Vietnam Coast Guard"],
+    news:["Vietnam-US CSP: first US aircraft carrier visit to Da Nang — symbolic upgrade","Vietnam arrests billionaire Truong My Lan — $27B fraud trial, largest in Southeast Asia","Samsung Vietnam: $7B expansion — 50% of Samsung phones made in Vietnam","South China Sea: Vietnam protests Chinese CCG water cannon at Spratly outpost","Vietnam-China: $36B trade surplus — dependency concern for Hanoi"],
+    economic:"GDP $430B. FDI: $36B 2024 — Samsung, Intel, Apple supply chain. Manufacturing 25% GDP. Growth 6.5% (2024). Defense 2.3% GDP. Exports: electronics 35%, textiles 15%.",
+  },
+  PHL:{
+    summary:"Philippines under President Marcos Jr. has sharply hardened its posture against China in the South China Sea while expanding defense cooperation with the US. The Marcos-Duterte political split is defining 2025 politics, with VP Sara Duterte impeached. The Abu Sayyaf Group and BIFF remain active in Mindanao.",
+    threats:[
+      {type:"China SCS",description:"Weekly Chinese Coast Guard harassment of BRP Sierra Madre supply missions. Water cannons, laser dazzlers. Xi Jinping personally warned Marcos against 'provocation.'",severity:"high",confidence:"HIGH",probability:95,source:"Philippine DFA/Reuters"},
+      {type:"Terrorism",description:"Abu Sayyaf Group: kidnapping in Sulu, Tawi-Tawi. BIFF: 300+ fighters, IED attacks. IS East Asia Province remnants post-Marawi siege 2017.",severity:"high",confidence:"HIGH",probability:85,source:"AFP/US JSOTF-P"},
+      {type:"Political",description:"VP Sara Duterte impeached Dec 2024 — trial in Senate. Marcos-Duterte alliance collapse. Rodrigo Duterte ICC extradition proceedings. Political realignment before 2025 midterms.",severity:"medium",confidence:"HIGH",probability:75,source:"Reuters"},
+    ],
+    keyActors:["President Marcos Jr.","AFP Chief of Staff","VP Sara Duterte (impeached)","Abu Sayyaf Sulu faction","US JSOTF-Philippines (600 troops)","MILF/BARMM"],
+    news:["Philippine Coast Guard: confrontation video goes viral — China accused of illegal seizure","Marcos expands EDCA to 9 bases including Cagayan — Taiwan scenario focused","VP Sara Duterte impeached: Senate trial begins — Marcos-Duterte alliance ends","ICC pre-trial: Duterte extradition request — Philippines ICJ position complex","Balikatan 2025: 15,000 troops, US Typhon missile system stays in Philippines"],
+    economic:"GDP $470B. Remittances $37B — largest income source. BPO services $32B. Growth 6.3%. Defense 1.5% GDP (rising). Semiconductor assembly. OFW population 10M+.",
+  },
+  IDN:{
+    summary:"Indonesia under President Prabowo Subianto (elected 2024) is the world's largest Muslim-majority democracy and a significant G20 economy. The Papua separatist conflict continues in a media-restricted zone. Indonesia maintains 'free and active' foreign policy — balancing US, China, and its own strategic autonomy.",
+    threats:[
+      {type:"Papua",description:"Free Papua Movement (OPM/TPNPB) conducting guerrilla operations in Pegunungan Tengah. TNI airstrikes on villages documented. Media access restricted — opacity on casualties.",severity:"medium",confidence:"MEDIUM",probability:80,source:"HRW/Reuters"},
+      {type:"Terrorism",description:"Jamaah Islamiyah network largely dismantled by Densus 88 (counter-terrorism unit). IS-inspired lone wolf plots ongoing. Jemaah Ansharud Daulah (JAD) splinter groups active.",severity:"medium",confidence:"HIGH",probability:45,source:"BNPT/Reuters"},
+      {type:"South China Sea",description:"China's 9-dash line overlaps Indonesia's Natuna EEZ — Chinese fishing vessels and CCG in Indonesian waters. Prabowo maintaining 'stability-first' posture.",severity:"medium",confidence:"HIGH",probability:75,source:"CSIS/Reuters"},
+    ],
+    keyActors:["President Prabowo Subianto","BIN (State Intelligence Agency)","TNI (Armed Forces)","Densus 88 (counter-terror)","OPM/TPNPB (Papua)"],
+    news:["Prabowo inaugurated: largest defense budget in history — $26B, 2025","Indonesia-Australia: IKSCA defense agreement expanded — submarine patrols coordinated","Papua: TNI drone strike kills 5 in Nduga — HRW calls for investigation","Nickel: Indonesia bans ore exports — forces $30B foreign battery investment","Indonesia-China $10B investment: Prabowo Beijing visit, BRI recommitment"],
+    economic:"GDP $1.4T (4th largest in Asia). Nickel: 37% of global reserves — EV battery supply chain leverage. Palm oil 60% of global supply. Growth 5.2%. Defense 0.9% GDP (rising).",
+  },
+  MYS:{
+    summary:"Malaysia under PM Anwar Ibrahim pursues pragmatic foreign policy balancing US strategic partnerships and substantial China economic ties. The domestic political scene has stabilized after years of coalition fragility. Malaysia is a significant semiconductor and LNG exporter.",
+    threats:[
+      {type:"South China Sea",description:"China claims overlap with Malaysia's Sarawak EEZ — drilling incidents periodic. Malaysian Coast Guard confronting Chinese vessels at Luconia Shoals.",severity:"medium",confidence:"HIGH",probability:75,source:"CSIS/Reuters"},
+      {type:"Terrorism",description:"PDRM (police) disrupting IS-linked networks annually. Deradicalization program active — 60+ individuals in program. Returnees from Syria monitored.",severity:"low",confidence:"HIGH",probability:35,source:"PDRM/Reuters"},
+    ],
+    keyActors:["PM Anwar Ibrahim","CGSS (domestic intel)","MINDEF","Malaysian Armed Forces","Petronas (NOC)"],
+    news:["Malaysia Madani: Anwar's unity government survives state elections — coalition stable","Petronas Sapura deal: $6B LNG contract with Japan — energy security priority","Malaysia-China: $10B investment Anwar Beijing visit — semiconductor supply chain","South China Sea: Malaysia quietly protests Chinese incursion at Kasawari gas field","RMAF: FA-50 acquisition from South Korea — replacing MiG-29s"],
+    economic:"GDP $440B. Petroleum: Petronas contributes 20% government revenue. Semiconductors: 7% of global production (Intel, Infineon). LNG exports. Growth 5.8%. Defense 1.1% GDP.",
+  },
+  KHM:{
+    summary:"Cambodia under PM Hun Manet (son of Hun Sen, handed power 2023) maintains a single-party state with close China ties, hosting the Chinese-funded Ream Naval Base. Human rights situation deteriorating. US-Cambodia relations remain strained over democratic regression and perceived Chinese influence.",
+    threats:[
+      {type:"Chinese Influence",description:"Ream Naval Base: Chinese-funded expansion — potentially first permanent Chinese overseas military base in Southeast Asia. US expelled from base 2020.",severity:"high",confidence:"HIGH",probability:90,source:"CSIS/WSJ"},
+      {type:"Political Repression",description:"CNRP (main opposition) banned. 100+ political prisoners. Press freedom worst in Southeast Asia. Sam Rainsy in exile.",severity:"medium",confidence:"HIGH",probability:99,source:"RSF/HRW"},
+    ],
+    keyActors:["PM Hun Manet (CPP)","Hun Sen (CPP patriarch, Senate President)","Chinese PLA Navy (Ream Naval Base)","CNRP exile movement"],
+    news:["Ream Naval Base: satellite imagery shows 3 Chinese naval vessels docked — Pentagon concerned","Hun Manet meets Xi — $1.4B in BRI projects announced for Cambodia","US sanctions Cambodian military officials over human rights abuses","Cambodia: Scam compounds displacing 100,000+ workers in KK special economic zone","ASEAN Summit: Cambodia blocks Myanmar ceasefire language under Chinese pressure"],
+    economic:"GDP $32B. Garment exports 45%. Chinese FDI dominant. Tourism recovering. KK Province: Chinese-linked online fraud operations (scam compounds) $12B+ operation.",
+  },
+  // ── Latin America ──
+  BRA:{
+    summary:"Brazil under President Lula (PT) is pursuing re-industrialization, Amazon protection, and Global South leadership while managing fiscal consolidation pressure. Brazil is the hemisphere's largest economy and a key BRICS member. Domestic politics: far-right Bolsonarismo remains potent — January 8 2023 Capitol-style riots. Amazon deforestation down 50% under Lula but agricultural pressure continues.",
+    threats:[
+      {type:"Political Polarisation",description:"Bolsonaro indicted for coup attempt (January 8 riots, alleged election subversion). PT vs Bolsonarismo divide threatens 2026 elections. Military neutrality not guaranteed.",severity:"medium",confidence:"HIGH",probability:65,source:"Reuters/AP"},
+      {type:"Organized Crime",description:"PCC (Primeiro Comando da Capital) and CV (Comando Vermelho): drug trafficking cartels with 50,000+ members controlling large urban areas and Amazon smuggling routes.",severity:"high",confidence:"HIGH",probability:85,source:"UNODC/ACLED"},
+      {type:"Amazon Deforestation",description:"Deforestation down 50% under Lula vs Bolsonaro peak but still 6,000+ km²/yr. Amazon tipping point: 17% of original biome lost — 20-25% threshold triggers savannification.",severity:"medium",confidence:"HIGH",probability:70,source:"INPE/Science"},
+    ],
+    keyActors:["President Lula (PT)","ABIN (Federal Intelligence)","AGU","PCC/CV (cartels)","Bolsonaro (right opposition)","BRICS+ presidency"],
+    news:["Bolsonaro indicted: Federal Police charge with coup attempt — trial date set","Brazil Amazon: deforestation down 50% vs 2022 — Lula climate policy progress","BRICS Summit Kazan: Brazil leads Global South debt relief agenda","Petrobras: record $11B dividend — offshore presalt production growth","Brazil floods Rio Grande do Sul: 160 dead, 300,000 displaced — climate emergency"],
+    economic:"GDP $2.2T. Commodities: soy, iron ore, oil — $450B exports. Pre-sal oil: 4.2M bpd Petrobras. Fiscal deficit 6.5% GDP — market pressure. Growth 2.9%. Defense 1.3% GDP.",
+  },
+  MEX:{
+    summary:"Mexico under President Claudia Sheinbaum (Morena, elected 2024) inherits AMLO's 'hugs not bullets' cartel policy and judicial reform controversy. Cartel violence: 30,000+ homicides/year. Mexico-US fentanyl crisis diplomatic friction. Mexico is the US's largest trading partner post-USMCA relocation boom.",
+    threats:[
+      {type:"Cartel Violence",description:"Sinaloa Cartel (post-Chapo split: Chapitos vs Mayos), CJNG (Jalisco), Zetas remnants. 30,000+ homicides/yr. Cartel control over 35%+ of municipalities. Fentanyl production (Chinese precursors) killing 70,000 Americans/yr.",severity:"critical",confidence:"HIGH",probability:99,source:"ACLED/DEA"},
+      {type:"Judicial Reform",description:"AMLO's judicial reform passed — elected judges replacing appointed. US, Canada, Bar Associations: independence concerns. USMCA review 2026 could penalize.",severity:"medium",confidence:"HIGH",probability:70,source:"Reuters/AP"},
+      {type:"Migration",description:"Mexico hosting 100,000+ Venezuelan, Haitian, Cuban migrants. US pressure to reduce crossings. Cartel 'coyote' industry: $13B/yr. Biden/Trump border policies creating diplomatic friction.",severity:"high",confidence:"HIGH",probability:90,source:"IOM/Reuters"},
+    ],
+    keyActors:["President Sheinbaum (Morena)","CISEN/CNI (intelligence)","SEDENA (Army)","Sinaloa Cartel (Chapitos/Mayos)","CJNG (Mencho)","DEA Mexico City"],
+    news:["Sheinbaum inauguration: first female president — 60% approval, Morena supermajority","Sinaloa Cartel war: Chapitos vs Mayos faction killing 3,000+ in Culiacán","Mexico judicial reform: first elections for Supreme Court judges — Aug 2025","US-Mexico fentanyl talks: Sheinbaum commits to more precursor seizures","Nearshoring: $40B foreign investment 2024 — Tesla, BMW, Apple supply chain Mexico"],
+    economic:"GDP $1.8T (15th globally). USMCA trade: $800B with US annually. Remittances: $63B — largest in world. Nearshoring FDI: $40B. Oil: Pemex 1.7M bpd (declining). Defense 0.7% GDP.",
+  },
+  COL:{
+    summary:"Colombia President Gustavo Petro (first left-wing president) pursuing 'Total Peace' negotiations with FARC dissidents, ELN, and criminal organizations simultaneously. Peace process progress uneven — guerrilla attacks on civilians continue while talks proceed. Colombia-Venezuela border reopened after 7 years. Coca production at record high despite US funding.",
+    threats:[
+      {type:"Armed Conflict",description:"EMC (FARC dissidents): 3,500+ fighters in Nariño, Cauca, Meta. ELN: 5,000+ fighters in Norte de Santander, Arauca. Clan del Golfo/AGC: 8,000+ in Urabá, Córdoba. All conducting attacks while in peace talks.",severity:"high",confidence:"HIGH",probability:90,source:"ACLED/UN"},
+      {type:"Drug Production",description:"Coca cultivation: 253,000 hectares (2024 record) — 90% of global cocaine supply. Petro suspended aerial eradication. US-Colombia counternarcotics friction growing.",severity:"high",confidence:"HIGH",probability:95,source:"UNODC/DEA"},
+    ],
+    keyActors:["President Petro (Colombia Humana)","DANE","Colombian Armed Forces","EMC/FARC-EP","ELN","Clan del Golfo","UNODC"],
+    news:["ELN attacks on Caño Limón pipeline — 400,000 bpd disruption","Colombia: coca cultivation record 253,000 hectares — Petro suspends eradication","Total Peace talks: ELN suspends bilateral ceasefire after civilian massacres","Colombia-Venezuela: Petro-Maduro meeting, border trade $500M resumed","Colombian forces kill FARC dissident commander — peace talks suspended"],
+    economic:"GDP $370B. Oil 35% of exports: 800K bpd (declining). Coffee, flowers, coal. Remittances $10B. Informal economy 50% of workforce. Defense 3.0% GDP.",
+  },
+  VEN:{
+    summary:"Venezuela under Nicolás Maduro claimed disputed 2024 election victory. 7.7M+ Venezuelans have fled — second-largest displacement crisis globally. US oil sector sanctions partially eased under Chevron waiver but snapped back after election fraud. Economy partially dollarizing. Russian, Chinese, Cuban support sustaining regime.",
+    threats:[
+      {type:"Authoritarian Repression",description:"200+ political prisoners post-election 2024. Opposition leader González fled to Spain. Maria Corina Machado under house arrest. SEBIN and DGCIM conducting arbitrary arrests.",severity:"high",confidence:"HIGH",probability:99,source:"OHCHR/HRW"},
+      {type:"Economic Collapse",description:"GDP down 80% from 2013 peak. Hyperinflation: 200%+ despite partial dollarization. 96% of population in poverty per ENCOVI survey.",severity:"critical",confidence:"HIGH",probability:99,source:"World Bank/ENCOVI"},
+    ],
+    keyActors:["President Maduro (PSUV)","SEBIN (intelligence)","Colectivos (armed civilian groups)","Edmundo González (opposition, exile)","Cuba/Russia/China (supporters)"],
+    news:["Venezuela: González recognized as legitimate president by 90+ countries — Maduro refuses","PDVSA: US snaps back oil sanctions post-election fraud — Chevron waiver expired","7.7M Venezuelan migrants: UNHCR largest displacement crisis in Americas","Maduro arrests 80+ US-linked individuals post-election — including NGO workers","Guyana ExxonMobil dispute: Venezuela Essequibo claim escalation"],
+    economic:"GDP $97B (down from $482B peak). Oil: 800K bpd (down from 3.4M peak). Dollarization 80%. Remittances $3B. Petro-Venezuela (PdVSA) debt $130B. Russia/China: $60B+ lent, uncollectable.",
+  },
+  ARG:{
+    summary:"Argentina under President Javier Milei (libertarian) implementing radical austerity — chainsaw to the state, dollar pegged exchange rate, $30B IMF deal. Inflation coming down from 289% (2024 record) to 50%+ range. Milei positioned as global libertarian icon but social costs mounting — poverty at 55%.",
+    threats:[
+      {type:"Economic Instability",description:"Inflation 289% peak Jan 2024 — Milei's shock therapy: peso devaluation, fuel subsidies removed, state workers fired. Poverty rate 55% — highest in 20 years. IMF $44B repayment restructuring.",severity:"high",confidence:"HIGH",probability:80,source:"INDEC/World Bank"},
+      {type:"Social Unrest",description:"General strikes, protests against austerity. Milei governing by decree — opposition Congress majority complicating reforms. Pension cuts reversed by Supreme Court.",severity:"medium",confidence:"HIGH",probability:75,source:"Reuters/AP"},
+    ],
+    keyActors:["President Milei (La Libertad Avanza)","IMF (lender, $44B)","SIDE (intelligence)","CGT labor unions","Kirchnerist Peronism (opposition)"],
+    news:["Milei shock therapy: inflation falls from 289% to 54% in 12 months","Argentina IMF: new $44B deal — third largest in Fund history","Buenos Aires: 500,000 in anti-austerity march — largest since 2001","Milei at Davos: 'Socialism is the enemy' — standing ovation, global libertarian icon","Argentina space agreement: NASA cooperation, Milei ends China tracking station"],
+    economic:"GDP $640B. Soy and beef: $40B exports. Lithium: 21% of global reserves. Inflation 54% (declining). Poverty 55%. IMF program: $44B extended fund facility. Defense 0.7% GDP.",
+  },
+  CHL:{
+    summary:"Chile under President Gabriel Boric (leftist) faces a constitutional crisis after two referendums rejected new constitutions (2022, 2023). Mining sector (copper, lithium) faces regulatory uncertainty. Organized crime from Colombian/Mexican cartels penetrating Chile's historically stable society.",
+    threats:[
+      {type:"Political Instability",description:"Constitutional process failed twice — 2022 left draft rejected, 2023 right draft rejected. Status quo 1980 Pinochet constitution continues. Boric governing with minority.",severity:"medium",confidence:"HIGH",probability:70,source:"Reuters"},
+      {type:"Organized Crime",description:"Colombian and Mexican cartel expansion into Chile. Venezuelan gang Tren de Aragua operating in northern Chile. Drug trafficking through Atacama corridor.",severity:"medium",confidence:"HIGH",probability:75,source:"PDI/Reuters"},
+    ],
+    keyActors:["President Boric (Apruebo Dignidad)","PDI (investigations police)","Codelco (copper NOC)","SQM (lithium)"],
+    news:["Chile lithium nationalization: Codelco-SQM joint venture approved — $65B strategy","Chile: Tren de Aragua gang killing in Iquique — Venezuelan cartel expanding","Boric constitutional process: third attempt — expert committee drafting hybrid proposal","Codelco copper: production falls to 50-year low — $3B turnaround plan","Chile-China FTA upgrade: $30B bilateral trade — largest LatAm partner"],
+    economic:"GDP $340B. Copper: 27% of global production (Codelco, private). Lithium: SQM $6B revenue. Growth 2.8%. Inequality high — Gini 0.44. Defense 2.0% GDP.",
+  },
+  PER:{
+    summary:"Peru under President Dina Boluarte (former Castillo VP) faces political instability — Castillo imprisoned after attempted coup, Boluarte governing under corruption investigations. Shining Path remnants (MRTA-Sendero Luminoso) in cocaine valleys. Peru is a major copper and silver producer.",
+    threats:[
+      {type:"Political Instability",description:"6 presidents in 7 years. Boluarte impeachment threats from Congress. 60+ killed in 2022-23 protests. Anti-democratic erosion of institutions.",severity:"high",confidence:"HIGH",probability:75,source:"Reuters/AP"},
+      {type:"Terrorism",description:"Sendero Luminoso remnants (VRAEM region): 500+ fighters, coca protection racket. 30+ security forces killed annually. Drug trafficking via VRAEM valley.",severity:"medium",confidence:"HIGH",probability:80,source:"DEVIDA/Reuters"},
+    ],
+    keyActors:["President Boluarte","DINI (National Intelligence)","José Pedro Castillo (imprisoned)","Sendero Luminoso remnants (VRAEM)"],
+    news:["Peru: Boluarte corruption investigation — Rolex watches, undeclared assets","Copper production: 2.8M tonnes — world's 2nd largest, Quellaveco ramp-up","Peru-Ecuador: joint military operation against Sendero in VRAEM","Pedro Castillo: sentenced to 18 months preventive detention","Peru declares emergency in VRAEM — drug-funded Sendero attacks on military"],
+    economic:"GDP $240B. Copper: 2.8M tonnes (#2 globally). Gold, silver, zinc. Growth 3.2%. Poverty 30% (rural 40%). Coca: VRAEM main production zone. Defense 1.2% GDP.",
+  },
+  CUB:{
+    summary:"Cuba under President Miguel Díaz-Canel faces its worst economic crisis since the Special Period of the 1990s — fuel shortages, blackouts (12-16 hrs/day), food scarcity, and massive emigration (500,000+ in 2022-23). The US embargo tightened under Trump. Protests (11J 2021) suppressed — 700+ protesters imprisoned. Cuba supports Russia diplomatically and may be hosting Russian intelligence facilities.",
+    threats:[
+      {type:"Economic Collapse",description:"GDP contracted 14% since 2019. Fuel: 12-16 hour daily blackouts. Food insecurity: 40%+ of population. 500,000+ emigrated to US 2022-23 — 5% of population in 2 years.",severity:"critical",confidence:"HIGH",probability:99,source:"Reuters/AP/EIU"},
+      {type:"Political Repression",description:"700+ protesters sentenced from 2021 protests — up to 25 years. No political pluralism. Rapid Response Brigades suppressing dissent.",severity:"high",confidence:"HIGH",probability:99,source:"Amnesty/HRW"},
+    ],
+    keyActors:["President Díaz-Canel","Raúl Castro (still influential)","MININT (intelligence)","FAR (Armed Forces)","Russian intelligence (Lourdes facility suspected renewed)"],
+    news:["Cuba blackouts: 16 hours/day — Havana power grid failure blamed on fuel shortage","500,000 Cubans emigrate to US: 2022-23 record — depopulating working-age cohort","Cuba-Russia: intelligence facility at Lourdes — satellite intercept concern for NSA","11J protesters: 500+ still imprisoned — Amnesty International campaign","Cuba-Venezuela: Maduro and Díaz-Canel Beijing summit — BRICS+ observer status sought"],
+    economic:"GDP $107B (official — heavily overstated). Tourism collapsed: 1.5M/yr vs 4.7M pre-COVID peak. Remittances $3.5B — constrained by US rules. Sugar, nickel, medical exports. Russian and Venezuelan subsidies critical.",
+  },
+  ECU:{
+    summary:"Ecuador under President Daniel Noboa declared an 'internal armed conflict' against drug cartels in January 2024 — the most dramatic security escalation in Latin American history. The cartels' kidnapping of TV journalists, assassination of prosecutors, and prison massacres preceded the declaration. US and Israel providing security assistance. Ecuador is a transit country for Colombian cocaine.",
+    threats:[
+      {type:"Narco-Terror",description:"Los Choneros (Sinaloa affiliate), Los Tiguerones, R7, Lobos: competing cartels with 200+ gangs. Homicide rate: 40/100K (from 6/100K in 2018). Prison massacres: 400+ killed in prisons 2021-2023.",severity:"critical",confidence:"HIGH",probability:90,source:"InSight Crime/Reuters"},
+      {type:"Political Violence",description:"Presidential candidate Fernando Villavicencio assassinated Aug 2023. Prosecutor Cesar Suarez killed Jan 2024. TV journalist kidnapping live on air — cartels demonstrating state penetration.",severity:"high",confidence:"HIGH",probability:80,source:"Reuters/AP"},
+    ],
+    keyActors:["President Noboa (ADN)","Police UIES (counter-narcotics)","Los Choneros (Sinaloa-linked)","R7 (FARC-linked)","Ecuador Armed Forces"],
+    news:["Ecuador declares 'internal armed conflict': military deployed to streets nationwide","TV station hostage crisis: armed cartel members seize Ecuador news studio live on air","Noboa emergency decree: 3,000 gang members arrested in first week","US$500M security assistance: US and Israel training Ecuadorian security forces","Ecuador prison crisis: 4,200 gang members transferred to maximum security after massacres"],
+    economic:"GDP $120B. Oil: 450K bpd (dollarized economy, no monetary policy). Bananas, shrimp, cocoa exports. Dollarization: economic stability but limits flexibility. IMF $4B program. Defense 2.4% GDP (elevated).",
+  },
+  HTI:{
+    summary:"Haiti has experienced near-complete state collapse. PM Ariel Henry resigned March 2024 under pressure from gangs that controlled 85%+ of Port-au-Prince. A Transitional Presidential Council formed, but the Kenyan-led Multinational Security Support Mission (MSSM) of 1,000 troops is severely outgunned by gang federations. 580,000+ internally displaced.",
+    threats:[
+      {type:"Gang Warfare",description:"G9 (Jimmy 'Barbecue' Chérizier) and G-Pèp coalition control 85%+ of capital. Massacres, sexual violence, kidnapping systematic. Police (HNP) outgunned — 9,000 officers vs 200,000 gang members.",severity:"critical",confidence:"HIGH",probability:99,source:"UN BINUH/Reuters"},
+      {type:"Humanitarian",description:"580,000 IDPs — highest ever. Cholera resurgence: 65,000 cases. 5.4M food insecure per WFP. Only 1 hospital functioning in Port-au-Prince metro.",severity:"critical",confidence:"HIGH",probability:99,source:"OCHA/WFP"},
+    ],
+    keyActors:["Transitional Presidential Council (9 members)","G9 Federation (Barbecue)","MSSM (Kenya-led, 1,000)","HNP (9,000 police)","CARICOM"],
+    news:["Haiti state collapse: PM Henry resigns, Barbecue gang seizes Prime Minister's office","Kenyan MSSM deployed: 1,000 police — overwhelmed by 200,000 gang members","Haiti cholera: 65,000 cases — Port-au-Prince hospitals non-functional","Transitional Council: 9-member body cannot agree on PM nomination — power vacuum","US: $300M security aid to Haiti, Noboa Ecuador model discussed"],
+    economic:"GDP $20B. 60% in poverty. Remittances $3.8B (18% GDP). Agriculture 20% GDP. Subsistence: 70% of population. Gang extortion: $1B+ annual economy disruption.",
+  },
+  // ── Sub-Saharan Africa (new) ──
+  COD:{
+    summary:"DR Congo under President Felix Tshisekedi is experiencing its worst crisis since the Second Congo War. Rwanda-backed M23 rebels captured Goma (2M population) in January 2025 — the largest rebel urban capture in DRC history. The DRC holds 70% of world's cobalt reserves and vast coltan, gold resources that fuel the conflict.",
+    threats:[
+      {type:"M23/Rwanda War",description:"M23 captured Goma, Bukavu — eastern DRC de facto under M23/Rwandan control. UN Group of Experts: Rwanda providing 3,500-4,000 troops. DRC-Rwanda de facto war. SADC forces (SA, Tanzania) suffering casualties.",severity:"critical",confidence:"HIGH",probability:99,source:"UN Panel/Reuters"},
+      {type:"FDLR/ADF/Other",description:"20+ armed groups active. ADF (IS affiliate in Uganda): attacks in Beni. FDLR (Rwandan Hutu) allied with FARDC. ASF/Wazalendo: pro-government militias adding complexity.",severity:"high",confidence:"HIGH",probability:95,source:"ACLED/UN"},
+      {type:"Humanitarian",description:"6.9M+ IDPs — world's largest internal displacement crisis. Famine in Ituri, North Kivu. 27M food insecure. Cholera, mpox outbreaks.",severity:"critical",confidence:"HIGH",probability:99,source:"OCHA/UNHCR"},
+    ],
+    keyActors:["President Tshisekedi","DRC Armed Forces (FARDC)","M23 (Rwanda-backed)","President Kagame (Rwanda)","SADC/MONUSCO","Corneille Nangaa (M23 political wing)"],
+    news:["M23 captures Goma: 2M-population city falls — Rwanda denies troops present","SADC Mission: South African soldiers killed in North Kivu fighting — first combat deaths","DRC cobalt: M23 controls Rubaya coltan mine — Apple, Tesla supply chain scrutiny","DRC-Rwanda: diplomatic relations severed, Kinshasa expels Rwandan ambassador","UN: 6.9M DRC IDPs — largest displacement crisis in world"],
+    economic:"GDP $65B. Cobalt: 70% global supply. Coltan, gold, diamonds. Economy extractive — 64% poverty. DRC minerals in every EV battery globally. Chinese mining dominance (Sicomines, others).",
+  },
+  ZAF:{
+    summary:"South Africa under President Cyril Ramaphosa (ANC, Government of National Unity since May 2024 elections) faces electricity crisis (load-shedding up to Stage 6), 32% unemployment, and ANC coalition instability. The GNU includes DA and other parties after ANC lost majority for first time since 1994. South Africa is BRICS chair and hosts ICC-indicted Putin — refusing to arrest creates ICC friction.",
+    threats:[
+      {type:"Economic/Unemployment",description:"32% unemployment — youth 60%+. Load-shedding (rolling blackouts up to 12 hours): lost GDP estimated at $50B/yr. SOE debt (Eskom, Transnet) requires ongoing bailouts.",severity:"high",confidence:"HIGH",probability:90,source:"World Bank/IMF"},
+      {type:"Crime",description:"Homicide rate: 45/100K — highest in non-war country globally. Cape Town: gang-warfare tied to drug trade (Staggie-linked organizations). Mozambique: cross-border crime.",severity:"high",confidence:"HIGH",probability:95,source:"SAPS/Amnesty"},
+      {type:"ANC-GNU Instability",description:"ANC 40% (lost majority). DA, IFP, PA in GNU — ideological tensions. ANC youth league, MK Party (Zuma) opposition. GNU collapse possible.",severity:"medium",confidence:"HIGH",probability:50,source:"Reuters/AP"},
+    ],
+    keyActors:["President Ramaphosa (ANC)","SSA (State Security Agency)","SANDF (Defence Force)","GNU coalition partners (DA, IFP, PA)","Julius Malema (EFF)","Zuma/MK Party"],
+    news:["ANC loses majority: 40% — Government of National Unity formed with DA","Eskom load-shedding: Stage 6 blackouts cost GDP $50B annually — finally improving","South Africa ICC: refusing arrest of Putin — ICC membership under review","BRICS South Africa chair: 6 new members accepted — bloc expansion","Cape Town: gang murder rate per capita highest in world — SAPs under-resourced"],
+    economic:"GDP $400B. Mining: gold, platinum, diamonds, chrome — $20B exports. Renewable energy: $5B investment. Unemployment 32%. Load-shedding costing 5% GDP annually. Tourism recovering.",
+  },
+  KEN:{
+    summary:"Kenya under President William Ruto faces Gen Z-led protests (June 2024) over Finance Bill tax increases, leading to withdrawal of the bill after parliament stormed. Kenya is East Africa's economic hub, hosts UN agencies and AU operations, and leads the Kenya-based Multinational Security Support Mission to Haiti.",
+    threats:[
+      {type:"Terrorism",description:"Al-Shabaab attacks in Mandera, Lamu counties — cross-border from Somalia. 2019 DusitD2 hotel attack: 21 dead. KDF in Somalia (AMISOM/ATMIS) — Al-Shabaab retaliatory targeting.",severity:"high",confidence:"HIGH",probability:75,source:"ACLED/Reuters"},
+      {type:"Political Unrest",description:"June 2024 Gen Z protests: Finance Bill withdrawn after parliament stormed, 50+ killed. Ruto cabinet reshuffle. Protests morphed into anti-corruption movement.",severity:"medium",confidence:"HIGH",probability:60,source:"Reuters/AP"},
+    ],
+    keyActors:["President Ruto","NIS (National Intelligence Service)","KDF (Kenya Defence Forces)","Raila Odinga (opposition, now AU Commission Chair)","Gen Z protest movement"],
+    news:["Gen Z Kenya: protests storm parliament — Ruto withdraws Finance Bill, reshuffles cabinet","Kenya leads MSSM Haiti deployment: 1,000 police — largest commitment","Al-Shabaab attack Mandera: 7 teachers killed — cross-border incursion","Odinga elected AU Commission Chairperson — first Kenyan in top AU role","Nairobi startup ecosystem: $1B VC funding — Africa's Silicon Savannah growing"],
+    economic:"GDP $120B. Horticulture $1.5B (cut flowers Europe). Tea: 30% of world's black tea. Mobile money: M-Pesa model exported globally. Growth 5.5%. IMF program: $3.6B. Defense 1.3% GDP.",
+  },
+  SSD:{
+    summary:"South Sudan — the world's youngest nation — is sliding back toward full-scale civil war. The 2018 Revitalized Agreement between President Kiir and VP Machar is disintegrating. Oil revenues fund military operations rather than governance. Famine conditions in 60% of the country.",
+    threats:[
+      {type:"Civil War",description:"SPLA-IO (Machar) forces clashing with SSPDF (Kiir) in Upper Nile and Jonglei. 2.3M displaced. Ceasefire violations daily per UNMISS.",severity:"critical",confidence:"HIGH",probability:80,source:"UNMISS/ACLED"},
+      {type:"Famine",description:"IPC Phase 3+ in 60% of country. 7.1M food insecure. Oil spill contaminating Bentiu water sources. Aid access blocked by all parties.",severity:"critical",confidence:"HIGH",probability:95,source:"IPC/OCHA"},
+    ],
+    keyActors:["President Salva Kiir","VP Riek Machar (SPLA-IO)","UNMISS (17,000 troops)","IGAD mediation","Kenya/Uganda (guarantors)"],
+    news:["South Sudan: Machar forces clash with Kiir troops — Revitalized Agreement failing","Famine: 7.1M food insecure — IPC Phase 4 in Unity State","UNMISS: 50+ ceasefire violations/month — unable to protect civilians at scale","South Sudan oil: production 140K bpd — revenues go to military not governance","IGAD summit: Nairobi ceasefire call — immediate violations reported"],
+    economic:"GDP $4B. Oil 95% of revenues: 140K bpd (declining, aging fields). Corruption: 94% of budget goes to security and presidency. Poverty 82%. Aid dependent.",
+  },
+  CAF:{
+    summary:"Central African Republic under President Faustin-Archange Touadéra is dependent on Wagner Group (Africa Corps) for security and political survival. The UN peacekeeping mission MINUSCA (15,000 troops) coexists uneasily with Wagner. Armed groups control 60%+ of territory despite periodic 'peace agreements.'",
+    threats:[
+      {type:"Armed Groups",description:"CPC coalition (6 armed groups): UPC, FPRC, MPC, Anti-Balaka operating in north and west. Wagner/FACA operations — civilian massacres documented by HRW, MSF.",severity:"critical",confidence:"HIGH",probability:90,source:"HRW/UN Panel"},
+      {type:"Wagner Extraction",description:"Wagner mines: gold (Ndassima), diamonds (Ndélé). UN Panel documented $300M+/yr extraction. Russian media covering operations — influence operation.",severity:"high",confidence:"HIGH",probability:95,source:"UN Panel of Experts"},
+    ],
+    keyActors:["President Touadéra","Africa Corps (Wagner, 2,000)","MINUSCA (15,000 UN)","CPC Armed Groups","Sidiki Abass (UPC)"],
+    news:["CAR: Wagner massacre in Bossangoa — 47 civilians killed per MINUSCA investigation","Russia vetoes UNSC CAR sanctions — protects Africa Corps from accountability","MINUSCA: 4 peacekeepers killed in IED — Wagner suspected by UN investigators","CAR gold: Ndassima mine producing $1B — Russia extracting, government receives <10%","Touadéra re-elected: 53% in disputed vote — EU refuses to observe"],
+    economic:"GDP $2.5B. Diamonds, gold, timber. 71% in extreme poverty. Aid: 20% GDP. Wagner extraction: $300M+/yr. USAID suspended over Wagner presence.",
+  },
+  MOZ:{
+    summary:"Mozambique under President Daniel Chapo faces a jihadist insurgency in Cabo Delgado province (ASWJ/IS affiliate), post-election violence after disputed 2024 results, and the challenge of managing the world's largest LNG discovery. Rwanda and SADC forces have rolled back but not eliminated the insurgency.",
+    threats:[
+      {type:"Jihadist Insurgency",description:"ASWJ (Ansar al-Sunna / IS Central Africa Province): 2,500+ fighters in Cabo Delgado. TotalEnergies LNG $20B project suspended. 1.2M IDPs. SADC/Rwanda forces partially effective.",severity:"high",confidence:"HIGH",probability:90,source:"ACLED/Reuters"},
+      {type:"Post-Election Violence",description:"2024 elections: Chapo (Frelimo) won contested result. Venâncio Mondlane (opposition) claiming fraud — protests, 200+ killed by security forces.",severity:"high",confidence:"HIGH",probability:75,source:"Reuters/AP"},
+    ],
+    keyActors:["President Chapo (Frelimo)","FADM (Armed Forces)","Rwanda Defence Forces (Cabo Delgado)","ASWJ/ISCAP insurgents","TotalEnergies (LNG project)"],
+    news:["Mozambique election protests: 200+ killed — Mondlane calls 'stolen election'","TotalEnergies Mozambique: force majeure extended — insurgency not controlled","Rwanda forces: Cabo Delgado gains — but insurgent cells spreading south","Mozambique LNG: $20B project on hold — Eni and Total awaiting security","SADC Mission extended — South Africa, Tanzania troops remaining in Cabo Delgado"],
+    economic:"GDP $18B. LNG: largest discovery in Africa — $50B+ potential, delayed. Aluminum (Mozal), coal, gas. 62% poverty. Growth 4.5%. Aid: 15% of budget.",
+  },
+  ZWE:{
+    summary:"Zimbabwe under President Emmerson Mnangagwa continues authoritarian governance despite the 'new dispensation' promise after Mugabe's fall. ZANU-PF maintains total political control, opposition CCC (Nelson Chamisa) faces harassment. Gold and lithium discoveries could transform the economy but gold smuggling to UAE continues.",
+    threats:[
+      {type:"Political Repression",description:"CCC opposition systematically harassed — Chamisa's movement abducted, beaten. Journalists arrested. Securocrats controlling state — ZANU-PF army nexus.",severity:"high",confidence:"HIGH",probability:90,source:"HRW/Reuters"},
+      {type:"Economic Instability",description:"ZiG (Zimbabwe Gold currency) introduced 2024 — 6th currency attempt since 2008 hyperinflation. Inflation still 200%+. 40% population food insecure.",severity:"high",confidence:"HIGH",probability:85,source:"World Bank/Reuters"},
+    ],
+    keyActors:["President Mnangagwa (ZANU-PF)","CIO (Central Intelligence Organisation)","ZDF (Defence Forces)","Nelson Chamisa (CCC opposition)","China (ZANU-PF patron)"],
+    news:["Zimbabwe ZiG currency: gold-backed launch — markets skeptical after 5 failed predecessors","Chamisa: 'I won the election' — CCC not recognized by ZANU-PF-controlled ZEC","Zimbabwe lithium: world's 5th largest reserve — Chinese Zhejiang Huayou investing $300M","Mnangagwa: re-elected 2023 in disputed vote — Chamisa refuses to accept","Zimbabwe: 6.5M food insecure — El Niño drought worst in 40 years"],
+    economic:"GDP $28B. Agriculture: tobacco, maize. Minerals: platinum, diamonds, gold, lithium. Gold smuggling: $1.5B to UAE. Remittances: $1.5B. ZiG currency attempt — stability uncertain.",
+  },
+  TZA:{
+    summary:"Tanzania under President Samia Suluhu Hassan (first female president) is pursuing economic liberalization and regional engagement. Tanzania hosts 700,000+ refugees from DRC, Burundi, Somalia. Growing strategic importance as Indian Ocean hub — China investing heavily in Dar es Salaam port.",
+    threats:[
+      {type:"Regional Instability",description:"DRC crisis: 700,000 Congolese refugees. Burundi political refugees. Al-Shabaab cross-border plots from Kenya/Tanzania border region.",severity:"medium",confidence:"HIGH",probability:60,source:"UNHCR/Reuters"},
+      {type:"Political",description:"Opposition party Chadema: systematic harassment ahead of 2025 elections. Journalists arrested under Cybercrime Act. Zanzibar political tensions.",severity:"medium",confidence:"HIGH",probability:65,source:"HRW/Reuters"},
+    ],
+    keyActors:["President Samia Suluhu Hassan (CCM)","TIS (intelligence)","TPDF (Defence Forces)","Chadema opposition"],
+    news:["Tanzania: first female head of state Samia pursuing Africa Union mediation in DRC","TPDF South Sudan deployment: 2,500 troops in UNMISS peacekeeping","Tanzania-DRC: hosting M23 ceasefire talks — stalled","China Dar es Salaam port: $10B Bagamoyo megaport — strategic Indian Ocean expansion","Tanzania: natural gas offshore Block 1/4 — $30B LNG project first gas 2031"],
+    economic:"GDP $80B. Tourism: Kilimanjaro, Serengeti $2.5B. Agriculture: coffee, tea, cashews. Gas offshore: transformative potential. Growth 5.3%. Chinese investment: $8B (infrastructure).",
+  },
+  CMR:{
+    summary:"Cameroon under President Paul Biya (42 years in power, 91 years old) faces the Anglophone separatist conflict in Northwest and Southwest regions (Ambazonia), Boko Haram in the Far North, and chronic governance challenges. Biya's succession is a dominant uncertainty.",
+    threats:[
+      {type:"Anglophone War",description:"Ambazonian separatists (ASONET, multiple factions) fighting Cameroon military in NW/SW regions since 2017. 6,000+ killed, 700,000 displaced, 700,000 children out of school.",severity:"high",confidence:"HIGH",probability:90,source:"ACLED/HRW"},
+      {type:"Boko Haram",description:"Boko Haram/ISWAP cross-border attacks in Far North — Lake Chad Basin. Kidnapping of students, farmers. Lake Chad Basin Commission MNJTF operations ongoing.",severity:"high",confidence:"HIGH",probability:85,source:"ACLED/Reuters"},
+      {type:"Succession",description:"Biya (91) ruling — no clear succession plan. Military and CPDM elite jockeying. Coup risk if Biya incapacitated.",severity:"high",confidence:"MEDIUM",probability:45,source:"ICG/Reuters"},
+    ],
+    keyActors:["President Biya (CPDM, 42 yrs)","DGRE (intelligence)","Ambazonian leaders (multiple factions)","MNJTF (Lake Chad Coalition)"],
+    news:["Cameroon Anglophone: 700,000 displaced — schools closed 7 years in conflict zone","Biya birthday: 91-year-old president absent for 6 months — succession speculation","Ambazonia talks: Swiss mediation collapsed — military escalation in NW/SW","MNJTF: cross-border operation kills 200+ Boko Haram in Far North","Cameroon oil: 70K bpd declining — new block licensing to revive sector"],
+    economic:"GDP $48B. Oil: 70K bpd declining. Cocoa: world's 4th producer. Timber, aluminum (ALUCAM). Anglophone war costing $2B/yr in lost economic activity. Growth 3.5%.",
+  },
+  // ── Oceania ──
+  AUS:{
+    summary:"Australia under PM Anthony Albanese (Labor) is undergoing the most significant defense realignment in its history — AUKUS SSN-AUKUS nuclear submarine partnership with US and UK, increased defense spending to 2.4% GDP, and an explicit deterrence posture against China. The relationship with China normalized under Albanese after Morrison-era freeze, but strategic competition defines the relationship.",
+    threats:[
+      {type:"China Competition",description:"PLA Navy transits through Australian maritime approaches increasing. Pacific coercive diplomacy (Solomon Islands 2022 security deal). Chinese intelligence operations targeting Australian institutions documented by ASIO.",severity:"high",confidence:"HIGH",probability:80,source:"ASIO/Reuters"},
+      {type:"Domestic Terrorism",description:"ASIO 2024: right-wing extremism overtakes Islamist terrorism as primary domestic threat. ISIS-inspired lone wolf risk reduced but persistent.",severity:"medium",confidence:"HIGH",probability:35,source:"ASIO"},
+    ],
+    keyActors:["PM Albanese (ALP)","ASIO (domestic intel)","ASIS (foreign intel)","ADF (Defence Forces)","AUKUS partners (US, UK)"],
+    news:["AUKUS: Virginia-class submarine rotation to HMAS Stirling begins — first US subs 2027","Australia-China: $30B trade dispute resolved — wine, barley tariffs removed","Australia defence budget: 2.4% GDP — $50B/yr, F-35A, Hunter-class frigates","ASIO annual report: 'threat from espionage and interference highest ever recorded'","Pacific islands: Australia counters China with $2B Indo-Pacific infrastructure fund"],
+    economic:"GDP $1.8T. Iron ore: $120B exports (China 80%). LNG: $80B. Coal: $55B. AUKUS: $360B submarine program. Unemployment 3.8%. Growth 1.9% (housing crisis drag).",
+  },
+  NZL:{
+    summary:"New Zealand under PM Christopher Luxon (National) is maintaining its independent foreign policy while deepening Five Eyes and AUKUS Pillar 2 participation. New Zealand-China relations are complex — China is the largest trading partner but NZ has signed AUKUS Pillar 2 and joined Pacific deterrence frameworks.",
+    threats:[
+      {type:"China Influence",description:"NZSIS tracking Chinese United Front Work Department influence operations targeting Chinese-diaspora communities and political parties. Huawei excluded from 5G. Pacific Islands Forum competition.",severity:"medium",confidence:"HIGH",probability:70,source:"NZSIS/Reuters"},
+    ],
+    keyActors:["PM Luxon (National)","NZSIS (Security Intelligence Service)","GCSB (cyber/signals)","NZDF (Defence Forces)"],
+    news:["New Zealand joins AUKUS Pillar 2 — AI, quantum, cyber capabilities cooperation","NZ-China trade: $30B — NZ resists decoupling despite security partner pressure","GCSB attributes cyberattack to Chinese MSS — diplomatic protest lodged","NZ Pacific: $3B Pacific Resilience Fund — countering Chinese infrastructure diplomacy","All Blacks: government funds sports diplomacy in Pacific Islands — soft power"],
+    economic:"GDP $250B. Dairy: Fonterra $20B exports (China key market). Tourism recovering. Growth 1.2% (housing crisis, rate hikes). Defense 1.5% GDP (rising to 2%).",
+  },
+  // ── Central Asia (more) ──
+  TKM:{
+    summary:"Turkmenistan under President Serdar Berdimuhamedov (son of Gurbanguly) is one of the world's most isolated authoritarian states. The country holds the 4th largest natural gas reserves globally but the economy is stagnant and the population impoverished relative to resource wealth.",
+    threats:[
+      {type:"Authoritarianism",description:"North Korea-style political system — personality cult. No political pluralism. Forced labor in cotton harvest. Press freedom 0%.",severity:"high",confidence:"HIGH",probability:99,source:"Amnesty/Freedom House"},
+      {type:"Regional Security",description:"Afghanistan border: TTP and ISKP infiltration risk. Turkmenistan maintaining 'eternal neutrality' — refusing NATO cooperation. Gas dependency on China (98% of exports).",severity:"medium",confidence:"HIGH",probability:50,source:"ICG"},
+    ],
+    keyActors:["President S. Berdimuhamedov","G. Berdimuhamedov (father, 'National Leader')","KNB (security service)","CNPC (China, gas contracts)"],
+    news:["Turkmenistan gas: $9B Chinese CNPC contract — 40 BCM/yr through Central Asia-China pipeline","Berdimuhamedov senior visits Xi — Galkynysh gas field expansion agreed","Ashgabat neutrality: Turkmenistan refuses Russian CSTO and SCO membership","Turkmenistan-Afghanistan: border incidents with TTP — neutrality tested","Human rights: 17,000 political prisoners estimated, UN Special Rapporteur denied access"],
+    economic:"GDP $60B (overstated). Gas: 4th largest reserves globally. CNPC contract dominates exports. Manat pegged to dollar — official 3.5, black market 20. Poverty pervasive despite gas wealth.",
+  },
+  TJK:{
+    summary:"Tajikistan under President Emomali Rahmon (28 years in power) is Central Asia's poorest state — 40%+ of GDP from remittances from Russia. The ISKP threat from Afghanistan is primary security concern. Russia's 201st Military Base (7,000 troops) in Dushanbe is Russia's largest foreign military installation.",
+    threats:[
+      {type:"ISKP/Afghanistan",description:"ISKP conducting cross-border attacks into Tajikistan — 2022 ISKP attack on Tajik border killed 17. 2,000km Afghanistan border porous. Tajik nationals among ISKP recruits.",severity:"high",confidence:"HIGH",probability:75,source:"CSTO/Reuters"},
+      {type:"Russia Dependency",description:"40% GDP from Tajik migrants in Russia. Russia 201st Base — security guarantee. CSTO member. Remittances declining due to Ukraine war-related ruble weakness.",severity:"high",confidence:"HIGH",probability:80,source:"World Bank"},
+    ],
+    keyActors:["President Rahmon","GKNB (security)","Russian 201st Military Base (7,000)","CSTO (security)"],
+    news:["ISKP: cross-border attack kills 11 Tajik border guards — largest since 2022","Rahmon visits Putin: 201st base extended until 2042 — security guarantee renewed","Tajikistan-Kyrgyzstan border demarcation: final agreement signed after 30 years","Tajik remittances: $3.5B declining — Russia war impact on migrant workers","GBAO uprising: Pamiri minority protests suppressed — 5 killed, 100 arrested"],
+    economic:"GDP $12B. Remittances: $3.5B (30% GDP). Aluminum: TALCO plant. Agriculture: cotton. Nurek hydro: 3.2GW. Poverty 26% (official). Russian base: $200M/yr economic injection.",
+  },
+  KGZ:{
+    summary:"Kyrgyzstan under President Sadyr Japarov is a hybrid democracy — competitive elections but executive dominance. The Kyrgyzstan-Tajikistan border conflict of April 2021 (casualties: 60+) highlights the fragility of Central Asian borders. Gold mining (Kumtor) is the economic lifeline. CSTO and SCO member.",
+    threats:[
+      {type:"Tajikistan Border",description:"Kyrgyzstan-Tajikistan clashes: 2021 war (60+ dead), 2022 clash (100+ dead). Border demarcation signed 2024 — implementation fragile. Historical Fergana Valley water/land disputes persist.",severity:"medium",confidence:"HIGH",probability:45,source:"ICG/Reuters"},
+      {type:"Russia Dependency",description:"Kyrgyzstan CSTO member. Remittances from Russia: 25-30% of GDP. Manas base (former US) closed 2014. Russian military exercises in Kyrgyzstan.",severity:"medium",confidence:"HIGH",probability:65,source:"World Bank"},
+    ],
+    keyActors:["President Japarov","GKNB (security)","Centerra Gold (Kumtor mine)","CSTO/SCO memberships"],
+    news:["Kyrgyzstan-Tajikistan: border demarcation signed — 30-year dispute ended","Kumtor gold mine: $1B production — 8% of GDP, nationalized from Centerra 2021","ISKP: Bishkek terrorist plot disrupted — 5 arrested with explosives","Kyrgyz remittances from Russia: declining 20% due to Ukraine war ruble weakness","SCO summit: Japarov hosts 9 heads of state — Bishkek as Central Asian hub"],
+    economic:"GDP $12B. Gold (Kumtor): 8% GDP. Remittances: 25-30% GDP from Russia. Agriculture: 20% GDP. Kyrgyzsom stable. Growth 3.8%.",
+  },
+  GTM:{
+    summary:"Guatemala under President Bernardo Arévalo has been locked in a constitutional crisis — prosecutors and courts tried to prevent his inauguration. Corruption networks (La Línea cartel networks) penetrate the state. Guatemala is the top source country for US-bound migrants.",
+    threats:[
+      {type:"Political Corruption",description:"FECI (anti-corruption unit) under political attack. AG Porras tried to bar Arévalo's inauguration — US sanctions on Porras imposed. Corruption deeply embedded in courts, military.",severity:"high",confidence:"HIGH",probability:80,source:"Reuters/WOLA"},
+      {type:"Gang Violence",description:"MS-13, Barrio 18, and local cartels (Lorenzanas, Huistas, Mendozas). Petén and Pacific coast cartel transit corridors. 30+ homicides/100K.",severity:"high",confidence:"HIGH",probability:85,source:"InSight Crime"},
+    ],
+    keyActors:["President Arévalo (Semilla)","FECI (anti-corruption)","AG Porras (US-sanctioned)","Cartel networks"],
+    news:["Arévalo: anti-corruption AG sanctioned by US — first time Guatemala official designated","Guatemala: CICIG 2.0 discussions — return of international anti-corruption body","MS-13: 500 arrests in El Salvador deportation to Guatemala — regional approach","Mexico-Guatemala border: military deployment against coyote networks","Coffee: Guatemala record harvest $2.5B exports — volatile due to climate"],
+    economic:"GDP $95B. Remittances: $21B (21% GDP — largest per capita in Americas). Coffee, bananas, sugar. Cartel economy: $2B+ shadow. Growth 4.1%.",
+  },
+  HND:{
+    summary:"Honduras under President Xiomara Castro (LIBRE) has shifted toward leftist economic policies and extradited former President Juan Orlando Hernández to the US on drug charges. Gang violence remains severe despite Bukele's El Salvador model interest.",
+    threats:[
+      {type:"Gang Violence",description:"MS-13 and Barrio 18: 45/100K homicide rate. San Pedro Sula: one of world's most violent cities. Gang extortion economy: $200M+/yr. State of Emergency deployed.",severity:"high",confidence:"HIGH",probability:90,source:"UNODC/ACLED"},
+      {type:"Corruption",description:"JOH extradited to US: convicted drug trafficking co-conspirator with Sinaloa Cartel. Institutional capture deep — judicial/police reform stalled.",severity:"high",confidence:"HIGH",probability:85,source:"DOJ/Reuters"},
+    ],
+    keyActors:["President Castro (LIBRE)","Juan Orlando Hernández (convicted, US)","Policia Nacional (reform)","MS-13/Barrio 18"],
+    news:["JOH conviction: former Honduras president sentenced 45 years US prison — drug trafficking","Castro State of Emergency: 1,000 soldiers deployed to gang zones","Honduras US aid: $180M counternarcotics — conditional on reform progress","Migrant caravans: 200,000 from Honduras to US 2024 — economic desperation","Honduras leaves ICJ: Nicaragua maritime dispute settled via negotiation"],
+    economic:"GDP $34B. Coffee, bananas, shrimp. Maquiladoras (textile assembly): $8B exports. Remittances: $10B (29% GDP). Growth 3.8%. Poverty 54%. Gang extortion costs $500M/yr.",
+  },
+  SLV:{
+    summary:"El Salvador under President Nayib Bukele won re-election with 85% amid unprecedented security gains — homicide rate down from 106/100K (2015) to 2.4/100K (2023). The mass imprisonment of 85,000+ suspected gang members has transformed public safety, though human rights organizations document serious due process violations.",
+    threats:[
+      {type:"Human Rights",description:"85,000+ imprisoned under State of Exception. 250+ deaths in custody. Arbitrary detention of innocent civilians documented by PDDH. No due process during exceptional regime.",severity:"medium",confidence:"HIGH",probability:75,source:"PDDH/HRW"},
+      {type:"Bitcoin Experiment",description:"Bitcoin legal tender: IMF loan conditions require rollback. Limited adoption — most Salvadorans don't use. $375M sovereign bitcoin holdings — volatile.",severity:"low",confidence:"HIGH",probability:60,source:"IMF/Reuters"},
+    ],
+    keyActors:["President Bukele (Nuevas Ideas)","PNC (Police National Civil)","PDDH (human rights ombudsman)","IMF (lender)"],
+    news:["El Salvador: homicide rate 2.4/100K — from 106/100K 2015 in 8 years","Bukele re-elected 85% — Latin America's most popular leader surveys","IMF $1.4B deal: Bitcoin de-emphasized as legal tender, still legal","CECOT mega-prison: 40,000 capacity — MS-13/Barrio 18 leadership imprisoned","El Salvador: Walmart, Domino's return — foreign investment rising with security"],
+    economic:"GDP $35B. Remittances $8B (24% GDP — US diaspora). Maquiladoras growing. FDI increasing post-security. Bitcoin: $375M sovereign holding. Growth 4.2%.",
+  },
+  BOL:{
+    summary:"Bolivia under President Luis Arce (MAS) is experiencing political turmoil — a failed coup attempt in June 2024, tensions with former president Evo Morales. Bolivia holds the world's largest lithium reserves and is critical to the global EV supply chain transition.",
+    threats:[
+      {type:"Political Instability",description:"Gen. Juan José Zúñiga led tank-ramming coup attempt June 2024 — failed within hours. MAS split: Morales vs Arce factions. 2025 elections in dispute.",severity:"high",confidence:"HIGH",probability:60,source:"Reuters/AP"},
+      {type:"Drug Trafficking",description:"Bolivia: 4th largest cocaine producer. Chapare region: coca cultivation. UNODC: 31,000 hectares. Cartel transit routes through Beni, Santa Cruz.",severity:"medium",confidence:"HIGH",probability:85,source:"UNODC"},
+    ],
+    keyActors:["President Arce (MAS)","Evo Morales (MAS rival)","Gen. Zúñiga (coup leader, arrested)","FELCN (narcotics police)"],
+    news:["Bolivia coup attempt: tanks ram palace gates — General Zúñiga arrested within 6 hours","Morales-Arce split: MAS fractures ahead of 2025 election, Morales barred from running","Bolivia lithium: $2.5B Chinese CATL joint venture — largest resource deal in history","Bolivia: IMF emergency: $500M, currency reserves depleted — dollarization debate","Chapare: 31,000 hectares coca — eradication program 50% funded by US"],
+    economic:"GDP $45B. Lithium: world's largest reserves (23M tonnes). Gas exports declining. Soy, quinoa. Fiscal crisis: subsidies consuming 5% GDP. Poverty 38%. Growth 2.5%.",
   },
 };
 
@@ -3481,7 +3863,26 @@ const HS_DETAIL={
   'Khartoum — SAF-RSF Civil War':'SAF (Sudanese Armed Forces) Commander-in-Chief Burhan vs. RSF (Rapid Support Forces) Commander Hemeti. War started April 2023 — 150,000+ killed, 8.5M displaced. Khartoum: control split between SAF (airport, north) and RSF (south, Omdurman). External backing: UAE → RSF (arms, funding via Chad), Russia/IRGC → SAF (limited). Gold: RSF controls Darfur artisanal mining est. $1.5B/yr — war financing. Famine: IPC Phase 5 declared Zamzam camp, North Darfur. Al-Fashir: last major Darfur city under SAF control — RSF siege ongoing. WFP aid: 50% funding gap — 28M food insecure. ICC: investigation opened for war crimes both parties.',
   'Northern Mali — JNIM Sahel Caliphate':'JNIM (Jama\'at Nusrat al-Islam wal-Muslimin / Group for Support of Islam and Muslims): AQ franchise commanded by Iyad ag Ghaly (Tuareg leader). Territory: controls Kidal (captured from junta), Menaka, Gao outskirts, most of Mopti region. Revenue: taxing agricultural zones, kidnapping for ransom (€15M+ 2024), drug transit. Personnel: 5,000-10,000 fighters, multi-ethnic coalition. Africa Corps: unable to dislodge JNIM — Kidal offensive failed. Assessment: JNIM approaching "proto-state" control of an area larger than France. West Africa expansion: JNIM cells active in Burkina Faso, Niger, Mali-Ghana border.',
   'Mogadishu — Al-Shabaab Operations':'Al-Shabaab (Harakat al-Shabaab al-Mujahideen): al-Qaeda affiliate, governed by Emir Cumar Usama Abdul Manan Diriye. Territory: controls est. 30% of Somalia, including major rural areas. Revenue: taxation of southern Somalia agriculture and trade ($100M+/yr). Attacks: average 100/month across Somalia — Mogadishu complex attacks targeting government, hotels, AMISOM/ATMIS. International: cells in Kenya, Tanzania, Uganda — 2010 Kampala bombing (76 dead). US AFRICOM: conducting drone strikes — 40+ in 2024. SNA-ATMIS offensive 2023-2025: pushed Al-Shabaab from Hiiraan and Galgadud but not degraded core. Assessment: Al-Shabaab will not be militarily defeated without viable governance alternative.',
-  'Pristina — Kosovo-Serbia Flashpoint':'SECRET // NATO. FROZEN CONFLICT — ESCALATION RISK. Kosovo (97% Albanian) declared independence 2008 — recognized by 100+ UN states, not by Serbia/Russia/China. North Kosovo: 50,000 ethnic Serbs — periodic barricades and confrontations with Kosovo Police. NATO KFOR (4,800 troops, 30 nations): Pristina airport and sector security. 2023: Serbian paramilitaries attacked KFOR in Banjska ambush — 30 attackers, 3 Serbian armed fighters killed, 1 KFOR seriously wounded. EU Rule of Law Mission (EULEX): justice support. Vucic position: Kosovo independence "will never be accepted." Dodik-Vucic coordination on Serbian national interests creating dual-front pressure. Assessment: low probability of conventional conflict, elevated hybrid confrontation.',
+  'Pristina — Kosovo-Serbia Flashpoint':'Kosovo declared independence 2008 — recognized by 100+ UN states, not Serbia/Russia/China. North Kosovo: 50,000 ethnic Serbs with periodic confrontations with Kosovo Police. NATO KFOR (4,800 troops): Pristina airport security. 2023: Serbian paramilitaries attacked KFOR in Banjska ambush — 30 attackers. EU EULEX justice mission ongoing. Vucic: Kosovo independence "will never be accepted." Assessment: low probability of conventional conflict, elevated hybrid pressure.',
+  // ── Southeast Asia ──
+  'Myanmar — Military Junta vs Resistance':'Myanmar Armed Forces (Tatmadaw) under Min Aung Hlaing seized power February 2021. Resistance: People\'s Defence Force (PDF) + Ethnic Armed Organizations (EAO) control 60%+ of territory by 2025. Brotherhood Alliance (MNDAA, TNLA, AA) offensive captured Lashio and Kokang areas. Tatmadaw conducting airstrikes on civilian areas — OHCHR documents war crimes. 2.7M internally displaced. China mediating between Tatmadaw and EAO allies — ceasefire talks collapsed. US/EU sanctions on junta leadership. Thailand hosting 120,000+ refugees. Assessment: Tatmadaw losing ground — military victory increasingly unlikely.',
+  'Bangkok — Political Polarisation':'Thailand\'s Constitutional Court dissolved the Move Forward party (May 2024) — successor Pheu Thai governing under PM Paetongtarn Shinawatra (Thaksin\'s daughter). Military establishment and monarchy remain dominant behind civilian facade. Southern Thailand: BRN (Barisan Revolusi Nasional) Malay-Muslim insurgency ongoing — 7,000+ dead since 2004, targeting security forces and teachers. Lèse-majesté prosecutions: 260+ individuals charged 2020-2024. Youth protest movement suppressed but re-emerging. Economic: tourism recovered, automotive exports strong.',
+  'West Philippine Sea — China Standoff':'China Coast Guard and maritime militia vessel harassment of Philippine supply missions to BRP Sierra Madre (Ayungin Shoal) — weekly incidents 2024-2025. Water cannons, laser dazzlers used against Philippine vessels. Arbitration Tribunal 2016 ruled in Philippines\' favor — China refuses to recognize. Marcos Jr. government hardened response: US-Philippines Enhanced Defense Cooperation Agreement (EDCA) expanded to 9 sites including Cagayan (facing Taiwan). US-Philippines Balikatan exercise: 15,000 troops, largest ever. 2025: Philippine fast boats filmed China seizing supplies.',
+  'Mindanao — Abu Sayyaf/BIFF Activity':'Abu Sayyaf Group (ASG): kidnapping-for-ransom operations in Sulu and Basilan. Reduced by AFP operations — 200 estimated members. Bangsamoro Islamic Freedom Fighters (BIFF): 300+ fighters in Maguindanao del Sur, Cotabato. ISIL Lanao (IS East Asia Province): Marawi siege 2017 aftermath — remnants active. AFP and JSOTF-Philippines (US) joint operations ongoing. Peace: Bangsamoro Autonomous Region in Muslim Mindanao (BARMM) established 2019 under MILF/MNLF peace deal — political progress but armed groups outside agreement.',
+  'Papua — Independence Movement':'West Papua (Indonesian province): Free Papua Movement (OPM) and United Liberation Movement for West Papua (ULMWP) conducting low-intensity insurgency. Indonesian security forces (TNI/Polri): operations in Pegunungan Tengah — civilian casualties documented by HRW. 2023-2025: escalating TNI airstrikes on villages. Media access restricted — journalists excluded. Dutch Parliament recognizes right to self-determination. UN Special Rapporteur: denied access. Economic: PT Freeport copper/gold mine ($10B/yr) — central to Jakarta interests. Assessment: separatist sentiment strong but military suppressed.',
+  // ── Latin America ──
+  'Port-au-Prince — Gang War Collapse':'Haiti under Transitional Presidential Council following PM Ariel Henry resignation March 2024 under gang pressure. G9 and G-Pèp gang coalitions (led by Jimmy "Barbecue" Chérizier) control 85%+ of Port-au-Prince. Kenyan-led Multinational Security Support Mission (MSSM): 1,000+ deployed June 2024 but outgunned. 580,000+ internally displaced in capital. State collapse: police, judiciary, healthcare non-functional in gang zones. Cholera resurgence. CARICOM mediation producing transitional council but no security improvement. 2025: gang offensive on remaining government-held areas.',
+  'Colombia — FARC Dissident Conflict':'Colombia President Petro pursuing "Total Peace" policy — negotiations with FARC dissidents (EMC/FARC-EP), ELN, and Clan del Golfo. EMC splinter (Estado Mayor Central): 3,500+ fighters, refusing peace terms. ELN: 5,000+ fighters, Colombia-Venezuela border operations. Clan del Golfo (AGC): 8,000+ members, cocaine trafficking. Peace talks repeatedly suspended after guerrilla attacks on security forces. FARC-EP 2016 peace deal: significant reintegration but 30%+ of demobilized fighters re-armed. Coca production at record high despite eradication. US: $450M counternarcotics aid annually.',
+  'Venezuela — Maduro Authoritarian Crisis':'Maduro claims 2024 election victory despite CNE refusing to publish voting tallies — opposition candidate Edmundo González documented winning. US/EU imposed sanctions. 7.7M+ Venezuelans emigrated — world\'s second-largest displacement crisis. SEBIN and DGCIM intelligence: 200+ political prisoners. Colectivos (pro-Maduro armed groups): enforcing political compliance. Economic: dollarization created two-tier economy — oil sector recovering under Chevron waiver. ELN operating freely in 12 Venezuelan states. Russia, Cuba, China providing political cover and intelligence support.',
+  'Central America — MS-13/Barrio 18 Violence':'El Salvador: President Bukele\'s mass gang crackdown (State of Exception since 2022) — 85,000+ arrested, gang homicides near zero but due process concerns. Guatemala, Honduras: MS-13 and Barrio 18 still operating — homicide rates 35-45/100K. Honduras: Xiomara Castro\'s government extradited drug lord Juan Orlando Hernández (former president) to US. Guatemala: President Arévalo anti-corruption reform blocked by AG. USAID Northern Triangle funding: $860M but corruption absorbs significant portion.',
+  'El Salvador — Bukele Security Crackdown':'President Bukele\'s State of Exception (2022-ongoing): 85,000+ imprisoned — gang homicides down 90% but international rights organizations documenting arbitrary detention, deaths in custody (250+ in prisons). Bitcoin adopted as legal tender — IMF loans conditional on rollback. 2024 re-election with 85% — most popular leader in Latin America surveys. Mega-prison (CECOT): 40,000 capacity. US human rights concerns vs. regional model debate. Economic: remittances $8B, gang extortion economy largely eliminated — growth improving.',
+  'Guatemala — Cartel Corridor Violence':'Bernardo Arévalo presidency under attack from AG Consuelo Porras (Cicig successor conflict). CICIG dismantled 2019 — corruption prosecutions collapsed. Guatemalan cartels: Huistas, Lorenzanas, Mendozas operating with near-impunity in Petén and Pacific coast. US-designated TCOs transiting Colombia/Venezuela product. IRGC-linked Hezbollah financing network busted in Guatemala City 2024. Migration: 600,000+ Guatemalans apprehended at US border annually. Remittances $21B — largest GDP contributor.',
+  // ── Africa ──
+  'Eastern DRC — M23/FDLR Conflict':'M23 rebel group backed by Rwanda (UN Group of Experts confirmed) captured Goma (capital of North Kivu, 2M population) January 2025 — largest rebel urban capture in DRC history. FDLR (Rwandan Hutu militia) allied with FARDC. SADC Mission in DRC (SAMIDRC): Tanzanian and South African troops — attacked by M23/RDF. Over 1M displaced in Kivu provinces 2025. DRC-Rwanda diplomatic relations severed. Congo mineral wealth (cobalt, coltan, gold): M23 control generating $300M+/yr financing. UN Panel: Rwanda providing troops, weapons, command to M23. ICC: arrest warrants against M23 commanders.',
+  'CAR — Wagner vs Armed Groups':'Central African Republic: Wagner Group (Africa Corps) deployed 2018 — 2,000+ personnel advising/fighting alongside FACA. Coalition of Patriotes pour le Changement (CPC): 6 armed groups active in north and west — attacking Wagner/FACA positions. UN Mission MINUSCA (14,000 troops): limited ROE. President Touadéra extending mandate, likely via Russian support. Wagner extracting mining concessions (gold, diamonds) as payment — UN Panel documented. Civilian massacres documented by Human Rights Watch — Wagner accountability near-zero. Russia blocking UNSC action on Wagner.',
+  'South Sudan — Civil War Resurgence':'South Sudan: 2018 Revitalized Peace Agreement deteriorating — Vice President Riek Machar forces (SPLA-IO) and President Salva Kiir forces fighting again in Upper Nile and Jonglei states. 2.3M displaced. Famine: IPC Phase 3+ in 60% of country. UNMISS (17,000 troops) cannot protect civilians at scale. Oil revenues (Kiir controls) funding military operations. RSF (Sudan) using South Sudan territory — complicating regional dynamics. 2025: ceasefire talks in Nairobi collapsed. Assessment: slide toward full civil war resumption.',
+  'Amhara — Fano Militia Conflict':'Ethiopian National Defence Forces (ENDF) fighting Fano (Amhara nationalist militia) across Amhara region since 2023. Fano mobilized after government disarmament attempt — "defending Amhara identity." Urban fighting in Gondar, Debre Markos, Debre Berhan. ENDF deploying drones (Turkish Bayraktar) against Fano positions — civilian areas struck. 2M+ displaced in Amhara. Tigray TPLF disarmament stalled simultaneously. Assessment: Ethiopian state fighting a two-front insurgency while managing Oromia OLA conflict — military stretched.',
+  'Cabo Delgado — ISKP Mozambique':'Ansar al-Sunna Wa Jama\'a (locally known as Al-Shabaab, not linked to Somali AS) affiliated with ISIL Central Africa Province. Operations in Cabo Delgado province since 2017. 2021: captured Mocímboa da Praia port for months. SADC Mission in Mozambique (SAMIM) + Rwandan forces (4,000) conducting counter-insurgency — significant territorial rollback but not eliminated. TotalEnergies LNG megaproject ($20B) still suspended — attack on contractor facility 2021. 1.2M internally displaced. Insurgent funding: illicit ruby mining, kidnapping, ivory trade.',
 };
 
 let currentHotspot=null;
