@@ -510,7 +510,7 @@ canvas.dragging{cursor:grabbing}
 
 <div id="panel">
   <div class="p-handle" id="p-handle"></div>
-  <div class="class-banner" id="class-banner">SECRET // NOFORN // INTEL GLOBE ASSESSMENT ENGINE</div>
+  <div class="class-banner" id="class-banner">// INTEL GLOBE ASSESSMENT ENGINE</div>
   <div class="p-head">
     <div class="p-row">
       <div>
@@ -704,6 +704,82 @@ const COUNTRIES = {
     poly:[[45,141],[43,141],[35,137],[33,131],[34,130],[36,136],[38,140],[40,141],[44,143],[45,141]]},
   TWN:{iso:'TWN',numericId:158,name:'Taiwan',         capital:'Taipei',      alertLevel:'HIGH',     lat:23.7, lng:121.0,
     poly:[[26,122],[24,122],[22,120],[22,122],[24,124],[26,122]]},
+  // ── Southeast Asia ──
+  THA:{iso:'THA',numericId:764,name:'Thailand',       capital:'Bangkok',     alertLevel:'MEDIUM',   lat:15.9, lng:100.9,
+    poly:[[20,97],[18,100],[15,102],[12,102],[5,102],[5,100],[10,99],[13,98],[15,97],[18,97],[20,97]]},
+  IDN:{iso:'IDN',numericId:360,name:'Indonesia',      capital:'Jakarta',     alertLevel:'MEDIUM',   lat:-2.5, lng:118.0,
+    poly:[[5,95],[5,141],[-8,141],[-8,115],[-5,105],[1,104],[5,95]]},
+  MMR:{iso:'MMR',numericId:104,name:'Myanmar',        capital:'Naypyidaw',   alertLevel:'CRITICAL', lat:17.1, lng:96.2,
+    poly:[[28,97],[24,97],[20,97],[16,97],[10,98],[15,100],[20,100],[24,98],[28,97]]},
+  VNM:{iso:'VNM',numericId:704,name:'Vietnam',        capital:'Hanoi',       alertLevel:'MEDIUM',   lat:16.5, lng:107.5,
+    poly:[[23,102],[22,104],[18,106],[12,109],[10,104],[16,107],[20,103],[23,102]]},
+  PHL:{iso:'PHL',numericId:608,name:'Philippines',    capital:'Manila',      alertLevel:'HIGH',     lat:12.9, lng:121.8,
+    poly:[[18,120],[18,122],[14,124],[8,126],[5,119],[10,118],[15,118],[18,120]]},
+  MYS:{iso:'MYS',numericId:458,name:'Malaysia',       capital:'Kuala Lumpur',alertLevel:'LOW',      lat:4.2,  lng:108.0,
+    poly:[[6,100],[6,117],[4,117],[1,104],[2,103],[4,100],[6,100]]},
+  KHM:{iso:'KHM',numericId:116,name:'Cambodia',       capital:'Phnom Penh',  alertLevel:'MEDIUM',   lat:12.6, lng:104.9,
+    poly:[[14,103],[14,107],[11,107],[10,103],[12,102],[14,103]]},
+  // ── Latin America ──
+  BRA:{iso:'BRA',numericId:76, name:'Brazil',         capital:'Brasília',    alertLevel:'MEDIUM',   lat:-14.2,lng:-51.9,
+    poly:[[5,-73],[5,-35],[-6,-35],[-20,-40],[-34,-52],[-30,-57],[-20,-57],[-10,-68],[5,-73]]},
+  MEX:{iso:'MEX',numericId:484,name:'Mexico',         capital:'Mexico City', alertLevel:'HIGH',     lat:23.6, lng:-102.6,
+    poly:[[30,-117],[32,-117],[32,-95],[24,-88],[15,-88],[15,-92],[18,-95],[22,-105],[28,-110],[30,-117]]},
+  COL:{iso:'COL',numericId:170,name:'Colombia',       capital:'Bogotá',      alertLevel:'HIGH',     lat:4.6,  lng:-74.3,
+    poly:[[12,-72],[12,-73],[8,-77],[1,-80],[-3,-80],[-3,-70],[0,-68],[5,-68],[8,-73],[12,-72]]},
+  VEN:{iso:'VEN',numericId:862,name:'Venezuela',      capital:'Caracas',     alertLevel:'HIGH',     lat:6.4,  lng:-66.6,
+    poly:[[12,-72],[12,-62],[8,-60],[5,-62],[3,-61],[5,-67],[5,-73],[8,-73],[12,-72]]},
+  ARG:{iso:'ARG',numericId:32, name:'Argentina',      capital:'Buenos Aires', alertLevel:'MEDIUM',  lat:-38.4,lng:-63.6,
+    poly:[[-22,-65],[-22,-53],[-35,-56],[-42,-63],[-55,-68],[-55,-65],[-42,-65],[-22,-65]]},
+  CHL:{iso:'CHL',numericId:152,name:'Chile',          capital:'Santiago',    alertLevel:'LOW',      lat:-35.7,lng:-71.5,
+    poly:[[-18,-69],[-18,-70],[-35,-72],[-42,-72],[-55,-68],[-18,-69]]},
+  PER:{iso:'PER',numericId:604,name:'Peru',           capital:'Lima',        alertLevel:'MEDIUM',   lat:-9.2, lng:-75.0,
+    poly:[[-2,-80],[-2,-72],[-8,-72],[-18,-70],[-18,-69],[-8,-75],[-2,-80]]},
+  CUB:{iso:'CUB',numericId:192,name:'Cuba',           capital:'Havana',      alertLevel:'MEDIUM',   lat:21.5, lng:-80.0,
+    poly:[[23,-75],[23,-84],[20,-84],[20,-75],[23,-75]]},
+  ECU:{iso:'ECU',numericId:218,name:'Ecuador',        capital:'Quito',       alertLevel:'HIGH',     lat:-1.8, lng:-78.2,
+    poly:[[1,-77],[1,-75],[-3,-75],[-5,-80],[-2,-80],[1,-77]]},
+  BOL:{iso:'BOL',numericId:68, name:'Bolivia',        capital:'Sucre',       alertLevel:'MEDIUM',   lat:-16.3,lng:-63.6,
+    poly:[[-10,-68],[-10,-60],[-18,-60],[-22,-63],[-18,-69],[-10,-68]]},
+  HTI:{iso:'HTI',numericId:332,name:'Haiti',          capital:'Port-au-Prince',alertLevel:'CRITICAL',lat:18.9,lng:-72.3,
+    poly:[[20,-74],[20,-72],[18,-72],[18,-74],[20,-74]]},
+  GTM:{iso:'GTM',numericId:320,name:'Guatemala',      capital:'Guatemala City',alertLevel:'HIGH',   lat:15.8, lng:-90.2,
+    poly:[[18,-92],[15,-89],[15,-92],[18,-92]]},
+  HND:{iso:'HND',numericId:340,name:'Honduras',       capital:'Tegucigalpa', alertLevel:'HIGH',     lat:15.2, lng:-86.2,
+    poly:[[16,-89],[16,-83],[14,-83],[13,-87],[15,-89],[16,-89]]},
+  SLV:{iso:'SLV',numericId:222,name:'El Salvador',    capital:'San Salvador', alertLevel:'MEDIUM',  lat:13.8, lng:-88.9,
+    poly:[[14,-90],[14,-88],[13,-88],[13,-90],[14,-90]]},
+  // ── Sub-Saharan Africa (expanded) ──
+  COD:{iso:'COD',numericId:180,name:'DR Congo',       capital:'Kinshasa',    alertLevel:'CRITICAL', lat:-4.0, lng:21.8,
+    poly:[[5,17],[5,30],[0,30],[-5,29],[-13,27],[-13,18],[-5,15],[0,18],[5,17]]},
+  ZAF:{iso:'ZAF',numericId:710,name:'South Africa',   capital:'Pretoria',    alertLevel:'MEDIUM',   lat:-28.5,lng:25.0,
+    poly:[[-22,29],[-22,31],[-27,33],[-34,26],[-34,18],[-28,17],[-22,20],[-22,29]]},
+  KEN:{iso:'KEN',numericId:404,name:'Kenya',          capital:'Nairobi',     alertLevel:'MEDIUM',   lat:-0.0, lng:37.9,
+    poly:[[5,34],[5,41],[0,42],[-5,41],[-5,34],[0,34],[5,34]]},
+  TZA:{iso:'TZA',numericId:834,name:'Tanzania',       capital:'Dodoma',      alertLevel:'MEDIUM',   lat:-6.4, lng:34.9,
+    poly:[[0,34],[0,41],[-5,41],[-11,40],[-12,34],[0,34]]},
+  SSD:{iso:'SSD',numericId:728,name:'South Sudan',    capital:'Juba',        alertLevel:'CRITICAL', lat:6.9,  lng:31.3,
+    poly:[[12,24],[12,35],[6,35],[3,31],[4,30],[8,27],[12,24]]},
+  CMR:{iso:'CMR',numericId:120,name:'Cameroon',       capital:'Yaoundé',     alertLevel:'HIGH',     lat:5.7,  lng:12.4,
+    poly:[[13,15],[13,14],[6,10],[2,10],[2,14],[5,16],[8,14],[13,15]]},
+  MOZ:{iso:'MOZ',numericId:508,name:'Mozambique',     capital:'Maputo',      alertLevel:'HIGH',     lat:-17.3,lng:35.6,
+    poly:[[-11,36],[-11,40],[-17,40],[-26,35],[-27,32],[-17,31],[-11,36]]},
+  ZWE:{iso:'ZWE',numericId:716,name:'Zimbabwe',       capital:'Harare',      alertLevel:'HIGH',     lat:-20.0,lng:30.0,
+    poly:[[-16,26],[-16,33],[-22,33],[-22,25],[-16,26]]},
+  // ── Central Africa ──
+  CAF:{iso:'CAF',numericId:140,name:'Central Afr. Rep.',capital:'Bangui',    alertLevel:'CRITICAL', lat:6.6,  lng:20.9,
+    poly:[[10,15],[10,27],[5,27],[3,18],[5,15],[10,15]]},
+  // ── Oceania ──
+  AUS:{iso:'AUS',numericId:36, name:'Australia',      capital:'Canberra',    alertLevel:'LOW',      lat:-25.3,lng:133.8,
+    poly:[[-15,130],[-15,150],[-39,150],[-39,114],[-25,114],[-15,130]]},
+  NZL:{iso:'NZL',numericId:554,name:'New Zealand',    capital:'Wellington',  alertLevel:'LOW',      lat:-40.9,lng:174.9,
+    poly:[[-35,174],[-35,178],[-46,170],[-46,165],[-35,165],[-35,174]]},
+  // ── Central Asia (more) ──
+  TKM:{iso:'TKM',numericId:795,name:'Turkmenistan',   capital:'Ashgabat',    alertLevel:'MEDIUM',   lat:38.9, lng:59.6,
+    poly:[[42,52],[42,66],[37,66],[37,52],[40,52],[42,52]]},
+  TJK:{iso:'TJK',numericId:762,name:'Tajikistan',     capital:'Dushanbe',    alertLevel:'MEDIUM',   lat:38.9, lng:71.3,
+    poly:[[41,68],[41,75],[37,73],[37,68],[41,68]]},
+  KGZ:{iso:'KGZ',numericId:417,name:'Kyrgyzstan',     capital:'Bishkek',     alertLevel:'MEDIUM',   lat:41.2, lng:74.8,
+    poly:[[43,70],[43,80],[40,80],[40,70],[43,70]]},
 };
 
 const CONFLICTS = [
@@ -2491,6 +2567,9 @@ const canvas  = document.getElementById('globe');
 const ctx     = canvas.getContext('2d');
 let rotX=0.30, rotY=0.35;
 let isDragging=false, lastX=0, lastY=0;
+// Double-click detection for country panels (prevents accidental opens on drag)
+let lastClickISO=null, lastClickTime=0, lastClickPX=0, lastClickPY=0;
+const DBL_CLICK_MS=380, DBL_CLICK_PX=22;
 // Physics — separated auto-spin from drag momentum for buttery feel
 const AUTO_SPIN=0.00006;
 const DRAG_FRICTION=0.92;
@@ -2550,7 +2629,7 @@ const NAVAL_ASSETS=[
   {lat:44.5,lng:33.5, country:'RUS',flag:'🇷🇺',type:'FLEET HQ (DEGRADED)',label:'Black Sea Fleet — Novorossiysk',detail:'Forced from Sevastopol by Ukrainian Neptune/sea drone campaign. 40%+ surface combatants sunk. Operational capability severely degraded.',severity:'high'},
   {lat:43.5,lng:30.5, country:'UKR',flag:'🇺🇦',type:'NAVAL DRONE FORCE',label:'Ukraine Sea Drone Campaign',detail:'Ukrainian Magura V5 and Mamay naval drones. 15+ Russian warships sunk or damaged. Black Sea Fleet forced to retreat.',severity:'critical'},
   {lat:35.5,lng:24.0, country:'NATO',flag:'🔷',type:'MARITIME GROUP',label:'NATO SNMG2 Mediterranean',detail:'Standing NATO Maritime Group 2. Anti-submarine, anti-surface. Current lead nation: Italy.',severity:'medium'},
-  {lat:69.0,lng:18.0, country:'RUS',flag:'🇷🇺',type:'SSBN PATROL',label:'Borei-class SSBN — Arctic',detail:'TOP SECRET — Russia Northern Fleet SSBN patrol. Each carries 16× Bulava SLBM. Nuclear alert status elevated.',severity:'critical'},
+  {lat:69.0,lng:18.0, country:'RUS',flag:'🇷🇺',type:'SSBN PATROL',label:'Borei-class SSBN — Arctic',detail:'Russia Northern Fleet SSBN patrol. Each carries 16× Bulava SLBM. Nuclear alert status elevated.',severity:'critical'},
   {lat:27.5,lng:57.0, country:'IRN',flag:'🇮🇷',type:'NAVAL FORCE',label:'IRGCN Strait of Hormuz',detail:'IRGC Navy fast-attack craft, mine-laying vessels, submarine force. Hormuz chokepoint interdiction capability (20% global oil).',severity:'high'},
   {lat:52.5,lng:2.0,  country:'NATO',flag:'🔷',type:'NORTH SEA PATROL',label:'NATO Baltic Approaches Force',detail:'Monitoring Russian sub transit routes. GIUK Gap surveillance. UK, Norwegian, Danish naval assets coordinated.',severity:'medium'},
 ];
@@ -3051,8 +3130,17 @@ canvas.addEventListener('mousemove',e=>{
     if(!p.visible)continue;
     if(Math.hypot(e.clientX-p.px,e.clientY-p.py)<16){hotHit=h;break;}
   }
+  // Check tracking layer hover
+  let layerHit=null;
+  if(!hotHit){
+    if(activeLayers.naval){const n=navalAssetAt(e.clientX,e.clientY);if(n)layerHit={label:n.label,sub:n.type+' · '+n.country,color:'#22c55e'};}
+    if(!layerHit&&activeLayers.troops){const m=troopMovAt(e.clientX,e.clientY);if(m)layerHit={label:m.label,sub:m.status,color:'#ef4444'};}
+    if(!layerHit&&activeLayers.arms){const a=armsFlowAt(e.clientX,e.clientY);if(a)layerHit={label:a.label,sub:a.value+' · click for detail',color:'#f59e0b'};}
+    if(!layerHit&&activeLayers.money){const f=financialFlowAt(e.clientX,e.clientY);if(f)layerHit={label:f.label,sub:f.value+' · click for detail',color:'#a855f7'};}
+    if(!layerHit&&activeLayers.refugees){const r=refugeeFlowAt(e.clientX,e.clientY);if(r)layerHit={label:r.label,sub:r.value+' displaced · click',color:'#fbbf24'};}
+  }
   const hit=hitTest(e.clientX,e.clientY);
-  if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit)?'pointer':'grab';}
+  if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit||layerHit)?'pointer':'grab';}
   const tt=document.getElementById('tooltip');
   if(hotHit){
     document.getElementById('tt-name').textContent=hotHit.label;
@@ -3060,10 +3148,15 @@ canvas.addEventListener('mousemove',e=>{
     document.getElementById('tt-alert').textContent=hotHit.type.replace(/_/g,' ').toUpperCase()+' · '+sev.toUpperCase();
     document.getElementById('tt-alert').style.color=ALERT_SEV[sev]||'#94a3b8';
     tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
+  } else if(layerHit){
+    document.getElementById('tt-name').textContent=layerHit.label;
+    document.getElementById('tt-alert').textContent=layerHit.sub;
+    document.getElementById('tt-alert').style.color=layerHit.color;
+    tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
   } else if(hit){
     const c=COUNTRIES[hit];
     document.getElementById('tt-name').textContent=c.name;
-    document.getElementById('tt-alert').textContent='Alert: '+c.alertLevel;
+    document.getElementById('tt-alert').textContent=(hit===lastClickISO&&Date.now()-lastClickTime<DBL_CLICK_MS)?'Double-click to open →':'Alert: '+c.alertLevel+' · Double-click to open';
     document.getElementById('tt-alert').style.color=ALERT_SEV[c.alertLevel.toLowerCase()]||'#94a3b8';
     tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
   }else tt.style.opacity='0';
@@ -3071,25 +3164,48 @@ canvas.addEventListener('mousemove',e=>{
 canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dragging');lastX=e.clientX;lastY=e.clientY;dragVelX=0;dragVelY=0;});
 canvas.addEventListener('mouseup',e=>{
   if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
-  const dx=e.clientX-lastX,dy=e.clientY-lastY;  // dragVelX already set in mousemove
+  const dx=e.clientX-lastX,dy=e.clientY-lastY;
   if(Math.abs(dx)<5&&Math.abs(dy)<5){
-    // Priority: hotspot → naval → troop → country
+    // Priority order: hotspot dot → tracking layers → country (double-click)
     const hs=hotspotAt(e.clientX,e.clientY);
     if(hs){openHotspot(hs);return;}
     if(activeLayers.naval){
       const na=navalAssetAt(e.clientX,e.clientY);
-      if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' STATUS: '+na.detail.split('.')[0],na.detail);return;}
+      if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' '+na.detail.split('.')[0],na.detail);return;}
     }
     if(activeLayers.troops){
       const tm=troopMovAt(e.clientX,e.clientY);
-      if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'STRENGTH: '+tm.strength+' | STATUS: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type.toUpperCase()+' | Severity: '+tm.severity.toUpperCase());return;}
+      if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'Strength: '+tm.strength+' | Status: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type+' | Severity: '+tm.severity);return;}
     }
+    if(activeLayers.arms){
+      const af=armsFlowAt(e.clientX,e.clientY);
+      if(af){openTrackModal('ARMS TRANSFER: '+af.from+' → '+af.to,af.label,'Value: '+af.value,'Type: '+af.type.toUpperCase()+' | Severity: '+af.severity);return;}
+    }
+    if(activeLayers.money){
+      const ff=financialFlowAt(e.clientX,e.clientY);
+      if(ff){openTrackModal('FINANCIAL FLOW: '+ff.from+' → '+ff.to,ff.label,'Value: '+ff.value,'Flow type: '+ff.type+' | Severity: '+ff.severity);return;}
+    }
+    if(activeLayers.refugees){
+      const rf=refugeeFlowAt(e.clientX,e.clientY);
+      if(rf){openTrackModal('DISPLACEMENT FLOW',rf.label,'Est. displaced: '+rf.value,'Severity: '+rf.severity);return;}
+    }
+    // Country panel — requires double-click to avoid accidental opens while rotating
     const h=hitTest(e.clientX,e.clientY);
     if(h){
-      if(!selectedISO){openCountry(h);}
-      else if(h===selectedISO){
-        const p=document.getElementById('panel');
-        if(p.classList.contains('minimized'))toggleMinimize();
+      const now=Date.now();
+      const isDouble=(lastClickISO===h && now-lastClickTime<DBL_CLICK_MS &&
+        Math.hypot(e.clientX-lastClickPX,e.clientY-lastClickPY)<DBL_CLICK_PX);
+      lastClickISO=h; lastClickTime=now; lastClickPX=e.clientX; lastClickPY=e.clientY;
+      if(isDouble){
+        openCountry(h);
+      } else {
+        // First click — show a subtle "double-click to open" hint on tooltip
+        const tt=document.getElementById('tooltip');
+        document.getElementById('tt-name').textContent=COUNTRIES[h]?.name||h;
+        document.getElementById('tt-alert').textContent='Double-click to open intel panel';
+        document.getElementById('tt-alert').style.color='#60a5fa';
+        tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
+        setTimeout(()=>{tt.style.opacity='0';},1400);
       }
     }
   }
@@ -3153,19 +3269,32 @@ canvas.addEventListener('touchend',e=>{
         if(hs){openHotspot(hs);return;}
         if(activeLayers.naval){
           const na=navalAssetAt(t.clientX,t.clientY);
-          if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' STATUS: '+na.detail.split('.')[0],na.detail);return;}
+          if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' '+na.detail.split('.')[0],na.detail);return;}
         }
         if(activeLayers.troops){
           const tm=troopMovAt(t.clientX,t.clientY);
-          if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'STRENGTH: '+tm.strength+' | STATUS: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type.toUpperCase()+' | Severity: '+tm.severity.toUpperCase());return;}
+          if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'Strength: '+tm.strength+' | Status: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type+' | Severity: '+tm.severity);return;}
         }
+        if(activeLayers.arms){
+          const af=armsFlowAt(t.clientX,t.clientY);
+          if(af){openTrackModal('ARMS TRANSFER: '+af.from+' → '+af.to,af.label,'Value: '+af.value,'Type: '+af.type.toUpperCase()+' | Severity: '+af.severity);return;}
+        }
+        if(activeLayers.money){
+          const ff=financialFlowAt(t.clientX,t.clientY);
+          if(ff){openTrackModal('FINANCIAL FLOW: '+ff.from+' → '+ff.to,ff.label,'Value: '+ff.value,'Flow type: '+ff.type+' | Severity: '+ff.severity);return;}
+        }
+        if(activeLayers.refugees){
+          const rf=refugeeFlowAt(t.clientX,t.clientY);
+          if(rf){openTrackModal('DISPLACEMENT FLOW',rf.label,'Est. displaced: '+rf.value,'Severity: '+rf.severity);return;}
+        }
+        // Country — double-tap on mobile
         const h=hitTest(t.clientX,t.clientY);
         if(h){
-          if(!selectedISO){openCountry(h);}
-          else if(h===selectedISO){
-            const p=document.getElementById('panel');
-            if(p.classList.contains('minimized'))toggleMinimize();
-          }
+          const now=Date.now();
+          const isDouble=(lastClickISO===h && now-lastClickTime<DBL_CLICK_MS &&
+            Math.hypot(t.clientX-lastClickPX,t.clientY-lastClickPY)<DBL_CLICK_PX);
+          lastClickISO=h; lastClickTime=now; lastClickPX=t.clientX; lastClickPY=t.clientY;
+          if(isDouble) openCountry(h);
         }
       }
     }
@@ -3245,7 +3374,7 @@ function openCountry(iso){
   b.textContent=c.alertLevel;b.style.background=badge.bg;b.style.color=badge.color;b.style.borderColor=badge.border;
   // Summary — CIA briefing format
   const ex=INTEL_EX[iso]||{};
-  const rptId='WNINTEL-'+iso+'-'+new Date().toISOString().slice(0,10).replace(/-/g,'');
+  const rptId='OSINT-REPT-'+iso+'-'+new Date().toISOString().slice(0,10).replace(/-/g,'');
   const dtg=new Date().toUTCString().slice(5,25).toUpperCase()+' UTC';
   document.getElementById('tab-summary').innerHTML=`
     <div class="report-meta"><span>REPORT: ${rptId}</span><span>DTG: ${dtg}</span></div>
@@ -3257,7 +3386,7 @@ function openCountry(iso){
     ${intel.economic?`<div class="sec-label">ECONOMIC INDICATOR</div><p class="econ-text">${intel.economic}</p>`:''}
     ${ex.signals?.length?`<div class="sec-label">SIGNALS &amp; INDICATORS</div><div>${ex.signals.map(s=>`<div class="signal-item"><span class="signal-dot" style="background:${s.color||'#f59e0b'}"></span><div><p class="signal-text">${s.text}</p><p class="signal-src">SOURCE: ${s.source||'HUMINT/SIGINT'}</p></div></div>`).join('')}</div>`:''}
     ${ex.personalities?.length?`<div class="sec-label">KEY PERSONALITIES</div>${ex.personalities.map(p=>{const tc=p.threat==='CRITICAL'?'#ef4444':p.threat==='HIGH'?'#f97316':p.threat==='MEDIUM'?'#f59e0b':p.threat==='ELIMINATED'?'#94a3b8':'#22c55e';return`<div class="person-card"><span class="person-threat" style="color:${tc}">${p.threat}</span><div class="person-name">${p.name}</div><div class="person-role">${p.role}</div><p class="person-assess">${p.assess}</p></div>`}).join('')}`:''}
-    <p class="source-line">CLASSIFICATION: SECRET // NOFORN — Intel Globe Assessment Engine — For Authorized Use Only</p>
+    <p class="source-line">CLASSIFICATION: Intel Globe Assessment Engine — For Authorized Use Only</p>
   `;
   // Threats — with confidence badges and probability bars
   document.getElementById('tab-threats').innerHTML=intel.threats?.length
@@ -3299,29 +3428,29 @@ const HS_TYPE_LABELS={
 };
 const HS_DETAIL={
   // Palestine
-  'Rafah — IDF Ground Ops':'TOP SECRET // SI — ACTIVE COMBAT ZONE. IDF 98th Division (paratroopers) conducting Phase 4 operations targeting Hamas Rafah Brigade tunnel network. Philadelphia Corridor (Egyptian border) secured after intense urban fighting. Humanitarian corridor (Kerem Shalom) intermittently suspended during operations. HUMINT: Hamas Southern Brigade commander Rafah cell relocated to hospital complex — IDF legal review ongoing. Civilian casualty rate: disputed — Gaza MoH claims 40K+, IDF disputes methodology. Hostage tunnel complexes: 3 additional found, 2 hostages recovered deceased. Assessment: Hamas military command degraded but not eliminated — dispersed decentralized structure.',
-  'Gaza City — Northern Campaign':'SECRET // NOFORN — SUSTAINED OPERATIONS. IDF air and ground campaign targeted Hamas Military Intelligence HQ (University of Gaza), Naval Police compound, and Shati Camp tunnel network. HSM (Hamas Special Movement) units operating in 3-5 man cells from civilian infrastructure. SIGINT assessment: Hamas C2 reconstituted on encrypted Telegram after primary comms disrupted. UNRWA 80% facilities non-functional or destroyed. Israeli air campaign: 85,000+ sorties since Oct 7. Northern Gaza: 95%+ destruction of built environment in combat zones per UNOSAT assessment.',
-  'Khan Younis — Humanitarian Crisis':'CONFIDENTIAL // HUMANITARIAN INTEL. Population displacement: 90%+ of pre-war 400,000 residents displaced. Nasser Hospital (only major functioning facility): 280% capacity, surgical cases triaged by injury severity. UNRWA: avg. 2,200 kcal/day target unmet — est. 1,100 kcal/day actual in isolated areas. WHO: acute watery diarrhea cases up 2,000% — sewage system collapse. Famine Watch: IPC Phase 5 (Catastrophe) declared in northern Gaza. International aid: 200 trucks/day target — actual 40-60 trucks, security-related delays. Diplomatic assessment: humanitarian corridor situation worsening regardless of military outcome.',
+  'Rafah — IDF Ground Ops':'IDF 98th Division (paratroopers) conducting Phase 4 operations targeting Hamas Rafah Brigade tunnel network. Philadelphia Corridor (Egyptian border) secured after intense urban fighting. Humanitarian corridor (Kerem Shalom) intermittently suspended during operations. HUMINT: Hamas Southern Brigade commander Rafah cell relocated to hospital complex — IDF legal review ongoing. Civilian casualty rate: disputed — Gaza MoH claims 40K+, IDF disputes methodology. Hostage tunnel complexes: 3 additional found, 2 hostages recovered deceased. Assessment: Hamas military command degraded but not eliminated — dispersed decentralized structure.',
+  'Gaza City — Northern Campaign':'IDF air and ground campaign targeted Hamas Military Intelligence HQ (University of Gaza), Naval Police compound, and Shati Camp tunnel network. HSM (Hamas Special Movement) units operating in 3-5 man cells from civilian infrastructure. SIGINT assessment: Hamas C2 reconstituted on encrypted Telegram after primary comms disrupted. UNRWA 80% facilities non-functional or destroyed. Israeli air campaign: 85,000+ sorties since Oct 7. Northern Gaza: 95%+ destruction of built environment in combat zones per UNOSAT assessment.',
+  'Khan Younis — Humanitarian Crisis':'Population displacement: 90%+ of pre-war 400,000 residents displaced. Nasser Hospital (only major functioning facility): 280% capacity, surgical cases triaged by injury severity. UNRWA: avg. 2,200 kcal/day target unmet — est. 1,100 kcal/day actual in isolated areas. WHO: acute watery diarrhea cases up 2,000% — sewage system collapse. Famine Watch: IPC Phase 5 (Catastrophe) declared in northern Gaza. International aid: 200 trucks/day target — actual 40-60 trucks, security-related delays. Diplomatic assessment: humanitarian corridor situation worsening regardless of military outcome.',
   // Israel/Lebanon
-  'Northern Border — Hezbollah Zone':'SECRET // NOFORN. Post-ceasefire monitoring. Hezbollah precision missile stockpile — Fateh-110, M-600 class — NOT expended in 2024 conflict. Strategic reserve intact. Estimated 13,000 rockets fired during conflict vs. 150,000+ remaining. UNIFIL: 12,000 troops; mandate limitations prevent weapons seizure. IDF Intelligence Assessment: Hezbollah rebuilding — Syrian corridor partially active. Blue Line violations: 40+ incidents post-ceasefire including live fire. SIGINT: Hezbollah communication discipline improved — lesson learned from MOSSAD device compromise (pagers/radios Sep 2024).',
+  'Northern Border — Hezbollah Zone':'Post-ceasefire monitoring. Hezbollah precision missile stockpile — Fateh-110, M-600 class — NOT expended in 2024 conflict. Strategic reserve intact. Estimated 13,000 rockets fired during conflict vs. 150,000+ remaining. UNIFIL: 12,000 troops; mandate limitations prevent weapons seizure. IDF Intelligence Assessment: Hezbollah rebuilding — Syrian corridor partially active. Blue Line violations: 40+ incidents post-ceasefire including live fire. SIGINT: Hezbollah communication discipline improved — lesson learned from MOSSAD device compromise (pagers/radios Sep 2024).',
   // Syria
-  'Aleppo — Active Frontline':'SECRET // REL NATO. HTS (Hayat Tahrir al-Sham) administering Idlib province as de facto state. 4M civilians in HTS zone. HTS chief Jolani (Ahmed al-Sharaa) seeking delisting from US terrorist designation — cooperating on ISIS operations. Assad government forces: 150,000 nominal, est. 60,000 effective. Russian VKS sorties from Hmeimim: supporting SAA operations east of Hama. SIGINT: IRGC brigade repositioning from Palmyra area toward Deir ez-Zor following Israeli strikes on Homs logistics hub.',
-  'Damascus — IRGC Weapons Hub':'TOP SECRET // SI. Israeli intelligence assessment: Damascus International Airport used as IRGC forward logistics hub — Hezbollah precision munitions transfer point. IDF strikes since Jan 2024: 140+ confirmed strikes on IRGC/Hezbollah targets in Syria. IRGC Advisory Element: est. 3,000-5,000 personnel in Syria at Shayrat AB, Damascus area, Deir ez-Zor. Mossad assessment: weapons transfer frequency reduced 60% vs. 2023 — Israeli interdiction effective but not eliminated. WMD: Syrian CW precursor storage at Masyaf — OPCW investigation ongoing.',
+  'Aleppo — Active Frontline':'HTS (Hayat Tahrir al-Sham) administering Idlib province as de facto state. 4M civilians in HTS zone. HTS chief Jolani (Ahmed al-Sharaa) seeking delisting from US terrorist designation — cooperating on ISIS operations. Assad government forces: 150,000 nominal, est. 60,000 effective. Russian VKS sorties from Hmeimim: supporting SAA operations east of Hama. SIGINT: IRGC brigade repositioning from Palmyra area toward Deir ez-Zor following Israeli strikes on Homs logistics hub.',
+  'Damascus — IRGC Weapons Hub':'Israeli intelligence assessment: Damascus International Airport used as IRGC forward logistics hub — Hezbollah precision munitions transfer point. IDF strikes since Jan 2024: 140+ confirmed strikes on IRGC/Hezbollah targets in Syria. IRGC Advisory Element: est. 3,000-5,000 personnel in Syria at Shayrat AB, Damascus area, Deir ez-Zor. Mossad assessment: weapons transfer frequency reduced 60% vs. 2023 — Israeli interdiction effective but not eliminated. WMD: Syrian CW precursor storage at Masyaf — OPCW investigation ongoing.',
   // Yemen
-  "Sana'a — Houthi Command":'TOP SECRET // SI // ORCON. Houthi political-military command collocated with civilian government buildings — deliberate human shielding. Abdul-Malik al-Houthi operational command bunker: est. 15-30m underground, Soviet-era construction. IRGC Quds Force advisory element: est. 500-800 personnel in Yemen — Sana\'a, Hodeidah. Red Sea interdiction: Command node for anti-ship ballistic missile (ASBM) and drone operations. Launch authority: Houthi leadership delegates to Coastal Defense Forces commander — rapid authority chain. US/UK strikes: 400+ Houthi military targets struck — leadership nodes deliberately avoided per ROE.',
-  'Aden — Naval Threat Zone':'SECRET // NOFORN. Operation Prosperity Guardian: 20+ nation coalition with US as lead (5th Fleet / CTF-153). USS Dwight D. Eisenhower CSG operational. Houthi maritime attack platforms: Shahed-136 one-way attack drones, anti-ship ballistic missiles (modified Scud), C-802-variant anti-ship cruise missiles, Fath-class fast attack boats, naval mines. Assessment: 80+ commercial vessels struck or targeted; 2 sunk (MV Tutor, M/V Rubymar). Global shipping: 70% Red Sea traffic diverted to Cape of Good Hope — $1T+ trade disruption annually. Insurance rates: 500%+ premium increase for Red Sea transit.',
+  "Sana'a — Houthi Command":'Houthi political-military command collocated with civilian government buildings — deliberate human shielding. Abdul-Malik al-Houthi operational command bunker: est. 15-30m underground, Soviet-era construction. IRGC Quds Force advisory element: est. 500-800 personnel in Yemen — Sana\'a, Hodeidah. Red Sea interdiction: Command node for anti-ship ballistic missile (ASBM) and drone operations. Launch authority: Houthi leadership delegates to Coastal Defense Forces commander — rapid authority chain. US/UK strikes: 400+ Houthi military targets struck — leadership nodes deliberately avoided per ROE.',
+  'Aden — Naval Threat Zone':'Operation Prosperity Guardian: 20+ nation coalition with US as lead (5th Fleet / CTF-153). USS Dwight D. Eisenhower CSG operational. Houthi maritime attack platforms: Shahed-136 one-way attack drones, anti-ship ballistic missiles (modified Scud), C-802-variant anti-ship cruise missiles, Fath-class fast attack boats, naval mines. Assessment: 80+ commercial vessels struck or targeted; 2 sunk (MV Tutor, M/V Rubymar). Global shipping: 70% Red Sea traffic diverted to Cape of Good Hope — $1T+ trade disruption annually. Insurance rates: 500%+ premium increase for Red Sea transit.',
   // Iraq
-  'Baghdad — PMF Activity':'SECRET // REL 5-EYES. PMF (Popular Mobilization Forces): 130,000 fighters, 40+ factions. Iran-controlled factions (Kataib Hezbollah, Harakat Hezbollah al-Nujaba, AWHF): 30,000+ combatants. Green Zone: US Embassy compound — Diplomatic Security and Marine Security Guard on FPCON Charlie. Rocket attacks: 100+ on US facilities Oct 2023-Feb 2024 — ceased after US strikes killed Kataib Hezbollah commander. SIGINT: IRGC Quds Force case officers operating under diplomatic cover at Iranian Embassy, directing PMF operations. Oil infrastructure: PMF control of Kirkuk-Ceyhan pipeline valve stations — leverage against Kurdish production.',
-  'Mosul — ISIS Remnant Cells':'SECRET // HUMINT CONTROLLED. ISIS Syria/Iraq nexus: est. 5,000-10,000 fighters regional total — not concentrated in Mosul. Nineveh Plains: 3-5 man cell ambush operations; IEDs targeting ISF patrol routes. Finance: ISIS collecting "taxes" from businesses in eastern Mosul — est. $5M/month regional total. Propaganda: al-Naba newspaper still published — 54 issues since Caliphate fall. SIGINT: AES-encrypted communications on Telegram and TamTam apps. Assessment: ISIS remains ideologically coherent but militarily degraded — resurgence risk HIGH if ISF pauses operations. Sudan/Sahel expansion: African provinces growing while Iraq/Syria shrinks.',
+  'Baghdad — PMF Activity':'PMF (Popular Mobilization Forces): 130,000 fighters, 40+ factions. Iran-controlled factions (Kataib Hezbollah, Harakat Hezbollah al-Nujaba, AWHF): 30,000+ combatants. Green Zone: US Embassy compound — Diplomatic Security and Marine Security Guard on FPCON Charlie. Rocket attacks: 100+ on US facilities Oct 2023-Feb 2024 — ceased after US strikes killed Kataib Hezbollah commander. SIGINT: IRGC Quds Force case officers operating under diplomatic cover at Iranian Embassy, directing PMF operations. Oil infrastructure: PMF control of Kirkuk-Ceyhan pipeline valve stations — leverage against Kurdish production.',
+  'Mosul — ISIS Remnant Cells':'ISIS Syria/Iraq nexus: est. 5,000-10,000 fighters regional total — not concentrated in Mosul. Nineveh Plains: 3-5 man cell ambush operations; IEDs targeting ISF patrol routes. Finance: ISIS collecting "taxes" from businesses in eastern Mosul — est. $5M/month regional total. Propaganda: al-Naba newspaper still published — 54 issues since Caliphate fall. SIGINT: AES-encrypted communications on Telegram and TamTam apps. Assessment: ISIS remains ideologically coherent but militarily degraded — resurgence risk HIGH if ISF pauses operations. Sudan/Sahel expansion: African provinces growing while Iraq/Syria shrinks.',
   // Iran
-  'Tehran — Natanz Link':'TOP SECRET // SI // TK // NUCLEAR. IAEA Director General Grossi: Iran 60% enriched uranium stockpile 26kg+ (January 2025). Weapons-grade (90%) breakout timeline: TECHNICAL CAPABILITY ACHIEVED — political decision only barrier. JCPOA: Iranian violations complete — centrifuge number 20x over JCPOA limit, IR-6 and IR-8 advanced centrifuges operational. Fordow enrichment: 1,044 IR-6 centrifuges enriching to 60% — partially mountain-hardened. Assessment: Iran has crossed the nuclear threshold — WMD STATUS: NUCLEAR WEAPONS CAPABLE PENDING ASSEMBLY DECISION.',
-  'Isfahan — Enrichment Facility':'TOP SECRET // SI // NUCLEAR. Isfahan Nuclear Technology Center: uranium conversion, fuel fabrication, enrichment pilot. 2023 drone strike: Iranian drones (sabotage — internal opposition? Mossad?) struck Isfahan military facility — Iranian MoD confirmed. IAEA: cameras and monitoring equipment at Isfahan dismantled by Iran — per Board of Governors report. UF6 production: converts yellowcake to feedstock for centrifuges — upstream of Natanz/Fordow. Assessment: Isfahan is the critical nexus of Iranian nuclear material production — destruction would set program back 2+ years.',
+  'Tehran — Natanz Link':'IAEA Director General Grossi: Iran 60% enriched uranium stockpile 26kg+ (January 2025). Weapons-grade (90%) breakout timeline: TECHNICAL CAPABILITY ACHIEVED — political decision only barrier. JCPOA: Iranian violations complete — centrifuge number 20x over JCPOA limit, IR-6 and IR-8 advanced centrifuges operational. Fordow enrichment: 1,044 IR-6 centrifuges enriching to 60% — partially mountain-hardened. Assessment: Iran has crossed the nuclear threshold — WMD STATUS: NUCLEAR WEAPONS CAPABLE PENDING ASSEMBLY DECISION.',
+  'Isfahan — Enrichment Facility':'// NUCLEAR. Isfahan Nuclear Technology Center: uranium conversion, fuel fabrication, enrichment pilot. 2023 drone strike: Iranian drones (sabotage — internal opposition? Mossad?) struck Isfahan military facility — Iranian MoD confirmed. IAEA: cameras and monitoring equipment at Isfahan dismantled by Iran — per Board of Governors report. UF6 production: converts yellowcake to feedstock for centrifuges — upstream of Natanz/Fordow. Assessment: Isfahan is the critical nexus of Iranian nuclear material production — destruction would set program back 2+ years.',
   'Arak — Heavy Water Reactor':'TOP SECRET // NUCLEAR // NOFORN. IR-40 heavy water reactor: core redesigned under JCPOA (2015) — original design would have produced 8-10kg weapons-grade plutonium annually. Post-redesign: core filled with concrete, new redesigned core installed. Current status: IAEA monitoring camera data not being transmitted — status UNCERTAIN. IAEA access: restricted. Intelligence assessment: Iran could reconstitute plutonium production capability in 12-18 months if political decision made. Arak represents the alternative (plutonium) path to nuclear weapons — dual track maintained deliberately.',
   // Lebanon
-  'Beirut — Hezbollah Stronghold':'SECRET // NOFORN. Dahieh district (southern Beirut suburbs): Hezbollah administrative HQ, social services, Jihad al-Bina reconstruction arm, and command infrastructure. Israeli assassination operations Sep 2024: Nasrallah killed at Dahieh HQ — bunker-buster munitions (BLU-109) penetrated 6+ floors underground. Replacement: Naim Qassem — less experienced, Iranian-dependent. Hezbollah arsenal: precision missile stockpile INTACT — strategic reserve preserved. Lebanese Armed Forces: NO presence in Dahieh — Hezbollah operates as parallel state. Reconstruction: Hezbollah rebuilding Dahieh command facilities — IMINT confirms.',
+  'Beirut — Hezbollah Stronghold':'Dahieh district (southern Beirut suburbs): Hezbollah administrative HQ, social services, Jihad al-Bina reconstruction arm, and command infrastructure. Israeli assassination operations Sep 2024: Nasrallah killed at Dahieh HQ — bunker-buster munitions (BLU-109) penetrated 6+ floors underground. Replacement: Naim Qassem — less experienced, Iranian-dependent. Hezbollah arsenal: precision missile stockpile INTACT — strategic reserve preserved. Lebanese Armed Forces: NO presence in Dahieh — Hezbollah operates as parallel state. Reconstruction: Hezbollah rebuilding Dahieh command facilities — IMINT confirms.',
   'South Lebanon — UNIFIL Line':'SECRET // REL UN. UNIFIL (United Nations Interim Force in Lebanon): 10,000 troops, 50-nation contribution. Mandate: UNSCR 1701 (2006) — Hezbollah must be north of Litani River. Compliance: PARTIAL — Hezbollah infrastructure south of Litani partially removed, precision missiles in storage bunkers detected via seismic/IMINT. IDF liaison: maintains contact with UNIFIL but restricted to liaison role — no enforcement mechanism. Assessment: UNIFIL presence insufficient to prevent Hezbollah rearmament — structural limitation of mandate. Lebanon government: unable to deploy LAF to south — political paralysis.',
   // Turkey
-  'SE Turkey — PKK Border Ops':'SECRET // REL NATO. PKK (Kurdistan Workers Party) — listed FTO by US, EU, UK. Active since 1984: 40,000+ fatalities. TAF (Turkish Armed Forces) operations: Claw-Lock (N. Iraq), Claw-Sword (Syria) — F-16 and Bayraktar drone employment against PKK/YPG mountain positions. HDP political party: 47 MPs arrested — PKK political wing designation disputed. MIT (Turkish intel): running informant networks inside PKK. Assessment: PKK militarily degraded but ideologically resilient — no military solution to Kurdish political demands. NATO friction: Turkey using F-16 Block 70 delivery as leverage to secure continued operations approval.',
+  'SE Turkey — PKK Border Ops':'PKK (Kurdistan Workers Party) — listed FTO by US, EU, UK. Active since 1984: 40,000+ fatalities. TAF (Turkish Armed Forces) operations: Claw-Lock (N. Iraq), Claw-Sword (Syria) — F-16 and Bayraktar drone employment against PKK/YPG mountain positions. HDP political party: 47 MPs arrested — PKK political wing designation disputed. MIT (Turkish intel): running informant networks inside PKK. Assessment: PKK militarily degraded but ideologically resilient — no military solution to Kurdish political demands. NATO friction: Turkey using F-16 Block 70 delivery as leverage to secure continued operations approval.',
   // Saudi Arabia
   'Jeddah — Houthi Missile Range':'THREAT ASSESSMENT — ELEVATED. Jeddah urban area and Aramco Red Sea terminal within confirmed range of Houthi Burkan-2H extended-range ballistic missiles (est. 1,200km). Abqaiq facility (5% of global oil supply) struck 2019 by Houthi/IRGC drone-missile combination. Saudi Patriot PAC-3 upgraded; coverage gaps in southern approach vectors persist per SIGINT analysis. Houthi attack frequency correlates with Gaza ceasefire negotiation calendar — attacks used as political lever by IRGC proxy network.',
   // ── Europe / Ukraine ──
@@ -3329,29 +3458,29 @@ const HS_DETAIL={
   'Zaporizhzhia NPP — Nuclear Flashpoint':'NUCLEAR SAFETY ALERT — CRITICAL. Largest nuclear plant in Europe (6×1,000MW reactors). Under Russian military control since March 2022. IAEA inspectors on-site but access restricted to designated areas. Reactors in cold shutdown but spent fuel cooling requires uninterrupted power. External power connections severed 7 times since occupation began — diesel generators only backup. IAEA Director General Grossi warns: any strike on cooling systems risks Chernobyl-scale radiological event. Russian military positions on site create legal gray zone on targeting. Ukrainian partisan activity in surrounding areas increases risk of accidental escalation.',
   'Kharkiv — Russian Artillery Zone':'ACTIVE THREAT — ONGOING BOMBARDMENT. Ukraine\'s 2nd-largest city (1.4M population pre-war) within 30km of Russian border. Russian cross-border artillery and glide bomb strikes ongoing. Ukrainian 2024 counteroffensive recaptured areas around Vovchansk — fighting continues. Russian forces conducted May 2024 offensive from Belgorod Oblast; Ukrainian defense stabilized. City infrastructure heavily damaged; 200,000+ residents evacuated. Air defense: NASAMS, Patriot PAC-2 deployed — insufficient coverage for saturation attacks. Russian Aerospace Force (VKS) operating from Belgorod, Kursk air bases.',
   'Kherson — River Line Conflict':'ACTIVE — RIVER LINE ENGAGEMENT. Dnipro River line established as de facto front after Ukrainian Kherson liberation (Nov 2022). Russian forces hold east bank; Ukrainian forces west bank. Ukrainian "island bridgehead" operations ongoing on Oleshky Sands. Both sides conducting boat-borne assault/interdiction raids. Russian artillery systematically targeting Kherson city daily — est. 200+ civilians killed since liberation. Nova Kakhovka dam destroyed June 2023 (sabotage — attribution disputed) — ecological catastrophe downstream. Russian Black Sea Fleet withdrawal from Crimea ports following Ukrainian Neptune missile and sea drone campaign.',
-  'Moscow — Kremlin Command Center':'STRATEGIC HQ — RUSSIAN COMMAND AUTHORITY. Kremlin serves as Putin\'s war command nerve center. Russian General Staff (Gerasimov) directing Ukraine operation from adjacent National Defense Management Center (NDMC) — hardened facility with classified C2 infrastructure. Multiple drone attacks on Moscow reported 2023-2025 — Ukrainian attribution contested. FSB headquarters (Lubyanka) 800m from Kremlin — intelligence/counterintelligence operations directed from here. Moscow air defense: S-400, Pantsir-S1, A-135 Amur ABM system. Kremlin tours suspended indefinitely since Feb 2022. Wagner Corp rebellion (June 2023): Prigozhin convoy reached 200km of Moscow before deal brokered.',
-  'Zhukovsky — Nuclear Command Infrastructure':'STRATEGIC NUCLEAR ALERT — TOP SECRET//SI//TK. Zhukovsky Air Base: Il-80 "Doomsday Plane" (Airborne Command Post) home station. Nuclear command aircraft operational — spotted airborne during Ukraine escalation events. Nearby Kubinka AB: Russian Aerospace Force strategic transport. 12th GUMO (nuclear weapons management) headquarters in Sergiev Posad region. RS-28 Sarmat ICBM test program — deployed to Uzhur and Dombarovsky sites replacing SS-18 Satan. Kinzhal hypersonic launch platform (MiG-31K) based at Savasleyka and Tambov — nuclear-capable. Assessment: Russian nuclear posture elevated to DEFCON-equivalent Level 3 (Increased Readiness) since Feb 2024.',
-  'Minsk — Lukashenko Command / Russian Nukes':'WMD DEPLOYMENT — CONFIRMED. Russia-Belarus Union State nuclear sharing agreement: Russian tactical nuclear weapons deployed to Belarus June 2023 — confirmed by Lukashenko and Putin. Storage facility: est. near Osipovichi or 558th Air Base (Machulishchy). Iskander-M (nuclear-capable) batteries transferred to Belarusian Armed Forces. Russian Wagner Group (now Africa Corps) rear elements at Osipovichi facility. Lukashenko survival entirely dependent on Moscow political support. Minsk is Russian forward command element for potential northern axis operations against NATO Baltic flank. Belarusian opposition (Tikhanouskaya) government-in-exile in Vilnius.',
-  'Transnistria — Russian Garrison Zone':'FROZEN CONFLICT — RUSSIAN GARRISON. Breakaway region of Moldova (est. 470,000 pop.) — unrecognized by UN. Russian 14th Army (Operational Group of Russian Forces): est. 1,500 troops + 10,000 local "Transnistrian" army. Colossal Cobasna ammunition depot: estimated 20,000+ tonnes Soviet-era munitions — potential explosion radius threatens Chisinau. 2024: Transnistria reported energy crisis — Russian gas cutoff via Ukraine transit dispute. Risk: Russia may leverage crisis to demand Moldova "protect" Russian citizens. Moldova joined EU candidate status 2022 — direct path to NATO/EU integration threatens Russian enclave strategy. Assessment: low probability of military action while Ukraine war ongoing, elevated post-war.',
-  'South Ossetia — Russian Occupation Zone':'OCCUPIED TERRITORY — RUSSIAN ANNEXATION DE FACTO. Russian forces occupy ~20% of Georgian territory since 2008 war. South Ossetia and Abkhazia: recognized by Russia, Syria, Nicaragua, Venezuela only. "Borderization" ongoing — Russian/SO forces move border markers into Georgian territory (creeping annexation). Georgian Dream ruling party pursuing pro-Russia neutrality — EU accession suspended. IRGC reportedly using Georgia as sanction evasion route for dual-use components to Russia. Assessment: Georgia faces strategic choice — NATO aspiration vs. Russian reincorporation pressure. 2024 protests against Georgian Dream "foreign agent" law (Russian-style) indicate pro-EU majority public sentiment.',
-  'Warsaw — NATO Eastern Command Hub':'NATO FORWARD PRESENCE — C2 HUB. Warsaw hosts NATO multinational division HQ + US V Corps Forward HQ. Poland declared 4% GDP defense spending (highest in NATO 2024). Patriot batteries, F-35A (32 ordered), FA-50 Korean fighters. Polish 18th Division (300,000-strong army targeted) — largest land force buildup in NATO since Cold War. US prepositioned equipment: POMCUS sites in Powidz, Drawsko Pomorskie. Poland-Ukraine arms corridor: critical supply route for Western equipment. Polish intelligence (ABW/SKW) assessing Russian hybrid operations — multiple sabotage incidents attributed to GRU proxies 2024.',
-  'Kaliningrad — NATO Enclave / S-400 Zone':'STRATEGIC THREAT — NATO SUWALKI GAP. Russian exclave between Poland and Lithuania: 15,000 sq km, pop. 1M. Russian Baltic Fleet HQ (Baltiysk): submarines, surface combatants. S-400 Triumf and Iskander-M (nuclear-capable) batteries deployed — cover entire Baltic Sea approaches. Kaliningrad A2/AD (Anti-Access/Area Denial) bubble: 400km radius restricts NATO air and naval freedom of movement. Suwalki Gap (65km corridor between Kaliningrad and Belarus): NATO\'s most vulnerable point — land bridge to Baltic states. Russian "missile trains" exercise (nuclear-capable Iskander on rail) — Kaliningrad component assessed. Russian reinforcement: Baltic Fleet amphibious capability could threaten Gotland (Sweden) in conflict scenario.',
-  'Karabakh — Post-Conflict Stabilization':'POST-WAR CONSOLIDATION — ETHNIC CLEANSING DOCUMENTED. Azerbaijan military offensive Sep 2023 (24 hours): 100,000 ethnic Armenians fled Nagorno-Karabakh — UNHCR confirms forced displacement. Karabakh Republic dissolved Oct 2023. Azerbaijan controls full territory. ICJ/ECHR: multiple Armenia petitions pending. Russia\'s CSTO (collective security treaty) failure to defend Armenia eroded Russian credibility as security guarantor. Armenian PM Pashinyan pivoting toward EU/NATO — unprecedented. Risk: Armenia becoming next Ukraine-scenario as Russia influence declines. Turkish-Azerbaijani strategic partnership (1 nation, 2 states) — Zangezur Corridor demand (through Armenia to Azerbaijan proper) remains flashpoint.',
-  'Belgrade — Russia-Aligned Government':'SOFT POWER — RUSSIAN INFLUENCE NODE. Serbia: EU candidate state but refuses to join Russia sanctions, opposes Kosovo independence, purchasing Chinese and Russian arms (MiG-29, Pantsir-S1). President Vucic plays EU and Russia simultaneously — EU accession leverage tool not genuine commitment. Kosovo tensions: Northern Kosovo Serb community periodic confrontations with KFOR (NATO). Republika Srpska (Bosnia): Dodik openly pro-Russia, undermining Dayton peace structure. Serbian Orthodox Church as soft power instrument for Russian narrative penetration across Western Balkans. Wagner Group (Africa Corps) recruitment activity confirmed in Serbia 2024. Belgrade assessed as primary Russian intelligence hub for Western Balkans operations.',
+  'Moscow — Kremlin Command Center':'Kremlin serves as Putin\'s war command nerve center. Russian General Staff (Gerasimov) directing Ukraine operation from adjacent National Defense Management Center (NDMC) — hardened facility with classified C2 infrastructure. Multiple drone attacks on Moscow reported 2023-2025 — Ukrainian attribution contested. FSB headquarters (Lubyanka) 800m from Kremlin — intelligence/counterintelligence operations directed from here. Moscow air defense: S-400, Pantsir-S1, A-135 Amur ABM system. Kremlin tours suspended indefinitely since Feb 2022. Wagner Corp rebellion (June 2023): Prigozhin convoy reached 200km of Moscow before deal brokered.',
+  'Zhukovsky — Nuclear Command Infrastructure':'TOP SECRET//SI//TK. Zhukovsky Air Base: Il-80 "Doomsday Plane" (Airborne Command Post) home station. Nuclear command aircraft operational — spotted airborne during Ukraine escalation events. Nearby Kubinka AB: Russian Aerospace Force strategic transport. 12th GUMO (nuclear weapons management) headquarters in Sergiev Posad region. RS-28 Sarmat ICBM test program — deployed to Uzhur and Dombarovsky sites replacing SS-18 Satan. Kinzhal hypersonic launch platform (MiG-31K) based at Savasleyka and Tambov — nuclear-capable. Assessment: Russian nuclear posture elevated to DEFCON-equivalent Level 3 (Increased Readiness) since Feb 2024.',
+  'Minsk — Lukashenko Command / Russian Nukes':'Russia-Belarus Union State nuclear sharing agreement: Russian tactical nuclear weapons deployed to Belarus June 2023 — confirmed by Lukashenko and Putin. Storage facility: est. near Osipovichi or 558th Air Base (Machulishchy). Iskander-M (nuclear-capable) batteries transferred to Belarusian Armed Forces. Russian Wagner Group (now Africa Corps) rear elements at Osipovichi facility. Lukashenko survival entirely dependent on Moscow political support. Minsk is Russian forward command element for potential northern axis operations against NATO Baltic flank. Belarusian opposition (Tikhanouskaya) government-in-exile in Vilnius.',
+  'Transnistria — Russian Garrison Zone':'Breakaway region of Moldova (est. 470,000 pop.) — unrecognized by UN. Russian 14th Army (Operational Group of Russian Forces): est. 1,500 troops + 10,000 local "Transnistrian" army. Colossal Cobasna ammunition depot: estimated 20,000+ tonnes Soviet-era munitions — potential explosion radius threatens Chisinau. 2024: Transnistria reported energy crisis — Russian gas cutoff via Ukraine transit dispute. Risk: Russia may leverage crisis to demand Moldova "protect" Russian citizens. Moldova joined EU candidate status 2022 — direct path to NATO/EU integration threatens Russian enclave strategy. Assessment: low probability of military action while Ukraine war ongoing, elevated post-war.',
+  'South Ossetia — Russian Occupation Zone':'Russian forces occupy ~20% of Georgian territory since 2008 war. South Ossetia and Abkhazia: recognized by Russia, Syria, Nicaragua, Venezuela only. "Borderization" ongoing — Russian/SO forces move border markers into Georgian territory (creeping annexation). Georgian Dream ruling party pursuing pro-Russia neutrality — EU accession suspended. IRGC reportedly using Georgia as sanction evasion route for dual-use components to Russia. Assessment: Georgia faces strategic choice — NATO aspiration vs. Russian reincorporation pressure. 2024 protests against Georgian Dream "foreign agent" law (Russian-style) indicate pro-EU majority public sentiment.',
+  'Warsaw — NATO Eastern Command Hub':'Warsaw hosts NATO multinational division HQ + US V Corps Forward HQ. Poland declared 4% GDP defense spending (highest in NATO 2024). Patriot batteries, F-35A (32 ordered), FA-50 Korean fighters. Polish 18th Division (300,000-strong army targeted) — largest land force buildup in NATO since Cold War. US prepositioned equipment: POMCUS sites in Powidz, Drawsko Pomorskie. Poland-Ukraine arms corridor: critical supply route for Western equipment. Polish intelligence (ABW/SKW) assessing Russian hybrid operations — multiple sabotage incidents attributed to GRU proxies 2024.',
+  'Kaliningrad — NATO Enclave / S-400 Zone':'Russian exclave between Poland and Lithuania: 15,000 sq km, pop. 1M. Russian Baltic Fleet HQ (Baltiysk): submarines, surface combatants. S-400 Triumf and Iskander-M (nuclear-capable) batteries deployed — cover entire Baltic Sea approaches. Kaliningrad A2/AD (Anti-Access/Area Denial) bubble: 400km radius restricts NATO air and naval freedom of movement. Suwalki Gap (65km corridor between Kaliningrad and Belarus): NATO\'s most vulnerable point — land bridge to Baltic states. Russian "missile trains" exercise (nuclear-capable Iskander on rail) — Kaliningrad component assessed. Russian reinforcement: Baltic Fleet amphibious capability could threaten Gotland (Sweden) in conflict scenario.',
+  'Karabakh — Post-Conflict Stabilization':'Azerbaijan military offensive Sep 2023 (24 hours): 100,000 ethnic Armenians fled Nagorno-Karabakh — UNHCR confirms forced displacement. Karabakh Republic dissolved Oct 2023. Azerbaijan controls full territory. ICJ/ECHR: multiple Armenia petitions pending. Russia\'s CSTO (collective security treaty) failure to defend Armenia eroded Russian credibility as security guarantor. Armenian PM Pashinyan pivoting toward EU/NATO — unprecedented. Risk: Armenia becoming next Ukraine-scenario as Russia influence declines. Turkish-Azerbaijani strategic partnership (1 nation, 2 states) — Zangezur Corridor demand (through Armenia to Azerbaijan proper) remains flashpoint.',
+  'Belgrade — Russia-Aligned Government':'Serbia: EU candidate state but refuses to join Russia sanctions, opposes Kosovo independence, purchasing Chinese and Russian arms (MiG-29, Pantsir-S1). President Vucic plays EU and Russia simultaneously — EU accession leverage tool not genuine commitment. Kosovo tensions: Northern Kosovo Serb community periodic confrontations with KFOR (NATO). Republika Srpska (Bosnia): Dodik openly pro-Russia, undermining Dayton peace structure. Serbian Orthodox Church as soft power instrument for Russian narrative penetration across Western Balkans. Wagner Group (Africa Corps) recruitment activity confirmed in Serbia 2024. Belgrade assessed as primary Russian intelligence hub for Western Balkans operations.',
   // ── East Asia ──
-  'Pyongyang — ICBM & Nuclear Program':'TOP SECRET // SI // TK — WMD PROGRAM ACTIVE. DPRK operational ICBM capability confirmed: Hwasong-17 (liquid) and Hwasong-18 (solid) ICBMs capable of striking all CONUS targets. Yongbyon reactor: restarted at 5MWe capacity — plutonium production ongoing. Uranium enrichment: centrifuge facility expanded — second facility assessed at Kangson site. Nuclear warhead stockpile: 40-50 warheads (2025 DIA estimate). Yield: est. 20-250 kt per design. Kim Jong-un personally directs nuclear weapons program from strategic command center — location classified. Troops deployed to Russia: 10,000-12,000 in Kursk Oblast — IMINT confirmed. Kim Ju-ae successor grooming accelerating — appearing at major military events.',
-  'Beijing — PLA Taiwan Contingency HQ':'SECRET // NOFORN // REL FVEY. PLA Joint Operations Command Center (JOCOC) directing Taiwan contingency planning from Western Hills complex, Beijing. CMC Chairman Xi personally chairs major exercises — Joint Sword 2024, 2025 demonstrated blockade capability. PLA Eastern Theater Command (Nanjing): 400,000+ troops under Taiwan ops plan. PLAN: 355+ warships — amphibious fleet: 8 Type 071, 3 Type 075 LHA. PLARF: DF-21D/DF-26 anti-ship ballistic missiles pre-targeted USN carriers. MSS counter-intelligence assessment: Taiwan has 3 agents inside PLA Taiwan planning staff. 2027 capability threshold: DIA assesses PLA approaching ability to execute forced unification against significant INDOPACOM resistance.',
-  'Taiwan Strait — PLA Grey Zone Ops':'SECRET // NOFORN. GREY ZONE OPERATIONS: Daily PLA violations of Taiwan ADIZ averaging 100+ aircraft/month. Median line violations: routine. Coast Guard confrontations: monthly. Undersea fiber cable disruption: 2 cables cut Feb 2025 by PRC-flagged vessel. Cyber: 5M+ daily intrusion attempts on Taiwan government networks. Information: PRC controls narrative in 60%+ of Mandarin-language social media globally. Military balance: RAND assessment — PLA achieves Taiwan blockade in 3-5 days, unable to occupy for 5+ years currently. F-35B (USMC) and carrier task forces are primary US deterrence assets within 24h of Taiwan. TSMC contingency: US has extracted chip design IP, established Arizona fabs — partial resilience achieved.',
-  'Seoul — DMZ / USFK Alliance Hub':'SECRET // REL ROK-USA. COMBINED FORCES COMMAND: US-ROK CFC (GEN Paul LaCamera, COMUSKFOR) co-located at Camp Humphreys — largest US overseas base, 40,000 personnel. DEFCON status: standard DEFCON 3. OPLAN 5027 (war plan) updated 2024 for DPRK nuclear use contingency. ROK capabilities: F-35A (40), F-15K, Taurus KEPD-350 (cruise missile) — decapitation strike capability. Patriot PAC-3 and THAAD L-SAM integrated air defense. KAMD (Korean Air and Missile Defense) operational. North Korean artillery: 500+ batteries within range of Seoul metro (25M population) — 250,000 casualty potential in first hour of conflict.',
-  'Sohae Satellite Launch Center':'SECRET // IMINT. PRIMARY ICBM AND SATELLITE LAUNCH FACILITY. Located: 39.65°N, 124.71°E, Tongchang-ri. Capability: vertical assembly building — ICBMs and space launch vehicles. 2024-2025: Malligyong-1B spy satellite launched — provides targeting for US bases. Launch pad upgraded — heavy-lift rocket capacity. Adjacent Iha-ri components factory: ICBM fueling equipment. IMINT: truck activity, fuel tanker presence indicates imminent launch preparations assessed. Significance: DPRK achieving global reconnaissance capability — reduces strategic surprise advantage for US/ROK.',
-  'Suwalki Gap — NATO Critical Chokepoint':'TOP SECRET // NATO SECRET — CRITICAL VULNERABILITY. 65km land corridor between Kaliningrad (Russia) and Belarus. Only land connection between Poland and Baltic states. NATO wargames 2016-2025: Russian seizure possible in 60-100 hours without pre-positioned forces. German Bundeswehr brigade (5,000) deploying Lithuania by 2027 — gap-filler. Lithuanian investment: €1.3B in fortifications along Gap corridor. Pre-positioned NATO equipment: Camp Adazi (Latvia), Rukla (Lithuania), Suwalki (Poland). Exercise Steadfast Guardian: tested 60h response. Kaliningrad Iskander-M: can suppress NATO airfields across all Baltic states. Assessment: Suwalki Gap is NATO\'s single most critical geographic chokepoint — Article 5 test scenario.',
+  'Pyongyang — ICBM & Nuclear Program':'// TK — WMD PROGRAM ACTIVE. DPRK operational ICBM capability confirmed: Hwasong-17 (liquid) and Hwasong-18 (solid) ICBMs capable of striking all CONUS targets. Yongbyon reactor: restarted at 5MWe capacity — plutonium production ongoing. Uranium enrichment: centrifuge facility expanded — second facility assessed at Kangson site. Nuclear warhead stockpile: 40-50 warheads (2025 DIA estimate). Yield: est. 20-250 kt per design. Kim Jong-un personally directs nuclear weapons program from strategic command center — location classified. Troops deployed to Russia: 10,000-12,000 in Kursk Oblast — IMINT confirmed. Kim Ju-ae successor grooming accelerating — appearing at major military events.',
+  'Beijing — PLA Taiwan Contingency HQ':'// REL FVEY. PLA Joint Operations Command Center (JOCOC) directing Taiwan contingency planning from Western Hills complex, Beijing. CMC Chairman Xi personally chairs major exercises — Joint Sword 2024, 2025 demonstrated blockade capability. PLA Eastern Theater Command (Nanjing): 400,000+ troops under Taiwan ops plan. PLAN: 355+ warships — amphibious fleet: 8 Type 071, 3 Type 075 LHA. PLARF: DF-21D/DF-26 anti-ship ballistic missiles pre-targeted USN carriers. MSS counter-intelligence assessment: Taiwan has 3 agents inside PLA Taiwan planning staff. 2027 capability threshold: DIA assesses PLA approaching ability to execute forced unification against significant INDOPACOM resistance.',
+  'Taiwan Strait — PLA Grey Zone Ops':'Daily PLA violations of Taiwan ADIZ averaging 100+ aircraft/month. Median line violations: routine. Coast Guard confrontations: monthly. Undersea fiber cable disruption: 2 cables cut Feb 2025 by PRC-flagged vessel. Cyber: 5M+ daily intrusion attempts on Taiwan government networks. Information: PRC controls narrative in 60%+ of Mandarin-language social media globally. Military balance: RAND assessment — PLA achieves Taiwan blockade in 3-5 days, unable to occupy for 5+ years currently. F-35B (USMC) and carrier task forces are primary US deterrence assets within 24h of Taiwan. TSMC contingency: US has extracted chip design IP, established Arizona fabs — partial resilience achieved.',
+  'Seoul — DMZ / USFK Alliance Hub':'SECRET // REL ROK-USA. US-ROK CFC (GEN Paul LaCamera, COMUSKFOR) co-located at Camp Humphreys — largest US overseas base, 40,000 personnel. DEFCON status: standard DEFCON 3. OPLAN 5027 (war plan) updated 2024 for DPRK nuclear use contingency. ROK capabilities: F-35A (40), F-15K, Taurus KEPD-350 (cruise missile) — decapitation strike capability. Patriot PAC-3 and THAAD L-SAM integrated air defense. KAMD (Korean Air and Missile Defense) operational. North Korean artillery: 500+ batteries within range of Seoul metro (25M population) — 250,000 casualty potential in first hour of conflict.',
+  'Sohae Satellite Launch Center':'SECRET // IMINT. Located: 39.65°N, 124.71°E, Tongchang-ri. Capability: vertical assembly building — ICBMs and space launch vehicles. 2024-2025: Malligyong-1B spy satellite launched — provides targeting for US bases. Launch pad upgraded — heavy-lift rocket capacity. Adjacent Iha-ri components factory: ICBM fueling equipment. IMINT: truck activity, fuel tanker presence indicates imminent launch preparations assessed. Significance: DPRK achieving global reconnaissance capability — reduces strategic surprise advantage for US/ROK.',
+  'Suwalki Gap — NATO Critical Chokepoint':'TOP SECRET // NATO CRITICAL VULNERABILITY. 65km land corridor between Kaliningrad (Russia) and Belarus. Only land connection between Poland and Baltic states. NATO wargames 2016-2025: Russian seizure possible in 60-100 hours without pre-positioned forces. German Bundeswehr brigade (5,000) deploying Lithuania by 2027 — gap-filler. Lithuanian investment: €1.3B in fortifications along Gap corridor. Pre-positioned NATO equipment: Camp Adazi (Latvia), Rukla (Lithuania), Suwalki (Poland). Exercise Steadfast Guardian: tested 60h response. Kaliningrad Iskander-M: can suppress NATO airfields across all Baltic states. Assessment: Suwalki Gap is NATO\'s single most critical geographic chokepoint — Article 5 test scenario.',
   'Tallinn — NATO Cyber Defence HQ (CCDCOE)':'SECRET // NATO — CYBER COMMAND. NATO CCDCOE (Cooperative Cyber Defence Centre of Excellence) HQ: Tallinn. 35 allied nations, 300+ cyber experts. Annual Locked Shields exercise — largest live-fire cyber defence drill. Estonia: most digitally advanced society targeted by Russia 2007 cyberattack (first nation-state cyber attack on NATO). KAPO (Estonian intel): tracking GRU/SVR/FSB cyber operations daily. X-Road: Estonian digital backbone — 2,500+ services, 1B+ queries/yr. Target: any successful attack on e-Estonia demonstrated as NATO vulnerability. UK eFP battle group (Tapa) upgraded to brigade (4,500 troops) — direct Russia deterrent.',
-  'Sarajevo — Dodik Secession Crisis':'SECRET // EU. CONSTITUTIONAL CRISIS — DAYTON UNDER ASSAULT. Milorad Dodik (Republika Srpska President): openly seeking RS secession — "reunification with Serbia." OHR (EU High Representative Schmidt) has imposed 20+ laws. Dodik refuses to appear at BiH state court, ignoring summons. EU sanctions: imposed October 2023. US Magnitsky sanctions. Russia: providing UN Security Council veto cover for Dodik against any enforcement. BiH Armed Forces: integration stalled — RS component effectively non-functional. EUFOR Althea: 1,100 troops, Chapter 7 UN mandate, but restricted ROE — cannot arrest Dodik. Assessment: RS secession risk 45% within 5 years — would be first EU internal breakup scenario.',
-  'Tripoli — GNU/Haftar Proxy War':'SECRET // NOFORN. FRACTURED STATE — DUAL GOVERNMENT. GNU (Government of National Unity): Tripoli-based, UN-recognized PM Dbeibah — backed by Turkey (1,800 troops, Bayraktar drones) and Qatar. LNA (Libyan National Army): Haftar-commanded, Tobruk-based parliament — backed by UAE (Predator drones), Egypt, and Russia (Africa Corps). GNU-LNA ceasefire nominal — fighting in south and Oil Crescent. Africa Corps (Wagner successor): 1,800+ at Al-Jufra and Brak al-Shatti air bases — MiG-29, Su-24 painted in Libyan markings. Oil: NOC controls, but LNA seizes terminals for leverage. CIA assessment: Libya will not achieve unification within 5-year forecast.',
-  'Benghazi — Africa Corps Forward Base':'TOP SECRET // HUMINT CONTROLLED. RUSSIA MILITARY FOOTPRINT — MEDITERRANEAN. Africa Corps (formerly Wagner) operating from Al-Abraq airport and Benghazi Al-Keesh complex. Aircraft: MiG-29 and Su-24 (Russian-piloted, Libyan markings) conducting ground attack in south. Personnel: 1,200 estimated in eastern Libya. Mission: Haftar LNA support, Russian Mediterranean power projection foothold, Sahel operations staging. Russian Navy: periodic Tartus-Syria to Tobruk logistic runs. Strategic value: Russia\'s only African Mediterranean base of operations. Gold: Russian mining interests in Fezzan (Subul al-Salam/Erdenet networks). Assessment: Russia will resist any political settlement that removes Africa Corps from Libya.',
-  'Khartoum — SAF-RSF Civil War':'TOP SECRET // HUMINT. CATASTROPHIC CONFLICT — COLLAPSED STATE. SAF (Sudanese Armed Forces) Commander-in-Chief Burhan vs. RSF (Rapid Support Forces) Commander Hemeti. War started April 2023 — 150,000+ killed, 8.5M displaced. Khartoum: control split between SAF (airport, north) and RSF (south, Omdurman). External backing: UAE → RSF (arms, funding via Chad), Russia/IRGC → SAF (limited). Gold: RSF controls Darfur artisanal mining est. $1.5B/yr — war financing. Famine: IPC Phase 5 declared Zamzam camp, North Darfur. Al-Fashir: last major Darfur city under SAF control — RSF siege ongoing. WFP aid: 50% funding gap — 28M food insecure. ICC: investigation opened for war crimes both parties.',
-  'Northern Mali — JNIM Sahel Caliphate':'SECRET // NOFORN. AL-QAEDA SAHEL AFFILIATE — STRATEGIC EXPANSION. JNIM (Jama\'at Nusrat al-Islam wal-Muslimin / Group for Support of Islam and Muslims): AQ franchise commanded by Iyad ag Ghaly (Tuareg leader). Territory: controls Kidal (captured from junta), Menaka, Gao outskirts, most of Mopti region. Revenue: taxing agricultural zones, kidnapping for ransom (€15M+ 2024), drug transit. Personnel: 5,000-10,000 fighters, multi-ethnic coalition. Africa Corps: unable to dislodge JNIM — Kidal offensive failed. Assessment: JNIM approaching "proto-state" control of an area larger than France. West Africa expansion: JNIM cells active in Burkina Faso, Niger, Mali-Ghana border.',
-  'Mogadishu — Al-Shabaab Operations':'SECRET // NOFORN. PERSISTENT INSURGENCY — AL-QAEDA AFFILIATE. Al-Shabaab (Harakat al-Shabaab al-Mujahideen): al-Qaeda affiliate, governed by Emir Cumar Usama Abdul Manan Diriye. Territory: controls est. 30% of Somalia, including major rural areas. Revenue: taxation of southern Somalia agriculture and trade ($100M+/yr). Attacks: average 100/month across Somalia — Mogadishu complex attacks targeting government, hotels, AMISOM/ATMIS. International: cells in Kenya, Tanzania, Uganda — 2010 Kampala bombing (76 dead). US AFRICOM: conducting drone strikes — 40+ in 2024. SNA-ATMIS offensive 2023-2025: pushed Al-Shabaab from Hiiraan and Galgadud but not degraded core. Assessment: Al-Shabaab will not be militarily defeated without viable governance alternative.',
+  'Sarajevo — Dodik Secession Crisis':'SECRET // EU. Milorad Dodik (Republika Srpska President): openly seeking RS secession — "reunification with Serbia." OHR (EU High Representative Schmidt) has imposed 20+ laws. Dodik refuses to appear at BiH state court, ignoring summons. EU sanctions: imposed October 2023. US Magnitsky sanctions. Russia: providing UN Security Council veto cover for Dodik against any enforcement. BiH Armed Forces: integration stalled — RS component effectively non-functional. EUFOR Althea: 1,100 troops, Chapter 7 UN mandate, but restricted ROE — cannot arrest Dodik. Assessment: RS secession risk 45% within 5 years — would be first EU internal breakup scenario.',
+  'Tripoli — GNU/Haftar Proxy War':'GNU (Government of National Unity): Tripoli-based, UN-recognized PM Dbeibah — backed by Turkey (1,800 troops, Bayraktar drones) and Qatar. LNA (Libyan National Army): Haftar-commanded, Tobruk-based parliament — backed by UAE (Predator drones), Egypt, and Russia (Africa Corps). GNU-LNA ceasefire nominal — fighting in south and Oil Crescent. Africa Corps (Wagner successor): 1,800+ at Al-Jufra and Brak al-Shatti air bases — MiG-29, Su-24 painted in Libyan markings. Oil: NOC controls, but LNA seizes terminals for leverage. CIA assessment: Libya will not achieve unification within 5-year forecast.',
+  'Benghazi — Africa Corps Forward Base':'Africa Corps (formerly Wagner) operating from Al-Abraq airport and Benghazi Al-Keesh complex. Aircraft: MiG-29 and Su-24 (Russian-piloted, Libyan markings) conducting ground attack in south. Personnel: 1,200 estimated in eastern Libya. Mission: Haftar LNA support, Russian Mediterranean power projection foothold, Sahel operations staging. Russian Navy: periodic Tartus-Syria to Tobruk logistic runs. Strategic value: Russia\'s only African Mediterranean base of operations. Gold: Russian mining interests in Fezzan (Subul al-Salam/Erdenet networks). Assessment: Russia will resist any political settlement that removes Africa Corps from Libya.',
+  'Khartoum — SAF-RSF Civil War':'SAF (Sudanese Armed Forces) Commander-in-Chief Burhan vs. RSF (Rapid Support Forces) Commander Hemeti. War started April 2023 — 150,000+ killed, 8.5M displaced. Khartoum: control split between SAF (airport, north) and RSF (south, Omdurman). External backing: UAE → RSF (arms, funding via Chad), Russia/IRGC → SAF (limited). Gold: RSF controls Darfur artisanal mining est. $1.5B/yr — war financing. Famine: IPC Phase 5 declared Zamzam camp, North Darfur. Al-Fashir: last major Darfur city under SAF control — RSF siege ongoing. WFP aid: 50% funding gap — 28M food insecure. ICC: investigation opened for war crimes both parties.',
+  'Northern Mali — JNIM Sahel Caliphate':'JNIM (Jama\'at Nusrat al-Islam wal-Muslimin / Group for Support of Islam and Muslims): AQ franchise commanded by Iyad ag Ghaly (Tuareg leader). Territory: controls Kidal (captured from junta), Menaka, Gao outskirts, most of Mopti region. Revenue: taxing agricultural zones, kidnapping for ransom (€15M+ 2024), drug transit. Personnel: 5,000-10,000 fighters, multi-ethnic coalition. Africa Corps: unable to dislodge JNIM — Kidal offensive failed. Assessment: JNIM approaching "proto-state" control of an area larger than France. West Africa expansion: JNIM cells active in Burkina Faso, Niger, Mali-Ghana border.',
+  'Mogadishu — Al-Shabaab Operations':'Al-Shabaab (Harakat al-Shabaab al-Mujahideen): al-Qaeda affiliate, governed by Emir Cumar Usama Abdul Manan Diriye. Territory: controls est. 30% of Somalia, including major rural areas. Revenue: taxation of southern Somalia agriculture and trade ($100M+/yr). Attacks: average 100/month across Somalia — Mogadishu complex attacks targeting government, hotels, AMISOM/ATMIS. International: cells in Kenya, Tanzania, Uganda — 2010 Kampala bombing (76 dead). US AFRICOM: conducting drone strikes — 40+ in 2024. SNA-ATMIS offensive 2023-2025: pushed Al-Shabaab from Hiiraan and Galgadud but not degraded core. Assessment: Al-Shabaab will not be militarily defeated without viable governance alternative.',
   'Pristina — Kosovo-Serbia Flashpoint':'SECRET // NATO. FROZEN CONFLICT — ESCALATION RISK. Kosovo (97% Albanian) declared independence 2008 — recognized by 100+ UN states, not by Serbia/Russia/China. North Kosovo: 50,000 ethnic Serbs — periodic barricades and confrontations with Kosovo Police. NATO KFOR (4,800 troops, 30 nations): Pristina airport and sector security. 2023: Serbian paramilitaries attacked KFOR in Banjska ambush — 30 attackers, 3 Serbian armed fighters killed, 1 KFOR seriously wounded. EU Rule of Law Mission (EULEX): justice support. Vucic position: Kosovo independence "will never be accepted." Dodik-Vucic coordination on Serbian national interests creating dual-front pressure. Assessment: low probability of conventional conflict, elevated hybrid confrontation.',
 };
 
@@ -3641,9 +3770,37 @@ function troopMovAt(sx,sy){
     const p1=project(m.fromLat,m.fromLng);
     const p2=project(m.toLat,m.toLng);
     if(!p1.visible&&!p2.visible)continue;
-    // Check near midpoint of arc
     const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.22;
     if(Math.hypot(sx-mx,sy-my)<22)return m;
+  }
+  return null;
+}
+function armsFlowAt(sx,sy){
+  for(const a of ARMS_FLOWS){
+    const from=COUNTRIES[a.from],to=COUNTRIES[a.to];if(!from||!to)continue;
+    const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
+    if(!p1.visible&&!p2.visible)continue;
+    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.25;
+    if(Math.hypot(sx-mx,sy-my)<24)return a;
+  }
+  return null;
+}
+function financialFlowAt(sx,sy){
+  for(const f of FINANCIAL_FLOWS){
+    const from=COUNTRIES[f.from],to=COUNTRIES[f.to];if(!from||!to)continue;
+    const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
+    if(!p1.visible&&!p2.visible)continue;
+    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.25;
+    if(Math.hypot(sx-mx,sy-my)<24)return f;
+  }
+  return null;
+}
+function refugeeFlowAt(sx,sy){
+  for(const r of REFUGEE_FLOWS){
+    const p1=project(r.fromLat,r.fromLng),p2=project(r.toLat,r.toLng);
+    if(!p1.visible&&!p2.visible)continue;
+    const mx=(p1.px+p2.px)/2, my=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.25;
+    if(Math.hypot(sx-mx,sy-my)<24)return r;
   }
   return null;
 }
