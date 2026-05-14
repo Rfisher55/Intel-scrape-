@@ -406,6 +406,52 @@ canvas.dragging{cursor:grabbing}
 .leg-item.naval{color:rgba(34,197,94,.9)}
 .leg-item.money{color:rgba(168,85,247,.9)}
 
+/* ── Social Intel panel ── */
+#social-btn{
+  position:fixed;bottom:30px;right:20px;z-index:160;
+  background:rgba(4,10,22,.92);border:1px solid rgba(245,158,11,.3);border-radius:5px;
+  color:#d97706;font-family:var(--mono);font-size:9px;letter-spacing:.15em;
+  padding:7px 12px;cursor:pointer;backdrop-filter:blur(10px);
+  display:flex;align-items:center;gap:6px;
+  transition:all .2s;white-space:nowrap;
+}
+#social-btn:hover{border-color:rgba(245,158,11,.6);color:#fbbf24;box-shadow:0 0 12px rgba(245,158,11,.15)}
+#social-panel{
+  position:fixed;right:0;top:56px;bottom:24px;width:380px;z-index:155;
+  background:linear-gradient(170deg,rgba(6,13,26,.99),rgba(4,10,22,.99));
+  border-left:1px solid rgba(245,158,11,.2);
+  display:none;flex-direction:column;
+  backdrop-filter:blur(14px);
+  box-shadow:-4px 0 40px rgba(0,0,0,.5);
+  transform:translateX(100%);transition:transform .28s cubic-bezier(.32,.72,0,1);
+}
+#social-panel.open{display:flex;transform:translateX(0)}
+#social-header{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;border-bottom:1px solid rgba(245,158,11,.15);
+  background:rgba(245,158,11,.05);flex-shrink:0}
+#social-tabs{display:flex;border-bottom:1px solid rgba(245,158,11,.1);flex-shrink:0}
+.stab{flex:1;padding:8px 4px;background:none;border:none;border-bottom:2px solid transparent;
+  color:var(--muted);font-family:var(--mono);font-size:8px;letter-spacing:.1em;cursor:pointer;transition:all .15s}
+.stab.active{color:#fbbf24;border-bottom-color:#f59e0b;background:rgba(245,158,11,.05)}
+.stab:hover{color:var(--dim)}
+#social-feed{flex:1;overflow-y:auto;padding:10px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sf-item{background:rgba(13,25,41,.6);border:1px solid var(--border2);border-left:2px solid #f59e0b;
+  border-radius:4px;padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
+.sf-item:hover{border-color:rgba(245,158,11,.5)}
+.sf-title{font-size:11px;color:var(--dim);line-height:1.5;margin-bottom:5px}
+.sf-meta{display:flex;justify-content:space-between;font-size:8px;color:var(--muted);letter-spacing:.08em}
+.sf-sub{color:#f59e0b}
+.sf-score{color:#22c55e}
+.sf-empty{font-size:11px;color:var(--muted);text-align:center;padding:30px 20px;line-height:1.8}
+.sf-item.vip{border-left-color:#a855f7}
+.sf-item.flight{border-left-color:#a3e635}
+.sf-flight-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sf-callsign{font-size:12px;font-weight:bold;color:#a3e635;font-family:var(--mono)}
+.sf-actype{font-size:9px;color:var(--muted);letter-spacing:.1em}
+@media(max-width:600px){#social-panel{width:100%;top:auto;bottom:0;height:55dvh;
+  border-left:none;border-top:1px solid rgba(245,158,11,.2);border-radius:14px 14px 0 0;}
+  #social-btn{bottom:32px;right:12px;font-size:8px;padding:6px 10px}}
+
 /* ── Intel Brief Modal (tracking layers) ── */
 #track-modal{
   position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;
@@ -520,7 +566,32 @@ canvas.dragging{cursor:grabbing}
   <button class="layer-btn" id="lb-naval"     onclick="toggleLayer('naval')"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS<span class="lb-count">10</span></button>
   <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span></button>
   <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span></button>
+  <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
+</div>
+
+<!-- Social Intel Drawer -->
+<div id="social-btn" onclick="toggleSocialPanel()" title="Social Intelligence Feed">
+  <span style="font-size:10px">◈</span> SOCIAL INTEL
+</div>
+<div id="social-panel">
+  <div id="social-header">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="color:#f59e0b;font-size:9px;letter-spacing:.2em">◈ SOCIAL INTELLIGENCE FEED</span>
+      <span id="social-live-dot" style="width:5px;height:5px;border-radius:50%;background:#22c55e;display:inline-block;animation:blink 1.2s step-start infinite"></span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="social-updated" style="font-size:8px;color:var(--muted)"></span>
+      <button onclick="fetchSocialIntel()" style="background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:3px 8px;border-radius:3px;font-size:9px;font-family:var(--mono)">↻</button>
+      <button onclick="toggleSocialPanel()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 4px">✕</button>
+    </div>
+  </div>
+  <div id="social-tabs">
+    <button class="stab active" onclick="setSocialTab('reddit')" id="stab-reddit">REDDIT</button>
+    <button class="stab" onclick="setSocialTab('twitter')" id="stab-twitter">X / TWITTER</button>
+    <button class="stab" onclick="setSocialTab('vip')" id="stab-vip">VIP TRACKER</button>
+  </div>
+  <div id="social-feed"></div>
 </div>
 
 <!-- Live intelligence ticker -->
@@ -920,6 +991,102 @@ const COUNTRIES = {
     poly:[[-19,-63],[-19,-55],[-27,-55],[-27,-63],[-19,-63]]},
   URY:{iso:'URY',numericId:858, name:'Uruguay',        capital:'Montevideo',  alertLevel:'LOW',      lat:-32.5,lng:-55.8,
     poly:[[-30,-58],[-30,-53],[-35,-53],[-35,-58],[-30,-58]]},
+  // ── NEW COUNTRIES ──────────────────────────────────────────────────────
+  // ── EUROPE ──────────────────────────────────────────────────────────────
+  IRL:{iso:'IRL',numericId:372,name:'Ireland',capital:'Dublin',alertLevel:'LOW',lat:53.3,lng:-8.0,
+    poly:[[55.4,-8.2],[55.1,-6.2],[54.0,-6.0],[52.0,-6.2],[51.5,-8.2],[52.1,-10.4],[53.3,-10.1],[54.7,-8.8],[55.4,-8.2]]},
+
+  ISL:{iso:'ISL',numericId:352,name:'Iceland',capital:'Reykjavik',alertLevel:'LOW',lat:64.9,lng:-18.9,
+    poly:[[66.5,-25.0],[66.5,-13.5],[63.4,-13.5],[63.4,-22.5],[64.0,-24.5],[65.5,-24.0],[66.5,-25.0]]},
+
+  LUX:{iso:'LUX',numericId:442,name:'Luxembourg',capital:'Luxembourg City',alertLevel:'LOW',lat:49.8,lng:6.1,
+    poly:[[50.18,5.73],[50.18,6.53],[49.45,6.53],[49.45,5.73],[50.18,5.73]]},
+
+  CYP:{iso:'CYP',numericId:196,name:'Cyprus',capital:'Nicosia',alertLevel:'MEDIUM',lat:35.1,lng:33.4,
+    poly:[[35.7,32.3],[35.7,34.6],[34.6,34.6],[34.6,33.9],[34.5,32.3],[35.1,32.3],[35.7,32.3]]},
+
+  MLT:{iso:'MLT',numericId:470,name:'Malta',capital:'Valletta',alertLevel:'LOW',lat:35.9,lng:14.5,
+    poly:[[36.1,14.2],[36.1,14.6],[35.8,14.6],[35.8,14.2],[36.1,14.2]]},
+
+  // ── EAST/HORN OF AFRICA ─────────────────────────────────────────────────
+  DJI:{iso:'DJI',numericId:262,name:'Djibouti',capital:'Djibouti City',alertLevel:'MEDIUM',lat:11.8,lng:42.6,
+    poly:[[12.7,41.8],[12.7,43.4],[11.5,43.4],[11.0,42.7],[11.0,41.8],[12.7,41.8]]},
+
+  ERI:{iso:'ERI',numericId:232,name:'Eritrea',capital:'Asmara',alertLevel:'HIGH',lat:15.3,lng:38.9,
+    poly:[[18.0,37.0],[18.0,43.2],[13.0,43.1],[12.4,43.4],[11.5,41.8],[12.7,41.8],[15.0,37.8],[18.0,37.0]]},
+
+  // ── WEST AFRICA ─────────────────────────────────────────────────────────
+  MRT:{iso:'MRT',numericId:478,name:'Mauritania',capital:'Nouakchott',alertLevel:'MEDIUM',lat:20.0,lng:-12.0,
+    poly:[[21.3,-17.1],[21.3,-4.8],[15.0,-4.8],[14.8,-17.1],[16.0,-16.5],[21.3,-17.1]]},
+
+  GMB:{iso:'GMB',numericId:270,name:'Gambia',capital:'Banjul',alertLevel:'MEDIUM',lat:13.5,lng:-15.5,
+    poly:[[13.8,-16.8],[13.8,-13.8],[13.1,-13.8],[13.1,-16.8],[13.8,-16.8]]},
+
+  GIN:{iso:'GIN',numericId:324,name:'Guinea',capital:'Conakry',alertLevel:'HIGH',lat:11.0,lng:-10.9,
+    poly:[[12.7,-15.1],[12.7,-7.6],[7.2,-7.6],[7.2,-15.1],[8.4,-13.7],[11.0,-15.1],[12.7,-15.1]]},
+
+  SLE:{iso:'SLE',numericId:694,name:'Sierra Leone',capital:'Freetown',alertLevel:'MEDIUM',lat:8.5,lng:-11.8,
+    poly:[[10.0,-15.3],[10.0,-10.3],[6.9,-10.3],[6.9,-13.3],[8.0,-13.3],[10.0,-15.3]]},
+
+  LBR:{iso:'LBR',numericId:430,name:'Liberia',capital:'Monrovia',alertLevel:'MEDIUM',lat:6.3,lng:-9.4,
+    poly:[[8.5,-11.5],[8.5,-7.4],[4.4,-7.4],[4.4,-11.5],[6.1,-10.9],[8.5,-11.5]]},
+
+  TGO:{iso:'TGO',numericId:768,name:'Togo',capital:'Lomé',alertLevel:'MEDIUM',lat:8.6,lng:0.8,
+    poly:[[11.1,-0.1],[11.1,1.9],[6.1,1.9],[6.1,-0.1],[8.0,0.5],[11.1,-0.1]]},
+
+  BEN:{iso:'BEN',numericId:204,name:'Benin',capital:'Porto-Novo',alertLevel:'MEDIUM',lat:9.3,lng:2.3,
+    poly:[[12.4,0.8],[12.4,3.9],[6.3,3.9],[6.3,0.8],[9.0,1.5],[12.4,0.8]]},
+
+  // ── CENTRAL/EAST AFRICA ─────────────────────────────────────────────────
+  RWA:{iso:'RWA',numericId:646,name:'Rwanda',capital:'Kigali',alertLevel:'HIGH',lat:-1.9,lng:29.9,
+    poly:[[-1.0,28.9],[-1.0,30.9],[-2.8,30.9],[-2.8,28.9],[-1.0,28.9]]},
+
+  BDI:{iso:'BDI',numericId:108,name:'Burundi',capital:'Gitega',alertLevel:'HIGH',lat:-3.4,lng:29.9,
+    poly:[[-2.3,29.0],[-2.3,30.9],[-4.5,30.9],[-4.5,29.0],[-2.3,29.0]]},
+
+  UGA:{iso:'UGA',numericId:800,name:'Uganda',capital:'Kampala',alertLevel:'MEDIUM',lat:1.4,lng:32.3,
+    poly:[[4.2,29.5],[4.2,35.0],[-1.5,35.0],[-1.5,29.5],[1.0,31.5],[4.2,29.5]]},
+
+  MWI:{iso:'MWI',numericId:454,name:'Malawi',capital:'Lilongwe',alertLevel:'MEDIUM',lat:-13.3,lng:34.3,
+    poly:[[-9.4,32.7],[-9.4,35.9],[-17.1,35.9],[-17.1,32.7],[-9.4,32.7]]},
+
+  // ── ASIA ────────────────────────────────────────────────────────────────
+  MNG:{iso:'MNG',numericId:496,name:'Mongolia',capital:'Ulaanbaatar',alertLevel:'LOW',lat:46.9,lng:103.8,
+    poly:[[52.1,87.8],[52.1,119.9],[41.6,119.9],[41.6,87.8],[47.0,91.0],[52.1,87.8]]},
+
+  BTN:{iso:'BTN',numericId:64,name:'Bhutan',capital:'Thimphu',alertLevel:'LOW',lat:27.5,lng:90.4,
+    poly:[[28.3,88.7],[28.3,92.1],[26.7,92.1],[26.7,88.7],[28.3,88.7]]},
+
+  MDV:{iso:'MDV',numericId:462,name:'Maldives',capital:'Malé',alertLevel:'LOW',lat:3.2,lng:73.2,
+    poly:[[7.1,72.7],[7.1,73.8],[-0.7,73.8],[-0.7,72.7],[7.1,72.7]]},
+
+  TLS:{iso:'TLS',numericId:626,name:'Timor-Leste',capital:'Dili',alertLevel:'MEDIUM',lat:-8.9,lng:125.7,
+    poly:[[-8.1,124.0],[-8.1,127.3],[-9.5,127.3],[-9.5,124.0],[-8.1,124.0]]},
+
+  BRN:{iso:'BRN',numericId:96,name:'Brunei',capital:'Bandar Seri Begawan',alertLevel:'LOW',lat:4.5,lng:114.7,
+    poly:[[5.1,114.1],[5.1,115.4],[4.0,115.4],[4.0,114.1],[5.1,114.1]]},
+
+  PNG:{iso:'PNG',numericId:598,name:'Papua New Guinea',capital:'Port Moresby',alertLevel:'MEDIUM',lat:-6.3,lng:143.9,
+    poly:[[-1.4,141.0],[-1.4,156.0],[-11.6,156.0],[-11.6,141.0],[-5.0,144.0],[-1.4,141.0]]},
+
+  FJI:{iso:'FJI',numericId:242,name:'Fiji',capital:'Suva',alertLevel:'LOW',lat:-17.7,lng:178.1,
+    poly:[[-15.7,177.0],[-15.7,180.0],[-19.2,180.0],[-19.2,177.0],[-15.7,177.0]]},
+
+  // ── AMERICAS ────────────────────────────────────────────────────────────
+  JAM:{iso:'JAM',numericId:388,name:'Jamaica',capital:'Kingston',alertLevel:'HIGH',lat:18.1,lng:-77.3,
+    poly:[[18.5,-78.4],[18.5,-76.2],[17.7,-76.2],[17.7,-78.4],[18.5,-78.4]]},
+
+  TTO:{iso:'TTO',numericId:780,name:'Trinidad and Tobago',capital:'Port of Spain',alertLevel:'MEDIUM',lat:10.7,lng:-61.2,
+    poly:[[11.4,-61.9],[11.4,-60.5],[10.0,-60.5],[10.0,-61.9],[11.4,-61.9]]},
+
+  BLZ:{iso:'BLZ',numericId:84,name:'Belize',capital:'Belmopan',alertLevel:'MEDIUM',lat:17.2,lng:-88.5,
+    poly:[[18.5,-89.2],[18.5,-87.8],[15.9,-87.8],[15.9,-89.2],[17.0,-89.2],[18.5,-89.2]]},
+
+  GUY:{iso:'GUY',numericId:328,name:'Guyana',capital:'Georgetown',alertLevel:'MEDIUM',lat:4.9,lng:-59.0,
+    poly:[[8.5,-60.0],[8.5,-57.1],[1.2,-57.1],[1.2,-60.0],[3.0,-59.8],[8.5,-60.0]]},
+
+  SUR:{iso:'SUR',numericId:740,name:'Suriname',capital:'Paramaribo',alertLevel:'MEDIUM',lat:3.9,lng:-56.0,
+    poly:[[6.0,-58.1],[6.0,-53.9],[2.0,-53.9],[2.0,-58.1],[4.0,-57.6],[6.0,-58.1]]},
 };
 
 const CONFLICTS = [
@@ -2948,6 +3115,571 @@ const INTEL = {
     news:["Uruguay election: Orsi wins — Frente Amplio returns to power after 5 years","Port of Montevideo: 5-tonne cocaine seizure — European-bound cartel network busted","UPM-2 operating: $3B mill doubles Uruguay forestry exports — Finnish investment success","Uruguay: first Latin American country with universal broadband — digital governance model","Orsi-Lula summit: Uruguay-Brazil deepened trade ahead of Mercosur-EU deal ratification"],
     economic:"GDP $82B. Agriculture: beef, soy, timber — 75% exports. Renewable energy: 97% clean electricity. Services: 60% GDP. Growth: 3.5%. Lowest poverty (5%) in South America. Gini: 39.",
   },
+
+  // ── NEW COUNTRY INTEL ─────────────────────────────────────────────────
+  // ── EUROPE ──────────────────────────────────────────────────────────────
+  IRL:{
+    summary:"Ireland maintains robust political stability as a neutral EU member experiencing demographic and economic growth driven by multinational tech and pharma investment. The housing crisis and cost-of-living pressures have emerged as primary domestic political flashpoints ahead of the 2025 general election cycle. Ireland's neutrality is under increasing debate as EU defense integration accelerates following the Russia-Ukraine war.",
+    threats:[
+      {type:"Housing Crisis",description:"Severe housing shortage with vacancy rates below 1% in Dublin; rent inflation at 8% YoY driving social unrest and political disruption",severity:"medium",confidence:"HIGH",probability:85,source:"CSO Ireland / Reuters"},
+      {type:"Cybersecurity",description:"HSE (Health Service Executive) ransomware attack legacy; state agencies remain targets for Russian-linked APT groups",severity:"medium",confidence:"MEDIUM",probability:45,source:"NCSC Ireland / ENISA"},
+      {type:"Migration Pressure",description:"Irregular migration arrivals from UK post-Brexit creating processing backlog; far-right protests at reception centers in 2024",severity:"medium",confidence:"HIGH",probability:70,source:"UNHCR / Irish Times"},
+      {type:"Neutrality Debate",description:"Growing pressure to join NATO or deeper EU defense structures amid Russian aggression; referendum probability rising",severity:"low",confidence:"MEDIUM",probability:35,source:"IISS / BBC"},
+    ],
+    keyActors:["Taoiseach Micheál Martin (Fianna Fáil)","An Garda Síochána","NCSC Ireland","EU Commission","IDA Ireland"],
+    news:[
+      "Ireland GDP grows 3.8% in 2024 driven by pharmaceutical and tech exports — CSO, Jan 2025",
+      "Government announces €6B housing action plan to deliver 50,000 units annually — Reuters, Nov 2024",
+      "Dáil passes Occupied Territories Bill amid Israeli diplomatic tensions — BBC, Feb 2025",
+      "NCSC warns of sustained Russian cyber probing of Irish energy grid infrastructure — RTE, Oct 2024",
+      "Ireland joins EU PESCO military mobility project, neutrality debate intensifies — Irish Times, Mar 2025",
+    ],
+    economic:"GDP approx $545B (2024). FDI-driven economy; Apple, Google, Meta have European HQs in Dublin. Corporate tax receipts at record €24B. Unemployment at 4.3%. Inflation 3.1%.",
+  },
+
+  ISL:{
+    summary:"Iceland remains one of the world's most stable democracies with a highly developed economy and strong social institutions. Volcanic activity on the Reykjanes Peninsula continued through 2024-2025, damaging the town of Grindavik and requiring evacuations. Iceland's Arctic location makes it strategically significant to NATO amid increased Russian submarine activity in the North Atlantic.",
+    threats:[
+      {type:"Volcanic Activity",description:"Reykjanes Peninsula experiencing continued eruption cycles; Grindavik partially destroyed, Blue Lagoon and geothermal infrastructure damaged",severity:"medium",confidence:"HIGH",probability:80,source:"Icelandic Met Office / AP"},
+      {type:"Arctic Security",description:"Russian submarine and aerial activity in the GIUK gap increasing; Iceland hosts NATO Keflavik air base of strategic importance",severity:"low",confidence:"HIGH",probability:60,source:"NATO / IISS"},
+      {type:"Fisheries Dispute",description:"Post-Brexit mackerel quota disputes with UK and Norway create diplomatic friction and economic uncertainty for fishing sector",severity:"low",confidence:"MEDIUM",probability:40,source:"FAO / Reuters"},
+    ],
+    keyActors:["Prime Minister Bjarni Benediktsson","Coast Guard Iceland","NATO Keflavik Air Base","IMO (Icelandic Met Office)"],
+    news:[
+      "Grindavik evacuated again as 8th volcanic eruption damages defensive berms — AP, Mar 2025",
+      "Iceland GDP expands 4.1% on tourism rebound and aluminum exports — Statistics Iceland, Jan 2025",
+      "NATO increases submarine monitoring flights from Keflavik following Russian Arctic exercises — Reuters, Oct 2024",
+      "Iceland wins Arctic Council chair, prioritizes climate and Indigenous rights — BBC, May 2025",
+      "Blue Lagoon geothermal spa reopens after third volcanic closure in 18 months — AP, Feb 2025",
+    ],
+    economic:"GDP approx $31B. Key sectors: fishing, aluminum smelting, tourism, geothermal energy. Unemployment 3.4%. Inflation normalizing to 5.2% after 2023 peak. Krona stable.",
+  },
+
+  LUX:{
+    summary:"Luxembourg is one of Europe's most prosperous and politically stable countries, serving as a key hub for EU financial services, the European Court of Justice, and NATO logistics. The country faces moderate exposure to global financial volatility given its outsized banking and investment fund sector. Immigration from within the EU accounts for nearly half the population, creating a unique multilingual social landscape.",
+    threats:[
+      {type:"Financial Sector Risk",description:"Luxembourg's investment fund sector (€5.8T AUM) carries systemic exposure to global credit tightening and US regulatory extraterritoriality",severity:"medium",confidence:"MEDIUM",probability:35,source:"IMF / ECB"},
+      {type:"Housing Affordability",description:"Housing prices among highest in EU; social tensions rising as domestic workers priced out of capital by cross-border commuter demand",severity:"medium",confidence:"HIGH",probability:75,source:"Eurostat / Luxemburger Wort"},
+      {type:"Tax Haven Scrutiny",description:"Ongoing EU and OECD pressure on special tax arrangements; Luxleaks legacy continues to affect EU relations",severity:"low",confidence:"MEDIUM",probability:30,source:"OECD / Reuters"},
+    ],
+    keyActors:["Prime Minister Luc Frieden (CSV)","CSSF (Financial Regulator)","European Court of Justice","NATO Logistics HQ"],
+    news:[
+      "Luxembourg investment fund industry AUM holds at €5.8T despite rising rates — ALFI, Jan 2025",
+      "Government approves €1.2B housing fund to address affordability crisis — Reuters, Nov 2024",
+      "Luxembourg steel sector (ArcelorMittal) restructures, 400 jobs at risk amid green transition — AP, Feb 2025",
+      "EU digital services tax negotiations use Luxembourg as test case for OECD Pillar Two — BBC, Dec 2024",
+      "Luxembourg launches LUNA satellite for EU military communications — ESA/Reuters, Apr 2025",
+    ],
+    economic:"GDP approx $87B. GDP per capita highest in EU at ~$131,000. Financial services 25% of GDP. AAA-rated sovereign debt. Unemployment 5.2%. Budget surplus 0.7% of GDP.",
+  },
+
+  CYP:{
+    summary:"Cyprus remains effectively partitioned since 1974, with the internationally recognized Republic of Cyprus in the south and the Turkish-occupied north (TRNC). UN reunification talks collapsed in 2017 and remain stalled. The discovery of significant offshore gas fields (Aphrodite, Calypso) has intensified Turkey-Cyprus-Greece maritime tensions. Cyprus serves as a key EU monitoring point for Middle East conflicts and a significant Russian oligarch asset hub under sanctions pressure.",
+    threats:[
+      {type:"Territorial Dispute",description:"Turkish military presence in northern Cyprus (30,000+ troops) entrenched; Varosha partial reopening increases tensions with EU and UN",severity:"high",confidence:"HIGH",probability:90,source:"UN UNFICYP / Reuters"},
+      {type:"Maritime Conflict",description:"Turkey disputes Cypriot EEZ claims; Turkish naval vessels harassed gas exploration rigs in Aphrodite and Calypso blocks",severity:"high",confidence:"HIGH",probability:65,source:"Reuters / IISS"},
+      {type:"Sanctions Evasion",description:"Cyprus financial system implicated in Russian sanctions evasion networks; EU pressure for tighter controls ongoing",severity:"medium",confidence:"HIGH",probability:60,source:"EU Commission / OCCRP"},
+      {type:"Migration",description:"Cyprus faces highest per-capita irregular migration arrivals in EU via Lebanon and Syria routes; reception capacity overwhelmed",severity:"medium",confidence:"HIGH",probability:80,source:"UNHCR / Frontex"},
+    ],
+    keyActors:["President Nikos Christodoulides","Turkish Armed Forces (TRNC)","UN UNFICYP","EU Commission","ExxonMobil/Qatar Petroleum (gas concessions)"],
+    news:[
+      "Cyprus-Turkey gas exploration standoff continues as Turkey sends seismic vessel to disputed block — Reuters, Jan 2025",
+      "UN reunification envoy visits Nicosia; both sides show limited flexibility — BBC, Feb 2025",
+      "EU sanctions 12 Cyprus-registered vessels for Russia oil transport — Reuters, Nov 2024",
+      "Asylum seeker arrivals reach 14,000 in 2024, highest per capita in EU — UNHCR, Dec 2024",
+      "Aphrodite gas field development agreement revised, first gas targeted for 2027 — AP, Mar 2025",
+    ],
+    economic:"GDP approx $31B. Services-dominated: shipping, tourism, financial services. Gas revenue remains prospective. Unemployment 6.1%. GDP per capita ~$35,000. Growth 2.9% (2024).",
+  },
+
+  MLT:{
+    summary:"Malta is a small but strategically located EU and NATO partner state in the central Mediterranean, serving as a critical search-and-rescue coordination point for migrants crossing from Libya and Tunisia. Politically stable under the Labour government, Malta faces international scrutiny over its citizenship-by-investment scheme and rule-of-law concerns following the Daphne Caruana Galizia assassination. Its proximity to Libya makes it a frontline state for Mediterranean migration flows.",
+    threats:[
+      {type:"Migration Pressure",description:"Malta's SAR zone among the most active in Mediterranean; over 4,000 arrivals in 2024 straining reception infrastructure",severity:"medium",confidence:"HIGH",probability:80,source:"UNHCR / Frontex"},
+      {type:"Rule of Law",description:"European Parliament maintains pressure over journalist murder accountability; judiciary independence concerns flagged by Venice Commission",severity:"medium",confidence:"HIGH",probability:65,source:"EU Commission / RSF"},
+      {type:"Citizenship Scheme",description:"EU legal challenge to Malta's golden passport program citing national security risks and money laundering concerns",severity:"low",confidence:"HIGH",probability:55,source:"EU Commission / Reuters"},
+    ],
+    keyActors:["PM Robert Abela (Labour)","Armed Forces of Malta","EUNAVFOR MED","EU Commission","UNHCR Malta"],
+    news:[
+      "European Court of Justice rules Malta citizenship-by-investment scheme violates EU law — Reuters, Apr 2025",
+      "Malta SAR zone records 4,200 migrant arrivals in 2024, 12 deaths at sea — UNHCR, Jan 2025",
+      "Yorgen Fenech murder trial reaches critical phase; Panama Papers links detailed — BBC, Mar 2025",
+      "Malta GDP grows 5.2% on gaming, aviation maintenance, and tourism — NSO Malta, Feb 2025",
+      "Malta joins EU naval operation Aspides protecting Red Sea shipping — AP, Mar 2024",
+    ],
+    economic:"GDP approx $21B. Key sectors: iGaming, tourism, financial services, aviation MRO. GDP per capita ~$39,000. Unemployment 2.9% (lowest in EU). Growth 5.1%.",
+  },
+
+  // ── EAST/HORN OF AFRICA ─────────────────────────────────────────────────
+  DJI:{
+    summary:"Djibouti's strategic location at the Bab el-Mandeb strait makes it host to multiple foreign military bases including the US Camp Lemonnier, the only permanent US base in Africa, plus French, Chinese, Japanese, and Italian facilities. The country profits geopolitically but faces chronic poverty and authoritarianism under President Ismail Omar Guelleh's 25-year rule. The Houthi campaign against Red Sea shipping has elevated Djibouti's strategic importance while disrupting its port revenues.",
+    threats:[
+      {type:"Regional Spillover",description:"Houthi Red Sea attacks divert shipping from Djibouti port; risk of direct conflict spillover via Bab el-Mandeb",severity:"high",confidence:"HIGH",probability:60,source:"Reuters / UNCTAD"},
+      {type:"Authoritarianism",description:"President Guelleh in power since 1999; political opposition suppressed; no independent media",severity:"medium",confidence:"HIGH",probability:90,source:"Freedom House / RSF"},
+      {type:"Water/Food Scarcity",description:"Djibouti imports 90% of food; climate-driven drought and shipping disruptions create acute food insecurity",severity:"high",confidence:"HIGH",probability:75,source:"WFP / OCHA"},
+      {type:"Debt Distress",description:"Chinese BRI debt for Djibouti–Addis Ababa railway and port expansion reaches 70% of GDP; IMF flags sustainability risk",severity:"medium",confidence:"HIGH",probability:65,source:"IMF / World Bank"},
+    ],
+    keyActors:["President Ismail Omar Guelleh","US AFRICOM (Camp Lemonnier)","PLA Navy Base","French Forces Djibouti","China Merchants Port Holdings"],
+    news:[
+      "US AFRICOM reinforces Camp Lemonnier with additional ISR assets amid Houthi threat — Reuters, Jan 2025",
+      "Djibouti port container volumes fall 18% as Red Sea shipping reroutes around Cape — UNCTAD, Feb 2025",
+      "IMF raises debt sustainability alarm over Chinese loans; debt-to-GDP at 74% — IMF, Dec 2024",
+      "Ethiopia-Djibouti railway freight volume hits record despite port congestion — AP, Nov 2024",
+      "WFP warns 40% of Djiboutians face acute food insecurity after failed rains — WFP, Mar 2025",
+    ],
+    economic:"GDP approx $4.4B. Economy dominated by port services and foreign military base leasing. GDP per capita ~$4,200. Unemployment 40%+. Heavy Chinese debt burden.",
+  },
+
+  ERI:{
+    summary:"Eritrea under President Isaias Afwerki remains one of the world's most isolated and repressive states, described as 'Africa's North Korea.' Eritrean forces participated in the Tigray war in Ethiopia (2020-2022), committing documented atrocities per UN investigators. The country has no independent press, no elections, and indefinite mandatory military service. The post-Tigray relationship with Ethiopia is fragile, and border tensions with Ethiopia and Djibouti persist.",
+    threats:[
+      {type:"Authoritarian Repression",description:"Indefinite national service constitutes forced labor per UN; arbitrary detention, torture, and extrajudicial killings documented",severity:"high",confidence:"HIGH",probability:95,source:"UN HRC / Amnesty International"},
+      {type:"Ethiopia Border Tension",description:"Post-Tigray war relations with Ethiopia deteriorating; Afwerki opposes Tigray rehabilitation; border incidents reported",severity:"high",confidence:"MEDIUM",probability:55,source:"ACLED / Reuters"},
+      {type:"Refugee Outflow",description:"One of highest per-capita refugee outflows globally; 500,000+ Eritreans in Sudan, Ethiopia, and Europe seeking asylum",severity:"high",confidence:"HIGH",probability:90,source:"UNHCR"},
+      {type:"Economic Collapse",description:"Foreign exchange shortage; mining sector (Bisha gold/zinc) dominant but opaque; sanctions and isolation limit development",severity:"medium",confidence:"HIGH",probability:85,source:"World Bank / IMF"},
+    ],
+    keyActors:["President Isaias Afwerki","Eritrean Defense Forces","PFDJ (ruling party)","UN Special Rapporteur on Eritrea","Nevsun Resources (now Zijin Mining)"],
+    news:[
+      "UN Special Rapporteur documents continued arbitrary detention and torture in Eritrea — UN HRC, Sep 2024",
+      "Eritrea refuses Ethiopian mediation offer; Afwerki meets Russian FM Lavrov in Asmara — Reuters, Nov 2024",
+      "Eritrean conscript deaths in Tigray war estimated 15,000-20,000 by UN experts — AP, Jan 2025",
+      "UNHCR reports 180,000 new Eritrean asylum applications globally in 2024 — UNHCR, Feb 2025",
+      "Bisha mining output declines as Zijin Mining disputes revenue sharing with government — Reuters, Mar 2025",
+    ],
+    economic:"GDP approx $2.2B. Highly opaque. Mining (gold, copper, zinc) primary hard currency earner. Remittances significant. GDP per capita ~$560. No IMF Article IV consultation since 2009.",
+  },
+
+  // ── WEST AFRICA ─────────────────────────────────────────────────────────
+  MRT:{
+    summary:"Mauritania sits at the interface of the Sahel crisis and the Atlantic, making it a critical buffer state against jihadist expansion from Mali and Burkina Faso. President Ghazouani has maintained relative stability through security cooperation with the EU and US while neighboring states face coups and insurgencies. Significant offshore gas reserves (GTA project with Senegal) began production in 2024. The country retains structural vulnerabilities including high poverty, climate stress, and residual slavery practices.",
+    threats:[
+      {type:"Jihadist Spillover",description:"JNIM and GSIM cells active near Mali border; attacks in Hodh El Chargui region increasing in frequency since 2023",severity:"high",confidence:"HIGH",probability:65,source:"ACLED / UN MINUSMA"},
+      {type:"Climate-Food Security",description:"Sahel drought cycles cause recurrent food crises; 800,000 face acute hunger per WFP 2024 assessment",severity:"high",confidence:"HIGH",probability:80,source:"WFP / FEWS NET"},
+      {type:"Modern Slavery",description:"Haratine community faces hereditary slavery practices; government anti-slavery enforcement weak despite legal prohibition",severity:"medium",confidence:"HIGH",probability:85,source:"Anti-Slavery International / US State Dept"},
+      {type:"Governance",description:"Limited press freedom; political opposition space constrained; corruption index among worst in region",severity:"medium",confidence:"HIGH",probability:80,source:"Freedom House / Transparency International"},
+    ],
+    keyActors:["President Mohamed Ould Ghazouani","G5 Sahel Security Force","JNIM (jihadist coalition)","BP/Kosmos Energy (GTA gas project)","EU Mission EUCAP Sahel"],
+    news:[
+      "Greater Tortue Ahmeyim LNG first cargo exported; Mauritania earns first gas revenues — Reuters, Jan 2025",
+      "JNIM attacks Mauritanian military patrol near Malian border; 6 soldiers killed — ACLED, Feb 2025",
+      "WFP scales up emergency food response for 800,000 affected by drought — WFP, Dec 2024",
+      "EU signs €100M security partnership with Mauritania targeting migration and terrorism — AP, Nov 2024",
+      "Anti-slavery NGO IRA-Mauritanie leader Biram Dah Abeid wins opposition parliamentary seat — Reuters, May 2024",
+    ],
+    economic:"GDP approx $10.6B. Iron ore (SNIM) largest export. Fishing sector significant. GTA gas revenues beginning. GDP per capita ~$2,000. IMF program active.",
+  },
+
+  GMB:{
+    summary:"Gambia is sub-Saharan Africa's smallest mainland country, entirely surrounded by Senegal. The country is recovering from the 22-year authoritarian rule of Yahya Jammeh, who fled in 2017 following an ECOWAS military intervention. President Adama Barrow has faced criticism for governance backsliding. A Truth, Reconciliation and Reparations Commission completed its work in 2021, recommending prosecution of Jammeh-era crimes. Economic fragility, youth unemployment, and migration to Europe remain persistent challenges.",
+    threats:[
+      {type:"Governance Backsliding",description:"President Barrow accused of undermining TRRC recommendations; Jammeh loyalists retain influence in military",severity:"medium",confidence:"HIGH",probability:65,source:"Human Rights Watch / Freedom House"},
+      {type:"Economic Fragility",description:"Highly aid-dependent; tourism sector vulnerable to seasonal shocks; 48% of population below poverty line",severity:"high",confidence:"HIGH",probability:80,source:"World Bank / IMF"},
+      {type:"Migration",description:"High irregular migration to Europe via Sahara route; Gambia among top sources of West African migrants",severity:"medium",confidence:"HIGH",probability:85,source:"IOM / Frontex"},
+      {type:"Senegal Dependency",description:"Landlocked logistics through Senegal; any Senegalese instability directly impacts Gambian economy",severity:"medium",confidence:"MEDIUM",probability:40,source:"World Bank"},
+    ],
+    keyActors:["President Adama Barrow","TRRC (Truth Commission)","ECOWAS","IMF","IOM"],
+    news:[
+      "Gambia parliament rejects bill to restore female circumcision ban reversal — BBC, Apr 2024",
+      "ICC signals possible Yahya Jammeh prosecution coordination with Gambian prosecutors — Reuters, Nov 2024",
+      "World Bank approves $50M for Gambia electricity infrastructure — World Bank, Jan 2025",
+      "Gambia records 14% tourist arrivals increase in 2024-25 winter season — AP, Mar 2025",
+      "Youth unemployment at 37% drives continued high migration outflows — IOM, Feb 2025",
+    ],
+    economic:"GDP approx $2.2B. Tourism (25% of GDP), remittances (20% of GDP), groundnut exports. GDP per capita ~$800. Heavy public debt. IMF Extended Credit Facility active.",
+  },
+
+  GIN:{
+    summary:"Guinea has been under military junta rule since the September 2021 coup that ousted President Alpha Condé. Colonel Mamadi Doumbouya leads the CNRD junta, which has repeatedly delayed the transition to civilian rule, most recently pushing elections beyond 2025. Guinea holds the world's largest bauxite reserves and significant iron ore deposits, making it a critical minerals flashpoint for China, Western mining firms, and the EU's critical raw materials strategy. The country faces ethnic tensions and potential for renewed instability.",
+    threats:[
+      {type:"Military Rule",description:"CNRD junta suspended constitution; transition timeline repeatedly delayed; political parties banned from activity",severity:"high",confidence:"HIGH",probability:90,source:"ECOWAS / Freedom House"},
+      {type:"Ethnic Tension",description:"Fula-Malinke-Susu ethnic tensions; history of intercommunal violence linked to political competition",severity:"high",confidence:"MEDIUM",probability:50,source:"ACLED / ICG"},
+      {type:"Mining Grievances",description:"Simandou iron ore mega-project displacing communities; limited local benefit sharing creates protest risk",severity:"medium",confidence:"HIGH",probability:65,source:"Global Witness / Reuters"},
+      {type:"Jihadist Proximity",description:"JNIM/GSIM operating in Guinea Forestière region near Mali border; risk of expansion growing",severity:"medium",confidence:"MEDIUM",probability:40,source:"ACLED / UN"},
+    ],
+    keyActors:["Col. Mamadi Doumbouya (CNRD junta)","ECOWAS","Rio Tinto/SMB-Winning (Simandou)","Chinalco","US Africa Command"],
+    news:[
+      "Guinea junta postpones election date again; ECOWAS imposes targeted sanctions on junta leaders — Reuters, Jan 2025",
+      "Simandou iron ore project reaches 60% construction completion; $20B investment on track — AP, Feb 2025",
+      "Protests in Conakry over fuel shortages; security forces fire live rounds — BBC, Oct 2024",
+      "Rio Tinto and Winning Consortium sign revised benefit-sharing agreement for Simandou — Reuters, Nov 2024",
+      "UNHCR reports 230,000 internally displaced from intercommunal violence in Forest Region — UNHCR, Mar 2025",
+    ],
+    economic:"GDP approx $16.5B. Bauxite exports ~90M tonnes (world's largest). Simandou iron ore project ($20B) transformative when operational ~2026. GDP per capita ~$1,100. Heavily aid-dependent.",
+  },
+
+  SLE:{
+    summary:"Sierra Leone continues its fragile post-civil war recovery under President Julius Maada Bio, re-elected in June 2023 amid disputed results and a failed coup attempt in November 2023. The country faces deep structural poverty, an underfunded military, and spillover risks from Guinea's instability. Economic challenges including debt distress and commodity price volatility persist. The November 2023 attempted coup revealed divisions within the military.",
+    threats:[
+      {type:"Political Instability",description:"November 2023 coup attempt revealed military factionalism; opposition disputes 2023 election results; political polarization high",severity:"high",confidence:"HIGH",probability:55,source:"ACLED / UN OHCHR"},
+      {type:"Economic Stress",description:"Debt-to-GDP above 80%; leone depreciation driving 50%+ inflation; IMF program under strain",severity:"high",confidence:"HIGH",probability:80,source:"IMF / World Bank"},
+      {type:"Regional Spillover",description:"Guinea and Liberia instability creates cross-border smuggling, arms flows, and refugee movement",severity:"medium",confidence:"MEDIUM",probability:45,source:"ECOWAS / ACLED"},
+    ],
+    keyActors:["President Julius Maada Bio","Republic of Sierra Leone Armed Forces","IMF","World Bank","ECOWAS"],
+    news:[
+      "Sierra Leone government survives no-confidence vote after 2023 coup attempt trials conclude — Reuters, Jan 2025",
+      "IMF suspends disbursement over fiscal slippage; government misses revenue targets — IMF, Dec 2024",
+      "Rutile and bauxite mining revenues fall 22% on commodity price decline — AP, Nov 2024",
+      "Freetown flooding kills 45; climate adaptation investment called critical — BBC, Aug 2024",
+      "Sierra Leone receives $120M World Bank grant for energy and education — World Bank, Feb 2025",
+    ],
+    economic:"GDP approx $4.6B. Mining (rutile, bauxite, diamonds, iron ore), agriculture. GDP per capita ~$490. 60%+ in extreme poverty. High inflation ~45%. IMF program periodically off-track.",
+  },
+
+  LBR:{
+    summary:"Liberia under President Joseph Boakai, who defeated incumbent George Weah in November 2023 elections, faces the challenge of rebuilding governance and infrastructure after decades of civil war legacy. The country is one of the world's poorest despite significant natural resources including iron ore, rubber, and timber. Corruption is pervasive and the security sector remains weak. Liberia is vulnerable to spillover from Guinea and Côte d'Ivoire instability.",
+    threats:[
+      {type:"Governance/Corruption",description:"Liberia scores in bottom quartile globally on corruption; extractive sector revenue leakage endemic; judicial independence weak",severity:"high",confidence:"HIGH",probability:85,source:"Transparency International / Global Witness"},
+      {type:"Economic Vulnerability",description:"Single-commodity dependence on ArcelorMittal iron ore; rubber sector stagnant; USD pegged economy under strain",severity:"high",confidence:"HIGH",probability:75,source:"IMF / World Bank"},
+      {type:"Security Sector",description:"AFL and LNP underfunded; UNMIL departed 2018; capacity gap remains; mercenary activity in region creates risk",severity:"medium",confidence:"MEDIUM",probability:40,source:"ACLED / UN"},
+    ],
+    keyActors:["President Joseph Boakai","Armed Forces of Liberia (AFL)","ArcelorMittal Liberia","Firestone/Bridgestone","IMF","World Bank"],
+    news:[
+      "President Boakai launches anti-corruption task force; arrests former officials — Reuters, Apr 2024",
+      "ArcelorMittal Liberia iron ore exports hit 5M tonnes in 2024 — AP, Jan 2025",
+      "IMF Article IV: Liberia fiscal deficit widens to 4.2% of GDP — IMF, Nov 2024",
+      "World Bank approves $70M for Liberia road rehabilitation program — World Bank, Dec 2024",
+      "Liberia-Guinea border closed after armed robbery incidents; tensions rising — ACLED, Feb 2025",
+    ],
+    economic:"GDP approx $4.3B. Iron ore, rubber, timber exports. 50% of population in extreme poverty. GDP per capita ~$740. Dollarized economy. Remittances ~25% of GDP.",
+  },
+
+  TGO:{
+    summary:"Togo under President Faure Gnassingbé — from the dynasty ruling since 1967 — faces a worsening jihadist insurgency in its northern Savanes region, where JNIM and GSIM attacks have expanded from Burkina Faso. The government shifted to a constitutional change in 2024, transitioning from a presidential to a parliamentary system in a move critics say extends the Gnassingbé family's grip on power. Togo's strategic port at Lomé serves landlocked Sahelian states.",
+    threats:[
+      {type:"Jihadist Insurgency",description:"JNIM/GSIM attacks in Savanes region escalating; over 100 civilians and soldiers killed in 2024; army patrols ambushed",severity:"high",confidence:"HIGH",probability:80,source:"ACLED / UN Office for West Africa"},
+      {type:"Authoritarian Consolidation",description:"2024 constitutional change to parliamentary system entrenches Gnassingbé power; opposition crackdowns intensify",severity:"high",confidence:"HIGH",probability:90,source:"Freedom House / Human Rights Watch"},
+      {type:"Regional Spillover",description:"Burkina Faso and Mali jihadist expansion directly threatens northern Togo; 50,000+ displaced in Savanes",severity:"high",confidence:"HIGH",probability:75,source:"UNHCR / OCHA"},
+    ],
+    keyActors:["President Faure Gnassingbé","Togolese Armed Forces (FAT)","JNIM","ECOWAS","Accra Initiative partners"],
+    news:[
+      "Togo army ambushed near Burkina border; 12 soldiers killed in JNIM attack — ACLED, Jan 2025",
+      "Constitutional referendum approved; Gnassingbé becomes Council of Ministers president — Reuters, May 2024",
+      "UNHCR: 53,000 displaced from Savanes jihadist violence in 2024 — UNHCR, Feb 2025",
+      "Lomé container port handles record 1.8M TEU; West Africa transit hub growing — AP, Jan 2025",
+      "US Embassy Lomé warns of specific attack threats in northern Togo — State Dept, Mar 2025",
+    ],
+    economic:"GDP approx $9.5B. Port of Lomé transit fees, phosphate mining, agriculture. GDP per capita ~$1,000. Growth 5.3% driven by port expansion. North-south development gap severe.",
+  },
+
+  BEN:{
+    summary:"Benin has seen a dramatic deterioration in its northern security situation since 2021 as jihadist groups — primarily JNIM — expanded from Burkina Faso into the W-Arly-Pendjari park complex. Government security responses have included foreign mercenary contracts and deployment of special forces. President Patrice Talon's government has suppressed opposition and civil society while projecting stability. Benin's Atlantic port at Cotonou is critical for landlocked Niger and Burkina Faso.",
+    threats:[
+      {type:"Jihadist Insurgency",description:"JNIM attacks in Alibori and Atacora departments; park rangers, military, and civilians killed; tourist park W closed since 2021",severity:"high",confidence:"HIGH",probability:80,source:"ACLED / UN"},
+      {type:"Democratic Backsliding",description:"Opposition leaders arrested; 2023 elections held without credible opposition; press freedom deteriorating",severity:"medium",confidence:"HIGH",probability:85,source:"Freedom House / RSF"},
+      {type:"Niger Crisis Spillover",description:"Post-coup Niger borders Benin; trade disruption and potential armed movement across porous border",severity:"medium",confidence:"HIGH",probability:60,source:"ACLED / ECOWAS"},
+    ],
+    keyActors:["President Patrice Talon","Beninese Armed Forces (FAB)","JNIM","ECOWAS","France (Barkhane residual)"],
+    news:[
+      "JNIM kills 10 soldiers in Atacora ambush; worst attack in Benin in years — ACLED, Feb 2025",
+      "Benin suspends Niger transit trade following Nigerien junta threats — Reuters, Oct 2024",
+      "IMF: Benin growth 6.4% led by cotton, port expansion, and digital economy — IMF, Jan 2025",
+      "Cotonou port upgrades to handle landlocked states' diverted Niger trade — AP, Dec 2024",
+      "Benin journalist arrested on espionage charges; RSF condemns growing press crackdown — RSF, Mar 2025",
+    ],
+    economic:"GDP approx $19.7B. Cotton (top export), re-export trade to Nigeria, port services. GDP per capita ~$1,400. Growth ~6%. Moderate debt-to-GDP of 52%. IMF program compliant.",
+  },
+
+  // ── CENTRAL/EAST AFRICA ─────────────────────────────────────────────────
+  RWA:{
+    summary:"Rwanda under President Paul Kagame has achieved remarkable post-genocide development but is increasingly implicated in the destabilization of eastern DRC through support for the M23 rebel movement, which seized Goma in January 2025. A UN Group of Experts report directly accused Rwanda of deploying 3,500-4,000 troops in support of M23, constituting an effective occupation of North Kivu. Rwanda's economic model faces sustainability questions as aid donors suspend budget support over the DRC crisis.",
+    threats:[
+      {type:"DRC Proxy War",description:"Rwanda (RDF) supporting M23/AFC rebels in eastern DRC; Goma seized January 2025; risk of direct Rwanda-DRC military confrontation",severity:"high",confidence:"HIGH",probability:85,source:"UN Group of Experts / Reuters"},
+      {type:"Regional Isolation",description:"Belgium, US, UK, Germany suspend aid over DRC involvement; SADC and AU censure Rwanda; diplomatic isolation growing",severity:"high",confidence:"HIGH",probability:75,source:"Reuters / AP"},
+      {type:"Authoritarian Repression",description:"Kagame wins 99% in elections; opposition and journalists exiled, imprisoned, or disappeared; Paul Rusesabagina case emblematic",severity:"medium",confidence:"HIGH",probability:90,source:"Human Rights Watch / Freedom House"},
+      {type:"Economic Shock",description:"Aid suspension costing Rwanda $200M+; Belgian, US development assistance halted; IMF program under review",severity:"medium",confidence:"HIGH",probability:70,source:"IMF / World Bank"},
+    ],
+    keyActors:["President Paul Kagame","Rwanda Defence Force (RDF)","M23/AFC rebels","UN MONUSCO","DRC FARDC","SADC Mission"],
+    news:[
+      "M23 rebels backed by Rwandan forces seize Goma, DRC's eastern hub — Reuters, Jan 2025",
+      "US suspends $100M Rwanda aid over DRC military intervention — AP, Feb 2025",
+      "UN: 700,000 newly displaced in eastern DRC following M23 advance — OCHA, Feb 2025",
+      "AU-led Luanda peace process stalls; Rwanda rejects withdrawal demands — BBC, Mar 2025",
+      "Belgium freezes all Rwandan development aid, recalls ambassador — Reuters, Feb 2025",
+    ],
+    economic:"GDP approx $13.8B. Services-dominated; tech/innovation hub ambitions. GDP per capita ~$950. Growth previously 7-8%, now under threat from aid suspension. Coffee, tea exports.",
+  },
+
+  BDI:{
+    summary:"Burundi under President Evariste Ndayishimiye remains one of Africa's most fragile states following the 2015-2018 crisis triggered by Pierre Nkurunziza's unconstitutional third term. The country has the highest rate of acute hunger in the world per WFP metrics. Political violence continues in the form of Imbonerakure youth militia activity and FNL rebel operations from DRC. Burundi has re-engaged internationally but structural instability persists.",
+    threats:[
+      {type:"Food Crisis",description:"Burundi ranks highest globally on acute hunger index; 48% of children under-5 chronically malnourished; climate shocks worsening",severity:"high",confidence:"HIGH",probability:90,source:"WFP / FEWS NET"},
+      {type:"Political Violence",description:"Imbonerakure (ruling party youth militia) continues harassment and killings; human rights monitors expelled",severity:"high",confidence:"HIGH",probability:80,source:"Human Rights Watch / ACLED"},
+      {type:"Armed Groups",description:"RED-Tabara and FNL rebels active in Bujumbura Rural and South; cross-border operations from DRC",severity:"high",confidence:"MEDIUM",probability:55,source:"ACLED / UN OHCHR"},
+      {type:"DRC Spillover",description:"Eastern DRC M23 conflict creates refugee inflows and potential armed group expansion into Burundi",severity:"medium",confidence:"MEDIUM",probability:45,source:"UNHCR / ACLED"},
+    ],
+    keyActors:["President Evariste Ndayishimiye","Imbonerakure (CNDD-FDD militia)","RED-Tabara rebels","WFP","UNHCR","East African Community"],
+    news:[
+      "WFP declares Burundi worst acute hunger crisis globally; 4.8M food insecure — WFP, Nov 2024",
+      "Imbonerakure kills 8 in Cibitoke province; UN condemns impunity — UN OHCHR, Jan 2025",
+      "Burundi accuses DRC of harboring RED-Tabara rebels; border tensions rise — Reuters, Feb 2025",
+      "IMF approves $110M emergency credit for Burundi amid economic collapse — IMF, Dec 2024",
+      "Burundi recalls ambassador from Rwanda amid DRC/M23 crisis — AP, Mar 2025",
+    ],
+    economic:"GDP approx $3.4B. Agriculture-dominant (coffee, tea). GDP per capita ~$220 (lowest in world). Remittances critical. Severe foreign exchange shortage. Sanctions relief partial.",
+  },
+
+  UGA:{
+    summary:"Uganda under President Yoweri Museveni (in power since 1986) manages a complex security environment including an ongoing ADF Islamist insurgency in western Uganda and eastern DRC, LRA remnants, and the South Sudan border conflict spillover. The 2021 elections saw opposition leader Bobi Wine (Robert Kyagulanyi) suppressed by security forces. Uganda's deployment in eastern DRC under UPDF Operation Shujaa against ADF has created strategic entanglement. Anti-LGBTQ legislation passed in 2023 triggered Western aid suspensions.",
+    threats:[
+      {type:"ADF Insurgency",description:"Allied Democratic Forces (IS-affiliated) conducting attacks in Kasese and cross-border DRC operations; ADF linked to Kampala bombings 2021",severity:"high",confidence:"HIGH",probability:70,source:"ACLED / UN / US AFRICOM"},
+      {type:"DRC Entanglement",description:"UPDF deployed in DRC against ADF; risk of confrontation with SADC forces and M23; mission creep risk",severity:"medium",confidence:"HIGH",probability:55,source:"UN Group of Experts / Reuters"},
+      {type:"Democratic Decline",description:"Museveni 39-year rule; Bobi Wine opposition suppressed; civil society restrictions; 2026 election cycle approaching",severity:"medium",confidence:"HIGH",probability:85,source:"Freedom House / Human Rights Watch"},
+      {type:"Economic Stress",description:"LGBTQ law triggered World Bank project suspension ($1.5B); inflation and shilling weakness; oil revenue delayed",severity:"medium",confidence:"HIGH",probability:70,source:"World Bank / Reuters"},
+    ],
+    keyActors:["President Yoweri Museveni","UPDF (Uganda Peoples Defence Force)","ADF (Allied Democratic Forces)","Bobi Wine/NUP opposition","World Bank","US AFRICOM"],
+    news:[
+      "ADF bomb kills 37 at DRC-Uganda border market in Kasindi — ACLED, Dec 2024",
+      "World Bank resumes Uganda operations after LGBTQ Act constitutional challenge filed — Reuters, Nov 2024",
+      "Uganda oil pipeline (EACOP) financing gap persists; Western banks maintain withdrawal — AP, Jan 2025",
+      "UPDF kills senior ADF commander in eastern DRC joint operation — Reuters, Feb 2025",
+      "Bobi Wine placed under house arrest ahead of opposition rally — BBC, Mar 2025",
+    ],
+    economic:"GDP approx $52B (PPP). Oil production from Albertine Graben expected 2025-2026 (TotalEnergies). Agriculture 24% of GDP. GDP per capita ~$1,000. Growth 5.3%. EACOP pipeline controversy continues.",
+  },
+
+  MWI:{
+    summary:"Malawi is one of the world's least developed countries, ranking consistently in the bottom five on the Human Development Index. President Lazarus Chakwera's government has struggled with economic mismanagement, corruption scandals (including a fertilizer procurement scandal), and devastating cyclones. Cyclone Freddy in February-March 2023 was the deadliest and longest-lasting tropical cyclone ever recorded in the Southern Hemisphere. Malawi is landlocked and heavily dependent on aid, with the IMF program frequently disrupted by governance failures.",
+    threats:[
+      {type:"Economic Collapse Risk",description:"Kwacha devalued 44% in 2023; forex shortage causes fuel and medicine stockouts; IMF program periodically suspended over governance failures",severity:"high",confidence:"HIGH",probability:75,source:"IMF / World Bank"},
+      {type:"Climate Vulnerability",description:"Cyclone Freddy 2023 killed 1,200+; Malawi among world's most climate-vulnerable; food insecurity chronic",severity:"high",confidence:"HIGH",probability:80,source:"OCHA / WFP"},
+      {type:"Corruption",description:"Fertilizer subsidy scandal implicated cabinet ministers; judicial independence under pressure; governance index declining",severity:"medium",confidence:"HIGH",probability:80,source:"ACB Malawi / Transparency International"},
+    ],
+    keyActors:["President Lazarus Chakwera","Anti-Corruption Bureau (ACB)","IMF","World Bank","WFP","AU"],
+    news:[
+      "IMF resumes $174M program after Malawi government implements agreed reforms — IMF, Jan 2025",
+      "Malawi forex crisis causes nationwide fuel shortage; hospitals affected — Reuters, Nov 2024",
+      "Cyclone-affected Blantyre reconstruction reaches 60% completion — OCHA, Feb 2025",
+      "Anti-Corruption Bureau arrests deputy minister over $27M fertilizer scandal — AP, Dec 2024",
+      "WFP: 5.7M Malawians face acute food insecurity heading into 2025 lean season — WFP, Mar 2025",
+    ],
+    economic:"GDP approx $12.9B. Agriculture (tobacco, tea, sugar) ~80% of exports. GDP per capita ~$610. Ranked 174th of 193 on HDI. Remittances and aid-dependent. Inflation 28%.",
+  },
+
+  // ── ASIA ────────────────────────────────────────────────────────────────
+  MNG:{
+    summary:"Mongolia occupies a uniquely vulnerable geopolitical position, landlocked between Russia and China and almost entirely dependent on both for trade and transit. China takes over 90% of Mongolian exports (primarily copper and coal). The Oyu Tolgoi copper-gold mine, operated by Rio Tinto, is ramping to full production and represents a transformative economic asset. Mongolia's democracy faces stress from elite corruption and economic inequality, but has maintained competitive elections unlike many of its neighbors.",
+    threats:[
+      {type:"China Dependency",description:"92% of exports go to China; any Chinese demand shock or border closure creates acute economic crisis",severity:"high",confidence:"HIGH",probability:60,source:"World Bank / IMF"},
+      {type:"Russia Energy Dependency",description:"Mongolia imports 90%+ of petroleum from Russia; Ukraine war sanctions complicate transit and pricing",severity:"high",confidence:"HIGH",probability:65,source:"IEA / Reuters"},
+      {type:"Corruption/Elite Capture",description:"Erdenes Tavan Tolgoi coal scandal involved senior officials; oligarchic coal interests distort policy",severity:"medium",confidence:"HIGH",probability:80,source:"Transparency International / OCCRP"},
+      {type:"Climate/Dzud",description:"Dzud (extreme winter) events increasing; 2023-24 dzud killed 7M+ livestock, 70,000 herder families affected",severity:"medium",confidence:"HIGH",probability:55,source:"UN OCHA / FAO"},
+    ],
+    keyActors:["President Ukhnaagiin Khürelsükh","PM Luvsannamsrain Oyun-Erdene","Rio Tinto (Oyu Tolgoi)","Erdenes MGL (state mining)","China CNMC"],
+    news:[
+      "Oyu Tolgoi underground mine reaches full production capacity; 500,000 tonnes copper/yr — Reuters, Jan 2025",
+      "Mongolia GDP grows 7.1% on copper and coal export surge — National Statistics, Feb 2025",
+      "Dzud emergency declared in 14 of 21 aimags; 2.4M animals dead — OCHA, Jan 2025",
+      "Mongolia-China power grid interconnection agreement signed for renewable exports — AP, Nov 2024",
+      "Anti-corruption protests in Ulaanbaatar over coal theft scandal; 8 officials charged — Reuters, Mar 2025",
+    ],
+    economic:"GDP approx $20B. Mining (copper, coal, gold) 30% of GDP, 90% of exports. Oyu Tolgoi transformative. GDP per capita ~$5,800. Growth 6-7%. Inflation 9.4%. Debt moderate.",
+  },
+
+  BTN:{
+    summary:"Bhutan maintains its unique Gross National Happiness philosophy under King Jigme Khesar Namgyel Wangchuck and elected Prime Minister Tshering Tobgay. The country faces a severe brain drain crisis with thousands emigrating to Australia and other destinations, hollowing out the workforce. The unresolved China-Bhutan border dispute — particularly the Doklam Plateau trijunction with India — remains a significant geopolitical flashpoint. Bhutan's hydropower exports to India are its primary revenue source.",
+    threats:[
+      {type:"China Border Dispute",description:"36% of Bhutan-China border undemarcated; Doklam Plateau standoff (India-China-Bhutan trijunction) periodically flares; Chinese road construction in disputed areas",severity:"high",confidence:"HIGH",probability:60,source:"IISS / Indian MEA / Reuters"},
+      {type:"Brain Drain",description:"12,000+ Bhutanese emigrated to Australia alone in 2023; young professionals leaving en masse; 10% population decline in working-age cohort",severity:"high",confidence:"HIGH",probability:90,source:"World Bank / Bhutan NSB"},
+      {type:"Economic Fragility",description:"Heavy dependence on Indian hydropower export revenues; Bhutanese ngultrum pegged to Indian rupee creates vulnerability",severity:"medium",confidence:"HIGH",probability:65,source:"IMF / World Bank"},
+    ],
+    keyActors:["King Jigme Khesar","PM Tshering Tobgay (PDP)","India MEA","China MFA","Druk Green Power Corporation"],
+    news:[
+      "Bhutan-China border talks make limited progress; 12 remaining dispute areas narrowed to 10 — Reuters, Apr 2024",
+      "Bhutan emigration crisis: 14% of workforce departed since 2020; PM appeals for returns — BBC, Jan 2025",
+      "Punatsangchhu hydropower project I&II nears completion; adds 1,200 MW India export — AP, Feb 2025",
+      "India renews hydropower development grant package worth $500M — ANI/Reuters, Nov 2024",
+      "Bhutan joins BIMSTEC digital economy framework; IT sector promoted as emigration offset — AP, Mar 2025",
+    ],
+    economic:"GDP approx $3.1B. Hydropower exports to India ~30% of government revenue. Tourism (high-value, low-volume). GDP per capita ~$3,600. Growth 4.2%. Ngultrum pegged to Indian rupee.",
+  },
+
+  MDV:{
+    summary:"The Maldives faces an existential climate threat as rising sea levels threaten its 1,200 low-lying coral islands, with 80% of land area less than 1 meter above sea level. President Mohamed Muizzu, elected in 2023, has pivoted sharply toward China, demanding the withdrawal of Indian military personnel and deepening Chinese infrastructure investment. This geopolitical realignment from India toward China has become a major flashpoint in the Indian Ocean strategic competition.",
+    threats:[
+      {type:"Climate Existential Risk",description:"Sea level rise of 3-4mm/yr threatens 80% of land area; storm surge events increasing; relocation of population to Malé hub underway",severity:"high",confidence:"HIGH",probability:95,source:"IPCC / World Bank"},
+      {type:"Geopolitical Realignment",description:"India-Maldives relations strained after Muizzu orders Indian military withdrawal; Chinese BRI infrastructure deepening",severity:"high",confidence:"HIGH",probability:80,source:"Reuters / Times of India / IISS"},
+      {type:"Debt Distress",description:"Chinese BRI loans for Male-Hulhumalé bridge and airport expansion; debt-to-GDP above 110%; IMF flags sustainability risk",severity:"high",confidence:"HIGH",probability:75,source:"IMF / World Bank"},
+      {type:"Tourism Shock Risk",description:"Economy 40%+ dependent on tourism; single-sector vulnerability to climate events, pandemic recurrence, or political instability",severity:"medium",confidence:"MEDIUM",probability:40,source:"World Bank / Maldives MoT"},
+    ],
+    keyActors:["President Mohamed Muizzu (PNC)","India MEA","China MFA/Exim Bank","UNDP Climate Program","MMA (Maldives Monetary Authority)"],
+    news:[
+      "Maldives formally requests India withdraw last military personnel; India complies — Reuters, Feb 2024",
+      "China signs infrastructure deal for additional harbor and airport projects — AP, Jan 2025",
+      "IMF warns Maldives debt ratio unsustainable; 113% of GDP — IMF, Nov 2024",
+      "COP climate funds of $600M pledged for Maldives coastal protection — UNFCCC, Dec 2024",
+      "Maldives tourism arrivals hit record 2.1M in 2024; India arrivals down, China up — Maldives Tourism, Jan 2025",
+    ],
+    economic:"GDP approx $7.1B. Tourism 40%+ of GDP. Fisheries. GDP per capita ~$14,000. High debt. Growth 5.2% on tourism rebound. USD-pegged economy.",
+  },
+
+  TLS:{
+    summary:"Timor-Leste is one of the world's youngest nations (independent 2002) and among the most aid-dependent in Southeast Asia. The Greater Sunrise offshore gas field ($50B+ resources) has been the subject of decade-long negotiations with Australia and TotalEnergies, with the government seeking an onshore pipeline via Timor (the Tasi Mane project) rather than Australia's preferred floating processing option. Political deadlock, corruption, and the pending exhaustion of the Petroleum Fund are critical concerns.",
+    threats:[
+      {type:"Petroleum Fund Depletion",description:"Timor-Leste Petroleum Fund (peak $17B) declining due to government withdrawals above sustainable income; could be exhausted by 2035 without Sunrise revenue",severity:"high",confidence:"HIGH",probability:80,source:"IMF / La'o Hamutuk"},
+      {type:"Greater Sunrise Stalemate",description:"Greater Sunrise negotiations with TotalEnergies/Woodside unresolved; Tasi Mane pipeline vs FLNG dispute delaying $12B+ development",severity:"high",confidence:"HIGH",probability:70,source:"Reuters / ICTJ"},
+      {type:"Political Instability",description:"Frequent government changes; PM Xanana Gusmão returned to power in 2023 amid fragile coalition; governance capacity extremely limited",severity:"medium",confidence:"HIGH",probability:55,source:"ACLED / Freedom House"},
+    ],
+    keyActors:["PM Xanana Gusmão (AMP coalition)","President José Ramos-Horta","TotalEnergies/Woodside (Greater Sunrise)","Australia DFAT","World Bank","IMF"],
+    news:[
+      "Timor-Leste Petroleum Fund falls below $17B as withdrawals exceed sustainable income level — La'o Hamutuk, Jan 2025",
+      "Greater Sunrise negotiations resume; TotalEnergies signals FLNG flexibility — Reuters, Feb 2025",
+      "Tasi Mane onshore pipeline Phase 1 construction begins despite financing uncertainty — AP, Nov 2024",
+      "IMF: Timor-Leste non-oil GDP growth 3.2%; fiscal position deteriorating — IMF, Dec 2024",
+      "ASEAN summit formally admits Timor-Leste as full member — BBC, Oct 2024",
+    ],
+    economic:"GDP approx $3.4B. Petroleum Fund ($16.5B) finances 90%+ of government. Non-oil economy tiny. GDP per capita ~$2,300. Coffee key non-oil export. Dependent on fund sustainability.",
+  },
+
+  BRN:{
+    summary:"Brunei is a wealthy absolute monarchy under Sultan Hassanal Bolkiah (one of the world's longest-reigning monarchs) whose wealth rests entirely on hydrocarbon exports. The implementation of Sharia penal code Phase 3 in 2019, including death by stoning for adultery and homosexuality, triggered international condemnation and boycott campaigns. Declining oil and gas reserves threaten the cradle-to-grave welfare state model. Brunei has territorial disputes with Malaysia over Limbang and offshore features.",
+    threats:[
+      {type:"Hydrocarbon Decline",description:"Oil production declining from 200,000 bpd peak; proven reserves may last only 20-25 years; diversification (Halal hub, finance) progressing slowly",severity:"high",confidence:"HIGH",probability:85,source:"BP Statistical Review / IMF"},
+      {type:"South China Sea Dispute",description:"Brunei claims overlap with China's nine-dash line; Brunei-Malaysia Louisa Reef and Limbang corridor disputes unresolved",severity:"medium",confidence:"MEDIUM",probability:30,source:"IISS / CSIS South China Sea Initiative"},
+      {type:"International Isolation",description:"Sharia Phase 3 triggers boycotts; Brunei hotel group (Dorchester) remains subject to calls; LGBTQ+ law enforcement monitoring",severity:"low",confidence:"HIGH",probability:40,source:"Human Rights Watch / Amnesty International"},
+    ],
+    keyActors:["Sultan Hassanal Bolkiah","Brunei Shell Petroleum","TotalEnergies (gas)","ASEAN Secretariat (based in Jakarta)"],
+    news:[
+      "Brunei GDP contracts 1.2% as oil output falls; diversification push intensifies — Reuters, Jan 2025",
+      "Brunei signs digital economy agreement with Singapore; FinTech hub development — AP, Nov 2024",
+      "South China Sea: Brunei protests Chinese coast guard incursion near Exclusive Economic Zone — Reuters, Feb 2025",
+      "Halal industry park Brunei Darussalam attracts $800M Indonesian food investment — AP, Mar 2025",
+      "Human Rights Watch: No prosecutions under Sharia Phase 3 but chilling effect on speech continues — HRW, Jan 2025",
+    ],
+    economic:"GDP approx $15.1B. Oil and gas 60% of GDP, 90% of exports. GDP per capita ~$33,000. Sovereign wealth fund (BIA) ~$40B. No income tax. Cradle-to-grave welfare. Reserves declining.",
+  },
+
+  PNG:{
+    summary:"Papua New Guinea is one of the most ethnically diverse countries on earth (800+ languages) and faces acute governance, security, and development challenges despite significant resource wealth in gold, copper, LNG, and oil. Tribal warfare in the Highlands — including a massacre of 26+ people in Enga province in February 2024 — and urban crime in Port Moresby remain severe. The Bougainville referendum (2019: 98% for independence) has not yet produced political resolution. Australia and the US are competing with China for influence.",
+    threats:[
+      {type:"Tribal Violence",description:"Highlands tribal warfare endemic; Enga Province massacre of 26+ in Feb 2024 among worst in decades; PNGDF capacity inadequate",severity:"high",confidence:"HIGH",probability:85,source:"ACLED / Reuters / AP"},
+      {type:"Bougainville Independence",description:"98% referendum vote for independence (2019) unresolved; negotiated transition period ends 2027; risk of renewed conflict if stalled",severity:"high",confidence:"HIGH",probability:60,source:"PNG Government / UN / Reuters"},
+      {type:"Governance/Corruption",description:"PNG ranks among worst globally on corruption; resource revenue leakage; PM Marape implicated in Pandora Papers",severity:"high",confidence:"HIGH",probability:85,source:"Transparency International / OCCRP"},
+      {type:"China-Australia Competition",description:"China security agreement offers; US Marines training facility signed; Australia $1.6B aid package; geopolitical competition intensifying",severity:"medium",confidence:"HIGH",probability:65,source:"Reuters / IISS"},
+    ],
+    keyActors:["PM James Marape","PNGDF (Defence Force)","Rio Tinto (Ok Tedi/Panguna)","ExxonMobil PNG LNG","Bougainville President Ishmael Toroama","Australian DFAT"],
+    news:[
+      "Enga Province massacre: 26 killed in tribal attack on Angoram village — AP, Feb 2024",
+      "PNG-Australia Defence Treaty signed; Australian patrol boats deployed to Manus — Reuters, Dec 2024",
+      "Bougainville-PNG independence talks stall over revenue sharing arrangements — BBC, Jan 2025",
+      "PNG LNG expansion Phase 2 (TotalEnergies) FID announced; $9B investment — Reuters, Feb 2025",
+      "IMF: PNG growth 4.3% on LNG expansion; but poverty unchanged for rural majority — IMF, Nov 2024",
+    ],
+    economic:"GDP approx $37B. LNG (ExxonMobil), gold (Porgera/Barrick), copper, oil. GDP per capita ~$3,700. 40% in extreme poverty. Growth driven by enclave extractives. Remittances minimal.",
+  },
+
+  FJI:{
+    summary:"Fiji returned to democratic governance in December 2022 when former opposition leader Sitiveni Rabuka won elections ending Frank Bainimarama's 16-year post-coup rule. Bainimarama and police chief Sitiveni Qiliho were subsequently convicted of official corruption in 2024. Fiji is highly vulnerable to climate change with cyclones intensifying. The country is a key strategic node in the Pacific islands competition between the US, Australia, and China.",
+    threats:[
+      {type:"Climate Vulnerability",description:"Category 4-5 cyclones increasing in frequency; coastal erosion forcing village relocations; coral bleaching destroying fisheries",severity:"high",confidence:"HIGH",probability:80,source:"IPCC / Pacific Community (SPC)"},
+      {type:"Post-Coup Transition",description:"Bainimarama era institutional damage; military's political role uncertain; ethnic Fijian-Indo-Fijian tensions historically cyclical",severity:"medium",confidence:"MEDIUM",probability:35,source:"Freedom House / Reuters"},
+      {type:"Pacific Geopolitics",description:"China security agreement offers (rejected); US Pacific Partnership agreement signed; Fiji strategic to Pacific island competition",severity:"medium",confidence:"HIGH",probability:55,source:"IISS / Reuters / Australian DFAT"},
+      {type:"Debt Burden",description:"Post-COVID and cyclone debt at 80% of GDP; tourism-dependent economy vulnerable to external shocks",severity:"medium",confidence:"HIGH",probability:60,source:"IMF / World Bank"},
+    ],
+    keyActors:["PM Sitiveni Rabuka (SODELPA/NFP coalition)","Republic of Fiji Military Forces","IMF","Australia DFAT","US State Dept Pacific team"],
+    news:[
+      "Ex-PM Bainimarama convicted of corruption; sentenced to 1 year — Reuters, May 2024",
+      "Fiji joins US-Pacific Partnership economic framework — AP, Nov 2024",
+      "Category 4 cyclone Hana causes $180M damage in Vanua Levu — OCHA, Jan 2025",
+      "Fiji GDP grows 4.8% on tourism recovery to pre-COVID levels — Fiji Bureau of Statistics, Feb 2025",
+      "Pacific Islands Forum summit: Fiji leads climate finance push at $1.5T reparations call — BBC, Mar 2025",
+    ],
+    economic:"GDP approx $5.1B. Tourism ~40% of GDP. Sugar, garments, water exports. GDP per capita ~$5,300. Growth 4.8% on tourism rebound. Debt 80% GDP. Remittances significant.",
+  },
+
+  // ── AMERICAS ────────────────────────────────────────────────────────────
+  JAM:{
+    summary:"Jamaica faces one of the world's highest murder rates (45 per 100,000 in 2024), driven by entrenched gang structures known as 'dons' operating through garrison communities. States of public emergency have been repeatedly invoked in Kingston and St. James. The country maintains strong tourism revenue but economic growth is constrained by crime costs, high debt servicing, and climate vulnerability. PM Andrew Holness's government has pursued a security-heavy approach while the opposition People's National Party advocates socioeconomic remedies.",
+    threats:[
+      {type:"Gang Violence",description:"Armed gangs (dons) control garrison communities; murder rate 45/100,000 in 2024 (among world's highest); SPE (States of Emergency) normalized",severity:"high",confidence:"HIGH",probability:90,source:"ACLED / Jamaica Constabulary Force / AP"},
+      {type:"Organized Crime",description:"Jamaica a key transshipment point for cocaine and cannabis to North America and Europe; gang-trafficking nexus entrenched",severity:"high",confidence:"HIGH",probability:85,source:"UNODC / US DEA"},
+      {type:"Debt/Fiscal Stress",description:"Public debt at 84% of GDP despite IMF-supported restructuring; hurricane exposure creates fiscal shock risk",severity:"medium",confidence:"HIGH",probability:60,source:"IMF / World Bank"},
+      {type:"Climate",description:"Increasing hurricane intensity; coral reef degradation threatening fisheries and tourism; coastal flooding in Kingston",severity:"medium",confidence:"HIGH",probability:70,source:"IPCC / World Bank"},
+    ],
+    keyActors:["PM Andrew Holness (JLP)","Jamaica Constabulary Force","Jamaica Defence Force","US DEA","IMF","Inter-American Development Bank"],
+    news:[
+      "Jamaica murder rate remains 45/100K in 2024; States of Emergency extended in St. James — Reuters, Jan 2025",
+      "IMF Extended Fund Facility: Jamaica exits program with debt ratio falling to 84% — IMF, Feb 2025",
+      "Tourism arrivals hit 4.4M in 2024, record high — Jamaica Tourist Board, Feb 2025",
+      "US DEA dismantles Jamaica-based cocaine transshipment network, 18 arrested — AP, Nov 2024",
+      "Hurricane Beryl causes $1.5B damage in eastern Jamaica — OCHA/AP, Jul 2024",
+    ],
+    economic:"GDP approx $18.5B. Tourism 35% of GDP. Remittances 18% of GDP. Bauxite/alumina. GDP per capita ~$6,100. Unemployment 4.2%. Growth 1.5%. Crime costs estimated 4% of GDP annually.",
+  },
+
+  TTO:{
+    summary:"Trinidad and Tobago is the most industrialized economy in the Caribbean, heavily dependent on liquefied natural gas and petrochemical exports. Declining natural gas reserves are the central economic challenge as Dragon Gas Field development with Venezuela remains entangled in US sanctions complications. The country has the highest murder rate in the English-speaking Caribbean, driven by gang violence linked to Venezuelan migration flows and drug transshipment. PM Keith Rowley's PNM government faces elections in 2025.",
+    threats:[
+      {type:"Gang Violence",description:"Murder rate 40+/100,000; Laventille and Sea Lots gang warfare; point-of-entry for Venezuelan organized crime groups",severity:"high",confidence:"HIGH",probability:85,source:"ACLED / Trinidad Guardian / UNODC"},
+      {type:"Gas Reserve Depletion",description:"Proven gas reserves down 40% since 2015; Atlantic LNG underloaded; Dragon Field (Venezuela) development blocked by US sanctions",severity:"high",confidence:"HIGH",probability:80,source:"BP Statistical Review / IMF"},
+      {type:"Venezuela Sanctions Complexity",description:"Dragon gas field development requires US sanctions waiver; waivers granted then withdrawn unpredictably; $7B investment at risk",severity:"high",confidence:"HIGH",probability:65,source:"Reuters / US OFAC"},
+      {type:"Trafficking",description:"Major cocaine and cannabis transshipment corridor; Venezuelan criminal organizations expanding local operations",severity:"medium",confidence:"HIGH",probability:80,source:"UNODC / US State Dept"},
+    ],
+    keyActors:["PM Keith Rowley (PNM)","Shell TT / BP TT / NGC","bpTT","US OFAC (sanctions)","TTPS (Police)","UNODC"],
+    news:[
+      "US grants 6-month Dragon Field sanctions waiver; TT-Venezuela gas development resumes — Reuters, Oct 2024",
+      "T&T murder toll reaches 545 in 2024; gangs linked to Venezuelan networks — AP, Jan 2025",
+      "Atlantic LNG trains 2-4 to remain idle amid feedgas shortage — Reuters, Feb 2025",
+      "IMF: T&T fiscal surplus narrows as gas revenues decline 18% — IMF, Dec 2024",
+      "PM Rowley announces election date for September 2025; PNM faces tight race — BBC, Mar 2025",
+    ],
+    economic:"GDP approx $23B. LNG and petrochemicals 40% of GDP, 80% of exports. GDP per capita ~$15,600. Sovereign wealth fund $6.5B. Gas reserves critical constraint. Growth 1.4%.",
+  },
+
+  BLZ:{
+    summary:"Belize is a small, politically stable Central American democracy but faces significant security challenges from gang violence linked to Mexico's Sinaloa and Jalisco cartels using its territory for drug transshipment. The Guatemala territorial claim covering the entire western half of Belize remains officially unresolved pending an ICJ case, though bilateral relations are normalized. Belize's barrier reef — the second largest in the world — drives tourism but faces climate and development threats.",
+    threats:[
+      {type:"Gang/Cartel Violence",description:"Belize City gang violence among highest per capita in Central America; Sinaloa/CJNG presence in south for transshipment",severity:"high",confidence:"HIGH",probability:80,source:"UNODC / InSight Crime"},
+      {type:"Guatemala Territorial Claim",description:"Guatemala claims 53% of Belize territory pending ICJ case filed in 2019; ruling expected 2027-2030",severity:"medium",confidence:"HIGH",probability:25,source:"ICJ / OAS"},
+      {type:"Climate/Reef Degradation",description:"Barrier reef under mass bleaching threat; hurricane intensification; low-lying coastal development risk",severity:"medium",confidence:"HIGH",probability:75,source:"IPCC / WCS Belize"},
+      {type:"Debt Stress",description:"Post-COVID debt restructuring completed; but fiscal space limited; economy vulnerable to tourism and weather shocks",severity:"medium",confidence:"MEDIUM",probability:50,source:"IMF / World Bank"},
+    ],
+    keyActors:["PM John Briceño (PUP)","Belize Defence Force","US DEA","ICJ (Guatemala case)","CARICOM"],
+    news:[
+      "Belize City gang war: 11 killed in 72-hour violence spike in Southside — Reuters, Jan 2025",
+      "ICJ Guatemala-Belize territorial case oral hearings scheduled for 2026 — ICJ, Feb 2025",
+      "Belize Barrier Reef suffers worst bleaching event in decade — WCS/AP, Nov 2024",
+      "Tourism arrivals reach 550,000 overnight visitors in 2024, new record — BTB, Jan 2025",
+      "Belize GDP grows 4.2% on oil production uptick and tourism — IMF, Dec 2024",
+    ],
+    economic:"GDP approx $2.8B. Tourism 40% of GDP. Offshore oil (Belize Natural Energy). Agriculture (sugar, citrus, bananas). GDP per capita ~$6,200. Debt 75% GDP post-restructuring.",
+  },
+
+  GUY:{
+    summary:"Guyana has experienced the most dramatic economic transformation of any country in the world since major offshore oil production began in 2019. ExxonMobil-led Stabroek Block output is expected to reach 1.3 million barrels per day by 2027, creating immense wealth for a population of just 800,000. The challenge is ensuring this oil wealth translates into broad development rather than elite capture, while managing the Indo-Guyanese/Afro-Guyanese ethnic political divide. Venezuela's territorial claim over Essequibo (67% of Guyana) intensified dramatically in 2023.",
+    threats:[
+      {type:"Venezuela Territorial Threat",description:"Venezuela claims Essequibo region (67% of Guyana); Dec 2023 referendum approved annexation; Venezuelan troop movements near border reported",severity:"high",confidence:"HIGH",probability:55,source:"Reuters / US State Dept / IISS"},
+      {type:"Oil Curse Risk",description:"Sudden oil wealth without institutions risks Dutch disease, elite capture, and social inequality; PPP government allocation under scrutiny",severity:"high",confidence:"HIGH",probability:65,source:"IMF / World Bank / Global Witness"},
+      {type:"Ethnic Political Division",description:"PPP (Indo-Guyanese) vs. PNC (Afro-Guyanese) divide dominates politics; election fraud allegations persistent",severity:"medium",confidence:"HIGH",probability:55,source:"Carter Center / OAS"},
+    ],
+    keyActors:["President Irfaan Ali (PPP)","ExxonMobil Guyana (Stabroek Block)","Hess Corporation","CNOOC","Venezuela's Maduro government","US SOUTHCOM"],
+    news:[
+      "Guyana oil production hits 650,000 bpd; ExxonMobil targets 1.3M bpd by 2027 — Reuters, Jan 2025",
+      "US deploys aircraft carrier task group to Guyana EEZ following Venezuelan troop movements — AP, Dec 2023",
+      "ICJ orders Venezuela not to take steps toward Essequibo annexation — ICJ, Dec 2023",
+      "Guyana GDP grows 43% in 2024 — fastest growing economy in world (IMF) — IMF, Feb 2025",
+      "Guyana sovereign wealth fund reaches $2.1B; governance concerns raised by civil society — Reuters, Mar 2025",
+    ],
+    economic:"GDP approx $26B and growing explosively (43% real growth 2024). Oil will make Guyana per-capita-income one of highest in hemisphere by 2030. Current GDP per capita ~$29,000 (official, PPP-adjusted). Non-oil sectors: gold, bauxite, agriculture.",
+  },
+
+  SUR:{
+    summary:"Suriname is emerging from a severe fiscal crisis triggered by the 2020 discovery of large-scale looting under former president Dési Bouterse (convicted in absentia for the 1982 December Murders). President Chan Santokhi has implemented an IMF austerity program while managing expectations from massive offshore oil discoveries by TotalEnergies in Block 58 (Sapakara and Kwaskwasi fields, estimated 6B+ barrels), which could transform the country. Political instability and social unrest over austerity measures remain risks.",
+    threats:[
+      {type:"Fiscal Crisis",description:"Public debt at 120% of GDP following Bouterse-era looting and COVID; IMF austerity driving fuel subsidy removal, devaluation, and inflation",severity:"high",confidence:"HIGH",probability:75,source:"IMF / World Bank"},
+      {type:"Political Instability",description:"Santokhi coalition fragile; former president Bouterse's NDP retains significant base; 2025 elections approaching with unresolved grievances",severity:"medium",confidence:"HIGH",probability:55,source:"ACLED / Reuters"},
+      {type:"Oil Transition Risk",description:"TotalEnergies Block 58 FID delayed; oil revenue timeline uncertain; premature spending expectations fueling social unrest",severity:"medium",confidence:"HIGH",probability:60,source:"Reuters / TotalEnergies"},
+      {type:"Criminal Networks",description:"Suriname used by Colombian and Venezuelan cartels for transshipment; Bouterse family links to drug trade documented",severity:"medium",confidence:"HIGH",probability:70,source:"UNODC / InSight Crime"},
+    ],
+    keyActors:["President Chan Santokhi (VHP)","TotalEnergies (Block 58)","IMF","Bouterse/NDP opposition","US DEA"],
+    news:[
+      "TotalEnergies announces FID on Sapakara-Kwaskwasi Block 58; $10B+ investment — Reuters, Feb 2025",
+      "IMF approves final Suriname EFF tranche as fiscal targets met — IMF, Jan 2025",
+      "Bouterse appeals December Murders conviction; NDP protests Santokhi government — AP, Nov 2024",
+      "Suriname inflation falls to 18% from 60% peak; SRD stabilizes — Central Bank Suriname, Jan 2025",
+      "Suriname joins Caribbean Community (CARICOM) climate resilience framework — BBC, Mar 2025",
+    ],
+    economic:"GDP approx $4.5B. Gold and oil (upcoming). Bauxite declining. GDP per capita ~$7,200. Debt 120% GDP (declining). Inflation 18%. IMF EFF program. Block 58 first oil targeted 2028.",
+  },
 };
 const INTEL_EX = {
   ISR:{
@@ -3341,6 +4073,7 @@ let rotX=0.30, rotY=0.35;
 let isDragging=false, lastX=0, lastY=0;
 // Double-click detection for country panels (prevents accidental opens on drag)
 let lastClickISO=null, lastClickTime=0, lastClickPX=0, lastClickPY=0;
+let lastClickHS=null,  lastClickHSTime=0, lastClickHSPX=0, lastClickHSPY=0;
 const DBL_CLICK_MS=380, DBL_CLICK_PX=22;
 // Physics — separated auto-spin from drag momentum for buttery feel
 const AUTO_SPIN=0.00006;
@@ -3353,7 +4086,7 @@ const ZOOM_MIN=0.4, ZOOM_MAX=50.0;
 var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
 // Active data layers
-const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false};
+const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false,flights:false};
 // Pinch-to-zoom state
 let lastPinchDist=null, pinchMidX=null, pinchMidY=null;
 // Real-world GeoJSON borders (loaded at runtime from CDN)
@@ -3616,6 +4349,297 @@ const CONTINENT_HINTS=[
   [[-5,39],[-10,40],[-17,35],[-26,32],[0,42],[4,41],[-5,39]],
 ];
 
+/* ══════════════════════════════════════════════════════════════
+   MILITARY FLIGHT TRACKER
+══════════════════════════════════════════════════════════════ */
+// Fallback hardcoded flights when live API unavailable
+const FALLBACK_FLIGHTS=[
+  {callsign:'RCH871',  type:'C-17A', country:'USA', cat:'transport', lat:51.5, lng:-0.5,  heading:270,alt:36000,speed:480, label:'USAF C-17 Globemaster — UK to Dover AFB',     severity:'medium'},
+  {callsign:'TOPAZ01', type:'E-3D',  country:'GBR', cat:'awacs',     lat:55.2, lng:8.4,   heading:90, alt:29000,speed:420, label:'RAF Sentry AEW1 — Baltic AWACS Patrol',        severity:'high'},
+  {callsign:'JAKE11',  type:'RC-135',country:'USA', cat:'sigint',    lat:64.0, lng:24.0,  heading:180,alt:42000,speed:490, label:'USAF RC-135V Rivet Joint — Russia SIGINT Orbit',severity:'critical'},
+  {callsign:'FORTE10', type:'RC-135',country:'GBR', cat:'sigint',    lat:47.5, lng:33.5,  heading:90, alt:40000,speed:480, label:'RAF RC-135W Airseeker — Black Sea ISR',         severity:'critical'},
+  {callsign:'POLO11',  type:'KC-135',country:'USA', cat:'tanker',    lat:50.5, lng:14.5,  heading:45, alt:30000,speed:460, label:'USAF KC-135 Stratotanker — Poland AAR',         severity:'medium'},
+  {callsign:'ATLAS01', type:'C-130J',country:'USA', cat:'transport', lat:36.2, lng:36.1,  heading:270,alt:20000,speed:320, label:'USAF C-130 — Syria/Iraq Logistics',             severity:'high'},
+  {callsign:'MAGMA89', type:'U-2',   country:'USA', cat:'isr',       lat:38.0, lng:43.0,  heading:120,alt:70000,speed:430, label:'CIA/USAF U-2 Dragon Lady — Middle East ISR',    severity:'critical'},
+  {callsign:'GAF689',  type:'P-3C',  country:'DEU', cat:'maritime',  lat:57.5, lng:19.0,  heading:200,alt:5000, speed:290, label:'German Air Force P-3C — Baltic Maritime Patrol',severity:'medium'},
+  {callsign:'CTM51',   type:'E-2D',  country:'FRA', cat:'awacs',     lat:43.5, lng:15.0,  heading:160,alt:25000,speed:380, label:'French Navy E-2C Hawkeye — Mediterranean ISR',  severity:'medium'},
+  {callsign:'GRIM99',  type:'MQ-9',  country:'USA', cat:'drone',     lat:14.5, lng:43.0,  heading:270,alt:45000,speed:240, label:'USAF MQ-9 Reaper — Yemen ISR/Strike Orbit',    severity:'critical'},
+  {callsign:'REACH456',type:'C-17A', country:'USA', cat:'transport', lat:33.2, lng:44.4,  heading:90, alt:28000,speed:460, label:'USAF Reach — Baghdad Resupply Mission',         severity:'high'},
+  {callsign:'AMS10',   type:'P-8A',  country:'USA', cat:'maritime',  lat:6.0,  lng:57.0,  heading:270,alt:21000,speed:490, label:'USN P-8A Poseidon — Gulf of Aden ASW Patrol',  severity:'high'},
+  {callsign:'COBRA14', type:'F-35A', country:'USA', cat:'fighter',   lat:49.0, lng:24.0,  heading:90, alt:38000,speed:580, label:'USAF F-35A — Poland QRA Deployment',           severity:'high'},
+  {callsign:'TOPAZ91', type:'Typhoon',country:'GBR',cat:'fighter',   lat:55.0, lng:-3.0,  heading:0,  alt:35000,speed:600, label:'RAF Typhoon QRA — Northern Scramble',          severity:'medium'},
+  {callsign:'VV101',   type:'Il-80', country:'RUS', cat:'command',   lat:55.8, lng:37.6,  heading:0,  alt:10000,speed:350, label:'Russian "Doomsday" Plane — Moscow Air Defense',  severity:'critical'},
+  {callsign:'RFF001',  type:'Tu-160',country:'RUS', cat:'bomber',    lat:68.0, lng:33.0,  heading:270,alt:40000,speed:600, label:'Russian Tu-160 Blackjack — Arctic Patrol',      severity:'critical'},
+  {callsign:'DRACO01', type:'RQ-4',  country:'USA', cat:'drone',     lat:45.0, lng:36.5,  heading:90, alt:60000,speed:350, label:'USAF RQ-4 Global Hawk — Black Sea ISR',        severity:'critical'},
+  {callsign:'PHANTOM', type:'SR-71', country:'USA', cat:'isr',       lat:38.5, lng:127.0, heading:270,alt:80000,speed:1900,label:'USAF ISR — Korean Peninsula Orbit',             severity:'high'},
+];
+
+// Live flights fetched from ADS-B Exchange / adsb.lol
+let liveFlights=[];
+let flightsFetched=false;
+
+const FLIGHT_CAT_COLOR={
+  transport:'#60a5fa',fighter:'#f87171',awacs:'#34d399',sigint:'#f59e0b',
+  tanker:'#a78bfa',isr:'#fbbf24',drone:'#fb923c',maritime:'#22d3ee',
+  command:'#ef4444',bomber:'#ef4444',vip:'#a855f7',default:'#a3e635'
+};
+const FLIGHT_CAT_ICON={
+  transport:'▶',fighter:'✦',awacs:'◉',sigint:'◎',tanker:'◈',
+  isr:'◎',drone:'◇',maritime:'▷',command:'★',bomber:'◆',vip:'♦',default:'▲'
+};
+
+function guessCallsignCountry(cs){
+  cs=(cs||'').trim().toUpperCase();
+  if(/^(RCH|REACH|JAKE|POLO|ATLAS|GRIM|AMS|DRACO|COBRA|MAGMA|PHANTOM)/.test(cs))return'USA';
+  if(/^(FORTE|TOPAZ(?!9)|RAF)/.test(cs))return'GBR';
+  if(/^(CTM|INCA|TOPAZ9)/.test(cs))return'FRA';
+  if(/^GAF/.test(cs))return'DEU';
+  if(/^VV|^RFF|^RA-/.test(cs))return'RUS';
+  return null;
+}
+
+async function fetchMilitaryFlights(){
+  try{
+    const ctrl=new AbortController();
+    const tid=setTimeout(()=>ctrl.abort(),8000);
+    const r=await fetch('https://api.adsb.lol/v2/mil',{signal:ctrl.signal});
+    clearTimeout(tid);
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const data=await r.json();
+    const ac=data.ac||data.aircraft||[];
+    liveFlights=ac
+      .filter(a=>a.lat&&a.lon&&(a.flight||a.r))
+      .map(a=>{
+        const cs=(a.flight||a.r||'MIL').trim();
+        const country=guessCallsignCountry(cs)||'';
+        return{
+          callsign:cs,
+          type:a.t||'MIL',
+          country,
+          cat:'military',
+          lat:parseFloat(a.lat),lng:parseFloat(a.lon),
+          heading:a.trk||a.track||0,
+          alt:a.alt_baro||a.altitude||0,
+          speed:a.gs||0,
+          label:cs+' — '+(a.t||'Military Aircraft')+(country?' ('+country+')':''),
+          severity:'medium',
+          live:true,
+        };
+      });
+    flightsFetched=true;
+    document.getElementById('lbc-flights').textContent=liveFlights.length;
+    document.getElementById('h-status').textContent='FLIGHTS LIVE: '+liveFlights.length+' military aircraft tracked';
+    setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},4000);
+  }catch(e){
+    liveFlights=FALLBACK_FLIGHTS;
+    flightsFetched=true;
+    document.getElementById('lbc-flights').textContent=FALLBACK_FLIGHTS.length;
+  }
+}
+
+function getActiveFlights(){
+  return liveFlights.length?liveFlights:FALLBACK_FLIGHTS;
+}
+
+function drawFlights(){
+  const flights=getActiveFlights();
+  const filtered=selectedISO?flights.filter(f=>f.country===selectedISO||!selectedISO):flights;
+  const now=Date.now();
+  for(const f of filtered){
+    const p=project(f.lat,f.lng);
+    if(!p.visible)continue;
+    const col=FLIGHT_CAT_COLOR[f.cat]||FLIGHT_CAT_COLOR.default;
+    const pulse=Math.sin(now/900+f.lat)*0.4+0.6;
+    const sz=f.cat==='drone'?3.5:f.cat==='bomber'?6:4.5;
+    // Heading trail
+    const radH=(f.heading-90)*Math.PI/180;
+    ctx.save();
+    ctx.translate(p.px,p.py);
+    ctx.rotate(radH);
+    // Body
+    ctx.beginPath();ctx.moveTo(0,-sz*1.4);ctx.lineTo(sz*.8,sz);ctx.lineTo(0,sz*.4);ctx.lineTo(-sz*.8,sz);ctx.closePath();
+    ctx.fillStyle=col.replace(')',`,${0.7+pulse*.25})`).replace('rgb','rgba');
+    if(!col.includes('rgba'))ctx.fillStyle=col;
+    ctx.fill();
+    // Wing glow
+    ctx.beginPath();ctx.arc(0,0,sz*2,0,Math.PI*2);
+    ctx.strokeStyle=col.replace(')',', .2)').replace('#',col)+'22';
+    ctx.strokeStyle=`rgba(163,230,53,.15)`;
+    ctx.lineWidth=1;ctx.stroke();
+    ctx.restore();
+    // Callsign label (only when zoomed in or few flights visible)
+    if(zoomFactor>1.8||filtered.length<20){
+      ctx.font=`bold 8px ${getComputedStyle(document.body).getPropertyValue('--mono')||'Courier New'}`;
+      ctx.fillStyle=col;
+      ctx.fillText(f.callsign,p.px+sz*2+2,p.py-2);
+    }
+  }
+}
+
+function flightAt(sx,sy){
+  const flights=getActiveFlights();
+  const filtered=selectedISO?flights.filter(f=>f.country===selectedISO||!selectedISO):flights;
+  for(const f of filtered){
+    const p=project(f.lat,f.lng);
+    if(!p.visible)continue;
+    if(Math.hypot(sx-p.px,sy-p.py)<16)return f;
+  }
+  return null;
+}
+
+function openFlightBrief(f){
+  const intel=INTEL[f.country];
+  buildIntelBrief({
+    category:'MILITARY FLIGHT INTELLIGENCE'+(f.live?' · LIVE ADS-B DATA':'· HARDCODED FALLBACK'),
+    dotColor:'#a3e635',
+    title:f.callsign+' — '+f.label,
+    badges:[
+      {text:(f.cat||'MIL').toUpperCase(),style:'blue'},
+      {text:f.type,style:'blue'},
+      {text:f.country||'UNKNOWN',style:'blue'},
+      {text:(f.severity||'medium').toUpperCase(),style:f.severity||'medium'},
+    ],
+    stats:[
+      {val:f.alt?Math.round(f.alt).toLocaleString()+'ft':'—',key:'ALTITUDE'},
+      {val:f.speed?Math.round(f.speed)+'kts':'—',key:'SPEED (GS)'},
+      {val:f.heading?Math.round(f.heading)+'°':'—',key:'HEADING'},
+    ],
+    fromISO:f.country||undefined,
+    detail:f.label+'. '+
+      (intel?.threats?.[0]?.description||
+      'Military aircraft tracked via open-source ADS-B transponder data. Mission classification unknown. Track from ADS-B Exchange / adsb.lol aggregation.'),
+    actors:intel?.keyActors?.slice(0,4)||[],
+    news:intel?.news?.slice(0,3)||[
+      'Open-source aircraft tracking: ADS-B Exchange monitors 25,000+ military flights/day',
+      'USAF: INDOPACOM air posture elevated — B-52, RC-135, E-8C JSTARS deployments increased',
+      'NATO: Combined Air Power 2025 — largest air exercise since Cold War, 6,000 sorties',
+    ]
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SOCIAL INTELLIGENCE FEED
+══════════════════════════════════════════════════════════════ */
+let socialTab='reddit';
+let socialPanelOpen=false;
+let lastSocialFetch=0;
+
+const VIP_TRACKER=[
+  {name:'POTUS (Biden→Trump)',   role:'US President',          country:'USA',lat:38.9,lng:-77.0,status:'WASHINGTON DC',detail:'White House / Camp David / Mar-a-Lago rotational schedule. Air Force One callsign SAM29000.',cat:'vip'},
+  {name:'Vladimir Putin',        role:'Russian President',      country:'RUS',lat:55.7,lng:37.6,status:'MOSCOW — KREMLIN',detail:'Bunker protocol active since 2022. Travel restricted to armored convoy. FSO detail 500+. Doomsday plane Il-80 on standby.',cat:'vip'},
+  {name:'Xi Jinping',            role:'Chinese President',      country:'CHN',lat:39.9,lng:116.4,status:'BEIJING — ZHONGNANHAI',detail:'PLA Air Force B-5021 Boeing 747SP presidential transport. PLA escort protocol. CEWMD (Central Bodyguard Bureau) detail.',cat:'vip'},
+  {name:'Volodymyr Zelensky',    role:'Ukrainian President',    country:'UKR',lat:50.5,lng:30.5,status:'KYIV — UNDISCLOSED',detail:'Security detail: SBU Alpha Group, foreign contractors. Movement highly restricted. Frequently travels to Brussels, Washington via unmarked aircraft.',cat:'vip'},
+  {name:'Benjamin Netanyahu',    role:'Israeli PM',             country:'ISR',lat:31.8,lng:35.2,status:'JERUSALEM / TEL AVIV',detail:'Enhanced security post-Oct 7. ICC arrest warrant issued Nov 2024 — travel to signatory states restricted. Shin Bet VIP unit escort.',cat:'vip'},
+  {name:'Crown Prince MBS',      role:'Saudi Arabia Crown Prince',country:'SAU',lat:24.7,lng:46.7,status:'RIYADH — AL YAMAMAH',detail:'Saudi Royal Guard + US contractor protection detail. G20, UN travel with 5-aircraft convoy. Kingdom Holdings jet fleet.',cat:'vip'},
+  {name:'Yahya Sinwar (KIA)',     role:'Hamas Leader (deceased)',country:'PSE',lat:31.4,lng:34.4,status:'KIA — OCTOBER 2024',detail:'Eliminated by IDF October 16, 2024 in Rafah tunnel complex. Identified via DNA. Replaced by Sinwar brother Mohammed.',cat:'vip'},
+  {name:'Emmanuel Macron',       role:'French President',       country:'FRA',lat:48.9,lng:2.3,status:'PARIS — ÉLYSÉE',detail:'GIGN/GSPR protective detail. Airbus A330-200 MRTT (callsign F-RARF). Travel patterns: Brussels, Kyiv (armored train from Poland).',cat:'vip'},
+  {name:'Kim Jong-un',           role:'DPRK Supreme Leader',    country:'PRK',lat:39.0,lng:125.8,status:'PYONGYANG — UNDISCLOSED',detail:'Air Koryo Ilyushin Il-62 presidential aircraft. Rarely travels abroad — Moscow summit Feb 2024 by armored train. Russian intelligence liaison active.',cat:'vip'},
+];
+
+function toggleSocialPanel(){
+  socialPanelOpen=!socialPanelOpen;
+  const p=document.getElementById('social-panel');
+  if(socialPanelOpen){
+    p.style.display='flex';
+    requestAnimationFrame(()=>p.classList.add('open'));
+    if(Date.now()-lastSocialFetch>300000)fetchSocialIntel();
+  } else {
+    p.classList.remove('open');
+    setTimeout(()=>{if(!socialPanelOpen)p.style.display='none';},300);
+  }
+}
+
+function setSocialTab(tab){
+  socialTab=tab;
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('stab-'+tab)?.classList.add('active');
+  renderSocialFeed();
+}
+
+let cachedRedditPosts=[];
+let cachedFlightData=[];
+
+async function fetchSocialIntel(){
+  const feed=document.getElementById('social-feed');
+  feed.innerHTML='<div class="sf-empty">◌ Fetching open-source intelligence…</div>';
+  lastSocialFetch=Date.now();
+  document.getElementById('social-updated').textContent='';
+
+  if(socialTab==='reddit'){
+    try{
+      const subs='worldnews+geopolitics+military+ukraine+middleeast+europeanunion';
+      const r=await fetch(`https://www.reddit.com/r/${subs}/hot.json?limit=25&t=day`,
+        {headers:{'Accept':'application/json'}});
+      if(!r.ok)throw new Error();
+      const data=await r.json();
+      cachedRedditPosts=(data.data?.children||[])
+        .filter(p=>p.data&&p.data.title)
+        .map(p=>p.data);
+      document.getElementById('social-updated').textContent=new Date().toUTCString().slice(17,22)+'Z';
+      renderSocialFeed();
+    }catch(e){
+      feed.innerHTML='<div class="sf-empty">⚠ Reddit API unavailable.<br>Try refreshing — CORS proxy may be needed in some environments.</div>';
+    }
+  } else if(socialTab==='vip'){
+    renderSocialFeed();
+  } else {
+    renderSocialFeed();
+  }
+}
+
+function renderSocialFeed(){
+  const feed=document.getElementById('social-feed');
+  if(socialTab==='reddit'){
+    if(!cachedRedditPosts.length){
+      feed.innerHTML='<div class="sf-empty">Press ↻ to load Reddit intelligence feed.<br><br>Sources: r/worldnews · r/geopolitics · r/military · r/ukraine · r/middleeast</div>';
+      return;
+    }
+    feed.innerHTML=cachedRedditPosts.map(p=>`
+      <div class="sf-item" onclick="window.open('https://reddit.com${p.permalink}','_blank')">
+        <div class="sf-title">${p.title}</div>
+        <div class="sf-meta">
+          <span class="sf-sub">r/${p.subreddit}</span>
+          <span class="sf-score">▲ ${p.score?.toLocaleString()||'?'} · ${Math.round((Date.now()/1000-p.created_utc)/3600)}h ago</span>
+        </div>
+      </div>`).join('');
+  } else if(socialTab==='twitter'){
+    feed.innerHTML=`<div class="sf-empty">
+      <strong style="color:#60a5fa">X / Twitter Integration</strong><br><br>
+      X API v2 requires OAuth 2.0 bearer token — cannot authenticate from browser without a backend proxy.<br><br>
+      <strong style="color:#f59e0b">Recommended open-source feeds:</strong><br>
+      • Nitter instances (Twitter mirror)<br>
+      • OSINT Twitter lists via RSS bridges<br>
+      • Bellingcat live feeds<br>
+      • ACLED Twitter / @ConflictAlert<br><br>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+        <a href="https://x.com/bellingcat" target="_blank" style="color:#93c5fd;font-size:10px">→ @Bellingcat (verified OSINT)</a>
+        <a href="https://x.com/RALee85" target="_blank" style="color:#93c5fd;font-size:10px">→ @RALee85 (Russia military analyst)</a>
+        <a href="https://x.com/IntelCrab" target="_blank" style="color:#93c5fd;font-size:10px">→ @IntelCrab (conflict intel)</a>
+        <a href="https://x.com/OSINTdefender" target="_blank" style="color:#93c5fd;font-size:10px">→ @OSINTdefender</a>
+        <a href="https://x.com/MilMilitary" target="_blank" style="color:#93c5fd;font-size:10px">→ Military activity tracking</a>
+      </div>
+    </div>`;
+  } else if(socialTab==='vip'){
+    feed.innerHTML=VIP_TRACKER.map(v=>`
+      <div class="sf-item vip" onclick="globe_focusVIP(${v.lat},${v.lng},'${v.name}','${v.status}')">
+        <div class="sf-flight-row">
+          <span class="sf-callsign">♦ ${v.name}</span>
+        </div>
+        <div style="font-size:9px;color:#a855f7;letter-spacing:.1em;margin-bottom:4px">${v.role} · ${v.country}</div>
+        <div style="font-size:10px;color:var(--dim);line-height:1.5;margin-bottom:5px">${v.detail}</div>
+        <div class="sf-meta"><span style="color:#fbbf24">📍 ${v.status}</span></div>
+      </div>`).join('');
+  }
+}
+
+function globe_focusVIP(lat,lng,name,status){
+  // Rotate globe to VIP location
+  rotY=-lng*Math.PI/180;
+  rotX=-lat*Math.PI/180;
+  document.getElementById('h-status').textContent='VIP TRACKER: '+name+' — '+status;
+  setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},5000);
+}
+
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   // ── Star field
@@ -3695,6 +4719,7 @@ function draw(){
   if(activeLayers.naval)     drawNavalAssets();
   if(activeLayers.money)     drawFinancialFlows();
   if(activeLayers.refugees)  drawRefugeeFlows();
+  if(activeLayers.flights)   drawFlights();
   drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -3986,9 +5011,24 @@ canvas.addEventListener('mouseup',e=>{
   if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
   const dx=e.clientX-lastX,dy=e.clientY-lastY;
   if(Math.abs(dx)<5&&Math.abs(dy)<5){
-    // Priority order: hotspot dot → tracking layers → country (double-click)
+    // Priority: flight → hotspot (double-click) → tracking layers → country (double-click)
+    if(activeLayers.flights){const fl=flightAt(e.clientX,e.clientY);if(fl){openFlightBrief(fl);return;}}
     const hs=hotspotAt(e.clientX,e.clientY);
-    if(hs){openHotspot(hs);return;}
+    if(hs){
+      const now=Date.now();
+      const isDbl=(lastClickHS===hs.label&&now-lastClickHSTime<DBL_CLICK_MS&&Math.hypot(e.clientX-lastClickHSPX,e.clientY-lastClickHSPY)<DBL_CLICK_PX);
+      lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=e.clientX;lastClickHSPY=e.clientY;
+      if(isDbl){openHotspot(hs);}
+      else{
+        const tt=document.getElementById('tooltip');
+        document.getElementById('tt-name').textContent=hs.label;
+        document.getElementById('tt-alert').textContent='Double-click to open';
+        document.getElementById('tt-alert').style.color='#f59e0b';
+        tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
+        setTimeout(()=>{tt.style.opacity='0';},1400);
+      }
+      return;
+    }
     if(activeLayers.naval){
       const na=navalAssetAt(e.clientX,e.clientY);
       if(na){openNavalBrief(na);return;}
@@ -4085,8 +5125,15 @@ canvas.addEventListener('touchend',e=>{
       const t=e.changedTouches[0];
       const dx=t.clientX-lastX,dy=t.clientY-lastY;
       if(Math.abs(dx)<8&&Math.abs(dy)<8){
+        if(activeLayers.flights){const fl=flightAt(t.clientX,t.clientY);if(fl){openFlightBrief(fl);return;}}
         const hs=hotspotAt(t.clientX,t.clientY);
-        if(hs){openHotspot(hs);return;}
+        if(hs){
+          const now=Date.now();
+          const isDbl=(lastClickHS===hs.label&&now-lastClickHSTime<DBL_CLICK_MS&&Math.hypot(t.clientX-lastClickHSPX,t.clientY-lastClickHSPY)<DBL_CLICK_PX);
+          lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=t.clientX;lastClickHSPY=t.clientY;
+          if(isDbl){openHotspot(hs);}
+          return;
+        }
         if(activeLayers.naval){
           const na=navalAssetAt(t.clientX,t.clientY);
           if(na){openNavalBrief(na);return;}
