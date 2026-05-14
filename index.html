@@ -1270,9 +1270,6 @@ function openCountry(iso){
     ?'<div class="sec-label">CONFLICT RELATIONSHIPS</div>'+cfs.map(c=>`<div class="conflict-item"><div class="cf-head"><span class="cf-countries">${c.fromName} → ${c.toName}</span><span class="cf-sev ${c.severity}">${c.severity.toUpperCase()}</span></div><div class="cf-meta"><span class="cf-type">${c.type.replace(/_/g,' ').toUpperCase()}</span><span class="cf-label">${c.label}</span></div></div>`).join('')
     :'<p class="no-data">No active conflict relationships.</p>';
   document.getElementById('p-updated').textContent='Updated: '+new Date().toLocaleTimeString();
-  const panel=document.getElementById('panel');
-  panel.classList.remove('fullscreen');  // reset any prior fullscreen
-  document.getElementById('p-expand').textContent='⤢';
   panel.style.transform='';             // clear any drag offset
   panel.classList.add('open');
   showTab('summary');
