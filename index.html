@@ -780,6 +780,46 @@ const COUNTRIES = {
     poly:[[41,68],[41,75],[37,73],[37,68],[41,68]]},
   KGZ:{iso:'KGZ',numericId:417,name:'Kyrgyzstan',     capital:'Bishkek',     alertLevel:'MEDIUM',   lat:41.2, lng:74.8,
     poly:[[43,70],[43,80],[40,80],[40,70],[43,70]]},
+  // West Africa — Sahel Crisis Belt
+  BFA:{iso:'BFA',numericId:854,name:'Burkina Faso',   capital:'Ouagadougou', alertLevel:'CRITICAL', lat:12.4, lng:-1.6,
+    poly:[[15,-5],[15,2],[10,2],[10,-5],[15,-5]]},
+  NER:{iso:'NER',numericId:562,name:'Niger',           capital:'Niamey',      alertLevel:'CRITICAL', lat:17.6, lng:8.1,
+    poly:[[23,2],[23,15],[12,15],[12,2],[23,2]]},
+  TCD:{iso:'TCD',numericId:148,name:'Chad',            capital:"N'Djamena",   alertLevel:'HIGH',     lat:15.5, lng:18.7,
+    poly:[[24,14],[24,24],[8,24],[8,14],[24,14]]},
+  SEN:{iso:'SEN',numericId:686,name:'Senegal',         capital:'Dakar',       alertLevel:'MEDIUM',   lat:14.5, lng:-14.5,
+    poly:[[16,-17],[16,-11],[12,-11],[12,-17],[16,-17]]},
+  GHA:{iso:'GHA',numericId:288,name:'Ghana',           capital:'Accra',       alertLevel:'MEDIUM',   lat:7.9,  lng:-1.0,
+    poly:[[11,-3],[11,1],[5,1],[5,-3],[11,-3]]},
+  CIV:{iso:'CIV',numericId:384,name:"Côte d'Ivoire",  capital:'Yamoussoukro',alertLevel:'MEDIUM',   lat:7.5,  lng:-5.5,
+    poly:[[10,-8],[10,-3],[4,-3],[4,-8],[10,-8]]},
+  AGO:{iso:'AGO',numericId:24,  name:'Angola',         capital:'Luanda',      alertLevel:'MEDIUM',   lat:-11.2,lng:17.9,
+    poly:[[-5,12],[-5,24],[-18,24],[-18,12],[-5,12]]},
+  // South/SE Asia additions
+  BGD:{iso:'BGD',numericId:50,  name:'Bangladesh',     capital:'Dhaka',       alertLevel:'HIGH',     lat:23.7, lng:90.4,
+    poly:[[26,88],[26,92],[21,92],[21,88],[26,88]]},
+  NPL:{iso:'NPL',numericId:524, name:'Nepal',          capital:'Kathmandu',   alertLevel:'MEDIUM',   lat:28.4, lng:84.1,
+    poly:[[30,80],[30,88],[26,88],[26,80],[30,80]]},
+  LKA:{iso:'LKA',numericId:144, name:'Sri Lanka',      capital:'Colombo',     alertLevel:'MEDIUM',   lat:7.9,  lng:80.8,
+    poly:[[10,79],[10,82],[6,82],[6,79],[10,79]]},
+  SGP:{iso:'SGP',numericId:702, name:'Singapore',      capital:'Singapore',   alertLevel:'LOW',      lat:1.4,  lng:103.8,
+    poly:[[1.2,103.6],[1.5,104.0],[1.2,104.0],[1.2,103.6]]},
+  LAO:{iso:'LAO',numericId:418, name:'Laos',           capital:'Vientiane',   alertLevel:'MEDIUM',   lat:17.9, lng:102.5,
+    poly:[[23,100],[23,106],[15,108],[15,102],[20,100],[23,100]]},
+  // Balkans
+  XKX:{iso:'XKX',numericId:0,   name:'Kosovo',         capital:'Pristina',    alertLevel:'MEDIUM',   lat:42.6, lng:20.9,
+    poly:[[43.3,20.0],[43.3,21.8],[41.9,21.8],[41.9,20.0],[43.3,20.0]]},
+  // Latin America additions
+  NIC:{iso:'NIC',numericId:558, name:'Nicaragua',      capital:'Managua',     alertLevel:'HIGH',     lat:12.9, lng:-85.2,
+    poly:[[15,-87],[15,-83],[11,-84],[11,-87],[15,-87]]},
+  CRI:{iso:'CRI',numericId:188, name:'Costa Rica',     capital:'San José',    alertLevel:'LOW',      lat:9.7,  lng:-83.8,
+    poly:[[11,-85],[11,-83],[8,-83],[8,-85],[11,-85]]},
+  PAN:{iso:'PAN',numericId:591, name:'Panama',         capital:'Panama City', alertLevel:'MEDIUM',   lat:8.5,  lng:-80.8,
+    poly:[[10,-82],[10,-78],[7,-78],[7,-82],[10,-82]]},
+  PRY:{iso:'PRY',numericId:600, name:'Paraguay',       capital:'Asunción',    alertLevel:'MEDIUM',   lat:-23.4,lng:-58.4,
+    poly:[[-19,-63],[-19,-55],[-27,-55],[-27,-63],[-19,-63]]},
+  URY:{iso:'URY',numericId:858, name:'Uruguay',        capital:'Montevideo',  alertLevel:'LOW',      lat:-32.5,lng:-55.8,
+    poly:[[-30,-58],[-30,-53],[-35,-53],[-35,-58],[-30,-58]]},
 };
 
 const CONFLICTS = [
@@ -825,6 +865,28 @@ const CONFLICTS = [
   {from:'SDN',to:'SDN',type:'war',       label:'SAF-RSF Civil War — Genocide Risk',       severity:'critical'},
   {from:'ETH',to:'ETH',type:'conflict',  label:'Tigray/Amhara Internal Conflict',        severity:'high'},
   {from:'SOM',to:'SOM',type:'conflict',  label:'Al-Shabaab Insurgency',                  severity:'high'},
+  // Sahel Belt
+  {from:'BFA',to:'BFA',type:'war',       label:'JNIM/ISGS — Burkina Faso Insurgency',     severity:'critical'},
+  {from:'NER',to:'NER',type:'conflict',  label:'IS-Sahel — Niger Expansion',               severity:'critical'},
+  {from:'TCD',to:'SDN',type:'crisis',    label:'Sudan → Chad Refugee Spillover',           severity:'high'},
+  {from:'MLI',to:'BFA',type:'conflict',  label:'JNIM Cross-Border Operations',             severity:'critical'},
+  {from:'CIV',to:'BFA',type:'conflict',  label:'JNIM Northern Côte d\'Ivoire Raids',       severity:'high'},
+  // Latin America
+  {from:'MEX',to:'USA',type:'crime',     label:'Sinaloa + CJNG Fentanyl Networks',         severity:'critical'},
+  {from:'COL',to:'MEX',type:'crime',     label:'Colombia Cocaine Pipeline',                severity:'critical'},
+  {from:'VEN',to:'COL',type:'crisis',    label:'Venezuela-Colombia Migration Crisis',       severity:'high'},
+  {from:'HTI',to:'HTI',type:'conflict',  label:'Haiti Gang Control (Viv Ansanm)',           severity:'critical'},
+  {from:'NIC',to:'NIC',type:'political', label:'Ortega Repression — Political Prisoners',  severity:'high'},
+  // SE Asia / Asia
+  {from:'MMR',to:'MMR',type:'war',       label:'Myanmar Civil War — Junta vs Alliance',     severity:'critical'},
+  {from:'MMR',to:'BGD',type:'crisis',    label:'Rohingya — Arakan Army Rakhine Conflict',   severity:'critical'},
+  {from:'CHN',to:'LAO',type:'debt',      label:'China Laos Railway Debt Trap',              severity:'high'},
+  {from:'BGD',to:'BGD',type:'political', label:'Bangladesh Post-Hasina Transition',         severity:'high'},
+  {from:'LKA',to:'LKA',type:'crisis',    label:'Sri Lanka Debt Restructuring',              severity:'medium'},
+  // Kosovo / Balkans
+  {from:'SRB',to:'XKX',type:'conflict',  label:'Kosovo-Serbia Frozen Conflict',             severity:'high'},
+  // Pacific
+  {from:'PAN',to:'USA',type:'dispute',   label:'Panama Canal — Hutchison/China Dispute',    severity:'high'},
 ];
 
 /* Threat hotspot pins — embedded base layer (supplemented by live GDELT) */
@@ -910,6 +972,33 @@ const HOTSPOTS = [
   {lat:6.9,  lng:31.6, country:'SSD',type:'active_conflict', label:'South Sudan — Civil War Resurgence',        severity:'critical'},
   {lat:5.0,  lng:37.1, country:'ETH',type:'active_conflict', label:'Amhara — Fano Militia Conflict',            severity:'high'},
   {lat:-13.3,lng:35.0, country:'MOZ',type:'terrorism',       label:'Cabo Delgado — ISKP Mozambique',            severity:'high'},
+  // Sahel Crisis Belt
+  {lat:12.4, lng:-1.6,  country:'BFA',type:'active_conflict',label:'Burkina Faso — JNIM / ISGS Insurgency',       severity:'critical'},
+  {lat:14.2, lng:1.5,   country:'NER',type:'active_conflict',label:'Niger — Coup + IS-Sahel Expansion',           severity:'critical'},
+  {lat:15.5, lng:18.7,  country:'TCD',type:'active_conflict',label:'Chad — Sudan Refugee Crisis + ISWAP',         severity:'high'},
+  {lat:12.4, lng:-1.1,  country:'BFA',type:'terrorism',      label:'Djibo Siege — 300,000 Civilians Encircled',   severity:'critical'},
+  {lat:14.2, lng:13.3,  country:'NER',type:'terrorism',      label:'Tillabéri — IS-Sahel Deadly Attacks',         severity:'critical'},
+  // Bangladesh / South Asia
+  {lat:23.7, lng:90.4,  country:'BGD',type:'active_conflict',label:'Bangladesh — Post-Hasina Transition Crisis',  severity:'high'},
+  {lat:21.4, lng:92.0,  country:'BGD',type:'humanitarian',   label:'Cox\'s Bazar — 1.1M Rohingya Refugees',       severity:'high'},
+  {lat:28.2, lng:84.1,  country:'NPL',type:'climate',        label:'Nepal — Himalayan Glacial Flood Risk',         severity:'high'},
+  // Kosovo
+  {lat:42.9, lng:20.9,  country:'XKX',type:'active_conflict',label:'North Kosovo — Serbia Armed Flashpoint',      severity:'high'},
+  // SE Asia additions
+  {lat:17.9, lng:102.5, country:'LAO',type:'crime',          label:'Golden Triangle — Meth Transit Hub',           severity:'high'},
+  {lat:1.4,  lng:103.8, country:'SGP',type:'political',      label:'Singapore — US-China Tech Decoupling Hub',    severity:'medium'},
+  // Latin America / Caribbean additions
+  {lat:12.9, lng:-85.2, country:'NIC',type:'political',      label:'Nicaragua — Ortega Authoritarian Crackdown',   severity:'high'},
+  {lat:8.5,  lng:-79.5, country:'PAN',type:'political',      label:'Panama Canal — Hutchison/China Port Dispute',  severity:'high'},
+  {lat:9.1,  lng:-79.5, country:'PAN',type:'humanitarian',   label:'Darién Gap — 500,000 Migrants/Year',           severity:'high'},
+  {lat:-25.2,lng:-57.6, country:'PRY',type:'crime',          label:'Ciudad del Este — PCC Narco Network',          severity:'high'},
+  // West Africa
+  {lat:7.5,  lng:-5.5,  country:'CIV',type:'terrorism',      label:'Côte d\'Ivoire North — JNIM Border Raids',    severity:'high'},
+  {lat:5.6,  lng:-0.2,  country:'GHA',type:'political',      label:'Ghana — Economic Recovery / Debt Crisis',      severity:'medium'},
+  {lat:-8.8, lng:13.2,  country:'AGO',type:'political',      label:'Angola — Chinese Debt / Oil Dependency',       severity:'medium'},
+  // Sri Lanka / Singapore
+  {lat:6.9,  lng:79.9,  country:'LKA',type:'political',      label:'Sri Lanka — Post-Default Economic Recovery',   severity:'medium'},
+  {lat:1.35, lng:103.82,country:'SGP',type:'political',      label:'Hutchison Ports — US-China Chokepoint',        severity:'medium'},
 ];
 const HOTSPOT_COLORS={
   active_conflict:'rgba(239,68,68,1)',nuclear:'rgba(239,68,68,1)',
@@ -2556,9 +2645,210 @@ const INTEL = {
     news:["Bolivia coup attempt: tanks ram palace gates — General Zúñiga arrested within 6 hours","Morales-Arce split: MAS fractures ahead of 2025 election, Morales barred from running","Bolivia lithium: $2.5B Chinese CATL joint venture — largest resource deal in history","Bolivia: IMF emergency: $500M, currency reserves depleted — dollarization debate","Chapare: 31,000 hectares coca — eradication program 50% funded by US"],
     economic:"GDP $45B. Lithium: world's largest reserves (23M tonnes). Gas exports declining. Soy, quinoa. Fiscal crisis: subsidies consuming 5% GDP. Poverty 38%. Growth 2.5%.",
   },
+  // ── Sahel Crisis Belt ──
+  BFA:{
+    summary:"Burkina Faso is experiencing one of the world's fastest-deteriorating humanitarian crises. The military junta of Captain Ibrahim Traoré (in power since Oct 2022) has expelled French forces, terminated the ECOWAS military partnership, invited Russia's Africa Corps (Wagner successor), and controls less than 60% of national territory. Islamist groups JNIM and ISGS operate freely across the north and east.",
+    threats:[
+      {type:"Islamist Insurgency",description:"JNIM (al-Qaeda affiliate) and ISGS (IS affiliate) control large swaths of northern/eastern Burkina. Siege of Djibo: 300,000 people cut off. 2024: 8,000+ deaths. Burkina now one of world's deadliest insurgencies.",severity:"critical",confidence:"HIGH",probability:95,source:"ACLED/UN"},
+      {type:"Military Junta / Governance Collapse",description:"Junta banned opposition parties, suspended elections indefinitely, expelled French Sahelian Force and US AFRICOM. Press freedom: RSF ranks BFA 86th. Internet shutdowns during attacks.",severity:"high",confidence:"HIGH",probability:90,source:"RSF/Human Rights Watch"},
+      {type:"Humanitarian Crisis",description:"2M+ internally displaced. WFP: 4.7M facing acute food insecurity — 1M in emergency. Health system: 60% of facilities closed in conflict zones. Cholera outbreaks.",severity:"critical",confidence:"HIGH",probability:95,source:"OCHA/WFP"},
+      {type:"Russian Influence",description:"Africa Corps (Wagner successor) deployed ~2,000 personnel. Gold mining concessions transferred to Russian entities. 2024: Gold exports diverted through UAE.",severity:"high",confidence:"HIGH",probability:85,source:"Reuters/Le Monde"},
+    ],
+    keyActors:["Capt. Ibrahim Traoré (junta leader)","JNIM (Jama'at Nusrat al-Islam)","ISGS (IS-Sahel)","Africa Corps (Russia)","Apollinaire Kyélem (PM)"],
+    news:["Burkina Faso: JNIM siege of Djibo enters 3rd year — 300,000 civilians trapped","Traoré expels French ambassador, terminates defense cooperation agreement","Africa Corps troops arrive at Ouagadougou military base — 1,800 deployed","WFP: 4.7M facing acute hunger in Burkina — worst in 15 years","Gold coup: Burkina junta nationalizes 15% of foreign mining revenue"],
+    economic:"GDP $19B. Gold mining: 50% export revenue — junta restructuring contracts. Cotton, agriculture. Conflict reducing arable land: 30% of farms abandoned. Severe aid dependency: $600M/year.",
+  },
+  NER:{
+    summary:"Niger's July 2023 military coup against President Bazoum created a strategic realignment in the Sahel. The CNSP junta expelled French and US forces, joined Mali and Burkina Faso in the Alliance of Sahel States (AES), and opened channels with Russia. Niger was historically a key uranium supplier to France and a critical US counterterrorism base (Agadez drone base, 1,000 US troops departed 2024).",
+    threats:[
+      {type:"US/French Withdrawal & Security Vacuum",description:"US closed Agadez Air Base — largest US drone base in Africa. France expelled. AES alliance with Mali/BFA creates anti-Western bloc. ISGS expanding in Tillabéri, Diffa regions — 2024: 3,000+ killed.",severity:"critical",confidence:"HIGH",probability:90,source:"Pentagon/Reuters"},
+      {type:"Islamist Expansion",description:"ISGS and JNIM exploit post-coup security vacuum. Lake Chad basin: ISWAP/Boko Haram spillover. Agadez region: kidnapping, roadblocks. 700,000+ displaced.",severity:"high",confidence:"HIGH",probability:88,source:"ACLED"},
+      {type:"Uranium Leverage",description:"Niger: 5th largest uranium producer — 5% of global supply. France's Orano mining expelled. Russia/China negotiating concessions. Potential EU supply chain vulnerability.",severity:"medium",confidence:"HIGH",probability:70,source:"IAEA/World Nuclear Association"},
+      {type:"Humanitarian Impact",description:"ECOWAS sanctions post-coup caused medicine/food shortages. 4M food insecure. US aid suspension ($500M). Healthcare system near collapse.",severity:"high",confidence:"HIGH",probability:85,source:"OCHA/USAID"},
+    ],
+    keyActors:["Gen. Abdourahamane Tchiani (CNSP leader)","ISGS commander (unnamed)","ECOWAS pressure coalition","Orano (France, expelled)","Wagner/Africa Corps presence"],
+    news:["Niger orders US military to leave — 1,000 troops exit Agadez Air Base by September 2024","Niger, Mali, Burkina Faso form Alliance of Sahel States — create joint defense force","ISGS attack: 300 civilians killed in Tillabéri — deadliest single attack in Niger's history","France's Orano uranium mine seized — $1.3B asset nationalized by junta","Niger joins Russia's Africa Corps framework — joint military exercises begin"],
+    economic:"GDP $17B. Uranium: historically 6% GDP. Oil pipeline to Benin: suspended amid coup tensions. Agriculture 40% of GDP. Extreme poverty: 50% below $2.15/day. ECOWAS sanctions cost: $1B.",
+  },
+  TCD:{
+    summary:"Chad under President Mahamat Idriss Déby (son of assassinated President Idriss Déby) has consolidated power through a managed transition. France announced withdrawal from Chad in late 2024. Chad hosts 1M+ refugees from Sudan's civil war and faces growing Sahel instability on its western flank. The country is a key node for remaining Western counterterrorism operations in the Sahel.",
+    threats:[
+      {type:"Sudan Refugee Crisis",description:"Sudan civil war since April 2023: 700,000+ fled to Chad. Eastern Chad infrastructure overwhelmed. UNHCR: 500,000 in camps, 200,000+ self-settling. Conflict risk: armed fighters mixing with civilians.",severity:"high",confidence:"HIGH",probability:90,source:"UNHCR/OCHA"},
+      {type:"Boko Haram / ISWAP Lake Chad",description:"Lake Chad Basin: ISWAP and Boko Haram splinters active in Lac Province. 2024: 200+ civilian deaths, 50,000 displaced. Multi-national force (MNJTF) degraded by Sahel pullbacks.",severity:"high",confidence:"HIGH",probability:80,source:"ACLED"},
+      {type:"Political Transition Risk",description:"Mahamat Déby won disputed presidential election May 2024. Opposition: elections rigged. Constitutional referendum passed, consolidating presidential powers. Coup risk: military factions loyal to old guard.",severity:"medium",confidence:"MEDIUM",probability:45,source:"ICG/Reuters"},
+      {type:"French Military Withdrawal",description:"France announced withdrawal of 1,000 troops from Chad — end of 60-year military presence. US scrambling to maintain ISR access at N'Djamena. Chad tilting toward Gulf States/Russia.",severity:"medium",confidence:"HIGH",probability:80,source:"Le Monde/AFP"},
+    ],
+    keyActors:["President Mahamat Idriss Déby","Prime Minister Allamaye Halina","ISWAP/Boko Haram commanders","UNHCR (700K Sudan refugees)","France (withdrawing)"],
+    news:["France announces end to military presence in Chad — final troops depart 2025","Sudan civil war drives 700,000 refugees into eastern Chad — crisis declared","Mahamat Déby wins presidential vote — opposition alleges fraud, protests suppressed","ISWAP attacks Lake Chad fishing communities — 5,000 displaced in single week","Chad signs Gulf investment deals worth $4B with UAE and Saudi Arabia"],
+    economic:"GDP $12B. Oil: 90% export revenue — declining production from 2003 Doba fields. Agriculture: 80% of employment. Debt: 77% of GDP. Remittance dependent. Extreme poverty: 42%.",
+  },
+  SEN:{
+    summary:"Senegal made a historic democratic transition in 2024 — the first transfer of power via election since independence. Opposition leader Bassirou Diomaye Faye won March 2024 elections, defeating candidates aligned with former President Macky Sall. Faye's government is renegotiating oil/gas contracts and asserting sovereignty, while managing migration pressures and Casamance separatism.",
+    threats:[
+      {type:"Resource Contract Disputes",description:"Faye government reviewing BP, Kosmos Energy oil/gas contracts. $5B Greater Tortue LNG project: renegotiation underway. Risk of investor flight vs. demand for better revenue terms.",severity:"medium",confidence:"MEDIUM",probability:55,source:"Reuters/Financial Times"},
+      {type:"Migration Crisis",description:"2024: 15,000+ Senegalese attempted Atlantic crossing to Canary Islands. Smuggling networks from Dakar, Ziguinchor. EU funding border control at €210M. Root cause: youth unemployment 40%.",severity:"medium",confidence:"HIGH",probability:75,source:"IOM/EU Frontex"},
+      {type:"Casamance Separatism",description:"MFDC separatists: 40+ year conflict in southern Casamance. Low-level armed activity continues. Faye government: peace dialogue initiated. Cross-border arms from Guinea-Bissau.",severity:"low",confidence:"MEDIUM",probability:30,source:"ICG"},
+    ],
+    keyActors:["President Bassirou Diomaye Faye","PM Ousmane Sonko","MFDC (separatists)","BP/Kosmos Energy","ECOWAS Secretariat"],
+    news:["Senegal democratic transfer: Faye wins, Macky Sall concedes — praised as African democratic model","Senegal oil production begins: Greater Tortue LNG first export — $1.4B revenue projected","Faye government demands renegotiation of gas contracts — BP warns of project delays","Atlantic migration: 15,000 Senegalese cross to Canary Islands in record year","Casamance: Faye meets MFDC leaders — first peace talks in 5 years"],
+    economic:"GDP $32B. Oil/gas: first production 2024 — transformative. Phosphates, groundnuts, fishing. Tourism: $600M. Youth unemployment: 40%. Growth: 8% projected 2025 with energy revenues.",
+  },
+  GHA:{
+    summary:"Ghana is emerging from a severe economic crisis sparked by COVID-19 debt overhang and commodity price shocks. The 2022 debt default — first in 40 years — required an IMF bailout of $3B. President John Mahama returned to power (Dec 2024 election) and is leading debt restructuring. Ghana remains one of West Africa's most stable democracies despite economic turmoil.",
+    threats:[
+      {type:"Debt Crisis & Economic Recovery",description:"Ghana defaulted 2022 — $30B external debt. IMF $3B program. 2024: Eurobond restructuring completed. Inflation peaked at 54% (2023), declining to 23% by 2024. Cocoa sector: disease wiping 40% of harvest.",severity:"medium",confidence:"HIGH",probability:60,source:"IMF/World Bank"},
+      {type:"Sahel Spillover Risk",description:"Northern Ghana borders Burkina Faso — Islamist insurgents making incursions. 2024: attacks in Savannah Region. Security services overstretched. Small-arms proliferation across border.",severity:"medium",confidence:"MEDIUM",probability:45,source:"ACLED/ECOWAS"},
+      {type:"Illegal Gold Mining",description:"Galamsey (illegal mining): destroying rivers, cocoa farms. 2024 crackdown: 500 arrested. Chinese nationals involved in organized operations. Environmental damage: $2B cost.",severity:"medium",confidence:"HIGH",probability:80,source:"Reuters/Al Jazeera"},
+    ],
+    keyActors:["President John Mahama","Finance Minister Cassiel Ato Forson","IMF Mission Chief","ECOWAS leadership","Cocoa Board (COCOBOD)"],
+    news:["Ghana Eurobond restructuring deal completed — $13B debt renegotiated with creditors","Mahama wins 2024 election — returns as president, pledges economic recovery","Cocoa disease: swollen shoot virus kills 40% of trees — $1.4B annual loss","Ghana: Sahel warning — BFA insurgents cross border, kill 3 soldiers in north","IMF 3rd review: Ghana program on track — $600M tranche released"],
+    economic:"GDP $76B. Gold: largest export (40%). Cocoa: 2nd. Oil production: 170,000 bpd. Inflation: declining from 54% peak. IMF restructuring: debt/GDP dropping from 105% toward 85% by 2026.",
+  },
+  CIV:{
+    summary:"Côte d'Ivoire remains West Africa's largest economy and a key regional stabilizer. President Alassane Ouattara's third term (2020) continues amid persistent north-south political tensions. Côte d'Ivoire faces growing Sahel spillover from Burkina Faso — jihadist incursions in 2024 in the north. The country produces 45% of world's cocoa.",
+    threats:[
+      {type:"Jihadist Northern Incursions",description:"JNIM and affiliated groups making cross-border raids from BFA. 2024: attacks on Kafolo military post, 10 soldiers killed. Risk of permanent safe-haven establishment in northern forests.",severity:"high",confidence:"HIGH",probability:65,source:"ACLED"},
+      {type:"Political Succession Risk",description:"Ouattara 82 years old — succession debate. 2025 presidential elections: opposition demanding fair process. Historical 2010-2011 civil war risk if disputed results repeat.",severity:"medium",confidence:"MEDIUM",probability:40,source:"ICG/AFP"},
+      {type:"Cocoa Price Volatility",description:"Cocoa hit record $10,000/tonne (2024). Ivorian government fixing farmgate price below market — farmer unrest. El Niño drought reduced harvest 25%. EU deforestation regulation affecting exports.",severity:"medium",confidence:"HIGH",probability:70,source:"Reuters/ICCO"},
+    ],
+    keyActors:["President Alassane Ouattara","FPI (Gbagbo party)","JNIM cross-border commanders","World Cocoa Foundation","Bolloré Africa Logistics"],
+    news:["Côte d'Ivoire: JNIM attack on northern Kafolo base — 10 soldiers killed","Cocoa: Ivory Coast and Ghana demand $400/tonne premium from chocolate companies","Ouattara: 2025 election — opposition calls for term limit enforcement","EU deforestation regulation: Côte d'Ivoire cocoa faces EU market restrictions","Abidjan metro opens Phase 1 — $1.4B Chinese-financed infrastructure project"],
+    economic:"GDP $78B. Cocoa: 45% world supply, 25% export revenue. Oil refining, cashews. Growth 6.5%. Infrastructure investment: $4B/year Chinese-financed. Income inequality: Gini 41.",
+  },
+  AGO:{
+    summary:"Angola is Africa's 2nd largest oil producer and a key geopolitical pivot between Western energy interests and China's Belt & Road footprint. President João Lourenço has pursued IMF reforms and anti-corruption measures since 2017. Angola exited OPEC in 2023. Key risk: oil revenue dependency as reserves decline.",
+    threats:[
+      {type:"Oil Revenue Dependency",description:"Oil: 90% of exports, 70% of government revenue. Production declining from 1.9M bpd peak to 1.1M bpd. 2024 fields: Block 15, 17 depleting. New deep-water blocks attracting TotalEnergies, BP, ExxonMobil.",severity:"medium",confidence:"HIGH",probability:75,source:"IEA/Angola MINPET"},
+      {type:"DRC Border Instability",description:"Angola-DRC border: M23/Rwanda spillover affecting Cabinda province. 2024: small arms trafficking, refugee movement. Cabinda enclave: FLEC separatists low-level. Angola peacekeeping in DRC: 500 troops.",severity:"medium",confidence:"MEDIUM",probability:40,source:"UN/Reuters"},
+      {type:"Chinese Debt",description:"Angola: Africa's largest Chinese debtor — $25B owed to Chinese banks (ExIm, CDB). Oil-for-infrastructure deals. Debt service: consuming 30% of state revenue. IMF: restructuring talks.",severity:"medium",confidence:"HIGH",probability:65,source:"AidData/IMF"},
+    ],
+    keyActors:["President João Lourenço","Sonangol (state oil company)","TotalEnergies/BP/ExxonMobil","China Development Bank","IMF Luanda mission"],
+    news:["Angola OPEC exit confirmed — Lourenço pursues independent production strategy","TotalEnergies: $6B Cameia-Golfinho deepwater project approved in Block 20","Angola-DRC mediation: Lourenço hosts Tshisekedi-Kagame talks in Luanda","Chinese debt: Angola renegotiates $5B with Sinosure — 10-year extension","IMF Angola review: anti-corruption progress cited, $1.5B facility approved"],
+    economic:"GDP $124B. Oil: 90% exports. Diamond mining: $2B/year. Agriculture recovering. Chinese FDI: $3B/year. Growth: 3.4%. Kwanza stabilizing after 2020 devaluation. Poverty: 32%.",
+  },
+  // ── South/SE Asia ──
+  BGD:{
+    summary:"Bangladesh underwent a dramatic political rupture in 2024. Prime Minister Sheikh Hasina fled to India in August 2024 following mass student protests — the 'July Revolution' — that killed 300+. A UN-backed interim government led by Nobel laureate Muhammad Yunus is governing, overseeing promised elections and accountability for killings. The country faces economic fragility, garment sector dependence, and Rohingya refugee burden.",
+    threats:[
+      {type:"Political Transition Instability",description:"Sheikh Hasina regime collapsed Aug 5, 2024. Interim govt: Muhammad Yunus leading. Awami League networks dismantled. BNP, Jamaat demanding elections. Military: backstop but not in direct power. Risk of factional violence during election period.",severity:"high",confidence:"HIGH",probability:65,source:"Reuters/ICG"},
+      {type:"Rohingya Refugee Crisis",description:"Bangladesh hosts 1.1M Rohingya refugees — world's largest camp (Cox's Bazar). ARSA (Arakan Rohingya Salvation Army) active in camps. Arms smuggling. 2024: repatriation to Myanmar impossible. Donor fatigue: UNHCR funding 50% gap.",severity:"high",confidence:"HIGH",probability:90,source:"UNHCR/AP"},
+      {type:"Climate Vulnerability",description:"Bangladesh: among most climate-vulnerable nations. 2024: worst floods in 20 years — 5M displaced. 80% of land under 10m elevation. Sea level rise threatening coastal agriculture. $1B annual climate damage.",severity:"high",confidence:"HIGH",probability:85,source:"World Bank/IPCC"},
+      {type:"Garment Sector Risk",description:"RMG: 85% of exports ($47B). Factory safety post-Rana Plaza improving but enforcement gaps. US/EU trade preference under review due to human rights concerns during Hasina era.",severity:"medium",confidence:"MEDIUM",probability:50,source:"ILO/BGMEA"},
+    ],
+    keyActors:["Muhammad Yunus (interim PM)","Gen. Waker-uz-Zaman (Army Chief)","BNP leadership","ARSA in Cox's Bazar","BGMEA (garment exporters)"],
+    news:["Sheikh Hasina flees Bangladesh — student revolution ends 15-year rule, 300+ killed","Yunus government: ICC referral for Hasina-era killings — accountability process begins","Bangladesh floods 2024: worst in 2 decades — 5.5M displaced, $2B damage","Rohingya: UNHCR warns funding crisis — 50% gap, rations cut at Cox's Bazar","Bangladesh garment sector: $47B exports — EU GSP review pending human rights audit"],
+    economic:"GDP $460B (PPP). Garments: 85% exports. Remittances: $22B. Growth: 6% (slowing from 7%). Inflation: 10%. Foreign reserves: $19B (3 months import cover). IMF program: $4.7B.",
+  },
+  NPL:{
+    summary:"Nepal maintains a delicate balance between India and China — the 'two boulders' of Nepali geopolitics. Persistent political instability (10 governments in 15 years) has hampered development. Nepal faces severe climate vulnerability in the Himalayas, high youth emigration ('brain drain'), and ongoing transition from monarchy to republic. Tourism and remittances are economic pillars.",
+    threats:[
+      {type:"Political Instability",description:"Nepal: 10 coalition governments since 2008 republic. Current: PM KP Sharma Oli coalition. Maoist legacy parties fracturing. Federal constitution implementation: disputed. 2025: mid-term elections possible.",severity:"medium",confidence:"HIGH",probability:65,source:"ICG/Reuters"},
+      {type:"India-China Competition",description:"BRI projects stalled — Nepal signed BRI 2017 but no projects funded. India: $1.7B infrastructure. MCC (US): $500M compact. Nepal navigating strategic competition. China pressure: extradite Tibetan activists.",severity:"medium",confidence:"MEDIUM",probability:55,source:"ICG/Xinhua"},
+      {type:"Climate & Glacial Hazards",description:"Himalayas: 2,000+ glacial lakes — GLOF risk. 2024 flooding: 250 killed. Climate change: monsoon intensification. Tourism infrastructure at risk. Annual disaster losses: $200M.",severity:"high",confidence:"HIGH",probability:80,source:"ICIMOD/UNDP"},
+    ],
+    keyActors:["PM KP Sharma Oli (CPN-UML)","Pushpa Kamal Dahal 'Prachanda' (Maoists)","Chinese Embassy (BRI)","Indian Embassy (strategic relationship)","Army Chief"],
+    news:["Nepal PM Oli survives no-confidence vote — coalition holds despite defections","Himalayan flooding: 250 killed, 40,000 displaced in 2024 monsoon — worst in decade","Nepal MCC $500M compact: parliament approves after 2-year delay","China demands Nepal extradite Tibetan protesters at border — Kathmandu resists","Nepal remittances: $9B — 26% of GDP, driven by Gulf and Malaysia migration"],
+    economic:"GDP $43B. Remittances: $9B (26% GDP). Tourism: $600M. Hydropower: 2,500 MW installed, 90,000 MW potential. Growth: 4%. Inflation: 7%. Trade deficit: $13B — mostly with India.",
+  },
+  LKA:{
+    summary:"Sri Lanka is recovering from its 2022 total economic collapse — the worst in its history. The Rajapaksa government's mismanagement led to sovereign default, fuel/food shortages, and mass protests. President Anura Kumara Dissanayake (elected Sept 2024, first leftist) is governing under a $2.9B IMF program. Ethnic reconciliation between Sinhala majority and Tamil minority remains incomplete.",
+    threats:[
+      {type:"Debt Restructuring Risk",description:"Sri Lanka defaulted 2022 — $83B debt. IMF program: $2.9B over 4 years. 2024: bilateral creditors (India, China, Paris Club) restructured. Conditions: fiscal austerity causing public sector strikes. Growth fragile.",severity:"medium",confidence:"HIGH",probability:60,source:"IMF/Reuters"},
+      {type:"China Debt / Port Sovereignty",description:"Hambantota Port: 99-year lease to China Merchants (2017) — strategic concern for India/US. Chinese submarine docked 2023 — India protests. New government reviewing strategic implications.",severity:"medium",confidence:"MEDIUM",probability:45,source:"Reuters/Indian Navy"},
+      {type:"Tamil Reconciliation",description:"Tamil diaspora: $500M annual support. Northern Province: political grievances unresolved. UN OHCHR: accountability for war crimes (Mullaitivu offensive 2009) still demanded. TNA in parliament pushing federalism.",severity:"low",confidence:"MEDIUM",probability:30,source:"UN OHCHR/ICG"},
+    ],
+    keyActors:["President Anura Dissanayake (NPP/JVP)","IMF Colombo mission","India High Commission","China Merchants (Hambantota)","TNA (Tamil parties)"],
+    news:["Sri Lanka: Dissanayake wins — NPP's first presidential win, pledges anti-corruption","IMF review: Sri Lanka on track — $337M tranche released after austerity measures","China-India competition: Sri Lanka reviews Hambantota Port lease terms","Sri Lanka tourism: 2M arrivals 2024 — pre-crisis recovery milestone","Colombo Port City: Chinese-backed financial hub opens — $1.4B investment"],
+    economic:"GDP $100B. Tourism: $4B. Tea exports: $1.2B. Remittances: $6B. Growth: 5% (recovery from -7.8% 2022 collapse). Debt/GDP: 128%. Foreign reserves recovering to $4B.",
+  },
+  SGP:{
+    summary:"Singapore is a globally significant financial hub, logistics gateway, and intelligence center. Under the People's Action Party (in power since 1965), Singapore manages geopolitical tensions between the US and China while remaining one of the world's most competitive economies. Key issues: succession after PM Lee Hsien Loong stepped down (2024), US-China trade tensions affecting port traffic, and rare earth/semiconductor supply chain positioning.",
+    threats:[
+      {type:"US-China Decoupling Pressure",description:"Singapore: largest transshipment hub in Asia. US-China trade restrictions causing cargo rerouting. Singapore facilitates tech transfer controls: CISA alerts on Chinese dual-use goods. MAS (monetary authority) managing Chinese capital outflows.",severity:"medium",confidence:"HIGH",probability:70,source:"MAS/Reuters"},
+      {type:"Water & Resources Dependency",description:"60% water from Malaysia (Johor). Agreement to 2061. Relations: generally stable but used as leverage. Food: 90% imported. Climate change: sea level rise — $100B infrastructure adaptation planned.",severity:"low",confidence:"HIGH",probability:25,source:"PUB Singapore/Reuters"},
+    ],
+    keyActors:["PM Lawrence Wong (PAP, since May 2024)","Senior Minister Lee Hsien Loong","MAS (Monetary Authority)","Temasek Holdings","ASEAN Secretariat (based in Singapore)"],
+    news:["Singapore PM transition: Lawrence Wong takes over from Lee Hsien Loong — PAP continuity","MAS: Singapore financial hub processing $4T daily forex — largest in Asia","Singapore CHIPS+: hosting ASML equipment servicing center despite US export controls","Johor-Singapore Special Economic Zone: 20 km² cross-border zone approved","Singapore GDP: $525B, per-capita $82,000 — 2024 growth 2.8% amid global slowdown"],
+    economic:"GDP $525B. Finance: 30%. Trade logistics: 25%. Pharma/biotech: 8%. Electronics manufacturing: 20%. FDI: $120B inflow. Reserves: $363B. Budget surplus: 1.5% GDP.",
+  },
+  LAO:{
+    summary:"Laos is deeply entangled in Chinese debt and Belt & Road infrastructure. The Laos-China Railway (opened 2021, $6B) has indebted Laos to Chinese banks beyond sustainable capacity — debt-to-GDP exceeds 120%. The one-party LPRP state has sold concessions and power to China. Tourism and hydropower are key sectors, but Laos ranks in bottom quartile on human development.",
+    threats:[
+      {type:"Chinese Debt Trap",description:"Laos-China Railway loan: $5.9B — 71% of total public debt owed to China. Sovereign debt/GDP: 124%. IMF: high risk of debt distress. Luang Prabang World Heritage site threatened by dam projects.",severity:"high",confidence:"HIGH",probability:80,source:"IMF/AidData"},
+      {type:"Drug Transit / Golden Triangle",description:"Laos: key transit route for Myanmar methamphetamine. Shan State production: crossing via Golden Triangle SEZ (Ton Pheung) — Chinese-operated casino zone. UNODC: $26B annual meth trade through region.",severity:"high",confidence:"HIGH",probability:85,source:"UNODC/INCSR"},
+      {type:"Mekong Dam Ecology",description:"11 Laos dams on Mekong (8 operational). Downstream: Thailand, Cambodia, Vietnam fisheries devastated — 60M livelihoods affected. Saltwater intrusion Vietnam delta. MRC data-sharing disputes.",severity:"medium",confidence:"HIGH",probability:80,source:"MRC/WWF"},
+    ],
+    keyActors:["PM Sonexay Siphandon (LPRP)","Chinese Exim Bank (creditor)","UNODC (narcotics)","Mekong River Commission","Ton Pheung SEZ operators"],
+    news:["Laos debt crisis: IMF warns of unsustainable trajectory — $14B owed to China","Laos-China Railway: 4M passengers 2024 but operating losses exceed $200M/year","Golden Triangle: Laos SEZ linked to $1B Myanmar meth network — UNODC report","Mekong crisis: Thai fishing communities sue Laos dam operators for $2B damages","Power exports: Laos sells $800M electricity to Thailand, Vietnam — hydropower lifeline"],
+    economic:"GDP $15B. Hydropower: 35% GDP via exports. Tourism: recovering ($800M). Railway revenue: below projections. Chinese investment: $8B. Debt/GDP: 124%. Kip currency: severe depreciation.",
+  },
+  // ── Balkans ──
+  XKX:{
+    summary:"Kosovo, Europe's youngest state (declared independence 2008), remains in a frozen conflict with Serbia over recognition and the ethnic-Serbian north. Serbia and its ally Russia refuse recognition. The 2023 Banjska ambush — where a Serbian commander crossed the border with armed militia, killing a Kosovo Police officer — nearly triggered war. NATO's KFOR (4,500 troops) maintains an uneasy peace.",
+    threats:[
+      {type:"Serbia-Kosovo Armed Flashpoint",description:"September 2023 Banjska incident: Serbian-linked Milan Radoičić led armed raid killing Kosovo Police officer. EU/US sanctions on Serbia's Lista Srpska. North Mitrovica: ethnic flashpoints. 2024 municipal elections in north: disrupted by Serbian boycott.",severity:"high",confidence:"HIGH",probability:55,source:"EULEX/Reuters"},
+      {type:"Serbia/Russia Non-Recognition",description:"5 UN Security Council members don't recognize Kosovo (Russia, China). Serbia EU accession: linked to Kosovo normalization. Brussels Agreement: stalled. Russian interference via Republika Srpska (BiH) and North Kosovo.",severity:"medium",confidence:"HIGH",probability:75,source:"ICG/EU"},
+      {type:"Organized Crime Networks",description:"Kosovo: transit route for heroin (Balkan Route). Cannabis cultivation. Political-criminal nexus: EULEX investigations ongoing. Diaspora money laundering. Regional organized crime: 60% of Balkan route drugs transiting.",severity:"medium",confidence:"MEDIUM",probability:65,source:"EULEX/Europol"},
+    ],
+    keyActors:["PM Albin Kurti (Vetëvendosje)","President Vjosa Osmani","Milan Radoičić (Serb militia leader)","KFOR/NATO (4,500 troops)","EULEX (EU rule of law mission)"],
+    news:["Banjska ambush: Serbia-linked militia kills Kosovo officer — NATO increases KFOR patrols","Kosovo applies for Council of Europe — Serbia lobbies against membership","PM Kurti visits Washington: US pledges KFOR commitment amid Serbia pressure","North Mitrovica: barricades removed after EU mediation — tensions ease temporarily","Kosovo: EU integration talks — visa liberalization in force since 2024"],
+    economic:"GDP $10B. Diaspora remittances: $1.2B (25% GDP). EU market access via SAA. Unemployment: 25%. Mining (nickel, zinc). Agriculture. Most economy informal (40%). Currency: Euro.",
+  },
+  // ── Latin America additions ──
+  NIC:{
+    summary:"Nicaragua under President Daniel Ortega has become one of the Western Hemisphere's most repressive states. Following the 2018 crackdown on protests (400+ killed), Ortega canceled the 2021 elections, arrested and expelled 160+ opposition leaders, stripped citizenship from critics including bishops and intellectuals, and expelled the Catholic Church's apostolic nuncio. Relations with the US, EU, and OAS are severed in practice.",
+    threats:[
+      {type:"Authoritarian Consolidation",description:"Ortega-Murillo family controls all branches of government. 2023: expelled 160+ political prisoners to US, stripped citizenship. Cardinal Álvaro Leiva expelled. Supreme Court packed. Independent media: all shut down.",severity:"high",confidence:"HIGH",probability:95,source:"HRW/Amnesty"},
+      {type:"Mass Emigration",description:"Nicaragua: 750,000+ have emigrated since 2018 — 10% of population. CBP: 250,000 Nicaraguans crossed US border in FY2024. Brain drain: professionals, entrepreneurs leaving. Remittances: $4.2B (25% GDP).",severity:"medium",confidence:"HIGH",probability:90,source:"IOM/CBP"},
+      {type:"Gang/Cartel Transit",description:"Nicaragua historically safer corridor — Ortega tolerates narco-transit for political accommodation. Sinaloa and Jalisco cartel shipments. 2024: US DEA operations disrupted — NIC expelled DEA 2018.",severity:"medium",confidence:"MEDIUM",probability:60,source:"DEA/InSight Crime"},
+    ],
+    keyActors:["President Daniel Ortega","VP Rosario Murillo (wife)","FSLN security apparatus","OAS (suspended NIC engagement)","Nicaraguan diaspora in Costa Rica/US"],
+    news:["Ortega strips citizenship of 94 critics — sends political prisoners to US in mass expulsion","Nicaragua expels Catholic Church nuncio — seizes Jesuit university properties","US sanctions: 100+ Nicaraguan officials under Magnitsky Act designations","Nicaragua GDP growing 4% despite isolation — remittances and Chinese investment","Costa Rica: 200,000 Nicaraguan refugees — largest migration since Contra war"],
+    economic:"GDP $16B. Remittances: $4.2B (25% GDP). Agriculture: coffee, beef. Chinese infrastructure: $1.5B canal study reactivated. Growth: 4%. Free trade zones: maquila exports to US.",
+  },
+  CRI:{
+    summary:"Costa Rica is Central America's most stable democracy and has maintained no military since 1949. The country is a hub for US technology companies and nearshoring. Key challenges: Darien Gap migration crisis transit, organized crime growth as major cartels establish logistics routes, and fiscal pressures. President Rodrigo Chaves (elected 2022) is pursuing anti-corruption and fiscal reform.",
+    threats:[
+      {type:"Cartel Transit & Violence",description:"Costa Rica: once peaceful — now a major cocaine transit hub. Sinaloa and MS-13 logistics. Homicide rate: 17/100,000 (up from 8 in 2020). Limón port: cocaine seizures up 300%. Narco-violence in Limón, Guápiles.",severity:"medium",confidence:"HIGH",probability:80,source:"InSight Crime/OIJ"},
+      {type:"Darien Migration",description:"Costa Rica: transit for 400,000+ migrants annually via Darien Gap. Smuggling networks. US pressure to deport. Economic burden: $200M. Venezuelan, Haitian, African migrants.",severity:"medium",confidence:"HIGH",probability:85,source:"IOM/Costa Rica Migration"},
+    ],
+    keyActors:["President Rodrigo Chaves","OIJ (criminal justice)","Intel (largest foreign employer)","Amazon/Microsoft (nearshoring hub)","INTERPOL San José"],
+    news:["Costa Rica cartel violence: homicides hit record — Limón port cocaine seizures triple","Intel expands Costa Rica campus: 3,500 jobs, nearshoring semiconductor design","Darien Gap: 400,000 crossed 2024 — Costa Rica requests US support for transit management","Chaves anti-corruption: 12 public officials arrested — IMF praises fiscal progress","Costa Rica renewable energy: 99% clean electricity for 8th consecutive year"],
+    economic:"GDP $68B. Tech/services: 40% GDP. Tourism: $3.5B. Medical devices: largest export. FDI: $3B. Growth: 5%. Debt: 60% GDP — declining under IMF program. Nearshoring boom ongoing.",
+  },
+  PAN:{
+    summary:"Panama's strategic importance stems from the Panama Canal — the world's most critical maritime chokepoint handling 5% of global trade. President José Raúl Mulino (elected 2024) closed the Darién Gap copper mine (Cobre Panamá) under public pressure, costing 5% GDP. Panama is navigating US pressure over Chinese port operator Hutchison, money laundering designations, and the Darién migration crisis.",
+    threats:[
+      {type:"Chinese Port Influence",description:"Hutchison Ports operates Balboa and Cristóbal — Panama Canal entrances on both coasts. US concerns: intelligence gathering, potential canal disruption. Trump 2025: demanded Panama retake control. Negotiations underway: $23B acquisition offer.",severity:"high",confidence:"HIGH",probability:70,source:"Reuters/FT"},
+      {type:"Darién Migration Crisis",description:"Darién Gap: 500,000+ migrants crossed 2024 — record. Sexual violence, deaths, cartel exploitation. US demanding Panama close jungle route. Mulino: increased bilateral deportation flights.",severity:"medium",confidence:"HIGH",probability:90,source:"IOM/UNHCR"},
+      {type:"Money Laundering / Panama Papers Legacy",description:"Panama Papers 2016 exposed offshore shell companies. FATF grey list 2019-2023. Post-delisting: compliance improving. Continued risk: real estate, free trade zones. Waked Money Laundering Organization: US-sanctioned network.",severity:"medium",confidence:"MEDIUM",probability:55,source:"FATF/FinCEN"},
+    ],
+    keyActors:["President José Mulino","Hutchison Ports (CK Hutchison/Hong Kong)","US Southern Command","FATF","First Quantum Minerals (Cobre Panamá)"],
+    news:["Panama: Mulino closes Cobre Panamá mine — $6B project halted, 5% GDP impact","Hutchison Ports: US demands sale of Panama Canal terminal operations — $23B offer","Darién record: 500,000 migrants cross Gap in 2024 — deadliest year on record","Panama FATF: removed from grey list 2023 — financial transparency reforms cited","Canal revenue: $4.6B in 2024 despite drought — water rationing limits transits"],
+    economic:"GDP $77B. Canal: $4.6B revenue. Financial services: 20% GDP. Free trade zones (Colón): $20B trade. Copper: halted. Growth: 7% (pre-mine closure), 2.5% (post). Dollarized economy.",
+  },
+  PRY:{
+    summary:"Paraguay is South America's fastest-growing economy but faces persistent governance challenges: corruption, narco-trafficking, and the Brazilian organized crime group PCC's deep penetration of the country. The Colorado Party has held power for all but 5 years since 1947. President Santiago Peña (elected 2023) governs while managing PCC infiltration, contraband at Ciudad del Este, and demands from the US and Brazil to curb illicit flows.",
+    threats:[
+      {type:"PCC (Brazilian Criminal Org) Penetration",description:"PCC (Primeiro Comando da Capital): controls drug trafficking, contraband, and money laundering across Paraguay. 2024: PCC-linked network seized $2B cocaine. Assassinations of anti-corruption prosecutors. State capture at municipal level.",severity:"high",confidence:"HIGH",probability:85,source:"InSight Crime/Reuters"},
+      {type:"Contraband Hub (Ciudad del Este)",description:"Ciudad del Este (Triple Border): $8B/year contraband — counterfeits, drugs, weapons. Hezbollah fundraising networks historically documented (post-2001 declining but residual). Itaipú Dam electricity: largest in world — contraband-funded corrupt contracts.",severity:"high",confidence:"HIGH",probability:80,source:"US Treasury/InSight Crime"},
+      {type:"Colorado Party Corruption",description:"60+ years of Colorado dominance. World Bank Governance: bottom 25th percentile. Anti-corruption prosecutors: 5 assassinated 2023-2024. Judiciary: independence compromised. Peña: reform rhetoric, limited action.",severity:"medium",confidence:"HIGH",probability:75,source:"Transparency International"},
+    ],
+    keyActors:["President Santiago Peña (Colorado Party)","PCC leadership (Brazilian org)","Itaipú Binational","Brazilian Federal Police (cross-border ops)","DEA Asunción"],
+    news:["PCC bust: 20-tonne cocaine seizure at Paraguay port — $2B network dismantled","Paraguay prosecutor assassinated: 5th anti-PCC murder in 18 months","Itaipú renegotiation: Paraguay demands $1.3B from Brazil — historic power-sharing deal","Ciudad del Este: US Treasury sanctions 15 entities in Triple Border network","Paraguay soy: world's 3rd largest exporter — $7B revenue fueling growth"],
+    economic:"GDP $45B. Soy/beef: 30% GDP. Hydropower (Itaipú): energy surplus exported. Growth: 4.5%. Inflation: 4%. Informal economy: 40%. FDI: $700M. Currency: Guaraní, stable.",
+  },
+  URY:{
+    summary:"Uruguay is South America's most stable democracy and transparent governance model. Consistently ranks as Latin America's least corrupt country and highest on human development. President Yamandú Orsi (Frente Amplio, elected Nov 2024) is the first left-wing president since Tabaré Vázquez. Uruguay legalized marijuana in 2013 (world first) and has universal healthcare and near-universal literacy. Primary risk: organized crime spillover from Brazil and Argentina.",
+    threats:[
+      {type:"Organized Crime Spillover",description:"Uruguay historically insulated from narco-violence — but PCC (Brazil) and Rosario cartel (Argentina) establishing logistics. Port of Montevideo: cocaine transit to Europe (5 tonnes seized 2024). Homicide rate rising: 11/100,000 (up from 7).",severity:"medium",confidence:"MEDIUM",probability:55,source:"InSight Crime/Interpol"},
+      {type:"Pulp Mill (UPM) Tensions",description:"UPM-2 Finnish pulp mill: $3B investment. Rail corridor: completed 2022. Environmental: Río Uruguay pollution concerns with Argentina — ICJ case pending. Indigenous land protests.",severity:"low",confidence:"LOW",probability:25,source:"Reuters/ICJ"},
+    ],
+    keyActors:["President Yamandú Orsi (FA)","Fiscalía (Anti-corruption)","UPM (Finnish pulp multinational)","INTERPOL Montevideo","Mercosur Secretariat"],
+    news:["Uruguay election: Orsi wins — Frente Amplio returns to power after 5 years","Port of Montevideo: 5-tonne cocaine seizure — European-bound cartel network busted","UPM-2 operating: $3B mill doubles Uruguay forestry exports — Finnish investment success","Uruguay: first Latin American country with universal broadband — digital governance model","Orsi-Lula summit: Uruguay-Brazil deepened trade ahead of Mercosur-EU deal ratification"],
+    economic:"GDP $82B. Agriculture: beef, soy, timber — 75% exports. Renewable energy: 97% clean electricity. Services: 60% GDP. Growth: 3.5%. Lowest poverty (5%) in South America. Gini: 39.",
+  },
 };
-
-/* Extended CIA-style intelligence data — personalities, signals, political/military assessments */
 const INTEL_EX = {
   ISR:{
     political:"Netanyahu coalition under sustained pressure from hostage families, judicial reform opponents, and ICC arrest warrant proceedings. War cabinet fragile — Gantz resigned June 2024. Elections anticipated post-ceasefire. Domestic political survival incentivizing conflict extension.",
@@ -2988,6 +3278,18 @@ const TROOP_MOVEMENTS=[
   {fromLat:37.1,fromLng:43.4,toLat:36.5,toLng:38.0,type:'ground',label:'Turkish TAF — Cross-Border Ops',strength:'25,000 + drones',status:'ONGOING OPS',country:'TUR',severity:'medium'},
   {fromLat:15.4,fromLng:44.2,toLat:15.0,toLng:42.5,type:'naval',label:'Houthi Coastal Defense Force',strength:'Anti-ship assets',status:'RED SEA THREAT',country:'YEM',severity:'critical'},
   {fromLat:43.0,fromLng:40.5,toLat:42.0,toLng:43.5,type:'ground',label:'Russian 58th Army — S. Ossetia',strength:'5,000 troops',status:'OCCUPATION',country:'RUS',severity:'medium'},
+  // Sahel / Africa
+  {fromLat:12.4,fromLng:-1.6,toLat:13.5,toLng:2.1,  type:'ground',label:'JNIM — Burkina/Niger Operations',strength:'10,000+ fighters',status:'ACTIVE INSURGENCY',country:'BFA',severity:'critical'},
+  {fromLat:12.4,fromLng:-1.6,toLat:12.4,toLng:-1.6, type:'ground',label:'Africa Corps (Russia) — Ouagadougou',strength:'2,000 advisors',status:'DEPLOYED',country:'RUS',severity:'high'},
+  {fromLat:15.6,fromLng:32.6,toLat:15.5,toLng:18.7, type:'ground',label:'RSF Sudan → Chad Border Incursions',strength:'armored columns',status:'ACTIVE',country:'SDN',severity:'critical'},
+  // Myanmar
+  {fromLat:16.5,fromLng:97.6,toLat:21.0,toLng:94.8, type:'ground',label:'Three Brotherhood Alliance — Shan State',strength:'30,000+ fighters',status:'OFFENSIVE',country:'MMR',severity:'critical'},
+  {fromLat:21.0,fromLng:94.8,toLat:17.1,toLng:96.9, type:'ground',label:'Tatmadaw Counteroffensive — Central Myanmar',strength:'degraded forces',status:'LOSING TERRITORY',country:'MMR',severity:'critical'},
+  // Latin America
+  {fromLat:4.7,fromLng:-74.1,toLat:8.0,toLng:-63.0, type:'ground',label:'FARC Dissidents — Colombia/Venezuela',strength:'3,000+ armed',status:'ACTIVE',country:'COL',severity:'high'},
+  {fromLat:23.6,fromLng:-102.5,toLat:18.0,toLng:-87.0,type:'ground',label:'Sinaloa + CJNG — Mexico Narco War',strength:'100,000+ members',status:'TERRITORIAL CONFLICT',country:'MEX',severity:'critical'},
+  // Kosovo
+  {fromLat:44.0,fromLng:20.5,toLat:42.9,toLng:20.9, type:'ground',label:'KFOR NATO Force — Kosovo',strength:'4,500 troops',status:'STABILIZATION',country:'XKX',severity:'medium'},
 ];
 const ARMS_FLOWS=[
   {from:'USA',to:'UKR',type:'multi',  label:'ATACMS + HIMARS + M777 + Patriot',  value:'$45B total',severity:'critical'},
@@ -3002,6 +3304,18 @@ const ARMS_FLOWS=[
   {from:'CHN',to:'RUS',type:'dual',   label:'Dual-Use Electronics + Machine Tools', value:'$6B/yr',severity:'critical'},
   {from:'PRK',to:'RUS',type:'ammo',   label:'Artillery Shells + KN-23 Ballistic', value:'$3B+',severity:'critical'},
   {from:'TUR',to:'UKR',type:'drone',  label:'Bayraktar TB2 Drone Platforms',       value:'$69M',severity:'medium'},
+  // Sahel / Africa
+  {from:'RUS',to:'BFA',type:'ground', label:'AK-74 + BTR + Mi-8 → Burkina Junta',  value:'$150M',severity:'high'},
+  {from:'RUS',to:'MLI',type:'ground', label:'BMP-3 + Grad MLRS → Wagner/Mali',      value:'$200M',severity:'high'},
+  {from:'ARE',to:'SDN',type:'multi',  label:'UAE → RSF — Armored Vehicles + Ammo',  value:'$1B+', severity:'critical'},
+  // Latin America
+  {from:'USA',to:'COL',type:'multi',  label:'US Colombia Security Cooperation',      value:'$450M/yr',severity:'medium'},
+  {from:'CHN',to:'VEN',type:'multi',  label:'China → Venezuela — Military Aid',      value:'$500M', severity:'medium'},
+  // SE Asia
+  {from:'RUS',to:'MMR',type:'jet',    label:'Su-30 + Yak-130 → Myanmar Junta',       value:'$2B',  severity:'high'},
+  {from:'CHN',to:'MMR',type:'ground', label:'China → Tatmadaw Armor + Artillery',    value:'$1.5B',severity:'high'},
+  {from:'USA',to:'PHL',type:'multi',  label:'US Philippines Security Assistance',     value:'$500M',severity:'medium'},
+  {from:'USA',to:'TWN',type:'multi',  label:'US Taiwan Arms Sales (HIMARS/F-16V)',    value:'$19B+',severity:'critical'},
 ];
 const NAVAL_ASSETS=[
   {lat:22.5,lng:37.5, country:'USA',flag:'🇺🇸',type:'CARRIER STRIKE GROUP',label:'USS Dwight D. Eisenhower CSG',detail:'Carrier Strike Group 2 — Red Sea Houthi deterrence. F/A-18E/F, EA-18G, E-2D Hawkeye. 5,000 sailors.',severity:'critical'},
@@ -3027,6 +3341,19 @@ const FINANCIAL_FLOWS=[
   {from:'SAU',to:'PAK',  type:'loan',    label:'Saudi Pakistan IMF Backstop Loans',     value:'$4B+',     color:'rgba(234,179,8',severity:'low'},
   {from:'RUS',to:'SYR',  type:'support', label:'Russian Syria Economic + Military Aid', value:'$2B/yr',   color:'rgba(220,38,38',severity:'medium'},
   {from:'PRK',to:'RUS',  type:'payment', label:'Arms Trade Settlement (grain+oil)',     value:'$3B equiv',color:'rgba(168,85,247',severity:'high'},
+  // Sahel / Africa
+  {from:'RUS',to:'MLI',  type:'military',label:'Russia Africa Corps → Mali (Wagner)',    value:'$300M/yr', color:'rgba(220,38,38',severity:'high'},
+  {from:'RUS',to:'BFA',  type:'military',label:'Russia Africa Corps → Burkina Faso',    value:'$200M/yr', color:'rgba(220,38,38',severity:'high'},
+  {from:'ARE',to:'SDN',  type:'funding', label:'UAE → RSF Sudan Paramilitaries',         value:'$1B+',     color:'rgba(234,179,8', severity:'critical'},
+  {from:'SAU',to:'EGY',  type:'support', label:'Saudi-UAE Egypt Economic Support',       value:'$22B',     color:'rgba(234,179,8', severity:'medium'},
+  // Latin America
+  {from:'MEX',to:'USA',  type:'drug',    label:'Fentanyl/Cocaine Flow Mexico → US',      value:'$30B/yr',  color:'rgba(239,68,68', severity:'critical'},
+  {from:'COL',to:'MEX',  type:'drug',    label:'Colombia → Mexico Cocaine Transit',      value:'$5B/yr',   color:'rgba(239,68,68', severity:'critical'},
+  {from:'CHN',to:'MEX',  type:'trade',   label:'China Precursor Chemicals → Cartels',    value:'$1B/yr',   color:'rgba(168,85,247',severity:'critical'},
+  // Asia
+  {from:'CHN',to:'LAO',  type:'debt',    label:'China Belt & Road Debt (Railway)',        value:'$6B loan', color:'rgba(168,85,247',severity:'high'},
+  {from:'CHN',to:'AGO',  type:'debt',    label:'China Angola Oil-for-Infra Loans',        value:'$25B',     color:'rgba(168,85,247',severity:'medium'},
+  {from:'IND',to:'NPL',  type:'aid',     label:'India Nepal Infrastructure Investment',   value:'$1.7B',    color:'rgba(59,130,246',severity:'low'},
 ];
 const REFUGEE_FLOWS=[
   {fromLat:49.0,fromLng:31.5, toLat:52.2,toLng:21.0, label:'Ukraine → Poland (3.5M+)',  value:'3.5M', severity:'critical'},
@@ -3036,6 +3363,15 @@ const REFUGEE_FLOWS=[
   {fromLat:15.4,fromLng:44.2, toLat:13.5,toLng:44.0, label:'Yemen Displacement (4.5M)', value:'4.5M', severity:'critical'},
   {fromLat:33.9,fromLng:67.7, toLat:30.4,toLng:69.3, label:'Afghan → Pakistan (4M+)',   value:'4M+',  severity:'high'},
   {fromLat:26.3,fromLng:17.2, toLat:35.9,toLng:14.5, label:'Libya → Mediterranean',     value:'800K/yr',severity:'high'},
+  // Sahel / Africa
+  {fromLat:17.6,fromLng:8.1,  toLat:35.7,toLng:10.1,  label:'Niger → Mediterranean (Migration)',value:'300K/yr',severity:'high'},
+  {fromLat:15.5,fromLng:32.6, toLat:15.5,toLng:18.7,  label:'Sudan Civil War → Chad (Refugees)', value:'700K+',  severity:'critical'},
+  {fromLat:17.1,fromLng:96.9, toLat:23.7,toLng:90.4,  label:'Myanmar → Bangladesh (Rohingya)',   value:'1.1M',   severity:'critical'},
+  {fromLat:6.4, fromLng:-66.6,toLat:4.7, toLng:-74.1, label:'Venezuela → Colombia (Migrants)',   value:'2.7M',   severity:'critical'},
+  {fromLat:6.4, fromLng:-66.6,toLat:0.5, toLng:-76.5, label:'Venezuela → Ecuador (Migrants)',    value:'500K',   severity:'high'},
+  {fromLat:18.9,fromLng:-72.3,toLat:25.8,toLng:-80.2, label:'Haiti → US (Boat Migration)',       value:'250K/yr',severity:'high'},
+  {fromLat:9.1, fromLng:-79.5,toLat:25.8,toLng:-80.2, label:'Darién Gap → US Border (Migrants)', value:'500K/yr',severity:'critical'},
+  {fromLat:12.4,fromLng:-1.6, toLat:35.7,toLng:5.3,   label:'Burkina Faso Displacement (IDP)',   value:'2.1M',   severity:'critical'},
 ];
 
 function resize(){
@@ -3883,6 +4219,21 @@ const HS_DETAIL={
   'South Sudan — Civil War Resurgence':'South Sudan: 2018 Revitalized Peace Agreement deteriorating — Vice President Riek Machar forces (SPLA-IO) and President Salva Kiir forces fighting again in Upper Nile and Jonglei states. 2.3M displaced. Famine: IPC Phase 3+ in 60% of country. UNMISS (17,000 troops) cannot protect civilians at scale. Oil revenues (Kiir controls) funding military operations. RSF (Sudan) using South Sudan territory — complicating regional dynamics. 2025: ceasefire talks in Nairobi collapsed. Assessment: slide toward full civil war resumption.',
   'Amhara — Fano Militia Conflict':'Ethiopian National Defence Forces (ENDF) fighting Fano (Amhara nationalist militia) across Amhara region since 2023. Fano mobilized after government disarmament attempt — "defending Amhara identity." Urban fighting in Gondar, Debre Markos, Debre Berhan. ENDF deploying drones (Turkish Bayraktar) against Fano positions — civilian areas struck. 2M+ displaced in Amhara. Tigray TPLF disarmament stalled simultaneously. Assessment: Ethiopian state fighting a two-front insurgency while managing Oromia OLA conflict — military stretched.',
   'Cabo Delgado — ISKP Mozambique':'Ansar al-Sunna Wa Jama\'a (locally known as Al-Shabaab, not linked to Somali AS) affiliated with ISIL Central Africa Province. Operations in Cabo Delgado province since 2017. 2021: captured Mocímboa da Praia port for months. SADC Mission in Mozambique (SAMIM) + Rwandan forces (4,000) conducting counter-insurgency — significant territorial rollback but not eliminated. TotalEnergies LNG megaproject ($20B) still suspended — attack on contractor facility 2021. 1.2M internally displaced. Insurgent funding: illicit ruby mining, kidnapping, ivory trade.',
+  'Burkina Faso — JNIM / ISGS Insurgency':'JNIM (Jama\'at Nusrat al-Islam wal-Muslimin, al-Qaeda West Africa affiliate) and ISGS (Islamic State Greater Sahara) together control 40%+ of Burkina Faso territory. Capital Ouagadougou has been attacked 3 times since 2022. The junta expelled France (January 2023) and US (March 2024) counterterrorism forces, invited Russia\'s Africa Corps (~2,000 troops). Djibo (300,000 population) has been under effective siege since 2022 — food convoys attacked, supply routes blocked. ACLED 2024: 8,000+ killed in BFA, making it one of the world\'s deadliest conflicts. Junta media blackouts prevent accurate reporting.',
+  'Niger — Coup + IS-Sahel Expansion':'July 2023 military coup overthrew elected President Bazoum — General Tchiani\'s CNSP expelled all French forces (August 2023) and demanded US departure from Agadez Air Base by September 2024 (completed). Niger joined Mali and Burkina Faso in the Alliance of Sahel States (AES). IS-Sahel (ISGS): October 2023 — single deadliest attack in Niger\'s history: 300 civilians killed near Tillabéri. Uranium leverage: Niger supplies 5% of global uranium; Orano (France) mine nationalized. Russia establishing intelligence and military presence via Wagner successor Africa Corps.',
+  'Chad — Sudan Refugee Crisis + ISWAP':'France announced withdrawal of all 1,000 troops from Chad in late 2024 — ending 60 years of Opération Barkhane-era presence. Chad hosts 600,000 Sudan civil war refugees (April 2023–present) in eastern Chad — the Adré crossing saw 200,000 arrive in weeks. Lake Chad: ISWAP (Islamic State West Africa Province) and Boko Haram fragment active in Lac Province. Chad\'s presidential election May 2024: Mahamat Idriss Déby (son) won in disputed vote. Assessment: Chad pivoting from France to Gulf States and Russia while managing the region\'s largest humanitarian crisis.',
+  'Djibo Siege — 300,000 Civilians Encircled':'Djibo, Burkina Faso (Sahel region): Under effective JNIM siege since 2022. Government supply convoys attacked or blocked — last major convoy reached in January 2024. Air drops providing minimum food. Markets empty. Medical supplies critically short — MSF warehouse seized. Population trapped: 300,000 civilians. ACLED documents 1,200+ deaths within 50km radius in 12 months. Junta\'s Africa Corps advisors unable to clear supply corridor. WFP: emergency IPC Phase 4 (Emergency) — starvation imminent for tens of thousands.',
+  'Tillabéri — IS-Sahel Deadly Attacks':'Tillabéri Region, Niger: October 2023 — IS-Sahel massacred 300 civilians in Karma district, largest single atrocity in Niger history. Region borders Mali\'s Ménaka: IS-Sahel primary zone of control. Communities abandoned: 700,000+ displaced from Tillabéri, Tahoua, Dosso regions. Government forces stretched after coup — army focused on capital security. MINUSMA (UN) withdrew from Mali August 2023, creating vacuum. Attack pattern: ambushes on market days, raids on civilian villages at dawn, IED attacks on military convoys.',
+  'Bangladesh — Post-Hasina Transition Crisis':'August 5, 2024: Prime Minister Sheikh Hasina fled Bangladesh to India after 15 years in power — mass student protests demanding quota reform turned into a broader uprising. Estimated 300–600 killed by security forces before her departure. Nobel Peace laureate Muhammad Yunus leads interim government by appointment. Hasina\'s Awami League networks dismantled; leaders arrested. BNP (main opposition) demanding immediate elections. Challenges: judicial reform, accountability for killings, economic stabilization under $4.7B IMF program, and managing 1.1M Rohingya refugees.',
+  'Cox\'s Bazar — 1.1M Rohingya Refugees':'World\'s largest refugee settlement: 1.1M Rohingya Muslims in Cox\'s Bazar, Bangladesh, following Myanmar military\'s ethnic cleansing campaign (2017, 2021+). ARSA (Arakan Rohingya Salvation Army) militants active in camps — inter-gang violence, arms trafficking. 2024: UNHCR funding gap — 50% of needed $876M received; rations cut from $12 to $10/person/month. Repatriation: impossible while Tatmadaw controls Rakhine (now contested with Arakan Army). Children: 200,000 with no formal education access. Camp fires: recurring — entire sectors destroyed.',
+  'North Kosovo — Serbia Armed Flashpoint':'September 2023 Banjska Incident: Serbian-linked Milan Radoičić led 30+ armed militia into northern Kosovo, killing Kosovo Police Sergeant Afrim Bunjaku. Radoičić resigned as Lista Srpska VP and admitted planning the operation. NATO KFOR emergency response — forces tripled in north. EU/US sanctioned Lista Srpska party. Context: north Kosovo is 90% ethnic Serb, refuses Kosovo government authority, flies Serbian flags. Serbia\'s President Vučić denied knowledge of operation. Brussels Agreement (normalization): completely stalled. Assessment: highest risk of armed escalation in Western Balkans since 1999.',
+  'Golden Triangle — Meth Transit Hub':'The Golden Triangle (Myanmar-Laos-Thailand border) is producing the world\'s largest methamphetamine supply. Myanmar\'s Shan State: 2023 production — $26B street value per UNODC. Laos Ton Pheung SEZ (Golden Triangle Special Economic Zone): Chinese-operated casino complex serves as transit/logistics hub — UNODC identified as narco infrastructure. Thailand seizures: 360M meth tablets in 2024 — record. Regional flow: Myanmar → Laos SEZ → Thailand → global distribution. Wa State Army (UWSA, Myanmar) and Shan State Army-South profiting alongside transnational Chinese organized crime networks.',
+  'Nicaragua — Ortega Authoritarian Crackdown':'Nicaragua under Daniel Ortega and Rosario Murillo (co-president, his wife) has dismantled all independent institutions. 2018: 300+ protesters killed. 2021 election: 7 presidential candidates arrested before vote. 2023: 222 political prisoners expelled to US in single operation, citizenship stripped. 2023–2024: Catholic Church targeted — Bishop Rolando Álvarez sentenced to 26 years (later expelled). All independent media shut. OAS invoked Inter-American Democratic Charter. FSLN operates as personal family vehicle. Emigration: 700,000+ fled (10% of population) to Costa Rica, US, Spain.',
+  'Panama Canal — Hutchison/China Port Dispute':'Hutchison Ports (CK Hutchison Holdings, Hong Kong) operates Balboa (Pacific) and Cristóbal (Atlantic) ports — both flanking the Panama Canal\'s entrances, handling 25%+ of canal-adjacent cargo. US intelligence: concern over Chinese intelligence-gathering capability. Trump administration 2025: demanded Panama "take back" control. $22.8B acquisition offer from Blackrock/US consortium for Hutchison global ports division including Panama. Panama\'s constitution: canal zone sovereignty inviolable. Canal authority: Hutchison has no operational control of canal itself. Assessment: strategic chokepoint — outcome will set precedent for Chinese port access globally.',
+  'Darién Gap — 500,000 Migrants/Year':'2024 record: 500,000+ migrants transited Darién Gap (Colombia-Panama jungle, 100km). Majority: Venezuelan, Ecuadorian, Haitian, Chinese nationals. Criminal networks (Clan del Golfo/Colombia): charge $400–800/person. Journey deaths: 300+ confirmed 2024, thousands unaccounted. Sexual violence: UNHCR documents attacks at multiple points. Children: 100,000+ unaccompanied. US response: increased deportation flights, funding Panama border security ($80M). Colombia: cannot control Clan del Golfo territory. Assessment: largest Western Hemisphere migration crisis since 2015 Mediterranean.',
+  'Ciudad del Este — PCC Narco Network':'Ciudad del Este (Paraguay) at the Triple Border (Argentina, Brazil, Paraguay): South America\'s second-largest free trade zone and a hub for organized crime. PCC (Primeiro Comando da Capital, Brazilian gang): controls cocaine distribution, contraband electronics, weapons trafficking. SENAD (Paraguay): $2B annual contraband flow. PCC assassination campaign: targeting prosecutors — 5 killed 2023–2024. Hezbollah historical fundraising network: largely dismantled post-2001 but residual facilitation. Itaipú Dam contracts: $3B procurement — corruption nexus. Assessment: criminal sovereignty within a democratic state.',
+  'Côte d\'Ivoire North — JNIM Border Raids':'JNIM (al-Qaeda West Africa) making cross-border incursions from Burkina Faso into northern Côte d\'Ivoire since 2020. June 2024: coordinated attack on Kafolo military post — 10 soldiers killed, 6 missing. January 2024: roadside IED in Tcheriba kills 3 soldiers. Pattern: hit-and-run attacks, then return to BFA sanctuary. CIV response: increased military presence north, intelligence cooperation with France (Operation Licorne successor). Risk: establishment of permanent safe-haven in Comoe National Park — dense, ungoverned forest. 1.2M people in vulnerable northern departments.',
+  'Panama Canal — Hutchison/China Port Dispute':'Hutchison Ports operates both entrances to the Panama Canal — a strategic concern for US military logistics. The canal handles $270B of US trade annually. During 2024 drought: water rationing reduced transits 36%, causing $400M revenue loss and shipping diversions. Expanding to alternative routes (Suez, Cape Horn, US rail). Canal Authority operating independently under Panamanian sovereignty since 1999. Chinese activity: port intelligence concern, not canal control. New Panama president Mulino elected 2024 on canal sovereignty platform.',
 };
 
 let currentHotspot=null;
