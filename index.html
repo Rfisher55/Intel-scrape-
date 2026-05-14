@@ -39,14 +39,16 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:9999;
 .h-logo{display:flex;align-items:center;gap:10px}
 .h-icon{font-size:20px;color:var(--accent);animation:glow 2s ease-in-out infinite}
 @keyframes glow{0%,100%{text-shadow:0 0 6px rgba(59,130,246,.8)}50%{text-shadow:0 0 18px rgba(59,130,246,1)}}
-.h-title{font-size:16px;font-weight:bold;letter-spacing:.15em;color:#93c5fd}
-.h-region{font-size:11px;color:var(--dim);border-left:1px solid var(--border);padding-left:14px}
-.h-middle{flex:1;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.08em}
-.h-right{display:flex;align-items:center;gap:16px}
-.h-live{display:flex;align-items:center;gap:6px;font-size:11px;color:#22c55e}
-.h-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink 1.2s step-start infinite}
+.h-title{font-size:16px;font-weight:bold;letter-spacing:.2em;color:#93c5fd;
+  text-shadow:0 0 20px rgba(147,197,253,.4)}
+.h-region{font-size:9px;color:var(--muted);border-left:1px solid var(--border);padding-left:14px;letter-spacing:.15em}
+.h-middle{flex:1;text-align:center;font-size:10px;color:var(--muted);letter-spacing:.1em}
+.h-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.h-live{display:flex;align-items:center;gap:5px;font-size:9px;color:#22c55e;letter-spacing:.12em}
+.h-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;animation:blink 1.2s step-start infinite;
+  box-shadow:0 0 6px #22c55e}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.h-time{font-size:10px;color:var(--muted)}
+.h-time{font-size:9px;color:var(--muted);font-family:var(--mono);letter-spacing:.1em}
 
 /* ── Globe canvas ── */
 #globe-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
@@ -56,12 +58,16 @@ canvas.dragging{cursor:grabbing}
 /* ── Tooltip ── */
 #tooltip{
   position:fixed;z-index:200;pointer-events:none;
-  background:rgba(5,12,26,.92);border:1px solid rgba(59,130,246,.5);
-  border-radius:4px;padding:6px 10px;font-size:12px;
+  background:rgba(4,10,22,.95);
+  border:1px solid rgba(59,130,246,.4);
+  border-top:2px solid rgba(59,130,246,.7);
+  border-radius:4px;padding:7px 12px;font-size:11px;
   opacity:0;transition:opacity .15s;white-space:nowrap;
+  box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 0 1px rgba(59,130,246,.08) inset;
+  backdrop-filter:blur(8px);
 }
-#tooltip .tt-name{font-weight:bold;color:#93c5fd}
-#tooltip .tt-alert{font-size:10px;margin-top:2px}
+#tooltip .tt-name{font-weight:bold;color:#bfdbfe;letter-spacing:.05em}
+#tooltip .tt-alert{font-size:9px;margin-top:3px;letter-spacing:.08em}
 
 /* ── Legend ── */
 #legend{
@@ -78,11 +84,13 @@ canvas.dragging{cursor:grabbing}
 
 /* ── Intel Panel ── */
 #panel{
-  position:fixed;top:56px;right:0;bottom:0;width:400px;z-index:200;
-  background:linear-gradient(180deg,rgba(8,15,30,.98),rgba(5,12,26,.98));
-  border-left:1px solid var(--border);
+  position:fixed;top:56px;right:0;bottom:0;width:420px;z-index:200;
+  background:linear-gradient(170deg,rgba(6,13,26,.99) 0%,rgba(4,10,22,.99) 100%);
+  border-left:1px solid rgba(59,130,246,.25);
+  border-top:1px solid rgba(59,130,246,.15);
   display:none;flex-direction:column;
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(14px);
+  box-shadow:-4px 0 40px rgba(0,0,0,.5),-1px 0 0 rgba(59,130,246,.08) inset;
 }
 #panel.open{display:flex;animation:slideIn .25s ease-out}
 @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
@@ -208,6 +216,8 @@ canvas.dragging{cursor:grabbing}
 #panel.minimized .p-expand{display:none!important}
 #panel.minimized .p-row{margin-bottom:0}
 #panel.minimized .p-head{padding:10px 16px;border-bottom:none}
+/* Desktop: collapse to header only — don't fill remaining viewport height */
+#panel.minimized{bottom:auto;height:auto}
 
 /* Fullscreen panel */
 #panel.fullscreen{
@@ -339,23 +349,31 @@ canvas.dragging{cursor:grabbing}
 /* ── Data Layers Panel ── */
 #layers-panel{
   position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;
-  background:rgba(5,12,26,.88);border:1px solid var(--border);border-radius:8px;
-  padding:10px 8px;display:flex;flex-direction:column;gap:5px;
-  backdrop-filter:blur(10px);min-width:136px;
+  background:rgba(4,10,22,.92);
+  border:1px solid rgba(59,130,246,.22);
+  border-radius:6px;
+  padding:10px 8px;display:flex;flex-direction:column;gap:4px;
+  backdrop-filter:blur(12px);min-width:148px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(59,130,246,.05) inset;
 }
-.layers-title{font-size:8px;letter-spacing:.2em;color:var(--muted);text-align:center;margin-bottom:3px}
+.layers-title{font-size:8px;letter-spacing:.25em;color:var(--muted);text-align:center;
+  margin-bottom:4px;padding-bottom:5px;border-bottom:1px solid var(--border2)}
 .layer-btn{
-  background:rgba(13,25,41,.7);border:1px solid var(--border2);border-radius:5px;
+  background:rgba(8,16,34,.8);border:1px solid rgba(30,58,95,.6);border-radius:4px;
   color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:.1em;
-  padding:6px 8px;cursor:pointer;text-align:left;transition:all .18s;white-space:nowrap;
+  padding:7px 8px;cursor:pointer;text-align:left;transition:all .18s;white-space:nowrap;
   display:flex;align-items:center;gap:6px;
 }
-.layer-btn:hover{border-color:var(--accent);color:var(--text)}
-.layer-btn.active{border-color:var(--accent);color:#93c5fd;background:rgba(59,130,246,.12)}
+.layer-btn:hover{border-color:rgba(59,130,246,.5);color:#bfdbfe;background:rgba(59,130,246,.08)}
+.layer-btn.active{
+  border-color:rgba(59,130,246,.6);color:#93c5fd;
+  background:linear-gradient(90deg,rgba(59,130,246,.12),rgba(59,130,246,.06));
+  box-shadow:0 0 12px rgba(59,130,246,.1) inset;
+}
 .layer-btn.active .lb-dot{animation:blink 1s step-start infinite}
-.lb-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.6}
-.layer-btn.active .lb-dot{opacity:1}
-@media(max-width:600px){#layers-panel{left:8px;min-width:120px;padding:7px 6px}}
+.lb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.5}
+.layer-btn.active .lb-dot{opacity:1;box-shadow:0 0 4px currentColor}
+@media(max-width:600px){#layers-panel{left:8px;min-width:130px;padding:7px 6px}}
 
 /* ── Tracking arc colors ── */
 :root{
@@ -388,24 +406,83 @@ canvas.dragging{cursor:grabbing}
 .leg-item.naval{color:rgba(34,197,94,.9)}
 .leg-item.money{color:rgba(168,85,247,.9)}
 
-/* ── Tracking modal ── */
+/* ── Intel Brief Modal (tracking layers) ── */
 #track-modal{
   position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;
-  background:rgba(2,8,16,.6);backdrop-filter:blur(4px);
+  background:rgba(2,6,14,.75);backdrop-filter:blur(6px);padding:16px;
 }
-#track-modal.open{display:flex}
 #track-card{
-  background:linear-gradient(160deg,rgba(13,25,41,.98),rgba(5,12,26,.98));
-  border:1px solid var(--border);border-radius:10px;padding:20px;
-  max-width:380px;width:calc(100% - 40px);box-shadow:0 20px 60px rgba(0,0,0,.7);
+  background:linear-gradient(170deg,rgba(8,16,34,.99) 0%,rgba(4,10,22,.99) 100%);
+  border:1px solid rgba(59,130,246,.35);border-radius:6px;
+  width:min(680px,calc(100vw - 32px));
+  max-height:min(90vh,700px);
+  display:flex;flex-direction:column;
+  box-shadow:0 0 0 1px rgba(59,130,246,.1),0 30px 80px rgba(0,0,0,.85),
+             0 0 60px rgba(59,130,246,.06) inset;
+  overflow:hidden;
+  position:relative;
 }
-.track-type{font-size:9px;letter-spacing:.2em;font-weight:bold;margin-bottom:8px}
-.track-label{font-size:15px;font-weight:bold;color:#93c5fd;margin-bottom:6px;line-height:1.4}
-.track-meta{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
-.track-badge{font-size:9px;padding:2px 8px;border-radius:3px;border:1px solid;letter-spacing:.1em}
-.track-desc{font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:14px}
-.track-close{width:100%;padding:8px;background:none;border:1px solid var(--border);border-radius:5px;color:var(--dim);font-family:var(--mono);font-size:10px;cursor:pointer}
-.track-close:hover{border-color:#ef4444;color:#ef4444}
+/* scan-line effect on modal */
+#track-card::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);
+}
+.tm-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 18px 9px;
+  background:rgba(59,130,246,.07);
+  border-bottom:1px solid rgba(59,130,246,.2);
+  flex-shrink:0;
+}
+.tm-category{font-size:8px;letter-spacing:.25em;font-weight:bold;color:#60a5fa;display:flex;align-items:center;gap:6px}
+.tm-category-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;animation:blink 1s step-start infinite}
+.tm-close{background:none;border:1px solid rgba(59,130,246,.3);color:var(--dim);cursor:pointer;
+  padding:4px 10px;border-radius:3px;font-size:10px;font-family:var(--mono);transition:all .15s;letter-spacing:.1em}
+.tm-close:hover{border-color:#ef4444;color:#ef4444}
+.tm-body{padding:18px 20px;overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:var(--border) transparent;position:relative;z-index:2}
+.tm-title{font-size:17px;font-weight:bold;color:#e2e8f0;margin-bottom:12px;line-height:1.35;letter-spacing:.02em}
+.tm-badges{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.tm-badge{font-size:8px;padding:3px 9px;border-radius:3px;border:1px solid;letter-spacing:.12em;font-weight:bold}
+.tm-badge.critical{background:rgba(127,29,29,.35);color:#fca5a5;border-color:rgba(239,68,68,.4)}
+.tm-badge.high{background:rgba(124,45,18,.35);color:#fdba74;border-color:rgba(249,115,22,.4)}
+.tm-badge.medium{background:rgba(120,53,15,.35);color:#fcd34d;border-color:rgba(234,179,8,.4)}
+.tm-badge.low{background:rgba(20,83,45,.35);color:#86efac;border-color:rgba(34,197,94,.4)}
+.tm-badge.blue{background:rgba(30,58,95,.45);color:#93c5fd;border-color:rgba(59,130,246,.4)}
+.tm-countries{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start;margin-bottom:16px}
+.tm-country-box{background:rgba(13,25,41,.7);border:1px solid var(--border2);border-radius:5px;padding:10px 12px}
+.tm-country-name{font-size:11px;font-weight:bold;color:#93c5fd;margin-bottom:3px;letter-spacing:.05em}
+.tm-country-alert{font-size:8px;letter-spacing:.12em;font-weight:bold;margin-bottom:6px}
+.tm-country-summary{font-size:10px;color:var(--dim);line-height:1.5}
+.tm-arrow{font-size:18px;color:rgba(59,130,246,.6);text-align:center;padding-top:18px;flex-shrink:0}
+.tm-divider{height:1px;background:var(--border2);margin:14px 0}
+.tm-section-label{font-size:8px;letter-spacing:.2em;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.tm-section-label::after{content:'';flex:1;height:1px;background:var(--border2)}
+.tm-detail{font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:14px}
+.tm-actors{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.tm-actor{font-size:9px;padding:2px 8px;background:rgba(30,58,95,.4);border:1px solid var(--border2);border-radius:3px;color:#7dd3fc}
+.tm-news-item{background:rgba(8,16,32,.7);border:1px solid var(--border2);border-left:2px solid #1d4ed8;border-radius:4px;padding:7px 10px;margin-bottom:6px;font-size:10px;color:var(--dim);line-height:1.45}
+.tm-stat-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.tm-stat{flex:1;min-width:100px;background:rgba(13,25,41,.5);border:1px solid var(--border2);border-radius:4px;padding:8px 10px}
+.tm-stat-val{font-size:16px;font-weight:bold;color:#93c5fd;font-family:var(--mono)}
+.tm-stat-key{font-size:8px;color:var(--muted);letter-spacing:.1em;margin-top:2px}
+.tm-footer{display:flex;justify-content:space-between;padding:8px 18px;border-top:1px solid var(--border2);font-size:8px;color:var(--muted);letter-spacing:.1em;background:rgba(4,10,22,.6);flex-shrink:0}
+@media(max-width:600px){
+  .tm-countries{grid-template-columns:1fr;gap:8px}
+  .tm-arrow{padding-top:0;transform:rotate(90deg)}
+  .tm-title{font-size:14px}
+}
+/* ── Header system status upgrades ── */
+.h-threat-level{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:.15em;padding:3px 10px;border-radius:3px;border:1px solid;font-weight:bold}
+.h-threat-level.elevated{background:rgba(124,45,18,.3);border-color:rgba(249,115,22,.5);color:#fdba74}
+.h-threat-level.high{background:rgba(127,29,29,.3);border-color:rgba(239,68,68,.5);color:#fca5a5}
+#sys-stats{display:flex;gap:12px;align-items:center;font-size:8px;color:var(--muted);letter-spacing:.1em}
+.sys-stat-item{display:flex;flex-direction:column;align-items:center;gap:1px}
+.sys-stat-val{color:#60a5fa;font-size:10px;font-weight:bold;font-family:var(--mono)}
+@media(max-width:768px){#sys-stats{display:none}}
+/* ── Layer count badges ── */
+.lb-count{font-size:8px;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.3);
+  border-radius:10px;padding:1px 5px;color:#93c5fd;margin-left:auto;font-family:var(--mono)}
+.layer-btn.active .lb-count{background:rgba(59,130,246,.35)}
 </style>
 </head>
 <body>
@@ -414,12 +491,18 @@ canvas.dragging{cursor:grabbing}
   <div class="h-logo">
     <span class="h-icon">◎</span>
     <span class="h-title">INTEL GLOBE</span>
-    <span class="h-region">Global Intelligence Platform</span>
+    <span class="h-region">OSINT Platform v3.1</span>
   </div>
-  <div class="h-middle" id="h-status">Click any country · Dots are hotspots · Scroll/pinch to zoom</div>
+  <div class="h-middle" id="h-status">Double-click country · Dots are hotspots · Scroll to zoom</div>
   <div class="h-right">
+    <div id="sys-stats">
+      <div class="sys-stat-item"><span class="sys-stat-val" id="stat-countries">125</span><span>COUNTRIES</span></div>
+      <div class="sys-stat-item"><span class="sys-stat-val" id="stat-hotspots">102</span><span>HOTSPOTS</span></div>
+      <div class="sys-stat-item"><span class="sys-stat-val" id="stat-conflicts">98</span><span>CONFLICTS</span></div>
+    </div>
+    <span class="h-threat-level elevated" id="global-threat">⚑ THREAT: ELEVATED</span>
     <button id="refresh-btn" onclick="refreshIntel()" style="background:none;border:1px solid #1e3a5f;color:#475569;cursor:pointer;padding:5px 11px;border-radius:4px;font-size:10px;font-family:'Courier New',monospace;letter-spacing:.1em;transition:all .25s" title="Refresh live intel data">↻ REFRESH</button>
-    <span class="h-live"><span class="h-dot"></span>LIVE FEED</span>
+    <span class="h-live"><span class="h-dot"></span>LIVE</span>
     <span class="h-time" id="h-time"></span>
   </div>
 </div>
@@ -431,12 +514,12 @@ canvas.dragging{cursor:grabbing}
 <!-- Data layer controls -->
 <div id="layers-panel">
   <div class="layers-title">DATA LAYERS</div>
-  <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS</button>
-  <button class="layer-btn" id="lb-troops"    onclick="toggleLayer('troops')"><span class="lb-dot" style="background:#ef4444"></span>TROOPS</button>
-  <button class="layer-btn" id="lb-arms"      onclick="toggleLayer('arms')"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS</button>
-  <button class="layer-btn" id="lb-naval"     onclick="toggleLayer('naval')"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS</button>
-  <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"><span class="lb-dot" style="background:#a855f7"></span>FINANCE</button>
-  <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"><span class="lb-dot" style="background:#fbbf24"></span>REFUGEES</button>
+  <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS<span class="lb-count">98</span></button>
+  <button class="layer-btn" id="lb-troops"    onclick="toggleLayer('troops')"><span class="lb-dot" style="background:#ef4444"></span>TROOPS<span class="lb-count">30</span></button>
+  <button class="layer-btn" id="lb-arms"      onclick="toggleLayer('arms')"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS<span class="lb-count">29</span></button>
+  <button class="layer-btn" id="lb-naval"     onclick="toggleLayer('naval')"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS<span class="lb-count">10</span></button>
+  <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span></button>
+  <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span></button>
 </div>
 
 <!-- Live intelligence ticker -->
@@ -462,14 +545,30 @@ canvas.dragging{cursor:grabbing}
   </div>
 </div>
 
-<!-- Tracking detail modal -->
+<!-- Intelligence Brief Modal -->
 <div id="track-modal" onclick="if(event.target===this)closeTrackModal()">
   <div id="track-card">
-    <div class="track-type" id="track-type">—</div>
-    <div class="track-label" id="track-label">—</div>
-    <div class="track-meta" id="track-meta"></div>
-    <div class="track-desc" id="track-desc">—</div>
-    <button class="track-close" onclick="closeTrackModal()">✕ CLOSE</button>
+    <div class="tm-header">
+      <div class="tm-category">
+        <span class="tm-category-dot" id="tm-dot" style="background:#60a5fa"></span>
+        <span id="tm-category">INTELLIGENCE BRIEF</span>
+      </div>
+      <button class="tm-close" onclick="closeTrackModal()">✕ CLOSE</button>
+    </div>
+    <div class="tm-body">
+      <div class="tm-title" id="tm-title">—</div>
+      <div class="tm-badges" id="tm-badges"></div>
+      <div id="tm-stat-row" class="tm-stat-row"></div>
+      <div id="tm-countries-section"></div>
+      <div class="tm-section-label">ASSESSMENT</div>
+      <div class="tm-detail" id="tm-detail">—</div>
+      <div id="tm-actors-section"></div>
+      <div id="tm-news-section"></div>
+    </div>
+    <div class="tm-footer">
+      <span>SOURCE: OPEN-SOURCE INTELLIGENCE AGGREGATION</span>
+      <span id="tm-timestamp"></span>
+    </div>
   </div>
 </div>
 <div id="geo-loading" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none">Loading real-world borders…</div>
@@ -3889,23 +3988,23 @@ canvas.addEventListener('mouseup',e=>{
     if(hs){openHotspot(hs);return;}
     if(activeLayers.naval){
       const na=navalAssetAt(e.clientX,e.clientY);
-      if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' '+na.detail.split('.')[0],na.detail);return;}
+      if(na){openNavalBrief(na);return;}
     }
     if(activeLayers.troops){
       const tm=troopMovAt(e.clientX,e.clientY);
-      if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'Strength: '+tm.strength+' | Status: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type+' | Severity: '+tm.severity);return;}
+      if(tm){openTroopMovBrief(tm);return;}
     }
     if(activeLayers.arms){
       const af=armsFlowAt(e.clientX,e.clientY);
-      if(af){openTrackModal('ARMS TRANSFER: '+af.from+' → '+af.to,af.label,'Value: '+af.value,'Type: '+af.type.toUpperCase()+' | Severity: '+af.severity);return;}
+      if(af){openArmsFlowBrief(af);return;}
     }
     if(activeLayers.money){
       const ff=financialFlowAt(e.clientX,e.clientY);
-      if(ff){openTrackModal('FINANCIAL FLOW: '+ff.from+' → '+ff.to,ff.label,'Value: '+ff.value,'Flow type: '+ff.type+' | Severity: '+ff.severity);return;}
+      if(ff){openFinancialFlowBrief(ff);return;}
     }
     if(activeLayers.refugees){
       const rf=refugeeFlowAt(e.clientX,e.clientY);
-      if(rf){openTrackModal('DISPLACEMENT FLOW',rf.label,'Est. displaced: '+rf.value,'Severity: '+rf.severity);return;}
+      if(rf){openRefugeeFlowBrief(rf);return;}
     }
     // Country panel — requires double-click to avoid accidental opens while rotating
     const h=hitTest(e.clientX,e.clientY);
@@ -3987,23 +4086,23 @@ canvas.addEventListener('touchend',e=>{
         if(hs){openHotspot(hs);return;}
         if(activeLayers.naval){
           const na=navalAssetAt(t.clientX,t.clientY);
-          if(na){openTrackModal(na.type+' · '+na.country,na.label,na.flag+' '+na.detail.split('.')[0],na.detail);return;}
+          if(na){openNavalBrief(na);return;}
         }
         if(activeLayers.troops){
           const tm=troopMovAt(t.clientX,t.clientY);
-          if(tm){openTrackModal('TROOP MOVEMENT · '+tm.country,tm.label,'Strength: '+tm.strength+' | Status: '+tm.status,'Country: '+tm.country+' | Type: '+tm.type+' | Severity: '+tm.severity);return;}
+          if(tm){openTroopMovBrief(tm);return;}
         }
         if(activeLayers.arms){
           const af=armsFlowAt(t.clientX,t.clientY);
-          if(af){openTrackModal('ARMS TRANSFER: '+af.from+' → '+af.to,af.label,'Value: '+af.value,'Type: '+af.type.toUpperCase()+' | Severity: '+af.severity);return;}
+          if(af){openArmsFlowBrief(af);return;}
         }
         if(activeLayers.money){
           const ff=financialFlowAt(t.clientX,t.clientY);
-          if(ff){openTrackModal('FINANCIAL FLOW: '+ff.from+' → '+ff.to,ff.label,'Value: '+ff.value,'Flow type: '+ff.type+' | Severity: '+ff.severity);return;}
+          if(ff){openFinancialFlowBrief(ff);return;}
         }
         if(activeLayers.refugees){
           const rf=refugeeFlowAt(t.clientX,t.clientY);
-          if(rf){openTrackModal('DISPLACEMENT FLOW',rf.label,'Est. displaced: '+rf.value,'Severity: '+rf.severity);return;}
+          if(rf){openRefugeeFlowBrief(rf);return;}
         }
         // Country — double-tap on mobile
         const h=hitTest(t.clientX,t.clientY);
@@ -4495,14 +4594,166 @@ function toggleLayer(name){
 }
 
 /* ════════════════════════════════════════════════════
-   TRACKING DETAIL MODAL
+   INTELLIGENCE BRIEF MODAL
 ════════════════════════════════════════════════════ */
-function openTrackModal(typeLabel,label,meta,desc){
-  document.getElementById('track-type').textContent=typeLabel;
-  document.getElementById('track-label').textContent=label;
-  document.getElementById('track-meta').textContent=meta;
-  document.getElementById('track-desc').textContent=desc;
+const SEV_COLORS={critical:'critical',high:'high',medium:'medium',low:'low'};
+
+function severityBadge(sev){
+  const s=(sev||'').toLowerCase();
+  return `<span class="tm-badge ${SEV_COLORS[s]||'blue'}">${(sev||'').toUpperCase()}</span>`;
+}
+
+function countryBriefHTML(iso){
+  const c=COUNTRIES[iso], intel=INTEL[iso];
+  if(!c)return'';
+  const alertColor={CRITICAL:'#fca5a5',HIGH:'#fdba74',MEDIUM:'#fcd34d',LOW:'#86efac'}[c.alertLevel]||'#94a3b8';
+  const summary=intel?.summary||'No intelligence summary available.';
+  const shortSummary=summary.length>200?summary.slice(0,200)+'…':summary;
+  return `<div class="tm-country-box">
+    <div class="tm-country-name">${c.name}</div>
+    <div class="tm-country-alert" style="color:${alertColor}">● ${c.alertLevel||'UNKNOWN'} ALERT · ${c.capital}</div>
+    <div class="tm-country-summary">${shortSummary}</div>
+  </div>`;
+}
+
+function buildIntelBrief(data){
+  // data: {category, dotColor, title, badges, stats, detail, fromISO, toISO, actors, news}
+  document.getElementById('tm-category').textContent=data.category||'INTELLIGENCE BRIEF';
+  document.getElementById('tm-dot').style.background=data.dotColor||'#60a5fa';
+  document.getElementById('tm-title').textContent=data.title||'—';
+  document.getElementById('tm-timestamp').textContent=new Date().toUTCString().replace(' GMT','Z');
+
+  // Badges
+  const badgesEl=document.getElementById('tm-badges');
+  badgesEl.innerHTML=(data.badges||[]).map(b=>`<span class="tm-badge ${b.style||'blue'}">${b.text}</span>`).join('');
+
+  // Stats row
+  const statsEl=document.getElementById('tm-stat-row');
+  statsEl.innerHTML=(data.stats||[]).map(s=>
+    `<div class="tm-stat"><div class="tm-stat-val">${s.val}</div><div class="tm-stat-key">${s.key}</div></div>`
+  ).join('');
+
+  // Countries
+  const countrySec=document.getElementById('tm-countries-section');
+  if(data.fromISO||data.toISO){
+    const fromHTML=data.fromISO?countryBriefHTML(data.fromISO):'';
+    const toHTML=data.toISO?countryBriefHTML(data.toISO):'';
+    const arrow=data.fromISO&&data.toISO?'<div class="tm-arrow">→</div>':'';
+    countrySec.innerHTML=`<div class="tm-section-label">INVOLVED PARTIES</div>
+      <div class="tm-countries">${fromHTML}${arrow}${toHTML}</div>`;
+  } else { countrySec.innerHTML=''; }
+
+  // Detail
+  document.getElementById('tm-detail').textContent=data.detail||'—';
+
+  // Actors
+  const actorSec=document.getElementById('tm-actors-section');
+  const actors=data.actors||[];
+  if(actors.length){
+    actorSec.innerHTML=`<div class="tm-section-label">KEY ACTORS</div>
+      <div class="tm-actors">${actors.map(a=>`<span class="tm-actor">${a}</span>`).join('')}</div>`;
+  } else { actorSec.innerHTML=''; }
+
+  // News
+  const newsSec=document.getElementById('tm-news-section');
+  const news=data.news||[];
+  if(news.length){
+    newsSec.innerHTML=`<div class="tm-section-label">RELATED INTELLIGENCE</div>`+
+      news.map(n=>`<div class="tm-news-item">${n}</div>`).join('');
+  } else { newsSec.innerHTML=''; }
+
   document.getElementById('track-modal').style.display='flex';
+}
+
+function openArmsFlowBrief(af){
+  const fromIntel=INTEL[af.from], toIntel=INTEL[af.to];
+  const fromActors=fromIntel?.keyActors||[];
+  const toActors=toIntel?.keyActors||[];
+  const allActors=[...new Set([...fromActors.slice(0,2),...toActors.slice(0,2)])];
+  const news=[];
+  if(fromIntel?.news) news.push(...fromIntel.news.slice(0,2));
+  if(toIntel?.news) news.push(...toIntel.news.slice(0,1));
+  buildIntelBrief({
+    category:'ARMS TRANSFER INTELLIGENCE',dotColor:'#f59e0b',
+    title:af.label,
+    badges:[{text:af.type.toUpperCase(),style:'blue'},{text:af.severity,style:SEV_COLORS[af.severity]||'blue'},
+            {text:af.from+' → '+af.to,style:'blue'}],
+    stats:[{val:af.value,key:'TRANSFER VALUE'},{val:af.type.toUpperCase(),key:'WEAPON TYPE'},{val:(af.severity||'').toUpperCase(),key:'THREAT LEVEL'}],
+    fromISO:af.from,toISO:af.to,
+    detail:`Arms transfer from ${COUNTRIES[af.from]?.name||af.from} to ${COUNTRIES[af.to]?.name||af.to}. ${fromIntel?.threats?.[0]?.description||''} Assessment based on open-source reporting, trade manifests, and satellite imagery analysis.`,
+    actors:allActors,news
+  });
+}
+
+function openFinancialFlowBrief(ff){
+  const fromIntel=INTEL[ff.from], toIntel=INTEL[ff.to];
+  const news=[];
+  if(fromIntel?.news) news.push(...fromIntel.news.slice(0,2));
+  if(toIntel?.news) news.push(...toIntel.news.slice(0,1));
+  buildIntelBrief({
+    category:'FINANCIAL INTELLIGENCE',dotColor:'#a855f7',
+    title:ff.label,
+    badges:[{text:ff.type.toUpperCase(),style:'blue'},{text:ff.severity,style:SEV_COLORS[ff.severity]||'blue'},
+            {text:ff.from+' → '+ff.to,style:'blue'}],
+    stats:[{val:ff.value,key:'FLOW VALUE'},{val:ff.type.toUpperCase(),key:'FLOW TYPE'},{val:(ff.severity||'').toUpperCase(),key:'THREAT LEVEL'}],
+    fromISO:ff.from,toISO:ff.to,
+    detail:`Financial flow from ${COUNTRIES[ff.from]?.name||ff.from} to ${COUNTRIES[ff.to]?.name||ff.to}. ${toIntel?.threats?.[0]?.description||fromIntel?.economic||''} Source: OSINT / financial monitoring.`,
+    actors:[...(fromIntel?.keyActors||[]).slice(0,2),...(toIntel?.keyActors||[]).slice(0,2)],
+    news
+  });
+}
+
+function openRefugeeFlowBrief(rf){
+  buildIntelBrief({
+    category:'DISPLACEMENT & MIGRATION INTELLIGENCE',dotColor:'#fbbf24',
+    title:rf.label,
+    badges:[{text:(rf.severity||'').toUpperCase(),style:SEV_COLORS[rf.severity]||'blue'},
+            {text:'DISPLACEMENT FLOW',style:'blue'}],
+    stats:[{val:rf.value,key:'DISPLACED'},{val:(rf.severity||'').toUpperCase(),key:'SEVERITY'}],
+    detail:`Mass displacement event tracked via UNHCR, IOM, and open-source reporting. Population movement represents a significant humanitarian and security concern. Receiving countries face capacity, social, and border security pressures.`,
+    news:['UNHCR: Global displacement reaches record 120M — conflict primary driver',
+          'IOM: Irregular migration routes monitored — criminal smuggling networks active',
+          'WFP: Food insecurity displacing 40M annually in conflict zones']
+  });
+}
+
+function openTroopMovBrief(tm){
+  const intel=INTEL[tm.country];
+  buildIntelBrief({
+    category:'MILITARY MOVEMENT INTELLIGENCE',dotColor:'#ef4444',
+    title:tm.label,
+    badges:[{text:tm.type.toUpperCase(),style:'blue'},{text:tm.severity,style:SEV_COLORS[tm.severity]||'blue'},
+            {text:tm.status,style:tm.severity==='critical'?'critical':'high'}],
+    stats:[{val:tm.strength,key:'FORCE STRENGTH'},{val:tm.type.toUpperCase(),key:'MOVEMENT TYPE'},{val:tm.status,key:'STATUS'}],
+    fromISO:tm.country,
+    detail:intel?.threats?.[0]?.description||`Military movement detected via satellite imagery, SIGINT, and open-source reporting. Deployment posture indicates ${tm.status.toLowerCase()} operations ongoing.`,
+    actors:intel?.keyActors?.slice(0,5)||[],
+    news:intel?.news?.slice(0,3)||[]
+  });
+}
+
+function openNavalBrief(na){
+  buildIntelBrief({
+    category:'NAVAL INTELLIGENCE / MARITIME OPS',dotColor:'#22c55e',
+    title:na.label,
+    badges:[{text:na.type,style:'blue'},{text:na.country,style:'blue'},{text:na.severity,style:SEV_COLORS[na.severity]||'blue'}],
+    stats:[{val:na.type,key:'ASSET CLASS'},{val:na.country,key:'FLAG STATE'},{val:(na.severity||'').toUpperCase(),key:'THREAT LEVEL'}],
+    fromISO:na.country!=='NATO'?na.country:undefined,
+    detail:na.detail,
+    news:['Global naval activity: 15+ active task forces deployed worldwide — threat environment elevated',
+          'Red Sea: Coalition forces intercepting Houthi missile/drone attacks on commercial shipping',
+          'South China Sea: PLAN carrier exercises continue — US/allied response patrols active']
+  });
+}
+
+function openTrackModal(typeLabel,label,meta,desc){
+  // Legacy fallback — builds a simple brief
+  buildIntelBrief({
+    category:typeLabel,dotColor:'#60a5fa',
+    title:label,
+    badges:[{text:meta,style:'blue'}],
+    detail:desc
+  });
 }
 function closeTrackModal(){
   document.getElementById('track-modal').style.display='none';
