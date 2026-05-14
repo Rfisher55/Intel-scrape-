@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Intel Globe — Middle East</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050c1a;--panel:#080f1e;--panel2:#0d1929;
+  --border:#1e3a5f;--border2:#162d4a;
+  --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --accent:#3b82f6;--mono:'Courier New',monospace;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
+
+/* ── Header ── */
+#header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px;
+  background:linear-gradient(180deg,rgba(5,12,26,.95) 0%,transparent 100%);
+  border-bottom:1px solid rgba(30,58,95,.4);
+  backdrop-filter:blur(4px);
+}
+.h-logo{display:flex;align-items:center;gap:10px}
+.h-icon{font-size:20px;color:var(--accent);animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 6px rgba(59,130,246,.8)}50%{text-shadow:0 0 18px rgba(59,130,246,1)}}
+.h-title{font-size:16px;font-weight:bold;letter-spacing:.15em;color:#93c5fd}
+.h-region{font-size:11px;color:var(--dim);border-left:1px solid var(--border);padding-left:14px}
+.h-middle{flex:1;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.08em}
+.h-right{display:flex;align-items:center;gap:16px}
+.h-live{display:flex;align-items:center;gap:6px;font-size:11px;color:#22c55e}
+.h-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink 1.2s step-start infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.h-time{font-size:10px;color:var(--muted)}
+
+/* ── Globe canvas ── */
+#globe-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+canvas{cursor:grab;display:block}
+canvas.dragging{cursor:grabbing}
+
+/* ── Tooltip ── */
+#tooltip{
+  position:fixed;z-index:200;pointer-events:none;
+  background:rgba(5,12,26,.92);border:1px solid rgba(59,130,246,.5);
+  border-radius:4px;padding:6px 10px;font-size:12px;
+  opacity:0;transition:opacity .15s;white-space:nowrap;
+}
+#tooltip .tt-name{font-weight:bold;color:#93c5fd}
+#tooltip .tt-alert{font-size:10px;margin-top:2px}
+
+/* ── Legend ── */
+#legend{
+  position:fixed;bottom:30px;left:20px;z-index:50;
+  background:rgba(5,12,26,.88);border:1px solid var(--border);
+  border-radius:6px;padding:12px 14px;min-width:130px;
+  backdrop-filter:blur(6px);
+}
+.leg-title{font-size:9px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px}
+.leg-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim);margin-bottom:5px}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.leg-div{border-top:1px solid var(--border2);margin:8px 0;display:none}
+.leg-arc-section{display:none}
+
+/* ── Intel Panel ── */
+#panel{
+  position:fixed;top:56px;right:0;bottom:0;width:400px;z-index:200;
+  background:linear-gradient(180deg,rgba(8,15,30,.98),rgba(5,12,26,.98));
+  border-left:1px solid var(--border);
+  display:none;flex-direction:column;
+  backdrop-filter:blur(12px);
+}
+#panel.open{display:flex;animation:slideIn .25s ease-out}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.p-head{padding:16px;border-bottom:1px solid var(--border2);background:rgba(13,25,41,.6)}
+.p-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.p-name{font-size:20px;font-weight:bold;color:#93c5fd;letter-spacing:.05em}
+.p-cap{font-size:11px;color:var(--muted);margin-top:3px}
+.p-controls{display:flex;align-items:center;gap:10px}
+.alert-badge{font-size:10px;font-weight:bold;letter-spacing:.12em;padding:3px 8px;border-radius:3px;border:1px solid}
+.p-close{background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 9px;border-radius:4px;font-size:12px;transition:all .2s}
+.p-close:hover{border-color:#ef4444;color:#ef4444}
+
+.connect-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:9px 14px;background:rgba(30,58,95,.3);border:1px solid var(--border);
+  border-radius:5px;color:var(--dim);font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;cursor:pointer;transition:all .2s;
+}
+.connect-btn:hover{background:rgba(59,130,246,.15);border-color:var(--accent);color:var(--text)}
+.connect-btn.active{background:rgba(239,68,68,.12);border-color:#ef4444;color:#fca5a5;
+  animation:arcPulse 2s ease-in-out infinite}
+@keyframes arcPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}50%{box-shadow:0 0 12px 2px rgba(239,68,68,.3)}}
+
+.p-tabs{display:flex;border-bottom:1px solid var(--border2)}
+.tab-btn{flex:1;padding:9px 4px;background:none;border:none;border-bottom:2px solid transparent;
+  color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:.1em;cursor:pointer;transition:all .15s}
+.tab-btn:hover{color:var(--dim)}
+.tab-btn.active{color:#93c5fd;border-bottom-color:var(--accent);background:rgba(59,130,246,.06)}
+
+.p-content{flex:1;overflow-y:auto;padding:16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.p-content::-webkit-scrollbar{width:4px}
+.p-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.sec-label{font-size:9px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px;border-bottom:1px solid var(--border2);padding-bottom:4px;margin-top:4px}
+.summary-text{font-size:12px;line-height:1.7;color:var(--dim)}
+.actors-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.actor-chip{font-size:10px;padding:3px 8px;background:rgba(30,58,95,.4);border:1px solid var(--border2);border-radius:3px;color:#7dd3fc}
+.econ-text{font-size:12px;color:#86efac;line-height:1.6}
+.no-data{font-size:12px;color:var(--muted);font-style:italic;text-align:center;padding:20px 0}
+
+.threat-item{background:rgba(13,25,41,.6);border:1px solid var(--border2);border-radius:5px;padding:10px 12px;margin-bottom:8px}
+.threat-head{display:flex;justify-content:space-between;margin-bottom:5px}
+.threat-type{font-size:10px;font-weight:bold;color:#93c5fd;letter-spacing:.1em}
+.threat-sev{font-size:10px;font-weight:bold}
+.threat-desc{font-size:11px;color:var(--dim);line-height:1.5}
+
+.news-item{background:rgba(13,25,41,.5);border:1px solid var(--border2);border-left:2px solid #1d4ed8;border-radius:4px;padding:9px 12px;margin-bottom:8px}
+.news-meta{display:flex;justify-content:space-between;margin-bottom:5px}
+.news-src{font-size:9px;letter-spacing:.1em;color:#7dd3fc}
+.news-time{font-size:9px;color:var(--muted)}
+.news-title{font-size:12px;color:var(--dim);line-height:1.45;display:block}
+
+.conflict-item{background:rgba(13,25,41,.6);border:1px solid var(--border2);border-radius:5px;padding:10px 12px;margin-bottom:8px}
+.cf-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.cf-countries{font-size:11px;color:#93c5fd;font-weight:bold}
+.cf-sev{font-size:9px;font-weight:bold;letter-spacing:.1em;padding:2px 6px;border-radius:3px}
+.cf-sev.critical{background:rgba(127,29,29,.4);color:#fca5a5}
+.cf-sev.high{background:rgba(124,45,18,.4);color:#fdba74}
+.cf-sev.medium{background:rgba(120,53,15,.4);color:#fcd34d}
+.cf-sev.low{background:rgba(20,83,45,.4);color:#86efac}
+.cf-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cf-type{font-size:9px;padding:2px 6px;background:rgba(30,58,95,.5);border:1px solid var(--border2);border-radius:3px;color:#7dd3fc;white-space:nowrap}
+.cf-label{font-size:11px;color:var(--dim)}
+
+.p-foot{display:flex;justify-content:space-between;padding:8px 16px;border-top:1px solid var(--border2);font-size:9px;color:var(--muted);background:rgba(5,12,26,.5)}
+.tab-section{display:none}
+.tab-section.active{display:block}
+
+@media(max-width:600px){
+  #panel{width:100%;top:55%}
+  .h-right,.h-region{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="h-logo">
+    <span class="h-icon">◎</span>
+    <span class="h-title">INTEL GLOBE</span>
+    <span class="h-region">Middle East Theatre</span>
+  </div>
+  <div class="h-middle" id="h-status">Click any highlighted country for Intel Report</div>
+  <div class="h-right">
+    <span class="h-live"><span class="h-dot"></span>LIVE FEED</span>
+    <span class="h-time" id="h-time"></span>
+  </div>
+</div>
+
+<div id="globe-wrap"><canvas id="globe"></canvas></div>
+
+<div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div></div>
+
+<div id="legend">
+  <div class="leg-title">ALERT LEVEL</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#b91c1c"></span>CRITICAL</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#dc2626"></span>HIGH</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#ea580c"></span>MEDIUM</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#16a34a"></span>LOW</div>
+  <div class="leg-div" id="leg-div"></div>
+  <div class="leg-arc-section" id="leg-arc-section">
+    <div class="leg-title">CONFLICT ARCS</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#ef4444"></span>War/Conflict</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Proxy/Support</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#a855f7"></span>Influence</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#3b82f6"></span>Diplomatic</div>
+  </div>
+</div>
+
+<div id="panel">
+  <div class="p-head">
+    <div class="p-row">
+      <div>
+        <div class="p-name" id="p-name">—</div>
+        <div class="p-cap"  id="p-cap">Capital: —</div>
+      </div>
+      <div class="p-controls">
+        <span class="alert-badge" id="p-badge">—</span>
+        <button class="p-close" onclick="closePanel()">✕</button>
+      </div>
+    </div>
+    <button class="connect-btn" id="connect-btn" onclick="toggleArcs()">
+      <span id="conn-icon">◎</span>&nbsp;<span id="conn-text">CONNECT — Show Relationships</span>
+    </button>
+  </div>
+  <div class="p-tabs">
+    <button class="tab-btn active" onclick="showTab('summary')">SUMMARY</button>
+    <button class="tab-btn" onclick="showTab('threats')">THREATS</button>
+    <button class="tab-btn" onclick="showTab('news')">INTEL</button>
+    <button class="tab-btn" onclick="showTab('conflicts')">CONFLICTS</button>
+  </div>
+  <div class="p-content">
+    <div class="tab-section active" id="tab-summary"></div>
+    <div class="tab-section" id="tab-threats"></div>
+    <div class="tab-section" id="tab-news"></div>
+    <div class="tab-section" id="tab-conflicts"></div>
+  </div>
+  <div class="p-foot">
+    <span id="p-updated">—</span>
+    <span>Intel Globe v1.0 — Middle East Edition</span>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════
+   ALL DATA EMBEDDED — WORKS AS PURE STATIC FILE
+════════════════════════════════════════════════════ */
+
+const COUNTRIES = {
+  ISR:{iso:'ISR',name:'Israel',       capital:'Jerusalem',   alertLevel:'HIGH',     lat:31.5, lng:34.75,
+    poly:[[33.27,35.67],[32.7,35.17],[32.35,34.96],[31.52,34.58],[29.5,34.9],[29.5,35.01],[30.89,35.44],[31.99,35.44],[33.27,35.67]]},
+  PSE:{iso:'PSE',name:'Palestine',    capital:'Ramallah',    alertLevel:'CRITICAL', lat:31.9, lng:35.2,
+    poly:[[32.55,35.54],[31.97,35.54],[31.48,34.93],[31.35,34.5],[31.21,34.21],[31.52,34.58],[32.7,35.17],[32.55,35.54]]},
+  LBN:{iso:'LBN',name:'Lebanon',      capital:'Beirut',      alertLevel:'HIGH',     lat:33.9, lng:35.5,
+    poly:[[34.64,36.48],[33.09,35.65],[33.27,35.67],[33.55,35.37],[33.9,35.92],[34.64,36.48]]},
+  SYR:{iso:'SYR',name:'Syria',        capital:'Damascus',    alertLevel:'HIGH',     lat:33.5, lng:36.3,
+    poly:[[37.38,42.35],[36.83,38.77],[36.5,37.19],[36.08,36.61],[35.17,36.15],[33.66,35.84],[33.1,35.8],[33.09,35.65],[34.64,36.48],[33.23,36.53],[32.67,38.99],[33.05,39.98],[37.38,42.35]]},
+  IRN:{iso:'IRN',name:'Iran',         capital:'Tehran',      alertLevel:'HIGH',     lat:35.7, lng:51.4,
+    poly:[[39.78,44.77],[38.85,47.24],[38.33,47.88],[36.7,49.46],[36.64,51.37],[37.54,56.11],[37.03,58.05],[36.38,60.04],[35.07,60.58],[31.4,61.66],[27.72,60.88],[25.03,57.34],[26.68,55.76],[27.18,54.22],[27.59,52.16],[27.84,50.47],[29.52,48.99],[30.99,48.0],[32.42,47.42],[33.07,46.03],[33.64,44.54],[34.48,42.74],[36.04,42.28],[37.41,42.4],[39.78,44.77]]},
+  IRQ:{iso:'IRQ',name:'Iraq',         capital:'Baghdad',     alertLevel:'MEDIUM',   lat:33.3, lng:44.4,
+    poly:[[37.38,42.35],[36.04,42.28],[34.48,42.74],[33.64,44.54],[33.07,46.03],[32.42,47.42],[30.99,48.0],[29.52,48.99],[29.1,47.18],[29.2,47.0],[30.0,47.97],[31.0,47.1],[32.15,47.63],[33.05,39.98],[32.67,38.99],[33.23,36.53],[37.38,42.35]]},
+  SAU:{iso:'SAU',name:'Saudi Arabia', capital:'Riyadh',      alertLevel:'MEDIUM',   lat:24.7, lng:46.7,
+    poly:[[32.0,37.0],[29.19,39.3],[27.96,35.14],[22.57,37.11],[19.0,40.97],[15.5,42.5],[17.5,49.0],[19.0,52.5],[22.6,55.6],[24.0,56.4],[25.7,56.3],[26.1,56.2],[25.8,55.8],[26.12,51.59],[25.52,50.7],[24.5,51.5],[24.5,51.6],[25.0,49.8],[28.9,47.4],[29.1,47.18],[29.52,48.99],[32.0,47.0],[32.0,37.0]]},
+  YEM:{iso:'YEM',name:'Yemen',        capital:"Sana'a",      alertLevel:'HIGH',     lat:15.4, lng:44.2,
+    poly:[[17.5,49.0],[15.5,42.5],[14.0,42.6],[12.6,43.5],[11.9,44.1],[12.0,45.0],[11.9,50.2],[12.5,52.0],[14.0,53.1],[16.0,52.0],[17.5,49.0]]},
+  TUR:{iso:'TUR',name:'Turkey',       capital:'Ankara',      alertLevel:'MEDIUM',   lat:39.9, lng:32.9,
+    poly:[[42.0,43.0],[41.5,41.5],[41.5,36.5],[40.7,35.0],[39.0,26.4],[37.0,28.0],[36.5,36.1],[36.08,36.61],[37.38,42.35],[40.0,43.0],[42.0,43.0]]},
+  JOR:{iso:'JOR',name:'Jordan',       capital:'Amman',       alertLevel:'LOW',      lat:31.9, lng:35.9,
+    poly:[[33.38,38.98],[32.67,38.99],[33.23,36.53],[32.53,36.0],[31.97,35.44],[30.89,35.44],[29.5,35.01],[29.18,39.3],[33.38,38.98]]},
+  EGY:{iso:'EGY',name:'Egypt',        capital:'Cairo',       alertLevel:'LOW',      lat:30.1, lng:31.2,
+    poly:[[31.67,25.0],[31.67,32.87],[31.12,33.78],[30.0,32.5],[29.93,34.3],[27.5,34.0],[22.0,36.87],[22.0,24.98],[31.67,25.0]]},
+  ARE:{iso:'ARE',name:'UAE',          capital:'Abu Dhabi',   alertLevel:'LOW',      lat:24.5, lng:54.4,
+    poly:[[26.12,51.59],[25.52,50.7],[24.5,51.5],[22.6,55.6],[24.0,56.4],[25.7,56.3],[26.12,56.2],[25.8,55.8],[26.12,51.59]]},
+  QAT:{iso:'QAT',name:'Qatar',        capital:'Doha',        alertLevel:'LOW',      lat:25.3, lng:51.5,
+    poly:[[25.52,50.7],[24.5,51.5],[24.5,50.8],[25.0,50.7],[26.15,51.2],[25.52,51.59],[25.52,50.7]]},
+  KWT:{iso:'KWT',name:'Kuwait',       capital:'Kuwait City', alertLevel:'LOW',      lat:29.4, lng:47.6,
+    poly:[[30.1,46.5],[29.1,47.18],[28.5,47.78],[28.5,48.43],[29.5,48.43],[30.1,47.57],[30.1,46.5]]},
+  BHR:{iso:'BHR',name:'Bahrain',      capital:'Manama',      alertLevel:'LOW',      lat:26.2, lng:50.6,
+    poly:[[26.28,50.3],[26.0,50.4],[26.1,50.62],[26.28,50.7],[26.28,50.3]]},
+  OMN:{iso:'OMN',name:'Oman',         capital:'Muscat',      alertLevel:'LOW',      lat:23.6, lng:58.6,
+    poly:[[24.0,56.4],[22.6,55.6],[17.5,49.0],[18.0,53.1],[20.0,57.5],[22.0,59.8],[24.5,58.3],[24.5,56.8],[24.0,56.4]]},
+};
+
+const CONFLICTS = [
+  {from:'ISR',to:'PSE',type:'war',      label:'Gaza Conflict',                severity:'critical'},
+  {from:'ISR',to:'LBN',type:'conflict', label:'Hezbollah Confrontation',      severity:'high'},
+  {from:'ISR',to:'IRN',type:'proxy_war',label:'Shadow War / Proxy Conflict',  severity:'high'},
+  {from:'ISR',to:'SYR',type:'airstrike',label:'Israeli Airstrikes on Syria',  severity:'medium'},
+  {from:'IRN',to:'SAU',type:'rivalry',  label:'Shia-Sunni Regional Rivalry',  severity:'medium'},
+  {from:'IRN',to:'YEM',type:'proxy',    label:'Houthi Proxy Support',         severity:'high'},
+  {from:'IRN',to:'LBN',type:'support',  label:'Hezbollah Arming & Funding',   severity:'high'},
+  {from:'IRN',to:'IRQ',type:'influence',label:'Iranian Political Influence',  severity:'medium'},
+  {from:'IRN',to:'PSE',type:'support',  label:'Hamas Support Network',        severity:'high'},
+  {from:'SAU',to:'YEM',type:'war',      label:'Coalition Military Campaign',  severity:'high'},
+  {from:'TUR',to:'SYR',type:'conflict', label:'Border Ops / Kurdish Corridor',severity:'medium'},
+  {from:'EGY',to:'PSE',type:'border',   label:'Rafah Border Crisis',          severity:'medium'},
+  {from:'JOR',to:'ISR',type:'border',   label:'Border Security Agreement',    severity:'low'},
+  {from:'ARE',to:'IRN',type:'rivalry',  label:'Gulf Territorial Tensions',    severity:'low'},
+];
+
+const INTEL = {
+  ISR:{
+    summary:"Israel remains engaged in multi-front military operations. Gaza ground campaign continues with ongoing hostage negotiations mediated by Qatar and Egypt. Northern border shows reduced but persistent Hezbollah activity. Diplomatic normalization with Saudi Arabia stalled pending Gaza resolution. Iran continues long-range missile development and proxy funding.",
+    threats:[
+      {type:"Military",  description:"Active Gaza campaign with IDF ground and air operations ongoing",         severity:"critical"},
+      {type:"Missile",   description:"Hezbollah maintains estimated 150,000+ rocket and missile arsenal",       severity:"high"},
+      {type:"Cyber",     description:"Iranian APT units conducting persistent cyber ops on infrastructure",     severity:"high"},
+      {type:"Diplomatic",description:"Regional normalization process suspended due to Gaza conflict",           severity:"medium"},
+    ],
+    keyActors:["IDF","Mossad","Shin Bet","Hamas","Hezbollah","Iran IRGC"],
+    news:[
+      "IDF reports elimination of senior Hamas command structure in Rafah",
+      "Iron Dome intercepts projectiles from northern border — Hezbollah attributed",
+      "Phase 2 hostage deal negotiations continuing in Doha mediated by Qatar",
+      "US $14.1B emergency military aid package approved by Congress",
+      "Israel-Saudi normalization roadmap on hold pending ceasefire",
+    ],
+    economic:"Defense spending at 8.2% of GDP — wartime budget. Shekel down 12% vs. USD. Tourism collapsed.",
+  },
+  PSE:{
+    summary:"Gaza Strip experiencing catastrophic humanitarian crisis under sustained Israeli military operations targeting Hamas command infrastructure. West Bank tensions elevated with IDF incursions into Jenin refugee camp and Tulkarm. Palestinian Authority governance fragmented between PA in West Bank and Hamas in Gaza. Post-war governance framework absent.",
+    threats:[
+      {type:"Humanitarian", description:"Acute food, water, and medical supply shortages across Gaza Strip",  severity:"critical"},
+      {type:"Military",     description:"Ongoing IDF ground operations — Rafah, Khan Younis, North Gaza",     severity:"critical"},
+      {type:"Political",    description:"Hamas-PA governance split deepens — no unified leadership",          severity:"high"},
+      {type:"Displacement", description:"1.9M+ internally displaced within Gaza — 85% of population",        severity:"critical"},
+    ],
+    keyActors:["Hamas","Palestinian Authority","UNRWA","IDF","Palestinian Islamic Jihad","ICC"],
+    news:[
+      "UNRWA reports 80% of healthcare facilities non-functional or destroyed",
+      "Phase 2 ceasefire terms — Hamas insists on permanent end; Israel refuses",
+      "ICC arrest warrant proceedings — implications for Netanyahu's travel",
+      "West Bank settler violence incidents up 40% year-on-year",
+      "Qatar, Egypt mediating — US envoy Hochstein in region",
+    ],
+    economic:"Economy functionally collapsed in Gaza. West Bank GDP contracted 25%. Unemployment 80%+ in Gaza.",
+  },
+  IRN:{
+    summary:"Iran maintains its 'Axis of Resistance' proxy network while advancing nuclear enrichment to near-weapons-grade levels. IRGC Quds Force conducts operations across Iraq, Syria, Lebanon, and Yemen. Domestic inflation at 42% despite oil export workarounds. New president Pezeshkian signals limited domestic reform but continuity on foreign policy.",
+    threats:[
+      {type:"Nuclear",  description:"60% U-235 enrichment — weapons-grade breakout timeline: 1-2 weeks if ordered", severity:"critical"},
+      {type:"Proxy",    description:"IRGC funds and arms Hamas, Hezbollah, Houthis, Iraqi PMF militias",            severity:"high"},
+      {type:"Missile",  description:"Shahab-3, Emad, Fattah-1 hypersonic arsenal; 3,000+ km range capability",      severity:"high"},
+      {type:"Cyber",    description:"APT33/34/35 actively targeting Gulf, Israeli, and Western infrastructure",      severity:"high"},
+    ],
+    keyActors:["IRGC","Quds Force","Supreme Leader Khamenei","President Pezeshkian","Hezbollah","Hamas","Houthis"],
+    news:[
+      "IAEA: Iran's 60%-enriched uranium stockpile exceeds 22kg — near-weapons threshold",
+      "Iran directly struck Israeli territory for first time with 300+ drones and missiles",
+      "IRGC Quds Force commander Qaani confirmed directing Hezbollah operations",
+      "Oil exports to China reach record despite sanctions — $60B+ annually",
+      "Nuclear deal (JCPOA) revival talks indefinitely suspended",
+    ],
+    economic:"Rial at historic lows: 600,000/USD. Inflation 42%. Sanctions cost $60B+ annually. Oil smuggling ongoing.",
+  },
+  IRQ:{
+    summary:"Iraq navigates a complex balancing act between continued US military presence and dominant Iranian influence over government and militia structures. Iran-backed Popular Mobilization Forces (PMF) conduct periodic strikes against US assets. ISIS remnants maintain active cells in Anbar, Diyala, and Kirkuk provinces. Kurdish autonomy tensions persist.",
+    threats:[
+      {type:"Militia",   description:"Iran-backed PMF groups launching drone/rocket attacks on US bases",       severity:"high"},
+      {type:"Terrorism", description:"ISIS cells active — Anbar, Diyala, Kirkuk ambushes continuing",          severity:"medium"},
+      {type:"Political", description:"PM Sudani balancing US-Iran pressure amid government paralysis",         severity:"medium"},
+      {type:"Kurdish",   description:"Erbil-Baghdad oil revenue dispute unresolved — KRG budget cut off",      severity:"medium"},
+    ],
+    keyActors:["PMF","Kataib Hezbollah","KDP","PUK","US CENTCOM","IRGC Quds Force","PM Sudani"],
+    news:[
+      "PMF formally agrees to halt attacks on US forces — compliance uncertain",
+      "ISIS ambush kills 8 Iraqi soldiers in Anbar Province desert",
+      "Iraq oil production hits 4.4M bpd — revenue $7B/month",
+      "US-Iraq joint committee on withdrawal timeline formed — 18-month timeline proposed",
+      "Erbil airport drone attack attributed to Iran-linked group",
+    ],
+    economic:"Oil revenues strong at $7B/month. Non-oil economy underdeveloped. Reconstruction stalled by corruption.",
+  },
+  SYR:{
+    summary:"Syria remains fractured across four de facto zones: Assad government (major cities), HTS (Idlib), SDF/YPG (northeast), Turkish-backed factions (northern strip). Russian military maintains Hmeimim air base and Tartus naval facility. Israeli airstrikes on Iranian positions occur weekly. Western sanctions block reconstruction.",
+    threats:[
+      {type:"Conflict",    description:"Multiple armed factions in active territorial and governance disputes",    severity:"high"},
+      {type:"Airstrike",   description:"Regular Israeli strikes on IRGC supply lines and Hezbollah weapons depots",severity:"medium"},
+      {type:"Turkish",     description:"Turkish military operations target YPG/PKK in northeast — Tal Rifaat area", severity:"medium"},
+      {type:"Humanitarian",description:"6.8M internally displaced; 5.5M external refugees in Turkey, Lebanon, Jordan",severity:"critical"},
+    ],
+    keyActors:["Assad Government","HTS (Julani)","SDF/YPG","Turkish-backed TFSA","IRGC","Russian Forces","US Forces (NE)"],
+    news:[
+      "HTS repels government offensive east of Hama — holds Idlib buffer zone",
+      "Israel strikes arms depot near Damascus airport — Hezbollah weapons transfer targeted",
+      "OPCW investigation confirms chlorine use in 2018 Douma attack — Assad denied",
+      "Arab League summit — Syria readmitted; UAE, Jordan normalize with Damascus",
+      "US troops (900) remain at Al-Tanf and NE Syria despite withdrawal pressure",
+    ],
+    economic:"GDP at $10B — 90% collapse since 2011. Syrian pound 15,000/USD (was 50). Sanctions block reconstruction.",
+  },
+  LBN:{
+    summary:"Lebanon in simultaneous political, economic, and security collapse. Hezbollah maintains parallel state functions in south and Bekaa Valley. Post-ceasefire with Israel holding but with periodic violations. Banking sector collapsed in 2019 — deposits remain frozen. Presidential vacancy has lasted over two years.",
+    threats:[
+      {type:"Hezbollah", description:"Rearming through Syria corridor — est. 150K+ rockets despite UN 1701",          severity:"high"},
+      {type:"Economic",  description:"Pound lost 98% of value — banking system insolvent, deposits frozen",            severity:"critical"},
+      {type:"Political", description:"Presidential vacuum — 30+ failed election rounds. No government formation.",      severity:"high"},
+      {type:"Refugee",   description:"1.5M Syrian + 500K Palestinian refugees strain all public services",             severity:"high"},
+    ],
+    keyActors:["Hezbollah","Lebanese Armed Forces (LAF)","UNIFIL","Iran","Saudi Arabia","France","IMF"],
+    news:[
+      "Ceasefire with Israel holding — LAF deploying south per UNSC 1701 terms",
+      "IMF warns Lebanon bailout conditional on banking sector reform — no progress",
+      "UNIFIL reports Hezbollah rearmament activity north of Litani River",
+      "Presidential election attempt #31 fails — Aoun faction blocks quorum",
+      "Beirut port blast case — judge Bitar faces renewed political interference",
+    ],
+    economic:"GDP $22B (down from $55B in 2018). Inflation 200%+ peak. 80% population below poverty line. No banking.",
+  },
+  SAU:{
+    summary:"Saudi Arabia advances Vision 2030 economic transformation while managing Yemen ceasefire fragility and Iran rivalry. Crown Prince MBS consolidates authority ahead of anticipated succession. OPEC+ production management central to global energy markets. Abraham Accords-style normalization with Israel on hold pending Gaza resolution.",
+    threats:[
+      {type:"Houthi",   description:"Houthi drone/missile attacks on Saudi infrastructure reduced but not eliminated", severity:"medium"},
+      {type:"Iran",     description:"Iranian regional proxy expansion threatens Saudi Gulf sphere of influence",        severity:"medium"},
+      {type:"Economic", description:"Oil price volatility threatens $500B+ Vision 2030 funding pipeline",             severity:"medium"},
+      {type:"Domestic", description:"MBS succession not formalized — internal royal family dynamics opaque",           severity:"low"},
+    ],
+    keyActors:["MBS (Crown Prince)","Saudi ARAMCO","Houthi Movement","IRGC","US CENTCOM","China (broker)"],
+    news:[
+      "Saudi-Iran normalization (China-brokered 2023) shows strain — Gaza a wedge",
+      "NEOM The Line megacity scaled back from 170km to 2.4km phase 1",
+      "ARAMCO secondary offering raises $11.2B — funds Vision 2030 giga-projects",
+      "Saudi-US defense pact discussions ongoing — NATO-like security guarantees sought",
+      "Hajj season proceeds — 1.8M pilgrims despite regional tension",
+    ],
+    economic:"GDP $1.06T. Aramco profit $121B (2023). Vision 2030 on track. Breakeven oil price: $85/bbl.",
+  },
+  YEM:{
+    summary:"Yemen remains split between Iran-backed Houthi control of the north (including Sanaa, Hodeidah) and the Saudi-backed Presidential Leadership Council in the south. Houthis conduct ongoing Red Sea shipping attacks targeting vessels linked to Israel or US interests. One of the world's worst humanitarian catastrophes, ongoing since 2015.",
+    threats:[
+      {type:"Houthi",      description:"Ongoing Red Sea attacks — 45+ vessels struck; global shipping disruption", severity:"high"},
+      {type:"Humanitarian",description:"21M of 33M population require humanitarian assistance",                    severity:"critical"},
+      {type:"Civil War",   description:"Houthi-PLC conflict with multiple active front lines",                    severity:"high"},
+      {type:"US/UK Ops",   description:"US/UK conducting sustained airstrikes on Houthi military infrastructure", severity:"medium"},
+    ],
+    keyActors:["Houthi Movement (Ansar Allah)","Presidential Leadership Council","Saudi Coalition","UAE","US 5th Fleet","IRGC Quds Force"],
+    news:[
+      "Houthis strike MV Tutor — vessel sinks in Red Sea; crew evacuated",
+      "Operation Prosperity Guardian: US/UK strikes Hodeidah missile sites",
+      "UN-mediated prisoner exchange: 90 prisoners per side",
+      "WHO: 10 million people facing acute food insecurity — famine-level in 5 governorates",
+      "Saudi Arabia reportedly paying Houthi salaries in secret ceasefire deal",
+    ],
+    economic:"GDP per capita $600. Economy destroyed — 80% import dependent. Rial collapsed. Aid = 60% of GDP.",
+  },
+  TUR:{
+    summary:"Turkey plays a multi-vector strategic role: NATO member maintaining Russia ties, mediating Ukraine conflict, conducting counter-PKK operations in Syria and Iraq, and hosting 3.6M Syrian refugees. Economy recovering from 2023 lira crisis with orthodox monetary policy. Erdogan holds dominant political position post-2023 election victory.",
+    threats:[
+      {type:"Kurdish",  description:"PKK attacks inside Turkey; YPG presence on Syrian border threatens buffer zone", severity:"medium"},
+      {type:"Economic", description:"Inflation normalizing from 85% peak — still 65%; lira fragile",                  severity:"medium"},
+      {type:"Refugee",  description:"3.6M registered Syrians — political pressure to repatriate growing",             severity:"medium"},
+      {type:"NATO",     description:"Turkey-Greece Aegean disputes; Cyprus partition unresolved",                      severity:"low"},
+    ],
+    keyActors:["President Erdogan","Turkish Armed Forces","MIT (Intelligence)","PKK","YPG/SDF","NATO HQ"],
+    news:[
+      "Operation Claw-Lock expanded: 200km² PKK territory cleared in N. Iraq",
+      "Turkey-Greece maritime border talks resume in Athens — first since 2021",
+      "F-16 Block 70 delivery from US confirmed — 40 aircraft, $23B deal",
+      "Erdogan hosts Iran and Russia for Astana Process summit on Syria",
+      "Turkish lira stabilizes at 32/USD after CBRT rate hikes to 50%",
+    ],
+    economic:"GDP $1.1T. Inflation 65% (peak 85%). Tourism $60B record. Defense exports $5.5B. Diversified economy.",
+  },
+  JOR:{
+    summary:"Jordan maintains stability as a moderate, Western-aligned regional anchor despite significant Palestinian refugee presence, Syrian border challenges, and fiscal stress. King Abdullah navigates the US alliance, Palestinian solidarity, and Iranian regional pressure with considerable diplomatic skill. Gaza conflict strains domestic public opinion and economic relations.",
+    threats:[
+      {type:"Refugee",   description:"2M+ Palestinian refugees; 660K registered Syrian refugees — fiscal burden",   severity:"medium"},
+      {type:"Economic",  description:"Water scarcity, energy import dependency — structural vulnerabilities",         severity:"medium"},
+      {type:"Spillover", description:"Gaza conflict drives Palestinian solidarity protests; pressure on government",  severity:"medium"},
+      {type:"Smuggling", description:"Drug (Captagon) and weapons smuggling from Syria increasing",                  severity:"low"},
+    ],
+    keyActors:["King Abdullah II","GID (Mukhabarat)","Palestinian Refugees","US CENTCOM","IMF","Muslim Brotherhood (Jordan)"],
+    news:[
+      "Jordanian F-16s intercept Iranian drones in Jordanian airspace — assisted Israel air defense",
+      "IMF $1.2B Extended Fund Facility disbursement approved",
+      "Jordan-Israel water-for-energy deal (National Water Carrier) renegotiation",
+      "Joint military exercise with US, UK, France — Operation Eager Lion",
+      "Jordan hosts secret Hamas-Israel backchannel negotiations",
+    ],
+    economic:"GDP $50B. Debt 90% of GDP. Remittances $4B/year. Unemployment 22%. IMF program on track.",
+  },
+  EGY:{
+    summary:"Egypt under President Sisi manages Gaza border pressure, the worst economic crisis in decades, and Sinai security. The Rafah crossing is central to Gaza humanitarian corridor negotiations. An IMF-backed reform program is underway following a 50% pound devaluation. The military maintains dominant political and economic control across 40% of the formal economy.",
+    threats:[
+      {type:"Economic",  description:"Forex crisis — pound devalued 50%+; inflation 34%; IMF bailout required",    severity:"high"},
+      {type:"Gaza",      description:"Rafah border management under intense international humanitarian pressure",   severity:"medium"},
+      {type:"Ethiopia",  description:"GERD dam threatens Nile water security for 100M Egyptians",                 severity:"medium"},
+      {type:"Sinai",     description:"ISIS-affiliate (Wilayat Sinai) residual attacks on military",               severity:"low"},
+    ],
+    keyActors:["President Sisi","Egyptian Military (SCAF)","IMF","Ethiopia (GERD)","Gaza Aid Coordinators"],
+    news:[
+      "IMF $8B program disbursement — conditions include energy subsidy reform",
+      "Egypt hosts Gaza ceasefire talks alongside Qatar — Blinken shuttle diplomacy",
+      "GERD 7th filling complete — Egypt, Ethiopia, Sudan talks failed again",
+      "GCC pledges $20B investment package conditional on economic reforms",
+      "Suez Canal revenues down 40% — Houthi Red Sea attacks divert shipping",
+    ],
+    economic:"GDP $395B. Inflation 34%. Pound at 47/USD (was 16). Suez Canal $8B revenue (down from $10B). IMF $8B lifeline.",
+  },
+  ARE:{
+    summary:"UAE operates as a global financial, logistics, and diplomatic hub while maintaining security through a close US defense partnership including Al Dhafra and Al Minhad air bases. Economic diversification via Dubai financial services and Abu Dhabi energy is well advanced. Abraham Accords trade with Israel continues at reduced levels amid Gaza conflict domestic pressure.",
+    threats:[
+      {type:"Cyber",   description:"Targeted by Iranian APT units and criminal groups — financial sector focus",  severity:"medium"},
+      {type:"Iran",    description:"Iran claims Abu Musa and Tunbs islands — low-level maritime friction",        severity:"low"},
+      {type:"Houthi",  description:"Houthi threat reduced after UAE Yemen withdrawal in 2019 — not eliminated", severity:"low"},
+    ],
+    keyActors:["MBZ (President)","MBR (Dubai)","ADNOC","Mubadala","US CENTCOM Al Dhafra","Mossad (cooperating)"],
+    news:[
+      "UAE-Israel trade $2.6B in 2024 — down 20% from 2023 amid Gaza pressure",
+      "G42 AI firm: Microsoft $1.5B investment — US pressured Huawei 5G removal",
+      "Dubai real estate record: $100B in transactions — 70% foreign buyers",
+      "UAE hosts COP29 preparatory talks — green hydrogen push",
+      "UAE-Iran maritime talks — confidence-building measures on islands dispute",
+    ],
+    economic:"GDP $504B. Non-oil now 70% of GDP. Dubai GDP 4.3% growth. Tourism 17M visitors. SWF: $1.3T (ADIA+Mubadala).",
+  },
+  QAT:{
+    summary:"Qatar exercises outsized diplomatic influence relative to its small size: hosting Hamas political bureau, mediating the Gaza ceasefire, housing the US Al Udeid air base, and operating Al Jazeera. LNG wealth ($60B+ annually) insulates from regional instability. Saudi blockade (2017-2021) resolved — relations normalized.",
+    threats:[
+      {type:"Diplomatic",description:"Hamas hosting creates friction with US, EU, Israel — expulsion pressure",  severity:"low"},
+      {type:"Regional",  description:"Risk of reimposed GCC blockade if regional realignment shifts",            severity:"low"},
+    ],
+    keyActors:["Emir Sheikh Tamim","QIA (Sovereign Fund $450B)","Hamas Political Bureau","US Al Udeid (10K troops)","Al Jazeera"],
+    news:[
+      "Qatar-mediated Phase 2 talks — permanent ceasefire vs. hostage release sequence disputed",
+      "LNG: Qatar signs 15-year supply contracts with German buyers at premium",
+      "Qatar Airways orders 160 more Airbus A321neo — 250 total outstanding",
+      "US-Qatar defense cooperation agreement extended 10 years — Al Udeid stays",
+      "FIFA World Cup legacy: Qatar hosts 3 major international summits in 2025",
+    ],
+    economic:"GDP $225B. GDP/capita: $85,000 — world's highest. LNG exports $60B+. QIA sovereign fund $450B.",
+  },
+  KWT:{
+    summary:"Kuwait maintains a stable constitutional monarchy with a significant elected parliament that regularly challenges the government, creating policy gridlock. Hosts major US military presence at Camp Arifjan and Ali Al Salem Air Base. Oil wealth managed through the Kuwait Investment Authority ($800B+). New Emir Sheikh Mishal consolidating authority following 2023 constitutional crisis.",
+    threats:[
+      {type:"Political",  description:"Parliament-government deadlock blocks economic reforms and diversification", severity:"medium"},
+      {type:"Succession", description:"New Emir (2023) still consolidating political base — uncertainty",         severity:"low"},
+    ],
+    keyActors:["Emir Sheikh Mishal","KIA ($800B sovereign fund)","National Assembly (parliament)","US Camp Arifjan"],
+    news:[
+      "Emir dissolves parliament — fourth dissolution in six years; new elections called",
+      "Kuwait Investment Authority assets confirmed at $823B — 5th largest sovereign fund",
+      "OPEC+ Kuwait quota: 2.6M bpd maintained — compliance 98%",
+      "US-Kuwait 10-year defense framework renewed — Camp Arifjan hosts 13,500 troops",
+      "Kuwait City metro Phase 1 contract awarded — $7B infrastructure project",
+    ],
+    economic:"GDP $162B. Oil = 90% of exports. No income tax. KIA $823B. Diversification stalled by political gridlock.",
+  },
+  BHR:{
+    summary:"Bahrain hosts the US Navy's 5th Fleet and maintains close strategic alignment with Saudi Arabia and the UAE. An Abraham Accords signatory with Israel. The Sunni Al Khalifa monarchy governs a majority Shia population (estimated 60-70%) with Iranian-linked opposition suppressed since 2011 uprising. Financial services growing as oil reserves near depletion.",
+    threats:[
+      {type:"Sectarian", description:"Shia majority grievances exploited by Iran for political influence and destabilization", severity:"medium"},
+      {type:"Iran",      description:"Iranian interference in Shia political networks and protest organization",                 severity:"medium"},
+      {type:"Economic",  description:"Oil reserves depleting — estimated 15 years remaining; diversification urgent",           severity:"medium"},
+    ],
+    keyActors:["King Hamad","Crown Prince Salman","Al Khalifa Ruling Family","US 5th Fleet (7,000 sailors)","Iran-linked Al Wefaq"],
+    news:[
+      "US 5th Fleet base expansion approved — new pier and command facilities",
+      "Bahrain-Israel fintech cooperation agreement signed despite Gaza pressure",
+      "Shia opposition figure Sheikh Isa Qassim remains under house arrest",
+      "Formula 1 Grand Prix proceeds — $500M economic impact for Bahrain",
+      "Islamic Finance summit: Bahrain cements hub status — $3.9T sector globally",
+    ],
+    economic:"GDP $44B. Oil 70% of revenue. Financial services growing. Breakeven oil price: $96/bbl — highest in Gulf.",
+  },
+  OMN:{
+    summary:"Oman under Sultan Haitham maintains the traditional Omani policy of strict neutrality, serving as a trusted back-channel for US-Iran diplomatic communications and Yemen humanitarian corridor negotiations. Strategically positioned along the Strait of Hormuz. Vision 2040 economic diversification underway with tourism, logistics, and green hydrogen focus.",
+    threats:[
+      {type:"Economic", description:"Oil reserves limited — Vision 2040 diversification essential and on track", severity:"low"},
+      {type:"Hormuz",   description:"Strait of Hormuz chokepoint — 20% of global oil transits daily",           severity:"low"},
+    ],
+    keyActors:["Sultan Haitham bin Tariq","Omani Intelligence (OISD)","US CENTCOM","Iran Foreign Ministry","DUQM SEZ Authority"],
+    news:[
+      "Oman hosts indirect Iran-US nuclear talks — 6th round concluded in Muscat",
+      "DUQM port phase 2 complete — $10B logistics hub attracting Indian, Chinese investment",
+      "Oman mediates Houthi-Saudi humanitarian corridor — grain ships cleared",
+      "Oman-Israel normalization: Muscat exploratory talks confirmed — no timeline",
+      "Green hydrogen MOU with Germany — 1GW facility at DUQM by 2030",
+    ],
+    economic:"GDP $108B. Oil 60% of revenue. Tourism growing 15%/yr. DUQM $30B FDI. Vision 2040 on track.",
+  },
+};
+
+const ARC_COLORS = {
+  war:'rgba(239,68,68',conflict:'rgba(249,115,22',proxy_war:'rgba(220,38,38',
+  proxy:'rgba(245,158,11',rivalry:'rgba(234,179,8',influence:'rgba(168,85,247',
+  support:'rgba(251,191,36',airstrike:'rgba(239,68,68',diplomatic:'rgba(59,130,246',
+  border:'rgba(107,114,128',
+};
+
+const ALERT_COLORS={CRITICAL:'rgba(185,28,28,.9)',HIGH:'rgba(220,38,38,.82)',MEDIUM:'rgba(234,88,12,.78)',LOW:'rgba(22,163,74,.72)'};
+const ALERT_SEV={critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'};
+const ALERT_BADGE={
+  CRITICAL:{bg:'#7f1d1d',color:'#fca5a5',border:'#ef4444'},
+  HIGH:    {bg:'#7c2d12',color:'#fdba74',border:'#f97316'},
+  MEDIUM:  {bg:'#78350f',color:'#fcd34d',border:'#f59e0b'},
+  LOW:     {bg:'#14532d',color:'#86efac',border:'#22c55e'},
+};
+
+/* ════════════════════════════════════════════════════
+   GLOBE RENDERER
+════════════════════════════════════════════════════ */
+const canvas  = document.getElementById('globe');
+const ctx     = canvas.getContext('2d');
+let rotX=0.35, rotY=-0.77;
+let isDragging=false, lastX=0, lastY=0;
+let velX=0.0002, velY=0;
+let scale, cx, cy;
+let selectedISO=null, hoveredISO=null;
+let showArcs=false;
+
+function resize(){
+  canvas.width =window.innerWidth;
+  canvas.height=window.innerHeight;
+  scale=Math.min(canvas.width,canvas.height)*0.42;
+  cx=canvas.width/2; cy=canvas.height/2;
+}
+
+function project(lat,lng){
+  const phi=lat*Math.PI/180, lam=lng*Math.PI/180;
+  let x=Math.cos(phi)*Math.cos(lam);
+  let y=Math.sin(phi);
+  let z=Math.cos(phi)*Math.sin(lam);
+  const cosY=Math.cos(rotY),sinY=Math.sin(rotY);
+  let x1=x*cosY-z*sinY, z1=x*sinY+z*cosY;
+  const cosX=Math.cos(rotX),sinX=Math.sin(rotX);
+  let y2=y*cosX-z1*sinX, z2=y*sinX+z1*cosX;
+  return{px:cx+x1*scale, py:cy-y2*scale, z:z2, visible:z2>0};
+}
+
+function drawPoly(poly,fill,stroke,doFill){
+  let segs=[],cur=[];
+  for(const[lat,lng]of poly){
+    const p=project(lat,lng);
+    if(p.visible){cur.push(p);}
+    else if(cur.length>1){segs.push(cur);cur=[];}
+    else cur=[];
+  }
+  if(cur.length>1)segs.push(cur);
+  for(const seg of segs){
+    ctx.beginPath();
+    ctx.moveTo(seg[0].px,seg[0].py);
+    for(let i=1;i<seg.length;i++)ctx.lineTo(seg[i].px,seg[i].py);
+    if(doFill&&fill){ctx.closePath();ctx.fillStyle=fill;ctx.fill();}
+    if(stroke)ctx.stroke();
+  }
+}
+
+function drawParallel(lat){
+  ctx.beginPath();let first=true;
+  for(let lng=-180;lng<=180;lng+=3){
+    const p=project(lat,lng);
+    if(!p.visible){first=true;continue;}
+    first?ctx.moveTo(p.px,p.py):ctx.lineTo(p.px,p.py);first=false;
+  }
+  ctx.stroke();
+}
+function drawMeridian(lng){
+  ctx.beginPath();let first=true;
+  for(let lat=-90;lat<=90;lat+=3){
+    const p=project(lat,lng);
+    if(!p.visible){first=true;continue;}
+    first?ctx.moveTo(p.px,p.py):ctx.lineTo(p.px,p.py);first=false;
+  }
+  ctx.stroke();
+}
+
+const CONTINENT_HINTS=[
+  [[37,22],[12,15],[4,-8],[-34,18],[-26,33],[1,43],[12,44],[20,39],[23,38],[27,34],[33,32],[37,22]],
+  [[71,28],[60,24],[55,28],[52,20],[46,10],[44,15],[40,28],[36,36],[37,22],[40,22],[44,21],[47,26],[56,21],[60,20],[64,26],[71,28]],
+  [[60,57],[36,57],[35,60],[25,67],[22,80],[12,80],[25,90],[38,75],[45,70],[52,60],[60,57]],
+  [[12,45],[8,41],[4,41],[0,42],[2,45],[11,50],[11,45],[12,45]],
+  [[-5,39],[-10,40],[-17,35],[-26,32],[0,42],[4,41],[-5,39]],
+];
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // Sphere
+  const g=ctx.createRadialGradient(cx-scale*.15,cy-scale*.15,scale*.05,cx,cy,scale);
+  g.addColorStop(0,'#0f1f3d');g.addColorStop(.6,'#071324');g.addColorStop(1,'#020810');
+  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+  // Atmosphere
+  const a=ctx.createRadialGradient(cx,cy,scale*.97,cx,cy,scale*1.08);
+  a.addColorStop(0,'rgba(50,120,255,.15)');a.addColorStop(1,'transparent');
+  ctx.beginPath();ctx.arc(cx,cy,scale*1.08,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
+  // Grid
+  ctx.strokeStyle='rgba(59,130,246,.07)';ctx.lineWidth=.5;
+  for(let lat=-80;lat<=80;lat+=20)drawParallel(lat);
+  for(let lng=-180;lng<=180;lng+=20)drawMeridian(lng);
+  // Continent hints
+  ctx.strokeStyle='rgba(25,50,90,.55)';ctx.lineWidth=.8;
+  for(const c of CONTINENT_HINTS)drawPoly(c,null,true,false);
+  // ME countries
+  for(const[iso,c]of Object.entries(COUNTRIES)){
+    const isSel=iso===selectedISO, isHov=iso===hoveredISO;
+    const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
+    ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':'rgba(100,150,220,.3)';
+    ctx.lineWidth=isSel?1.5:.8;
+    drawPoly(c.poly,fill,true,true);
+    const ctr=project(c.lat,c.lng);
+    if(ctr.visible){
+      ctx.font='bold 10px Courier New';
+      ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
+    }
+  }
+  // Arcs
+  if(showArcs)drawArcs();
+  // Border
+  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
+  ctx.strokeStyle='rgba(59,130,246,.2)';ctx.lineWidth=1;ctx.stroke();
+}
+
+function drawArcs(){
+  const arcs=selectedISO
+    ?CONFLICTS.filter(c=>c.from===selectedISO||c.to===selectedISO)
+    :CONFLICTS;
+  const t=(Date.now()%3000)/3000;
+  for(const arc of arcs){
+    const from=COUNTRIES[arc.from],to=COUNTRIES[arc.to];
+    if(!from||!to)continue;
+    const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
+    if(!p1.visible&&!p2.visible)continue;
+    const base=ARC_COLORS[arc.type]||'rgba(239,68,68';
+    const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
+    const dx=p2.px-p1.px,dy=p2.py-p1.py;
+    const off=Math.sqrt(dx*dx+dy*dy)*0.35;
+    const cpX=mx-dy/Math.sqrt(dx*dx+dy*dy)*off;
+    const cpY=my+dx/Math.sqrt(dx*dx+dy*dy)*off;
+    // Glow
+    ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
+    ctx.strokeStyle=`${base},.15)`;ctx.lineWidth=5;ctx.stroke();
+    // Animated dash
+    ctx.beginPath();ctx.setLineDash([12,8]);ctx.lineDashOffset=-t*60;
+    ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
+    ctx.strokeStyle=`${base},.85)`;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function animate(){
+  if(!isDragging){rotY+=velX;if(velY){rotX+=velY;velY*=.95;}}
+  draw();requestAnimationFrame(animate);
+}
+
+/* ════════════════════════════════════════════════════
+   HIT TESTING
+════════════════════════════════════════════════════ */
+function spherePoint(sx,sy){
+  const dx=(sx-cx)/scale,dy=(cy-sy)/scale,r2=dx*dx+dy*dy;
+  if(r2>1)return null;
+  return{x:dx,y:dy,z:Math.sqrt(1-r2)};
+}
+function unrotate(pt){
+  const cosX=Math.cos(-rotX),sinX=Math.sin(-rotX);
+  let y2=pt.y*cosX-pt.z*sinX, z2=pt.y*sinX+pt.z*cosX;
+  const cosY=Math.cos(-rotY),sinY=Math.sin(-rotY);
+  let x2=pt.x*cosY-z2*sinY, z3=pt.x*sinY+z2*cosY;
+  return{lat:Math.asin(Math.max(-1,Math.min(1,y2)))*180/Math.PI, lng:Math.atan2(z3,x2)*180/Math.PI};
+}
+function pip(lat,lng,poly){
+  let inside=false;
+  for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+    const[yi,xi]=poly[i],[yj,xj]=poly[j];
+    if(((yi>lat)!==(yj>lat))&&lng<(xj-xi)*(lat-yi)/(yj-yi)+xi)inside=!inside;
+  }
+  return inside;
+}
+function hitTest(sx,sy){
+  const sp=spherePoint(sx,sy);if(!sp)return null;
+  const{lat,lng}=unrotate(sp);
+  for(const[iso,c]of Object.entries(COUNTRIES))if(pip(lat,lng,c.poly))return iso;
+  return null;
+}
+
+/* ════════════════════════════════════════════════════
+   MOUSE / TOUCH
+════════════════════════════════════════════════════ */
+canvas.addEventListener('mousemove',e=>{
+  if(isDragging){
+    const dx=e.clientX-lastX,dy=e.clientY-lastY;
+    rotY+=dx*.005;rotX+=dy*.005;rotX=Math.max(-1.3,Math.min(1.3,rotX));
+    velX=dx*.0008;velY=dy*.0008;lastX=e.clientX;lastY=e.clientY;return;
+  }
+  const hit=hitTest(e.clientX,e.clientY);
+  if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=hit?'pointer':'grab';}
+  const tt=document.getElementById('tooltip');
+  if(hit){
+    const c=COUNTRIES[hit];
+    document.getElementById('tt-name').textContent=c.name;
+    document.getElementById('tt-alert').textContent='Alert: '+c.alertLevel;
+    document.getElementById('tt-alert').style.color=ALERT_SEV[c.alertLevel.toLowerCase()]||'#94a3b8';
+    tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
+  }else tt.style.opacity='0';
+});
+canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dragging');lastX=e.clientX;lastY=e.clientY;velX=0;velY=0;});
+canvas.addEventListener('mouseup',e=>{
+  if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
+  const dx=e.clientX-lastX,dy=e.clientY-lastY;
+  if(Math.abs(dx)<4&&Math.abs(dy)<4){const h=hitTest(e.clientX,e.clientY);if(h)openCountry(h);}
+});
+canvas.addEventListener('mouseleave',()=>{isDragging=false;canvas.classList.remove('dragging');document.getElementById('tooltip').style.opacity='0';hoveredISO=null;});
+canvas.addEventListener('touchstart',e=>{const t=e.touches[0];isDragging=true;lastX=t.clientX;lastY=t.clientY;velX=0;velY=0;e.preventDefault();},{passive:false});
+canvas.addEventListener('touchmove',e=>{const t=e.touches[0];const dx=t.clientX-lastX,dy=t.clientY-lastY;rotY+=dx*.005;rotX+=dy*.005;rotX=Math.max(-1.3,Math.min(1.3,rotX));velX=dx*.0008;velY=dy*.0008;lastX=t.clientX;lastY=t.clientY;e.preventDefault();},{passive:false});
+canvas.addEventListener('touchend',e=>{isDragging=false;if(e.changedTouches.length){const t=e.changedTouches[0];const h=hitTest(t.clientX,t.clientY);if(h)openCountry(h);}});
+window.addEventListener('resize',()=>{resize();});
+
+/* ════════════════════════════════════════════════════
+   PANEL UI
+════════════════════════════════════════════════════ */
+function openCountry(iso){
+  selectedISO=iso;showArcs=false;updateConnBtn();
+  const c=COUNTRIES[iso];
+  document.getElementById('p-name').textContent=c.name;
+  document.getElementById('p-cap').textContent='Capital: '+c.capital;
+  document.getElementById('h-status').innerHTML='VIEWING: <strong style="color:#93c5fd">'+c.name.toUpperCase()+'</strong>';
+  const intel=INTEL[iso]||{};
+  const badge=ALERT_BADGE[c.alertLevel]||ALERT_BADGE.LOW;
+  const b=document.getElementById('p-badge');
+  b.textContent=c.alertLevel;b.style.background=badge.bg;b.style.color=badge.color;b.style.borderColor=badge.border;
+  // Summary
+  document.getElementById('tab-summary').innerHTML=`
+    <div class="sec-label">SITUATION ASSESSMENT</div>
+    <p class="summary-text">${intel.summary||'No data available.'}</p>
+    ${intel.keyActors?.length?`<div class="sec-label">KEY ACTORS</div><div class="actors-list">${intel.keyActors.map(a=>`<span class="actor-chip">${a}</span>`).join('')}</div>`:''}
+    ${intel.economic?`<div class="sec-label">ECONOMIC INDICATOR</div><p class="econ-text">${intel.economic}</p>`:''}
+  `;
+  // Threats
+  document.getElementById('tab-threats').innerHTML=intel.threats?.length
+    ?'<div class="sec-label">ACTIVE THREAT VECTORS</div>'+intel.threats.map(t=>`<div class="threat-item"><div class="threat-head"><span class="threat-type">${t.type.toUpperCase()}</span><span class="threat-sev" style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span></div><p class="threat-desc">${t.description}</p></div>`).join('')
+    :'<p class="no-data">No active threats recorded.</p>';
+  // News / Intel
+  document.getElementById('tab-news').innerHTML=intel.news?.length
+    ?'<div class="sec-label">CURRENT INTELLIGENCE ITEMS</div>'+intel.news.map(n=>`<div class="news-item"><p class="news-title">${n}</p></div>`).join('')
+    :'<p class="no-data">No intelligence items available.</p>';
+  // Conflicts
+  const cfs=CONFLICTS.filter(c=>c.from===iso||c.to===iso).map(c=>({
+    ...c,fromName:COUNTRIES[c.from]?.name||c.from,toName:COUNTRIES[c.to]?.name||c.to
+  }));
+  document.getElementById('tab-conflicts').innerHTML=cfs.length
+    ?'<div class="sec-label">CONFLICT RELATIONSHIPS</div>'+cfs.map(c=>`<div class="conflict-item"><div class="cf-head"><span class="cf-countries">${c.fromName} → ${c.toName}</span><span class="cf-sev ${c.severity}">${c.severity.toUpperCase()}</span></div><div class="cf-meta"><span class="cf-type">${c.type.replace(/_/g,' ').toUpperCase()}</span><span class="cf-label">${c.label}</span></div></div>`).join('')
+    :'<p class="no-data">No active conflict relationships.</p>';
+  document.getElementById('p-updated').textContent='Updated: '+new Date().toLocaleTimeString();
+  document.getElementById('panel').classList.add('open');
+  showTab('summary');
+}
+
+function closePanel(){
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('h-status').textContent='Click any highlighted country for Intel Report';
+  selectedISO=null;showArcs=false;updateConnBtn();
+  document.getElementById('leg-div').style.display='none';
+  document.getElementById('leg-arc-section').style.display='none';
+}
+function toggleArcs(){
+  showArcs=!showArcs;updateConnBtn();
+  document.getElementById('leg-div').style.display=showArcs?'':'none';
+  document.getElementById('leg-arc-section').style.display=showArcs?'':'none';
+}
+function updateConnBtn(){
+  const btn=document.getElementById('connect-btn');
+  btn.classList.toggle('active',showArcs);
+  document.getElementById('conn-icon').textContent=showArcs?'◉':'◎';
+  document.getElementById('conn-text').textContent=showArcs?'HIDE CONNECTIONS':'CONNECT — Show Relationships';
+}
+function showTab(name){
+  document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>{if(b.textContent.toLowerCase()===name||b.textContent.toLowerCase()==='intel'&&name==='news')b.classList.add('active');});
+}
+function tick(){document.getElementById('h-time').textContent=new Date().toUTCString().slice(0,25)+' UTC';setTimeout(tick,1000);}
+
+resize();tick();animate();
+</script>
+</body>
+</html>
