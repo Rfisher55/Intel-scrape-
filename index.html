@@ -8,8 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Intel Globe"/>
 <title>Intel Globe — Middle East</title>
-<!-- TopoJSON → GeoJSON converter (async so it never blocks page render) -->
-<script async src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<!-- TopoJSON loaded dynamically only after globe is running -->
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -294,7 +293,7 @@ canvas.dragging{cursor:grabbing}
 
 <div id="globe-wrap"><canvas id="globe"></canvas></div>
 <div id="zoom-hint">Scroll to zoom · Drag to spin · Pinch on mobile</div>
-<div id="geo-loading" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none;transition:opacity .4s">Loading real-world borders…</div>
+<div id="geo-loading" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none">Loading real-world borders…</div>
 
 <div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div></div>
 
@@ -826,31 +825,28 @@ function drawMeridian(lng){
 }
 
 /* ── Real-world GeoJSON border rendering ── */
-async function loadWorldData(){
-  const hide=()=>{const el=document.getElementById('geo-loading');if(el)el.style.display='none';};
-  try{
-    // Wait up to 6 s for the async topojson script to finish loading
-    if(typeof topojson==='undefined'){
-      await new Promise(resolve=>{
-        const deadline=Date.now()+6000;
-        (function poll(){typeof topojson!=='undefined'?resolve():Date.now()<deadline?setTimeout(poll,80):resolve();}());
-      });
-    }
-    if(typeof topojson==='undefined'){hide();return;}  // CDN failed — use fallback polys
+function loadWorldData(){
+  // Inject topojson script dynamically so it never blocks the page
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js';
+  s.onload=()=>_fetchWorldAtlas();
+  s.onerror=()=>{};  // silent — globe already works with embedded polygons
+  document.head.appendChild(s);
+}
 
-    // Fetch world-atlas with a hard 12-second timeout
+async function _fetchWorldAtlas(){
+  try{
+    const ctrl=new AbortController();
+    setTimeout(()=>ctrl.abort(),12000);
     const res=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json',
-      {signal:AbortSignal.timeout(12000)});
-    if(!res.ok)throw new Error('HTTP '+res.status);
+      {signal:ctrl.signal});
+    if(!res.ok)return;
     const topo=await res.json();
     const geo=topojson.feature(topo,topo.objects.countries);
     worldFeatures=geo.features;
     for(const[iso,c]of Object.entries(COUNTRIES))if(c.numericId)numericToISO[c.numericId]=iso;
     geoReady=true;
-    hide();
-  }catch(e){
-    hide();  // silently fall back to embedded simplified polygons
-  }
+  }catch(e){}  // silent — globe keeps using embedded polygons
 }
 
 function drawGeoFeature(feature,fill,stroke,doFill){
@@ -1023,7 +1019,8 @@ function drawArcs(){
 
 function animate(){
   if(!isDragging){rotY+=velX;if(velY){rotX+=velY;velY*=.95;}}
-  draw();requestAnimationFrame(animate);
+  try{draw();}catch(e){console.error('draw:',e);}
+  requestAnimationFrame(animate);
 }
 
 /* ════════════════════════════════════════════════════
