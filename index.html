@@ -187,6 +187,33 @@ canvas.dragging{cursor:grabbing}
 #panel.fullscreen .p-name{font-size:26px}
 #panel.fullscreen .p-content{padding:24px 32px;max-width:900px;margin:0 auto}
 
+/* ── Hotspot modal ── */
+#hs-modal{
+  position:fixed;inset:0;z-index:500;display:none;
+  align-items:center;justify-content:center;
+  background:rgba(2,8,16,.6);backdrop-filter:blur(4px);
+}
+#hs-modal.open{display:flex;}
+#hs-card{
+  background:linear-gradient(160deg,rgba(13,25,41,.98),rgba(5,12,26,.98));
+  border:1px solid var(--border);border-radius:10px;
+  padding:20px;max-width:360px;width:calc(100% - 40px);
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+.hs-type-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.hs-type{font-size:9px;letter-spacing:.18em;font-weight:bold}
+.hs-sev{font-size:9px;font-weight:bold;letter-spacing:.12em;padding:2px 8px;border-radius:3px}
+.hs-title{font-size:15px;font-weight:bold;color:#93c5fd;line-height:1.4;margin-bottom:10px}
+.hs-body{font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:14px}
+.hs-footer{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.hs-country-btn{flex:1;padding:8px;background:rgba(59,130,246,.15);border:1px solid var(--accent);
+  border-radius:5px;color:#93c5fd;font-family:var(--mono);font-size:10px;
+  letter-spacing:.1em;cursor:pointer;text-align:center}
+.hs-country-btn:hover{background:rgba(59,130,246,.3)}
+.hs-close-btn{padding:8px 14px;background:none;border:1px solid var(--border);
+  border-radius:5px;color:var(--dim);font-family:var(--mono);font-size:10px;cursor:pointer}
+.hs-close-btn:hover{border-color:#ef4444;color:#ef4444}
+
 /* Zoom hint */
 #zoom-hint{
   position:fixed;bottom:30px;right:20px;z-index:50;
@@ -310,6 +337,22 @@ canvas.dragging{cursor:grabbing}
     <div class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Proxy/Support</div>
     <div class="leg-item"><span class="leg-dot" style="background:#a855f7"></span>Influence</div>
     <div class="leg-item"><span class="leg-dot" style="background:#3b82f6"></span>Diplomatic</div>
+  </div>
+</div>
+
+<!-- Hotspot detail modal -->
+<div id="hs-modal" onclick="if(event.target===this)closeHotspot()">
+  <div id="hs-card">
+    <div class="hs-type-bar">
+      <span class="hs-type" id="hs-type">—</span>
+      <span class="hs-sev" id="hs-sev">—</span>
+    </div>
+    <div class="hs-title" id="hs-title">—</div>
+    <div class="hs-body" id="hs-body">—</div>
+    <div class="hs-footer">
+      <button class="hs-country-btn" id="hs-country-btn" onclick="hsOpenCountry()">VIEW COUNTRY INTEL</button>
+      <button class="hs-close-btn" onclick="closeHotspot()">✕ CLOSE</button>
+    </div>
   </div>
 </div>
 
@@ -1100,15 +1143,16 @@ canvas.addEventListener('mouseup',e=>{
   if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
   const dx=e.clientX-lastX,dy=e.clientY-lastY;
   if(Math.abs(dx)<5&&Math.abs(dy)<5){
+    // Hotspot dots take priority over country clicks
+    const hs=hotspotAt(e.clientX,e.clientY);
+    if(hs){openHotspot(hs);return;}
     const h=hitTest(e.clientX,e.clientY);
     if(h){
       if(!selectedISO){openCountry(h);}
       else if(h===selectedISO){
-        // Tap same country — restore if minimized
         const p=document.getElementById('panel');
         if(p.classList.contains('minimized'))toggleMinimize();
       }
-      // Different country while one is locked: ignored
     }
   }
 });
@@ -1162,6 +1206,8 @@ canvas.addEventListener('touchend',e=>{
       const t=e.changedTouches[0];
       const dx=t.clientX-lastX,dy=t.clientY-lastY;
       if(Math.abs(dx)<8&&Math.abs(dy)<8){
+        const hs=hotspotAt(t.clientX,t.clientY);
+        if(hs){openHotspot(hs);return;}
         const h=hitTest(t.clientX,t.clientY);
         if(h){
           if(!selectedISO){openCountry(h);}
@@ -1272,6 +1318,83 @@ function openCountry(iso){
   showTab('summary');
   // Kick off live fetch (non-blocking)
   fetchLiveNews(iso);
+}
+
+/* ════════════════════════════════════════════════════
+   HOTSPOT MODAL
+════════════════════════════════════════════════════ */
+const HS_TYPE_LABELS={
+  active_conflict:'ACTIVE CONFLICT',nuclear:'NUCLEAR THREAT',
+  missile_threat:'MISSILE THREAT',airstrike:'AIRSTRIKE ZONE',
+  militia:'MILITIA ACTIVITY',terrorism:'TERRORISM',
+  humanitarian:'HUMANITARIAN CRISIS',instability:'INSTABILITY',
+  military_ops:'MILITARY OPERATIONS',
+};
+const HS_DETAIL={
+  // Palestine
+  'Rafah — IDF Ground Ops':'Sustained Israeli ground operations targeting Hamas tunnel network and command infrastructure. Ongoing civilian displacement. Humanitarian corridor intermittently active. Heavy urban combat reported in southern Rafah.',
+  'Gaza City — Northern Campaign':'Israeli air and ground operations targeting Hamas military command nodes. Significant structural damage throughout northern Gaza. UNRWA reporting near-total collapse of public services.',
+  'Khan Younis — Humanitarian Crisis':'Major IDP concentration point. Water and food distribution severely constrained. WHO reports multiple hospitals operating at crisis capacity with minimal supplies.',
+  // Israel/Lebanon
+  'Northern Border — Hezbollah Zone':'Persistent cross-border fire exchange. Hezbollah maintaining observation and anti-tank missile positions along the Blue Line. UNIFIL presence strained.',
+  // Syria
+  'Aleppo — Active Frontline':'HTS-controlled buffer zone under pressure from government forces. Periodic artillery exchanges. Russian air presence continues over Idlib corridor.',
+  'Damascus — IRGC Weapons Hub':'Regular Israeli airstrikes targeting IRGC weapons transfer routes. Hezbollah logistics hub at Damascus airport repeatedly struck. Iranian military advisory personnel present.',
+  // Yemen
+  "Sana'a — Houthi Command":'Houthi leadership and IRGC advisory elements operating from Sana\'a. Long-range drone and missile launch sites in surrounding mountains. Red Sea interdiction operations coordinated from here.',
+  'Aden — Naval Threat Zone':'Houthi maritime attack operations targeting international shipping in the Red Sea and Gulf of Aden. USS Carney and coalition naval assets operating in response posture.',
+  // Iraq
+  'Baghdad — PMF Activity':'Iran-backed Popular Mobilization Force headquarters and coordination hub. Periodic rocket attacks on Green Zone. US Embassy compound on elevated security posture.',
+  'Mosul — ISIS Remnant Cells':'Residual ISIS cells conducting low-level insurgency in Nineveh Plains and desert areas south of Mosul. Periodic ambushes on Iraqi Security Forces reported.',
+  // Iran
+  'Tehran — Natanz Link':'Iranian nuclear coordination and command linked to Natanz enrichment operations. IRGC Aerospace Force missile command co-located. 60% enrichment stockpile exceeding JCPOA limits.',
+  'Isfahan — Enrichment Facility':'Uranium conversion and enrichment facility complex. Site of multiple unexplained incidents including 2023 drone strike. IAEA access periodically restricted.',
+  'Arak — Heavy Water Reactor':'IR-40 heavy water reactor modified under JCPOA but retains proliferation concern. Plutonium production capability if reactivated. IAEA monitoring cameras reported disabled.',
+  // Lebanon
+  'Beirut — Hezbollah Stronghold':'Dahieh district serves as Hezbollah political and logistics headquarters. Southern suburbs house weapons storage and command infrastructure. Lebanese Armed Forces have no effective presence.',
+  'South Lebanon — UNIFIL Line':'UN-mandated buffer zone along the Blue Line. Hezbollah repositioning north of Litani per ceasefire terms, compliance partial. UNIFIL patrols restricted in some sectors.',
+  // Turkey
+  'SE Turkey — PKK Border Ops':'Turkish military conducting cross-border operations against PKK/YPG positions in northern Iraq and Syria. TAF drone operations continuous. F-16 sorties from Incirlik.',
+  // Saudi Arabia
+  'Jeddah — Houthi Missile Range':'Jeddah and critical Red Sea infrastructure within range of Houthi Burkan-2H ballistic missiles. Aramco Abqaiq facility previously struck. Patriot batteries on elevated alert.',
+};
+
+let currentHotspot=null;
+
+function hotspotAt(sx,sy){
+  const allSpots=[...HOTSPOTS,...liveHotspots];
+  for(const h of allSpots){
+    const p=project(h.lat,h.lng);
+    if(p.visible&&Math.hypot(sx-p.px,sy-p.py)<14)return h;
+  }
+  return null;
+}
+
+function openHotspot(h){
+  currentHotspot=h;
+  const sevColor={critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'};
+  const sevBg={critical:'rgba(127,29,29,.5)',high:'rgba(124,45,18,.5)',medium:'rgba(120,53,15,.5)',low:'rgba(20,83,45,.5)'};
+  document.getElementById('hs-type').textContent=HS_TYPE_LABELS[h.type]||h.type.replace(/_/g,' ').toUpperCase();
+  document.getElementById('hs-type').style.color=sevColor[h.severity]||'#94a3b8';
+  const sev=document.getElementById('hs-sev');
+  sev.textContent=h.severity.toUpperCase();
+  sev.style.color=sevColor[h.severity]||'#94a3b8';
+  sev.style.background=sevBg[h.severity]||'rgba(50,50,50,.5)';
+  document.getElementById('hs-title').textContent=h.label;
+  const detail=HS_DETAIL[h.label]||h.description||'Real-time intelligence being compiled. This hotspot has been flagged based on recent GDELT event data. Check the country intel panel for full situation assessment.';
+  document.getElementById('hs-body').textContent=detail;
+  const countryName=h.country&&COUNTRIES[h.country]?COUNTRIES[h.country].name:'';
+  const btn=document.getElementById('hs-country-btn');
+  btn.textContent=countryName?'VIEW '+countryName.toUpperCase()+' INTEL':'VIEW COUNTRY INTEL';
+  btn.style.display=countryName?'':'none';
+  document.getElementById('hs-modal').classList.add('open');
+}
+function closeHotspot(){
+  document.getElementById('hs-modal').classList.remove('open');
+  currentHotspot=null;
+}
+function hsOpenCountry(){
+  if(currentHotspot?.country){closeHotspot();openCountry(currentHotspot.country);}
 }
 
 /* ── Live news via GDELT + Reddit (no API key required) ── */
