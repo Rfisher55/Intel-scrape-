@@ -485,6 +485,11 @@ canvas.dragging{cursor:grabbing}
 .tm-close{background:none;border:1px solid rgba(59,130,246,.3);color:var(--dim);cursor:pointer;
   padding:4px 10px;border-radius:3px;font-size:10px;font-family:var(--mono);transition:all .15s;letter-spacing:.1em}
 .tm-close:hover{border-color:#ef4444;color:#ef4444}
+.tm-intel-btn{background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.5);color:#93c5fd;cursor:pointer;
+  padding:6px 14px;border-radius:3px;font-size:10px;font-family:var(--mono);transition:all .18s;letter-spacing:.1em;
+  display:flex;align-items:center;gap:6px}
+.tm-intel-btn:hover{background:rgba(59,130,246,.25);border-color:#60a5fa;color:#e2e8f0}
+.tm-intel-btn .btn-arrow{font-size:11px}
 .tm-body{padding:18px 20px;overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:var(--border) transparent;position:relative;z-index:2}
 .tm-title{font-size:17px;font-weight:bold;color:#e2e8f0;margin-bottom:12px;line-height:1.35;letter-spacing:.02em}
 .tm-badges{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
@@ -637,6 +642,7 @@ canvas.dragging{cursor:grabbing}
       <div id="tm-actors-section"></div>
       <div id="tm-news-section"></div>
     </div>
+    <div id="tm-intel-btns" style="display:flex;gap:8px;padding:8px 18px 4px;flex-wrap:wrap"></div>
     <div class="tm-footer">
       <span>SOURCE: OPEN-SOURCE INTELLIGENCE AGGREGATION</span>
       <span id="tm-timestamp"></span>
@@ -1087,6 +1093,133 @@ const COUNTRIES = {
 
   SUR:{iso:'SUR',numericId:740,name:'Suriname',capital:'Paramaribo',alertLevel:'MEDIUM',lat:3.9,lng:-56.0,
     poly:[[6.0,-58.1],[6.0,-53.9],[2.0,-53.9],[2.0,-58.1],[4.0,-57.6],[6.0,-58.1]]},
+
+  // ── ADDITIONAL WORLD COUNTRIES ──────────────────────────────────────────
+  // ── NORTH AMERICA ────────────────────────────────────────────────────────
+  USA:{iso:'USA',numericId:840,name:'United States',capital:'Washington D.C.',alertLevel:'HIGH',lat:38.9,lng:-95.7,
+    poly:[[49.0,-124.7],[49.0,-66.9],[25.0,-66.9],[24.5,-81.4],[25.1,-80.1],[29.0,-89.0],[29.7,-93.8],[26.0,-97.1],[25.8,-100.5],[31.3,-106.4],[31.3,-111.1],[32.5,-114.7],[32.5,-117.2],[34.0,-120.4],[38.0,-122.5],[41.8,-124.2],[48.4,-124.7],[49.0,-124.7]]},
+
+  CAN:{iso:'CAN',numericId:124,name:'Canada',capital:'Ottawa',alertLevel:'LOW',lat:56.1,lng:-96.3,
+    poly:[[83.1,-74.0],[83.1,-141.0],[60.0,-141.0],[54.7,-130.0],[48.3,-124.7],[45.0,-76.5],[44.0,-66.9],[47.5,-52.6],[56.0,-53.3],[60.3,-64.8],[63.0,-68.0],[72.0,-80.0],[83.1,-74.0]]},
+
+  // ── CARIBBEAN ────────────────────────────────────────────────────────────
+  DOM:{iso:'DOM',numericId:214,name:'Dominican Republic',capital:'Santo Domingo',alertLevel:'HIGH',lat:18.7,lng:-70.2,
+    poly:[[19.9,-71.9],[19.9,-68.3],[17.5,-68.3],[17.5,-71.9],[19.9,-71.9]]},
+
+  BHS:{iso:'BHS',numericId:44,name:'Bahamas',capital:'Nassau',alertLevel:'LOW',lat:25.0,lng:-77.4,
+    poly:[[27.3,-79.1],[27.3,-72.7],[22.9,-72.7],[22.9,-79.1],[27.3,-79.1]]},
+
+  BRB:{iso:'BRB',numericId:52,name:'Barbados',capital:'Bridgetown',alertLevel:'LOW',lat:13.2,lng:-59.6,
+    poly:[[13.5,-59.7],[13.5,-59.4],[13.0,-59.4],[13.0,-59.7],[13.5,-59.7]]},
+
+  ATG:{iso:'ATG',numericId:28,name:'Antigua and Barbuda',capital:'Saint John\'s',alertLevel:'LOW',lat:17.1,lng:-61.8,
+    poly:[[17.3,-61.9],[17.3,-61.6],[16.9,-61.6],[16.9,-61.9],[17.3,-61.9]]},
+
+  DMA:{iso:'DMA',numericId:212,name:'Dominica',capital:'Roseau',alertLevel:'LOW',lat:15.4,lng:-61.4,
+    poly:[[15.6,-61.5],[15.6,-61.2],[15.2,-61.2],[15.2,-61.5],[15.6,-61.5]]},
+
+  GRD:{iso:'GRD',numericId:308,name:'Grenada',capital:'Saint George\'s',alertLevel:'LOW',lat:12.1,lng:-61.7,
+    poly:[[12.3,-61.8],[12.3,-61.5],[11.9,-61.5],[11.9,-61.8],[12.3,-61.8]]},
+
+  KNA:{iso:'KNA',numericId:659,name:'Saint Kitts and Nevis',capital:'Basseterre',alertLevel:'LOW',lat:17.3,lng:-62.7,
+    poly:[[17.5,-62.9],[17.5,-62.5],[17.0,-62.5],[17.0,-62.9],[17.5,-62.9]]},
+
+  LCA:{iso:'LCA',numericId:662,name:'Saint Lucia',capital:'Castries',alertLevel:'LOW',lat:13.9,lng:-60.9,
+    poly:[[14.1,-61.1],[14.1,-60.8],[13.7,-60.8],[13.7,-61.1],[14.1,-61.1]]},
+
+  VCT:{iso:'VCT',numericId:670,name:'Saint Vincent and the Grenadines',capital:'Kingstown',alertLevel:'LOW',lat:13.3,lng:-61.2,
+    poly:[[13.5,-61.3],[13.5,-61.1],[13.0,-61.1],[13.0,-61.3],[13.5,-61.3]]},
+
+  // ── CENTRAL ASIA ─────────────────────────────────────────────────────────
+  UZB:{iso:'UZB',numericId:860,name:'Uzbekistan',capital:'Tashkent',alertLevel:'MEDIUM',lat:41.4,lng:64.6,
+    poly:[[42.5,56.0],[42.5,70.9],[37.2,70.9],[37.2,56.0],[40.0,57.0],[42.5,56.0]]},
+
+  // ── AFRICA ───────────────────────────────────────────────────────────────
+  ZMB:{iso:'ZMB',numericId:894,name:'Zambia',capital:'Lusaka',alertLevel:'MEDIUM',lat:-13.1,lng:27.8,
+    poly:[[-8.2,21.9],[-8.2,33.7],[-18.1,33.7],[-18.1,21.9],[-13.0,27.0],[-8.2,21.9]]},
+
+  NAM:{iso:'NAM',numericId:516,name:'Namibia',capital:'Windhoek',alertLevel:'LOW',lat:-22.6,lng:17.1,
+    poly:[[-17.2,11.7],[-17.2,25.3],[-28.9,19.0],[-28.9,17.0],[-22.0,11.7],[-17.2,11.7]]},
+
+  BWA:{iso:'BWA',numericId:72,name:'Botswana',capital:'Gaborone',alertLevel:'LOW',lat:-22.3,lng:24.7,
+    poly:[[-17.8,19.9],[-17.8,29.4],[-26.9,29.4],[-26.9,19.9],[-22.0,24.0],[-17.8,19.9]]},
+
+  LSO:{iso:'LSO',numericId:426,name:'Lesotho',capital:'Maseru',alertLevel:'MEDIUM',lat:-29.6,lng:28.2,
+    poly:[[-28.6,27.0],[-28.6,29.5],[-30.7,29.5],[-30.7,27.0],[-28.6,27.0]]},
+
+  SWZ:{iso:'SWZ',numericId:748,name:'Eswatini',capital:'Mbabane',alertLevel:'HIGH',lat:-26.5,lng:31.5,
+    poly:[[-25.7,30.8],[-25.7,32.2],[-27.3,32.2],[-27.3,30.8],[-25.7,30.8]]},
+
+  MDG:{iso:'MDG',numericId:450,name:'Madagascar',capital:'Antananarivo',alertLevel:'MEDIUM',lat:-20.3,lng:46.9,
+    poly:[[-11.9,43.2],[-11.9,50.5],[-25.6,47.0],[-25.6,43.9],[-20.0,43.2],[-11.9,43.2]]},
+
+  GAB:{iso:'GAB',numericId:266,name:'Gabon',capital:'Libreville',alertLevel:'MEDIUM',lat:-0.8,lng:11.6,
+    poly:[[2.3,8.7],[2.3,14.5],[-3.9,14.5],[-3.9,8.7],[0.0,9.5],[2.3,8.7]]},
+
+  COG:{iso:'COG',numericId:178,name:'Republic of Congo',capital:'Brazzaville',alertLevel:'MEDIUM',lat:-0.2,lng:15.8,
+    poly:[[3.7,11.1],[3.7,18.7],[-5.0,18.7],[-5.0,11.1],[0.0,15.0],[3.7,11.1]]},
+
+  GNB:{iso:'GNB',numericId:624,name:'Guinea-Bissau',capital:'Bissau',alertLevel:'HIGH',lat:12.0,lng:-15.2,
+    poly:[[12.7,-16.7],[12.7,-13.6],[10.9,-13.6],[10.9,-16.7],[12.7,-16.7]]},
+
+  GNQ:{iso:'GNQ',numericId:226,name:'Equatorial Guinea',capital:'Malabo',alertLevel:'MEDIUM',lat:1.7,lng:10.3,
+    poly:[[3.8,8.4],[3.8,11.3],[-1.5,11.3],[-1.5,8.4],[1.5,9.5],[3.8,8.4]]},
+
+  MUS:{iso:'MUS',numericId:480,name:'Mauritius',capital:'Port Louis',alertLevel:'LOW',lat:-20.3,lng:57.6,
+    poly:[[-19.9,57.3],[-19.9,57.9],[-20.5,57.9],[-20.5,57.3],[-19.9,57.3]]},
+
+  COM:{iso:'COM',numericId:174,name:'Comoros',capital:'Moroni',alertLevel:'MEDIUM',lat:-11.6,lng:43.3,
+    poly:[[-11.3,43.2],[-11.3,44.6],[-12.4,44.6],[-12.4,43.2],[-11.3,43.2]]},
+
+  CPV:{iso:'CPV',numericId:132,name:'Cape Verde',capital:'Praia',alertLevel:'LOW',lat:16.0,lng:-24.0,
+    poly:[[17.2,-25.4],[17.2,-22.7],[14.8,-22.7],[14.8,-25.4],[17.2,-25.4]]},
+
+  STP:{iso:'STP',numericId:678,name:'São Tomé and Príncipe',capital:'São Tomé',alertLevel:'LOW',lat:0.2,lng:6.6,
+    poly:[[1.7,6.4],[1.7,7.5],[-0.1,7.5],[-0.1,6.4],[1.7,6.4]]},
+
+  // ── EUROPEAN MICROSTATES ─────────────────────────────────────────────────
+  AND:{iso:'AND',numericId:20,name:'Andorra',capital:'Andorra la Vella',alertLevel:'LOW',lat:42.5,lng:1.5,
+    poly:[[42.7,1.4],[42.7,1.8],[42.4,1.8],[42.4,1.4],[42.7,1.4]]},
+
+  MCO:{iso:'MCO',numericId:492,name:'Monaco',capital:'Monaco',alertLevel:'LOW',lat:43.7,lng:7.4,
+    poly:[[43.8,7.4],[43.8,7.5],[43.7,7.5],[43.7,7.4],[43.8,7.4]]},
+
+  SMR:{iso:'SMR',numericId:674,name:'San Marino',capital:'San Marino',alertLevel:'LOW',lat:43.9,lng:12.5,
+    poly:[[44.0,12.4],[44.0,12.5],[43.9,12.5],[43.9,12.4],[44.0,12.4]]},
+
+  LIE:{iso:'LIE',numericId:438,name:'Liechtenstein',capital:'Vaduz',alertLevel:'LOW',lat:47.1,lng:9.5,
+    poly:[[47.3,9.5],[47.3,9.6],[47.0,9.6],[47.0,9.5],[47.3,9.5]]},
+
+  // ── PACIFIC ISLANDS ──────────────────────────────────────────────────────
+  SLB:{iso:'SLB',numericId:90,name:'Solomon Islands',capital:'Honiara',alertLevel:'MEDIUM',lat:-9.6,lng:160.2,
+    poly:[[-5.5,155.5],[-5.5,167.0],[-12.5,167.0],[-12.5,155.5],[-9.0,160.0],[-5.5,155.5]]},
+
+  VUT:{iso:'VUT',numericId:548,name:'Vanuatu',capital:'Port Vila',alertLevel:'LOW',lat:-15.4,lng:166.9,
+    poly:[[-13.1,166.5],[-13.1,170.0],[-20.3,170.0],[-20.3,166.5],[-15.0,167.0],[-13.1,166.5]]},
+
+  WSM:{iso:'WSM',numericId:882,name:'Samoa',capital:'Apia',alertLevel:'LOW',lat:-13.8,lng:-172.1,
+    poly:[[-13.4,-172.8],[-13.4,-171.4],[-14.1,-171.4],[-14.1,-172.8],[-13.4,-172.8]]},
+
+  TON:{iso:'TON',numericId:776,name:'Tonga',capital:'Nuku\'alofa',alertLevel:'LOW',lat:-21.2,lng:-175.2,
+    poly:[[-15.6,-175.4],[-15.6,-173.7],[-21.5,-173.7],[-21.5,-175.4],[-15.6,-175.4]]},
+
+  FSM:{iso:'FSM',numericId:583,name:'Micronesia',capital:'Palikir',alertLevel:'LOW',lat:7.4,lng:150.6,
+    poly:[[10.1,137.4],[10.1,163.2],[4.7,163.2],[4.7,137.4],[10.1,137.4]]},
+
+  MHL:{iso:'MHL',numericId:584,name:'Marshall Islands',capital:'Majuro',alertLevel:'LOW',lat:7.1,lng:171.2,
+    poly:[[14.7,161.3],[14.7,172.2],[4.6,172.2],[4.6,161.3],[14.7,161.3]]},
+
+  KIR:{iso:'KIR',numericId:296,name:'Kiribati',capital:'South Tarawa',alertLevel:'MEDIUM',lat:1.9,lng:-157.4,
+    poly:[[3.4,172.6],[3.4,177.0],[1.3,177.0],[1.3,172.6],[3.4,172.6]]},
+
+  PLW:{iso:'PLW',numericId:585,name:'Palau',capital:'Ngerulmud',alertLevel:'LOW',lat:7.5,lng:134.6,
+    poly:[[8.1,134.2],[8.1,134.9],[6.9,134.9],[6.9,134.2],[8.1,134.2]]},
+
+  NRU:{iso:'NRU',numericId:520,name:'Nauru',capital:'Yaren',alertLevel:'LOW',lat:-0.5,lng:166.9,
+    poly:[[-0.4,166.9],[-0.4,167.0],[-0.6,167.0],[-0.6,166.9],[-0.4,166.9]]},
+
+  TUV:{iso:'TUV',numericId:798,name:'Tuvalu',capital:'Funafuti',alertLevel:'MEDIUM',lat:-8.5,lng:179.2,
+    poly:[[-5.7,175.8],[-5.7,180.0],[-10.8,180.0],[-10.8,175.8],[-5.7,175.8]]},
 };
 
 const CONFLICTS = [
@@ -3680,6 +3813,361 @@ const INTEL = {
     ],
     economic:"GDP approx $4.5B. Gold and oil (upcoming). Bauxite declining. GDP per capita ~$7,200. Debt 120% GDP (declining). Inflation 18%. IMF EFF program. Block 58 first oil targeted 2028.",
   },
+
+  // ── ADDITIONAL COUNTRY INTEL ─────────────────────────────────────────────
+  // ── NORTH AMERICA ────────────────────────────────────────────────────────
+  USA:{
+    summary:"The United States remains the world's preeminent military and economic power, navigating a contested geopolitical landscape marked by great-power competition with China and Russia. Domestically, political polarization reached historic levels through the 2024 election cycle, while the economy maintained resilience with GDP growth near 2.5% despite elevated interest rates. The Trump administration's second term has introduced major trade policy shifts including sweeping tariffs, straining relationships with traditional allies.",
+    threats:[
+      {type:"Great Power Competition",description:"China's military modernization and assertive posture in the Pacific; Taiwan Strait tensions; Chinese espionage and technology theft at scale",severity:"critical",confidence:"HIGH",probability:75,source:"DNI Annual Threat Assessment 2025"},
+      {type:"Domestic Extremism",description:"Rise of domestic violent extremism from both far-right and ideologically motivated actors; election-related threats; infrastructure targeting",severity:"high",confidence:"HIGH",probability:60,source:"DHS / FBI"},
+      {type:"Cyber Threats",description:"Nation-state cyber intrusions (Salt Typhoon telecom breach, Volt Typhoon critical infrastructure pre-positioning) by Chinese APTs; Russian election interference",severity:"high",confidence:"HIGH",probability:80,source:"CISA / NSA"},
+      {type:"Trade War Escalation",description:"Broad tariff regime (10-145% on China) risks retaliatory measures, supply chain disruption, and inflation resurgence; WTO dispute backlog",severity:"medium",confidence:"HIGH",probability:70,source:"IMF / Reuters"},
+    ],
+    keyActors:["President Donald Trump","DoD / Pentagon","CIA / NSA","Congress (divided)","Federal Reserve (Jerome Powell)"],
+    news:[
+      "Trump tariffs at 145% on Chinese goods trigger $3T market sell-off before partial pause — Reuters, Apr 2025",
+      "Salt Typhoon: Chinese hackers compromised 9 US telecom companies including AT&T — WSJ, Jan 2025",
+      "US GDP growth 2.4% in 2024, unemployment 4.1% — BLS, Jan 2025",
+      "DOGE federal workforce reductions spark mass protests in Washington DC — AP, Mar 2025",
+      "US deploys additional carrier strike group to Pacific amid Taiwan tensions — DoD, Feb 2025",
+    ],
+    economic:"GDP $28.8T (2024, world's largest). Per capita ~$85,000. Unemployment 4.1%. Inflation 2.8%. Dollar as global reserve currency. Tech, finance, defense, agriculture dominant sectors.",
+  },
+
+  CAN:{
+    summary:"Canada faces significant geopolitical pressure from US tariff policies under Trump's second term, with the auto sector and aluminum/steel industries particularly exposed. Prime Minister Mark Carney, elected April 2025 following Justin Trudeau's resignation, is navigating a delicate balance between maintaining the alliance with Washington while defending Canadian economic interests. The country faces record immigration, housing affordability crises, and a cost-of-living emergency.",
+    threats:[
+      {type:"US Trade Pressure",description:"25% US tariffs on Canadian steel, aluminum, autos; Trump annexation rhetoric raises sovereignty concerns; CUSMA renegotiation timeline uncertain",severity:"high",confidence:"HIGH",probability:75,source:"Reuters / Globe and Mail"},
+      {type:"Housing Crisis",description:"National housing shortage with vacancy rates below 1% in Toronto/Vancouver; 42% of Canadians unable to afford homes; tent cities expanding",severity:"medium",confidence:"HIGH",probability:85,source:"CMHC / Statistics Canada"},
+      {type:"Arctic Sovereignty",description:"Increased Russian and Chinese activity in Arctic; Northwest Passage legal status disputed; NORAD modernization urgently needed",severity:"medium",confidence:"HIGH",probability:55,source:"DND Canada / NATO"},
+      {type:"Wildfire Season",description:"Escalating wildfire risk in BC, Alberta, Ontario; 2024 saw 18M hectares burned nationally; climate-driven acceleration",severity:"medium",confidence:"HIGH",probability:80,source:"CIFFC / Environment Canada"},
+    ],
+    keyActors:["PM Mark Carney (Liberal)","CSIS","RCMP","Bank of Canada (Tiff Macklem)","Premiers coalition"],
+    news:[
+      "Mark Carney wins Liberal leadership; becomes PM vowing to fight Trump tariffs — CBC, Apr 2025",
+      "Canada GDP contracts 0.2% Q1 2025 as US tariffs bite auto sector — Statistics Canada, May 2025",
+      "Canada joins EU in SWIFT-style financial messaging for Ukraine — Reuters, Feb 2025",
+      "CSIS warns Chinese interference operations targeted 2025 federal election — Globe and Mail, Mar 2025",
+      "Canada announces $73B NORAD modernization over 20 years — DND, Jan 2025",
+    ],
+    economic:"GDP $2.3T. Key sectors: energy (oil sands), mining, autos, finance, tech. Unemployment 6.7%. Inflation 2.3%. High household debt ratio. CAD at 0.72 USD.",
+  },
+
+  // ── CARIBBEAN ─────────────────────────────────────────────────────────
+  DOM:{
+    summary:"The Dominican Republic faces a dual crisis of massive irregular migration pressure from Haiti—with hundreds of thousands displaced by gang violence—and internal governance challenges including rampant corruption and Dominican gang spillover. President Abinader secured re-election in 2024 and has pursued aggressive border militarization. Despite these challenges, the economy remains one of the fastest-growing in the Caribbean, driven by tourism and remittances.",
+    threats:[
+      {type:"Haiti Migration Crisis",description:"500,000+ Haitian migrants in country; gang violence driving mass displacement across porous border; deportation capacity overwhelmed",severity:"high",confidence:"HIGH",probability:85,source:"IOM / UNHCR"},
+      {type:"Gang Infiltration",description:"Haitian gang networks (G9, Viv Ansanm) extending influence into border provinces; Dominican criminal groups expanding",severity:"high",confidence:"HIGH",probability:65,source:"InSight Crime / UNODC"},
+      {type:"Corruption",description:"Systematic corruption in judiciary and customs; narco-trafficking through Caribbean routes; FATF grey-list risk",severity:"medium",confidence:"HIGH",probability:70,source:"Transparency International"},
+    ],
+    keyActors:["President Luis Abinader","Armed Forces (FFAA)","DNCD (drug control)","IOM","MINUSTAH legacy actors"],
+    news:[
+      "Dominican Republic deports 100,000+ Haitians in 2024 amid escalating border crisis — AP, Jan 2025",
+      "Abinader wins re-election with 57% majority pledging 'zero tolerance' on migration — Reuters, May 2024",
+      "Dominican GDP grows 5.5% in 2024 on tourism and remittance surge — Central Bank DR, Jan 2025",
+      "Border wall construction resumes along Haiti-DR frontier — AFP, Oct 2024",
+      "US designates Dominican drug trafficking network under Kingpin Act — OFAC, Feb 2025",
+    ],
+    economic:"GDP $121B. Tourism (10M+ arrivals/year), remittances ($10B), free trade zones. Growth 5.5%. Unemployment 5.4%. Inflation 3.8%.",
+  },
+
+  BHS:{
+    summary:"The Bahamas serves as a major financial hub and tourism destination while grappling with narco-trafficking corridor status between South America and the United States. The country faces existential threats from climate change and rising sea levels threatening low-lying islands. Financial sector vulnerabilities including cryptocurrency exchange collapses (FTX was headquartered in Nassau) have strained regulatory credibility.",
+    threats:[
+      {type:"Drug Trafficking",description:"Key transshipment point for Colombian cocaine en route to US; Bahamian organized crime embedded in logistics; DEA-monitored corridors",severity:"high",confidence:"HIGH",probability:75,source:"DEA / UNODC"},
+      {type:"Climate Vulnerability",description:"89% of population lives within 5 meters of sea level; Category 5 hurricane Dorian (2019) destroyed Abaco; annual hurricane season existential risk",severity:"high",confidence:"HIGH",probability:80,source:"IPCC / NOAA"},
+    ],
+    keyActors:["PM Philip Davis (PLP)","Royal Bahamas Police Force","DEA attaché","Financial Intelligence Unit"],
+    news:[
+      "FTX bankruptcy proceedings conclude; Sam Bankman-Fried sentenced to 25 years — Reuters, Mar 2024",
+      "Bahamas GDP rebounds 4.2% on record 10M tourist arrivals — Ministry of Finance, Jan 2025",
+      "Royal Bahamas Police crack major drug ring linked to Colombian BACRIM — AFP, Nov 2024",
+    ],
+    economic:"GDP $13.7B. Tourism 50%+ of GDP. Offshore finance. Per capita $34,000. Unemployment 9.6%. Significant hurricane-related reconstruction costs annually.",
+  },
+
+  BRB:{
+    summary:"Barbados has successfully repositioned as a high-income Caribbean nation and republic since 2021, with Prime Minister Mia Mottley becoming a prominent global voice on climate finance and SIDS debt relief. The economy is recovering strongly from COVID disruption via tourism. Drug trafficking remains a persistent security challenge given the island's position in the Eastern Caribbean.",
+    threats:[
+      {type:"Drug Trafficking",description:"Eastern Caribbean transshipment node; cocaine from Venezuela and Trinidad; rising local gang violence linked to drug trade",severity:"medium",confidence:"HIGH",probability:65,source:"UNODC / Caribbean CRI"},
+      {type:"Climate Vulnerability",description:"Sea-level rise and intensifying hurricanes; coral reef bleaching threatening marine economy",severity:"medium",confidence:"HIGH",probability:80,source:"IPCC"},
+    ],
+    keyActors:["PM Mia Mottley (BLP)","Barbados Defence Force","Royal Barbados Police"],
+    news:[
+      "Barbados GDP grows 5.2% on record tourism; IMF exits program — IMF, Jan 2025",
+      "PM Mottley at COP29: demands $1T climate finance for small islands — Reuters, Nov 2024",
+      "CARICOM leaders summit discusses Caribbean drug trafficking corridors — CARICOM, Feb 2025",
+    ],
+    economic:"GDP $5.8B. Tourism dominant. Per capita ~$20,000. Debt-to-GDP 105% (declining). IMF program concluded 2024.",
+  },
+
+  ATG:{summary:"Antigua and Barbuda is a small twin-island nation recovering from devastating 2017 hurricane impacts. The country has become a significant offshore financial and citizenship-by-investment hub, drawing regulatory scrutiny. Tourism drives the economy.",threats:[{type:"Climate",description:"Category 5 hurricane vulnerability; Barbuda was 95% destroyed by Irma 2017",severity:"high",confidence:"HIGH",probability:60,source:"NOAA"}],keyActors:["PM Gaston Browne (ALP)"],news:["Antigua GDP grows 5.1% on strong tourism — ECCB, 2025","Citizenship by investment program under EU scrutiny for due diligence gaps — Reuters, 2024"],economic:"GDP $2.0B. Tourism 60%+ GDP. CBI program revenues significant."},
+
+  DMA:{summary:"Dominica is rebuilding from 2017 Hurricane Maria destruction and has developed a climate resilience strategy including geothermal energy development. The citizenship-by-investment program is a major revenue source.",threats:[{type:"Climate",description:"Highly vulnerable to Atlantic hurricanes; Category 5 Maria 2017 caused $1.4B damage on a $600M GDP economy",severity:"high",confidence:"HIGH",probability:65,source:"ECLAC/NOAA"}],keyActors:["PM Roosevelt Skerrit"],news:["Dominica opens first geothermal power plant — AFP, 2024","PM Skerrit wins 6th term in 2024 election — Reuters, 2024"],economic:"GDP $0.7B. Tourism, bananas, CBI program. Per capita ~$9,000."},
+
+  GRD:{summary:"Grenada has achieved stable growth post-Hurricane Ivan (2004) reconstruction and maintains one of the Caribbean's better governance scores. The island is a significant spice exporter and emerging medical tourism destination.",threats:[{type:"Climate",description:"Hurricane vulnerability; Ivan 2004 caused 200% of GDP in damage",severity:"high",confidence:"HIGH",probability:60,source:"NOAA"}],keyActors:["PM Dickon Mitchell (NDC)"],news:["Grenada GDP grows 4.8% driven by tourism and nutmeg exports — ECCB, 2025"],economic:"GDP $1.3B. Tourism, nutmeg (world's second largest producer), CBI program."},
+
+  KNA:{summary:"Saint Kitts and Nevis operates the world's oldest citizenship-by-investment program (est. 1984) and maintains a stable high-income Caribbean economy. The federation's small size makes it vulnerable to external economic shocks and natural disasters.",threats:[{type:"Financial Crime",description:"CBI program misuse risk; due diligence gaps allowing money laundering; EU blacklist threat",severity:"medium",confidence:"HIGH",probability:50,source:"FATF/EU"},],keyActors:["PM Terrance Drew"],news:["St Kitts CBI reforms implemented after EU concerns — Reuters, 2024"],economic:"GDP $1.0B. CBI and tourism dominant. Per capita ~$19,000."},
+
+  LCA:{summary:"Saint Lucia is the Eastern Caribbean's largest economy and a significant tourist destination. The island navigates drug trafficking pressures given its position between Trinidad and Barbados, while working to diversify from pure tourism dependence.",threats:[{type:"Crime",description:"Rising violent crime linked to drug trafficking; gang activity in Castries; US travel advisory Level 2",severity:"medium",confidence:"HIGH",probability:65,source:"UNODC/US State Dept"}],keyActors:["PM Philip Pierre (SLP)"],news:["Saint Lucia GDP grows 5.5% on record 1.2M stayover arrivals — CTO, 2025"],economic:"GDP $2.5B. Tourism 65%+ GDP. Banana exports declining."},
+
+  VCT:{summary:"Saint Vincent and the Grenadines is rebuilding from the catastrophic 2021 La Soufrière volcanic eruption that displaced 20,000 and caused $300M in damage. The Grenadines chain is an elite yachting and sailing destination. Drug trafficking through the island chain remains a persistent challenge.",threats:[{type:"Volcanic Activity",description:"La Soufrière remains active; 2021 eruption displaced 20,000 people; next major eruption possible",severity:"high",confidence:"MEDIUM",probability:35,source:"UWI Seismic Research Centre"}],keyActors:["PM Ralph Gonsalves (ULP)"],news:["St Vincent receives final $85M World Bank volcanic recovery grant — World Bank, 2025"],economic:"GDP $0.9B. Tourism, agriculture, remittances. Reconstruction from 2021 eruption ongoing."},
+
+  // ── CENTRAL ASIA ─────────────────────────────────────────────────────────
+  UZB:{
+    summary:"Uzbekistan under President Shavkat Mirziyoyev has undergone significant economic liberalization and opening since 2016, transitioning from Islam Karimov's isolated authoritarian model to a more pragmatic engagement with global markets. The country is Central Asia's most populous state and sits at a crossroads of great-power competition between Russia, China, and the US. Significant human rights concerns persist alongside the reforms.",
+    threats:[
+      {type:"Authoritarian Control",description:"Political opposition suppressed; media tightly controlled; forced labor in cotton harvest; no genuine electoral competition",severity:"medium",confidence:"HIGH",probability:90,source:"Human Rights Watch / Freedom House"},
+      {type:"Russian Influence",description:"Deep economic dependency on Russia; remittances from 2-3M Uzbek workers in Russia; sanctions compliance pressure",severity:"medium",confidence:"HIGH",probability:65,source:"IISS / Reuters"},
+      {type:"Afghan Instability Spillover",description:"Taliban border proximity; drugs and fighters crossing porous frontier; Uzbek militant networks (IMU) partially reconstituted in Afghanistan",severity:"high",confidence:"HIGH",probability:55,source:"UN Monitoring Team / ACLED"},
+      {type:"Water Scarcity",description:"Aral Sea near-total desiccation; Amu Darya water allocation disputes with Tajikistan, Turkmenistan; climate-driven agricultural crisis",severity:"medium",confidence:"HIGH",probability:70,source:"UNDP / World Bank"},
+    ],
+    keyActors:["President Shavkat Mirziyoyev","SNB (National Security Service)","Russian MFAs","IMF/World Bank missions","China BRI investors"],
+    news:[
+      "Uzbekistan GDP grows 6.5% — fastest in Central Asia for fourth consecutive year — ADB, Jan 2025",
+      "Mirziyoyev wins third term with 87% in election dismissed by OSCE as not free — Reuters, Nov 2024",
+      "Trans-Caspian trade corridor bypassing Russia sees 40% volume increase — Reuters, Feb 2025",
+      "Uzbekistan textile exports to EU surge as Western sanctions create Russia trade gap — FT, Jan 2025",
+      "Tashkent hosts SCO summit; Uzbekistan balances Russia-China-West triangulation — AFP, Oct 2024",
+    ],
+    economic:"GDP $102B. Cotton, natural gas, gold, uranium. FDI surging: $4.5B in 2024. Growth 6.5%. Unemployment 9%. Remittances $8.5B from Russia at risk from sanctions.",
+  },
+
+  // ── AFRICA ───────────────────────────────────────────────────────────────
+  ZMB:{
+    summary:"Zambia completed Africa's first COVID-era sovereign debt restructuring in 2023, emerging from default with a $6.3B debt relief deal after years of negotiations. President Hakainde Hichilema continues ambitious economic reforms, but faces severe electricity shortages due to drought-hit Kariba hydroelectric dam and high youth unemployment. Zambia's copper resources are central to the global energy transition, making it a key strategic target for Chinese and Western mining investment.",
+    threats:[
+      {type:"Energy Crisis",description:"Kariba Dam at 12% capacity due to El Niño drought; load-shedding 20+ hours/day crippling industry and households; copper production impacted",severity:"high",confidence:"HIGH",probability:80,source:"ZESCO / Reuters"},
+      {type:"Debt Sustainability",description:"Post-restructuring debt ratios still elevated; IMF program conditions require austerity; social service cuts generating unrest",severity:"medium",confidence:"HIGH",probability:60,source:"IMF / World Bank"},
+      {type:"China Influence",description:"China holds majority of external debt; Chinese mining companies control significant copper and cobalt assets; sovereignty concerns",severity:"medium",confidence:"HIGH",probability:65,source:"Jubilee Debt Campaign / Reuters"},
+    ],
+    keyActors:["President Hakainde Hichilema (UPND)","Bank of Zambia","IMF mission","Glencore / First Quantum (mining)","China Eximbank"],
+    news:[
+      "Zambia finalizes $6.3B debt restructuring — first African country post-COVID default to complete process — Reuters, Oct 2023",
+      "Kariba Dam power crisis: Zambia and Zimbabwe implement 20-hour daily load-shedding — AP, Oct 2024",
+      "First Quantum Minerals Cobre Panama shutdown triggers copper supply shock — Reuters, Nov 2023",
+      "IMF approves $1.3B ECF program for Zambia; copper revenues key to recovery — IMF, Sep 2023",
+      "Zambia GDP rebounds 4.7% as copper prices surge on EV demand — World Bank, Jan 2025",
+    ],
+    economic:"GDP $29B. Copper and cobalt dominant (80% of exports). Agriculture 10% GDP. Growth 4.7%. Debt restructuring complete. Electricity crisis constraining growth.",
+  },
+
+  NAM:{
+    summary:"Namibia has emerged as a major new oil and gas frontier following TotalEnergies' massive Orange Basin discoveries offshore, positioning the sparsely populated country for potential resource wealth transformation. President Netumbo Nandi-Ndaitwah became Africa's first female head of state upon election in November 2024. The country ranks among Africa's most unequal societies despite middle-income status, and faces persistent drought from climate change.",
+    threats:[
+      {type:"Inequality",description:"World's highest Gini coefficient (59.1); San and other communities in extreme poverty while elite capture mining revenues",severity:"high",confidence:"HIGH",probability:90,source:"World Bank / UNDP"},
+      {type:"Climate/Drought",description:"Chronic drought in north and Kalahari; 2024 El Niño drought declared national emergency; food insecurity for 500,000+",severity:"high",confidence:"HIGH",probability:80,source:"FAO / WFP"},
+      {type:"Oil Revenue Management",description:"Orange Basin estimated 11B barrels; TotalEnergies FID approaching; Dutch disease and resource curse risks",severity:"medium",confidence:"MEDIUM",probability:50,source:"TotalEnergies / IMF"},
+    ],
+    keyActors:["President Netumbo Nandi-Ndaitwah (SWAPO)","TotalEnergies (Orange Basin)","Bank of Namibia","NamPower"],
+    news:[
+      "Nandi-Ndaitwah wins presidency — Africa's first female head of state — AFP, Nov 2024",
+      "TotalEnergies Orange Basin FPSO contract awarded; first oil targeted 2030 — Reuters, Jan 2025",
+      "Namibia drought emergency: 500,000 face food insecurity; El Niño impact severe — WFP, Sep 2024",
+      "Green hydrogen project: Namibia signs $10B deal with Germany — Reuters, Nov 2024",
+      "Namibia GDP grows 4.0% on mining and construction boom — BoN, Jan 2025",
+    ],
+    economic:"GDP $12.4B. Mining (diamonds, uranium, gold), fishing, emerging oil. Per capita $5,100. Gini 59.1 (highest in world). Growth 4.0%.",
+  },
+
+  BWA:{
+    summary:"Botswana's decades-long reputation as Africa's governance success story has shown cracks, with incumbent President Mokgweetsi Masisi losing the 2024 election in a historic upset—the first democratic transfer of power in the country's history. Former president Duma Boko won the election amid economic discontent fueled by high unemployment (26%) and stagnant diamond revenues as lab-grown diamonds disrupt the De Beers model.",
+    threats:[
+      {type:"Diamond Industry Disruption",description:"Lab-grown diamonds threatening natural diamond market; De Beers market share falling; Botswana's 80% export dependence on diamonds existential risk",severity:"high",confidence:"HIGH",probability:75,source:"Bain Jewelry Report / Reuters"},
+      {type:"Unemployment",description:"Youth unemployment at 40%; over-reliance on diamond sector; diversification into beef and tourism insufficient",severity:"high",confidence:"HIGH",probability:85,source:"Statistics Botswana / World Bank"},
+      {type:"HIV/AIDS",description:"25% adult HIV prevalence among world's highest; PEPFAR funding cuts under Trump administration threaten treatment programs",severity:"medium",confidence:"HIGH",probability:70,source:"UNAIDS / WHO"},
+    ],
+    keyActors:["President Duma Boko (UDC)","De Beers / Debswana","Bank of Botswana","PEPFAR mission"],
+    news:[
+      "Opposition Duma Boko wins Botswana election — first democratic transfer of power — BBC, Nov 2024",
+      "De Beers diamond sales fall 30% as lab-grown substitute demand surges — FT, Jan 2025",
+      "Botswana renegotiates De Beers sales agreement; demands larger state share — Reuters, Dec 2024",
+      "PEPFAR cuts threaten HIV treatment for 400,000 Batswana — AP, Mar 2025",
+      "Botswana GDP growth slows to 2.5% on weak diamond revenues — Statistics Botswana, Jan 2025",
+    ],
+    economic:"GDP $20B. Diamonds 80%+ exports. Beef, tourism. Per capita $7,900. Growth 2.5%. Unemployment 26%. World's largest diamond reserves.",
+  },
+
+  LSO:{
+    summary:"Lesotho, entirely landlocked within South Africa, is one of the world's most politically unstable democracies with six different prime ministers since 2015 and multiple attempted coups. Prime Minister Sam Matekane continues to struggle with endemic corruption, a failing garment industry, and a severe HIV/AIDS crisis. The country's Lesotho Highlands Water Project remains its primary economic asset, selling water to South Africa.",
+    threats:[
+      {type:"Political Instability",description:"Coalition governments collapse repeatedly; military interference in politics; 2022 coup attempt; fragile democratic institutions",severity:"high",confidence:"HIGH",probability:70,source:"ICG / ACLED"},
+      {type:"HIV/AIDS",description:"22% adult prevalence; second highest in world; healthcare system strained; PEPFAR dependency",severity:"high",confidence:"HIGH",probability:85,source:"UNAIDS"},
+      {type:"Economic Vulnerability",description:"Garment industry (AGOA-dependent) threatened by US tariff policies; remittances from South African mines declining",severity:"high",confidence:"HIGH",probability:75,source:"World Bank / USAID"},
+    ],
+    keyActors:["PM Sam Matekane (RFP)","Lesotho Defence Force","SADC Mission","PEPFAR","LHDA (Highlands Water)"],
+    news:[
+      "Lesotho PM Matekane survives no-confidence vote as coalition fractures — Reuters, 2024",
+      "AGOA garment sector: Lesotho fears US tariff exclusion threatening 40,000 jobs — AP, Mar 2025",
+      "Lesotho Highlands Water Phase II completed; water exports to SA increase 30% — LHWC, 2024",
+    ],
+    economic:"GDP $2.8B. Water exports to SA, garments (AGOA), remittances from SA miners. Per capita ~$1,200. Extreme poverty 35%.",
+  },
+
+  SWZ:{
+    summary:"Eswatini (formerly Swaziland) is Africa's last absolute monarchy, with King Mswati III wielding total power. The country experienced its worst political violence in decades during 2021-2022 pro-democracy protests that left dozens dead. Opposition parties remain banned, and international pressure for political reform has been largely ignored. The country has the world's highest HIV/AIDS prevalence at 27%.",
+    threats:[
+      {type:"Political Repression",description:"Absolute monarchy banning political parties; 2021 pro-democracy protests suppressed with lethal force; ANC/South Africa pressure for reform",severity:"high",confidence:"HIGH",probability:90,source:"Human Rights Watch / Amnesty"},
+      {type:"HIV/AIDS",description:"World's highest HIV prevalence at 27%; healthcare infrastructure inadequate; PEPFAR dependency for ART",severity:"critical",confidence:"HIGH",probability:95,source:"UNAIDS"},
+      {type:"Succession Risk",description:"King Mswati III aging; no clear succession plan; youth bulge with no political outlet creating structural instability",severity:"high",confidence:"MEDIUM",probability:50,source:"ICG"},
+    ],
+    keyActors:["King Mswati III","Royal Eswatini Police","ANC South Africa","PEPFAR","SADC"],
+    news:[
+      "Eswatini: King Mswati refuses reform talks despite SADC mediation — Reuters, 2024",
+      "HIV prevalence remains world's highest at 27%; WHO emergency assessment — WHO, 2024",
+      "Pro-democracy activists jailed under Sedition Act after protests — HRW, 2024",
+    ],
+    economic:"GDP $4.8B. Sugar, textiles (AGOA). Per capita ~$4,000. Highly dependent on South Africa customs union revenues.",
+  },
+
+  MDG:{
+    summary:"Madagascar is one of the world's poorest countries and a biodiversity hotspot facing existential environmental threats from deforestation. Political instability has been chronic since 2009 and the country regularly faces food security crises. President Andry Rajoelina secured a disputed third term in 2023. The island nation's vanilla, cloves, and rare earth minerals attract geopolitical interest despite governance failures.",
+    threats:[
+      {type:"Climate Vulnerability",description:"Southern Madagascar experiencing worst drought in 40 years; 2M food insecure; climate-change driven cyclone intensification destroying coastal towns annually",severity:"critical",confidence:"HIGH",probability:85,source:"WFP / OCHA"},
+      {type:"Deforestation",description:"90% of original forest cover lost; illegal logging (rosewood, ebony) for Chinese market; biodiversity collapse underway",severity:"high",confidence:"HIGH",probability:90,source:"WCS / WWF"},
+      {type:"Political Instability",description:"Rajoelina disputed re-election; opposition boycott; French interference allegations; military influence in politics",severity:"medium",confidence:"HIGH",probability:65,source:"ICG / Reuters"},
+    ],
+    keyActors:["President Andry Rajoelina (TGV)","Gendarmerie Nationale","WFP mission","French military presence (legacy)"],
+    news:[
+      "Madagascar south: 2M face starvation as drought enters 4th year — WFP, Jan 2025",
+      "Cyclone Gamane kills 18, displaces 130,000 in northeast Madagascar — OCHA, Mar 2024",
+      "Rajoelina re-elected in disputed vote; EU election observers cite irregularities — Reuters, Dec 2023",
+      "Rare earth deposits discovered in southern Madagascar attract Chinese investment — FT, 2024",
+    ],
+    economic:"GDP $14.5B. Vanilla (world's top producer), cloves, nickel-cobalt (Ambatovy). Per capita ~$500. 75% below $2/day poverty line.",
+  },
+
+  GAB:{
+    summary:"Gabon's August 2023 military coup ended 56 years of Bongo family rule, with General Brice Oligui Nguema leading the Transition Committee (CTRI). The coup was broadly welcomed domestically after Ali Bongo's disputed re-election. Gabon's oil revenues are declining as reserves deplete, and the country faces economic diversification challenges. The new military leadership has promised elections while consolidating power.",
+    threats:[
+      {type:"Military Junta Transition",description:"Post-coup transition timeline uncertain; military consolidating power; promised elections delayed; democratic backsliding risk",severity:"high",confidence:"HIGH",probability:70,source:"ICG / Reuters"},
+      {type:"Oil Depletion",description:"Crude output declined from 300,000 b/d (peak) to 200,000 b/d; reserve depletion by 2025-2030; revenue cliff approaching",severity:"high",confidence:"HIGH",probability:80,source:"EIA / Rystad Energy"},
+      {type:"Inequality",description:"Oil wealth concentrated in Libreville elite; rural poverty 45%; Bongo family looted billions; post-coup wealth redistribution demands",severity:"medium",confidence:"HIGH",probability:70,source:"World Bank"},
+    ],
+    keyActors:["Gen. Brice Oligui Nguema (CTRI)","OPEC / Gabonese oil ministry","Total Gabon","France (legacy neocolonial)"],
+    news:[
+      "Gabon coup: General Nguema ousts Bongo after disputed election — BBC, Aug 2023",
+      "Gabon exits OPEC as oil production declines make membership uneconomical — Reuters, Jul 2023",
+      "Gabon transition elections promised for 2025; timeline slipping — AFP, Jan 2025",
+      "TotalEnergies Gabon offshore block exploration resumes under new government — Reuters, 2024",
+    ],
+    economic:"GDP $20B. Oil 40% of GDP, 80% of exports. Timber, manganese. Per capita ~$8,800 but extreme inequality. Oil reserves declining.",
+  },
+
+  COG:{
+    summary:"The Republic of Congo (Brazzaville) is governed by President Denis Sassou Nguesso, who has ruled for over 38 of the past 46 years. The country is an oil state with chronic mismanagement, high debt, and persistent civil conflict in the Pool region. It sits alongside the enormous Congo Basin forest, the world's second lung after the Amazon, which faces increasing logging pressure.",
+    threats:[
+      {type:"Authoritarian Governance",description:"Sassou Nguesso family looting oil revenues; opposition suppressed; elections neither free nor fair; youth unemployment 45%",severity:"high",confidence:"HIGH",probability:90,source:"HRW / Transparency International"},
+      {type:"Oil Revenue Mismanagement",description:"Public debt at 100%+ of GDP; IMF-required austerity; oil revenues declining but political will for reform absent",severity:"high",confidence:"HIGH",probability:80,source:"IMF"},
+      {type:"Pool Region Conflict",description:"Ninja rebel groups in Pool region; periodic clashes; 100,000+ IDPs; Evangelical church (Ntoumi) armed faction",severity:"medium",confidence:"HIGH",probability:55,source:"ACLED / OCHA"},
+    ],
+    keyActors:["President Denis Sassou Nguesso","Elf/Total legacy (now TotalEnergies)","IMF mission","Pool region rebels (Ntoumi)"],
+    news:[
+      "Congo-Brazzaville: Sassou Nguesso wins fifth term in uncontested election — AFP, Mar 2025",
+      "IMF approves $449M ECF program conditional on anti-corruption measures — IMF, Jan 2024",
+      "Congo Basin deforestation accelerates: 500,000 hectares lost in 2024 — Global Forest Watch, 2025",
+    ],
+    economic:"GDP $12.5B. Oil 70% of government revenue. Timber. Per capita ~$2,300. Debt 105% of GDP. IMF program active.",
+  },
+
+  GNB:{
+    summary:"Guinea-Bissau is one of the world's most fragile states and a major cocaine transshipment hub for Latin American cartels routing drugs to Europe. The country has experienced nine coups or coup attempts since independence in 1974. President Umaro Sissoco Embaló has consolidated power following his own disputed election, ruling by decree and dissolving parliament. The cashew economy barely sustains the population.",
+    threats:[
+      {type:"Drug Trafficking",description:"World's first narco-state designation risk; Colombian and Venezuelan cartels using archipelago as staging post; political elite complicit",severity:"critical",confidence:"HIGH",probability:85,source:"UNODC / DEA"},
+      {type:"Political Instability",description:"9 coups in 50 years; parliamentary dissolution; military with decisive political role; elections disputed",severity:"critical",confidence:"HIGH",probability:75,source:"ICG / ACLED"},
+      {type:"Institutional Collapse",description:"State capacity near zero; public servants unpaid for months; judiciary non-functional; UNODC peacebuilding mission essential",severity:"high",confidence:"HIGH",probability:80,source:"UNODC / UN"},
+    ],
+    keyActors:["President Umaro Embaló","Military (FASB)","UNODC mission","Colombian cartel networks","ECOWAS"],
+    news:[
+      "UNODC: Guinea-Bissau remains critical cocaine transit node to Europe — UNODC, 2024",
+      "President Embaló dissolves parliament for third time — Reuters, 2024",
+      "EU withdraws police training mission EUAM Guinea-Bissau amid security concerns — EU, 2024",
+    ],
+    economic:"GDP $1.7B. Cashews 90% of export earnings. Per capita ~$800. Aid-dependent. Drug transit economy distorts official statistics.",
+  },
+
+  GNQ:{
+    summary:"Equatorial Guinea is a tiny oil-rich state governed by President Teodoro Obiang Nguema Mbasogo, the world's longest-serving non-royal head of state (since 1979). Son Teodorin is VP and designated successor despite US and French money-laundering convictions related to looted oil revenues. Oil production has peaked and is declining sharply, threatening the regime's social contract.",
+    threats:[
+      {type:"Oil Decline",description:"Production fallen from 400,000 to 100,000 b/d; Marathon and other majors exiting; revenue cliff threatens patronage system",severity:"high",confidence:"HIGH",probability:85,source:"EIA / Rystad"},
+      {type:"Authoritarian Succession",description:"Obiang (82) transitioning power to convicted kleptocrat son Teodorin; elite infighting; succession violence risk",severity:"high",confidence:"HIGH",probability:60,source:"ICG / HRW"},
+      {type:"Bioko Volcano",description:"Cameroon Mountain / Bioko Island volcanic activity; proximity to Malabo capital",severity:"low",confidence:"LOW",probability:15,source:"Smithsonian GVP"},
+    ],
+    keyActors:["President Teodoro Obiang (PDGE)","VP Teodorin Obiang","ExxonMobil / Marathon (legacy)","France (diplomatic cover)"],
+    news:[
+      "Teodorin Obiang retains VP post despite French conviction for embezzlement — Reuters, 2024",
+      "Equatorial Guinea oil output hits 20-year low — OPEC monthly bulletin, 2024",
+      "ExxonMobil completes exit from EG deepwater blocks — Reuters, 2024",
+    ],
+    economic:"GDP $12B. Oil 90% of government revenue. Per capita $7,000 but 70%+ in poverty. Wealth concentrated in Obiang family.",
+  },
+
+  MUS:{
+    summary:"Mauritius is Africa's most developed country and a leading financial center, ranked first in Africa on ease of doing business. The November 2024 election saw a stunning defeat of longtime PM Pravind Jugnauth, with Navin Ramgoolam returning to power. The island faces vulnerability from climate change, over-tourism, and its status as an offshore financial hub under increasing FATF scrutiny.",
+    threats:[
+      {type:"Financial Crime Risk",description:"Offshore financial center used for Indian capital flows; FATF grey-listing risk; Pandora Papers exposure",severity:"medium",confidence:"HIGH",probability:50,source:"FATF / ICIJ"},
+      {type:"Climate Vulnerability",description:"Low-lying coast vulnerable to sea-level rise; cyclone intensification risk; coral bleaching threatening marine tourism",severity:"medium",confidence:"HIGH",probability:70,source:"IPCC"},
+    ],
+    keyActors:["PM Navin Ramgoolam (PTr)","Bank of Mauritius","FATF","India (largest trade/investment partner)"],
+    news:[
+      "Ramgoolam wins landslide election ending Jugnauth decade — BBC, Nov 2024",
+      "Mauritius removed from FATF grey list after AML reforms — FATF, Oct 2023",
+      "Mauritius GDP grows 6.5% on record tourism and financial services — Statistics Mauritius, Jan 2025",
+    ],
+    economic:"GDP $14.8B. Financial services, tourism, textiles. Per capita ~$11,700. Africa's highest HDI. Growth 6.5%.",
+  },
+
+  COM:{summary:"Comoros is a fragile island state with chronic political instability, having experienced over 20 coups or attempted coups since independence. President Azali Assoumani controversially amended the constitution to reset his term limits. The country is highly dependent on remittances from the Comoran diaspora in France.",threats:[{type:"Political Instability",description:"20+ coups since independence; Assoumani term limit manipulation; opposition jailed",severity:"high",confidence:"HIGH",probability:70,source:"ICG"},{type:"Climate",description:"Rising sea levels threatening atolls; cyclone vulnerability",severity:"medium",confidence:"HIGH",probability:75,source:"IPCC"}],keyActors:["President Azali Assoumani","French diaspora community"],news:["Comoros: Assoumani re-elected in disputed vote; opposition arrested — Reuters, Jan 2024","Comoros joins Arab League; Gulf aid flows increase — AFP, 2023"],economic:"GDP $1.4B. Vanilla, cloves, ylang-ylang. Remittances 25%+ of GDP. Per capita ~$1,600."},
+
+  CPV:{summary:"Cape Verde is a stable, democratic archipelago off West Africa's coast and a model of governance for the region. Its strategic mid-Atlantic position makes it valuable for drug interdiction and trans-Atlantic surveillance. Strong diaspora ties to Portugal and the Netherlands fund the economy via remittances.",threats:[{type:"Drug Trafficking",description:"Mid-Atlantic transshipment point for South American cocaine to Europe; local gang violence rising",severity:"medium",confidence:"HIGH",probability:65,source:"UNODC"}],keyActors:["PM José Maria Neves","Cape Verde Coast Guard","US/EU maritime patrol cooperation"],news:["Cape Verde GDP grows 5.2% on tourism rebound — INE, 2025","Cape Verde coast guard seizes 3 tonnes of cocaine in trans-Atlantic intercept — Reuters, 2024"],economic:"GDP $2.1B. Tourism 25%+ GDP. Remittances 12%. Per capita ~$3,700."},
+
+  STP:{summary:"São Tomé and Príncipe is a tiny, politically stable island nation in the Gulf of Guinea. Offshore oil exploration has yet to yield commercial production despite decades of hope. The country's cocoa is prized globally. It maintains close ties with Portugal and Taiwan.",threats:[{type:"Food Security",description:"Import-dependent; 90% of food imported; global price shocks devastating",severity:"medium",confidence:"HIGH",probability:70,source:"WFP"}],keyActors:["President Carlos Vila Nova","Taiwan (diplomatic partner)","Cocoa industry"],news:["São Tomé cocoa exports hit record high on premium demand — Reuters, 2024"],economic:"GDP $0.7B. Cocoa, fishing, tourism (nascent). Per capita ~$3,100. Aid-dependent."},
+
+  // ── EUROPEAN MICROSTATES ─────────────────────────────────────────────────
+  AND:{summary:"Andorra is a stable microstate nestled between France and Spain, known for its ski resorts, duty-free shopping, and status as a low-tax haven. The country has modernized significantly and signed an association agreement with the EU in 2024. Financial transparency has improved under OECD pressure.",threats:[{type:"Economic Dependency",description:"Heavy reliance on tourism and tax haven status; EU association agreement may erode tax advantages",severity:"low",confidence:"HIGH",probability:45,source:"OECD/EU"}],keyActors:["Co-Princes (French President + Bishop of Urgell)","PM Xavier Espot"],news:["Andorra-EU association agreement signed — EU, 2024","Andorra ski season breaks records with 8M visitor days — Ministry of Tourism, 2025"],economic:"GDP $3.3B. Tourism 80%+ GDP. Duty-free retail. Per capita ~$42,000."},
+
+  MCO:{summary:"Monaco is the world's second-smallest country and most densely populated, known as a playground for the ultra-wealthy. The Grimaldi family's constitutional monarchy is one of the most stable governments in the world. The principality is a major financial center with strict money-laundering controls following EU pressure.",threats:[{type:"Money Laundering",description:"Historical reputation as financial secrecy hub; MONEYVAL pressure improved compliance; still attracts oligarch wealth",severity:"low",confidence:"MEDIUM",probability:30,source:"MONEYVAL/FATF"}],keyActors:["Prince Albert II","Government Minister Didier Guillaume"],news:["Monaco joins EU automatic tax information exchange — EU, 2024","Russian oligarch assets frozen in Monaco following EU sanctions — Reuters, 2024"],economic:"GDP $8.1B. Finance, tourism, real estate. Zero income tax. Per capita ~$200,000 (highest in world)."},
+
+  SMR:{summary:"San Marino is a tiny landlocked microstate within Italy, claiming to be the world's oldest republic (301 AD). Its economy is closely tied to Italy and the broader eurozone. The country has no standing army but maintains a ceremonial military corps.",threats:[{type:"Economic Integration",description:"Complete economic dependency on Italy; eurozone exposure; tourist-dependent economy",severity:"low",confidence:"HIGH",probability:40,source:"IMF"}],keyActors:["Captains Regent (rotating)"],news:["San Marino GDP grows 3.2% on tourism and financial services — BCSM, 2025"],economic:"GDP $2.1B. Finance, tourism, ceramics. Per capita ~$48,000."},
+
+  LIE:{summary:"Liechtenstein is one of the world's wealthiest countries per capita, a double-landlocked microstate between Switzerland and Austria. It is a major financial center specializing in private wealth management and corporate holdings, with over 75,000 registered companies in a country of 38,000 people.",threats:[{type:"Financial Regulation",description:"Offshore wealth management hub; under OECD/EU automatic exchange of information pressure; AML scrutiny",severity:"low",confidence:"HIGH",probability:35,source:"OECD/FATF"}],keyActors:["Prince Hans-Adam II","PM Daniel Risch"],news:["Liechtenstein strengthens AML rules under FATF review — FMA, 2024"],economic:"GDP $6.9B. Finance, precision manufacturing, pharmaceuticals. Per capita ~$180,000. Lowest unemployment in world (1.5%)."},
+
+  // ── PACIFIC ISLANDS ──────────────────────────────────────────────────────
+  SLB:{
+    summary:"Solomon Islands made global headlines in 2022 by signing a landmark security agreement with China, triggering alarm in Australia, the US, and the broader Pacific. PM Jeremiah Manele (elected April 2024) has signaled a more balanced approach but the China security pact remains active. The islands are highly vulnerable to climate change and experienced significant inter-island ethnic violence in 2021 (Malaita riots).",
+    threats:[
+      {type:"China Security Pact",description:"2022 Solomon Islands-China security agreement allows PLA Navy vessel access; Australian and US strategic anxiety; potential base establishment",severity:"high",confidence:"HIGH",probability:60,source:"IISS / Australian DSD"},
+      {type:"Climate Vulnerability",description:"Low-lying atolls experiencing sea-level rise; Ontong Java Atoll at risk; cyclone intensity increasing",severity:"high",confidence:"HIGH",probability:80,source:"IPCC"},
+      {type:"Internal Ethnic Tension",description:"Malaita-Guadalcanal tensions; 2021 Honiara riots; Malaita Premier threatening secession over pro-China stance",severity:"medium",confidence:"HIGH",probability:50,source:"ICG / ACLED"},
+    ],
+    keyActors:["PM Jeremiah Manele","China MFA","Australia DFAT","Malaita Premier Daniel Suidani"],
+    news:[
+      "Solomon Islands PM Manele signals review of China security pact after election — Reuters, May 2024",
+      "Australia pledges $250M Pacific security package targeting Solomon Islands — AFP, Apr 2024",
+      "China Coast Guard vessels conduct first-ever port call at Honiara — Reuters, Oct 2024",
+    ],
+    economic:"GDP $1.5B. Timber, fishing, palm oil. Per capita ~$2,200. Aid-dependent. Chinese investment in infrastructure growing.",
+  },
+
+  VUT:{summary:"Vanuatu is highly vulnerable to natural disasters and climate change, regularly ranking as one of the world's most disaster-prone countries. The nation has over 80 indigenous languages and a complex kastom (custom) system. Cyclone Winston (2024) caused significant damage. Chinese infrastructure investment is growing.",threats:[{type:"Climate/Disasters",description:"Average 1.5 cyclones per year; Ambae volcano ongoing evacuation; most natural disaster-exposed country on World Risk Index",severity:"high",confidence:"HIGH",probability:85,source:"UNDRR / World Risk Index"}],keyActors:["PM Charlot Salwai","China (infrastructure donor)","Australia (traditional partner)"],news:["Vanuatu ratifies Paris Agreement loss and damage mechanism — UN, 2024","Cyclone Lola destroys 30% of crops in northern Vanuatu — OCHA, Nov 2024"],economic:"GDP $1.0B. Tourism, offshore finance (Vanuatu Financial Services Commission), copra. Per capita ~$3,000."},
+
+  WSM:{summary:"Samoa (formerly Western Samoa) is a stable Pacific island democracy and traditional Polynesian society. PM Fiamē Naomi Māta'afa leads the country with a focus on climate change diplomacy and Pacific regionalism. The country receives significant remittances from New Zealand and Australia.",threats:[{type:"Climate",description:"Cyclone vulnerability; sea-level rise threatening coastal villages; coral bleaching",severity:"medium",confidence:"HIGH",probability:75,source:"IPCC"},{type:"Economic Dependency",description:"Remittance dependency (25%+ GDP); limited economic diversification",severity:"medium",confidence:"HIGH",probability:70,source:"World Bank"}],keyActors:["PM Fiamē Naomi Māta'afa"],news:["Samoa hosts Commonwealth Heads of Government Meeting 2024 — Reuters","Samoa cyclone preparedness praised as model for SIDS — UNDRR, 2025"],economic:"GDP $0.9B. Remittances, tourism, fishing. Per capita ~$4,200."},
+
+  TON:{summary:"Tonga is a constitutional monarchy navigating significant Chinese debt exposure from infrastructure loans. The January 2022 Hunga Tonga-Hunga Ha'apai volcanic eruption and tsunami caused major destruction. PM Siaosi Sovaleni is seeking debt relief from China while maintaining Australian and New Zealand security relationships.",threats:[{type:"Volcanic/Tsunami Risk",description:"Active volcanic arc; 2022 Hunga Tonga eruption most powerful in century; submarine cables remain vulnerable",severity:"high",confidence:"HIGH",probability:50,source:"Smithsonian GVP / NIWA"},{type:"Chinese Debt Trap",description:"70%+ of external debt owed to China Eximbank; debt service consuming 15% of GDP; sovereignty concerns",severity:"high",confidence:"HIGH",probability:65,source:"Lowy Institute / IMF"}],keyActors:["PM Siaosi Sovaleni","King Tupou VI","China Eximbank","Australia DFAT"],news:["Tonga seeks Chinese debt restructuring following volcanic eruption costs — Reuters, 2024","Tonga GDP grows 3.2% as reconstruction boom continues — ADB, 2025"],economic:"GDP $0.5B. Remittances 40%+ GDP, squash, fishing. Per capita ~$4,500."},
+
+  FSM:{summary:"The Federated States of Micronesia is in 'free association' with the United States, which provides defense and substantial financial assistance in exchange for strategic military access. The 2023 Compact of Free Association renewal was hard-fought amid concerns about Chinese influence. The islands face existential climate threats.",threats:[{type:"Climate Existential Threat",description:"Chuuk Lagoon and atolls at 2m elevation; storm surges inundating villages; freshwater lens contamination by saltwater",severity:"critical",confidence:"HIGH",probability:85,source:"IPCC"},{type:"China Competition",description:"Chinese offers of aid and investment rejected; US Compact renewed but Chuuk secession movement complicates",severity:"medium",confidence:"HIGH",probability:45,source:"CSIS / US State Dept"}],keyActors:["President Wesley Simina","US Interior Department","US Navy (USCG access)"],news:["FSM renews Compact of Free Association with US — US State Dept, 2023","FSM joins Climate Vulnerable Forum declaration — UNFCCC, 2024"],economic:"GDP $0.4B. US Compact funds 30%+ of GDP. Fishing license fees. Per capita ~$3,500."},
+
+  MHL:{summary:"The Marshall Islands signed a new Compact of Free Association with the US in 2023 after difficult negotiations. Bikini and Enewetak atolls remain contaminated from 67 nuclear tests conducted by the US between 1946-1958. Sea-level rise is an existential threat, with some islands potentially uninhabitable within decades.",threats:[{type:"Climate Existential Threat",description:"Average elevation 2m; king tides regularly flooding capital Majuro; freshwater contaminated; relocation of population under consideration",severity:"critical",confidence:"HIGH",probability:90,source:"IPCC / Marshallese government"},{type:"Nuclear Legacy",description:"Bikini Atoll still radioactive; Runit Dome (concrete nuclear waste cap) cracking under sea-level rise; US liability claims unresolved",severity:"high",confidence:"HIGH",probability:60,source:"Department of Energy / Reuters"}],keyActors:["President Hilda Heine","US Department of Interior","Nuclear Claims Tribunal"],news:["Marshall Islands nuclear waste dome Runit cracking; US refuses cleanup funding — AP, 2024","RMI renews Compact with US; secures $700M in assistance — US State Dept, 2023"],economic:"GDP $0.3B. US Compact funds, fishing licenses, ship registry. Per capita ~$4,300."},
+
+  KIR:{summary:"Kiribati faces perhaps the most direct existential threat from climate change of any nation — its 33 atolls average 2 meters in elevation. President Taneti Maamau has controversially pivoted toward China (switching recognition from Taiwan in 2019) and rejected Australian defense overtures. The relocation of the entire population to Fiji's Vanua Levu island is under planning.",threats:[{type:"Climate Existential Threat",description:"Nation may become uninhabitable by 2050-2100; saltwater intrusion destroying freshwater; storm surge flooding; purchased Vanua Levu land in Fiji for relocation",severity:"critical",confidence:"HIGH",probability:85,source:"IPCC / Kiribati government"},{type:"China Alignment",description:"2019 Taiwan switch; Chinese fishing access; potential PLA logistics base on Kiritimati — strategic concern for US/Australia",severity:"high",confidence:"HIGH",probability:55,source:"CSIS / Australian DSD"}],keyActors:["President Taneti Maamau","China MFA","Australia / New Zealand","US Navy (Pearl Harbor proximity)"],news:["Kiribati purchases Fijian land for potential full national relocation — BBC, 2024","US expresses concern over Chinese survey ship activity near Kiritimati — Reuters, 2025"],economic:"GDP $0.2B. Fishing licenses, phosphate (depleted), remittances. Per capita ~$1,700."},
+
+  PLW:{summary:"Palau is a US Compact country of great strategic significance, controlling the second island chain approaches to the Philippines. President Surangel Whipps Jr. has made Palau a vocal advocate for Taiwan recognition and has resisted Chinese pressure. The country's pristine marine environment supports high-end dive tourism.",threats:[{type:"China Pressure",description:"China has pressured Palau to switch Taiwan recognition; offers of investment rejected; Chinese tourists boycott (90% drop) used as economic coercion",severity:"high",confidence:"HIGH",probability:70,source:"Reuters / US State Dept"},{type:"Climate",description:"Coral bleaching destroying dive tourism infrastructure; sea-level rise threatening low-lying islands",severity:"medium",confidence:"HIGH",probability:75,source:"IPCC"}],keyActors:["President Surangel Whipps Jr.","US Defense Department (Compact)","Taiwan (diplomatic ally)"],news:["Palau: Chinese tourist boycott causes 90% drop; economy diversifying — AP, 2024","US military conducts exercises in Palau as strategic outpost value rises — DoD, 2025"],economic:"GDP $0.3B. Tourism (recovering), US Compact funds, fishing. Per capita ~$15,000."},
+
+  NRU:{summary:"Nauru is the world's smallest republic by area (21 km²) and was once the world's wealthiest nation per capita from phosphate mining in the 1980s. After exhausting its phosphate reserves, the economy collapsed catastrophically. Nauru now derives significant revenue from hosting Australia's controversial offshore asylum seeker detention center.",threats:[{type:"Economic Fragility",description:"Phosphate entirely depleted; economy dependent on Australian detention center payments and fishing licenses; no sustainable revenue base",severity:"high",confidence:"HIGH",probability:90,source:"World Bank / ADB"},{type:"Climate",description:"2m average elevation; salt intrusion; rising seas an existential threat",severity:"critical",confidence:"HIGH",probability:85,source:"IPCC"}],keyActors:["President David Adeang","Australia Home Affairs (detention center)","China (switched from Taiwan 2024)"],news:["Nauru switches diplomatic recognition from Taiwan to China — Reuters, Jan 2024","Australian offshore processing: Nauru receives $350M annually — Australian Senate, 2024"],economic:"GDP $0.1B. Australian detention center payments dominant. Fishing licenses. Per capita ~$10,000 (artificial from detention payments)."},
+
+  TUV:{summary:"Tuvalu is one of the world's smallest and most climate-threatened nations. It has signed a unique agreement with Australia that would allow Tuvaluans to relocate to Australia permanently as climate refugees. The 2023 Falepili Union grants Australia defense responsibilities in exchange for migration rights — a historic first in climate diplomacy.",threats:[{type:"Climate Existential Threat",description:"Average elevation 2m; Funafuti regularly inundated; tidal flooding increasing; 100% of population may need relocation by 2100",severity:"critical",confidence:"HIGH",probability:90,source:"IPCC"},{type:"Sovereignty Dissolution",description:"Falepili Union with Australia: historic but controversial climate refuge deal; potential loss of UN seat and statehood",severity:"high",confidence:"HIGH",probability:50,source:"Reuters / Lowy Institute"}],keyActors:["PM Feleti Teo","Australia DFAT","UN SIDS mission"],news:["Tuvalu-Australia Falepili Union: Tuvaluans can migrate to Australia permanently — BBC, Nov 2023","Tuvalu votes to preserve statehood even after submersion — UN General Assembly, 2024"],economic:"GDP $0.06B. Fishing licenses, .tv domain name rights ($5M/year), remittances. Per capita ~$5,500."},
 };
 const INTEL_EX = {
   ISR:{
@@ -5675,8 +6163,8 @@ function countryBriefHTML(iso){
   const alertColor={CRITICAL:'#fca5a5',HIGH:'#fdba74',MEDIUM:'#fcd34d',LOW:'#86efac'}[c.alertLevel]||'#94a3b8';
   const summary=intel?.summary||'No intelligence summary available.';
   const shortSummary=summary.length>200?summary.slice(0,200)+'…':summary;
-  return `<div class="tm-country-box">
-    <div class="tm-country-name">${c.name}</div>
+  return `<div class="tm-country-box" onclick="closeTrackModal();openCountry('${iso}');showTab('news')" style="cursor:pointer" title="Click to open ${c.name} intel report">
+    <div class="tm-country-name">${c.name} <span style="color:#60a5fa;font-size:9px;letter-spacing:.1em">▶ VIEW REPORT</span></div>
     <div class="tm-country-alert" style="color:${alertColor}">● ${c.alertLevel||'UNKNOWN'} ALERT · ${c.capital}</div>
     <div class="tm-country-summary">${shortSummary}</div>
   </div>`;
@@ -5727,6 +6215,20 @@ function buildIntelBrief(data){
     newsSec.innerHTML=`<div class="tm-section-label">RELATED INTELLIGENCE</div>`+
       news.map(n=>`<div class="tm-news-item">${n}</div>`).join('');
   } else { newsSec.innerHTML=''; }
+
+  // View Intel buttons — one per involved country
+  const btnsEl=document.getElementById('tm-intel-btns');
+  const isos=[];
+  if(data.fromISO && COUNTRIES[data.fromISO]) isos.push(data.fromISO);
+  if(data.toISO && COUNTRIES[data.toISO] && data.toISO!==data.fromISO) isos.push(data.toISO);
+  if(data.iso && COUNTRIES[data.iso] && !isos.includes(data.iso)) isos.push(data.iso);
+  if(isos.length){
+    btnsEl.innerHTML=isos.map(iso=>{
+      const cname=(COUNTRIES[iso]?.name||iso).toUpperCase();
+      return `<button class="tm-intel-btn" onclick="closeTrackModal();openCountry('${iso}');showTab('news')">
+        <span class="btn-arrow">▶</span> VIEW ${cname} INTEL REPORT</button>`;
+    }).join('');
+  } else { btnsEl.innerHTML=''; }
 
   document.getElementById('track-modal').style.display='flex';
 }
