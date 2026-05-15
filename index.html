@@ -574,6 +574,8 @@ canvas.dragging{cursor:grabbing}
   <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span></button>
   <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signal aggregation — unverified crowd-sourced reports"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span></button>
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT — Radio frequency and electronic signal anomaly monitoring"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">27</span></button>
+  <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Cyber Operations — Nation-state hacking, APT attacks, destructive malware"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">20</span></button>
+  <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network Disruption — Internet shutdowns, undersea cable cuts, GPS jamming, intercept nodes"><span class="lb-dot" style="background:#f59e0b"></span>🌐 NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
 </div>
 
@@ -4576,7 +4578,7 @@ const ZOOM_MIN=0.4, ZOOM_MAX=50.0;
 var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
 // Active data layers
-const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false,flights:false,unverified:false,sigint:false};
+const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false,flights:false,unverified:false,sigint:false,cyber:false,netdisrupt:false};
 // Pinch-to-zoom state
 let lastPinchDist=null, pinchMidX=null, pinchMidY=null;
 // Real-world GeoJSON borders (loaded at runtime from CDN)
@@ -5235,6 +5237,238 @@ function openSIGINTBrief(node){
   });
 }
 
+// ── CYBER OPS LAYER ───────────────────────────────────────────────────────────
+const CYBER_OP_COLOR={
+  espionage:'rgba(96,165,250',supply_chain:'rgba(52,211,153',
+  destructive:'rgba(239,68,68',theft:'rgba(249,115,22',influence:'rgba(168,85,247'
+};
+const CYBER_OP_DOT={espionage:'#60a5fa',supply_chain:'#34d399',destructive:'#ef4444',theft:'#f97316',influence:'#a855f7'};
+const CYBER_OP_LABEL={espionage:'ESPIONAGE',supply_chain:'SUPPLY CHAIN',destructive:'DESTRUCTIVE ATTACK',theft:'CYBER THEFT',influence:'INFLUENCE OP'};
+
+const CYBER_OPS=[
+  // Russia
+  {from:'RUS',to:'USA',type:'espionage',label:'SVR APT29 — SolarWinds Supply Chain (18,000 orgs)',actor:'APT29 / Cozy Bear (SVR)',severity:'critical',date:'2019–2020',ttps:'Trojanized Orion software update · SUNBURST/TEARDROP malware · network-wide lateral movement · credential theft · exfil via Azure'},
+  {from:'RUS',to:'UKR',type:'destructive',label:'GRU Sandworm — Power Grid, Wiper & KillNet Campaign',actor:'GRU / Sandworm + KillNet',severity:'critical',date:'2022–ongoing',ttps:'Industroyer2 ICS malware · HermeticWiper/WhisperGate · CaddyWiper · massive DDoS · satellite comms jamming (Viasat KA-SAT)'},
+  {from:'RUS',to:'EST',type:'destructive',label:'GRU — Estonia DDoS (First Major NATO Cyber Incident)',actor:'GRU + pro-Kremlin hacktivists',severity:'high',date:'2007',ttps:'Coordinated botnet DDoS targeting parliament, banks, ISPs · preceded by Bronze Soldier monument dispute'},
+  {from:'RUS',to:'DEU',type:'espionage',label:'APT28 — Bundestag Network Breach (16GB exfiltrated)',actor:'GRU / Fancy Bear (APT28)',severity:'high',date:'2015',ttps:'Spearphishing · keylogger deployment · lateral movement to parliamentary servers · exfil via encrypted C2'},
+  {from:'RUS',to:'FRA',type:'influence',label:'APT28 — Macron Campaign Hack-and-Leak (En Marche)',actor:'GRU / Fancy Bear',severity:'medium',date:'2017',ttps:'Phishing via fake Microsoft login pages · document exfiltration · 4chan/WikiLeaks amplified leak 48h before election'},
+  {from:'RUS',to:'GBR',type:'espionage',label:'FSB Turla — UK Govt & Defence Contractor Intrusion',actor:'FSB / Turla (Snake malware)',severity:'high',date:'ongoing',ttps:'Snake/Uroburos rootkit · satellite comms hijacking for C2 · MOD contractor network breach'},
+  {from:'RUS',to:'POL',type:'espionage',label:'APT28 — Polish Government & Military Networks',actor:'GRU / APT28',severity:'high',date:'2023–ongoing',ttps:'HeadLace malware · phishing · Polish election interference attempts'},
+  // China
+  {from:'CHN',to:'USA',type:'espionage',label:'Volt Typhoon — US Critical Infrastructure Pre-positioning',actor:'PLA / Volt Typhoon',severity:'critical',date:'2023–2024',ttps:'Living-off-the-land (LOtL) · SOHO router compromise · OT/ICS network access · pre-positioned for crisis activation · water/power/transport targeted'},
+  {from:'CHN',to:'USA',type:'espionage',label:'Salt Typhoon — AT&T/Verizon ISP Backbone Compromise',actor:'MSS / Salt Typhoon',severity:'critical',date:'2024',ttps:'ISP backbone intrusion · lawful intercept (CALEA) system access · senior US official communications intercepted · metadata collection at scale'},
+  {from:'CHN',to:'USA',type:'supply_chain',label:'APT10 Cloud Hopper — MSP Supply Chain (131 targets)',actor:'MSS / APT10 (Stone Panda)',severity:'critical',date:'2016–2018',ttps:'Managed service provider compromise · lateral pivot to MSP clients · intellectual property theft across 45 countries'},
+  {from:'CHN',to:'IND',type:'espionage',label:'APT41 — India Power Grid (Mumbai Blackout Indicators)',actor:'PLA / APT41',severity:'high',date:'2020',ttps:'ShadowPad RAT · Winnti · ICS/SCADA network access · Mumbai Oct 2020 blackout coincided with confirmed APT41 intrusion indicators'},
+  {from:'CHN',to:'TWN',type:'destructive',label:'PLA Cyber — Taiwan Election DDoS + Sustained Network Ops',actor:'PLA Unit 61398 + APT40',severity:'critical',date:'ongoing',ttps:'Multi-vector DDoS · spearphishing government officials · disinformation amplification · supply chain targeting of TSMC vendors'},
+  {from:'CHN',to:'AUS',type:'espionage',label:'APT40 — Australian Parliament & University Breach',actor:'MSS / APT40 (Bronze Mohawk)',severity:'high',date:'2019',ttps:'Spearphishing with weaponized documents · credential theft · Parliament House network access pre-election'},
+  // North Korea
+  {from:'PRK',to:'KOR',type:'theft',label:'Lazarus — ROK Defence Contractor Classified Exfil',actor:'Lazarus Group / Bureau 121',severity:'critical',date:'ongoing',ttps:'Spearphishing defence contractors · custom implants · classified submarine and missile data stolen'},
+  {from:'PRK',to:'USA',type:'destructive',label:'Lazarus — WannaCry Ransomworm ($8B global damage)',actor:'Lazarus Group',severity:'critical',date:'2017',ttps:'NSA EternalBlue exploit (MS17-010) · SMB worm propagation · 300,000 systems in 150 countries · NHS shutdown · FedEx/Telefónica disrupted'},
+  {from:'PRK',to:'JPN',type:'theft',label:'Lazarus — Crypto Exchange Heists ($1.7B stolen in 2023)',actor:'Lazarus / TraderTraitor',severity:'critical',date:'2023',ttps:'Social engineering of developers · malicious npm packages · DeFi smart contract exploits · Atomic Wallet · Alphapo · CoinsPaid'},
+  // Iran
+  {from:'IRN',to:'ISR',type:'destructive',label:'IRGC — Israeli Water Treatment SCADA Attack',actor:'IRGC / APT33 (Charming Kitten)',severity:'critical',date:'2020',ttps:'ICS/SCADA remote access · Natanz-linked water system manipulation attempt · chlorine dosage targeting · Galil Sewage Authority'},
+  {from:'IRN',to:'SAU',type:'destructive',label:'IRGC — Shamoon Wiper (Saudi Aramco, 30,000 workstations)',actor:'IRGC / APT34 (OilRig)',severity:'critical',date:'2012',ttps:'Disttrack/Shamoon destructive wiper malware · overwrote MBR · 30,000 Aramco workstations destroyed · replaced with Burning American Flag image'},
+  {from:'IRN',to:'USA',type:'espionage',label:'APT33 — US Aviation & Energy Sector Espionage',actor:'IRGC / APT33',severity:'high',date:'ongoing',ttps:'Spearphishing via fake job portals · SHAPESHIFT/DROPSHOT malware · password-spray against aviation, energy, defence contractors'},
+  // US/Allied operations
+  {from:'USA',to:'IRN',type:'destructive',label:'NSA + Unit 8200 — Olympic Games / Stuxnet',actor:'NSA CYBERCOM + IDF Unit 8200',severity:'critical',date:'2009–2010',ttps:'5 zero-day exploits · Stuxnet PLC logic bomb · air-gap bridge via USB · Siemens centrifuge sabotage · 1,000+ IR-1 centrifuges destroyed at Natanz'},
+  {from:'USA',to:'PRK',type:'espionage',label:'NSA TAO — North Korea Network Infiltration',actor:'NSA / TAO (Office of Tailored Access Operations)',severity:'critical',date:'ongoing',ttps:'Quantum Insert (BGP manipulation) · custom firmware implants · satellite relay intercept · full DPRK network mapping including Lazarus infrastructure'},
+  {from:'GBR',to:'RUS',type:'espionage',label:'GCHQ — Tempora Programme (Russian Cable Taps)',actor:'GCHQ / NCSC',severity:'high',date:'ongoing',ttps:'Deep packet inspection on BT/Vodafone cables · 200+ fiber optic intercept points · ~21 petabytes/day · shared with NSA Five Eyes'},
+];
+
+function drawCyberLayer(){
+  const now=Date.now();
+  const ops=selectedISO?CYBER_OPS.filter(op=>op.from===selectedISO||op.to===selectedISO):CYBER_OPS;
+  for(const op of ops){
+    const f=COUNTRIES[op.from],t=COUNTRIES[op.to];if(!f||!t)continue;
+    const p1=project(f.lat,f.lng),p2=project(t.lat,t.lng);
+    if(!p1.visible&&!p2.visible)continue;
+    const col=CYBER_OP_COLOR[op.type]||'rgba(148,163,184';
+    const {cpX,cpY}=arcCP(p1,p2,0.2);
+    // Animated dashed arc — simulates data flow
+    ctx.save();
+    ctx.setLineDash([7,5]);
+    ctx.lineDashOffset=-(now/25)%12;
+    ctx.beginPath();ctx.moveTo(p1.px,p1.py);
+    ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
+    ctx.strokeStyle=`${col},0.55)`;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+    // Arrowhead at target end
+    if(p2.visible){
+      const tv=0.86;
+      const bx=(1-tv)*(1-tv)*p1.px+2*(1-tv)*tv*cpX+tv*tv*p2.px;
+      const by=(1-tv)*(1-tv)*p1.py+2*(1-tv)*tv*cpY+tv*tv*p2.py;
+      const ang=Math.atan2(p2.py-by,p2.px-bx);
+      ctx.save();ctx.translate(p2.px,p2.py);ctx.rotate(ang);
+      ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-9,-4);ctx.lineTo(-9,4);ctx.closePath();
+      ctx.fillStyle=`${col},0.8)`;ctx.fill();
+      ctx.restore();
+    }
+    drawArcMarker(p1,p2,0.2,`${col},0.9)`,op.label);
+  }
+}
+
+function cyberAt(sx,sy){
+  const ops=selectedISO?CYBER_OPS.filter(op=>op.from===selectedISO||op.to===selectedISO):CYBER_OPS;
+  for(const op of ops){
+    const f=COUNTRIES[op.from],t=COUNTRIES[op.to];if(!f||!t)continue;
+    const p1=project(f.lat,f.lng),p2=project(t.lat,t.lng);
+    if(!p1.visible&&!p2.visible)continue;
+    if(arcMinDist(sx,sy,p1,p2,0.2)<20)return op;
+  }
+  return null;
+}
+
+function openCyberBrief(op){
+  buildIntelBrief({
+    category:'💻 CYBER OPERATION',
+    dotColor:CYBER_OP_DOT[op.type]||'#60a5fa',
+    title:op.label,
+    fromISO:op.from,toISO:op.to,
+    badges:[
+      {text:CYBER_OP_LABEL[op.type]||op.type.toUpperCase(),style:op.type==='destructive'?'critical':'blue'},
+      {text:op.severity.toUpperCase(),style:op.severity==='critical'?'critical':'blue'},
+      {text:op.date,style:'blue'},
+    ],
+    stats:[
+      {val:op.actor,                                key:'THREAT ACTOR'},
+      {val:CYBER_OP_LABEL[op.type]||op.type.toUpperCase(), key:'OP TYPE'},
+      {val:op.severity.toUpperCase(),               key:'SEVERITY'},
+    ],
+    detail:`THREAT ACTOR: ${op.actor}\nCLASSIFICATION: ${CYBER_OP_LABEL[op.type]||op.type}\nATTRIBUTION CONFIDENCE: ${op.severity==='critical'?'HIGH':'MEDIUM'}\nDATELINE: ${op.date}\n\nTTPSs (Tactics / Techniques / Procedures):\n${op.ttps}\n\nINTEL ASSESSMENT:\nThis operation represents a confirmed or highly likely state-sponsored cyber activity targeting ${COUNTRIES[op.to]?.name||op.to} infrastructure, networks, or personnel. Attribution is based on malware code signatures, C2 infrastructure overlap, victimology patterns, and operational tradecraft consistent with ${op.actor} historical activity.`,
+    actors:[op.actor],
+    news:[`${op.label} · Actor: ${op.actor} · ${op.date}`],
+  });
+}
+
+// ── NETWORK DISRUPTION / COMMS INTERCEPT LAYER ───────────────────────────────
+const NET_TYPE_COLOR={
+  shutdown:'rgba(239,68,68',throttle:'rgba(249,115,22',censorship:'rgba(234,179,8',
+  cable_cut:'rgba(245,158,11',gps_jam:'rgba(52,211,153',bgp_hijack:'rgba(167,139,250',intercept:'rgba(34,211,238'
+};
+const NET_TYPE_DOT={shutdown:'#ef4444',throttle:'#f97316',censorship:'#eab308',cable_cut:'#f59e0b',gps_jam:'#22c55e',bgp_hijack:'#a855f7',intercept:'#22d3ee'};
+const NET_TYPE_LABEL={shutdown:'INTERNET SHUTDOWN',throttle:'THROTTLING/BLOCK',censorship:'CENSORSHIP DPI',cable_cut:'CABLE SEVERED',gps_jam:'GPS JAMMING',bgp_hijack:'BGP HIJACK',intercept:'MASS INTERCEPT'};
+
+const NET_DISRUPTIONS=[
+  // Internet shutdowns
+  {iso:'MMR',lat:16.9,lng:96.1,type:'shutdown',severity:'critical',label:'Myanmar — Military Junta Total Internet Blackout',detail:'Following February 2021 coup, junta severed internet for months. Ongoing targeted shutdowns in Chin, Kachin and Shan States during offensive operations. Designed to prevent documentation of atrocities and coordinate resistance.'},
+  {iso:'IRN',lat:35.7,lng:51.4,type:'throttle',severity:'critical',label:'Iran — IRGC Internet Kill Switch (Protest Suppression)',detail:'IRGC-operated throttling and shutdowns during Nov 2019, 2021, and 2022 Mahsa Amini protests. Instagram and WhatsApp permanently throttled. Government-run IRINN filter cuts foreign content. VPN usage surged 3,000%.'},
+  {iso:'SDN',lat:15.6,lng:32.5,type:'shutdown',severity:'high',label:'Sudan — RSF + SAF Both Cutting Mobile Communications',detail:'Both RSF and SAF forces deliberately cutting mobile and internet in contested areas. Khartoum communications repeatedly severed during urban combat. International visibility into atrocities intentionally suppressed.'},
+  {iso:'ETH',lat:9.0,lng:38.7,type:'shutdown',severity:'high',label:'Ethiopia — Tigray Region Blackout (2+ Years)',detail:'Ethiopian government imposed total communications blackout on Tigray region Nov 2020 to Jan 2023 — one of the longest government-imposed internet blackouts in recorded history. 6 million residents isolated as conflict escalated.'},
+  {iso:'RUS',lat:55.8,lng:37.6,type:'censorship',severity:'high',label:'Russia — RuNet Sovereign Internet + VPN Crackdown',detail:'Roskomnadzor blocking VPNs, Tor, independent media. SORM-3 deep packet inspection mandatory on all ISPs. Technical capability exists for full isolation from global internet. 6,000+ sites blocked since Feb 2022 invasion.'},
+  {iso:'CHN',lat:39.9,lng:116.4,type:'censorship',severity:'critical',label:'China — Great Firewall Deep Packet Inspection Grid',detail:'World\'s most comprehensive censorship infrastructure. Blocks Google, Meta, Twitter, WhatsApp, NYT, BBC. Real-time AI-assisted content filtering. Golden Shield DPI at all 3 international internet gateways. >100,000 personnel.'},
+  {iso:'PRK',lat:39.0,lng:125.7,type:'shutdown',severity:'critical',label:'North Korea — Near-Total Isolation (4 BGP Routes)',detail:'Fewer than 1,024 IP addresses registered publicly. Only state-approved Kwangmyong intranet accessible to citizens. International connectivity limited to 4 routers. 100% monitored by Reconnaissance General Bureau.'},
+  {iso:'BLR',lat:53.9,lng:27.6,type:'shutdown',severity:'high',label:'Belarus — Lukashenko Election Internet Shutdown (2020)',detail:'Total internet blackout during Aug 2020 election protests. Telegram channels became primary resistance coordination tool; state attempted targeted disruption. Selective mobile data cutoffs in protest areas.'},
+  // Undersea cable sabotage
+  {iso:'SWE',lat:56.0,lng:14.0,type:'cable_cut',severity:'critical',label:'Baltic Sea — Undersea Cable Sabotage (Russia Suspected)',detail:'2023–2024: Balticconnector gas pipeline + data cable; Finland-Germany cable; Swedish-Lithuanian cable severed. NATO investigation points to Russian shadow fleet dragging anchors. EUCLID intelligence assessment: deliberate hybrid warfare.'},
+  {iso:'EGY',lat:31.2,lng:32.3,type:'cable_cut',severity:'critical',label:'Red Sea — 4 Undersea Data Cables Cut (Feb–Mar 2024)',detail:'EIG, AAE-1, Seacom, and TGN-EA cables severed near Yemen coast. Carries ~25% of Europe-Asia internet traffic. Mix of Houthi ship strikes and anchor damage in contested maritime zone. 10–50% traffic rerouting required.'},
+  {iso:'TWN',lat:25.1,lng:121.5,type:'cable_cut',severity:'high',label:'Taiwan — Matsu Island Submarine Cables Severed',detail:'Feb 2023: Both submarine cables serving Matsu Islands cut within 5 days — assessed as deliberate. Chinese sand dredging vessels in area. 14,000 island residents reduced to 30Mbps satellite backup. Considered Taiwan invasion rehearsal probe.'},
+  // GPS jamming zones
+  {iso:'ISR',lat:32.1,lng:34.8,type:'gps_jam',severity:'high',label:'Israel — IDF GPS Spoofing Affecting Civil Aviation',detail:'IDF electronic warfare causing GPS spoofing across Lebanon, Syria, and Israel since 2023. Ben Gurion Airport approach procedures modified. Commercial aircraft receiving false position data placing them over Beirut or Cairo. Ongoing daily interference.'},
+  {iso:'FIN',lat:60.2,lng:24.9,type:'gps_jam',severity:'high',label:'Baltic States — Russian GPS Jamming from Kaliningrad',detail:'Persistent GPS jamming from Kaliningrad exclave affecting Finland, Estonia, Latvia, Lithuania navigation. Commercial aviation impacted: 100+ incidents in 2023. Maritime navigation degraded. Peaks correlate with Russian military exercises.'},
+  {iso:'UKR',lat:50.4,lng:30.5,type:'gps_jam',severity:'critical',label:'Ukraine — Widespread GPS Jamming + Spoofing (Both Sides)',detail:'Extensive GPS jamming and spoofing affecting all navigation in theatre. Russian Krasukha-4 EW systems targeting Ukrainian drone GPS. Ukrainian drones switching to optical/terrain navigation. Civilian aircraft on modified GPS-denied procedures for Kyiv/Lviv.'},
+  // BGP hijacking and mass intercept
+  {iso:'CHN',lat:36.0,lng:103.0,type:'bgp_hijack',severity:'high',label:'China Telecom — BGP Route Hijacking (US/EU Traffic)',detail:'China Telecom documented BGP hijacking misdirecting internet traffic through Chinese infrastructure. April 2010: 15% of global internet traffic rerouted through China for 18 minutes including US military, Senate, and .gov domains. Pattern of subsequent smaller incidents.'},
+  {iso:'RUS',lat:59.9,lng:30.3,type:'intercept',severity:'critical',label:'FSB SORM-3 — Russian ISP Mass Surveillance Backbone',detail:'All Russian ISPs legally required to install FSB\'s SORM-3 DPI equipment at their own cost. FSB has real-time warrantless access to all Russian internet traffic. Foreign VoIP (Skype, WhatsApp) must route through SORM nodes or face blocking.'},
+  {iso:'USA',lat:38.9,lng:-77.0,type:'intercept',severity:'high',label:'NSA — PRISM + Upstream Collection (Global Backbone)',detail:'PRISM (SIGAD US-984XN): direct server access at Google, Apple, Facebook, Microsoft, Yahoo. Upstream: fiber optic taps at major US internet exchange points. ~21 petabytes/day. Shared with Five Eyes partners. Revealed by Snowden, June 2013.'},
+  {iso:'GBR',lat:51.5,lng:-0.1,type:'intercept',severity:'high',label:'GCHQ — Tempora Programme (200+ Cable Taps)',detail:'GCHQ taps 200+ fiber optic cables at UK landing stations via BT and Vodafone. Data held 3 days buffered, metadata 30 days. ~21 petabytes/day intercepted. Larger collection than NSA. Shared with NSA, CSEC, ASD, GCSB (Five Eyes).'},
+];
+
+function drawNetDisruptLayer(){
+  const now=Date.now();
+  const list=selectedISO?NET_DISRUPTIONS.filter(n=>n.iso===selectedISO):NET_DISRUPTIONS;
+  for(const nd of list){
+    const c=COUNTRIES[nd.iso];if(!c)continue;
+    const p=project(nd.lat,nd.lng);if(!p.visible)continue;
+    const col=NET_TYPE_COLOR[nd.type]||'rgba(148,163,184';
+    const pulse=Math.sin(now/750+nd.lat*0.3)*0.5+0.5;
+    // Outer pulse ring
+    ctx.beginPath();ctx.arc(p.px,p.py,22+pulse*7,0,Math.PI*2);
+    ctx.strokeStyle=`${col},${0.07+pulse*0.1})`;ctx.lineWidth=1;ctx.stroke();
+    // Main ring
+    ctx.beginPath();ctx.arc(p.px,p.py,14,0,Math.PI*2);
+    ctx.strokeStyle=`${col},${0.4+pulse*0.35})`;ctx.lineWidth=2;ctx.stroke();
+    // Type-specific interior symbol
+    ctx.save();ctx.translate(p.px,p.py);
+    const sc=`${col},0.9)`;
+    if(nd.type==='shutdown'||nd.type==='throttle'){
+      ctx.strokeStyle=sc;ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.moveTo(-5,-5);ctx.lineTo(5,5);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(5,-5);ctx.lineTo(-5,5);ctx.stroke();
+    } else if(nd.type==='censorship'){
+      ctx.strokeStyle=sc;ctx.lineWidth=1.8;
+      ctx.strokeRect(-4,-4.5,8,6.5);
+      ctx.beginPath();ctx.arc(0,-4.5,2.8,Math.PI,0);ctx.stroke();
+    } else if(nd.type==='cable_cut'){
+      ctx.strokeStyle=sc;ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.moveTo(-6,0);ctx.lineTo(-2,0);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(2,0);ctx.lineTo(6,0);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,-4);ctx.lineTo(0,4);ctx.stroke();
+    } else if(nd.type==='gps_jam'){
+      ctx.strokeStyle=sc;ctx.lineWidth=1.5;
+      for(let a=0;a<Math.PI*2;a+=Math.PI/3){
+        ctx.beginPath();ctx.moveTo(Math.cos(a)*2,Math.sin(a)*2);
+        ctx.lineTo(Math.cos(a)*6,Math.sin(a)*6);ctx.stroke();
+      }
+      ctx.beginPath();ctx.arc(0,0,2,0,Math.PI*2);
+      ctx.fillStyle=sc;ctx.fill();
+    } else if(nd.type==='bgp_hijack'){
+      ctx.strokeStyle=sc;ctx.lineWidth=1.8;
+      ctx.beginPath();ctx.arc(0,0,4,0,Math.PI*1.6);ctx.stroke();
+      ctx.fillStyle=sc;
+      ctx.beginPath();ctx.moveTo(1,-4);ctx.lineTo(4,-2);ctx.lineTo(-1,-1);ctx.closePath();ctx.fill();
+    } else {
+      // intercept — eye with pupil
+      ctx.strokeStyle=sc;ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.arc(0,0,4,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.arc(0,0,1.5,0,Math.PI*2);
+      ctx.fillStyle=sc;ctx.fill();
+    }
+    ctx.restore();
+    // Labels
+    ctx.save();ctx.textAlign='center';
+    ctx.font='bold 7px monospace';
+    ctx.fillStyle=`${col},0.9)`;
+    ctx.fillText(NET_TYPE_LABEL[nd.type]||nd.type,p.px,p.py-19);
+    if(nd.severity==='critical'){
+      ctx.fillStyle='rgba(239,68,68,0.85)';
+      ctx.fillText('CRITICAL',p.px,p.py+23);
+    }
+    ctx.restore();
+  }
+}
+
+function netDisruptAt(sx,sy){
+  const list=selectedISO?NET_DISRUPTIONS.filter(n=>n.iso===selectedISO):NET_DISRUPTIONS;
+  for(const nd of list){
+    const c=COUNTRIES[nd.iso];if(!c)continue;
+    const p=project(nd.lat,nd.lng);if(!p.visible)continue;
+    if(Math.hypot(sx-p.px,sy-p.py)<24)return nd;
+  }
+  return null;
+}
+
+function openNetDisruptBrief(nd){
+  buildIntelBrief({
+    category:'🌐 NETWORK / COMMS DISRUPTION',
+    dotColor:NET_TYPE_DOT[nd.type]||'#94a3b8',
+    title:nd.label,
+    iso:nd.iso,
+    badges:[
+      {text:NET_TYPE_LABEL[nd.type]||nd.type.toUpperCase(),style:['shutdown','cable_cut','intercept'].includes(nd.type)?'critical':'blue'},
+      {text:nd.severity.toUpperCase(),style:nd.severity==='critical'?'critical':'blue'},
+    ],
+    stats:[
+      {val:NET_TYPE_LABEL[nd.type]||nd.type, key:'TYPE'},
+      {val:nd.severity.toUpperCase(),        key:'SEVERITY'},
+      {val:COUNTRIES[nd.iso]?.name||nd.iso,  key:'LOCATION'},
+    ],
+    detail:nd.detail,
+    actors:[COUNTRIES[nd.iso]?.name||nd.iso],
+    news:[nd.label],
+  });
+}
+
 const FLIGHT_CAT_COLOR={
   transport:'#60a5fa',fighter:'#f87171',awacs:'#34d399',sigint:'#f59e0b',
   tanker:'#a78bfa',isr:'#fbbf24',drone:'#fb923c',maritime:'#22d3ee',
@@ -5577,8 +5811,10 @@ function draw(){
   if(activeLayers.money)     drawFinancialFlows();
   if(activeLayers.refugees)  drawRefugeeFlows();
   if(activeLayers.flights)   drawFlights();
-  if(activeLayers.unverified) drawUnverifiedLayer();
-  if(activeLayers.sigint)    drawSIGINTLayer();
+  if(activeLayers.unverified)  drawUnverifiedLayer();
+  if(activeLayers.sigint)      drawSIGINTLayer();
+  if(activeLayers.cyber)       drawCyberLayer();
+  if(activeLayers.netdisrupt)  drawNetDisruptLayer();
   drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -5874,6 +6110,8 @@ canvas.addEventListener('mousemove',e=>{
     if(!layerHit&&activeLayers.refugees){const r=refugeeFlowAt(e.clientX,e.clientY);if(r)layerHit={label:r.label,sub:r.value+' displaced · click for intel',color:'#fbbf24'};}
     if(!layerHit&&activeLayers.unverified){const s=unverifiedAt(e.clientX,e.clientY);if(s)layerHit={label:'⚠ '+s.country+' — '+s.count+' REPORTS',sub:'Unverified social signals · click for detail',color:'#fb923c'};}
     if(!layerHit&&activeLayers.sigint){const sn=sigintAt(e.clientX,e.clientY);if(sn)layerHit={label:(sn.anomaly?'⚠ ANOMALY — ':'')+sn.label,sub:(SIGINT_TYPE_LABEL[sn.type]||sn.type)+' · intensity '+sn.intensity+'/10 · click for intel',color:sn.anomaly?'#ef4444':'#34d399'};}
+    if(!layerHit&&activeLayers.cyber){const co=cyberAt(e.clientX,e.clientY);if(co)layerHit={label:co.label,sub:(CYBER_OP_LABEL[co.type]||co.type)+' · '+co.actor+' · click for intel',color:CYBER_OP_DOT[co.type]||'#60a5fa'};}
+    if(!layerHit&&activeLayers.netdisrupt){const nd=netDisruptAt(e.clientX,e.clientY);if(nd)layerHit={label:nd.label,sub:(NET_TYPE_LABEL[nd.type]||nd.type)+' · click for intel',color:NET_TYPE_DOT[nd.type]||'#f59e0b'};}
   }
   const hit=hitTest(e.clientX,e.clientY);
   if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit||layerHit)?'pointer':'grab';}
@@ -5951,6 +6189,14 @@ canvas.addEventListener('mouseup',e=>{
     if(activeLayers.sigint){
       const sn=sigintAt(e.clientX,e.clientY);
       if(sn){openSIGINTBrief(sn);return;}
+    }
+    if(activeLayers.cyber){
+      const co=cyberAt(e.clientX,e.clientY);
+      if(co){openCyberBrief(co);return;}
+    }
+    if(activeLayers.netdisrupt){
+      const nd=netDisruptAt(e.clientX,e.clientY);
+      if(nd){openNetDisruptBrief(nd);return;}
     }
     // Country panel — requires double-click to avoid accidental opens while rotating
     const h=hitTest(e.clientX,e.clientY);
@@ -6068,6 +6314,14 @@ canvas.addEventListener('touchend',e=>{
         if(activeLayers.sigint){
           const sn=sigintAt(t.clientX,t.clientY);
           if(sn){openSIGINTBrief(sn);return;}
+        }
+        if(activeLayers.cyber){
+          const co=cyberAt(t.clientX,t.clientY);
+          if(co){openCyberBrief(co);return;}
+        }
+        if(activeLayers.netdisrupt){
+          const nd=netDisruptAt(t.clientX,t.clientY);
+          if(nd){openNetDisruptBrief(nd);return;}
         }
         // Country — double-tap on mobile
         const h=hitTest(t.clientX,t.clientY);
