@@ -6386,21 +6386,27 @@ function renderSocialFeed(){
     }
     const ts=vipFetchTime?new Date(vipFetchTime).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
     document.getElementById('social-updated').textContent=ts+'Z';
-    const tierLabels=['TIER 1 — NUCLEAR POWERS & ADVERSARIES','TIER 1 — ACTIVE CONFLICT','TIER 2 — NATO / ALLIED','TIER 2 — REGIONAL POWERS','TIER 3 — STRATEGIC WATCH'];
-    let lastTier=-1;
-    feed.innerHTML=vipLiveData.map((v,i)=>{
+    // Tier break points match VIP_LIST ordering
+    const TIER_BREAKS={0:'TIER 1 — NUCLEAR POWERS & ADVERSARIES',5:'TIER 1 — ACTIVE CONFLICT',8:'TIER 2 — NATO / ALLIED',15:'TIER 2 — REGIONAL POWERS',23:'TIER 3 — STRATEGIC WATCH',28:'TIER 3 — DECEASED / KIA'};
+    const parts=[];
+    vipLiveData.forEach((v,i)=>{
+      if(TIER_BREAKS[i]!==undefined){
+        const color=i<5?'#ef4444':i<8?'#f97316':i<15?'#3b82f6':i<23?'#a855f7':'#6b7280';
+        parts.push(`<div style="font-size:8px;color:${color};letter-spacing:.18em;font-family:var(--mono);padding:8px 10px 4px;border-bottom:1px solid rgba(30,58,95,.5);margin-bottom:4px;margin-top:${i===0?'0':'4px'};background:rgba(${i<5?'239,68,68':i<8?'249,115,22':i<15?'59,130,246':i<23?'168,85,247':'107,114,128'},.07)">▸ ${TIER_BREAKS[i]}</div>`);
+      }
       const isKIA=v.role.includes('KIA')||v.defaultStatus.includes('ELIMINATED');
-      const confColor=isKIA?'#94a3b8':v.confidence==='CONFIRMED'?'#22c55e':v.confidence==='LOADING'?'#94a3b8':'#f59e0b';
+      const confColor=isKIA?'#6b7280':v.confidence==='CONFIRMED'?'#22c55e':v.confidence==='LOADING'?'#94a3b8':'#f59e0b';
       const confLabel=isKIA?'◯ KIA / ELIMINATED':v.confidence==='CONFIRMED'?'● CONFIRMED':v.confidence==='LOADING'?'◌ LOADING':'◌ ESTIMATED';
-      const safeN=v.name.replace(/'/g,"\\'").replace(/[^\w\s\-'.,]/g,''),safeS=v.status.replace(/'/g,"\\'").replace(/[^\w\s\-'.,—]/g,'');
+      const safeN=(v.name+'').replace(/'/g,"\\'").replace(/[^\w\s\-.,]/g,'');
+      const safeS=(v.status+'').replace(/'/g,"\\'").replace(/[^\w\s\-.,—]/g,'');
       const cardBg=isKIA?'rgba(30,15,15,.5)':'';
       const nameColor=isKIA?'#6b7280':'#e2e8f0';
       const roleColor=isKIA?'#4b5563':'#a855f7';
       const locIcon=isKIA?'✝':'📍';
       const locColor=isKIA?'#6b7280':'#e2e8f0';
-      return`<div class="sf-item vip" onclick="globe_focusVIP(${v.lat},${v.lng},'${safeN}','${safeS}')" style="${cardBg?'background:'+cardBg+';':''}" title="${isKIA?'Last known location — ELIMINATED':'Click to track on globe + satellite'}">
+      parts.push(`<div class="sf-item vip" onclick="globe_focusVIP(${v.lat},${v.lng},'${safeN}','${safeS}')" style="${cardBg?'background:'+cardBg+';':''}" title="${isKIA?'Last known location — ELIMINATED':'Click: globe rotates + satellite opens at exact location'}">
         <div class="sf-flight-row">
-          <span class="sf-callsign" style="color:${nameColor}">${isKIA?'✝':' ♦'} ${v.name}</span>
+          <span class="sf-callsign" style="color:${nameColor}">${isKIA?'✝ ':' ♦ '}${v.name}</span>
           <span style="font-size:8px;color:${confColor};letter-spacing:.08em">${confLabel}</span>
         </div>
         <div style="font-size:9px;color:${roleColor};letter-spacing:.1em;margin-bottom:5px">${v.role} · ${v.country}</div>
@@ -6410,8 +6416,9 @@ function renderSocialFeed(){
           <span style="color:var(--muted);font-size:8px">${v.sourceDomain||'GDELT/OSINT'}</span>
           <span style="color:var(--muted);font-size:8px">${isKIA?'LAST KNOWN LOCATION':v.updated?'UPDATED '+v.updated:'DEFAULT INTEL'}</span>
         </div>
-      </div>`;
-    }).join('');
+      </div>`);
+    });
+    feed.innerHTML=parts.join('');
   }
 }
 
