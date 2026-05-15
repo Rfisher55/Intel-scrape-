@@ -4922,69 +4922,38 @@ async function fetchUnverifiedSignals(){
     if(!countMap[iso])countMap[iso]=[];
     if(!countMap[iso].find(x=>x.title===post.title))countMap[iso].push(post);
   }
-
-  // X/Twitter via Nitter RSS — primary social media source
-  const NITTER_INSTANCES=['https://nitter.poast.org','https://nitter.privacydev.net','https://nitter.1d4.us'];
-  const GEO_QUERIES=[
-    'ukraine russia war','israel gaza hamas','iran nuclear',
-    'china taiwan military','houthi red sea','north korea missile',
-    'myanmar junta','sudan civil war','sahel militant attack',
-    'nato troops deployment','military airstrike explosion','refugee crisis border'
-  ];
-
-  async function tryNitterRSS(query){
-    const proxy='https://corsproxy.io/?';
-    for(const inst of NITTER_INSTANCES){
-      try{
-        const url=`${inst}/search/rss?q=${encodeURIComponent(query)}&f=tweets`;
-        const ctrl=new AbortController();
-        setTimeout(()=>ctrl.abort(),8000);
-        const r=await fetch(proxy+encodeURIComponent(url),{signal:ctrl.signal});
-        if(!r.ok)continue;
-        const xml=await r.text();
-        if(!xml.includes('<item>'))continue;
-        const doc=new DOMParser().parseFromString(xml,'text/xml');
-        const items=[...doc.querySelectorAll('item')];
-        if(!items.length)continue;
-        return items.map(item=>{
-          const rawTitle=item.querySelector('title')?.textContent||'';
-          const title=rawTitle.replace(/^@[\w]+:\s*/,'').trim();
-          const link=item.querySelector('link')?.textContent||'#';
-          const pubDate=item.querySelector('pubDate')?.textContent||'';
-          const ts=pubDate?new Date(pubDate).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
-          return{title,url:link,sub:'X/Twitter',time:ts,score:0,source:'X'};
-        }).filter(p=>p.title.length>10);
-      }catch(e){}
+  function buildSignals(){
+    unverifiedSignals=[];
+    for(const [iso,posts] of Object.entries(countMap)){
+      const unique=posts.slice(0,15);
+      unverifiedSignals.push({
+        iso,country:COUNTRIES[iso]?.name||iso,count:unique.length,
+        posts:unique.sort((a,b)=>b.score-a.score),
+        sources:[...new Set(unique.map(p=>p.source))],
+        lastUpdate:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
+      });
     }
-    return[];
+    unverifiedSignals.sort((a,b)=>b.count-a.count);
+    if(el)el.textContent=unverifiedSignals.length||'0';
   }
 
-  // Run all X/Twitter queries in parallel
-  const xFetches=GEO_QUERIES.map(async q=>{
-    const posts=await tryNitterRSS(q);
-    for(const post of posts){
-      const isos=extractISOs(post.title);
-      for(const iso of isos)addPost(iso,post);
-    }
-  });
-
-  // Reddit as secondary social media source (also social media, not Wikipedia)
-  const SUBS=['worldnews','geopolitics','military','ukraine','middleeast'];
+  // Reddit — reliable, no auth, CORS-friendly social media
+  const SUBS=['worldnews','geopolitics','military','ukraine','middleeast','europe','worldpolitics'];
   const rFetches=SUBS.map(async sub=>{
     try{
       const ctrl=new AbortController();
-      setTimeout(()=>ctrl.abort(),6000);
-      const r=await fetch(`https://www.reddit.com/r/${sub}/hot.json?limit=20`,{signal:ctrl.signal});
+      setTimeout(()=>ctrl.abort(),7000);
+      const r=await fetch(`https://www.reddit.com/r/${sub}/hot.json?limit=25`,{signal:ctrl.signal});
       if(!r.ok)return;
       const d=await r.json();
       for(const child of d.data?.children||[]){
         const p=child.data||child;
         if(!p.title)continue;
-        const isos=extractISOs(p.title);
+        const isos=extractISOs(p.title+(p.selftext?' '+p.selftext.slice(0,200):''));
         const ts=p.created_utc?new Date(p.created_utc*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
         for(const iso of isos){
           addPost(iso,{
-            title:p.title.slice(0,130),
+            title:p.title.slice(0,140),
             url:p.permalink?'https://reddit.com'+p.permalink:(p.url||'#'),
             sub:`r/${sub}`,time:ts,score:p.score||0,source:'Reddit'
           });
@@ -4992,30 +4961,79 @@ async function fetchUnverifiedSignals(){
       }
     }catch(e){}
   });
+  await Promise.allSettled(rFetches);
+  buildSignals(); // show Reddit results immediately
 
-  await Promise.allSettled([...xFetches,...rFetches]);
+  // Bluesky — public search API, no auth, CORS-friendly X-era social media
+  const BSK_QUERIES=[
+    'ukraine war attack','gaza israel airstrike','iran military',
+    'china taiwan strait','houthi missile','north korea launch',
+    'sudan fighting','sahel coup','myanmar army'
+  ];
+  const bFetches=BSK_QUERIES.map(async q=>{
+    try{
+      const ctrl=new AbortController();
+      setTimeout(()=>ctrl.abort(),6000);
+      const r=await fetch(`https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=${encodeURIComponent(q)}&limit=25`,{signal:ctrl.signal});
+      if(!r.ok)return;
+      const d=await r.json();
+      for(const post of d.posts||[]){
+        const text=post.record?.text||'';
+        if(!text)continue;
+        const isos=extractISOs(text);
+        const ts=post.record?.createdAt?new Date(post.record.createdAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+        for(const iso of isos){
+          addPost(iso,{
+            title:text.slice(0,140).replace(/\n/g,' '),
+            url:`https://bsky.app/profile/${post.author?.handle}/post/${post.uri?.split('/').pop()}`,
+            sub:'Bluesky',time:ts,score:post.likeCount||0,source:'Bluesky'
+          });
+        }
+      }
+    }catch(e){}
+  });
 
-  unverifiedSignals=[];
-  for(const [iso,posts] of Object.entries(countMap)){
-    const unique=posts.slice(0,15);
-    unverifiedSignals.push({
-      iso,
-      country:COUNTRIES[iso]?.name||iso,
-      count:unique.length,
-      posts:unique.sort((a,b)=>b.score-a.score),
-      sources:[...new Set(unique.map(p=>p.source))],
-      lastUpdate:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
-    });
+  // X/Twitter via Nitter RSS — try quickly, bonus if available
+  const NITTER=['https://nitter.poast.org','https://nitter.privacydev.net'];
+  const X_QUERIES=['ukraine russia','gaza hamas','iran nuclear','china taiwan','houthi attack'];
+  async function tryNitter(query){
+    for(const inst of NITTER){
+      try{
+        const url=`${inst}/search/rss?q=${encodeURIComponent(query)}&f=tweets`;
+        const ctrl=new AbortController();
+        setTimeout(()=>ctrl.abort(),4000);
+        const r=await fetch('https://corsproxy.io/?'+encodeURIComponent(url),{signal:ctrl.signal});
+        if(!r.ok)continue;
+        const xml=await r.text();
+        if(!xml.includes('<item>'))continue;
+        const doc=new DOMParser().parseFromString(xml,'text/xml');
+        return [...doc.querySelectorAll('item')].map(item=>{
+          const title=(item.querySelector('title')?.textContent||'').replace(/^@[\w]+:\s*/,'').trim();
+          const pubDate=item.querySelector('pubDate')?.textContent||'';
+          const ts=pubDate?new Date(pubDate).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+          return{title,url:item.querySelector('link')?.textContent||'#',sub:'X/Twitter',time:ts,score:0,source:'X'};
+        }).filter(p=>p.title.length>10);
+      }catch(e){}
+    }
+    return[];
   }
-  unverifiedSignals.sort((a,b)=>b.count-a.count);
-  if(el)el.textContent=unverifiedSignals.length||'0';
+  const xFetches=X_QUERIES.map(async q=>{
+    const posts=await tryNitter(q);
+    for(const post of posts){
+      const isos=extractISOs(post.title);
+      for(const iso of isos)addPost(iso,post);
+    }
+  });
+
+  await Promise.allSettled([...bFetches,...xFetches]);
+  buildSignals(); // update with Bluesky + any X data
 }
 
 function drawUnverifiedLayer(){
   const now=Date.now();
-  // Auto-refresh every 5 minutes
   if(now-unverifiedFetchTime>UNVERIFIED_REFRESH_MS)fetchUnverifiedSignals();
-  for(const sig of unverifiedSignals){
+  const list=selectedISO?unverifiedSignals.filter(s=>s.iso===selectedISO):unverifiedSignals;
+  for(const sig of list){
     const c=COUNTRIES[sig.iso];if(!c)continue;
     const p=project(c.lat,c.lng);if(!p.visible)continue;
     const pulse=Math.sin(now/700+sig.count*0.7)*0.5+0.5;
@@ -5043,7 +5061,8 @@ function drawUnverifiedLayer(){
 }
 
 function unverifiedAt(sx,sy){
-  for(const sig of unverifiedSignals){
+  const list=selectedISO?unverifiedSignals.filter(s=>s.iso===selectedISO):unverifiedSignals;
+  for(const sig of list){
     const c=COUNTRIES[sig.iso];if(!c)continue;
     const p=project(c.lat,c.lng);if(!p.visible)continue;
     if(Math.hypot(sx-p.px,sy-p.py)<22)return sig;
@@ -5054,28 +5073,31 @@ function unverifiedAt(sx,sy){
 function openUnverifiedBrief(sig){
   const urgency=Math.min(sig.count/10,1);
   const dotColor=urgency>.65?'#ef4444':urgency>.3?'#fb923c':'#fbbf24';
-  const topSources=sig.sources.slice(0,4).join(', ');
-  const preview=sig.posts.slice(0,3).map(p=>`"${p.title}" (${p.sub}, ${p.time}, ↑${p.score})`).join('\n');
+  const topSources=sig.sources.slice(0,4).join(' · ');
+  const xCount=sig.posts.filter(p=>p.source==='X'||p.source==='Bluesky').length;
+  const preview=sig.posts.slice(0,5).map(p=>`[${p.sub}] "${p.title}" — ${p.time}`).join('\n');
+  const alertLevel=urgency>.65?'HIGH VOLUME — POSSIBLE ACTIVE INCIDENT':urgency>.3?'MODERATE — DEVELOPING SITUATION':'LOW — EARLY SIGNAL';
   buildIntelBrief({
-    category:'⚠ UNVERIFIED SOCIAL SIGNALS',
+    category:'⚠ UNCONFIRMED SOCIAL INTEL SIGNAL',
     dotColor,
-    title:`${sig.country} — ${sig.count} Social Reports (Last 3h)`,
+    title:`${sig.country} — ${sig.count} Independent Reports`,
     iso:sig.iso,
     badges:[
-      {text:'UNVERIFIED',style:'critical'},
-      {text:sig.count+' REPORTS',style:'blue'},
-      {text:'CROWD-SOURCED',style:'blue'},
+      {text:'NOT VERIFIED',style:'critical'},
+      {text:sig.count+' SOCIAL REPORTS',style:'blue'},
+      {text:alertLevel,style:urgency>.65?'critical':'blue'},
     ],
     stats:[
-      {val:sig.count,         key:'REPORTS'},
-      {val:sig.sources.length,key:'SOURCES'},
-      {val:sig.lastUpdate,    key:'FETCHED'},
+      {val:sig.count,              key:'REPORTS'},
+      {val:xCount||'—',           key:'X/SOCIAL'},
+      {val:sig.lastUpdate,        key:'UPDATED'},
     ],
-    detail:'⚠ UNVERIFIED INTELLIGENCE — These signals originate from crowd-sourced social media posts and have NOT been independently verified. Report count indicates volume of posts mentioning this country in the last 3 hours.\n\n'+
-      'SOURCES: '+topSources+'\n\n'+
-      'TOP REPORTS:\n'+preview,
+    detail:'⚠ UNCONFIRMED INTELLIGENCE — This signal was flagged because a statistically significant number of independent social media users are reporting an event or situation involving this country. This does NOT constitute verified intelligence.\n\n'+
+      'This is how raw OSINT works: when enough unconnected people report the same thing from different accounts and platforms, it indicates something is likely occurring — even before mainstream media confirms it.\n\n'+
+      'PLATFORMS: '+topSources+'\n\n'+
+      'RECENT REPORTS:\n'+preview,
     actors:sig.sources,
-    news:sig.posts.map(p=>`${p.title} — ${p.sub} · ${p.time} · ↑${p.score}`),
+    news:sig.posts.map(p=>`[${p.sub}] ${p.title} — ${p.time}`),
   });
 }
 
@@ -5090,54 +5112,56 @@ const SIGINT_TYPE_LABEL={
 };
 
 const SIGINT_NODES=[
-  // Ukraine/Russia — dense EW and HF activity
-  {lat:48.5,lng:37.5,type:'EW',intensity:9,label:'Electronic Warfare Cluster — Donbas Front Line',region:'Ukraine',anomaly:true},
-  {lat:47.8,lng:33.2,type:'HF_RADIO',intensity:8,label:'HF Comms Burst — Kherson Sector',region:'Ukraine',anomaly:true},
-  {lat:51.5,lng:31.3,type:'CELLULAR',intensity:7,label:'Anomalous Cell Traffic — Belarus Border Zone',region:'Belarus',anomaly:true},
-  {lat:55.0,lng:43.0,type:'RADAR',intensity:6,label:'Air Defense Radar Emissions — Central Russia',region:'Russia',anomaly:false},
-  {lat:50.3,lng:30.5,type:'EW',intensity:7,label:'EW Interference — Kyiv Air Defense',region:'Ukraine',anomaly:false},
+  // Ukraine/Russia
+  {iso:'UKR',lat:48.5,lng:37.5,type:'EW',intensity:9,label:'Electronic Warfare Cluster — Donbas Front Line',region:'Ukraine',anomaly:true},
+  {iso:'UKR',lat:47.8,lng:33.2,type:'HF_RADIO',intensity:8,label:'HF Comms Burst — Kherson Sector',region:'Ukraine',anomaly:true},
+  {iso:'UKR',lat:50.3,lng:30.5,type:'EW',intensity:7,label:'EW Interference — Kyiv Air Defense',region:'Ukraine',anomaly:false},
+  {iso:'BLR',lat:51.5,lng:31.3,type:'CELLULAR',intensity:7,label:'Anomalous Cell Traffic — Belarus Border Zone',region:'Belarus',anomaly:true},
+  {iso:'RUS',lat:55.0,lng:43.0,type:'RADAR',intensity:6,label:'Air Defense Radar Emissions — Central Russia',region:'Russia',anomaly:false},
   // Middle East
-  {lat:31.4,lng:34.3,type:'EW',intensity:10,label:'Dense Signal Cluster — Gaza Strip',region:'Gaza',anomaly:true},
-  {lat:33.5,lng:35.5,type:'HF_RADIO',intensity:8,label:'HF Activity — South Lebanon (Hezbollah Zone)',region:'Lebanon',anomaly:true},
-  {lat:32.5,lng:44.4,type:'CELLULAR',intensity:5,label:'Cell Density Spike — Baghdad',region:'Iraq',anomaly:false},
-  {lat:15.0,lng:42.8,type:'SATELLITE',intensity:9,label:'Satellite Uplink Cluster — Houthi Control Zone',region:'Yemen',anomaly:true},
-  {lat:13.5,lng:44.0,type:'EW',intensity:8,label:'Electronic Jamming — Red Sea Corridor',region:'Yemen',anomaly:true},
-  {lat:32.0,lng:36.0,type:'HF_RADIO',intensity:6,label:'HF Comms — Jordan Military',region:'Jordan',anomaly:false},
-  // Desert anomalies — core SIGINT concept (signals where none should exist)
-  {lat:29.5,lng:36.5,type:'HF_RADIO',intensity:7,label:'⚠ HF Burst — Wadi Rum Desert (No Infrastructure)',region:'Jordan',anomaly:true},
-  {lat:28.0,lng:30.5,type:'EW',intensity:6,label:'⚠ EW Signatures — Western Egypt Desert',region:'Egypt',anomaly:true},
-  {lat:25.0,lng:10.0,type:'HF_RADIO',intensity:8,label:'⚠ HF Comms — Libyan Desert (Wagner Activity)',region:'Libya',anomaly:true},
+  {iso:'PSE',lat:31.4,lng:34.3,type:'EW',intensity:10,label:'Dense Signal Cluster — Gaza Strip',region:'Gaza',anomaly:true},
+  {iso:'LBN',lat:33.5,lng:35.5,type:'HF_RADIO',intensity:8,label:'HF Activity — South Lebanon (Hezbollah Zone)',region:'Lebanon',anomaly:true},
+  {iso:'IRQ',lat:32.5,lng:44.4,type:'CELLULAR',intensity:5,label:'Cell Density Spike — Baghdad',region:'Iraq',anomaly:false},
+  {iso:'YEM',lat:15.0,lng:42.8,type:'SATELLITE',intensity:9,label:'Satellite Uplink Cluster — Houthi Control Zone',region:'Yemen',anomaly:true},
+  {iso:'YEM',lat:13.5,lng:44.0,type:'EW',intensity:8,label:'Electronic Jamming — Red Sea Corridor',region:'Yemen',anomaly:true},
+  {iso:'JOR',lat:32.0,lng:36.0,type:'HF_RADIO',intensity:6,label:'HF Comms — Jordan Military',region:'Jordan',anomaly:false},
+  // Desert anomalies — signals where no civilian infrastructure exists
+  {iso:'JOR',lat:29.5,lng:36.5,type:'HF_RADIO',intensity:7,label:'⚠ HF Burst — Wadi Rum Desert (No Infrastructure)',region:'Jordan',anomaly:true},
+  {iso:'EGY',lat:28.0,lng:30.5,type:'EW',intensity:6,label:'⚠ EW Signatures — Western Egypt Desert',region:'Egypt',anomaly:true},
+  {iso:'LBY',lat:25.0,lng:10.0,type:'HF_RADIO',intensity:8,label:'⚠ HF Comms — Libyan Desert (Wagner Activity)',region:'Libya',anomaly:true},
   // Iran
-  {lat:35.7,lng:51.4,type:'EW',intensity:7,label:'Electronic Activity — Tehran Military District',region:'Iran',anomaly:false},
-  {lat:29.0,lng:61.5,type:'RADAR',intensity:6,label:'Radar Emissions — Iran-Pakistan Border',region:'Iran',anomaly:true},
+  {iso:'IRN',lat:35.7,lng:51.4,type:'EW',intensity:7,label:'Electronic Activity — Tehran Military District',region:'Iran',anomaly:false},
+  {iso:'IRN',lat:29.0,lng:61.5,type:'RADAR',intensity:6,label:'Radar Emissions — Iran-Pakistan Border',region:'Iran',anomaly:true},
   // Africa/Sahel
-  {lat:15.5,lng:2.0,type:'EW',intensity:8,label:'EW Signatures — Mali/Niger Border (Sahel)',region:'Sahel',anomaly:true},
-  {lat:12.0,lng:14.0,type:'HF_RADIO',intensity:7,label:'HF Comms — Lake Chad Basin (Boko Haram)',region:'Chad',anomaly:true},
-  {lat:6.0,lng:25.0,type:'CELLULAR',intensity:6,label:'Cell Anomaly — South Sudan Conflict Zone',region:'South Sudan',anomaly:true},
-  {lat:15.0,lng:30.0,type:'EW',intensity:9,label:'Electronic Activity — Sudan Civil War Zone',region:'Sudan',anomaly:true},
-  {lat:5.0,lng:18.0,type:'HF_RADIO',intensity:5,label:'HF Activity — CAR (Wagner Presence)',region:'CAR',anomaly:true},
+  {iso:'MLI',lat:15.5,lng:2.0,type:'EW',intensity:8,label:'EW Signatures — Mali/Niger Border (Sahel)',region:'Sahel',anomaly:true},
+  {iso:'TCD',lat:12.0,lng:14.0,type:'HF_RADIO',intensity:7,label:'HF Comms — Lake Chad Basin (Boko Haram)',region:'Chad',anomaly:true},
+  {iso:'SSD',lat:6.0,lng:25.0,type:'CELLULAR',intensity:6,label:'Cell Anomaly — South Sudan Conflict Zone',region:'South Sudan',anomaly:true},
+  {iso:'SDN',lat:15.0,lng:30.0,type:'EW',intensity:9,label:'Electronic Activity — Sudan Civil War Zone',region:'Sudan',anomaly:true},
+  {iso:'CAF',lat:5.0,lng:18.0,type:'HF_RADIO',intensity:5,label:'HF Activity — CAR (Wagner Presence)',region:'CAR',anomaly:true},
   // Asia-Pacific
-  {lat:38.5,lng:127.5,type:'RADAR',intensity:9,label:'Air Defense Radar Array — North Korea DMZ',region:'North Korea',anomaly:false},
-  {lat:39.0,lng:125.7,type:'EW',intensity:8,label:'EW Activity — Pyongyang Military Zone',region:'North Korea',anomaly:false},
-  {lat:24.0,lng:121.5,type:'RADAR',intensity:7,label:'Air Defense Activity — Taiwan Strait',region:'Taiwan',anomaly:true},
-  {lat:35.0,lng:109.0,type:'EW',intensity:6,label:'EW Signatures — Central China Military Zone',region:'China',anomaly:false},
-  {lat:36.5,lng:101.0,type:'SATELLITE',intensity:7,label:'⚠ Sat Uplinks — Tibet Military Build-up Zone',region:'China',anomaly:true},
+  {iso:'PRK',lat:38.5,lng:127.5,type:'RADAR',intensity:9,label:'Air Defense Radar Array — North Korea DMZ',region:'North Korea',anomaly:false},
+  {iso:'PRK',lat:39.0,lng:125.7,type:'EW',intensity:8,label:'EW Activity — Pyongyang Military Zone',region:'North Korea',anomaly:false},
+  {iso:'TWN',lat:24.0,lng:121.5,type:'RADAR',intensity:7,label:'Air Defense Activity — Taiwan Strait',region:'Taiwan',anomaly:true},
+  {iso:'CHN',lat:35.0,lng:109.0,type:'EW',intensity:6,label:'EW Signatures — Central China Military Zone',region:'China',anomaly:false},
+  {iso:'CHN',lat:36.5,lng:101.0,type:'SATELLITE',intensity:7,label:'⚠ Sat Uplinks — Tibet Military Build-up Zone',region:'China',anomaly:true},
   // South Asia
-  {lat:33.5,lng:74.0,type:'HF_RADIO',intensity:7,label:'HF Activity — Kashmir Line of Control',region:'India/Pakistan',anomaly:true},
-  {lat:24.0,lng:69.0,type:'RADAR',intensity:5,label:'Radar Activity — Pakistan Western Desert',region:'Pakistan',anomaly:false},
+  {iso:'IND',lat:33.5,lng:74.0,type:'HF_RADIO',intensity:7,label:'HF Activity — Kashmir Line of Control (India side)',region:'Kashmir',anomaly:true},
+  {iso:'PAK',lat:33.2,lng:73.8,type:'HF_RADIO',intensity:7,label:'HF Activity — Kashmir Line of Control (Pakistan side)',region:'Kashmir',anomaly:true},
+  {iso:'PAK',lat:24.0,lng:69.0,type:'RADAR',intensity:5,label:'Radar Activity — Pakistan Western Desert',region:'Pakistan',anomaly:false},
   // Europe
-  {lat:57.0,lng:22.0,type:'EW',intensity:7,label:'EW GPS Interference — Baltic Region',region:'Estonia/Latvia',anomaly:true},
-  {lat:69.5,lng:18.5,type:'RADAR',intensity:6,label:'Radar Array — Northern Norway (NATO)',region:'Norway',anomaly:false},
-  {lat:41.5,lng:20.5,type:'HF_RADIO',intensity:4,label:'HF Activity — Balkans',region:'Balkans',anomaly:false},
-  // Americas/Caribbean
-  {lat:25.5,lng:-80.5,type:'SATELLITE',intensity:5,label:'Satellite Comms — Florida Straits (SOUTHCOM)',region:'USA',anomaly:false},
-  {lat:20.0,lng:-76.0,type:'HF_RADIO',intensity:4,label:'HF — Caribbean Maritime Zone',region:'Cuba',anomaly:false},
-  {lat:4.0,lng:-74.0,type:'EW',intensity:5,label:'EW Signatures — Colombia (FARC Comms)',region:'Colombia',anomaly:true},
+  {iso:'EST',lat:57.0,lng:22.0,type:'EW',intensity:7,label:'EW GPS Interference — Baltic Region',region:'Estonia/Latvia',anomaly:true},
+  {iso:'NOR',lat:69.5,lng:18.5,type:'RADAR',intensity:6,label:'Radar Array — Northern Norway (NATO)',region:'Norway',anomaly:false},
+  {iso:'SRB',lat:41.5,lng:20.5,type:'HF_RADIO',intensity:4,label:'HF Activity — Western Balkans',region:'Balkans',anomaly:false},
+  // Americas
+  {iso:'USA',lat:25.5,lng:-80.5,type:'SATELLITE',intensity:5,label:'Satellite Comms — Florida Straits (SOUTHCOM)',region:'USA',anomaly:false},
+  {iso:'CUB',lat:20.0,lng:-76.0,type:'HF_RADIO',intensity:4,label:'HF — Caribbean Maritime Zone',region:'Cuba',anomaly:false},
+  {iso:'COL',lat:4.0,lng:-74.0,type:'EW',intensity:5,label:'EW Signatures — Colombia (FARC Comms)',region:'Colombia',anomaly:true},
 ];
 
 function drawSIGINTLayer(){
   const now=Date.now();
-  for(const node of SIGINT_NODES){
+  const nodes=selectedISO?SIGINT_NODES.filter(n=>n.iso===selectedISO):SIGINT_NODES;
+  for(const node of nodes){
     const p=project(node.lat,node.lng);if(!p.visible)continue;
     const col=SIGINT_TYPE_COLOR[node.type]||'rgba(148,163,184';
     const pulse=Math.sin(now/600+node.intensity*0.4)*0.5+0.5;
@@ -5170,7 +5194,8 @@ function drawSIGINTLayer(){
 }
 
 function sigintAt(sx,sy){
-  for(const node of SIGINT_NODES){
+  const nodes=selectedISO?SIGINT_NODES.filter(n=>n.iso===selectedISO):SIGINT_NODES;
+  for(const node of nodes){
     const p=project(node.lat,node.lng);if(!p.visible)continue;
     const r=12+node.intensity*1.4;
     if(Math.hypot(sx-p.px,sy-p.py)<r)return node;
