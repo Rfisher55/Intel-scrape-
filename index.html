@@ -7473,17 +7473,26 @@ let satDragging=false,satDragLast={x:0,y:0};
 
 const SAT_LAYERS={
   esri:{id:'esri',label:'HIGH RES',maxZoom:18,color:'#a3e635',
-    desc:'ESRI World Imagery — commercial satellite, sub-meter resolution in urban areas. Reference imagery (updated periodically, not daily).',
+    desc:'ESRI World Imagery — commercial satellite, sub-meter to 1m resolution. Best available reference imagery. Not updated daily.',
     url:(z,tx,ty)=>`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${ty}/${tx}`},
-  modis:{id:'modis',label:'DAILY MODIS',maxZoom:9,color:'#22c55e',
-    desc:'NASA MODIS Terra — 250m resolution, updated every 24 hours. Shows active fires, smoke plumes, ship wakes, dust clouds from explosions.',
+  sentinel:{id:'sentinel',label:'SENTINEL-2',maxZoom:14,color:'#34d399',
+    desc:'ESA Sentinel-2 cloudless composite via EOX — 10m resolution. Sharper than ESRI in many regions. Annual composite, not daily.',
+    url:(z,tx,ty)=>`https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/${z}/${ty}/${tx}.jpg`},
+  modis:{id:'modis',label:'MODIS DAILY',maxZoom:9,color:'#22c55e',
+    desc:'NASA MODIS Terra — 250m resolution, updated every 24h (morning pass). Shows fires, smoke plumes, ship wakes, dust clouds from explosions.',
     url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+  viirs_tc:{id:'viirs_tc',label:'VIIRS DAILY',maxZoom:9,color:'#6ee7b7',
+    desc:'NASA VIIRS Suomi NPP — 375m resolution, updated daily. Clearer than MODIS. Best free daily true-color satellite available.',
+    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
   viirs:{id:'viirs',label:'NIGHT VIIRS',maxZoom:8,color:'#fbbf24',
-    desc:'NASA VIIRS night lights — updated daily. Detects active lighting changes, field fires, blackouts, military forward operating bases.',
+    desc:'NASA VIIRS night lights — updated daily. Detects active lighting, field fires, blackouts, forward operating bases, military camps.',
     url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_At_Sensor_Radiance/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
   thermal:{id:'thermal',label:'THERMAL',maxZoom:7,color:'#ef4444',
     desc:'NASA MODIS thermal anomalies — updated daily. Detects active fires, explosions, burning infrastructure, industrial heat signatures.',
     url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Thermal_Anomalies_Fire_Daily/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.png`},
+  false_color:{id:'false_color',label:'FALSE COLOR',maxZoom:9,color:'#f97316',
+    desc:'NASA MODIS bands 7-2-1 — updated daily. Burn scars appear red, active fires bright red/orange, vegetation green, bare soil pink.',
+    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_Bands721/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
 };
 
 const SAT_LOCATIONS=[
