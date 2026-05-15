@@ -357,7 +357,15 @@ canvas.dragging{cursor:grabbing}
   box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(59,130,246,.05) inset;
 }
 .layers-title{font-size:8px;letter-spacing:.25em;color:var(--muted);text-align:center;
-  margin-bottom:4px;padding-bottom:5px;border-bottom:1px solid var(--border2)}
+  margin-bottom:4px;padding-bottom:5px;border-bottom:1px solid var(--border2);
+  cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:center;gap:4px;
+  position:relative}
+.layers-title:hover{color:#93c5fd}
+.layers-chevron{font-size:7px;opacity:.6;transition:transform .25s;display:inline-block}
+#layers-panel.collapsed .layers-chevron{transform:rotate(180deg)}
+#layers-panel.collapsed .layer-btn,
+#layers-panel.collapsed #layers-filter-hint{display:none!important}
+#layers-panel.collapsed{padding-bottom:6px}
 .layer-btn{
   background:rgba(8,16,34,.8);border:1px solid rgba(30,58,95,.6);border-radius:4px;
   color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:.1em;
@@ -566,7 +574,7 @@ canvas.dragging{cursor:grabbing}
 
 <!-- Data layer controls -->
 <div id="layers-panel">
-  <div class="layers-title">DATA LAYERS</div>
+  <div class="layers-title" onclick="toggleLayersPanel()" title="Collapse / expand panel">DATA LAYERS <span class="layers-chevron" id="panel-chevron">▲</span></div>
   <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')" title="Real documented active conflicts — OSINT verified open-source intelligence database"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS<span class="lb-count">98</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-troops"    onclick="toggleLayer('troops')"    title="Troop deployments and movements — documented OSINT intelligence database"><span class="lb-dot" style="background:#ef4444"></span>TROOPS<span class="lb-count">30</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-arms"      onclick="toggleLayer('arms')"      title="Arms transfers and weapons flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS<span class="lb-count">29</span><span class="lb-src">OSINT</span></button>
@@ -578,6 +586,7 @@ canvas.dragging{cursor:grabbing}
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network disruptions — documented internet shutdowns, cable cuts, GPS jamming, intercept nodes (OSINT)"><span class="lb-dot" style="background:#f59e0b"></span>🌐 NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn active" id="lb-hotspots" onclick="toggleHotspots()" title="Toggle always-visible hotspot alert markers on/off"><span class="lb-dot" style="background:#f87171"></span>● HOTSPOTS<span class="lb-src">VIZ</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
 </div>
 
@@ -4594,6 +4603,7 @@ let zoomFactor=1.0, targetZoom=1.0;
 const ZOOM_MIN=0.4, ZOOM_MAX=50.0;
 var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
+let showHotspots=true;
 // Active data layers
 const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false,flights:false,unverified:false,sigint:false,cyber:false,netdisrupt:false};
 
@@ -5874,7 +5884,7 @@ function draw(){
   if(activeLayers.sigint)      drawSIGINTLayer();
   if(activeLayers.cyber)       drawCyberLayer();
   if(activeLayers.netdisrupt)  drawNetDisruptLayer();
-  drawHotspots();
+  if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
   ctx.strokeStyle='rgba(59,130,246,.25)';ctx.lineWidth=1.5;ctx.stroke();
@@ -6813,6 +6823,17 @@ function toggleLayer(name){
   updateLayerFilterHint();
 }
 
+function toggleLayersPanel(){
+  const panel=document.getElementById('layers-panel');
+  const chevron=document.getElementById('panel-chevron');
+  panel.classList.toggle('collapsed');
+  chevron.textContent=panel.classList.contains('collapsed')?'▼':'▲';
+}
+function toggleHotspots(){
+  showHotspots=!showHotspots;
+  const btn=document.getElementById('lb-hotspots');
+  if(btn)btn.classList.toggle('active',showHotspots);
+}
 function updateLayerFilterHint(){
   const anyActive=Object.values(activeLayers).some(Boolean);
   const hint=document.getElementById('layers-filter-hint');
