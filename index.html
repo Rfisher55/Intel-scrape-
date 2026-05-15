@@ -5686,17 +5686,168 @@ let socialTab='reddit';
 let socialPanelOpen=false;
 let lastSocialFetch=0;
 
-const VIP_TRACKER=[
-  {name:'POTUS (Biden→Trump)',   role:'US President',          country:'USA',lat:38.9,lng:-77.0,status:'WASHINGTON DC',detail:'White House / Camp David / Mar-a-Lago rotational schedule. Air Force One callsign SAM29000.',cat:'vip'},
-  {name:'Vladimir Putin',        role:'Russian President',      country:'RUS',lat:55.7,lng:37.6,status:'MOSCOW — KREMLIN',detail:'Bunker protocol active since 2022. Travel restricted to armored convoy. FSO detail 500+. Doomsday plane Il-80 on standby.',cat:'vip'},
-  {name:'Xi Jinping',            role:'Chinese President',      country:'CHN',lat:39.9,lng:116.4,status:'BEIJING — ZHONGNANHAI',detail:'PLA Air Force B-5021 Boeing 747SP presidential transport. PLA escort protocol. CEWMD (Central Bodyguard Bureau) detail.',cat:'vip'},
-  {name:'Volodymyr Zelensky',    role:'Ukrainian President',    country:'UKR',lat:50.5,lng:30.5,status:'KYIV — UNDISCLOSED',detail:'Security detail: SBU Alpha Group, foreign contractors. Movement highly restricted. Frequently travels to Brussels, Washington via unmarked aircraft.',cat:'vip'},
-  {name:'Benjamin Netanyahu',    role:'Israeli PM',             country:'ISR',lat:31.8,lng:35.2,status:'JERUSALEM / TEL AVIV',detail:'Enhanced security post-Oct 7. ICC arrest warrant issued Nov 2024 — travel to signatory states restricted. Shin Bet VIP unit escort.',cat:'vip'},
-  {name:'Crown Prince MBS',      role:'Saudi Arabia Crown Prince',country:'SAU',lat:24.7,lng:46.7,status:'RIYADH — AL YAMAMAH',detail:'Saudi Royal Guard + US contractor protection detail. G20, UN travel with 5-aircraft convoy. Kingdom Holdings jet fleet.',cat:'vip'},
-  {name:'Yahya Sinwar (KIA)',     role:'Hamas Leader (deceased)',country:'PSE',lat:31.4,lng:34.4,status:'KIA — OCTOBER 2024',detail:'Eliminated by IDF October 16, 2024 in Rafah tunnel complex. Identified via DNA. Replaced by Sinwar brother Mohammed.',cat:'vip'},
-  {name:'Emmanuel Macron',       role:'French President',       country:'FRA',lat:48.9,lng:2.3,status:'PARIS — ÉLYSÉE',detail:'GIGN/GSPR protective detail. Airbus A330-200 MRTT (callsign F-RARF). Travel patterns: Brussels, Kyiv (armored train from Poland).',cat:'vip'},
-  {name:'Kim Jong-un',           role:'DPRK Supreme Leader',    country:'PRK',lat:39.0,lng:125.8,status:'PYONGYANG — UNDISCLOSED',detail:'Air Koryo Ilyushin Il-62 presidential aircraft. Rarely travels abroad — Moscow summit Feb 2024 by armored train. Russian intelligence liaison active.',cat:'vip'},
+// ── VIP TRACKER — live OSINT location intelligence ───────────────────────────
+const VIP_LIST=[
+  {name:'Donald Trump',        searchName:'Trump',         role:'US President',           country:'USA',defaultLat:38.9, defaultLng:-77.0, defaultStatus:'WASHINGTON DC / MAR-A-LAGO'},
+  {name:'Vladimir Putin',      searchName:'Putin',         role:'Russian President',       country:'RUS',defaultLat:55.7, defaultLng:37.6,  defaultStatus:'MOSCOW — KREMLIN'},
+  {name:'Xi Jinping',          searchName:'Xi Jinping',    role:'Chinese President',       country:'CHN',defaultLat:39.9, defaultLng:116.4, defaultStatus:'BEIJING — ZHONGNANHAI'},
+  {name:'Volodymyr Zelensky',  searchName:'Zelensky',      role:'Ukrainian President',     country:'UKR',defaultLat:50.5, defaultLng:30.5,  defaultStatus:'KYIV — UNDISCLOSED'},
+  {name:'Benjamin Netanyahu',  searchName:'Netanyahu',     role:'Israeli PM',              country:'ISR',defaultLat:31.8, defaultLng:35.2,  defaultStatus:'JERUSALEM / TEL AVIV'},
+  {name:'Mohammed bin Salman', searchName:'bin Salman',    role:'Saudi Crown Prince',      country:'SAU',defaultLat:24.7, defaultLng:46.7,  defaultStatus:'RIYADH — AL YAMAMAH'},
+  {name:'Emmanuel Macron',     searchName:'Macron',        role:'French President',        country:'FRA',defaultLat:48.9, defaultLng:2.3,   defaultStatus:'PARIS — ÉLYSÉE'},
+  {name:'Kim Jong-un',         searchName:'Kim Jong Un',   role:'DPRK Supreme Leader',     country:'PRK',defaultLat:39.0, defaultLng:125.8, defaultStatus:'PYONGYANG — UNDISCLOSED'},
+  {name:'Friedrich Merz',      searchName:'Merz',          role:'German Chancellor',       country:'DEU',defaultLat:52.5, defaultLng:13.4,  defaultStatus:'BERLIN'},
+  {name:'Keir Starmer',        searchName:'Starmer',       role:'UK Prime Minister',       country:'GBR',defaultLat:51.5, defaultLng:-0.1,  defaultStatus:'LONDON — DOWNING ST'},
+  {name:'Narendra Modi',       searchName:'Modi',          role:'Indian PM',               country:'IND',defaultLat:28.6, defaultLng:77.2,  defaultStatus:'NEW DELHI'},
+  {name:'Recep Erdoğan',       searchName:'Erdogan',       role:'Turkish President',       country:'TUR',defaultLat:39.9, defaultLng:32.9,  defaultStatus:'ANKARA'},
+  {name:'Ali Khamenei',        searchName:'Khamenei',      role:'Iranian Supreme Leader',  country:'IRN',defaultLat:35.7, defaultLng:51.4,  defaultStatus:'TEHRAN'},
 ];
+let vipLiveData=VIP_LIST.map(v=>({...v,lat:v.defaultLat,lng:v.defaultLng,status:v.defaultStatus,confidence:'LOADING',headline:null,sourceUrl:null,sourceDomain:null,updated:null,articles:[]}));
+let vipFetchTime=0;
+
+// Location keyword → coordinates (longer phrases matched first)
+const VIP_LOC_DB={
+  'mar-a-lago':{lat:26.5,lng:-80.1,label:'Mar-a-Lago, Florida'},
+  'palm beach':{lat:26.7,lng:-80.1,label:'Palm Beach, Florida'},
+  'camp david':{lat:39.6,lng:-77.5,label:'Camp David, Maryland'},
+  'white house':{lat:38.9,lng:-77.0,label:'Washington DC'},
+  'washington':{lat:38.9,lng:-77.0,label:'Washington DC'},
+  'new york city':{lat:40.7,lng:-74.0,label:'New York City'},
+  'new york':{lat:40.7,lng:-74.0,label:'New York'},
+  'un general assembly':{lat:40.7,lng:-74.0,label:'UN General Assembly, NYC'},
+  'united nations':{lat:40.7,lng:-74.0,label:'UN, New York'},
+  'st. petersburg':{lat:59.9,lng:30.3,label:'St. Petersburg'},
+  'saint petersburg':{lat:59.9,lng:30.3,label:'St. Petersburg'},
+  'kremlin':{lat:55.8,lng:37.6,label:'Moscow — Kremlin'},
+  'moscow':{lat:55.7,lng:37.6,label:'Moscow'},
+  'sochi':{lat:43.6,lng:39.7,label:'Sochi'},
+  'minsk':{lat:53.9,lng:27.6,label:'Minsk'},
+  'zhongnanhai':{lat:39.9,lng:116.4,label:'Beijing — Zhongnanhai'},
+  'beijing':{lat:39.9,lng:116.4,label:'Beijing'},
+  'shanghai':{lat:31.2,lng:121.5,label:'Shanghai'},
+  'hong kong':{lat:22.3,lng:114.2,label:'Hong Kong'},
+  'kharkiv':{lat:50.0,lng:36.2,label:'Kharkiv'},
+  'zaporizhzhia':{lat:47.8,lng:35.2,label:'Zaporizhzhia'},
+  'odessa':{lat:46.5,lng:30.7,label:'Odessa'},
+  'odesa':{lat:46.5,lng:30.7,label:'Odesa'},
+  'kyiv':{lat:50.5,lng:30.5,label:'Kyiv'},
+  'kiev':{lat:50.5,lng:30.5,label:'Kyiv'},
+  'jerusalem':{lat:31.8,lng:35.2,label:'Jerusalem'},
+  'tel aviv':{lat:32.1,lng:34.8,label:'Tel Aviv'},
+  'riyadh':{lat:24.7,lng:46.7,label:'Riyadh'},
+  'jeddah':{lat:21.5,lng:39.2,label:'Jeddah'},
+  'neom':{lat:28.0,lng:35.0,label:'NEOM, Saudi Arabia'},
+  'elysee':{lat:48.9,lng:2.3,label:'Paris — Élysée'},
+  'élysée':{lat:48.9,lng:2.3,label:'Paris — Élysée'},
+  'versailles':{lat:48.8,lng:2.1,label:'Versailles'},
+  'paris':{lat:48.9,lng:2.3,label:'Paris'},
+  'downing street':{lat:51.5,lng:-0.1,label:'London — Downing St'},
+  'buckingham':{lat:51.5,lng:-0.1,label:'London'},
+  'london':{lat:51.5,lng:-0.1,label:'London'},
+  'berlin':{lat:52.5,lng:13.4,label:'Berlin'},
+  'munich':{lat:48.1,lng:11.6,label:'Munich'},
+  'pyongyang':{lat:39.0,lng:125.8,label:'Pyongyang'},
+  'new delhi':{lat:28.6,lng:77.2,label:'New Delhi'},
+  'mumbai':{lat:19.1,lng:72.9,label:'Mumbai'},
+  'ahmedabad':{lat:23.0,lng:72.6,label:'Ahmedabad'},
+  'delhi':{lat:28.6,lng:77.2,label:'New Delhi'},
+  'istanbul':{lat:41.0,lng:28.9,label:'Istanbul'},
+  'ankara':{lat:39.9,lng:32.9,label:'Ankara'},
+  'antalya':{lat:36.9,lng:30.7,label:'Antalya'},
+  'tehran':{lat:35.7,lng:51.4,label:'Tehran'},
+  'qom':{lat:34.6,lng:51.0,label:'Qom'},
+  'brussels':{lat:50.8,lng:4.4,label:'Brussels — NATO/EU HQ'},
+  'nato summit':{lat:50.8,lng:4.4,label:'NATO Summit'},
+  'geneva':{lat:46.2,lng:6.1,label:'Geneva'},
+  'davos':{lat:46.8,lng:9.8,label:'Davos'},
+  'strasbourg':{lat:48.6,lng:7.7,label:'Strasbourg'},
+  'rome':{lat:41.9,lng:12.5,label:'Rome'},
+  'vatican':{lat:41.9,lng:12.5,label:'Vatican City'},
+  'madrid':{lat:40.4,lng:-3.7,label:'Madrid'},
+  'warsaw':{lat:52.2,lng:21.0,label:'Warsaw'},
+  'kyoto':{lat:35.0,lng:135.8,label:'Kyoto'},
+  'tokyo':{lat:35.7,lng:139.7,label:'Tokyo'},
+  'osaka':{lat:34.7,lng:135.5,label:'Osaka'},
+  'seoul':{lat:37.6,lng:127.0,label:'Seoul'},
+  'singapore':{lat:1.3,lng:103.8,label:'Singapore'},
+  'bangkok':{lat:13.8,lng:100.5,label:'Bangkok'},
+  'doha':{lat:25.3,lng:51.5,label:'Doha, Qatar'},
+  'dubai':{lat:25.2,lng:55.3,label:'Dubai, UAE'},
+  'abu dhabi':{lat:24.5,lng:54.4,label:'Abu Dhabi, UAE'},
+  'cairo':{lat:30.0,lng:31.2,label:'Cairo'},
+  'amman':{lat:31.9,lng:35.9,label:'Amman'},
+  'beirut':{lat:33.9,lng:35.5,label:'Beirut'},
+  'damascus':{lat:33.5,lng:36.3,label:'Damascus'},
+  'baghdad':{lat:33.3,lng:44.4,label:'Baghdad'},
+  'islamabad':{lat:33.7,lng:73.1,label:'Islamabad'},
+  'nairobi':{lat:-1.3,lng:36.8,label:'Nairobi'},
+  'addis ababa':{lat:9.0,lng:38.7,label:'Addis Ababa'},
+  'pretoria':{lat:-25.7,lng:28.2,label:'Pretoria'},
+  'johannesburg':{lat:-26.2,lng:28.0,label:'Johannesburg'},
+  'brasilia':{lat:-15.8,lng:-47.9,label:'Brasília'},
+  'buenos aires':{lat:-34.6,lng:-58.4,label:'Buenos Aires'},
+  'bogota':{lat:4.7,lng:-74.1,label:'Bogotá'},
+  'lima':{lat:-12.0,lng:-77.0,label:'Lima'},
+  'ottawa':{lat:45.4,lng:-75.7,label:'Ottawa'},
+  'toronto':{lat:43.7,lng:-79.4,label:'Toronto'},
+  'canberra':{lat:-35.3,lng:149.1,label:'Canberra'},
+  'sydney':{lat:-33.9,lng:151.2,label:'Sydney'},
+  'auckland':{lat:-36.9,lng:174.8,label:'Auckland'},
+};
+
+function extractVIPLocation(text){
+  const lower=text.toLowerCase();
+  const keys=Object.keys(VIP_LOC_DB).sort((a,b)=>b.length-a.length);
+  for(const kw of keys){if(lower.includes(kw))return{...VIP_LOC_DB[kw],keyword:kw};}
+  return null;
+}
+
+async function fetchVIPLocations(){
+  vipLiveData=VIP_LIST.map(v=>({...v,lat:v.defaultLat,lng:v.defaultLng,status:v.defaultStatus,confidence:'LOADING',headline:null,sourceUrl:null,sourceDomain:null,updated:null,articles:[]}));
+  renderSocialFeed();
+  const fetches=VIP_LIST.map(async(vip,i)=>{
+    try{
+      const q=encodeURIComponent('"'+vip.searchName+'"');
+      const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}+sourcelang:English&mode=artlist&format=json&maxrecords=10&sort=DateDesc&timespan=1d`;
+      const ctrl=new AbortController();
+      const tid=setTimeout(()=>ctrl.abort(),10000);
+      const r=await fetch(url,{signal:ctrl.signal});
+      clearTimeout(tid);
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      const data=await r.json();
+      const articles=(data.articles||[]);
+      let bestLoc=null,bestArt=null;
+      for(const art of articles){
+        const loc=extractVIPLocation(art.title||'');
+        if(loc){bestLoc=loc;bestArt=art;break;}
+      }
+      if(!bestLoc){
+        for(const art of articles){
+          const loc=extractVIPLocation(art.url||'');
+          if(loc){bestLoc=loc;bestArt=art;break;}
+        }
+      }
+      return{
+        ...vip,
+        lat:bestLoc?bestLoc.lat:vip.defaultLat,
+        lng:bestLoc?bestLoc.lng:vip.defaultLng,
+        status:bestLoc?bestLoc.label.toUpperCase():vip.defaultStatus,
+        confidence:bestLoc?'CONFIRMED':'ESTIMATED',
+        headline:bestArt?bestArt.title:null,
+        sourceUrl:bestArt?bestArt.url:null,
+        sourceDomain:bestArt?bestArt.domain:null,
+        updated:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+        articles:articles.slice(0,3).map(a=>a.title).filter(Boolean),
+      };
+    }catch(e){
+      return{...vip,lat:vip.defaultLat,lng:vip.defaultLng,status:vip.defaultStatus,confidence:'ESTIMATED',headline:null,sourceUrl:null,sourceDomain:null,updated:null,articles:[]};
+    }
+  });
+  const results=await Promise.allSettled(fetches);
+  vipLiveData=results.map((r,i)=>r.status==='fulfilled'?r.value:{...VIP_LIST[i],lat:VIP_LIST[i].defaultLat,lng:VIP_LIST[i].defaultLng,status:VIP_LIST[i].defaultStatus,confidence:'ESTIMATED',headline:null,updated:null,articles:[]});
+  vipFetchTime=Date.now();
+  renderSocialFeed();
+}
 
 function toggleSocialPanel(){
   socialPanelOpen=!socialPanelOpen;
@@ -5715,7 +5866,8 @@ function setSocialTab(tab){
   socialTab=tab;
   document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
   document.getElementById('stab-'+tab)?.classList.add('active');
-  renderSocialFeed();
+  if(tab==='vip'&&(Date.now()-vipFetchTime>600000||!vipFetchTime))fetchVIPLocations();
+  else renderSocialFeed();
 }
 
 let cachedRedditPosts=[];
@@ -5743,7 +5895,7 @@ async function fetchSocialIntel(){
       feed.innerHTML='<div class="sf-empty">⚠ Reddit API unavailable.<br>Try refreshing — CORS proxy may be needed in some environments.</div>';
     }
   } else if(socialTab==='vip'){
-    renderSocialFeed();
+    fetchVIPLocations();
   } else {
     renderSocialFeed();
   }
@@ -5782,15 +5934,30 @@ function renderSocialFeed(){
       </div>
     </div>`;
   } else if(socialTab==='vip'){
-    feed.innerHTML=VIP_TRACKER.map(v=>`
-      <div class="sf-item vip" onclick="globe_focusVIP(${v.lat},${v.lng},'${v.name}','${v.status}')">
+    if(!vipFetchTime&&vipLiveData.every(v=>v.confidence==='LOADING')){
+      feed.innerHTML='<div class="sf-empty">◌ Fetching VIP location intelligence from open sources…<br><br>Querying GDELT real-time news index for each subject.</div>';
+      return;
+    }
+    const ts=vipFetchTime?new Date(vipFetchTime).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+    document.getElementById('social-updated').textContent=ts+'Z';
+    feed.innerHTML=vipLiveData.map((v,i)=>{
+      const confColor=v.confidence==='CONFIRMED'?'#22c55e':v.confidence==='LOADING'?'#94a3b8':'#f59e0b';
+      const confLabel=v.confidence==='CONFIRMED'?'● CONFIRMED':v.confidence==='LOADING'?'◌ LOADING':'◌ ESTIMATED';
+      const safeN=v.name.replace(/'/g,"\\'"),safeS=v.status.replace(/'/g,"\\'");
+      return`<div class="sf-item vip" onclick="globe_focusVIP(${v.lat},${v.lng},'${safeN}','${safeS}')">
         <div class="sf-flight-row">
           <span class="sf-callsign">♦ ${v.name}</span>
+          <span style="font-size:8px;color:${confColor};letter-spacing:.08em">${confLabel}</span>
         </div>
-        <div style="font-size:9px;color:#a855f7;letter-spacing:.1em;margin-bottom:4px">${v.role} · ${v.country}</div>
-        <div style="font-size:10px;color:var(--dim);line-height:1.5;margin-bottom:5px">${v.detail}</div>
-        <div class="sf-meta"><span style="color:#fbbf24">📍 ${v.status}</span></div>
-      </div>`).join('');
+        <div style="font-size:9px;color:#a855f7;letter-spacing:.1em;margin-bottom:5px">${v.role} · ${v.country}</div>
+        <div style="font-size:11px;font-weight:600;color:#e2e8f0;margin-bottom:5px;letter-spacing:.04em">📍 ${v.status}</div>
+        ${v.headline?`<div style="font-size:9px;color:var(--dim);line-height:1.45;margin-bottom:4px;border-left:2px solid rgba(168,85,247,.45);padding-left:6px;cursor:pointer" onclick="event.stopPropagation();window.open('${v.sourceUrl}','_blank')">${v.headline.slice(0,130)}${v.headline.length>130?'…':''}</div>`:''}
+        <div class="sf-meta">
+          <span style="color:var(--muted);font-size:8px">${v.sourceDomain||'GDELT/OSINT'}</span>
+          <span style="color:var(--muted);font-size:8px">${v.updated?'UPDATED '+v.updated:'DEFAULT INTEL'}</span>
+        </div>
+      </div>`;
+    }).join('');
   }
 }
 
