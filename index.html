@@ -7146,6 +7146,7 @@ function openCountry(iso){
   const dtg=new Date().toUTCString().slice(5,25).toUpperCase()+' UTC';
   document.getElementById('tab-summary').innerHTML=`
     <div class="report-meta"><span>REPORT: ${rptId}</span><span>DTG: ${dtg}</span></div>
+    <div id="live-threat-score" style="background:rgba(8,16,33,.7);border:1px solid rgba(30,58,95,.5);border-radius:4px;padding:10px 12px;margin-bottom:12px"></div>
     <div class="sec-label">SITUATION ASSESSMENT</div>
     <p class="summary-text">${intel.summary||'No data available.'}</p>
     ${ex.political?`<div class="sec-label">POLITICAL ANALYSIS</div><p class="political-text">${ex.political}</p>`:''}
@@ -7185,6 +7186,46 @@ function openCountry(iso){
   renderForeignTab(iso);
   // Kick off live fetch (non-blocking)
   fetchLiveNews(iso);
+  fetchCountryLiveThreat(iso);
+}
+
+async function fetchCountryLiveThreat(iso){
+  const countryName=COUNTRIES[iso]?.name||iso;
+  const el=document.getElementById('live-threat-score');
+  if(!el)return;
+  el.innerHTML='<span style="color:#475569;font-size:9px">◌ computing…</span>';
+  let score=0;
+  const intel=INTEL[iso]||{};
+  // Base from existing threat data
+  const sevMap={critical:4,high:3,medium:2,low:1};
+  (intel.threats||[]).forEach(t=>score+=sevMap[t.severity]||0);
+  score=Math.min(score,12);
+  // Boost from GDELT
+  try{
+    const q=encodeURIComponent(`"${countryName}" attack OR war OR strike OR explosion OR offensive OR killed OR missiles`);
+    const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=20&format=json&timespan=24h`;
+    const res=await fetch(url,{signal:AbortSignal.timeout(5000)});
+    if(res.ok){
+      const d=await res.json();
+      const art=d.articles||[];
+      const boost=Math.min(art.length*0.4,4);
+      score=Math.min(score+boost,15);
+    }
+  }catch{}
+  // Conflict count boost
+  const cfCount=CONFLICTS.filter(c=>c.from===iso||c.to===iso).length;
+  score=Math.min(score+cfCount*0.3,15);
+  const pct=((score/15)*100).toFixed(0);
+  const color=score>=10?'#ef4444':score>=7?'#f97316':score>=4?'#fbbf24':'#22c55e';
+  const label=score>=10?'CRITICAL':score>=7?'HIGH':score>=4?'ELEVATED':'GUARDED';
+  el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+    <span style="font-size:10px;color:${color};font-weight:bold;letter-spacing:.1em">LIVE THREAT INDEX: <span style="font-size:14px">${label}</span></span>
+    <span style="font-size:11px;color:${color};font-weight:bold">${score.toFixed(1)}/15</span>
+  </div>
+  <div style="height:5px;background:rgba(30,58,95,.4);border-radius:3px;overflow:hidden">
+    <div style="width:${pct}%;height:100%;background:${color};border-radius:3px;transition:width 1s ease"></div>
+  </div>
+  <div style="font-size:9px;color:#475569;margin-top:3px;letter-spacing:.06em">GDELT EVENT MONITOR · OSINT BASE · CONFLICT DATABASE</div>`;
 }
 
 function renderFactionsTab(iso){
@@ -7418,20 +7459,27 @@ let refreshTimer=null;
 const liveCache={};
 
 function renderNewsTab(iso,items,isLive){
+  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   const label=isLive
-    ?'<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>LIVE INTELLIGENCE FEED</span><span style="color:#22c55e;font-size:9px;animation:blink 1.2s step-start infinite">● LIVE</span></div>'
-    :'<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>INTEL ITEMS</span><span style="color:#475569;font-size:9px">● CACHED</span></div>';
-  const refreshBtn='<button onclick="fetchLiveNews(selectedISO,true)" style="width:100%;margin-bottom:10px;padding:6px;background:rgba(30,58,95,.3);border:1px solid #1e3a5f;border-radius:4px;color:#94a3b8;font-family:\'Courier New\',monospace;font-size:9px;cursor:pointer;letter-spacing:.1em">↻ REFRESH FEED</button>';
+    ?`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>LIVE INTELLIGENCE FEED</span><span style="color:#22c55e;font-size:10px;animation:blink 1.2s step-start infinite">● LIVE ${ts}</span></div>`
+    :`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>INTELLIGENCE ITEMS</span><span style="color:#64748b;font-size:10px">● OSINT BASE</span></div>`;
+  const refreshBtn=`<button onclick="fetchLiveNews(selectedISO,true)" style="width:100%;margin-bottom:10px;padding:7px;background:rgba(30,58,95,.3);border:1px solid #1e3a5f;border-radius:4px;color:#7dd3fc;font-family:'Courier New',monospace;font-size:10px;cursor:pointer;letter-spacing:.1em">↻ REFRESH LIVE FEED</button>`;
   if(!items||items.length===0){
-    document.getElementById('tab-news').innerHTML=label+refreshBtn+'<p class="no-data">No live news — click refresh to try again.</p>';
+    document.getElementById('tab-news').innerHTML=label+refreshBtn+'<p class="no-data">No live intel — click refresh to query GDELT/OSINT feeds.</p>';
     return;
   }
+  const catColor={'MILITARY':'#ef4444','GENERAL':'#60a5fa','OSINT':'#22c55e'};
   const html=items.map(n=>{
     if(typeof n==='string')return`<div class="news-item"><p class="news-title">${n}</p></div>`;
     const age=n.published?timeAgo(n.published):'';
-    return`<div class="news-item">
-      <div class="news-meta"><span class="news-src">${n.source||'FEED'}</span><span class="news-time">${age}</span></div>
-      ${n.url?`<a href="${n.url}" target="_blank" rel="noopener" class="news-title" style="color:#e2e8f0;text-decoration:none">${n.title}</a>`
+    const cat=n.category||'';
+    const catBadge=cat?`<span style="font-size:8px;padding:1px 5px;border-radius:2px;background:rgba(30,58,95,.5);color:${catColor[cat]||'#94a3b8'};letter-spacing:.1em;margin-left:6px">${cat}</span>`:'';
+    return`<div class="news-item" style="border-left-color:${catColor[cat]||'#1d4ed8'}">
+      <div class="news-meta">
+        <span class="news-src">${n.source||'FEED'}${catBadge}</span>
+        <span class="news-time">${age}</span>
+      </div>
+      ${n.url?`<a href="${n.url}" target="_blank" rel="noopener" class="news-title" style="text-decoration:none;cursor:pointer" title="Click to read full report">${n.title}</a>`
               :`<p class="news-title">${n.title}</p>`}
     </div>`;
   }).join('');
@@ -7445,17 +7493,34 @@ async function fetchLiveNews(iso, force=false){
   }
   const countryName=COUNTRIES[iso]?.name||iso;
   const results=[];
-  // Try GDELT (free, no key, browser CORS ok)
+  // GDELT query 1: general country news
   try{
-    const q=encodeURIComponent(`"${countryName}" conflict OR war OR military OR tension OR sanctions`);
-    const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=10&format=json&timespan=1week`;
+    const q=encodeURIComponent(`"${countryName}" conflict OR war OR military OR tension OR sanctions OR attack OR missile OR nuclear`);
+    const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=12&format=json&timespan=3days`;
     const res=await fetch(url,{signal:AbortSignal.timeout(6000)});
     if(res.ok){
       const data=await res.json();
       if(data.articles){
-        results.push(...data.articles.slice(0,6).map(a=>({
-          title:a.title,url:a.url,source:'GDELT',
-          published:a.seendatetime?a.seendatetime.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,'$1-$2-$3T$4:$5:$6Z'):''
+        results.push(...data.articles.slice(0,8).map(a=>({
+          title:a.title,url:a.url,source:'GDELT/OSINT',
+          published:a.seendatetime?a.seendatetime.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,'$1-$2-$3T$4:$5:$6Z'):'',
+          category:'GENERAL'
+        })));
+      }
+    }
+  }catch{}
+  // GDELT query 2: security/military specific
+  try{
+    const q2=encodeURIComponent(`"${countryName}" army OR troops OR airstrike OR strike OR insurgent OR terror OR coup OR ceasefire OR offensive`);
+    const url2=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q2}&mode=artlist&maxrecords=8&format=json&timespan=7days`;
+    const res2=await fetch(url2,{signal:AbortSignal.timeout(5000)});
+    if(res2.ok){
+      const d2=await res2.json();
+      if(d2.articles){
+        results.push(...d2.articles.slice(0,5).map(a=>({
+          title:a.title,url:a.url,source:'GDELT/MILITARY',
+          published:a.seendatetime?a.seendatetime.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,'$1-$2-$3T$4:$5:$6Z'):'',
+          category:'MILITARY'
         })));
       }
     }
