@@ -400,13 +400,14 @@ canvas.dragging{cursor:grabbing}
 /* ── Live ticker ── */
 #live-ticker{
   position:fixed;bottom:0;left:0;right:0;z-index:50;
-  background:rgba(5,12,26,.8);border-top:1px solid rgba(30,58,95,.5);
-  height:24px;display:flex;align-items:center;overflow:hidden;
-  font-size:9px;color:var(--muted);letter-spacing:.08em;
+  background:rgba(4,10,22,.92);border-top:1px solid rgba(59,130,246,.25);
+  height:28px;display:flex;align-items:center;overflow:hidden;
+  font-size:11px;color:var(--dim);letter-spacing:.05em;
+  backdrop-filter:blur(4px);
 }
-.ticker-label{padding:0 12px;color:var(--accent);font-weight:bold;letter-spacing:.15em;white-space:nowrap;flex-shrink:0;border-right:1px solid var(--border)}
-.ticker-track{display:flex;gap:0;animation:ticker 60s linear infinite;white-space:nowrap}
-.ticker-item{padding:0 24px;border-right:1px solid var(--border2)}
+.ticker-label{padding:0 14px;color:#ef4444;font-weight:bold;letter-spacing:.2em;font-size:10px;white-space:nowrap;flex-shrink:0;border-right:1px solid rgba(59,130,246,.3);background:rgba(127,29,29,.15)}
+.ticker-track{display:flex;gap:0;animation:ticker 90s linear infinite;white-space:nowrap}
+.ticker-item{padding:0 28px;border-right:1px solid rgba(30,58,95,.4);color:var(--text)}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── Legend expanded ── */
@@ -8903,6 +8904,23 @@ function renderThreatMatrix(){
 }
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
+// Live ticker update every 10 minutes
+(async function fetchTickerLive(){
+  try{
+    const q=encodeURIComponent('war military attack nuclear missile cyber sanction geopolitical conflict hostage cease fire');
+    const r=await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=30&format=json&timespan=4h`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return;
+    const d=await r.json();
+    const articles=(d.articles||[]).filter(a=>a.title&&a.title.length>20).slice(0,20);
+    if(!articles.length)return;
+    const track=document.getElementById('ticker-track');
+    if(!track)return;
+    const items=articles.map(a=>`<span class="ticker-item">${a.title.slice(0,120)}</span>`);
+    // duplicate for seamless loop
+    track.innerHTML=items.join('')+items.join('');
+  }catch(e){}
+  setTimeout(fetchTickerLive,10*60*1000);
+})();
 </script>
 </body>
 </html>
