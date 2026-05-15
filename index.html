@@ -821,13 +821,13 @@ canvas.dragging{cursor:grabbing}
 <div id="sat-backdrop" onclick="toggleSatPanel()"></div>
 <div id="sat-panel">
   <div id="sat-header-bar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span style="color:#34d399;font-size:10px;letter-spacing:.2em;font-family:var(--mono)">🛰 SATELLITE INTELLIGENCE VIEWER</span>
-      <span style="width:5px;height:5px;border-radius:50%;background:#34d399;display:inline-block;animation:blink 2s step-start infinite"></span>
+    <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1">
+      <span id="sat-mode-label" style="color:#34d399;font-size:10px;letter-spacing:.2em;font-family:var(--mono);white-space:nowrap">🛰 SATELLITE INTELLIGENCE VIEWER</span>
+      <span style="width:5px;height:5px;border-radius:50%;background:#34d399;flex-shrink:0;display:inline-block;animation:blink 2s step-start infinite"></span>
+      <span id="sat-title-label" style="font-size:10px;color:#fbbf24;font-family:var(--mono);font-weight:bold;letter-spacing:.08em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:4px"></span>
     </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <span id="sat-title-label" style="font-size:9px;color:#34d399;font-family:var(--mono);letter-spacing:.08em;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
-      <button onclick="toggleSatPanel()" style="background:rgba(127,29,29,.4);border:1.5px solid rgba(239,68,68,.6);color:#fca5a5;cursor:pointer;font-size:10px;font-family:var(--mono);font-weight:bold;letter-spacing:.12em;padding:5px 14px;border-radius:3px;transition:background .15s" onmouseover="this.style.background='rgba(185,28,28,.6)'" onmouseout="this.style.background='rgba(127,29,29,.4)'">✕ CLOSE MAP</button>
+    <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+      <button onclick="toggleSatPanel()" style="background:rgba(127,29,29,.4);border:1.5px solid rgba(239,68,68,.6);color:#fca5a5;cursor:pointer;font-size:10px;font-family:var(--mono);font-weight:bold;letter-spacing:.12em;padding:5px 18px;border-radius:3px;transition:background .15s" onmouseover="this.style.background='rgba(185,28,28,.7)'" onmouseout="this.style.background='rgba(127,29,29,.4)'">✕ CLOSE MAP</button>
     </div>
   </div>
   <div id="sat-controls-bar">
@@ -4824,6 +4824,9 @@ const CIA_PROFILES = {
   SRB:{gov:'Presidential Republic — President Aleksandar Vučić (SNS · seeking strategic ambiguity)',intel_priority:'TIER 2',nuke:'NONE',mil_rating:3,mil_detail:'Serbian AF: 28,150 · MiG-29M (modernized) · H-145M/H-125 (Airbus) · Nora-B52 self-propelled howitzer · Kornet-T ATGM · BIA (internal) · BIA foreign collection (Russian-aligned historically)',econ:'GDP $75B · 3.5% growth · Lithium (Jadar project — largest EU deposit) · EU/Serbian dispute · German industrial investment · INR stable',gdp_trend:'UP',alliances:['CHN (strategic partnership)','RUS (historical/energy)','EU (candidate — stuck on Kosovo)'],adversaries:['KOS (independence dispute)','NATO (historical — 1999 bombing)'],primary_concern:'Kosovo tension — Vučić using KOS crisis for domestic politics while EU integration stalled',vulnerabilities:['Kosovo flashpoint (KSF vs Serbia)','Russian intelligence infiltration of BIA','Lithium deal geopolitics (EU vs China)','EU candidate stuck on Kosovo recognition'],intel_gaps:['BIA-GRU integration depth','Vučić China vs EU endgame','Jadar lithium deal Chinese vs EU terms'],cia_note:'Serbia is the Balkans\' most strategically contested state. Vučić runs a sophisticated double game — EU integration candidate while maintaining Russia and China partnerships, using Kosovo as leverage. The Jadar lithium deposit (largest in Europe) is becoming a proxy for EU-China competition: Rio Tinto vs CATL for mining rights. Whoever wins lithium wins the EV battery supply chain argument in Europe.'},
   KAZ:{gov:'Presidential Republic — President Kassym-Jomart Tokayev (ruling since 2019 · consolidated post-2022 unrest)',intel_priority:'TIER 2',nuke:'NONE · Formerly 4th largest nuclear arsenal (surrendered 1993)',mil_rating:3,mil_detail:'KAF: 39,000 · Post-Soviet equipment · Limited power projection · KNB intelligence (KGB successor) · Russian CSTO military but Tokayev refused Ukraine deployment · Semipalatinsk nuclear test site legacy',econ:'GDP $261B · #1 oil producer in Central Asia · Tengizchevroil (Chevron · $50B expansion) · Uranium: #1 globally (Kazatomprom 40% world supply) · BTC/CPC pipelines bypassing Russia · Tenge stable',gdp_trend:'UP',alliances:['RUS (CSTO — conditional)','CHN (SCO/BRI)','USA/EU (oil sector)'],adversaries:['None active · managing RUS pressure'],primary_concern:'Balancing Russia dependency while refusing to implement Ukraine sanctions — Middle Corridor (Trans-Caspian) positioning',vulnerabilities:['Russian pressure (large ethnic Russian north)','China economic penetration','January 2022 unrest root causes unresolved','Nazarbayev family shadow power'],intel_gaps:['Nazarbayev network residual influence','Russian pressure threshold for CSTO compliance','Chinese rare earth vs uranium negotiation terms'],cia_note:'Kazakhstan is executing the most sophisticated multi-vector foreign policy in Central Asia. Tokayev refused to send troops to Ukraine, refused to implement Western sanctions (parallel import route to Russia), and is simultaneously expanding oil exports via BTC (bypassing Russia) and deepening Chinese economic ties. Kazatomprom (40% global uranium) gives Astana extraordinary leverage. The "Middle Corridor" through Caspian to Europe is becoming a China-to-Europe sanctions-busting route.'},
   UZB:{gov:'Presidential Republic — President Shavkat Mirziyoyev (ruling since 2016 · reformist vs Karimov legacy)',intel_priority:'TIER 2',nuke:'NONE',mil_rating:3,mil_detail:'Uzbek AF: 48,000 · Post-Soviet · SNB intelligence (successor to KGB) · Hosting US logistics post-2001 (Karshi-Khanabad closed 2005) · Limited but improving capability',econ:'GDP $100B · Gold mining · Natural gas · Cotton/textile · Remittances from Russia · $8B gold reserves · Tourism reform growing',gdp_trend:'UP',alliances:['RUS (SCO/CIS)','CHN (BRI anchor)','USA (limited engagement)','EU (GSP+)'],adversaries:['None · managing border with AFG/TJK'],primary_concern:'Afghan spillover — TTP/ISIS-K recruitment of Uzbek nationals · Water scarcity (Amu Darya)',vulnerabilities:['Afghan border TTP infiltration','Fergana Valley Islamist recruitment','Aral Sea ecological collapse (water security)','Russian labor market dependency (2M migrants)'],intel_gaps:['SNB-FSB intelligence sharing extent','Chinese intelligence infrastructure at BRI projects','Uzbek ISIS-K foreign fighter count'],cia_note:'Uzbekistan under Mirziyoyev is the most reformed Central Asian state — opened borders, liberalized tourism, signed $20B in Western investment deals. But it remains an authoritarian state with deep security apparatus. The critical variable is Afghan spillover: 80% of Central Asian ISIS-K foreign fighters are Uzbek/Tajik. A mass-casualty ISIS-K operation blamed on Uzbek nationals could destabilize Mirziyoyev\'s reform trajectory.'},
+  LBY:{gov:'Tripartite fragmentation: GNU (Tripoli — UN-recognized · PM Dbeibah) vs HoR/LNA (Tobruk/Benghazi — Gen. Haftar)',intel_priority:'TIER 2',nuke:'NONE (Qadhafi program dismantled 2003)',mil_rating:2,mil_detail:'LNA (Haftar): ~35,000 fighters · Wagner Group (Russian) elements · UAE air support · Egyptian backing · GNU GNA: ~40,000 (Misrata militias · TUR-backed) · Petroleum Facilities Guard · Russian Pantsir-S1 air defense',econ:'GDP $54B · 95% oil revenue · Blocked NOC exports · CBL split (two central banks) · Dinar parallel market · $75B+ sovereign wealth (frozen LIA)',gdp_trend:'STABLE',alliances:['GNU: TUR/QAT/Italy','LNA/HoR: EGY/UAE/RUS/FRA'],adversaries:['ISIS Sirte resurgence','Each other (GNU vs LNA)'],primary_concern:'Permanent partition — eastern/western Libya becoming de facto separate states with foreign proxy armies',vulnerabilities:['Oil infrastructure weaponized (both sides)','Wagner successor groups (Africa Corps)','Migrant transit state exploitation','No disarmament mechanism'],intel_gaps:['Wagner/Africa Corps Libyan force size post-Mali withdrawal','UAE weapons transfer types to LNA','ISIS Sirte reconstruction capacity'],cia_note:'Libya is the Mediterranean\'s most consequential failed state. Haftar (LNA) controls the oil crescent and eastern Libya with Russian Wagner/Africa Corps backing, UAE air support, and Egyptian logistics. Dbeibah (GNU) controls Tripoli using Turkish-backed Misrata militias. Neither side can win — this is managed partition sustained by oil money and competing foreign interests. Wagner\'s Libya footprint is Russia\'s most valuable North Africa leverage point.'},
+  SOM:{gov:'Federal Presidential Republic — President Hassan Sheikh Mohamud · Fragile federal model (Puntland/Jubbaland/Hirshabelle/Galmudug)',intel_priority:'TIER 2',nuke:'NONE',mil_rating:2,mil_detail:'SNAF: ~20,000 (capacity-limited) · AMISOM/ATMIS (AU Mission: Uganda/Kenya/Ethiopia/Djibouti — 11,000) · Al-Shabaab: 7,000-12,000 fighters (controls 60%+ rural south/central) · US AFRICOM airstrikes ongoing · Bancroft Group (US contractor training)',econ:'GDP $8.4B · Livestock/remittances dominant ($2B/yr diaspora) · Berbera port (UAE-managed · Somaliland) · Fishing piracy residual · Mogadishu rebuilding slowly',gdp_trend:'STABLE',alliances:['USA (AFRICOM/CT)','AU (ATMIS)','TUR (military base/Mogadishu port)','UAE (Berbera/trade)'],adversaries:['Al-Shabaab (al-Qaeda affiliate)','ISIS-Somalia','Somaliland separatism','Ethiopia-Somaliland port deal (2024 crisis)'],primary_concern:'Al-Shabaab controlling majority of territory — ATMIS withdrawal creating governance vacuum · Ethiopia-Somaliland deal triggering regional crisis',vulnerabilities:['ATMIS withdrawal timeline (capacity gap)','Clan system fragmenting federal state','Ethiopia port deal creating potential Somalia-Ethiopia conflict','Climate shocks (drought/flood cycles)'],intel_gaps:['Al-Shabaab financial network (hawala/taxation depth)','ISIS-Somalia-al-Shabaab rivalry threshold','Mukhtar Robow (defected al-Shabaab) current intelligence value'],cia_note:'Somalia is the proving ground for US CT strategy without boots on ground. Al-Shabaab survived 15 years of military pressure, AU peacekeepers, and drone strikes by adapting — taxation of the population, sophisticated propaganda, and clan accommodation. The 2024 Ethiopia-Somaliland port deal (Ethiopia gets Red Sea access, Somaliland gets recognition talks) has destabilized an already fragile Horn of Africa balance. Somalia\'s threat to "defend its territory" against Ethiopia could trigger the worst East Africa interstate conflict since the Ogaden War.'},
+  MLI:{gov:'Military Junta — Transition President Col. Assimi Goïta (coup Aug 2020 / May 2021) · CNSP military council',intel_priority:'TIER 2',nuke:'NONE',mil_rating:2,mil_detail:'FAMA: ~21,500 · Wagner/Africa Corps: est. 1,000-2,000 operatives (replaced French Barkhane) · Russian Mi-8/Mi-35 helicopters · Sudanese mercenaries · JNIM (al-Qaeda Sahel affiliate): 10,000+ fighters · ISGS (ISIS Sahel): 3,000-4,000',econ:'GDP $19B · Gold #1 export (Barrick/AngloGold) · Cotton/agriculture · CFA Franc (ECOWAS suspended) · 70%+ poverty · Aid cut by France/EU/ECOWAS',gdp_trend:'DOWN',alliances:['RUS (Wagner/Africa Corps)','BFA/NIG (AES Alliance — anti-French axis)','CHN (infrastructure)'],adversaries:['France (expelled 2022)','UN MINUSMA (expelled 2023)','ECOWAS (sanctions)','JNIM/ISGS jihadist groups'],primary_concern:'Jihadist territorial expansion while Wagner enables junta — JNIM controls 50%+ of Mali territory',vulnerabilities:['Wagner reliance creating Russian dependency','ECOWAS sanctions + French departure = aid cliff','JNIM advancing toward Bamako (capital) periodically','AES Alliance (Mali/BFA/NIG) financial isolation'],intel_gaps:['Wagner Africa Corps true casualty rate in Mali','JNIM-ISGS coordination depth vs rivalry','Goïta succession planning'],cia_note:'Mali is ground zero for the West\'s failed Sahel strategy. France spent $1B+/yr on Operation Barkhane for 9 years — JNIM still controls 50%+ of Mali. Goïta expelled France, then the UN, then brought in Wagner. Result: Wagner enables junta survival, JNIM expands regardless, civilian massacres attributed to Wagner-FAMA operations (Moura: 500 killed). The AES Alliance (Mali+Burkina Faso+Niger) is a Russian-backed anti-Western bloc controlling the Sahara corridor — the most significant geopolitical shift in Africa in a generation.'},
   ZWE:{gov:'Presidential Republic — President Emmerson Mnangagwa (ZANU-PF · post-Mugabe coup 2017)',intel_priority:'TIER 3',nuke:'NONE',mil_rating:2,mil_detail:'ZDF: 29,000 · Limited capability · CIO intelligence (feared internal security) · ZDF involvement in DRC (SADC SAMIDRC) · Gold smuggling protection via military',econ:'GDP $26B · Gold (#1 export · smuggled $1.5B+/yr) · Zimbabwe Gold (ZiG) currency launched 2024 · Lithium reserves significant · Tobacco/agriculture · Inflation chronically unstable',gdp_trend:'STABLE',alliances:['CHN (Mnangagwa was Beijing-trained)','RUS (diplomatic)','SADC (regional)'],adversaries:['USA/EU/UK (targeted sanctions)'],primary_concern:'Economic mismanagement + gold smuggling + elite CIO-military kleptocracy undermining any reform',vulnerabilities:['Currency instability (ZiG replacing RTGS dollar)','Gold smuggling ($1.5B/yr lost revenue)','Land reform agricultural collapse legacy','Mnangagwa vs military faction tensions'],intel_gaps:['CIO gold smuggling network to Dubai','Chinese lithium deal terms (Arcadia/Prospect Resources)','Mnangagwa succession (crocodile faction vs military)'],cia_note:'Zimbabwe is a resource-rich kleptocracy. The "Second Republic" under Mnangagwa is Mugabe 2.0 — same ZANU-PF elite, same CIO apparatus, different face. Gold smuggling to Dubai (est. $1.5B/yr) sustains the elite while the population remains poor. Chinese lithium investment is the new economic variable — but deals are opaque and likely structured to benefit ZANU-PF elites rather than the national treasury.'},
 };
 
@@ -6414,17 +6417,26 @@ function renderSocialFeed(){
 
 function globe_focusVIP(lat,lng,name,status){
   if(socialPanelOpen)toggleSocialPanel();
+  if(threatPanelOpen)toggleThreatPanel();
   dragVelX=0;dragVelY=0;
   const toX=-lat*Math.PI/180, toY=-lng*Math.PI/180;
   vipAnimTarget={fromX:rotX,fromY:rotY,toX,toY,startMs:Date.now(),dur:1400};
   vipFocusMarker={lat,lng,name,status,born:Date.now()};
-  document.getElementById('h-status').textContent='⬤ VIP LOCATED: '+name+' — '+status;
-  // After globe animation completes, open satellite viewer at building level
+  const hStatus=document.getElementById('h-status');
+  hStatus.textContent='⬤ VIP TRACKING: '+name+' — GLOBE ROTATING TO POSITION…';
+  hStatus.style.color='#fbbf24';
+  // After globe animation completes (1400ms), open ESRI satellite at building-level zoom 17
   setTimeout(()=>{
     satVipLabel={name,status,lat,lng};
-    satOpenAt(lat,lng,'♦ '+name+' — '+status,16);
-  },1500);
-  setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},8000);
+    // Force ESRI HIGH RES (maxZoom 18) for best VIP building-level imagery
+    satOpenAt(lat,lng,'♦ VIP TRACK: '+name+' — '+status,17,'esri');
+    hStatus.textContent='⬤ VIP LOCKED: '+name+' — '+status;
+    hStatus.style.color='#34d399';
+  },1450);
+  setTimeout(()=>{
+    hStatus.textContent='Double-click country · Dots are hotspots · Scroll to zoom';
+    hStatus.style.color='';
+  },9000);
 }
 
 function draw(){
@@ -8397,27 +8409,32 @@ function toggleSatPanel(){
     bd.style.display='block';
     requestAnimationFrame(()=>{
       panel.classList.add('open');
-      // 200ms: panel CSS transition settling, then re-check at 500ms for any half-size edge case
-      setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},200);
-      setTimeout(()=>{sizeSatCanvas();if(satLocSelected){const c=document.getElementById('sat-canvas');if(c&&(c.width<100||c.height<100))drawSatMap();};},500);
     });
     populateSatLocSel();
     document.getElementById('sat-date-in').value=satDate;
     if(!satLocSelected)showSatLocList();
     updateSatInfoBar();
+    // ResizeObserver handles canvas sizing reliably — no setTimeout needed
   } else {
     panel.classList.remove('open');
     bd.style.display='none';
+    clearVipLabel();
     setTimeout(()=>{if(!satOpen)panel.style.display='none';},240);
   }
 }
 
+function clearVipLabel(){
+  if(satVipLabel&&satVipLabel._pulseId){clearInterval(satVipLabel._pulseId);}
+  satVipLabel=null;
+}
 function satShowLocList(){
   satLocSelected=false;
-  satVipLabel=null;
+  clearVipLabel();
   document.getElementById('sat-back-btn').style.display='none';
   document.getElementById('sat-title-label').textContent='';
   document.getElementById('sat-loc-sel').value='';
+  const modeEl=document.getElementById('sat-mode-label');
+  if(modeEl){modeEl.textContent='🛰 SATELLITE INTELLIGENCE VIEWER';modeEl.style.color='#34d399';}
   showSatLocList();
 }
 
@@ -8456,8 +8473,12 @@ function satJumpToLocation(name){
   if(!name)return;
   const loc=SAT_LOCATIONS.find(l=>l.name===name);
   if(!loc)return;
+  clearVipLabel(); // stop VIP pulse when navigating to a standard location
+  const modeEl=document.getElementById('sat-mode-label');
+  if(modeEl){modeEl.textContent='🛰 SATELLITE INTELLIGENCE VIEWER';modeEl.style.color='#34d399';}
   satLat=loc.lat;satLng=loc.lng;
   satZoom=Math.min(loc.zoom,SAT_LAYERS[satLayerKey].maxZoom);
+  clearSatTileCache();
   satLocSelected=true;
   document.getElementById('sat-loc-list').style.display='none';
   document.getElementById('sat-loc-sel').value=name;
@@ -8466,22 +8487,33 @@ function satJumpToLocation(name){
   sizeSatCanvas();drawSatMap();updateSatInfoBar();
 }
 
-function satOpenAt(lat,lng,label,zoom){
+function satOpenAt(lat,lng,label,zoom,forceLayer){
   satLat=lat;satLng=lng;
+  // Switch layer if requested (e.g. ESRI HIGH RES for VIP views)
+  if(forceLayer&&SAT_LAYERS[forceLayer]){
+    satLayerKey=forceLayer;
+    document.querySelectorAll('.sl-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('sl-'+forceLayer)?.classList.add('active');
+  }
   satZoom=zoom?Math.min(zoom,SAT_LAYERS[satLayerKey].maxZoom):Math.min(11,SAT_LAYERS[satLayerKey].maxZoom);
-  clearSatTileCache(); // always flush tiles when jumping to a new location
+  clearSatTileCache();
   satLocSelected=true;
-  document.getElementById('sat-title-label').textContent=label||'';
+  // Update header mode label
+  const isVip=forceLayer==='esri'&&zoom>=15;
+  const modeEl=document.getElementById('sat-mode-label');
+  const titleEl=document.getElementById('sat-title-label');
+  if(modeEl)modeEl.textContent=isVip?'🛰 VIP TRACKING MODE — HIGH RES ESRI':'🛰 SATELLITE INTELLIGENCE VIEWER';
+  if(modeEl)modeEl.style.color=isVip?'#fbbf24':'#34d399';
+  if(titleEl)titleEl.textContent=label||'';
   document.getElementById('sat-back-btn').style.display='inline-flex';
   document.getElementById('sat-loc-list').style.display='none';
+  updateSatInfoBar();
   if(!satOpen){
     toggleSatPanel();
-    // toggleSatPanel has a 120ms internal delay — give it extra time then force a size+draw
-    setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();updateSatInfoBar();},300);
-    setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},600);
+    // ResizeObserver fires when wrap reaches real size → auto draws
   } else {
-    sizeSatCanvas();drawSatMap();updateSatInfoBar();
-    setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},200);
+    sizeSatCanvas();
+    drawSatMap();
   }
 }
 
@@ -8521,8 +8553,11 @@ function sizeSatCanvas(){
   const wrap=document.getElementById('sat-map-wrap');
   const canvas=document.getElementById('sat-canvas');
   if(!wrap||!canvas)return;
-  canvas.width=wrap.clientWidth||900;
-  canvas.height=wrap.clientHeight||500;
+  // getBoundingClientRect is accurate even during CSS transitions; clientWidth can be 0 mid-animation
+  const r=wrap.getBoundingClientRect();
+  const w=Math.round(r.width)||wrap.clientWidth||900;
+  const h=Math.round(r.height)||wrap.clientHeight||500;
+  if(w>50&&h>50){canvas.width=w;canvas.height=h;}
 }
 
 function worldPx(lat,lng,z){
@@ -8606,41 +8641,79 @@ function drawSatMap(){
     ctx.fillText('Tile server unreachable. Try a different layer or select another location.',W/2,H/2+8);
     ctx.textAlign='left';
   }
-  // Crosshair / VIP pin
+  // Crosshair / VIP targeting reticle
   const cx=W/2,cy=H/2;
   if(satVipLabel){
-    // Bold target ring for VIP
-    ctx.strokeStyle='rgba(251,191,36,.9)';ctx.lineWidth=2;
-    ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);ctx.stroke();
-    ctx.strokeStyle='rgba(251,191,36,.6)';ctx.lineWidth=1;
-    ctx.beginPath();ctx.arc(cx,cy,28,0,Math.PI*2);ctx.stroke();
+    // Pulsing outer ring (uses performance.now for animation, redraws via scheduleVipPulse)
+    const pulse=Math.abs(Math.sin(performance.now()*0.002));
+    const r1=20+pulse*6;
+    const r2=32+pulse*4;
+    const alpha1=0.6+pulse*0.35;
+    // Outer pulsing ring
+    ctx.strokeStyle=`rgba(251,191,36,${alpha1})`;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(cx,cy,r2,0,Math.PI*2);ctx.stroke();
+    // Inner solid ring
     ctx.strokeStyle='rgba(251,191,36,.95)';ctx.lineWidth=2;
-    ctx.beginPath();ctx.moveTo(cx-28,cy);ctx.lineTo(cx-10,cy);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx+10,cy);ctx.lineTo(cx+28,cy);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx,cy-28);ctx.lineTo(cx,cy-10);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx,cy+10);ctx.lineTo(cx,cy+28);ctx.stroke();
-    ctx.fillStyle='rgba(251,191,36,.9)';
-    ctx.beginPath();ctx.arc(cx,cy,4,0,Math.PI*2);ctx.fill();
-    // VIP name tag — box above crosshair
-    const tag=satVipLabel.name;
-    ctx.font='bold 12px monospace';
+    ctx.beginPath();ctx.arc(cx,cy,r1,0,Math.PI*2);ctx.stroke();
+    // 45° tick marks on inner ring
+    ctx.strokeStyle='rgba(251,191,36,.9)';ctx.lineWidth=2;
+    [45,135,225,315].forEach(deg=>{
+      const rad=deg*Math.PI/180;
+      const x1=cx+Math.cos(rad)*(r1+2),y1=cy+Math.sin(rad)*(r1+2);
+      const x2=cx+Math.cos(rad)*(r1+10),y2=cy+Math.sin(rad)*(r1+10);
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    });
+    // Cardinal crosshair arms (gap in center)
+    const gap=r1+2,arm=r2+18;
+    ctx.strokeStyle='rgba(251,191,36,.9)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(cx-arm,cy);ctx.lineTo(cx-gap,cy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx+gap,cy);ctx.lineTo(cx+arm,cy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx,cy-arm);ctx.lineTo(cx,cy-gap);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx,cy+gap);ctx.lineTo(cx,cy+arm);ctx.stroke();
+    // Center dot
+    ctx.fillStyle='rgba(251,191,36,.95)';
+    ctx.beginPath();ctx.arc(cx,cy,3.5,0,Math.PI*2);ctx.fill();
+    // ── VIP name tag above crosshair ──
+    const tag=satVipLabel.name.toUpperCase();
+    ctx.font='bold 13px monospace';
     const tw=ctx.measureText(tag).width;
-    const bx=cx-tw/2-8,by=cy-60,bw=tw+16,bh=22;
-    ctx.fillStyle='rgba(15,23,42,.88)';
-    ctx.strokeStyle='rgba(251,191,36,.7)';ctx.lineWidth=1.2;
-    ctx.beginPath();ctx.roundRect(bx,by,bw,bh,4);ctx.fill();ctx.stroke();
-    // stem line from tag to target
-    ctx.strokeStyle='rgba(251,191,36,.6)';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(cx,by+bh);ctx.lineTo(cx,cy-18);ctx.stroke();
-    ctx.fillStyle='#fbbf24';ctx.textAlign='center';
-    ctx.fillText(tag,cx,by+15);ctx.textAlign='left';
-    // Status subtitle
+    const boxH=26,boxW=tw+20,boxX=cx-boxW/2,boxY=cy-arm-boxH-8;
+    // Shadow
+    ctx.fillStyle='rgba(0,0,0,.5)';
+    ctx.fillRect(boxX+2,boxY+2,boxW,boxH);
+    // Box fill + border
+    ctx.fillStyle='rgba(3,10,25,.92)';
+    ctx.strokeStyle='rgba(251,191,36,.85)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.roundRect(boxX,boxY,boxW,boxH,4);ctx.fill();ctx.stroke();
+    // Gold highlight bar on top of box
+    ctx.fillStyle='rgba(251,191,36,.25)';
+    ctx.fillRect(boxX+1,boxY+1,boxW-2,5);
+    // VIP name text
+    ctx.fillStyle='#fbbf24';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(tag,cx,boxY+boxH/2);
+    // Stem from box to crosshair
+    ctx.strokeStyle='rgba(251,191,36,.55)';ctx.lineWidth=1;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(cx,boxY+boxH);ctx.lineTo(cx,cy-arm);ctx.stroke();
+    ctx.setLineDash([]);
+    // ── Status label below crosshair ──
     const sub=satVipLabel.status;
-    ctx.font='10px monospace';
-    ctx.fillStyle='rgba(148,163,184,.85)';
+    ctx.font='10px monospace';ctx.fillStyle='rgba(148,163,184,.9)';
     const sw=ctx.measureText(sub).width;
-    ctx.fillText(sub,cx-sw/2,cy+45);
+    // Backing pill
+    ctx.fillStyle='rgba(3,10,25,.8)';
+    ctx.fillRect(cx-sw/2-6,cy+arm+4,sw+12,16);
+    ctx.fillStyle='#b0c4d8';ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillText(sub,cx,cy+arm+7);
+    // Reset
+    ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    // Schedule continuous redraw to animate pulse
+    if(!satVipLabel._pulseId){
+      const repulse=()=>{if(satVipLabel&&satOpen&&satLocSelected){drawSatMap();}};
+      satVipLabel._pulseId=setInterval(repulse,80);
+    }
   } else {
+    // Standard red crosshair
     ctx.strokeStyle='rgba(239,68,68,.85)';ctx.lineWidth=1.5;
     ctx.beginPath();ctx.moveTo(cx-16,cy);ctx.lineTo(cx+16,cy);ctx.stroke();
     ctx.beginPath();ctx.moveTo(cx,cy-16);ctx.lineTo(cx,cy+16);ctx.stroke();
@@ -8740,8 +8813,25 @@ function initSatMapEvents(){
     if(e.key==='+'||e.key==='=') satZoomIn();
     if(e.key==='-') satZoomOut();
   });
-  // Resize handler
+  // Window resize
   window.addEventListener('resize',()=>{if(satOpen&&satLocSelected){sizeSatCanvas();drawSatMap();}});
+  // ResizeObserver — fires reliably whenever sat-map-wrap changes size (including panel open/close CSS transition)
+  // This is the authoritative canvas sizing trigger — no fragile setTimeout chains needed
+  const wrap=document.getElementById('sat-map-wrap');
+  if(wrap&&window.ResizeObserver){
+    const ro=new ResizeObserver(entries=>{
+      if(!satOpen)return;
+      const e=entries[0];
+      const w=Math.round(e.contentRect.width);
+      const h=Math.round(e.contentRect.height);
+      if(w>50&&h>50){
+        const c=document.getElementById('sat-canvas');
+        if(c){c.width=w;c.height=h;}
+        if(satLocSelected)drawSatMap();
+      }
+    });
+    ro.observe(wrap);
+  }
 }
 
 function hsOpenSatellite(){
