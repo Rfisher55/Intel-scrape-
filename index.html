@@ -462,6 +462,75 @@ canvas.dragging{cursor:grabbing}
   border-left:none;border-top:1px solid rgba(245,158,11,.2);border-radius:14px 14px 0 0;}
   #social-btn{bottom:32px;right:12px;font-size:8px;padding:6px 10px}}
 
+/* ── Satellite Imagery Panel ── */
+#sat-btn{
+  position:fixed;bottom:65px;right:20px;z-index:160;
+  background:rgba(4,10,22,.92);border:1px solid rgba(52,211,153,.3);border-radius:5px;
+  color:#34d399;font-family:var(--mono);font-size:9px;letter-spacing:.15em;
+  padding:7px 12px;cursor:pointer;backdrop-filter:blur(10px);
+  display:flex;align-items:center;gap:6px;transition:all .2s;white-space:nowrap;
+}
+#sat-btn:hover{border-color:rgba(52,211,153,.6);color:#6ee7b7;box-shadow:0 0 12px rgba(52,211,153,.15)}
+#sat-backdrop{position:fixed;inset:0;z-index:195;background:rgba(2,6,14,.6);backdrop-filter:blur(4px);display:none}
+#sat-panel{
+  position:fixed;left:50%;top:50%;z-index:200;
+  transform:translate(-50%,-50%) scale(.95);
+  width:min(95vw,980px);height:min(88vh,700px);
+  background:rgba(4,10,22,.97);border:1px solid rgba(52,211,153,.25);border-radius:8px;
+  display:none;flex-direction:column;
+  backdrop-filter:blur(16px);
+  box-shadow:0 24px 80px rgba(0,0,0,.7),0 0 0 1px rgba(52,211,153,.06) inset;
+  transition:transform .22s cubic-bezier(.32,.72,0,1),opacity .22s;opacity:0;
+}
+#sat-panel.open{transform:translate(-50%,-50%) scale(1);opacity:1}
+#sat-header-bar{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;border-bottom:1px solid rgba(52,211,153,.15);flex-shrink:0}
+#sat-controls-bar{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  padding:7px 12px;border-bottom:1px solid rgba(52,211,153,.1);flex-shrink:0;
+  background:rgba(8,20,40,.4);
+}
+.sl-btn{
+  background:rgba(8,16,34,.8);border:1px solid rgba(30,58,95,.6);border-radius:3px;
+  color:var(--muted);font-family:var(--mono);font-size:8px;letter-spacing:.1em;
+  padding:4px 9px;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.sl-btn:hover{border-color:rgba(52,211,153,.4);color:#34d399}
+.sl-btn.active{border-color:rgba(52,211,153,.6);color:#34d399;background:rgba(52,211,153,.12)}
+#sat-info-bar{
+  padding:5px 12px;font-size:8px;font-family:var(--mono);color:var(--muted);
+  border-bottom:1px solid rgba(52,211,153,.08);flex-shrink:0;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+#sat-map-wrap{flex:1;position:relative;overflow:hidden;background:#010408;min-height:0}
+#sat-canvas{display:block;cursor:crosshair}
+#sat-loc-list{
+  position:absolute;inset:0;overflow-y:auto;
+  background:rgba(4,10,22,.96);padding:14px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px;align-content:start;
+}
+.sat-loc-item{
+  background:rgba(8,20,40,.7);border:1px solid rgba(52,211,153,.15);border-radius:4px;
+  padding:8px 10px;cursor:pointer;transition:all .15s;
+}
+.sat-loc-item:hover{border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.07)}
+.sat-loc-name{font-size:9px;color:#e2e8f0;letter-spacing:.04em;margin-bottom:3px}
+.sat-loc-cat{font-size:7px;letter-spacing:.14em;color:var(--muted)}
+#sat-hud{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.72);border:1px solid rgba(52,211,153,.3);border-radius:4px;
+  padding:4px 12px;font-family:var(--mono);font-size:9px;color:#94a3b8;
+  pointer-events:none;white-space:nowrap;letter-spacing:.04em;
+}
+#sat-loading-overlay{
+  position:absolute;inset:0;background:rgba(4,10,22,.85);
+  display:none;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:10px;color:#34d399;letter-spacing:.2em;
+}
+@media(max-width:600px){#sat-panel{width:100%;height:85dvh;top:auto;bottom:0;left:0;transform:none!important;border-radius:14px 14px 0 0}
+  #sat-panel.open{transform:none!important}
+  #sat-btn{bottom:100px;right:12px;font-size:8px;padding:6px 10px}}
+
 /* ── Intel Brief Modal (tracking layers) ── */
 #track-modal{
   position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;
@@ -637,6 +706,47 @@ canvas.dragging{cursor:grabbing}
   </div>
 </div>
 
+<!-- Satellite Imagery Button -->
+<div id="sat-btn" onclick="toggleSatPanel()" title="Satellite Imagery Viewer">🛰 SATELLITE</div>
+
+<!-- Satellite Panel -->
+<div id="sat-backdrop" onclick="toggleSatPanel()"></div>
+<div id="sat-panel">
+  <div id="sat-header-bar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="color:#34d399;font-size:10px;letter-spacing:.2em;font-family:var(--mono)">🛰 SATELLITE INTELLIGENCE VIEWER</span>
+      <span style="width:5px;height:5px;border-radius:50%;background:#34d399;display:inline-block;animation:blink 2s step-start infinite"></span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span id="sat-title-label" style="font-size:9px;color:#34d399;font-family:var(--mono);letter-spacing:.08em"></span>
+      <button onclick="toggleSatPanel()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:0 4px">✕</button>
+    </div>
+  </div>
+  <div id="sat-controls-bar">
+    <select id="sat-loc-sel" onchange="satJumpToLocation(this.value)" style="background:rgba(8,20,40,.9);border:1px solid rgba(52,211,153,.25);color:#94a3b8;font-family:var(--mono);font-size:8px;padding:4px 6px;border-radius:3px;letter-spacing:.04em;cursor:pointer;flex-shrink:0">
+      <option value="">— SELECT LOCATION —</option>
+    </select>
+    <button class="sl-btn active" id="sl-esri"    onclick="setSatLayer('esri')">HIGH RES</button>
+    <button class="sl-btn"        id="sl-modis"   onclick="setSatLayer('modis')">DAILY MODIS</button>
+    <button class="sl-btn"        id="sl-viirs"   onclick="setSatLayer('viirs')">NIGHT VIIRS</button>
+    <button class="sl-btn"        id="sl-thermal" onclick="setSatLayer('thermal')">THERMAL</button>
+    <input type="date" id="sat-date-in" onchange="satDateChange(this.value)" title="Select imagery date (for NASA layers)" style="background:rgba(8,20,40,.9);border:1px solid rgba(52,211,153,.2);color:#94a3b8;font-family:var(--mono);font-size:8px;padding:4px 6px;border-radius:3px;cursor:pointer">
+    <div style="display:flex;gap:4px;margin-left:auto;flex-shrink:0">
+      <button class="sl-btn" onclick="satZoomIn()"  title="Zoom in">＋</button>
+      <button class="sl-btn" onclick="satZoomOut()" title="Zoom out">－</button>
+    </div>
+  </div>
+  <div id="sat-info-bar">
+    <span id="sat-layer-desc" style="flex:1;font-size:7.5px"></span>
+    <span id="sat-coords-label" style="color:#34d399;font-weight:600;font-size:8px;white-space:nowrap"></span>
+  </div>
+  <div id="sat-map-wrap">
+    <canvas id="sat-canvas"></canvas>
+    <div id="sat-loc-list"></div>
+    <div id="sat-hud"></div>
+  </div>
+</div>
+
 <!-- Intelligence Brief Modal -->
 <div id="track-modal" onclick="if(event.target===this)closeTrackModal()">
   <div id="track-card">
@@ -695,6 +805,7 @@ canvas.dragging{cursor:grabbing}
     <div class="hs-body" id="hs-body">—</div>
     <div class="hs-footer">
       <button class="hs-country-btn" id="hs-country-btn" onclick="hsOpenCountry()">VIEW COUNTRY INTEL</button>
+      <button class="hs-country-btn" id="hs-sat-btn" onclick="hsOpenSatellite()" style="border-color:rgba(52,211,153,.5);color:#34d399;background:rgba(52,211,153,.08)">🛰 SATELLITE VIEW</button>
       <button class="hs-close-btn" onclick="closeHotspot()">✕ CLOSE</button>
     </div>
   </div>
@@ -7350,7 +7461,318 @@ function tick(){document.getElementById('h-time').textContent=new Date().toUTCSt
 // Expose for refresh button onclick attribute
 window.fetchLiveNews=fetchLiveNews;
 
-resize();tick();animate();loadWorldData();fetchLiveHotspots();
+// ── SATELLITE IMAGERY PANEL ──────────────────────────────────────────────────
+let satOpen=false,satLocSelected=false;
+let satLat=32.5,satLng=37.0,satZoom=9;
+let satLayerKey='esri';
+let satDate=(()=>{const d=new Date();d.setDate(d.getDate()-2);return d.toISOString().slice(0,10);})();
+const SAT_TS=256;
+let satTileCache={},satCacheKeys=[];
+const SAT_CACHE_MAX=500;
+let satDragging=false,satDragLast={x:0,y:0};
+
+const SAT_LAYERS={
+  esri:{id:'esri',label:'HIGH RES',maxZoom:18,color:'#a3e635',
+    desc:'ESRI World Imagery — commercial satellite, sub-meter resolution in urban areas. Reference imagery (updated periodically, not daily).',
+    url:(z,tx,ty)=>`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${ty}/${tx}`},
+  modis:{id:'modis',label:'DAILY MODIS',maxZoom:9,color:'#22c55e',
+    desc:'NASA MODIS Terra — 250m resolution, updated every 24 hours. Shows active fires, smoke plumes, ship wakes, dust clouds from explosions.',
+    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+  viirs:{id:'viirs',label:'NIGHT VIIRS',maxZoom:8,color:'#fbbf24',
+    desc:'NASA VIIRS night lights — updated daily. Detects active lighting changes, field fires, blackouts, military forward operating bases.',
+    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_At_Sensor_Radiance/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+  thermal:{id:'thermal',label:'THERMAL',maxZoom:7,color:'#ef4444',
+    desc:'NASA MODIS thermal anomalies — updated daily. Detects active fires, explosions, burning infrastructure, industrial heat signatures.',
+    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Thermal_Anomalies_Fire_Daily/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.png`},
+};
+
+const SAT_LOCATIONS=[
+  {name:'Eastern Ukraine — Donbas Front',lat:48.1,lng:37.6,zoom:9,cat:'CONFLICT'},
+  {name:'Gaza Strip',lat:31.35,lng:34.3,zoom:11,cat:'CONFLICT'},
+  {name:'Kyiv — Capital Region',lat:50.45,lng:30.52,zoom:11,cat:'CONFLICT'},
+  {name:'Zaporizhzhia — Nuclear Plant Zone',lat:47.5,lng:34.6,zoom:10,cat:'CONFLICT'},
+  {name:'Bakhmut / Avdiivka Sector',lat:48.05,lng:37.75,zoom:10,cat:'CONFLICT'},
+  {name:'Lebanon — Southern Border',lat:33.1,lng:35.4,zoom:10,cat:'CONFLICT'},
+  {name:'Myanmar — Tatmadaw Operations',lat:19.0,lng:96.5,zoom:8,cat:'CONFLICT'},
+  {name:'Sudan — RSF Darfur Region',lat:13.5,lng:24.0,zoom:8,cat:'CONFLICT'},
+  {name:'Yemen — Houthi Territory',lat:15.35,lng:44.2,zoom:9,cat:'CONFLICT'},
+  {name:'Sohae Satellite Launch Site (DPRK)',lat:39.66,lng:124.71,zoom:13,cat:'NUCLEAR/MISSILE'},
+  {name:'Yongbyon Nuclear Complex (DPRK)',lat:39.8,lng:125.8,zoom:12,cat:'NUCLEAR/MISSILE'},
+  {name:'Fordow Nuclear Facility (Iran)',lat:34.88,lng:49.21,zoom:13,cat:'NUCLEAR/MISSILE'},
+  {name:'Natanz Enrichment Site (Iran)',lat:33.72,lng:51.73,zoom:12,cat:'NUCLEAR/MISSILE'},
+  {name:'Kapustin Yar (Russian ICBM Range)',lat:48.5,lng:45.8,zoom:10,cat:'MILITARY'},
+  {name:'Plesetsk Cosmodrome (Russia)',lat:62.9,lng:40.6,zoom:11,cat:'MILITARY'},
+  {name:'Diego Garcia (US Naval Base)',lat:-7.31,lng:72.4,zoom:12,cat:'MILITARY'},
+  {name:'Rammstein Air Base (US/NATO)',lat:49.44,lng:7.60,zoom:13,cat:'MILITARY'},
+  {name:'Incirlik Air Base (US/Turkey)',lat:37.00,lng:35.43,zoom:13,cat:'MILITARY'},
+  {name:'Camp Lemonnier (US, Djibouti)',lat:11.55,lng:43.15,zoom:13,cat:'MILITARY'},
+  {name:'Sanya Naval Base (China)',lat:18.22,lng:109.59,zoom:12,cat:'NAVAL'},
+  {name:'Tartus Naval Base (Russia/Syria)',lat:34.89,lng:35.87,zoom:13,cat:'NAVAL'},
+  {name:'Sevastopol — Black Sea Fleet HQ',lat:44.62,lng:33.52,zoom:12,cat:'NAVAL'},
+  {name:'Novorossiysk Naval Base (Russia)',lat:44.7,lng:37.8,zoom:12,cat:'NAVAL'},
+  {name:'Taiwan Strait',lat:24.0,lng:120.0,zoom:8,cat:'MARITIME'},
+  {name:'Strait of Hormuz',lat:26.58,lng:56.25,zoom:9,cat:'MARITIME'},
+  {name:'South China Sea — Spratlys',lat:10.5,lng:114.0,zoom:8,cat:'MARITIME'},
+  {name:'Black Sea — Operations Zone',lat:44.0,lng:32.0,zoom:7,cat:'MARITIME'},
+  {name:'Bab el-Mandeb Strait (Houthi)',lat:12.6,lng:43.4,zoom:9,cat:'MARITIME'},
+  {name:'Lourdes SIGINT Station (Cuba)',lat:22.93,lng:-82.2,zoom:14,cat:'SIGINT'},
+  {name:'Menwith Hill (UK/NSA)',lat:54.0,lng:-1.68,zoom:13,cat:'SIGINT'},
+  {name:'RAF Akrotiri (UK, Cyprus)',lat:34.59,lng:32.98,zoom:12,cat:'SIGINT'},
+  {name:'Moscow — Kremlin',lat:55.75,lng:37.62,zoom:13,cat:'VIP/CAPITAL'},
+  {name:'Beijing — Zhongnanhai',lat:39.91,lng:116.39,zoom:13,cat:'VIP/CAPITAL'},
+  {name:'Washington DC — White House',lat:38.9,lng:-77.0,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'Pyongyang — Leadership Complex',lat:39.02,lng:125.75,zoom:13,cat:'VIP/CAPITAL'},
+  {name:'Tehran — Leadership Quarter',lat:35.7,lng:51.42,zoom:13,cat:'VIP/CAPITAL'},
+];
+
+function toggleSatPanel(){
+  satOpen=!satOpen;
+  const panel=document.getElementById('sat-panel');
+  const bd=document.getElementById('sat-backdrop');
+  if(satOpen){
+    panel.style.display='flex';
+    bd.style.display='block';
+    requestAnimationFrame(()=>{panel.classList.add('open');sizeSatCanvas();});
+    populateSatLocSel();
+    document.getElementById('sat-date-in').value=satDate;
+    if(!satLocSelected)showSatLocList();
+    else setTimeout(drawSatMap,80);
+    updateSatInfoBar();
+  } else {
+    panel.classList.remove('open');
+    bd.style.display='none';
+    setTimeout(()=>{if(!satOpen)panel.style.display='none';},240);
+  }
+}
+
+function populateSatLocSel(){
+  const sel=document.getElementById('sat-loc-sel');
+  if(sel.children.length>1)return;
+  const cats=[...new Set(SAT_LOCATIONS.map(l=>l.cat))];
+  cats.forEach(cat=>{
+    const og=document.createElement('optgroup');og.label=cat;
+    SAT_LOCATIONS.filter(l=>l.cat===cat).forEach(loc=>{
+      const o=document.createElement('option');o.value=loc.name;o.textContent=loc.name;og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+}
+
+function showSatLocList(){
+  const list=document.getElementById('sat-loc-list');
+  const catColors={'CONFLICT':'#ef4444','NUCLEAR/MISSILE':'#f97316','MILITARY':'#fbbf24','NAVAL':'#22c55e','MARITIME':'#34d399','SIGINT':'#a855f7','VIP/CAPITAL':'#60a5fa'};
+  list.style.display='grid';
+  list.innerHTML=`<div style="grid-column:1/-1;font-size:8px;letter-spacing:.2em;color:var(--muted);padding:2px 0 10px;font-family:var(--mono)">▸ SELECT TARGET AREA — DRAG TO PAN · SCROLL TO ZOOM</div>`+
+    SAT_LOCATIONS.map(loc=>`
+      <div class="sat-loc-item" onclick="satJumpToLocation('${loc.name.replace(/'/g,"\\'")}')">
+        <div class="sat-loc-name">${loc.name}</div>
+        <div class="sat-loc-cat" style="color:${catColors[loc.cat]||'#94a3b8'}">${loc.cat}</div>
+      </div>`).join('');
+}
+
+function satJumpToLocation(name){
+  if(!name)return;
+  const loc=SAT_LOCATIONS.find(l=>l.name===name);
+  if(!loc)return;
+  satLat=loc.lat;satLng=loc.lng;
+  satZoom=Math.min(loc.zoom,SAT_LAYERS[satLayerKey].maxZoom);
+  satLocSelected=true;
+  document.getElementById('sat-loc-list').style.display='none';
+  document.getElementById('sat-loc-sel').value=name;
+  document.getElementById('sat-title-label').textContent=loc.name;
+  sizeSatCanvas();drawSatMap();updateSatInfoBar();
+}
+
+function satOpenAt(lat,lng,label,zoom){
+  satLat=lat;satLng=lng;
+  satZoom=zoom?Math.min(zoom,SAT_LAYERS[satLayerKey].maxZoom):Math.min(11,SAT_LAYERS[satLayerKey].maxZoom);
+  satLocSelected=true;
+  document.getElementById('sat-title-label').textContent=label||'';
+  if(!satOpen)toggleSatPanel();
+  else{
+    document.getElementById('sat-loc-list').style.display='none';
+    sizeSatCanvas();drawSatMap();updateSatInfoBar();
+  }
+}
+
+function setSatLayer(key){
+  satLayerKey=key;
+  const layer=SAT_LAYERS[key];
+  satZoom=Math.min(satZoom,layer.maxZoom);
+  document.querySelectorAll('.sl-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sl-'+key)?.classList.add('active');
+  satTileCache={};satCacheKeys=[];
+  updateSatInfoBar();
+  if(satLocSelected)drawSatMap();
+}
+
+function satDateChange(val){
+  satDate=val;
+  satTileCache={};satCacheKeys=[];
+  if(satLocSelected&&satLayerKey!=='esri')drawSatMap();
+}
+
+function satZoomIn(){
+  if(satZoom<SAT_LAYERS[satLayerKey].maxZoom){satZoom++;satTileCache={};satCacheKeys=[];if(satLocSelected)drawSatMap();updateSatInfoBar();}}
+function satZoomOut(){
+  if(satZoom>2){satZoom--;satTileCache={};satCacheKeys=[];if(satLocSelected)drawSatMap();updateSatInfoBar();}}
+
+function updateSatInfoBar(){
+  const layer=SAT_LAYERS[satLayerKey];
+  document.getElementById('sat-layer-desc').textContent=layer.desc;
+  document.getElementById('sat-coords-label').textContent=
+    satLocSelected?`${Math.abs(satLat).toFixed(4)}°${satLat>=0?'N':'S'}  ${Math.abs(satLng).toFixed(4)}°${satLng>=0?'E':'W'}  ·  Z${satZoom}`:'';
+}
+
+function sizeSatCanvas(){
+  const wrap=document.getElementById('sat-map-wrap');
+  const canvas=document.getElementById('sat-canvas');
+  if(!wrap||!canvas)return;
+  canvas.width=wrap.clientWidth||900;
+  canvas.height=wrap.clientHeight||500;
+}
+
+function worldPx(lat,lng,z){
+  const n=Math.pow(2,z)*SAT_TS;
+  const x=(lng+180)/360*n;
+  const sinLat=Math.sin(lat*Math.PI/180);
+  const y=(0.5-Math.log((1+sinLat)/(1-sinLat))/(4*Math.PI))*n;
+  return{x,y};
+}
+
+function drawSatMap(){
+  const canvas=document.getElementById('sat-canvas');
+  if(!canvas||!satLocSelected)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  if(!W||!H){sizeSatCanvas();return;}
+  ctx.fillStyle='#010408';ctx.fillRect(0,0,W,H);
+  const layer=SAT_LAYERS[satLayerKey];
+  const maxTile=Math.pow(2,satZoom);
+  const center=worldPx(satLat,satLng,satZoom);
+  const tileLeft=Math.floor((center.x-W/2)/SAT_TS)-1;
+  const tileRight=Math.floor((center.x+W/2)/SAT_TS)+1;
+  const tileTop=Math.floor((center.y-H/2)/SAT_TS)-1;
+  const tileBot=Math.floor((center.y+H/2)/SAT_TS)+1;
+  let loading=0;
+  for(let ty=tileTop;ty<=tileBot;ty++){
+    for(let tx=tileLeft;tx<=tileRight;tx++){
+      if(tx<0||tx>=maxTile||ty<0||ty>=maxTile)continue;
+      const cPx=Math.round(tx*SAT_TS-center.x+W/2);
+      const cPy=Math.round(ty*SAT_TS-center.y+H/2);
+      const key=`${satLayerKey}/${satDate}/${satZoom}/${tx}/${ty}`;
+      if(!satTileCache[key]){
+        const img=new Image();
+        satTileCache[key]={img,state:'loading'};
+        satCacheKeys.push(key);
+        if(satCacheKeys.length>SAT_CACHE_MAX){delete satTileCache[satCacheKeys.shift()];}
+        img.onload=()=>{if(satTileCache[key])satTileCache[key].state='loaded';drawSatMap();};
+        img.onerror=()=>{if(satTileCache[key])satTileCache[key].state='error';drawSatMap();};
+        img.src=layer.url(satZoom,tx,ty,satDate);
+      }
+      const e=satTileCache[key];
+      if(e.state==='loaded'){
+        try{ctx.drawImage(e.img,cPx,cPy,SAT_TS,SAT_TS);}catch(err){}
+      } else if(e.state==='error'){
+        ctx.fillStyle='rgba(12,24,44,.7)';ctx.fillRect(cPx,cPy,SAT_TS,SAT_TS);
+        ctx.strokeStyle='rgba(59,130,246,.1)';ctx.strokeRect(cPx,cPy,SAT_TS,SAT_TS);
+        ctx.fillStyle='rgba(94,114,144,.5)';ctx.font='9px monospace';
+        ctx.fillText('NO DATA',cPx+(SAT_TS/2-28),cPy+(SAT_TS/2));
+      } else {
+        ctx.fillStyle='rgba(6,14,28,.6)';ctx.fillRect(cPx,cPy,SAT_TS,SAT_TS);
+        ctx.strokeStyle='rgba(52,211,153,.08)';ctx.strokeRect(cPx,cPy,SAT_TS,SAT_TS);
+        loading++;
+      }
+    }
+  }
+  // Crosshair
+  const cx=W/2,cy=H/2;
+  ctx.strokeStyle='rgba(239,68,68,.85)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(cx-16,cy);ctx.lineTo(cx+16,cy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-16);ctx.lineTo(cx,cy+16);ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.stroke();
+  // HUD
+  const hud=document.getElementById('sat-hud');
+  if(hud){
+    const lbl=`${Math.abs(satLat).toFixed(5)}°${satLat>=0?'N':'S'}  ${Math.abs(satLng).toFixed(5)}°${satLng>=0?'E':'W'}  ·  Zoom ${satZoom}  ·  ${layer.label}${loading?' — loading…':''}`;
+    hud.textContent=lbl;
+  }
+  updateSatInfoBar();
+}
+
+function initSatMapEvents(){
+  const canvas=document.getElementById('sat-canvas');
+  if(!canvas||canvas._satEvt)return;
+  canvas._satEvt=true;
+  canvas.addEventListener('mousedown',e=>{satDragging=true;satDragLast={x:e.clientX,y:e.clientY};canvas.style.cursor='grabbing';e.preventDefault();});
+  canvas.addEventListener('mousemove',e=>{
+    if(!satDragging||!satLocSelected)return;
+    const dx=e.clientX-satDragLast.x,dy=e.clientY-satDragLast.y;
+    satDragLast={x:e.clientX,y:e.clientY};
+    const n=Math.pow(2,satZoom)*SAT_TS;
+    const sinLat=Math.sin(satLat*Math.PI/180);
+    const worldY=(0.5-Math.log((1+sinLat)/(1-sinLat))/(4*Math.PI))*n;
+    const newWorldY=worldY-dy;
+    const normalized=newWorldY/n;
+    const latRad=Math.atan(Math.sinh(Math.PI*(1-2*normalized)));
+    satLat=Math.max(-85,Math.min(85,latRad*180/Math.PI));
+    const worldX=(satLng+180)/360*n;
+    const newWorldX=worldX-dx;
+    satLng=((newWorldX/n*360-180)+360)%360-180;
+    drawSatMap();
+  });
+  canvas.addEventListener('mouseup',()=>{satDragging=false;canvas.style.cursor='crosshair';});
+  canvas.addEventListener('mouseleave',()=>{satDragging=false;canvas.style.cursor='crosshair';});
+  canvas.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const max=SAT_LAYERS[satLayerKey].maxZoom;
+    const delta=e.deltaY<0?1:-1;
+    const newZ=Math.max(2,Math.min(max,satZoom+delta));
+    if(newZ!==satZoom){satZoom=newZ;satTileCache={};satCacheKeys=[];if(satLocSelected)drawSatMap();updateSatInfoBar();}
+  },{passive:false});
+  // Touch support
+  let lastTouchDist=null;
+  canvas.addEventListener('touchstart',e=>{
+    if(e.touches.length===1){satDragging=true;satDragLast={x:e.touches[0].clientX,y:e.touches[0].clientY};}
+    else if(e.touches.length===2){satDragging=false;lastTouchDist=Math.hypot(e.touches[1].clientX-e.touches[0].clientX,e.touches[1].clientY-e.touches[0].clientY);}
+    e.preventDefault();
+  },{passive:false});
+  canvas.addEventListener('touchmove',e=>{
+    if(e.touches.length===1&&satDragging&&satLocSelected){
+      const dx=e.touches[0].clientX-satDragLast.x,dy=e.touches[0].clientY-satDragLast.y;
+      satDragLast={x:e.touches[0].clientX,y:e.touches[0].clientY};
+      const n=Math.pow(2,satZoom)*SAT_TS;
+      const sinLat=Math.sin(satLat*Math.PI/180);
+      const worldY=(0.5-Math.log((1+sinLat)/(1-sinLat))/(4*Math.PI))*n;
+      const newWorldY=worldY-dy;
+      const latRad=Math.atan(Math.sinh(Math.PI*(1-2*newWorldY/n)));
+      satLat=Math.max(-85,Math.min(85,latRad*180/Math.PI));
+      const worldX=(satLng+180)/360*n;
+      satLng=(((worldX-dx)/n*360-180)+360)%360-180;
+      drawSatMap();
+    } else if(e.touches.length===2&&lastTouchDist){
+      const dist=Math.hypot(e.touches[1].clientX-e.touches[0].clientX,e.touches[1].clientY-e.touches[0].clientY);
+      const max=SAT_LAYERS[satLayerKey].maxZoom;
+      if(dist>lastTouchDist*1.15&&satZoom<max){satZoom++;satTileCache={};satCacheKeys=[];drawSatMap();}
+      else if(dist<lastTouchDist*0.85&&satZoom>2){satZoom--;satTileCache={};satCacheKeys=[];drawSatMap();}
+      lastTouchDist=dist;
+    }
+    e.preventDefault();
+  },{passive:false});
+  canvas.addEventListener('touchend',()=>{satDragging=false;lastTouchDist=null;});
+  // ESC key closes panel
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&satOpen)toggleSatPanel();});
+  // Resize handler
+  window.addEventListener('resize',()=>{if(satOpen&&satLocSelected){sizeSatCanvas();drawSatMap();}});
+}
+
+function hsOpenSatellite(){
+  if(!currentHotspot)return;
+  closeHotspot();
+  satOpenAt(currentHotspot.lat,currentHotspot.lng,currentHotspot.label,11);
+}
+
+resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
 </script>
 </body>
 </html>
