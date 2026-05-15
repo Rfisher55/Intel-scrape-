@@ -7869,7 +7869,10 @@ async function refreshIntel(){
   xFetchTime=0; redditFetchTime=0;
   if(socialPanelOpen&&socialTab==='twitter')tasks.push(fetchXTwitterFeed());
   if(socialPanelOpen&&socialTab==='reddit')tasks.push(fetchSocialIntel());
+  if(selectedISO)tasks.push(fetchCountryLiveThreat(selectedISO));
   await Promise.allSettled(tasks);
+  // Also refresh live ticker
+  fetchTickerLive&&fetchTickerLive();
   btn.textContent='↻ MASTER REFRESH';btn.style.color='';btn.disabled=false;
   const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   document.getElementById('h-status').textContent='✓ ALL FEEDS UPDATED — '+ts;
