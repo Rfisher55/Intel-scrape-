@@ -460,7 +460,9 @@ canvas.dragging{cursor:grabbing}
 .sf-callsign{font-size:13px;font-weight:bold;color:#a3e635;font-family:var(--mono)}
 .sf-actype{font-size:10px;color:var(--dim);letter-spacing:.1em}
 @media(max-width:600px){#social-panel{width:100%;top:auto;bottom:0;height:55dvh;
-  border-left:none;border-top:1px solid rgba(245,158,11,.2);border-radius:14px 14px 0 0;}
+  border-left:none;border-top:1px solid rgba(245,158,11,.2);border-radius:14px 14px 0 0;
+  transform:translateY(102%)!important;transition:transform .28s cubic-bezier(.32,.72,0,1)!important}
+  #social-panel.open{transform:translateY(0%)!important;display:flex}
   #social-btn{bottom:32px;right:12px;font-size:8px;padding:6px 10px}}
 
 /* ── Satellite Imagery Panel ── */
@@ -531,8 +533,8 @@ canvas.dragging{cursor:grabbing}
   font-family:var(--mono);font-size:10px;color:#34d399;letter-spacing:.2em;
 }
 @media(max-width:600px){
-  #sat-panel{width:100%;height:88dvh;top:auto;bottom:0;left:0;transform:none!important;border-radius:14px 14px 0 0}
-  #sat-panel.open{transform:none!important}
+  #sat-panel{width:100%;height:88dvh;top:auto;bottom:0;left:0;transform:translateY(102%)!important;border-radius:14px 14px 0 0;opacity:1!important;transition:transform .28s cubic-bezier(.32,.72,0,1)!important}
+  #sat-panel.open{transform:translateY(0%)!important}
   #sat-btn{bottom:100px;right:12px;font-size:8px;padding:6px 10px}
   #sat-controls-bar{padding:5px 8px;gap:4px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
   #sat-controls-bar::-webkit-scrollbar{display:none}
@@ -6098,7 +6100,7 @@ const VIP_LIST=[
   {name:'Giorgia Meloni',         searchName:'Meloni',           role:'Italian PM',                   country:'ITA',defaultLat:41.9009,  defaultLng:12.4802,   defaultStatus:'ROME — PALAZZO CHIGI'},
   {name:'Mark Rutte',             searchName:'Rutte',            role:'NATO Secretary General',       country:'BEL',defaultLat:50.8797,  defaultLng:4.4275,    defaultStatus:'BRUSSELS — NATO HQ'},
   {name:'Ursula von der Leyen',   searchName:'von der Leyen',    role:'EU Commission President',      country:'BEL',defaultLat:50.8407,  defaultLng:4.3833,    defaultStatus:'BRUSSELS — EU BERLAYMONT'},
-  {name:'Justin Trudeau',         searchName:'Trudeau',          role:'Canadian PM',                  country:'CAN',defaultLat:45.4235,  defaultLng:-75.6980,  defaultStatus:'OTTAWA — RIDEAU COTTAGE'},
+  {name:'Mark Carney',            searchName:'Carney Canada',    role:'Canadian PM',                  country:'CAN',defaultLat:45.4235,  defaultLng:-75.6980,  defaultStatus:'OTTAWA — RIDEAU COTTAGE (PM)'},
   /* ── TIER 2 — REGIONAL POWERS ── */
   {name:'Narendra Modi',          searchName:'Modi',             role:'Indian PM',                    country:'IND',defaultLat:28.5986,  defaultLng:77.1889,   defaultStatus:'NEW DELHI — 7 LOK KALYAN MARG'},
   {name:'Recep Erdoğan',          searchName:'Erdogan',          role:'Turkish President',            country:'TUR',defaultLat:39.9314,  defaultLng:32.8038,   defaultStatus:'ANKARA — PRESIDENTIAL COMPLEX'},
@@ -9103,6 +9105,23 @@ const SAT_LOCATIONS=[
   {name:'Riyadh — Al Yamamah Palace (MBS)',lat:24.69,lng:46.72,zoom:14,cat:'VIP/CAPITAL'},
   {name:'Mar-a-Lago (Trump)',lat:26.52,lng:-80.08,zoom:15,cat:'VIP/CAPITAL'},
   {name:'Élysée Palace — Paris',lat:48.87,lng:2.32,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Berlin — Bundeskanzleramt',lat:52.5202,lng:13.3690,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'London — 10 Downing Street',lat:51.5034,lng:-0.1276,zoom:16,cat:'VIP/CAPITAL'},
+  {name:'Kyiv — Zelensky Presidential Office',lat:50.4481,lng:30.5234,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Jerusalem — Netanyahu Residence (Balfour)',lat:31.7784,lng:35.2046,zoom:16,cat:'VIP/CAPITAL'},
+  {name:'Abu Dhabi — Presidential Palace',lat:24.4539,lng:54.3773,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'Ankara — Turkish Presidential Complex',lat:39.9314,lng:32.8038,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'New Delhi — Modi Residence (7 LKM)',lat:28.5986,lng:77.1889,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'New Delhi — Rashtrapati Bhavan',lat:28.6145,lng:77.1993,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'Tokyo — Prime Minister\'s Kantei',lat:35.6762,lng:139.7480,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Seoul — Presidential Hannam Residence',lat:37.5816,lng:126.9777,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Brussels — NATO HQ',lat:50.8797,lng:4.4275,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Brasília — Palácio do Alvorada',lat:-15.7975,lng:-47.8919,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'Buenos Aires — Casa Rosada',lat:-34.6083,lng:-58.3712,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Caracas — Miraflores Palace',lat:10.4880,lng:-66.8792,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Jakarta — Merdeka Palace',lat:-6.1751,lng:106.8272,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'Riyadh — Al-Yamamah Palace',lat:24.6877,lng:46.7219,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'Ryongsong Residence — Kim Jong-un',lat:39.0816,lng:125.7745,zoom:14,cat:'VIP/CAPITAL'},
 ];
 
 // Which location categories are meaningful to observe per imagery layer
