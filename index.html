@@ -726,10 +726,14 @@ canvas.dragging{cursor:grabbing}
     <select id="sat-loc-sel" onchange="satJumpToLocation(this.value)" style="background:rgba(8,20,40,.9);border:1px solid rgba(52,211,153,.25);color:#94a3b8;font-family:var(--mono);font-size:8px;padding:4px 6px;border-radius:3px;letter-spacing:.04em;cursor:pointer;flex-shrink:0">
       <option value="">— SELECT LOCATION —</option>
     </select>
-    <button class="sl-btn active" id="sl-esri"    onclick="setSatLayer('esri')">HIGH RES</button>
-    <button class="sl-btn"        id="sl-modis"   onclick="setSatLayer('modis')">DAILY MODIS</button>
-    <button class="sl-btn"        id="sl-viirs"   onclick="setSatLayer('viirs')">NIGHT VIIRS</button>
-    <button class="sl-btn"        id="sl-thermal" onclick="setSatLayer('thermal')">THERMAL</button>
+    <button class="sl-btn active" id="sl-esri"       onclick="setSatLayer('esri')">HIGH RES</button>
+    <button class="sl-btn"        id="sl-sentinel"   onclick="setSatLayer('sentinel')">SENTINEL-2</button>
+    <button class="sl-btn"        id="sl-modis"      onclick="setSatLayer('modis')">MODIS DAILY</button>
+    <button class="sl-btn"        id="sl-viirs_tc"   onclick="setSatLayer('viirs_tc')">VIIRS DAILY</button>
+    <button class="sl-btn"        id="sl-viirs"      onclick="setSatLayer('viirs')">NIGHT LIGHTS</button>
+    <button class="sl-btn"        id="sl-thermal"    onclick="setSatLayer('thermal')">THERMAL</button>
+    <button class="sl-btn"        id="sl-false_color" onclick="setSatLayer('false_color')">FALSE COLOR</button>
+    <button class="sl-btn" id="sat-back-btn" onclick="satShowLocList()" style="display:none;margin-left:4px;border-color:rgba(52,211,153,.3);color:#34d399">◀ LOCATIONS</button>
     <input type="date" id="sat-date-in" onchange="satDateChange(this.value)" title="Select imagery date (for NASA layers)" style="background:rgba(8,20,40,.9);border:1px solid rgba(52,211,153,.2);color:#94a3b8;font-family:var(--mono);font-size:8px;padding:4px 6px;border-radius:3px;cursor:pointer">
     <div style="display:flex;gap:4px;margin-left:auto;flex-shrink:0">
       <button class="sl-btn" onclick="satZoomIn()"  title="Zoom in">＋</button>
@@ -7496,42 +7500,110 @@ const SAT_LAYERS={
 };
 
 const SAT_LOCATIONS=[
+  // ACTIVE CONFLICTS
   {name:'Eastern Ukraine — Donbas Front',lat:48.1,lng:37.6,zoom:9,cat:'CONFLICT'},
+  {name:'Chasiv Yar — Active Front Line',lat:48.08,lng:37.86,zoom:11,cat:'CONFLICT'},
+  {name:'Kherson — Dnipro Crossing Zone',lat:46.64,lng:32.61,zoom:10,cat:'CONFLICT'},
   {name:'Gaza Strip',lat:31.35,lng:34.3,zoom:11,cat:'CONFLICT'},
-  {name:'Kyiv — Capital Region',lat:50.45,lng:30.52,zoom:11,cat:'CONFLICT'},
-  {name:'Zaporizhzhia — Nuclear Plant Zone',lat:47.5,lng:34.6,zoom:10,cat:'CONFLICT'},
-  {name:'Bakhmut / Avdiivka Sector',lat:48.05,lng:37.75,zoom:10,cat:'CONFLICT'},
-  {name:'Lebanon — Southern Border',lat:33.1,lng:35.4,zoom:10,cat:'CONFLICT'},
+  {name:'Rafah — Gaza Southern Border',lat:31.28,lng:34.22,zoom:12,cat:'CONFLICT'},
+  {name:'Kyiv — Capital Defense Zone',lat:50.45,lng:30.52,zoom:11,cat:'CONFLICT'},
+  {name:'Zaporizhzhia Nuclear Plant Zone',lat:47.5,lng:34.6,zoom:10,cat:'CONFLICT'},
+  {name:'Lebanon — Southern Border IDF',lat:33.1,lng:35.4,zoom:10,cat:'CONFLICT'},
   {name:'Myanmar — Tatmadaw Operations',lat:19.0,lng:96.5,zoom:8,cat:'CONFLICT'},
-  {name:'Sudan — RSF Darfur Region',lat:13.5,lng:24.0,zoom:8,cat:'CONFLICT'},
-  {name:'Yemen — Houthi Territory',lat:15.35,lng:44.2,zoom:9,cat:'CONFLICT'},
+  {name:'Sudan — RSF Darfur (Khartoum)',lat:15.55,lng:32.53,zoom:11,cat:'CONFLICT'},
+  {name:'Yemen — Houthi Missile Sites',lat:15.35,lng:44.2,zoom:9,cat:'CONFLICT'},
+  {name:'Hodeidah Port — Houthi Ops',lat:14.8,lng:42.95,zoom:12,cat:'CONFLICT'},
+  {name:'Eastern Congo — M23 Goma',lat:-1.66,lng:29.22,zoom:10,cat:'CONFLICT'},
+  {name:'Tigray — Ethiopia Conflict Zone',lat:14.0,lng:38.5,zoom:8,cat:'CONFLICT'},
+  {name:'Nagorno-Karabakh',lat:39.82,lng:46.75,zoom:9,cat:'CONFLICT'},
+  // NUCLEAR & MISSILE
   {name:'Sohae Satellite Launch Site (DPRK)',lat:39.66,lng:124.71,zoom:13,cat:'NUCLEAR/MISSILE'},
   {name:'Yongbyon Nuclear Complex (DPRK)',lat:39.8,lng:125.8,zoom:12,cat:'NUCLEAR/MISSILE'},
+  {name:'Punggye-ri Test Site (DPRK)',lat:41.28,lng:129.08,zoom:12,cat:'NUCLEAR/MISSILE'},
   {name:'Fordow Nuclear Facility (Iran)',lat:34.88,lng:49.21,zoom:13,cat:'NUCLEAR/MISSILE'},
   {name:'Natanz Enrichment Site (Iran)',lat:33.72,lng:51.73,zoom:12,cat:'NUCLEAR/MISSILE'},
-  {name:'Kapustin Yar (Russian ICBM Range)',lat:48.5,lng:45.8,zoom:10,cat:'MILITARY'},
-  {name:'Plesetsk Cosmodrome (Russia)',lat:62.9,lng:40.6,zoom:11,cat:'MILITARY'},
+  {name:'Parchin Military Complex (Iran)',lat:35.52,lng:51.78,zoom:12,cat:'NUCLEAR/MISSILE'},
+  {name:'Dimona Nuclear Research (Israel)',lat:31.00,lng:35.14,zoom:13,cat:'NUCLEAR/MISSILE'},
+  {name:'Novaya Zemlya — Russian Nuke Test',lat:73.5,lng:54.9,zoom:8,cat:'NUCLEAR/MISSILE'},
+  {name:'Semipalatinsk — Former Soviet Nuke Site',lat:50.4,lng:78.5,zoom:9,cat:'NUCLEAR/MISSILE'},
+  {name:'Lop Nur — China Nuclear Test Site',lat:40.77,lng:89.18,zoom:8,cat:'NUCLEAR/MISSILE'},
+  {name:'Pantex — US Nuclear Warhead Assembly',lat:35.3,lng:-101.5,zoom:12,cat:'NUCLEAR/MISSILE'},
+  {name:'Y-12 National Security Complex (US)',lat:36.01,lng:-84.26,zoom:13,cat:'NUCLEAR/MISSILE'},
+  {name:'Kapustin Yar (Russian ICBM Range)',lat:48.5,lng:45.8,zoom:10,cat:'NUCLEAR/MISSILE'},
+  // MILITARY BASES
   {name:'Diego Garcia (US Naval Base)',lat:-7.31,lng:72.4,zoom:12,cat:'MILITARY'},
   {name:'Rammstein Air Base (US/NATO)',lat:49.44,lng:7.60,zoom:13,cat:'MILITARY'},
   {name:'Incirlik Air Base (US/Turkey)',lat:37.00,lng:35.43,zoom:13,cat:'MILITARY'},
   {name:'Camp Lemonnier (US, Djibouti)',lat:11.55,lng:43.15,zoom:13,cat:'MILITARY'},
+  {name:'Al Udeid Air Base (Qatar)',lat:25.12,lng:51.31,zoom:13,cat:'MILITARY'},
+  {name:'Al Dhafra Air Base (UAE)',lat:24.25,lng:54.55,zoom:13,cat:'MILITARY'},
+  {name:'Thule Air Base (Greenland/US)',lat:76.53,lng:-68.70,zoom:12,cat:'MILITARY'},
+  {name:'Andersen AFB (Guam)',lat:13.58,lng:144.93,zoom:12,cat:'MILITARY'},
+  {name:'Camp Humphreys (South Korea)',lat:36.97,lng:127.03,zoom:13,cat:'MILITARY'},
+  {name:'Hmeimim Air Base (Russia/Syria)',lat:35.40,lng:37.24,zoom:13,cat:'MILITARY'},
+  {name:'Ali Al Salem Air Base (Kuwait)',lat:29.54,lng:47.67,zoom:13,cat:'MILITARY'},
+  {name:'Cheyenne Mountain NORAD (US)',lat:38.74,lng:-104.85,zoom:13,cat:'MILITARY'},
+  {name:'Area 51 — Groom Lake (US)',lat:37.24,lng:-115.81,zoom:13,cat:'MILITARY'},
+  {name:'Dugway Proving Ground (US)',lat:40.18,lng:-113.08,zoom:10,cat:'MILITARY'},
+  {name:'Pine Gap (US/Australia SIGINT)',lat:-23.80,lng:133.74,zoom:13,cat:'MILITARY'},
+  {name:'Plesetsk Cosmodrome (Russia)',lat:62.93,lng:40.58,zoom:11,cat:'MILITARY'},
+  {name:'Wagner/Africa Corps — Mali Base Bamako',lat:12.65,lng:-8.0,zoom:11,cat:'MILITARY'},
+  {name:'Russian 201st Base (Tajikistan)',lat:38.56,lng:68.77,zoom:12,cat:'MILITARY'},
+  // NAVAL
   {name:'Sanya Naval Base (China)',lat:18.22,lng:109.59,zoom:12,cat:'NAVAL'},
   {name:'Tartus Naval Base (Russia/Syria)',lat:34.89,lng:35.87,zoom:13,cat:'NAVAL'},
   {name:'Sevastopol — Black Sea Fleet HQ',lat:44.62,lng:33.52,zoom:12,cat:'NAVAL'},
   {name:'Novorossiysk Naval Base (Russia)',lat:44.7,lng:37.8,zoom:12,cat:'NAVAL'},
+  {name:'Gadzhiyevo SSBN Base (Russia)',lat:69.28,lng:33.32,zoom:12,cat:'NAVAL'},
+  {name:'Norfolk Naval Station (US)',lat:36.95,lng:-76.30,zoom:12,cat:'NAVAL'},
+  {name:'Yokosuka Naval Base (US/Japan)',lat:35.30,lng:139.67,zoom:12,cat:'NAVAL'},
+  {name:'HMNB Clyde — Faslane UK Trident',lat:56.03,lng:-4.83,zoom:12,cat:'NAVAL'},
+  {name:'Changi Naval Base (Singapore)',lat:1.39,lng:104.0,zoom:12,cat:'NAVAL'},
+  {name:'Guantanamo Bay (Cuba/US)',lat:19.91,lng:-75.11,zoom:12,cat:'NAVAL'},
+  {name:'Djibouti PLA Navy Base (China)',lat:11.52,lng:43.15,zoom:13,cat:'NAVAL'},
+  {name:'Ream Naval Base (China/Cambodia)',lat:10.52,lng:103.63,zoom:13,cat:'NAVAL'},
+  {name:'Hambantota Port (China/Sri Lanka)',lat:6.12,lng:81.12,zoom:12,cat:'NAVAL'},
+  {name:'Gwadar Port (China/Pakistan)',lat:25.12,lng:62.33,zoom:13,cat:'NAVAL'},
+  // MARITIME CHOKEPOINTS
   {name:'Taiwan Strait',lat:24.0,lng:120.0,zoom:8,cat:'MARITIME'},
   {name:'Strait of Hormuz',lat:26.58,lng:56.25,zoom:9,cat:'MARITIME'},
   {name:'South China Sea — Spratlys',lat:10.5,lng:114.0,zoom:8,cat:'MARITIME'},
-  {name:'Black Sea — Operations Zone',lat:44.0,lng:32.0,zoom:7,cat:'MARITIME'},
+  {name:'South China Sea — Scarborough Shoal',lat:15.18,lng:117.75,zoom:11,cat:'MARITIME'},
+  {name:'Black Sea — Active Operations Zone',lat:44.0,lng:32.0,zoom:7,cat:'MARITIME'},
   {name:'Bab el-Mandeb Strait (Houthi)',lat:12.6,lng:43.4,zoom:9,cat:'MARITIME'},
-  {name:'Lourdes SIGINT Station (Cuba)',lat:22.93,lng:-82.2,zoom:14,cat:'SIGINT'},
-  {name:'Menwith Hill (UK/NSA)',lat:54.0,lng:-1.68,zoom:13,cat:'SIGINT'},
-  {name:'RAF Akrotiri (UK, Cyprus)',lat:34.59,lng:32.98,zoom:12,cat:'SIGINT'},
+  {name:'Strait of Malacca',lat:2.5,lng:101.5,zoom:8,cat:'MARITIME'},
+  {name:'Suez Canal — Northern Entrance',lat:31.25,lng:32.32,zoom:11,cat:'MARITIME'},
+  {name:'Kerch Strait (Crimea Bridge)',lat:45.34,lng:36.62,zoom:11,cat:'MARITIME'},
+  // INTELLIGENCE HQ
+  {name:'CIA Headquarters — Langley (US)',lat:38.95,lng:-77.15,zoom:14,cat:'INTEL HQ'},
+  {name:'NSA Fort Meade (US)',lat:39.11,lng:-76.77,zoom:14,cat:'INTEL HQ'},
+  {name:'GCHQ Cheltenham (UK)',lat:51.90,lng:-2.08,zoom:14,cat:'INTEL HQ'},
+  {name:'FSB Lubyanka — Moscow',lat:55.76,lng:37.63,zoom:15,cat:'INTEL HQ'},
+  {name:'SVR Yasenevo — Moscow Forest',lat:55.60,lng:37.52,zoom:14,cat:'INTEL HQ'},
+  {name:'GRU HQ — Khodinka Moscow',lat:55.79,lng:37.56,zoom:14,cat:'INTEL HQ'},
+  {name:'MSS Ministry State Security (Beijing)',lat:39.90,lng:116.38,zoom:14,cat:'INTEL HQ'},
+  {name:'Menwith Hill (UK/NSA)',lat:54.0,lng:-1.68,zoom:13,cat:'INTEL HQ'},
+  {name:'Lourdes SIGINT Station (Cuba)',lat:22.93,lng:-82.2,zoom:14,cat:'INTEL HQ'},
+  {name:'RAF Akrotiri (UK, Cyprus)',lat:34.59,lng:32.98,zoom:12,cat:'INTEL HQ'},
+  {name:'Israeli Unit 8200 — Urim Station',lat:31.32,lng:34.62,zoom:13,cat:'INTEL HQ'},
+  // SPACE & LAUNCH
+  {name:'Kennedy Space Center (US)',lat:28.57,lng:-80.65,zoom:12,cat:'SPACE/LAUNCH'},
+  {name:'Vandenberg Space Force Base (US)',lat:34.74,lng:-120.57,zoom:12,cat:'SPACE/LAUNCH'},
+  {name:'Jiuquan Satellite Launch Center (China)',lat:40.96,lng:100.29,zoom:12,cat:'SPACE/LAUNCH'},
+  {name:'Xichang Satellite Launch Center (China)',lat:28.25,lng:102.03,zoom:12,cat:'SPACE/LAUNCH'},
+  {name:'Wenchang Space Launch Site (China)',lat:19.61,lng:110.95,zoom:12,cat:'SPACE/LAUNCH'},
+  {name:'Baikonur Cosmodrome (Kazakhstan/Russia)',lat:45.97,lng:63.31,zoom:11,cat:'SPACE/LAUNCH'},
+  {name:'Naro Space Center (South Korea)',lat:34.43,lng:127.54,zoom:12,cat:'SPACE/LAUNCH'},
+  {name:'Tanegashima Space Center (Japan)',lat:30.40,lng:130.97,zoom:12,cat:'SPACE/LAUNCH'},
+  // VIP / CAPITALS
   {name:'Moscow — Kremlin',lat:55.75,lng:37.62,zoom:13,cat:'VIP/CAPITAL'},
   {name:'Beijing — Zhongnanhai',lat:39.91,lng:116.39,zoom:13,cat:'VIP/CAPITAL'},
   {name:'Washington DC — White House',lat:38.9,lng:-77.0,zoom:14,cat:'VIP/CAPITAL'},
   {name:'Pyongyang — Leadership Complex',lat:39.02,lng:125.75,zoom:13,cat:'VIP/CAPITAL'},
   {name:'Tehran — Leadership Quarter',lat:35.7,lng:51.42,zoom:13,cat:'VIP/CAPITAL'},
+  {name:'Riyadh — Al Yamamah Palace (MBS)',lat:24.69,lng:46.72,zoom:14,cat:'VIP/CAPITAL'},
+  {name:'Mar-a-Lago (Trump)',lat:26.52,lng:-80.08,zoom:15,cat:'VIP/CAPITAL'},
+  {name:'Élysée Palace — Paris',lat:48.87,lng:2.32,zoom:15,cat:'VIP/CAPITAL'},
 ];
 
 function toggleSatPanel(){
@@ -7541,17 +7613,27 @@ function toggleSatPanel(){
   if(satOpen){
     panel.style.display='flex';
     bd.style.display='block';
-    requestAnimationFrame(()=>{panel.classList.add('open');sizeSatCanvas();});
+    requestAnimationFrame(()=>{
+      panel.classList.add('open');
+      setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},120);
+    });
     populateSatLocSel();
     document.getElementById('sat-date-in').value=satDate;
     if(!satLocSelected)showSatLocList();
-    else setTimeout(drawSatMap,80);
     updateSatInfoBar();
   } else {
     panel.classList.remove('open');
     bd.style.display='none';
     setTimeout(()=>{if(!satOpen)panel.style.display='none';},240);
   }
+}
+
+function satShowLocList(){
+  satLocSelected=false;
+  document.getElementById('sat-back-btn').style.display='none';
+  document.getElementById('sat-title-label').textContent='';
+  document.getElementById('sat-loc-sel').value='';
+  showSatLocList();
 }
 
 function populateSatLocSel(){
@@ -7589,6 +7671,7 @@ function satJumpToLocation(name){
   document.getElementById('sat-loc-list').style.display='none';
   document.getElementById('sat-loc-sel').value=name;
   document.getElementById('sat-title-label').textContent=loc.name;
+  document.getElementById('sat-back-btn').style.display='inline-flex';
   sizeSatCanvas();drawSatMap();updateSatInfoBar();
 }
 
@@ -7597,6 +7680,7 @@ function satOpenAt(lat,lng,label,zoom){
   satZoom=zoom?Math.min(zoom,SAT_LAYERS[satLayerKey].maxZoom):Math.min(11,SAT_LAYERS[satLayerKey].maxZoom);
   satLocSelected=true;
   document.getElementById('sat-title-label').textContent=label||'';
+  document.getElementById('sat-back-btn').style.display='inline-flex';
   if(!satOpen)toggleSatPanel();
   else{
     document.getElementById('sat-loc-list').style.display='none';
@@ -7769,8 +7853,30 @@ function initSatMapEvents(){
     e.preventDefault();
   },{passive:false});
   canvas.addEventListener('touchend',()=>{satDragging=false;lastTouchDist=null;});
-  // ESC key closes panel
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&satOpen)toggleSatPanel();});
+  // Keyboard controls
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&satOpen){toggleSatPanel();return;}
+    if(!satOpen||!satLocSelected)return;
+    const panPx=60;
+    const n=Math.pow(2,satZoom)*SAT_TS;
+    if(e.key==='ArrowLeft'||e.key==='ArrowRight'||e.key==='ArrowUp'||e.key==='ArrowDown'){
+      e.preventDefault();
+      const worldX=(satLng+180)/360*n;
+      const sinLat=Math.sin(satLat*Math.PI/180);
+      const worldY=(0.5-Math.log((1+sinLat)/(1-sinLat))/(4*Math.PI))*n;
+      let newX=worldX,newY=worldY;
+      if(e.key==='ArrowLeft') newX=worldX+panPx;
+      if(e.key==='ArrowRight') newX=worldX-panPx;
+      if(e.key==='ArrowUp') newY=worldY-panPx;
+      if(e.key==='ArrowDown') newY=worldY+panPx;
+      satLng=(((newX/n*360)-180)+360)%360-180;
+      const latRad=Math.atan(Math.sinh(Math.PI*(1-2*newY/n)));
+      satLat=Math.max(-85,Math.min(85,latRad*180/Math.PI));
+      drawSatMap();
+    }
+    if(e.key==='+'||e.key==='=') satZoomIn();
+    if(e.key==='-') satZoomOut();
+  });
   // Resize handler
   window.addEventListener('resize',()=>{if(satOpen&&satLocSelected){sizeSatCanvas();drawSatMap();}});
 }
