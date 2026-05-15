@@ -494,7 +494,9 @@ canvas.dragging{cursor:grabbing}
   background:rgba(8,16,34,.8);border:1px solid rgba(30,58,95,.6);border-radius:3px;
   color:var(--muted);font-family:var(--mono);font-size:8px;letter-spacing:.1em;
   padding:4px 9px;cursor:pointer;transition:all .15s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:5px;
 }
+.sl-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;opacity:.8}
 .sl-btn:hover{border-color:rgba(52,211,153,.4);color:#34d399}
 .sl-btn.active{border-color:rgba(52,211,153,.6);color:#34d399;background:rgba(52,211,153,.12)}
 #sat-info-bar{
@@ -772,13 +774,13 @@ canvas.dragging{cursor:grabbing}
     <select id="sat-loc-sel" onchange="satJumpToLocation(this.value)" style="background:rgba(8,20,40,.9);border:1px solid rgba(52,211,153,.25);color:#94a3b8;font-family:var(--mono);font-size:8px;padding:4px 6px;border-radius:3px;letter-spacing:.04em;cursor:pointer;flex-shrink:0">
       <option value="">— SELECT LOCATION —</option>
     </select>
-    <button class="sl-btn active" id="sl-esri"       onclick="setSatLayer('esri')">HIGH RES</button>
-    <button class="sl-btn"        id="sl-sentinel"   onclick="setSatLayer('sentinel')">SENTINEL-2</button>
-    <button class="sl-btn"        id="sl-modis"      onclick="setSatLayer('modis')">MODIS DAILY</button>
-    <button class="sl-btn"        id="sl-viirs_tc"   onclick="setSatLayer('viirs_tc')">VIIRS DAILY</button>
-    <button class="sl-btn"        id="sl-viirs"      onclick="setSatLayer('viirs')">NIGHT LIGHTS</button>
-    <button class="sl-btn"        id="sl-thermal"    onclick="setSatLayer('thermal')">THERMAL</button>
-    <button class="sl-btn"        id="sl-false_color" onclick="setSatLayer('false_color')">FALSE COLOR</button>
+    <button class="sl-btn active" id="sl-esri"    onclick="setSatLayer('esri')">   <span class="sl-dot" style="background:#a3e635"></span>HIGH RES</button>
+    <button class="sl-btn"        id="sl-clarity" onclick="setSatLayer('clarity')"><span class="sl-dot" style="background:#34d399"></span>ULTRA-HD</button>
+    <button class="sl-btn"        id="sl-terrain" onclick="setSatLayer('terrain')"><span class="sl-dot" style="background:#fbbf24"></span>TERRAIN</button>
+    <button class="sl-btn"        id="sl-ocean"   onclick="setSatLayer('ocean')">  <span class="sl-dot" style="background:#22c55e"></span>OCEAN</button>
+    <button class="sl-btn"        id="sl-dark"    onclick="setSatLayer('dark')">   <span class="sl-dot" style="background:#94a3b8"></span>DARK OPS</button>
+    <button class="sl-btn"        id="sl-topo"    onclick="setSatLayer('topo')">   <span class="sl-dot" style="background:#f97316"></span>TOPO</button>
+    <button class="sl-btn"        id="sl-natgeo"  onclick="setSatLayer('natgeo')"> <span class="sl-dot" style="background:#60a5fa"></span>NAT GEO</button>
     <button class="sl-btn" id="sat-back-btn" onclick="satShowLocList()" style="display:none;margin-left:4px;border-color:rgba(52,211,153,.3);color:#34d399">◀ LOCATIONS</button>
     <input type="date" id="sat-date-in" onchange="satDateChange(this.value)" title="Select imagery date (for NASA layers)" style="background:rgba(8,20,40,.9);border:1px solid rgba(52,211,153,.2);color:#94a3b8;font-family:var(--mono);font-size:8px;padding:4px 6px;border-radius:3px;cursor:pointer">
     <div style="display:flex;gap:4px;margin-left:auto;flex-shrink:0">
@@ -7766,26 +7768,26 @@ function nextSatLoad(){
 
 const SAT_LAYERS={
   esri:{id:'esri',label:'HIGH RES',maxZoom:18,color:'#a3e635',
-    desc:'ESRI World Imagery — commercial satellite, sub-meter to 1m resolution. Best available imagery, not updated daily.',
+    desc:'ESRI World Imagery — commercial satellite, sub-meter to 1m resolution. Best detail available.',
     url:(z,tx,ty)=>`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${ty}/${tx}`},
-  sentinel:{id:'sentinel',label:'SENTINEL-2',maxZoom:14,color:'#34d399',
-    desc:'ESA Sentinel-2 cloudless composite — 10m resolution, sharper than ESRI in many regions. Annual composite, not daily.',
-    url:(z,tx,ty)=>`https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/${z}/${ty}/${tx}.jpg`},
-  modis:{id:'modis',label:'MODIS DAILY',maxZoom:9,color:'#22c55e',
-    desc:'NASA MODIS Terra — 250m resolution, updated every 24h. Shows fires, smoke plumes, ship wakes, dust clouds.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
-  viirs_tc:{id:'viirs_tc',label:'VIIRS DAILY',maxZoom:9,color:'#6ee7b7',
-    desc:'NASA VIIRS Suomi NPP — 375m resolution, updated daily. Clearer than MODIS. Best free daily true-color satellite available.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
-  viirs:{id:'viirs',label:'NIGHT LIGHTS',maxZoom:8,color:'#fbbf24',
-    desc:'NASA VIIRS night lights (ENCC) — shows city lights, field fires, base activity. Dark areas = no light source detected.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_ENCC/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
-  thermal:{id:'thermal',label:'THERMAL',maxZoom:8,color:'#ef4444',
-    desc:'NASA MODIS thermal anomalies — shows ONLY active fires and heat sources. Areas without active heat appear dark (transparent overlay).',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Thermal_Anomalies_Fire_Daily/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.png`},
-  false_color:{id:'false_color',label:'FALSE COLOR',maxZoom:9,color:'#f97316',
-    desc:'NASA MODIS bands 7-2-1 — burn scars appear bright red, active fires orange, healthy vegetation green, bare soil pink/tan.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_Bands721/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+  clarity:{id:'clarity',label:'ULTRA-HD',maxZoom:17,color:'#34d399',
+    desc:'ESRI Clarity — enhanced high-resolution satellite imagery. Superior detail in urban and military areas.',
+    url:(z,tx,ty)=>`https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/${z}/${ty}/${tx}`},
+  terrain:{id:'terrain',label:'TERRAIN',maxZoom:13,color:'#fbbf24',
+    desc:'ESRI World Terrain — elevation shading and topographic relief. Essential for military terrain analysis.',
+    url:(z,tx,ty)=>`https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/${z}/${ty}/${tx}`},
+  ocean:{id:'ocean',label:'OCEAN',maxZoom:10,color:'#22c55e',
+    desc:'ESRI Ocean Basemap — bathymetric ocean floor topology. Critical for naval and submarine operations.',
+    url:(z,tx,ty)=>`https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/${z}/${ty}/${tx}`},
+  dark:{id:'dark',label:'DARK OPS',maxZoom:18,color:'#94a3b8',
+    desc:'CartoDB Dark basemap — tactical dark background, ideal for overlaying intelligence data.',
+    url:(z,tx,ty)=>`https://${'abcd'[(Math.abs(tx)+Math.abs(ty))%4]}.basemaps.cartocdn.com/dark_nolabels/${z}/${tx}/${ty}.png`},
+  topo:{id:'topo',label:'TOPO',maxZoom:15,color:'#f97316',
+    desc:'ESRI World Topographic — detailed contours, roads, infrastructure. Best for movement analysis.',
+    url:(z,tx,ty)=>`https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${ty}/${tx}`},
+  natgeo:{id:'natgeo',label:'NAT GEO',maxZoom:12,color:'#60a5fa',
+    desc:'ESRI NatGeo World Map — National Geographic cartographic style. Political boundaries and terrain.',
+    url:(z,tx,ty)=>`https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${ty}/${tx}`},
 };
 
 const SAT_LOCATIONS=[
@@ -7897,13 +7899,13 @@ const SAT_LOCATIONS=[
 
 // Which location categories are meaningful to observe per imagery layer
 const SAT_LAYER_CATS={
-  esri:        ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','INTEL HQ','VIP/CAPITAL','SPACE/LAUNCH','MARITIME'],
-  sentinel:    ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','VIP/CAPITAL','SPACE/LAUNCH','MARITIME'],
-  modis:       ['CONFLICT','MARITIME','NUCLEAR/MISSILE','MILITARY','NAVAL'],
-  viirs_tc:    ['CONFLICT','MARITIME','NUCLEAR/MISSILE','MILITARY','NAVAL'],
-  viirs:       ['VIP/CAPITAL','MILITARY','NAVAL','MARITIME','SPACE/LAUNCH','NUCLEAR/MISSILE'],
-  thermal:     ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','MARITIME'],
-  false_color: ['CONFLICT','NUCLEAR/MISSILE','MARITIME','SPACE/LAUNCH','MILITARY'],
+  esri:    ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','INTEL HQ','VIP/CAPITAL','SPACE/LAUNCH','MARITIME'],
+  clarity: ['NUCLEAR/MISSILE','MILITARY','NAVAL','INTEL HQ','VIP/CAPITAL','SPACE/LAUNCH','CONFLICT'],
+  terrain: ['CONFLICT','MILITARY','NUCLEAR/MISSILE','SPACE/LAUNCH','MARITIME'],
+  ocean:   ['NAVAL','MARITIME','CONFLICT'],
+  dark:    ['CONFLICT','MILITARY','NAVAL','MARITIME','INTEL HQ','NUCLEAR/MISSILE'],
+  topo:    ['CONFLICT','MILITARY','NUCLEAR/MISSILE','SPACE/LAUNCH','VIP/CAPITAL'],
+  natgeo:  ['VIP/CAPITAL','INTEL HQ','NUCLEAR/MISSILE','MILITARY','CONFLICT'],
 };
 
 function toggleSatPanel(){
@@ -8057,7 +8059,6 @@ function drawSatMap(){
   const tileTop=Math.floor((center.y-H/2)/SAT_TS)-1;
   const tileBot=Math.floor((center.y+H/2)/SAT_TS)+1;
   let loading=0,errors=0,loaded=0;
-  const isThermal=satLayerKey==='thermal';
   for(let ty=tileTop;ty<=tileBot;ty++){
     for(let tx=tileLeft;tx<=tileRight;tx++){
       if(tx<0||tx>=maxTile||ty<0||ty>=maxTile)continue;
@@ -8087,22 +8088,14 @@ function drawSatMap(){
       }
     }
   }
-  // Error overlay — shown when all tiles failed (service blocked or unavailable)
+  // Error overlay — all tiles failed
   if(loading===0&&errors>0&&loaded===0){
-    ctx.fillStyle='rgba(0,0,0,.72)';ctx.fillRect(0,H/2-52,W,104);
+    ctx.fillStyle='rgba(0,0,0,.72)';ctx.fillRect(0,H/2-46,W,92);
     ctx.textAlign='center';
     ctx.fillStyle='#ef4444';ctx.font='bold 13px monospace';
-    ctx.fillText('⚠  TILE DATA UNAVAILABLE',W/2,H/2-22);
+    ctx.fillText('⚠  TILES UNAVAILABLE',W/2,H/2-16);
     ctx.fillStyle='#94a3b8';ctx.font='10px monospace';
-    ctx.fillText('NASA GIBS or EOX tile server is not reachable from your network.',W/2,H/2+2);
-    ctx.fillText('Try switching to  HIGH RES  or  SENTINEL-2,  or change the date.',W/2,H/2+20);
-    ctx.textAlign='left';
-  }
-  // Thermal layer note — tiles are transparent where no fires; looks dark by design
-  if(isThermal&&loaded>0){
-    ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(0,H-28,W,28);
-    ctx.fillStyle='#f87171';ctx.font='9px monospace';ctx.textAlign='center';
-    ctx.fillText('THERMAL: colored dots = active fire/heat only — dark areas have no anomaly detected',W/2,H-11);
+    ctx.fillText('Tile server unreachable. Try a different layer or select another location.',W/2,H/2+8);
     ctx.textAlign='left';
   }
   // Crosshair
