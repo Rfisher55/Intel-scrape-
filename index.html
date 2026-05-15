@@ -7589,33 +7589,49 @@ function nextSatLoad(){
     const {img,url,key}=satQueue.shift();
     if(!satTileCache[key]||satTileCache[key].state!=='loading')continue;
     satInflight++;
-    img.onload=()=>{
-      satInflight--;
-      if(satTileCache[key])satTileCache[key].state='loaded';
-      drawSatMap();nextSatLoad();
+    const isEsri=url.includes('arcgisonline.com');
+
+    const doLoad=(src,attempt)=>{
+      img.onload=()=>{
+        satInflight=Math.max(0,satInflight-1);
+        if(satTileCache[key])satTileCache[key].state='loaded';
+        drawSatMap();nextSatLoad();
+      };
+      img.onerror=()=>{
+        // First failure on non-ESRI: retry immediately via CORS proxy
+        if(attempt===0&&!isEsri){
+          doLoad('https://corsproxy.io/?'+encodeURIComponent(src),1);
+          return;
+        }
+        satInflight=Math.max(0,satInflight-1);
+        const retries=(satTileRetries[key]||0)+1;
+        if(retries<=2){
+          satTileRetries[key]=retries;
+          setTimeout(()=>{
+            if(!satTileCache[key]||satTileCache[key].state==='loaded')return;
+            delete satTileCache[key];
+            const idx=satCacheKeys.indexOf(key);
+            if(idx>=0)satCacheKeys.splice(idx,1);
+            if(satLocSelected)drawSatMap();
+          },retries*1500);
+        } else {
+          delete satTileRetries[key];
+          if(satTileCache[key])satTileCache[key].state='error';
+          drawSatMap();
+        }
+        nextSatLoad();
+      };
+      img.src=src;
     };
-    img.onerror=()=>{
-      satInflight--;
-      const retries=(satTileRetries[key]||0)+1;
-      if(retries<=2){
-        satTileRetries[key]=retries;
-        setTimeout(()=>{
-          if(!satTileCache[key]||satTileCache[key].state==='loaded')return;
-          delete satTileCache[key];
-          const idx=satCacheKeys.indexOf(key);
-          if(idx>=0)satCacheKeys.splice(idx,1);
-          if(satLocSelected)drawSatMap();
-        },retries*1500);
-      } else {
-        delete satTileRetries[key];
-        if(satTileCache[key])satTileCache[key].state='error';
-        drawSatMap();
-      }
-      nextSatLoad();
-    };
-    img.src=url;
+
+    doLoad(url,0);
   }
 }
+
+// Rotate across NASA GIBS subdomains for load balancing
+const GIBS_HOSTS=['gibs.earthdata.nasa.gov','gibs-a.earthdata.nasa.gov','gibs-b.earthdata.nasa.gov','gibs-c.earthdata.nasa.gov'];
+let _gibsIdx=0;
+const gibsHost=()=>GIBS_HOSTS[_gibsIdx++%GIBS_HOSTS.length];
 
 const SAT_LAYERS={
   esri:{id:'esri',label:'HIGH RES',maxZoom:18,color:'#a3e635',
@@ -7625,20 +7641,20 @@ const SAT_LAYERS={
     desc:'ESA Sentinel-2 cloudless composite via EOX — 10m resolution. Sharper than ESRI in many regions. Annual composite, not daily.',
     url:(z,tx,ty)=>`https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/${z}/${ty}/${tx}.jpg`},
   modis:{id:'modis',label:'MODIS DAILY',maxZoom:9,color:'#22c55e',
-    desc:'NASA MODIS Terra — 250m resolution, updated every 24h (morning pass). Shows fires, smoke plumes, ship wakes, dust clouds from explosions.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+    desc:'NASA MODIS Terra — 250m resolution, updated every 24h. Shows fires, smoke plumes, ship wakes, dust clouds.',
+    url:(z,tx,ty,dt)=>`https://${gibsHost()}/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
   viirs_tc:{id:'viirs_tc',label:'VIIRS DAILY',maxZoom:9,color:'#6ee7b7',
     desc:'NASA VIIRS Suomi NPP — 375m resolution, updated daily. Clearer than MODIS. Best free daily true-color satellite available.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
-  viirs:{id:'viirs',label:'NIGHT VIIRS',maxZoom:8,color:'#fbbf24',
+    url:(z,tx,ty,dt)=>`https://${gibsHost()}/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+  viirs:{id:'viirs',label:'NIGHT LIGHTS',maxZoom:8,color:'#fbbf24',
     desc:'NASA VIIRS night lights — updated daily. Detects active lighting, field fires, blackouts, forward operating bases, military camps.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_At_Sensor_Radiance/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
-  thermal:{id:'thermal',label:'THERMAL',maxZoom:7,color:'#ef4444',
+    url:(z,tx,ty,dt)=>`https://${gibsHost()}/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_At_Sensor_Radiance/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+  thermal:{id:'thermal',label:'THERMAL',maxZoom:8,color:'#ef4444',
     desc:'NASA MODIS thermal anomalies — updated daily. Detects active fires, explosions, burning infrastructure, industrial heat signatures.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Thermal_Anomalies_Fire_Daily/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.png`},
+    url:(z,tx,ty,dt)=>`https://${gibsHost()}/wmts/epsg3857/best/MODIS_Terra_Thermal_Anomalies_Fire_Daily/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.png`},
   false_color:{id:'false_color',label:'FALSE COLOR',maxZoom:9,color:'#f97316',
     desc:'NASA MODIS bands 7-2-1 — updated daily. Burn scars appear red, active fires bright red/orange, vegetation green, bare soil pink.',
-    url:(z,tx,ty,dt)=>`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_Bands721/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
+    url:(z,tx,ty,dt)=>`https://${gibsHost()}/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_Bands721/default/${dt}/GoogleMapsCompatible/${z}/${ty}/${tx}.jpg`},
 };
 
 const SAT_LOCATIONS=[
