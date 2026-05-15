@@ -6943,6 +6943,148 @@ window.addEventListener('resize',()=>{resize();});
 /* ════════════════════════════════════════════════════
    PANEL UI
 ════════════════════════════════════════════════════ */
+
+// ── COUNTRY FACTIONS DB — armed groups operating within each country ──────
+const COUNTRY_FACTIONS={
+  SYR:[
+    {name:'HTS (Hayat Tahrir al-Sham)',type:'ISLAMIST MILITIA',leader:'Ahmed al-Sharaa (Julani)',strength:75,control:'Idlib + NW Syria (4M pop)',vs:['SAA','ISIS/Daesh'],foreign:'Turkey-adjacent; US terrorist designation',desc:'De facto state in Idlib. Runs civilian government, courts, taxes. Distancing from AQ origins. Seeking US delisting.'},
+    {name:'Syrian Arab Army (SAA)',type:'STATE MILITARY',leader:'Def. Min. Ali Mahmoud Abbas',strength:45,control:'SW Syria, Coastal, Damascus',vs:['HTS','SDF','ISIS'],foreign:'Russia (VKS air support), Iran (IRGC advisors), Hezbollah',desc:'Severely degraded by civil war. Estimated 60K effective of 150K nominal. Russian and Iranian support critical for survival.'},
+    {name:'SDF / YPG (Kurdish Forces)',type:'SEPARATIST MILITIA',leader:'Gen. Mazloum Abdi',strength:70,control:'NE Syria — Rojava (~30% of territory)',vs:['Turkey/TFSA','ISIS'],foreign:'USA (900 troops, weapons, air support)',desc:'Partner force for US counter-ISIS. Turkey views as PKK extension and conducts airstrikes. Controls oil fields. Administration of 2M+ in Autonomous Administration of NE Syria.'},
+    {name:'ISIS / Daesh',type:'TERRORIST',leader:'Abu Hafs al-Hashimi al-Qurashi',strength:20,control:'Desert pockets, Deir ez-Zor, Badiya',vs:['All factions'],foreign:'None (self-financing via remnant taxation)',desc:'Degraded but persistent insurgency. 5,000-10,000 fighters estimated Syria/Iraq. Prison breaks and sleeper cell attacks ongoing. CJTF-OIR: 300+ strikes/yr.'},
+    {name:'TFSA / SNA (Turkish-backed)',type:'PROXY MILITIA',leader:'Multiple Turkish-directed commanders',strength:50,control:'N. border strip: Afrin, Euphrates Shield, Olive Branch zones',vs:['SDF/YPG','PKK'],foreign:'Turkey (direct command, weapons, pay)',desc:'Collection of FSA remnants under Turkish control. Used as proxy against Kurdish autonomy. Documented human rights abuses in Afrin.'},
+    {name:'IRGC / Hezbollah elements',type:'FOREIGN FORCE',leader:'IRGC Quds Force',strength:40,control:'Damascus outskirts, Deir ez-Zor, Homs corridor',vs:['Israel strikes','Anti-Iran rebels'],foreign:'Iran (commands and funds)',desc:'3,000-5,000 IRGC and Hezbollah personnel. Manage Shia militia networks. Run Damascus-Beirut weapons transfer corridor. Target of 140+ Israeli strikes in 2024.'},
+  ],
+  LBY:[
+    {name:'GNU (Govt of National Unity)',type:'RECOGNIZED GOVT',leader:'PM Abdulhamid Dbeibah',strength:45,control:'Tripoli, NW Libya',vs:['LNA'],foreign:'Turkey (Bayraktar drones, troops), UN-recognized, Italy',desc:'Tripoli-based internationally recognized government. Weak institutional control — dependent on militia coalitions. Oil revenue split contested.'},
+    {name:'LNA (Libyan National Army)',type:'MILITARY FACTION',leader:'Field Marshal Khalifa Haftar',strength:55,control:'East Libya (Cyrenaica), Benghazi, Fezzan',vs:['GNU','Tripoli militias'],foreign:'UAE, Egypt, Russia (Africa Corps/Wagner), France (unofficial)',desc:'Controls eastern Libya and most oil fields. Haftar sons lead key units. Africa Corps (Wagner successor) ~1,200 troops provides critical support.'},
+    {name:'Africa Corps (Wagner successor)',type:'FOREIGN MERCENARY',leader:'Russian GRU',strength:35,control:'South Libya — Fezzan, Sabha',vs:['GNU proxies'],foreign:'Russia',desc:'Successor to Wagner Group in Libya. Approx. 1,200-1,800 personnel. Controls southern oil infrastructure. Supplies Haftar with logistics and airpower.'},
+    {name:'Misrata Militias',type:'CITY MILITIA',leader:'Multiple city council-linked commanders',strength:40,control:'Misrata, coastal central Libya',vs:['LNA','Haftar'],foreign:'Turkey (weapons), Qatar (historical)',desc:'Most powerful western militia bloc. 8,000+ fighters. Fought off LNA siege 2019-2020. Nominally aligned with GNU but maintain autonomous command.'},
+    {name:'ISIS Libya',type:'TERRORIST',leader:'Unknown',strength:10,control:'Desert pockets, Sirte coast',vs:['LNA','GNU','All'],foreign:'None formal',desc:'Degraded since 2016 Sirte defeat. Estimated 100-300 fighters. Desert insurgency, periodic attacks on oil infrastructure and checkpoints.'},
+  ],
+  YEM:[
+    {name:'Houthis (Ansar Allah)',type:'INSURGENT/DE FACTO STATE',leader:'Abdul-Malik al-Houthi',strength:80,control:'Sanaa, north/west Yemen, Hodeidah port (70% of population)',vs:['Saudi coalition','STC','Yemeni govt'],foreign:'Iran (IRGC advisors, weapons via Oman corridor)',desc:'De facto government of most populous Yemen. Running Red Sea anti-ship campaign — 80+ attacks on commercial shipping. IRGC-provided ballistic missiles and drone tech.'},
+    {name:'Presidential Leadership Council',type:'RECOGNIZED GOVT',leader:'Rashad al-Alimi (chair)',strength:30,control:'Aden, SE Yemen, Marib (contested)',vs:['Houthis'],foreign:'Saudi Arabia, UAE (funds/weapons), UN recognition',desc:'Fragmented coalition of 8 factions. No unified command. Saudi-funded but internally fractious. Controls southern coast and Marib oil region.'},
+    {name:'STC (Southern Transitional Council)',type:'SEPARATIST',leader:'Aidarous al-Zubaidi',strength:40,control:'Aden, Hadhramaut (contested)',vs:['Houthis','Yemeni govt'],foreign:'UAE (primary backer)',desc:'Seeks South Yemen independence. UAE-funded and armed. Controls Aden. Nominal PLC member but maintains separate command. Security Belt Forces.'},
+    {name:'Al-Qaeda in Arabian Peninsula (AQAP)',type:'TERRORIST',leader:'Saad al-Amri (acting)',strength:25,control:'Rural Marib, Hadhramaut, Abyan',vs:['All — opportunistic'],foreign:'None (self-financing)',desc:'Strongest Al-Qaeda franchise globally. Exploits war chaos. Governs territory in SE Yemen. Produces PETN explosives. Multiple plots against aviation.'},
+  ],
+  IRQ:[
+    {name:'Popular Mobilization Forces (PMF)',type:'STATE-ALLIED MILITIA',leader:'Falih al-Fayyadh (political), multiple factional commanders',strength:70,control:'Nineveh, western Iraq, Iran border corridors',vs:['ISIS remnants','US forces (covertly)'],foreign:"Iran (IRGC Quds Force) — Kataib Hezbollah, Asa'ib Ahl al-Haq",desc:'100,000+ official strength. Legally part of Iraqi state but Iran-directed factions operate autonomously. Attacked US bases 170+ times 2023-2024.'},
+    {name:'Kataib Hezbollah',type:'IRAN PROXY',leader:'Abu Ala al-Walai',strength:50,control:'Iraq-Syria border, Anbar, Baghdad',vs:['USA','Israel (via proxies)'],foreign:'Iran IRGC (direct command)',desc:'Closest Iraqi group to Iran. Designated US terrorist organization. US airstrike killed Abu Mahdi al-Muhandis (founder) Jan 2020. Conducts Iran-directed attacks on US bases.'},
+    {name:'Kurdistan Regional Government (KRG)',type:'AUTONOMOUS REGION',leader:'PM Masrour Barzani',strength:65,control:'Iraqi Kurdistan — Erbil, Sulaymaniyah, Dohuk',vs:['ISIS remnants','Occasional Turkish strikes on PKK'],foreign:'USA (military partnership), Turkey (trade), Iran (influence in Sulaymaniyah)',desc:'Semi-autonomous region. Peshmerga forces: 160,000+ (mixed capability). PKK presence in Qandil mountains draws Turkish airstrikes. Internal split: KDP (Barzani) vs PUK (Talabani family).'},
+    {name:'ISIS / Daesh Iraq',type:'TERRORIST',leader:'Network-based, no single leader',strength:20,control:'Desert pockets, Anbar-Nineveh border',vs:['PMF','ISF','KRG Peshmerga','CJTF-OIR'],foreign:'None',desc:'Insurgency mode. 500-1,500 fighters estimated Iraq. Monthly attacks on ISF and PMF. Revenue: kidnapping, taxing rural communities. No territorial control.'},
+  ],
+  UKR:[
+    {name:'Ukrainian Armed Forces (UAF)',type:'STATE MILITARY',leader:'CinC Gen. Oleksandr Syrsky',strength:95,control:'Ukrainian government-controlled territory',vs:['Russian Armed Forces','Russian proxies'],foreign:'USA ($61B+), EU ($90B+), NATO weaponry — Abrams, F-16, HIMARS, Patriots',desc:'1,000,000+ mobilized (est). Critical shortage: artillery ammunition, manpower. Western weapons have equalized battlefield. Air defense degraded by Russian missile attrition. F-16s operational 2024.'},
+    {name:'Russian Armed Forces (RuAF)',type:'FOREIGN OCCUPIER',leader:'Gen. Valery Gerasimov (CinC), Cmdr Vladimir Putin',strength:80,control:'Occupied territories: Donetsk (est. 65%), Luhansk (est. 95%), Zaporizhzhia, Kherson partials',vs:['UAF'],foreign:'DPRK (12K+ troops deployed), Iran (Shahed drones), China (dual-use goods)',desc:'600,000+ deployed. Grinding offensive. Daily casualties estimated 1,000+. Drone warfare dominant. ATACMS, Storm Shadow strikes on logistics depth.'},
+    {name:'Azov Brigade (Special Ops Detachment)',type:'STATE UNIT',leader:'Col. Denys Prokopenko',strength:55,control:'Deployed to Zaporizhzhia front',vs:['Russian forces'],foreign:'None (Ukrainian state unit)',desc:'Originally far-right volunteer militia, now fully integrated into Ukrainian military. Elite status. Captive exchange: Azov commanders released 2023. Deployed to critical sectors.'},
+    {name:'Russian LNR/DNR proxy forces',type:'PROXY MILITIA',leader:'Russian GRU / FSB control',strength:40,control:'Occupied Donetsk, Luhansk',vs:['UAF'],foreign:'Russia (commands, equips, pays)',desc:'Remnants of original 2014 separatist forces now subordinate to Russian military command. Cannon fodder role — frontline assault with Russian regular forces in command.'},
+    {name:'DPRK Military (attached units)',type:'FOREIGN FORCE',leader:'Unknown Korean generals attached to RuAF',strength:30,control:'Kursk Oblast (Russian soil), Deployed Eastern front',vs:['UAF'],foreign:'North Korea (deployed by Kim Jong-un per Putin agreement)',desc:'12,000+ North Korean troops deployed to Russia/Ukraine front. Artillery operation training and assault units. High casualties reported — unfamiliar with drone warfare.'},
+  ],
+  PSE:[
+    {name:'Hamas (Izz ad-Din al-Qassam Brigades)',type:'ISLAMIST MILITANT',leader:'Yahya Sinwar (killed Oct 2024) → Mohammed Sinwar',strength:35,control:'Gaza Strip (degraded governance)',vs:['IDF','Palestinian Authority'],foreign:'Iran (weapons, funding), Qatar (political office)',desc:'Military wing: 20,000-30,000 fighters (pre-war), now heavily degraded. Oct 7 attack: 1,200 killed, 253 hostages. IDF campaign targeted leadership — 90%+ of senior command killed or fled. Rebuilt in tunnel network.'},
+    {name:'Palestinian Islamic Jihad (PIJ)',type:'ISLAMIST MILITANT',leader:'Ziad al-Nakhalah',strength:20,control:'Gaza (secondary to Hamas)',vs:['IDF'],foreign:'Iran (primary funder, $100M/yr)',desc:'More directly Iran-controlled than Hamas. Refuses political participation — purely military. Al-Quds Brigades: 8,000-12,000 fighters (pre-war). Iranian IRGC provides direct operational guidance.'},
+    {name:'Palestinian Authority (Fatah)',type:'GOVERNING AUTHORITY',leader:'Mahmoud Abbas (87)',strength:25,control:'West Bank (nominal), Gaza (absent)',vs:['Hamas','PIJ'],foreign:'EU (aid), USA (security coordination), Arab states',desc:'Aging, corrupt institution. No Gaza presence since 2007 Hamas coup. West Bank security forces coordinate with IDF on counter-Hamas operations (condemned by Palestinians). Abbas: no succession plan.'},
+    {name:"Lion's Den / West Bank Brigades",type:'MILITANT (NEW GEN)',leader:'Decentralized cell leadership',strength:15,control:'Jenin, Nablus, Tulkarm refugee camps',vs:['IDF','PA Security Forces'],foreign:'None formal — Hamas/PIJ inspire but do not command',desc:'New generation of West Bank militants rejecting both Hamas and PA. Emerge from refugee camps. IDF conducting near-nightly operations in Jenin and Tulkarm. High operational tempo — PA security forces cooperate with IDF.'},
+  ],
+  AFG:[
+    {name:'Taliban (Islamic Emirate of Afghanistan)',type:'STATE/TERRORIST',leader:'Supreme Leader Haibatullah Akhundzada',strength:90,control:'All Afghanistan (national government)',vs:['ISKP','NRF remnants'],foreign:'Pakistan (historical ISI support), China (diplomatic engagement), Qatar (talks), Russia (pragmatic)',desc:'Returned to power Aug 2021. Bans women from education and work. No international recognition. Economic collapse — 95% population below poverty line. Increasingly targeting ISKP.'},
+    {name:'ISKP (Islamic State Khorasan)',type:'TERRORIST',leader:'Unknown (frequent decapitation)',strength:25,control:'No territory — network-based, Kabul, eastern provinces',vs:['Taliban','US (drone strikes)'],foreign:'None (ideological network)',desc:'ISIS affiliate. Declared Taliban apostates. Kabul airport attack killed 183. Multiple suicide bombings monthly. External attack planning — claimed Vienna, Moscow Crocus attacks. Recruits disaffected Taliban members.'},
+    {name:'NRF (National Resistance Front)',type:'RESISTANCE',leader:'Ahmad Massoud',strength:10,control:'Panjshir Valley (contested)',vs:['Taliban'],foreign:'Tajikistan (sanctuary), India (reported support)',desc:'Son of Ahmed Shah Massoud. Limited military capacity. Primarily symbolic resistance. Some Panjshir valley holdouts. International support symbolic rather than material.'},
+  ],
+  MLI:[
+    {name:"JNIM (Jama'at Nusrat al-Islam)",type:'JIHADIST',leader:'Iyad Ag Ghaly',strength:60,control:'Central and Northern Mali, Burkina Faso, Niger expansion',vs:['Mali state/Wagner/Russia','MINUSMA remnants','GATIA (Tuareg)'],foreign:'Al-Qaeda (AQIM affiliate)',desc:'Most powerful jihadist group in Sahel. Expanding into Burkina Faso and Niger following MINUSMA withdrawal. Revenue: kidnapping, taxation, gold. 2,000-5,000 fighters.'},
+    {name:'ISGS / ISWAP West Africa',type:'JIHADIST',leader:'Unknown',strength:30,control:'Tri-border: Mali/Niger/Burkina + Lake Chad basin',vs:['JNIM','State forces'],foreign:'ISIS global network',desc:'ISIS affiliate competing with JNIM. Targets civilians more indiscriminately. Expanding from tri-border into Benin, Togo. Clashes with JNIM for territorial control.'},
+    {name:'Malian Armed Forces (FAMA) + Wagner/Africa Corps',type:'STATE + MERCENARY',leader:'Junta: Col. Assimi Goita + Africa Corps',strength:40,control:'Bamako and southern cities',vs:['JNIM','ISGS','Tuareg separatists'],foreign:'Russia (Africa Corps ~1,000 troops), China (weapons)',desc:'Military junta expelled France (Barkhane), MINUSMA. Africa Corps deployed for junta protection and counter-insurgency. Accused of massacres. Losing ground to jihadists despite Russian support.'},
+    {name:'CSP-PSD (Tuareg separatists)',type:'SEPARATIST',leader:'Alghabass Ag Intalla',strength:35,control:'Kidal, Menaka, Timbuktu (northern Mali)',vs:['FAMA/Wagner','JNIM (sometimes)'],foreign:'Algeria (mediation), previously France (arms)',desc:'Coalition of Tuareg groups. Recaptured Kidal from FAMA after Wagner-supported assault. Maintain alliance of convenience with some JNIM factions vs FAMA.'},
+  ],
+  SDN:[
+    {name:'Sudanese Armed Forces (SAF)',type:'STATE MILITARY',leader:'Gen. Abdel Fattah al-Burhan',strength:55,control:'Khartoum (contested), River Nile, Red Sea coast, East Sudan',vs:['RSF'],foreign:'Egypt, Iran (Bayraktar drones rumored), some Arab states',desc:'Regular army. Losing Khartoum to RSF. Air force advantage but limited ground force effectiveness. Recruiting Islamist militias to supplement.'},
+    {name:'RSF (Rapid Support Forces)',type:'PARAMILITARY',leader:'Gen. Mohamed Hamdan Dagalo (Hemedti)',strength:65,control:'Darfur, Kordofan, most of Khartoum',vs:['SAF','Darfur resistance'],foreign:'UAE (significant support — weapons, finance), Russia (Wagner liaison), Wagner (historical)',desc:'Former Janjaweed — accused of Darfur genocide 2003. Controls gold mines. UAE financial backing critical. Documented mass atrocities in Darfur — ICC investigation. 9M+ displaced.'},
+    {name:'SPLM-N (Nuba Mountains / Blue Nile)',type:'REBEL',leader:'Abdelaziz al-Hilu',strength:25,control:'Nuba Mountains, South Kordofan, Blue Nile state',vs:['SAF'],foreign:'South Sudan (sanctuary), minimal external support',desc:'Long-running insurgency from South Sudan war. Advocates secular state. Now semi-aligned with SAF against RSF — complex shifting alliances.'},
+  ],
+  MMR:[
+    {name:'Myanmar Junta (SAC/Tatmadaw)',type:'STATE/COUP',leader:'Gen. Min Aung Hlaing',strength:50,control:'Naypyidaw, Yangon, shrinking urban centers',vs:['PDF','NUG','EAOs'],foreign:'China (weapons, economic lifeline), Russia (jets, weapons)',desc:'2021 coup government losing territory rapidly. Conscription enacted 2024 — mass draft dodging. Air force bombing civilian areas. Estimated 50,000+ killed since coup.'},
+    {name:"PDF (People's Defence Force / NUG)",type:'RESISTANCE',leader:'Nominal NUG control, decentralized',strength:55,control:'Sagaing, Magway, expanding — 60%+ of territory by area',vs:['Tatmadaw'],foreign:'USA (non-lethal), diaspora funding',desc:"NUG civilian government's armed wing. Coordinate with EAOs but not unified command. IED and guerrilla campaign. Overran 100+ military bases 2023-2024."},
+    {name:'MNDAA / Brotherhood Alliance EAOs',type:'ETHNIC ARMED ORG',leader:'Multiple ethnic leaders',strength:70,control:'Shan State, Rakhine (ARSA/AA), Kachin (KIA), Karen (KNLA)',vs:['Tatmadaw'],foreign:'China (ambivalent — seeks stability, tacitly allows operations vs Scam centers)',desc:'Ethnic Armed Organizations: Arakan Army controls 70%+ of Rakhine. KIA holds Kachin. Operation 1027 (MNDAA+TNR+AA) overran 500+ junta positions in weeks. China pressured ceasefire — only partially effective.'},
+  ],
+  NGA:[
+    {name:'Boko Haram / ISWAP',type:'JIHADIST',leader:'ISWAP: Abu Musab al-Barnawi',strength:45,control:'NE Nigeria (Borno, Yobe) + Lake Chad basin',vs:['Nigerian military','Civilian JTF','MNJTF'],foreign:'ISIS network (ISWAP), Al-Qaeda splinter (Boko Haram rump)',desc:'ISWAP (ISIS-aligned) dominates post-Shekau death. Controls villages, taxes farmers. 36,000+ killed since 2009, 2M+ displaced. Circling back to attacking schools.'},
+    {name:'IPOB (Biafra separatists)',type:'SEPARATIST',leader:'Nnamdi Kanu (detained)',strength:20,control:'SE Nigeria (Igbo states) — shadow governance',vs:['Nigerian federal forces'],foreign:'Diaspora funding (global Igbo community)',desc:'Seeks Biafran independence. Eastern Security Network (ESN) — armed wing conducting attacks. Kanu detained in Kenya/Nigeria since 2021. Weekly "sit-at-home" paralyzes SE Nigeria economy.'},
+    {name:'Niger Delta Avengers / oil militants',type:'MILITANT',leader:'Decentralized',strength:15,control:'Niger Delta — oil pipelines, creeks',vs:['Oil companies','Nigerian Navy'],foreign:'None formal',desc:'Pipeline bombing campaign reducing Nigeria oil output. Revenue: oil bunkering (theft). Government amnesty programs bought temporary peace. Resurgent since 2024.'},
+  ],
+  SOM:[
+    {name:'Al-Shabaab',type:'JIHADIST',leader:'Ahmed Diriye (Abu Ubaidah)',strength:70,control:'Rural southern Somalia, Jubaland, parts of Bay/Bakool',vs:['FGS','ATMIS/AUSSOM','US AFRICOM strikes'],foreign:'Al-Qaeda (affiliate), self-financing via taxation',desc:'$100M+ annual revenue from checkpoints and taxation. 5,000-12,000 fighters. Controls most rural areas despite losing cities. Weekly complex attacks in Mogadishu. Conducted attacks in Kenya, Ethiopia. US: 450+ airstrikes 2024.'},
+    {name:'Federal Government of Somalia (FGS)',type:'STATE',leader:'President Hassan Sheikh Mohamud',strength:35,control:'Mogadishu, state capitals (contested)',vs:['Al-Shabaab','ISIS-Somalia'],foreign:'USA (airstrikes, training), Turkey (military base, drones), AU mission (AUSSOM), EU',desc:'Fragile UN-recognized government. Clan politics dominate. Army: 21,000 nominal, 7,000 effective. Turkish drones game-changing for airstrikes. Recovering territory in Hirshabelle, Galmudug.'},
+    {name:'ISIS-Somalia',type:'TERRORIST',leader:'Unknown',strength:10,control:'Puntland mountain areas',vs:['Al-Shabaab','FGS','Puntland forces'],foreign:'ISIS global (small funding/direction)',desc:'Rival to Al-Shabaab. Fighting for recruit base. Puntland: Bari region mountain strongholds. Attacks on Al-Shabaab leadership. Small — 200-500 fighters.'},
+  ],
+  COL:[
+    {name:'FARC-EP Dissidents (Estado Mayor Central)',type:'NARCO-TERRORIST',leader:'Ivan Mordisco',strength:45,control:'Caqueta, Meta, Guaviare, Pacific corridor',vs:['Colombian military','ELN (sometimes)'],foreign:'Venezuela (sanctuary), drug cartel networks',desc:'Splinter refusing 2016 peace deal. 3,000-5,000 fighters. Control cocaine processing zones. Revenue: $200M+/yr. Venezuela provides sanctuary and training support.'},
+    {name:'ELN (National Liberation Army)',type:'GUERRILLA',leader:'Eliecer Erlinto Chamorro (Antonio Garcia)',strength:40,control:'Arauca, Choco, Catatumbo, Venezuela border',vs:['Colombian military','FARC dissidents (sometimes)','Gulf Clan'],foreign:'Venezuela (tacit support), Cuba (historical)',desc:'Cuba-inspired Marxist group. 4,000-6,000 fighters. Peace talks ongoing but stalled. Heavy mining and extortion revenue. Expanding into Venezuela (50+ fronts).'},
+    {name:'Gulf Clan (Clan del Golfo)',type:'NARCO-PARAMILITARY',leader:'Dairo Antonio Usuga ("Otoniel" captured 2021) to El Chiquito Malo',strength:55,control:'Uraba, Caribbean coast, 8+ departments',vs:['Colombian military','ELN','FARC dissidents'],foreign:'Mexican cartels (Sinaloa, CJNG partnerships)',desc:'Largest criminal organization in Colombia. 6,000-8,000 members. Multiple drug corridors. Largest cocaine exporter. Paramilitary successor.'},
+  ],
+  MEX:[
+    {name:'Sinaloa Cartel',type:'NARCO-CRIMINAL',leader:'Ismael "El Mayo" Zambada (captured 2024); leadership disputed',strength:70,control:'Sinaloa, Sonora, Baja California, 30+ states',vs:['CJNG','Mexican military (partially)'],foreign:'USA (primary market), Colombia (supply), China (fentanyl precursors)',desc:'Largest drug trafficking organization globally. Controls fentanyl and meth precursor supply chain. Internal split (Chapitos vs Mayo faction) causing increased violence 2024.'},
+    {name:'CJNG (Jalisco New Generation)',type:'NARCO-CRIMINAL',leader:'Nemesio Oseguera (El Mencho)',strength:65,control:'Jalisco, Guanajuato, Michoacan, expanding nationwide',vs:['Sinaloa','Mexican military'],foreign:'Chinese fentanyl precursors, US market',desc:'Most aggressive cartel. Downed military helicopter with RPG. Expanding faster than any rival. El Mencho: most wanted in Mexico. $10M US bounty.'},
+  ],
+  PRK:[
+    {name:"Korean People's Army (KPA)",type:'STATE MILITARY',leader:'Supreme Leader Kim Jong-un (direct)',strength:85,control:'All North Korea territory',vs:['ROK military','US Forces Korea'],foreign:'Russia (current technology exchange — weapons for troops), China (economic lifeline, diplomatic shield)',desc:'1.28M active military. 4th largest army globally. 10,000 artillery tubes targeting Seoul. Nuclear arsenal: 40-60 warheads estimated. ICBM capable (Hwasong-18 demonstrated). Troops deployed Russia 2024.'},
+    {name:'Reconnaissance General Bureau (RGB)',type:'INTELLIGENCE/SPECIAL OPS',leader:'Kim Jong-un (direct control)',strength:60,control:'Covert global operations',vs:['ROK NIS','CIA','Mossad'],foreign:'None (operates clandestinely)',desc:'Controls Lazarus Group cyber ops ($3B+ stolen). Unit 121: cyber warfare. Bureau 39: illicit finance. Runs overseas workers forced-labor scheme ($500M/yr). Assassination program (Kim Jong-nam killed Malaysia 2017).'},
+  ],
+  RUS:[
+    {name:'Russian Armed Forces (VKS/Ground)',type:'STATE MILITARY',leader:'Gen. Valery Gerasimov',strength:80,control:'Russia + occupied Ukraine territories',vs:['UAF','NATO (deterrence)'],foreign:'DPRK (12K+ troops supporting), Iran (Shahed drones), China (components)',desc:'600,000+ deployed Ukraine. 500,000+ casualties estimated (KIA+WIA) since Feb 2022. Force reconstituted via mass mobilization. Drone warfare primary. Nuclear deterrence posture elevated.'},
+    {name:'FSB (Federal Security Service)',type:'INTELLIGENCE',leader:'Alexander Bortnikov',strength:75,control:'Russia (domestic) + foreign operations',vs:['CIA','MI6','BND','Ukrainian SBU'],foreign:'None (runs networks globally)',desc:'Internal security and foreign intelligence. Runs GRU parallel ops. Responsible for UK Novichok assassinations. Active sabotage campaign in EU (fires, assassinations). Controls border security.'},
+    {name:'GRU (Military Intelligence)',type:'INTELLIGENCE/SPECIAL OPS',leader:'Admiral Igor Kostyukov',strength:70,control:'Ukraine operations + global covert',vs:['NATO intelligence agencies','Ukrainian HUR'],foreign:'None',desc:'Unit 29155: Europe assassination/sabotage team. Unit 26165 (Fancy Bear): cyber ops. GRU Spetsnaz in Ukraine. Runs disinformation operations. Attempted coup support Venezuela 2019.'},
+    {name:'Africa Corps (former Wagner)',type:'PARAMIL/EXPEDITIONARY',leader:'Russian MoD / GRU',strength:50,control:'Mali, Niger, Burkina, CAR, Libya, Sudan (RSF training)',vs:['MINUSMA remnants','local resistance'],foreign:'Russian state (post-Prigozhin rebrand)',desc:'Post-Prigozhin rebranded under Russian MoD. 5,000-15,000 personnel across Africa. Revenue: mining concessions (gold, diamonds). Accused of mass atrocities. Providing political cover for coups.'},
+  ],
+  CHN:[
+    {name:"PLA (People's Liberation Army)",type:'STATE MILITARY',leader:'CMC Chairman Xi Jinping; Joint Chiefs: Gen. Zhang Youxia',strength:90,control:'China territory + contested maritime claims',vs:['USA/INDOPACOM','Taiwan ROC military','India (border)'],foreign:'Russia (exercises, tacit alignment), Pakistan (CPEC military cooperation)',desc:'2M active. Largest navy by hulls. DF-41 ICBMs. Carrier fleet: 3 carriers (Liaoning, Shandong, Fujian). Cyber: APT groups (Volt Typhoon, Salt Typhoon). 2027 Taiwan invasion capability target per DIA.'},
+    {name:'MSS (Ministry of State Security)',type:'INTELLIGENCE',leader:'Chen Yixin',strength:80,control:'China + global covert',vs:['CIA','MI6','ASIS','all Western intel'],foreign:'None (runs global networks)',desc:'Foreign espionage, counterintelligence. APT40, APT41 cyber espionage. 1,000+ Chinese agents under NGO/business cover globally. Confucius Institutes monitoring diaspora. Police stations in Western countries.'},
+  ],
+};
+
+// ── COUNTRY FOREIGN INFLUENCE — how external actors shape each country ──────
+const COUNTRY_FOREIGN={
+  SYR:[
+    {country:'Russia',iso:'RUS',type:'MILITARY',impact:'CRITICAL',color:'#ef4444',desc:'Air campaign from Hmeimim AB: 1,000+ strikes/yr. Tartus naval base — only Russian Mediterranean port. S-300/400 air defense. Economic investments. Protects Assad at UNSC. Without Russia, Assad falls.'},
+    {country:'Iran',iso:'IRN',type:'MILITARY + POLITICAL',impact:'CRITICAL',color:'#ef4444',desc:'3,000-5,000 IRGC + Hezbollah. Weapons transit hub for Hezbollah. $6B+ economic investment. "Axis of Resistance" cornerstone. Quds Force runs Iraqi militia networks into Syria.'},
+    {country:'USA',iso:'USA',type:'MILITARY',impact:'HIGH',color:'#f97316',desc:'900 troops NE Syria. SDF partner force. Counter-ISIS operations. Al-Tanf garrison blocks Iran land corridor. CJTF-OIR strikes. No engagement with Assad government.'},
+    {country:'Turkey',iso:'TUR',type:'MILITARY + OCCUPATION',impact:'HIGH',color:'#f97316',desc:'4 occupation zones in N. Syria. Turkish-backed SNA proxy force. Anti-Kurdish drone strikes (targeting SDF/YPG). Controls Afrin, Euphrates Shield, Olive Branch, Peace Spring zones.'},
+    {country:'Israel',iso:'ISR',type:'MILITARY',impact:'MEDIUM',color:'#fbbf24',desc:'140+ airstrikes 2024 targeting IRGC/Hezbollah weapons transfers. No ground presence. Coordinates with Russia (deconfliction). Struck Homs, Damascus airport, T4 airbase.'},
+  ],
+  UKR:[
+    {country:'USA',iso:'USA',type:'MILITARY + FINANCIAL',impact:'CRITICAL',color:'#ef4444',desc:'$61B+ security assistance. HIMARS, M1 Abrams, F-16s, Patriot batteries, ATACMS. 300+ US defense contractors in-country. CIA maintains active intelligence operations. Largest single bilateral donor.'},
+    {country:'EU / NATO',iso:'DEU',type:'MILITARY + FINANCIAL',impact:'CRITICAL',color:'#ef4444',desc:'EU: $90B+ combined. Germany: Leopard 2, IRIS-T, Gepard. UK: Storm Shadow, Challenger 2. Poland: largest European donor per GDP. Czech ammunition initiative: 800K shells. All 32 NATO members contributing.'},
+    {country:'Russia',iso:'RUS',type:'MILITARY OCCUPIER',impact:'CRITICAL',color:'#ef4444',desc:'600,000+ troops. Occupying ~20% Ukrainian territory. Daily missile/drone strikes on infrastructure. DPRK troops and Iranian Shahed drones. Nuclear deterrence threats.'},
+    {country:'North Korea',iso:'PRK',type:'MILITARY',impact:'HIGH',color:'#f97316',desc:'12,000+ KPA troops deployed to Kursk Oblast and eastern front. Artillery crews operate Russian systems. 6,000+ container ammunition shipments. Kim-Putin alliance formalized June 2024.'},
+    {country:'China',iso:'CHN',type:'ECONOMIC + DUAL-USE',impact:'HIGH',color:'#f97316',desc:'Not supplying weapons but dual-use goods: microchips, machine tools, optical equipment enabling Russian military production. $240B China-Russia trade 2023 (up 26%). Diplomatic cover at UNSC.'},
+    {country:'Iran',iso:'IRN',type:'MILITARY',impact:'MEDIUM',color:'#fbbf24',desc:'Shahed-136 loitering munitions: 3,000+ launched vs Ukraine. Ballistic missiles (Fateh-110) transferred 2024. Iranian technicians in Belarus training Russian operators.'},
+  ],
+  YEM:[
+    {country:'Iran',iso:'IRN',type:'MILITARY + POLITICAL',impact:'CRITICAL',color:'#ef4444',desc:'IRGC Quds Force: 500-800 advisors. Anti-ship ballistic missiles (ASBM) technology transfer. Drone components via Oman route. Houthi is cornerstone of "Axis of Resistance."'},
+    {country:'Saudi Arabia',iso:'SAU',type:'MILITARY COALITION',impact:'HIGH',color:'#f97316',desc:'Led coalition since 2015. 250,000 airstrikes on Yemen. Fuel and arms blockade. $7B+ direct military spending/yr. Negotiating with Houthis since 2023 — ceasefire fragile.'},
+    {country:'UAE',iso:'ARE',type:'MILITARY + POLITICAL',impact:'HIGH',color:'#f97316',desc:'STC backer — seeking independent South Yemen as UAE sphere. Abu Dhabi Port at Mukalla. Withdrew most forces 2019 but maintains STC support and intelligence presence.'},
+    {country:'USA',iso:'USA',type:'MILITARY',impact:'MEDIUM',color:'#fbbf24',desc:'US/UK strikes: 400+ Houthi military targets 2024. Fifth Fleet threat response. Carrier strike group USS Eisenhower conducted strikes. No ground forces. CENTCOM intelligence sharing with Saudi coalition.'},
+  ],
+  IRQ:[
+    {country:'Iran',iso:'IRN',type:'POLITICAL + MILITARY',impact:'CRITICAL',color:'#ef4444',desc:'IRGC Quds Force controls PMF factions. Iraqi PM chosen with Iranian blessing. $10B+ annual economic influence. Kataib Hezbollah attacks US bases per Iranian direction.'},
+    {country:'USA',iso:'USA',type:'MILITARY',impact:'HIGH',color:'#f97316',desc:'2,500 troops remaining (counter-ISIS). Al-Asad AB, Erbil operations. CJTF-OIR airstrikes. PMF attacked US forces 170+ times 2023-2024. Withdrawal negotiations ongoing.'},
+    {country:'Turkey',iso:'TUR',type:'MILITARY',impact:'MEDIUM',color:'#fbbf24',desc:'Regular airstrikes on PKK in Iraqi Kurdistan (Qandil mountains). Bases in N. Iraq. Opposed by Baghdad but tolerated. Economic leverage: Turkish trade critical to KRG.'},
+    {country:'Israel',iso:'ISR',type:'COVERT',impact:'LOW-MEDIUM',color:'#22c55e',desc:'Occasional strikes on IRGC/Hezbollah logistics in Iraq. Intelligence operations. No official relations but intelligence coordination via KRG.'},
+  ],
+  AFG:[
+    {country:'Pakistan',iso:'PAK',type:'HISTORICAL + CURRENT',impact:'HIGH',color:'#f97316',desc:'ISI created and sustained Taliban. Still maintains influence but deteriorating — Taliban sheltering TTP (Pakistani Taliban). Border clashes increasing. Pakistan demands TTP action.'},
+    {country:'China',iso:'CHN',type:'ECONOMIC + DIPLOMATIC',impact:'HIGH',color:'#f97316',desc:'BRI extension ambitions. Copper mine deal (Mes Aynak — delayed). Diplomatic engagement — only major power with ambassador. Demands Taliban suppress Uyghur ETIM fighters.'},
+    {country:'Russia',iso:'RUS',type:'DIPLOMATIC',impact:'MEDIUM',color:'#fbbf24',desc:'Taliban ambassador in Moscow. Counternarcotics concern. Gas pipeline ambitions (TAPI). Pragmatic engagement without formal recognition.'},
+    {country:'Iran',iso:'IRN',type:'ECONOMIC + WATER',impact:'MEDIUM',color:'#fbbf24',desc:'Trade relations. Helmand River water dispute (Taliban diverting). 6M Afghan refugees in Iran. Historical support for Hazara minority — now under Taliban repression.'},
+  ],
+  PRK:[
+    {country:'China',iso:'CHN',type:'ECONOMIC + DIPLOMATIC',impact:'CRITICAL',color:'#ef4444',desc:'90%+ of DPRK trade. UN sanctions enforcement (selective). Diplomatic shield at UNSC. Oil and food supply. Opposes regime collapse more than nuclear program. No pressure on Kim.'},
+    {country:'Russia',iso:'RUS',type:'MILITARY + ECONOMIC',impact:'HIGH',color:'#f97316',desc:'Weapons-for-troops deal June 2024. DPRK supplying shells, rockets. Russia providing satellite and ICBM technology. Sanctions busting oil supply. Reviving Cold War alliance.'},
+    {country:'USA',iso:'USA',type:'MILITARY + SANCTIONS',impact:'HIGH',color:'#f97316',desc:'28,500 US troops in ROK. USFK + ROK military alliance. Maximum pressure sanctions. No diplomatic contact since 2019 Hanoi summit collapse. CVID demand non-negotiable per policy.'},
+    {country:'South Korea',iso:'KOR',type:'DETERRENCE',impact:'HIGH',color:'#f97316',desc:'Combined ROK-US force: 600,000+ troops, F-35s, Aegis destroyers. K2 Black Panther tanks. Ballistic missile program uncapped. Intelligence: NIS monitors DPRK closely.'},
+  ],
+};
+
 function openCountry(iso){
   selectedISO=iso;showArcs=false;updateConnBtn();updateLayerFilterHint();
   const panel=document.getElementById('panel');
@@ -6997,8 +7139,96 @@ function openCountry(iso){
   panel.style.transform='';             // clear any drag offset
   panel.classList.add('open');
   showTab('summary');
+  // Render new deep-dive tabs
+  renderFactionsTab(iso);
+  renderForeignTab(iso);
   // Kick off live fetch (non-blocking)
   fetchLiveNews(iso);
+}
+
+function renderFactionsTab(iso){
+  const factions=COUNTRY_FACTIONS[iso];
+  const el=document.getElementById('tab-factions');
+  if(!el)return;
+  if(!factions||factions.length===0){
+    const intel=INTEL[iso]||{};
+    const actors=(intel.keyActors||[]).filter(a=>/militia|force|army|group|brigade|hamas|hezbollah|isis|al-|jnim|rsf|pla|fsa|sdf|pkk|lna|gnc/i.test(a));
+    if(actors.length===0){el.innerHTML='<p class="no-data">No specific faction data available for this country. See SUMMARY for key actors.</p>';return;}
+    el.innerHTML='<div class="sec-label">KEY ARMED ACTORS (FROM INTEL BASE)</div>'+
+      actors.map(a=>`<div class="faction-card"><div class="faction-name">${a}</div></div>`).join('');
+    return;
+  }
+  const typeColors={
+    'STATE MILITARY':'#60a5fa','ISLAMIST MILITIA':'#ef4444','INSURGENT/DE FACTO STATE':'#f97316',
+    'NARCO-CRIMINAL':'#a855f7','NARCO-TERRORIST':'#a855f7','SEPARATIST MILITIA':'#fbbf24',
+    'JIHADIST':'#ef4444','TERRORIST':'#ef4444','PROXY MILITIA':'#f97316','FOREIGN FORCE':'#f59e0b',
+    'MILITIA':'#fb923c','REBEL':'#84cc16','PARAMILITARY':'#f97316','RESISTANCE':'#22c55e',
+    'FOREIGN MERCENARY':'#f59e0b','STATE':'#60a5fa','RECOGNIZED GOVT':'#60a5fa',
+    'INTELLIGENCE':'#94a3b8','INTELLIGENCE/SPECIAL OPS':'#94a3b8','STATE/TERRORIST':'#ef4444',
+    'STATE/COUP':'#f97316','ETHNIC ARMED ORG':'#fbbf24','AUTONOMOUS REGION':'#34d399',
+    'STATE UNIT':'#60a5fa','GOVERNING AUTHORITY':'#60a5fa','MILITANT (NEW GEN)':'#fb923c',
+    'CITY MILITIA':'#fb923c','PARAMIL/EXPEDITIONARY':'#f97316','STATE-ALLIED MILITIA':'#f97316',
+    'IRAN PROXY':'#ef4444','NARCO-PARAMILITARY':'#a855f7','GUERRILLA':'#84cc16',
+    'MILITARY FACTION':'#60a5fa','STATE + MERCENARY':'#f59e0b','ISLAMIST MILITANT':'#ef4444',
+  };
+  const internalConflicts=[];
+  for(let i=0;i<factions.length;i++){
+    for(let j=i+1;j<factions.length;j++){
+      const a=factions[i],b=factions[j];
+      const avsB=(a.vs||[]).some(v=>b.name.toLowerCase().includes(v.toLowerCase().split('/')[0].toLowerCase().trim().slice(0,8)));
+      const bvsA=(b.vs||[]).some(v=>a.name.toLowerCase().includes(v.toLowerCase().split('/')[0].toLowerCase().trim().slice(0,8)));
+      if(avsB||bvsA)internalConflicts.push({a:a.name,b:b.name});
+    }
+  }
+  el.innerHTML=
+    (internalConflicts.length?`<div class="sec-label">INTERNAL FACTION CONFLICTS</div><div style="margin-bottom:12px">${internalConflicts.map(c=>`<div class="faction-conflict-row"><span>${c.a}</span><span class="fcc-arrow">&#9876;</span><span>${c.b}</span></div>`).join('')}</div>`:'')
+    +'<div class="sec-label">ARMED FACTIONS &amp; ORGANIZATIONS ('+factions.length+')</div>'
+    +factions.map(f=>{
+      const col=typeColors[f.type]||'#94a3b8';
+      return`<div class="faction-card">
+        <div class="faction-name">${f.name}</div>
+        <div class="faction-type" style="color:${col}">${f.type}</div>
+        <div class="faction-strength-bar"><div class="faction-strength-fill" style="width:${f.strength}%;background:${col}"></div></div>
+        <div class="faction-meta">
+          ${f.leader?`<div class="faction-meta-item"><span>LEADERSHIP</span>${f.leader}</div>`:''}
+          ${f.control?`<div class="faction-meta-item"><span>AREA OF CONTROL</span>${f.control}</div>`:''}
+        </div>
+        <p style="font-size:9px;color:#64748b;line-height:1.5;margin:0 0 4px">${f.desc||''}</p>
+        ${f.vs&&f.vs.length?`<div class="faction-vs">&#9876; HOSTILE TO: ${f.vs.join(' &middot; ')}</div>`:''}
+        ${f.foreign?`<div class="faction-foreign">&#9672; FOREIGN BACKING: ${f.foreign}</div>`:''}
+      </div>`;
+    }).join('');
+}
+
+function renderForeignTab(iso){
+  const influences=COUNTRY_FOREIGN[iso];
+  const el=document.getElementById('tab-foreign');
+  if(!el)return;
+  if(!influences||influences.length===0){
+    const inbound=CONFLICTS.filter(c=>c.to===iso).map(c=>({
+      country:COUNTRIES[c.from]?.name||c.from,iso:c.from,type:c.type.toUpperCase(),
+      impact:'MEDIUM',color:'#f59e0b',desc:c.label+(c.ttps?'\n'+c.ttps:''),
+    }));
+    if(!inbound.length){el.innerHTML='<p class="no-data">No foreign influence data available for this country.</p>';return;}
+    el.innerHTML='<div class="sec-label">FOREIGN ACTORS (FROM CONFLICT DATA)</div>'+
+      inbound.slice(0,8).map(f=>`<div class="foreign-card" style="border-color:${f.color}">
+        <div class="foreign-country" style="color:${f.color}">${f.country}</div>
+        <div class="foreign-type">${f.type}</div>
+        <div class="foreign-desc">${f.desc}</div>
+      </div>`).join('');
+    return;
+  }
+  const impactColors={CRITICAL:'#ef4444',HIGH:'#f97316',MEDIUM:'#fbbf24','LOW-MEDIUM':'#84cc16',LOW:'#22c55e'};
+  el.innerHTML='<div class="sec-label">FOREIGN POWERS &amp; INFLUENCE VECTORS ('+influences.length+')</div>'+
+    influences.map(f=>{
+      const col=f.color||impactColors[f.impact]||'#94a3b8';
+      return`<div class="foreign-card" style="border-color:${col}">
+        <div class="foreign-country" style="color:${col}">${f.country}</div>
+        <div class="foreign-type">${f.type}</div>
+        <div class="foreign-desc">${f.desc}</div>
+        <div class="foreign-impact" style="color:${col}">IMPACT LEVEL: ${f.impact}</div>
+      </div>`;
+    }).join('');
 }
 
 /* ════════════════════════════════════════════════════
@@ -7739,13 +7969,34 @@ let satOpen=false,satLocSelected=false;
 let satLat=32.5,satLng=37.0,satZoom=9;
 let satLayerKey='esri';
 let satDate=(()=>{const d=new Date();d.setDate(d.getDate()-2);return d.toISOString().slice(0,10);})();
+let satVipLabel=null; // set when opened for a VIP — draws pin label on canvas
 const SAT_TS=256;
 let satTileCache={},satCacheKeys=[],satTileRetries={};
-const SAT_CACHE_MAX=500;
+const SAT_CACHE_MAX=2000;
 let satInflight=0;
 const SAT_MAX_INFLIGHT=8;
 const satQueue=[];
-let satDragging=false,satDragLast={x:0,y:0};
+let satDragging=false,satDragLast={x:0,y:0},satDrawPending=false;
+function scheduleSatDraw(){
+  if(satDrawPending)return;
+  satDrawPending=true;
+  requestAnimationFrame(()=>{satDrawPending=false;if(satLocSelected)drawSatMap();});
+}
+function tryParentTile(ctx,tx,ty,cPx,cPy){
+  for(let d=1;d<=3;d++){
+    const scale=1<<d;
+    const pz=satZoom-d;if(pz<0)break;
+    const ptx=tx>>d,pty=ty>>d;
+    const pkey=`${satLayerKey}/${satDate}/${pz}/${ptx}/${pty}`;
+    const p=satTileCache[pkey];
+    if(p&&p.state==='loaded'){
+      const sq=SAT_TS/scale;
+      const sx=(tx-(ptx<<d))*sq,sy=(ty-(pty<<d))*sq;
+      try{ctx.drawImage(p.img,sx,sy,sq,sq,cPx,cPy,SAT_TS,SAT_TS);return true;}catch{}
+    }
+  }
+  return false;
+}
 
 function clearSatTileCache(){satTileCache={};satCacheKeys=[];satTileRetries={};satInflight=0;satQueue.length=0;}
 
@@ -8074,20 +8325,17 @@ function drawSatMap(){
   const ctx=canvas.getContext('2d');
   const W=canvas.width,H=canvas.height;
   if(!W||!H){sizeSatCanvas();return;}
-  ctx.fillStyle='#010408';ctx.fillRect(0,0,W,H);
   const layer=SAT_LAYERS[satLayerKey];
-  const maxTile=Math.pow(2,satZoom);
+  const maxTile=1<<satZoom;
   const center=worldPx(satLat,satLng,satZoom);
   const tileLeft=Math.floor((center.x-W/2)/SAT_TS)-1;
   const tileRight=Math.floor((center.x+W/2)/SAT_TS)+1;
   const tileTop=Math.floor((center.y-H/2)/SAT_TS)-1;
   const tileBot=Math.floor((center.y+H/2)/SAT_TS)+1;
-  let loading=0,errors=0,loaded=0;
+  // Queue all missing tiles first (before any drawing)
   for(let ty=tileTop;ty<=tileBot;ty++){
     for(let tx=tileLeft;tx<=tileRight;tx++){
       if(tx<0||tx>=maxTile||ty<0||ty>=maxTile)continue;
-      const cPx=Math.round(tx*SAT_TS-center.x+W/2);
-      const cPy=Math.round(ty*SAT_TS-center.y+H/2);
       const key=`${satLayerKey}/${satDate}/${satZoom}/${tx}/${ty}`;
       if(!satTileCache[key]){
         const img=makeSatImg();
@@ -8097,18 +8345,40 @@ function drawSatMap(){
         satQueue.push({img,url:layer.url(satZoom,tx,ty,satDate),key});
         nextSatLoad();
       }
+    }
+  }
+  // Only fill dark background if there are truly no tiles at all yet
+  const anyLoaded=satCacheKeys.some(k=>satTileCache[k]&&satTileCache[k].state==='loaded');
+  if(!anyLoaded) ctx.fillStyle='#050d1a',ctx.fillRect(0,0,W,H);
+  else ctx.clearRect(0,0,W,H); // transparent clear so parent tiles show through
+  // Two-pass draw: first parent-tile fallbacks (background), then actual tiles on top
+  let loading=0,errors=0,loaded=0;
+  for(let ty=tileTop;ty<=tileBot;ty++){
+    for(let tx=tileLeft;tx<=tileRight;tx++){
+      if(tx<0||tx>=maxTile||ty<0||ty>=maxTile)continue;
+      const cPx=Math.round(tx*SAT_TS-center.x+W/2);
+      const cPy=Math.round(ty*SAT_TS-center.y+H/2);
+      const key=`${satLayerKey}/${satDate}/${satZoom}/${tx}/${ty}`;
       const e=satTileCache[key];
-      if(e.state==='loaded'){
-        try{ctx.drawImage(e.img,cPx,cPy,SAT_TS,SAT_TS);}catch(err){}
+      if(!e||e.state!=='loaded'){
+        // Show parent tile scaled up while this tile loads — prevents black holes
+        tryParentTile(ctx,tx,ty,cPx,cPy);
+        if(e&&e.state==='error')errors++;
+        else loading++;
+      }
+    }
+  }
+  // Second pass: draw loaded tiles on top of fallbacks
+  for(let ty=tileTop;ty<=tileBot;ty++){
+    for(let tx=tileLeft;tx<=tileRight;tx++){
+      if(tx<0||tx>=maxTile||ty<0||ty>=maxTile)continue;
+      const cPx=Math.round(tx*SAT_TS-center.x+W/2);
+      const cPy=Math.round(ty*SAT_TS-center.y+H/2);
+      const key=`${satLayerKey}/${satDate}/${satZoom}/${tx}/${ty}`;
+      const e=satTileCache[key];
+      if(e&&e.state==='loaded'){
+        try{ctx.drawImage(e.img,cPx,cPy,SAT_TS,SAT_TS);}catch{}
         loaded++;
-      } else if(e.state==='error'){
-        ctx.fillStyle='rgba(10,18,36,.85)';ctx.fillRect(cPx,cPy,SAT_TS,SAT_TS);
-        ctx.strokeStyle='rgba(239,68,68,.15)';ctx.strokeRect(cPx,cPy,SAT_TS,SAT_TS);
-        errors++;
-      } else {
-        ctx.fillStyle='rgba(6,14,28,.6)';ctx.fillRect(cPx,cPy,SAT_TS,SAT_TS);
-        ctx.strokeStyle='rgba(52,211,153,.08)';ctx.strokeRect(cPx,cPy,SAT_TS,SAT_TS);
-        loading++;
       }
     }
   }
@@ -8157,7 +8427,7 @@ function initSatMapEvents(){
     const worldX=(satLng+180)/360*n;
     const newWorldX=worldX-dx;
     satLng=((newWorldX/n*360-180)+360)%360-180;
-    drawSatMap();
+    scheduleSatDraw();
   });
   canvas.addEventListener('mouseup',()=>{satDragging=false;canvas.style.cursor='crosshair';});
   canvas.addEventListener('mouseleave',()=>{satDragging=false;canvas.style.cursor='crosshair';});
@@ -8187,7 +8457,7 @@ function initSatMapEvents(){
       satLat=Math.max(-85,Math.min(85,latRad*180/Math.PI));
       const worldX=(satLng+180)/360*n;
       satLng=(((worldX-dx)/n*360-180)+360)%360-180;
-      drawSatMap();
+      scheduleSatDraw();
     } else if(e.touches.length===2&&lastTouchDist){
       const dist=Math.hypot(e.touches[1].clientX-e.touches[0].clientX,e.touches[1].clientY-e.touches[0].clientY);
       const max=SAT_LAYERS[satLayerKey].maxZoom;
@@ -8217,7 +8487,7 @@ function initSatMapEvents(){
       satLng=(((newX/n*360)-180)+360)%360-180;
       const latRad=Math.atan(Math.sinh(Math.PI*(1-2*newY/n)));
       satLat=Math.max(-85,Math.min(85,latRad*180/Math.PI));
-      drawSatMap();
+      scheduleSatDraw();
     }
     if(e.key==='+'||e.key==='=') satZoomIn();
     if(e.key==='-') satZoomOut();
