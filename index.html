@@ -7575,9 +7575,47 @@ let satLat=32.5,satLng=37.0,satZoom=9;
 let satLayerKey='esri';
 let satDate=(()=>{const d=new Date();d.setDate(d.getDate()-2);return d.toISOString().slice(0,10);})();
 const SAT_TS=256;
-let satTileCache={},satCacheKeys=[];
+let satTileCache={},satCacheKeys=[],satTileRetries={};
 const SAT_CACHE_MAX=500;
+let satInflight=0;
+const SAT_MAX_INFLIGHT=8;
+const satQueue=[];
 let satDragging=false,satDragLast={x:0,y:0};
+
+function clearSatTileCache(){satTileCache={};satCacheKeys=[];satTileRetries={};satInflight=0;satQueue.length=0;}
+
+function nextSatLoad(){
+  while(satInflight<SAT_MAX_INFLIGHT&&satQueue.length){
+    const {img,url,key}=satQueue.shift();
+    if(!satTileCache[key]||satTileCache[key].state!=='loading')continue;
+    satInflight++;
+    img.onload=()=>{
+      satInflight--;
+      if(satTileCache[key])satTileCache[key].state='loaded';
+      drawSatMap();nextSatLoad();
+    };
+    img.onerror=()=>{
+      satInflight--;
+      const retries=(satTileRetries[key]||0)+1;
+      if(retries<=2){
+        satTileRetries[key]=retries;
+        setTimeout(()=>{
+          if(!satTileCache[key]||satTileCache[key].state==='loaded')return;
+          delete satTileCache[key];
+          const idx=satCacheKeys.indexOf(key);
+          if(idx>=0)satCacheKeys.splice(idx,1);
+          if(satLocSelected)drawSatMap();
+        },retries*1500);
+      } else {
+        delete satTileRetries[key];
+        if(satTileCache[key])satTileCache[key].state='error';
+        drawSatMap();
+      }
+      nextSatLoad();
+    };
+    img.src=url;
+  }
+}
 
 const SAT_LAYERS={
   esri:{id:'esri',label:'HIGH RES',maxZoom:18,color:'#a3e635',
@@ -7798,21 +7836,21 @@ function setSatLayer(key){
   satZoom=Math.min(satZoom,layer.maxZoom);
   document.querySelectorAll('.sl-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('sl-'+key)?.classList.add('active');
-  satTileCache={};satCacheKeys=[];
+  clearSatTileCache();
   updateSatInfoBar();
   if(satLocSelected)drawSatMap();
 }
 
 function satDateChange(val){
   satDate=val;
-  satTileCache={};satCacheKeys=[];
+  clearSatTileCache();
   if(satLocSelected&&satLayerKey!=='esri')drawSatMap();
 }
 
 function satZoomIn(){
-  if(satZoom<SAT_LAYERS[satLayerKey].maxZoom){satZoom++;satTileCache={};satCacheKeys=[];if(satLocSelected)drawSatMap();updateSatInfoBar();}}
+  if(satZoom<SAT_LAYERS[satLayerKey].maxZoom){satZoom++;clearSatTileCache();if(satLocSelected)drawSatMap();updateSatInfoBar();}}
 function satZoomOut(){
-  if(satZoom>2){satZoom--;satTileCache={};satCacheKeys=[];if(satLocSelected)drawSatMap();updateSatInfoBar();}}
+  if(satZoom>2){satZoom--;clearSatTileCache();if(satLocSelected)drawSatMap();updateSatInfoBar();}}
 
 function updateSatInfoBar(){
   const layer=SAT_LAYERS[satLayerKey];
@@ -7863,18 +7901,15 @@ function drawSatMap(){
         satTileCache[key]={img,state:'loading'};
         satCacheKeys.push(key);
         if(satCacheKeys.length>SAT_CACHE_MAX){delete satTileCache[satCacheKeys.shift()];}
-        img.onload=()=>{if(satTileCache[key])satTileCache[key].state='loaded';drawSatMap();};
-        img.onerror=()=>{if(satTileCache[key])satTileCache[key].state='error';drawSatMap();};
-        img.src=layer.url(satZoom,tx,ty,satDate);
+        satQueue.push({img,url:layer.url(satZoom,tx,ty,satDate),key});
+        nextSatLoad();
       }
       const e=satTileCache[key];
       if(e.state==='loaded'){
         try{ctx.drawImage(e.img,cPx,cPy,SAT_TS,SAT_TS);}catch(err){}
       } else if(e.state==='error'){
-        ctx.fillStyle='rgba(12,24,44,.7)';ctx.fillRect(cPx,cPy,SAT_TS,SAT_TS);
-        ctx.strokeStyle='rgba(59,130,246,.1)';ctx.strokeRect(cPx,cPy,SAT_TS,SAT_TS);
-        ctx.fillStyle='rgba(94,114,144,.5)';ctx.font='9px monospace';
-        ctx.fillText('NO DATA',cPx+(SAT_TS/2-28),cPy+(SAT_TS/2));
+        ctx.fillStyle='rgba(10,18,36,.9)';ctx.fillRect(cPx,cPy,SAT_TS,SAT_TS);
+        ctx.strokeStyle='rgba(59,130,246,.06)';ctx.strokeRect(cPx,cPy,SAT_TS,SAT_TS);
       } else {
         ctx.fillStyle='rgba(6,14,28,.6)';ctx.fillRect(cPx,cPy,SAT_TS,SAT_TS);
         ctx.strokeStyle='rgba(52,211,153,.08)';ctx.strokeRect(cPx,cPy,SAT_TS,SAT_TS);
@@ -7925,7 +7960,7 @@ function initSatMapEvents(){
     const max=SAT_LAYERS[satLayerKey].maxZoom;
     const delta=e.deltaY<0?1:-1;
     const newZ=Math.max(2,Math.min(max,satZoom+delta));
-    if(newZ!==satZoom){satZoom=newZ;satTileCache={};satCacheKeys=[];if(satLocSelected)drawSatMap();updateSatInfoBar();}
+    if(newZ!==satZoom){satZoom=newZ;clearSatTileCache();if(satLocSelected)drawSatMap();updateSatInfoBar();}
   },{passive:false});
   // Touch support
   let lastTouchDist=null;
@@ -7950,8 +7985,8 @@ function initSatMapEvents(){
     } else if(e.touches.length===2&&lastTouchDist){
       const dist=Math.hypot(e.touches[1].clientX-e.touches[0].clientX,e.touches[1].clientY-e.touches[0].clientY);
       const max=SAT_LAYERS[satLayerKey].maxZoom;
-      if(dist>lastTouchDist*1.15&&satZoom<max){satZoom++;satTileCache={};satCacheKeys=[];drawSatMap();}
-      else if(dist<lastTouchDist*0.85&&satZoom>2){satZoom--;satTileCache={};satCacheKeys=[];drawSatMap();}
+      if(dist>lastTouchDist*1.15&&satZoom<max){satZoom++;clearSatTileCache();drawSatMap();}
+      else if(dist<lastTouchDist*0.85&&satZoom>2){satZoom--;clearSatTileCache();drawSatMap();}
       lastTouchDist=dist;
     }
     e.preventDefault();
