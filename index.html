@@ -6274,7 +6274,11 @@ function globe_focusVIP(lat,lng,name,status){
   vipAnimTarget={fromX:rotX,fromY:rotY,toX,toY,startMs:Date.now(),dur:1400};
   vipFocusMarker={lat,lng,name,status,born:Date.now()};
   document.getElementById('h-status').textContent='⬤ VIP LOCATED: '+name+' — '+status;
-  setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},7000);
+  // After globe animation completes, open satellite viewer zoomed to their location
+  setTimeout(()=>{
+    satOpenAt(lat,lng,'♦ '+name+' — '+status,15);
+  },1500);
+  setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},8000);
 }
 
 function draw(){
