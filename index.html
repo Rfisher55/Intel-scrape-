@@ -5982,10 +5982,13 @@ function setSocialTab(tab){
   document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
   document.getElementById('stab-'+tab)?.classList.add('active');
   if(tab==='vip'&&(Date.now()-vipFetchTime>600000||!vipFetchTime))fetchVIPLocations();
+  else if(tab==='twitter'&&(Date.now()-xFetchTime>600000||!xFetchTime))fetchXTwitterFeed();
   else renderSocialFeed();
 }
 
 let cachedRedditPosts=[];
+let cachedXPosts=[];
+let xFetchTime=0;
 let cachedFlightData=[];
 
 async function fetchSocialIntel(){
@@ -5997,9 +6000,12 @@ async function fetchSocialIntel(){
   if(socialTab==='reddit'){
     try{
       const subs='worldnews+geopolitics+military+ukraine+middleeast+europeanunion';
-      const r=await fetch(`https://www.reddit.com/r/${subs}/hot.json?limit=25&t=day`,
-        {headers:{'Accept':'application/json'}});
-      if(!r.ok)throw new Error();
+      const directUrl=`https://www.reddit.com/r/${subs}/hot.json?limit=30`;
+      const proxyUrl=`https://corsproxy.io/?${encodeURIComponent(directUrl)}`;
+      let r;
+      try{r=await fetch(directUrl,{headers:{'Accept':'application/json'},signal:AbortSignal.timeout(7000)});}catch(e){r=null;}
+      if(!r||!r.ok) r=await fetch(proxyUrl,{signal:AbortSignal.timeout(9000)});
+      if(!r.ok)throw new Error('HTTP '+r.status);
       const data=await r.json();
       cachedRedditPosts=(data.data?.children||[])
         .filter(p=>p.data&&p.data.title)
@@ -6007,13 +6013,109 @@ async function fetchSocialIntel(){
       document.getElementById('social-updated').textContent=new Date().toUTCString().slice(17,22)+'Z';
       renderSocialFeed();
     }catch(e){
-      feed.innerHTML='<div class="sf-empty">⚠ Reddit API unavailable.<br>Try refreshing — CORS proxy may be needed in some environments.</div>';
+      feed.innerHTML='<div class="sf-empty">⚠ Reddit unavailable — both direct and proxy failed.<br>Try again in a moment.</div>';
     }
+  } else if(socialTab==='twitter'){
+    fetchXTwitterFeed();
   } else if(socialTab==='vip'){
     fetchVIPLocations();
   } else {
     renderSocialFeed();
   }
+}
+
+async function fetchXTwitterFeed(){
+  const feed=document.getElementById('social-feed');
+  feed.innerHTML='<div class="sf-empty">◌ Fetching OSINT intelligence from open sources…</div>';
+  const OSINT_ACCOUNTS=['bellingcat','OSINTdefender','RALee85','IntelCrab','WarMonitor3','GeoConfirmed','Osinttechnical','sentdefender'];
+  const NITTER_INSTANCES=['https://nitter.net','https://nitter.cz','https://nitter.privacydev.net'];
+  let posts=[];
+
+  // Try Nitter RSS feeds via corsproxy
+  const nitterFetches=OSINT_ACCOUNTS.map(account=>
+    (async()=>{
+      for(const inst of NITTER_INSTANCES){
+        try{
+          const url=`${inst}/${account}/rss`;
+          const r=await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+          if(!r.ok)continue;
+          const xml=await r.text();
+          const doc=new DOMParser().parseFromString(xml,'text/xml');
+          const items=[...doc.querySelectorAll('item')];
+          const acctPosts=items.map(item=>{
+            const title=item.querySelector('title')?.textContent||'';
+            const link=item.querySelector('link')?.textContent||'';
+            const pd=item.querySelector('pubDate')?.textContent||'';
+            if(!title||title===`@${account}`)return null;
+            return{text:title,url:link,author:'@'+account,source:'nitter',date:pd?new Date(pd):new Date()};
+          }).filter(Boolean);
+          if(acctPosts.length)return acctPosts;
+        }catch(e){continue;}
+      }
+      return[];
+    })()
+  );
+  const nitterResults=await Promise.allSettled(nitterFetches);
+  nitterResults.forEach(r=>{if(r.status==='fulfilled')posts.push(...r.value);});
+
+  // Bluesky public search
+  try{
+    const queries=['OSINT conflict','military intelligence','geopolitics breaking','Ukraine Russia war'];
+    const bskyFetches=queries.map(q=>
+      fetch(`https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=${encodeURIComponent(q)}&limit=10&sort=latest`,{signal:AbortSignal.timeout(8000)})
+        .then(r=>r.ok?r.json():null).catch(()=>null)
+    );
+    const bskyResults=await Promise.allSettled(bskyFetches);
+    bskyResults.forEach(res=>{
+      if(res.status==='fulfilled'&&res.value?.posts){
+        res.value.posts.forEach(p=>{
+          const txt=p.record?.text||'';
+          if(!txt)return;
+          posts.push({
+            text:txt,
+            url:`https://bsky.app/profile/${p.author?.handle}/post/${(p.uri||'').split('/').pop()}`,
+            author:'@'+(p.author?.handle||'bsky'),
+            source:'bluesky',
+            date:new Date(p.record?.createdAt||Date.now())
+          });
+        });
+      }
+    });
+  }catch(e){}
+
+  // GDELT fallback if still sparse
+  if(posts.length<5){
+    try{
+      const terms=['military+conflict','OSINT+intelligence','geopolitics'];
+      const gdeltFetches=terms.map(q=>
+        fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&format=json&maxrecords=8&sort=DateDesc&timespan=6h`,{signal:AbortSignal.timeout(8000)})
+          .then(r=>r.ok?r.json():null).catch(()=>null)
+      );
+      const gdeltResults=await Promise.allSettled(gdeltFetches);
+      gdeltResults.forEach(res=>{
+        if(res.status==='fulfilled'&&res.value?.articles){
+          res.value.articles.forEach(a=>{
+            if(!a.title)return;
+            const raw=a.seendate||'';
+            const dstr=raw.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/,'$1-$2-$3T$4:$5:$6Z');
+            posts.push({text:a.title,url:a.url||'',author:a.domain||'GDELT',source:'gdelt',date:new Date(dstr)||new Date()});
+          });
+        }
+      });
+    }catch(e){}
+  }
+
+  // Deduplicate and sort newest first
+  const seen=new Set();
+  posts=posts.filter(p=>{
+    if(!p.text||seen.has(p.text))return false;
+    seen.add(p.text);return true;
+  }).sort((a,b)=>b.date-a.date).slice(0,50);
+
+  cachedXPosts=posts;
+  xFetchTime=Date.now();
+  document.getElementById('social-updated').textContent=new Date().toUTCString().slice(17,22)+'Z';
+  renderSocialFeed();
 }
 
 function renderSocialFeed(){
@@ -6032,22 +6134,23 @@ function renderSocialFeed(){
         </div>
       </div>`).join('');
   } else if(socialTab==='twitter'){
-    feed.innerHTML=`<div class="sf-empty">
-      <strong style="color:#60a5fa">X / Twitter Integration</strong><br><br>
-      X API v2 requires OAuth 2.0 bearer token — cannot authenticate from browser without a backend proxy.<br><br>
-      <strong style="color:#f59e0b">Recommended open-source feeds:</strong><br>
-      • Nitter instances (Twitter mirror)<br>
-      • OSINT Twitter lists via RSS bridges<br>
-      • Bellingcat live feeds<br>
-      • ACLED Twitter / @ConflictAlert<br><br>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
-        <a href="https://x.com/bellingcat" target="_blank" style="color:#93c5fd;font-size:10px">→ @Bellingcat (verified OSINT)</a>
-        <a href="https://x.com/RALee85" target="_blank" style="color:#93c5fd;font-size:10px">→ @RALee85 (Russia military analyst)</a>
-        <a href="https://x.com/IntelCrab" target="_blank" style="color:#93c5fd;font-size:10px">→ @IntelCrab (conflict intel)</a>
-        <a href="https://x.com/OSINTdefender" target="_blank" style="color:#93c5fd;font-size:10px">→ @OSINTdefender</a>
-        <a href="https://x.com/MilMilitary" target="_blank" style="color:#93c5fd;font-size:10px">→ Military activity tracking</a>
-      </div>
-    </div>`;
+    if(!cachedXPosts.length){
+      feed.innerHTML='<div class="sf-empty">Press ↻ to load OSINT intelligence from X · Bluesky · GDELT.<br><br>Sources: @bellingcat · @OSINTdefender · @RALee85 · @IntelCrab · @GeoConfirmed · Bluesky · GDELT</div>';
+      return;
+    }
+    const srcBadge={nitter:'<span style="color:#60a5fa;font-size:8px">X</span>',bluesky:'<span style="color:#818cf8;font-size:8px">BSK</span>',gdelt:'<span style="color:#f59e0b;font-size:8px">GDELT</span>'};
+    feed.innerHTML=cachedXPosts.map(p=>{
+      const ageMin=Math.round((Date.now()-p.date.getTime())/60000);
+      const age=ageMin<60?ageMin+'m ago':Math.round(ageMin/60)+'h ago';
+      const safeUrl=p.url.replace(/"/g,'%22');
+      return`<div class="sf-item" onclick="window.open('${safeUrl}','_blank')">
+        <div class="sf-title">${p.text.slice(0,240)}${p.text.length>240?'…':''}</div>
+        <div class="sf-meta">
+          <span class="sf-sub">${p.author}</span>
+          <span class="sf-score">${srcBadge[p.source]||p.source} · ${age}</span>
+        </div>
+      </div>`;
+    }).join('');
   } else if(socialTab==='vip'){
     if(!vipFetchTime&&vipLiveData.every(v=>v.confidence==='LOADING')){
       feed.innerHTML='<div class="sf-empty">◌ Fetching VIP location intelligence from open sources…<br><br>Querying GDELT real-time news index for each subject.</div>';
@@ -6077,9 +6180,10 @@ function renderSocialFeed(){
 }
 
 function globe_focusVIP(lat,lng,name,status){
-  // Rotate globe to VIP location
+  if(socialPanelOpen)toggleSocialPanel();
   rotY=-lng*Math.PI/180;
   rotX=-lat*Math.PI/180;
+  dragVelX=0;dragVelY=0;
   document.getElementById('h-status').textContent='VIP TRACKER: '+name+' — '+status;
   setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},5000);
 }
