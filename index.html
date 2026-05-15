@@ -822,7 +822,7 @@ canvas.dragging{cursor:grabbing}
     </div>
     <div style="display:flex;gap:8px;align-items:center">
       <span id="sat-title-label" style="font-size:9px;color:#34d399;font-family:var(--mono);letter-spacing:.08em;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
-      <button onclick="toggleSatPanel()" style="background:rgba(30,58,95,.5);border:1px solid rgba(100,116,139,.4);color:#94a3b8;cursor:pointer;font-size:9px;font-family:var(--mono);letter-spacing:.1em;padding:4px 10px;border-radius:3px">✕ CLOSE</button>
+      <button onclick="toggleSatPanel()" style="background:rgba(127,29,29,.4);border:1.5px solid rgba(239,68,68,.6);color:#fca5a5;cursor:pointer;font-size:10px;font-family:var(--mono);font-weight:bold;letter-spacing:.12em;padding:5px 14px;border-radius:3px;transition:background .15s" onmouseover="this.style.background='rgba(185,28,28,.6)'" onmouseout="this.style.background='rgba(127,29,29,.4)'">✕ CLOSE MAP</button>
     </div>
   </div>
   <div id="sat-controls-bar">
@@ -5949,19 +5949,19 @@ let lastSocialFetch=0;
 
 // ── VIP TRACKER — live OSINT location intelligence ───────────────────────────
 const VIP_LIST=[
-  {name:'Donald Trump',        searchName:'Trump',         role:'US President',           country:'USA',defaultLat:38.9, defaultLng:-77.0, defaultStatus:'WASHINGTON DC / MAR-A-LAGO'},
-  {name:'Vladimir Putin',      searchName:'Putin',         role:'Russian President',       country:'RUS',defaultLat:55.7, defaultLng:37.6,  defaultStatus:'MOSCOW — KREMLIN'},
-  {name:'Xi Jinping',          searchName:'Xi Jinping',    role:'Chinese President',       country:'CHN',defaultLat:39.9, defaultLng:116.4, defaultStatus:'BEIJING — ZHONGNANHAI'},
-  {name:'Volodymyr Zelensky',  searchName:'Zelensky',      role:'Ukrainian President',     country:'UKR',defaultLat:50.5, defaultLng:30.5,  defaultStatus:'KYIV — UNDISCLOSED'},
-  {name:'Benjamin Netanyahu',  searchName:'Netanyahu',     role:'Israeli PM',              country:'ISR',defaultLat:31.8, defaultLng:35.2,  defaultStatus:'JERUSALEM / TEL AVIV'},
-  {name:'Mohammed bin Salman', searchName:'bin Salman',    role:'Saudi Crown Prince',      country:'SAU',defaultLat:24.7, defaultLng:46.7,  defaultStatus:'RIYADH — AL YAMAMAH'},
-  {name:'Emmanuel Macron',     searchName:'Macron',        role:'French President',        country:'FRA',defaultLat:48.9, defaultLng:2.3,   defaultStatus:'PARIS — ÉLYSÉE'},
-  {name:'Kim Jong-un',         searchName:'Kim Jong Un',   role:'DPRK Supreme Leader',     country:'PRK',defaultLat:39.0, defaultLng:125.8, defaultStatus:'PYONGYANG — UNDISCLOSED'},
-  {name:'Friedrich Merz',      searchName:'Merz',          role:'German Chancellor',       country:'DEU',defaultLat:52.5, defaultLng:13.4,  defaultStatus:'BERLIN'},
-  {name:'Keir Starmer',        searchName:'Starmer',       role:'UK Prime Minister',       country:'GBR',defaultLat:51.5, defaultLng:-0.1,  defaultStatus:'LONDON — DOWNING ST'},
-  {name:'Narendra Modi',       searchName:'Modi',          role:'Indian PM',               country:'IND',defaultLat:28.6, defaultLng:77.2,  defaultStatus:'NEW DELHI'},
-  {name:'Recep Erdoğan',       searchName:'Erdogan',       role:'Turkish President',       country:'TUR',defaultLat:39.9, defaultLng:32.9,  defaultStatus:'ANKARA'},
-  {name:'Ali Khamenei',        searchName:'Khamenei',      role:'Iranian Supreme Leader',  country:'IRN',defaultLat:35.7, defaultLng:51.4,  defaultStatus:'TEHRAN'},
+  {name:'Donald Trump',        searchName:'Trump',         role:'US President',           country:'USA',defaultLat:26.5074, defaultLng:-80.0558, defaultStatus:'MAR-A-LAGO — PALM BEACH FL'},
+  {name:'Vladimir Putin',      searchName:'Putin',         role:'Russian President',       country:'RUS',defaultLat:55.7521, defaultLng:37.6175, defaultStatus:'MOSCOW — KREMLIN'},
+  {name:'Xi Jinping',          searchName:'Xi Jinping',    role:'Chinese President',       country:'CHN',defaultLat:39.9175, defaultLng:116.3906, defaultStatus:'BEIJING — ZHONGNANHAI'},
+  {name:'Volodymyr Zelensky',  searchName:'Zelensky',      role:'Ukrainian President',     country:'UKR',defaultLat:50.4481, defaultLng:30.5234, defaultStatus:'KYIV — PRESIDENTIAL OFFICE'},
+  {name:'Benjamin Netanyahu',  searchName:'Netanyahu',     role:'Israeli PM',              country:'ISR',defaultLat:31.7784, defaultLng:35.2046, defaultStatus:'JERUSALEM — PM RESIDENCE'},
+  {name:'Mohammed bin Salman', searchName:'bin Salman',    role:'Saudi Crown Prince',      country:'SAU',defaultLat:24.6877, defaultLng:46.7219, defaultStatus:'RIYADH — AL YAMAMAH PALACE'},
+  {name:'Emmanuel Macron',     searchName:'Macron',        role:'French President',        country:'FRA',defaultLat:48.8713, defaultLng:2.3161, defaultStatus:'PARIS — ÉLYSÉE PALACE'},
+  {name:'Kim Jong-un',         searchName:'Kim Jong Un',   role:'DPRK Supreme Leader',     country:'PRK',defaultLat:39.0437, defaultLng:125.7382, defaultStatus:'PYONGYANG — RYONGSONG RESIDENCE'},
+  {name:'Friedrich Merz',      searchName:'Merz',          role:'German Chancellor',       country:'DEU',defaultLat:52.5202, defaultLng:13.3690, defaultStatus:'BERLIN — BUNDESKANZLERAMT'},
+  {name:'Keir Starmer',        searchName:'Starmer',       role:'UK Prime Minister',       country:'GBR',defaultLat:51.5034, defaultLng:-0.1276, defaultStatus:'LONDON — 10 DOWNING STREET'},
+  {name:'Narendra Modi',       searchName:'Modi',          role:'Indian PM',               country:'IND',defaultLat:28.6139, defaultLng:77.2090, defaultStatus:'NEW DELHI — PM RESIDENCE'},
+  {name:'Recep Erdoğan',       searchName:'Erdogan',       role:'Turkish President',       country:'TUR',defaultLat:39.9314, defaultLng:32.8038, defaultStatus:'ANKARA — PRESIDENTIAL COMPLEX'},
+  {name:'Ali Khamenei',        searchName:'Khamenei',      role:'Iranian Supreme Leader',  country:'IRN',defaultLat:35.7219, defaultLng:51.4205, defaultStatus:'TEHRAN — SUPREME LEADER COMPOUND'},
 ];
 let vipLiveData=VIP_LIST.map(v=>({...v,lat:v.defaultLat,lng:v.defaultLng,status:v.defaultStatus,confidence:'LOADING',headline:null,sourceUrl:null,sourceDomain:null,updated:null,articles:[]}));
 let vipFetchTime=0;
@@ -5970,54 +5970,54 @@ let vipAnimTarget=null;  // {toX,toY,fromX,fromY,startMs,dur}
 
 // Location keyword → coordinates (longer phrases matched first)
 const VIP_LOC_DB={
-  'mar-a-lago':{lat:26.5,lng:-80.1,label:'Mar-a-Lago, Florida'},
-  'palm beach':{lat:26.7,lng:-80.1,label:'Palm Beach, Florida'},
-  'camp david':{lat:39.6,lng:-77.5,label:'Camp David, Maryland'},
-  'white house':{lat:38.9,lng:-77.0,label:'Washington DC'},
-  'washington':{lat:38.9,lng:-77.0,label:'Washington DC'},
-  'new york city':{lat:40.7,lng:-74.0,label:'New York City'},
-  'new york':{lat:40.7,lng:-74.0,label:'New York'},
-  'un general assembly':{lat:40.7,lng:-74.0,label:'UN General Assembly, NYC'},
-  'united nations':{lat:40.7,lng:-74.0,label:'UN, New York'},
-  'st. petersburg':{lat:59.9,lng:30.3,label:'St. Petersburg'},
-  'saint petersburg':{lat:59.9,lng:30.3,label:'St. Petersburg'},
-  'kremlin':{lat:55.8,lng:37.6,label:'Moscow — Kremlin'},
-  'moscow':{lat:55.7,lng:37.6,label:'Moscow'},
-  'sochi':{lat:43.6,lng:39.7,label:'Sochi'},
-  'minsk':{lat:53.9,lng:27.6,label:'Minsk'},
-  'zhongnanhai':{lat:39.9,lng:116.4,label:'Beijing — Zhongnanhai'},
-  'beijing':{lat:39.9,lng:116.4,label:'Beijing'},
-  'shanghai':{lat:31.2,lng:121.5,label:'Shanghai'},
+  'mar-a-lago':{lat:26.5074,lng:-80.0558,label:'Mar-a-Lago — Palm Beach, FL'},
+  'palm beach':{lat:26.5074,lng:-80.0558,label:'Palm Beach, Florida'},
+  'camp david':{lat:39.6480,lng:-77.4656,label:'Camp David, Maryland'},
+  'white house':{lat:38.8977,lng:-77.0366,label:'White House — Washington DC'},
+  'washington':{lat:38.8977,lng:-77.0366,label:'Washington DC'},
+  'new york city':{lat:40.7128,lng:-74.0060,label:'New York City'},
+  'new york':{lat:40.7128,lng:-74.0060,label:'New York'},
+  'un general assembly':{lat:40.7489,lng:-73.9680,label:'UN General Assembly, NYC'},
+  'united nations':{lat:40.7489,lng:-73.9680,label:'UN Headquarters, New York'},
+  'st. petersburg':{lat:59.9343,lng:30.3351,label:'St. Petersburg'},
+  'saint petersburg':{lat:59.9343,lng:30.3351,label:'St. Petersburg'},
+  'kremlin':{lat:55.7521,lng:37.6175,label:'Moscow — Kremlin'},
+  'moscow':{lat:55.7521,lng:37.6175,label:'Moscow'},
+  'sochi':{lat:43.5992,lng:39.7257,label:'Sochi'},
+  'minsk':{lat:53.9045,lng:27.5615,label:'Minsk'},
+  'zhongnanhai':{lat:39.9175,lng:116.3906,label:'Beijing — Zhongnanhai'},
+  'beijing':{lat:39.9175,lng:116.3906,label:'Beijing'},
+  'shanghai':{lat:31.2304,lng:121.4737,label:'Shanghai'},
   'hong kong':{lat:22.3,lng:114.2,label:'Hong Kong'},
   'kharkiv':{lat:50.0,lng:36.2,label:'Kharkiv'},
   'zaporizhzhia':{lat:47.8,lng:35.2,label:'Zaporizhzhia'},
   'odessa':{lat:46.5,lng:30.7,label:'Odessa'},
   'odesa':{lat:46.5,lng:30.7,label:'Odesa'},
-  'kyiv':{lat:50.5,lng:30.5,label:'Kyiv'},
-  'kiev':{lat:50.5,lng:30.5,label:'Kyiv'},
-  'jerusalem':{lat:31.8,lng:35.2,label:'Jerusalem'},
-  'tel aviv':{lat:32.1,lng:34.8,label:'Tel Aviv'},
-  'riyadh':{lat:24.7,lng:46.7,label:'Riyadh'},
-  'jeddah':{lat:21.5,lng:39.2,label:'Jeddah'},
-  'neom':{lat:28.0,lng:35.0,label:'NEOM, Saudi Arabia'},
-  'elysee':{lat:48.9,lng:2.3,label:'Paris — Élysée'},
-  'élysée':{lat:48.9,lng:2.3,label:'Paris — Élysée'},
-  'versailles':{lat:48.8,lng:2.1,label:'Versailles'},
-  'paris':{lat:48.9,lng:2.3,label:'Paris'},
-  'downing street':{lat:51.5,lng:-0.1,label:'London — Downing St'},
-  'buckingham':{lat:51.5,lng:-0.1,label:'London'},
-  'london':{lat:51.5,lng:-0.1,label:'London'},
-  'berlin':{lat:52.5,lng:13.4,label:'Berlin'},
-  'munich':{lat:48.1,lng:11.6,label:'Munich'},
-  'pyongyang':{lat:39.0,lng:125.8,label:'Pyongyang'},
-  'new delhi':{lat:28.6,lng:77.2,label:'New Delhi'},
-  'mumbai':{lat:19.1,lng:72.9,label:'Mumbai'},
-  'ahmedabad':{lat:23.0,lng:72.6,label:'Ahmedabad'},
-  'delhi':{lat:28.6,lng:77.2,label:'New Delhi'},
-  'istanbul':{lat:41.0,lng:28.9,label:'Istanbul'},
-  'ankara':{lat:39.9,lng:32.9,label:'Ankara'},
-  'antalya':{lat:36.9,lng:30.7,label:'Antalya'},
-  'tehran':{lat:35.7,lng:51.4,label:'Tehran'},
+  'kyiv':{lat:50.4481,lng:30.5234,label:'Kyiv — Presidential Office'},
+  'kiev':{lat:50.4481,lng:30.5234,label:'Kyiv — Presidential Office'},
+  'jerusalem':{lat:31.7784,lng:35.2046,label:'Jerusalem — PM Residence'},
+  'tel aviv':{lat:32.0853,lng:34.7818,label:'Tel Aviv'},
+  'riyadh':{lat:24.6877,lng:46.7219,label:'Riyadh — Al Yamamah Palace'},
+  'jeddah':{lat:21.5433,lng:39.1728,label:'Jeddah'},
+  'neom':{lat:28.0339,lng:35.0618,label:'NEOM, Saudi Arabia'},
+  'elysee':{lat:48.8713,lng:2.3161,label:'Paris — Élysée Palace'},
+  'élysée':{lat:48.8713,lng:2.3161,label:'Paris — Élysée Palace'},
+  'versailles':{lat:48.8049,lng:2.1204,label:'Versailles'},
+  'paris':{lat:48.8713,lng:2.3161,label:'Paris'},
+  'downing street':{lat:51.5034,lng:-0.1276,label:'London — 10 Downing Street'},
+  'buckingham':{lat:51.5014,lng:-0.1419,label:'Buckingham Palace, London'},
+  'london':{lat:51.5034,lng:-0.1276,label:'London'},
+  'berlin':{lat:52.5202,lng:13.3690,label:'Berlin — Bundeskanzleramt'},
+  'munich':{lat:48.1351,lng:11.5820,label:'Munich'},
+  'pyongyang':{lat:39.0437,lng:125.7382,label:'Pyongyang — Ryongsong Residence'},
+  'new delhi':{lat:28.6139,lng:77.2090,label:'New Delhi — PMO'},
+  'mumbai':{lat:19.0760,lng:72.8777,label:'Mumbai'},
+  'ahmedabad':{lat:23.0225,lng:72.5714,label:'Ahmedabad'},
+  'delhi':{lat:28.6139,lng:77.2090,label:'New Delhi — PMO'},
+  'istanbul':{lat:41.0082,lng:28.9784,label:'Istanbul'},
+  'ankara':{lat:39.9314,lng:32.8038,label:'Ankara — Presidential Complex'},
+  'antalya':{lat:36.8969,lng:30.7133,label:'Antalya'},
+  'tehran':{lat:35.7219,lng:51.4205,label:'Tehran — Supreme Leader Compound'},
   'qom':{lat:34.6,lng:51.0,label:'Qom'},
   'brussels':{lat:50.8,lng:4.4,label:'Brussels — NATO/EU HQ'},
   'nato summit':{lat:50.8,lng:4.4,label:'NATO Summit'},
@@ -6335,10 +6335,10 @@ function globe_focusVIP(lat,lng,name,status){
   vipAnimTarget={fromX:rotX,fromY:rotY,toX,toY,startMs:Date.now(),dur:1400};
   vipFocusMarker={lat,lng,name,status,born:Date.now()};
   document.getElementById('h-status').textContent='⬤ VIP LOCATED: '+name+' — '+status;
-  // After globe animation completes, open satellite viewer zoomed to city level
+  // After globe animation completes, open satellite viewer at building level
   setTimeout(()=>{
     satVipLabel={name,status,lat,lng};
-    satOpenAt(lat,lng,'♦ '+name+' — '+status,13);
+    satOpenAt(lat,lng,'♦ '+name+' — '+status,16);
   },1500);
   setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},8000);
 }
@@ -8228,7 +8228,9 @@ function toggleSatPanel(){
     bd.style.display='block';
     requestAnimationFrame(()=>{
       panel.classList.add('open');
-      setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},120);
+      // 200ms: panel CSS transition settling, then re-check at 500ms for any half-size edge case
+      setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},200);
+      setTimeout(()=>{sizeSatCanvas();if(satLocSelected){const c=document.getElementById('sat-canvas');if(c&&(c.width<100||c.height<100))drawSatMap();};},500);
     });
     populateSatLocSel();
     document.getElementById('sat-date-in').value=satDate;
@@ -8298,13 +8300,19 @@ function satJumpToLocation(name){
 function satOpenAt(lat,lng,label,zoom){
   satLat=lat;satLng=lng;
   satZoom=zoom?Math.min(zoom,SAT_LAYERS[satLayerKey].maxZoom):Math.min(11,SAT_LAYERS[satLayerKey].maxZoom);
+  clearSatTileCache(); // always flush tiles when jumping to a new location
   satLocSelected=true;
   document.getElementById('sat-title-label').textContent=label||'';
   document.getElementById('sat-back-btn').style.display='inline-flex';
-  if(!satOpen)toggleSatPanel();
-  else{
-    document.getElementById('sat-loc-list').style.display='none';
+  document.getElementById('sat-loc-list').style.display='none';
+  if(!satOpen){
+    toggleSatPanel();
+    // toggleSatPanel has a 120ms internal delay — give it extra time then force a size+draw
+    setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();updateSatInfoBar();},300);
+    setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},600);
+  } else {
     sizeSatCanvas();drawSatMap();updateSatInfoBar();
+    setTimeout(()=>{sizeSatCanvas();if(satLocSelected)drawSatMap();},200);
   }
 }
 
