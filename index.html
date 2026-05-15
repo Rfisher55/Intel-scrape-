@@ -614,8 +614,9 @@ canvas.dragging{cursor:grabbing}
   border-radius:10px;padding:1px 5px;color:#93c5fd;margin-left:auto;font-family:var(--mono)}
 .layer-btn.active .lb-count{background:rgba(59,130,246,.35)}
 /* ── Global Threat Matrix ── */
-#threat-btn{position:fixed;bottom:70px;right:16px;z-index:200;background:rgba(7,14,28,.88);border:1px solid rgba(239,68,68,.5);color:#fca5a5;cursor:pointer;padding:8px 14px;border-radius:4px;font-size:10px;font-family:var(--mono);letter-spacing:.12em;transition:all .25s;font-weight:bold}
-#threat-btn:hover{background:rgba(127,29,29,.6);border-color:#ef4444;color:#fff}
+#threat-btn{position:fixed;bottom:104px;right:20px;z-index:200;background:rgba(7,14,28,.92);border:1px solid rgba(239,68,68,.4);border-radius:5px;color:#fca5a5;cursor:pointer;padding:7px 12px;font-size:9px;font-family:var(--mono);letter-spacing:.15em;transition:all .2s;font-weight:bold;display:flex;align-items:center;gap:6px;backdrop-filter:blur(10px);white-space:nowrap}
+#threat-btn:hover{background:rgba(127,29,29,.6);border-color:#ef4444;color:#fff;box-shadow:0 0 12px rgba(239,68,68,.2)}
+@media(max-width:600px){#threat-btn{bottom:142px;right:12px;font-size:8px;padding:6px 10px}}
 #threat-backdrop{display:none;position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
 #threat-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:300;width:min(720px,96vw);max-height:90vh;overflow-y:auto;background:rgba(4,9,20,.97);border:1px solid rgba(239,68,68,.4);border-radius:6px;font-family:var(--mono)}
 #threat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(239,68,68,.25);background:rgba(127,29,29,.2)}
@@ -5744,43 +5745,57 @@ function guessCallsignCountry(cs){
   return null;
 }
 
+function parseMilAircraft(ac){
+  return ac
+    .filter(a=>a.lat!=null&&a.lon!=null&&(a.flight||a.r||a.hex))
+    .map(a=>{
+      const cs=((a.flight||a.r||a.hex||'MIL')+'').trim();
+      const country=guessCallsignCountry(cs)||'';
+      const lat=parseFloat(a.lat),lng=parseFloat(a.lon||a.long||a.longitude);
+      if(!isFinite(lat)||!isFinite(lng))return null;
+      return{callsign:cs,type:(a.t||a.type||'MIL').trim(),country,cat:'military',
+        lat,lng,heading:a.trk||a.track||a.true_track||0,
+        alt:a.alt_baro||a.altitude||a.geo_altitude||0,
+        speed:a.gs||a.velocity||0,
+        label:cs+' — '+(a.t||a.type||'Military Aircraft')+(country?' ('+country+')':''),
+        severity:'medium',live:true};
+    }).filter(Boolean);
+}
+
 async function fetchMilitaryFlights(){
-  try{
-    const ctrl=new AbortController();
-    const tid=setTimeout(()=>ctrl.abort(),8000);
-    const r=await fetch('https://api.adsb.lol/v2/mil',{signal:ctrl.signal});
-    clearTimeout(tid);
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const data=await r.json();
-    const ac=data.ac||data.aircraft||[];
-    liveFlights=ac
-      .filter(a=>a.lat&&a.lon&&(a.flight||a.r))
-      .map(a=>{
-        const cs=(a.flight||a.r||'MIL').trim();
-        const country=guessCallsignCountry(cs)||'';
-        return{
-          callsign:cs,
-          type:a.t||'MIL',
-          country,
-          cat:'military',
-          lat:parseFloat(a.lat),lng:parseFloat(a.lon),
-          heading:a.trk||a.track||0,
-          alt:a.alt_baro||a.altitude||0,
-          speed:a.gs||0,
-          label:cs+' — '+(a.t||'Military Aircraft')+(country?' ('+country+')':''),
-          severity:'medium',
-          live:true,
-        };
-      });
+  const APIS=[
+    // adsb.lol — military endpoint
+    ()=>fetch('https://api.adsb.lol/v2/mil',{signal:AbortSignal.timeout(7000)})
+          .then(r=>{if(!r.ok)throw 0;return r.json();})
+          .then(d=>parseMilAircraft(d.ac||d.aircraft||[])),
+    // adsb.fi — military endpoint
+    ()=>fetch('https://api.adsb.fi/v1/mil',{signal:AbortSignal.timeout(7000)})
+          .then(r=>{if(!r.ok)throw 0;return r.json();})
+          .then(d=>parseMilAircraft(d.ac||d.aircraft||[])),
+    // OpenSky — anonymous, all traffic, filter by callsign patterns
+    ()=>fetch('https://opensky-network.org/api/states/all',{signal:AbortSignal.timeout(10000)})
+          .then(r=>{if(!r.ok)throw 0;return r.json();})
+          .then(d=>{
+            const MIL_CS=/^(RCH|REACH|JAKE|POLO|ATLAS|GRIM|AMS|DRACO|COBRA|MAGMA|PHANTOM|FORTE|TOPAZ|CTM|INCA|GAF|VV|RFF|SAM0|SPAR|NIGHT|TACAMO|PLAAF|PLAN0|RAM|UGLY|VIPER|DOOM|HAVOC)/;
+            return parseMilAircraft((d.states||[])
+              .filter(s=>s[1]&&MIL_CS.test((s[1]+'').trim()))
+              .map(s=>({lat:s[6],lon:s[5],flight:s[1],t:'',trk:s[10],gs:s[9],alt_baro:s[7]})));
+          }),
+  ];
+  let result=[];
+  for(const api of APIS){
+    try{result=await api();if(result.length>0)break;}catch{}
+  }
+  if(result.length>0){
+    liveFlights=result;
     flightsFetched=true;
     document.getElementById('lbc-flights').textContent=liveFlights.length;
-    const now=new Date();
-    const ts=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    document.getElementById('h-status').textContent='FLIGHTS LIVE: '+liveFlights.length+' military aircraft tracked — updated '+ts;
+    const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    document.getElementById('h-status').textContent='✈ LIVE: '+liveFlights.length+' military aircraft — updated '+ts;
     setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},5000);
-  }catch(e){
+  } else {
     if(!flightsFetched){liveFlights=FALLBACK_FLIGHTS;flightsFetched=true;}
-    document.getElementById('lbc-flights').textContent=liveFlights.length||FALLBACK_FLIGHTS.length;
+    document.getElementById('lbc-flights').textContent=(liveFlights.length||FALLBACK_FLIGHTS.length)+'*';
   }
 }
 
@@ -6353,12 +6368,6 @@ function draw(){
   // Outer atmospheric ring
   ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
   ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
-  // VIP fly-to animation
-  if(vipAnimTarget){
-    const p=(Date.now()-vipAnimTarget.startMs)/vipAnimTarget.dur;
-    if(p>=1){rotX=vipAnimTarget.toX;rotY=vipAnimTarget.toY;vipAnimTarget=null;}
-    else{const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;rotX=vipAnimTarget.fromX+(vipAnimTarget.toX-vipAnimTarget.fromX)*e;rotY=vipAnimTarget.fromY+(vipAnimTarget.toY-vipAnimTarget.fromY)*e;}
-  }
   // VIP location marker
   if(vipFocusMarker){
     const vm=vipFocusMarker;
@@ -6587,16 +6596,24 @@ function drawHUD(){
 
 function animate(){
   if(!isDragging){
-    // Smooth zoom lerp
     if(Math.abs(zoomFactor-targetZoom)>0.0005){
       zoomFactor+=(targetZoom-zoomFactor)*0.13;
       scale=baseScale*zoomFactor;
     }
-    // Exponential momentum decay — buttery physics
-    dragVelX*=DRAG_FRICTION;
-    dragVelY*=DRAG_FRICTION;
-    rotY+=AUTO_SPIN+dragVelX;
-    if(Math.abs(dragVelY)>0.00001){rotX+=dragVelY;rotX=Math.max(-1.3,Math.min(1.3,rotX));}
+    if(vipAnimTarget){
+      // VIP fly-to: suppress auto-spin so animation isn't overwritten each frame
+      const p=Math.min(1,(Date.now()-vipAnimTarget.startMs)/vipAnimTarget.dur);
+      const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+      rotX=vipAnimTarget.fromX+(vipAnimTarget.toX-vipAnimTarget.fromX)*e;
+      rotY=vipAnimTarget.fromY+(vipAnimTarget.toY-vipAnimTarget.fromY)*e;
+      rotX=Math.max(-1.3,Math.min(1.3,rotX));
+      if(p>=1){rotX=vipAnimTarget.toX;rotY=vipAnimTarget.toY;dragVelX=0;dragVelY=0;vipAnimTarget=null;}
+    } else {
+      dragVelX*=DRAG_FRICTION;
+      dragVelY*=DRAG_FRICTION;
+      rotY+=AUTO_SPIN+dragVelX;
+      if(Math.abs(dragVelY)>0.00001){rotX+=dragVelY;rotX=Math.max(-1.3,Math.min(1.3,rotX));}
+    }
   }
   try{draw();}catch(e){console.error('draw:',e);}
   requestAnimationFrame(animate);
@@ -7333,7 +7350,7 @@ function toggleLayer(name){
     if(activeLayers[name]){
       fetchMilitaryFlights();
       clearInterval(flightRefreshTimer);
-      flightRefreshTimer=setInterval(fetchMilitaryFlights,30000);
+      flightRefreshTimer=setInterval(fetchMilitaryFlights,15000);
     } else {
       clearInterval(flightRefreshTimer);
       flightRefreshTimer=null;
