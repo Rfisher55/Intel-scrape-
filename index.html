@@ -9286,9 +9286,9 @@ function renderThreatMatrix(){
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
 // Live ticker update every 10 minutes
-(async function fetchTickerLive(){
+async function fetchTickerLive(){
   try{
-    const q=encodeURIComponent('war military attack nuclear missile cyber sanction geopolitical conflict hostage cease fire');
+    const q=encodeURIComponent('war military attack nuclear missile cyber sanction geopolitical conflict hostage cease-fire airstrike');
     const r=await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=30&format=json&timespan=4h`,{signal:AbortSignal.timeout(8000)});
     if(!r.ok)return;
     const d=await r.json();
@@ -9296,12 +9296,15 @@ resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents()
     if(!articles.length)return;
     const track=document.getElementById('ticker-track');
     if(!track)return;
-    const items=articles.map(a=>`<span class="ticker-item">${a.title.slice(0,120)}</span>`);
-    // duplicate for seamless loop
-    track.innerHTML=items.join('')+items.join('');
+    const items=articles.map(a=>`<span class="ticker-item">${a.title.slice(0,110)}</span>`);
+    track.innerHTML=items.join('')+items.join(''); // duplicate for seamless loop
+    // restart animation
+    track.style.animation='none';
+    requestAnimationFrame(()=>track.style.animation='');
   }catch(e){}
   setTimeout(fetchTickerLive,10*60*1000);
-})();
+}
+fetchTickerLive();
 </script>
 </body>
 </html>
