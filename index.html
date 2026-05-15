@@ -4906,6 +4906,7 @@ const FALLBACK_FLIGHTS=[
 // Live flights fetched from ADS-B Exchange / adsb.lol
 let liveFlights=[];
 let flightsFetched=false;
+let flightRefreshTimer=null;
 let unverifiedSignals=[];
 let unverifiedFetchTime=0;
 const UNVERIFIED_REFRESH_MS=5*60*1000;
@@ -5588,12 +5589,13 @@ async function fetchMilitaryFlights(){
       });
     flightsFetched=true;
     document.getElementById('lbc-flights').textContent=liveFlights.length;
-    document.getElementById('h-status').textContent='FLIGHTS LIVE: '+liveFlights.length+' military aircraft tracked';
-    setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},4000);
+    const now=new Date();
+    const ts=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    document.getElementById('h-status').textContent='FLIGHTS LIVE: '+liveFlights.length+' military aircraft tracked — updated '+ts;
+    setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},5000);
   }catch(e){
-    liveFlights=FALLBACK_FLIGHTS;
-    flightsFetched=true;
-    document.getElementById('lbc-flights').textContent=FALLBACK_FLIGHTS.length;
+    if(!flightsFetched){liveFlights=FALLBACK_FLIGHTS;flightsFetched=true;}
+    document.getElementById('lbc-flights').textContent=liveFlights.length||FALLBACK_FLIGHTS.length;
   }
 }
 
@@ -6823,7 +6825,16 @@ function toggleLayer(name){
   const btn=document.getElementById('lb-'+name);
   if(btn)btn.classList.toggle('active',activeLayers[name]);
   if(name==='conflicts'){showArcs=activeLayers[name];updateConnBtn();}
-  if(name==='flights'&&activeLayers[name]&&!flightsFetched)fetchMilitaryFlights();
+  if(name==='flights'){
+    if(activeLayers[name]){
+      fetchMilitaryFlights();
+      clearInterval(flightRefreshTimer);
+      flightRefreshTimer=setInterval(fetchMilitaryFlights,30000);
+    } else {
+      clearInterval(flightRefreshTimer);
+      flightRefreshTimer=null;
+    }
+  }
   if(name==='unverified'&&activeLayers[name])fetchUnverifiedSignals();
   updateLayerFilterHint();
 }
