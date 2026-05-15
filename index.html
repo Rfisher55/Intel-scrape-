@@ -7758,6 +7758,8 @@ const SAT_LAYER_CATS={
   thermal:     ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','MARITIME'],
   false_color: ['CONFLICT','NUCLEAR/MISSILE','MARITIME','SPACE/LAUNCH','MILITARY'],
 };
+
+function toggleSatPanel(){
   satOpen=!satOpen;
   const panel=document.getElementById('sat-panel');
   const bd=document.getElementById('sat-backdrop');
