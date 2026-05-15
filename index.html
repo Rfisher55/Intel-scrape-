@@ -4566,7 +4566,22 @@ let isDragging=false, lastX=0, lastY=0;
 // Double-click detection for country panels (prevents accidental opens on drag)
 let lastClickISO=null, lastClickTime=0, lastClickPX=0, lastClickPY=0;
 let lastClickHS=null,  lastClickHSTime=0, lastClickHSPX=0, lastClickHSPY=0;
+let lastLayerLabel=null,lastLayerTime=0,lastLayerPX=0,lastLayerPY=0;
 const DBL_CLICK_MS=380, DBL_CLICK_PX=22;
+function layerDbl(label,sx,sy){
+  const now=Date.now();
+  const ok=lastLayerLabel===label&&now-lastLayerTime<500&&Math.hypot(sx-lastLayerPX,sy-lastLayerPY)<28;
+  lastLayerLabel=label;lastLayerTime=now;lastLayerPX=sx;lastLayerPY=sy;
+  return ok;
+}
+function layerHint(label,sx,sy){
+  const tt=document.getElementById('tooltip');
+  document.getElementById('tt-name').textContent=label;
+  document.getElementById('tt-alert').textContent='Double-click to open intel brief';
+  document.getElementById('tt-alert').style.color='#60a5fa';
+  tt.style.left=(sx+14)+'px';tt.style.top=(sy-10)+'px';tt.style.opacity='1';
+  setTimeout(()=>{tt.style.opacity='0';},1400);
+}
 // Physics — separated auto-spin from drag momentum for buttery feel
 const AUTO_SPIN=0.00006;
 const DRAG_FRICTION=0.92;
@@ -4911,6 +4926,29 @@ function extractISOs(text){
   return found;
 }
 
+// Cluster posts that share 2+ meaningful keywords — detects "multiple reports of same event"
+function clusterPosts(posts){
+  const STOP=new Set(['the','a','an','is','are','was','were','has','have','had','been','will',
+    'be','to','of','in','on','at','for','with','from','by','about','that','this','and','or',
+    'but','not','also','after','before','as','it','its','they','them','their','we','us','he',
+    'she','his','her','who','which','what','when','where','how','why','new','says','said',
+    'over','amid','two','three','claim','report','reports','says','cited','via','amid']);
+  function kw(t){return t.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(w=>w.length>3&&!STOP.has(w));}
+  const used=new Set();const clusters=[];
+  for(let i=0;i<posts.length;i++){
+    if(used.has(i))continue;
+    const ki=kw(posts[i].title);
+    const cluster=[posts[i]];used.add(i);
+    for(let j=i+1;j<posts.length;j++){
+      if(used.has(j))continue;
+      const kj=kw(posts[j].title);
+      if(ki.filter(w=>kj.includes(w)).length>=2){cluster.push(posts[j]);used.add(j);}
+    }
+    clusters.push(cluster);
+  }
+  return clusters.sort((a,b)=>b.length-a.length);
+}
+
 async function fetchUnverifiedSignals(){
   const now=Date.now();
   if(unverifiedFetchTime&&now-unverifiedFetchTime<UNVERIFIED_REFRESH_MS)return;
@@ -4927,11 +4965,18 @@ async function fetchUnverifiedSignals(){
   function buildSignals(){
     unverifiedSignals=[];
     for(const [iso,posts] of Object.entries(countMap)){
-      const unique=posts.slice(0,15);
+      if(!posts.length)continue;
+      const clusters=clusterPosts(posts);
+      const multiSrc=clusters.find(c=>[...new Set(c.map(p=>p.source))].length>=2);
+      // Require either a multi-source cluster OR 3+ total posts to avoid noise
+      if(!multiSrc&&posts.length<3)continue;
+      const topCluster=clusters[0]||[];
       unverifiedSignals.push({
-        iso,country:COUNTRIES[iso]?.name||iso,count:unique.length,
-        posts:unique.sort((a,b)=>b.score-a.score),
-        sources:[...new Set(unique.map(p=>p.source))],
+        iso,country:COUNTRIES[iso]?.name||iso,count:posts.length,
+        clusters,topCluster,
+        clusterCount:clusters.filter(c=>c.length>1).length,
+        posts:posts.sort((a,b)=>b.score-a.score).slice(0,20),
+        sources:[...new Set(posts.map(p=>p.source))],
         lastUpdate:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
       });
     }
@@ -4939,96 +4984,89 @@ async function fetchUnverifiedSignals(){
     if(el)el.textContent=unverifiedSignals.length||'0';
   }
 
-  // Reddit — reliable, no auth, CORS-friendly social media
-  const SUBS=['worldnews','geopolitics','military','ukraine','middleeast','europe','worldpolitics'];
+  // ── REDDIT — reliable public JSON API, no auth needed ──────────────────────
+  const SUBS=['worldnews','geopolitics','military','ukraine','middleeast','europe','worldpolitics','news'];
   const rFetches=SUBS.map(async sub=>{
     try{
-      const ctrl=new AbortController();
-      setTimeout(()=>ctrl.abort(),7000);
+      const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),8000);
       const r=await fetch(`https://www.reddit.com/r/${sub}/hot.json?limit=25`,{signal:ctrl.signal});
       if(!r.ok)return;
       const d=await r.json();
       for(const child of d.data?.children||[]){
-        const p=child.data||child;
-        if(!p.title)continue;
+        const p=child.data||child;if(!p.title)continue;
         const isos=extractISOs(p.title+(p.selftext?' '+p.selftext.slice(0,200):''));
         const ts=p.created_utc?new Date(p.created_utc*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
-        for(const iso of isos){
-          addPost(iso,{
-            title:p.title.slice(0,140),
-            url:p.permalink?'https://reddit.com'+p.permalink:(p.url||'#'),
-            sub:`r/${sub}`,time:ts,score:p.score||0,source:'Reddit'
-          });
-        }
+        for(const iso of isos)addPost(iso,{title:p.title.slice(0,140),url:p.permalink?'https://reddit.com'+p.permalink:(p.url||'#'),sub:`r/${sub}`,time:ts,score:p.score||0,source:'Reddit'});
       }
     }catch(e){}
   });
   await Promise.allSettled(rFetches);
-  buildSignals(); // show Reddit results immediately
+  buildSignals(); // show Reddit results immediately — fastest reliable source
 
-  // Bluesky — public search API, no auth, CORS-friendly X-era social media
-  const BSK_QUERIES=[
-    'ukraine war attack','gaza israel airstrike','iran military',
-    'china taiwan strait','houthi missile','north korea launch',
-    'sudan fighting','sahel coup','myanmar army'
-  ];
-  const bFetches=BSK_QUERIES.map(async q=>{
+  // ── BLUESKY — open public search API, no auth, CORS-safe ──────────────────
+  const BSK_Q=['ukraine war','gaza israel','iran attack','china taiwan','houthi strike',
+    'north korea','myanmar military','sudan fighting','sahel coup','russia missile'];
+  const bFetches=BSK_Q.map(async q=>{
     try{
-      const ctrl=new AbortController();
-      setTimeout(()=>ctrl.abort(),6000);
+      const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),6000);
       const r=await fetch(`https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=${encodeURIComponent(q)}&limit=25`,{signal:ctrl.signal});
       if(!r.ok)return;
       const d=await r.json();
       for(const post of d.posts||[]){
-        const text=post.record?.text||'';
-        if(!text)continue;
+        const text=post.record?.text||'';if(!text)continue;
         const isos=extractISOs(text);
         const ts=post.record?.createdAt?new Date(post.record.createdAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
-        for(const iso of isos){
-          addPost(iso,{
-            title:text.slice(0,140).replace(/\n/g,' '),
-            url:`https://bsky.app/profile/${post.author?.handle}/post/${post.uri?.split('/').pop()}`,
-            sub:'Bluesky',time:ts,score:post.likeCount||0,source:'Bluesky'
-          });
-        }
+        for(const iso of isos)addPost(iso,{title:text.slice(0,140).replace(/\n/g,' '),url:`https://bsky.app/profile/${post.author?.handle}/post/${post.uri?.split('/').pop()}`,sub:'Bluesky',time:ts,score:post.likeCount||0,source:'Bluesky'});
       }
     }catch(e){}
   });
 
-  // X/Twitter via Nitter RSS — try quickly, bonus if available
-  const NITTER=['https://nitter.poast.org','https://nitter.privacydev.net'];
-  const X_QUERIES=['ukraine russia','gaza hamas','iran nuclear','china taiwan','houthi attack'];
-  async function tryNitter(query){
+  // ── TELEGRAM public channels via corsproxy ─────────────────────────────────
+  // Note: Discord requires auth — not accessible from browser without login
+  const TG_CH=['wartranslated','intelslava','disclosetv','thewarnews','geopolitics_live'];
+  const tFetches=TG_CH.map(async ch=>{
+    try{
+      const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),7000);
+      const r=await fetch('https://corsproxy.io/?'+encodeURIComponent(`https://t.me/s/${ch}`),{signal:ctrl.signal});
+      if(!r.ok)return;
+      const html=await r.text();
+      const doc=new DOMParser().parseFromString(html,'text/html');
+      for(const el2 of doc.querySelectorAll('.tgme_widget_message_text')){
+        const text=el2.textContent?.trim().replace(/\s+/g,' ').slice(0,140)||'';
+        if(text.length<15)continue;
+        const isos=extractISOs(text);
+        for(const iso of isos)addPost(iso,{title:text,url:`https://t.me/s/${ch}`,sub:`Telegram/${ch}`,time:'—',score:0,source:'Telegram'});
+      }
+    }catch(e){}
+  });
+
+  // ── X/TWITTER via Nitter RSS (bonus — instances often down) ───────────────
+  const NITTER=['https://nitter.poast.org','https://nitter.privacydev.net','https://nitter.nl'];
+  const X_Q=['ukraine russia war','gaza hamas','iran nuclear','china taiwan military','houthi red sea'];
+  async function tryNitter(q){
     for(const inst of NITTER){
       try{
-        const url=`${inst}/search/rss?q=${encodeURIComponent(query)}&f=tweets`;
-        const ctrl=new AbortController();
-        setTimeout(()=>ctrl.abort(),4000);
-        const r=await fetch('https://corsproxy.io/?'+encodeURIComponent(url),{signal:ctrl.signal});
+        const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),4000);
+        const r=await fetch('https://corsproxy.io/?'+encodeURIComponent(`${inst}/search/rss?q=${encodeURIComponent(q)}&f=tweets`),{signal:ctrl.signal});
         if(!r.ok)continue;
-        const xml=await r.text();
-        if(!xml.includes('<item>'))continue;
+        const xml=await r.text();if(!xml.includes('<item>'))continue;
         const doc=new DOMParser().parseFromString(xml,'text/xml');
-        return [...doc.querySelectorAll('item')].map(item=>{
+        return[...doc.querySelectorAll('item')].map(item=>{
           const title=(item.querySelector('title')?.textContent||'').replace(/^@[\w]+:\s*/,'').trim();
-          const pubDate=item.querySelector('pubDate')?.textContent||'';
-          const ts=pubDate?new Date(pubDate).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
-          return{title,url:item.querySelector('link')?.textContent||'#',sub:'X/Twitter',time:ts,score:0,source:'X'};
+          const ts=item.querySelector('pubDate')?.textContent||'';
+          return{title,url:item.querySelector('link')?.textContent||'#',sub:'X/Twitter',time:ts?new Date(ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—',score:0,source:'X'};
         }).filter(p=>p.title.length>10);
       }catch(e){}
     }
     return[];
   }
-  const xFetches=X_QUERIES.map(async q=>{
+  const xFetches=X_Q.map(async q=>{
     const posts=await tryNitter(q);
-    for(const post of posts){
-      const isos=extractISOs(post.title);
-      for(const iso of isos)addPost(iso,post);
-    }
+    for(const post of posts){const isos=extractISOs(post.title);for(const iso of isos)addPost(iso,post);}
   });
 
-  await Promise.allSettled([...bFetches,...xFetches]);
-  buildSignals(); // update with Bluesky + any X data
+  await Promise.allSettled([...bFetches,...tFetches,...xFetches]);
+  buildSignals(); // final update after all social sources
 }
 
 function drawUnverifiedLayer(){
@@ -5075,31 +5113,36 @@ function unverifiedAt(sx,sy){
 function openUnverifiedBrief(sig){
   const urgency=Math.min(sig.count/10,1);
   const dotColor=urgency>.65?'#ef4444':urgency>.3?'#fb923c':'#fbbf24';
-  const topSources=sig.sources.slice(0,4).join(' · ');
-  const xCount=sig.posts.filter(p=>p.source==='X'||p.source==='Bluesky').length;
-  const preview=sig.posts.slice(0,5).map(p=>`[${p.sub}] "${p.title}" — ${p.time}`).join('\n');
-  const alertLevel=urgency>.65?'HIGH VOLUME — POSSIBLE ACTIVE INCIDENT':urgency>.3?'MODERATE — DEVELOPING SITUATION':'LOW — EARLY SIGNAL';
+  const alertLevel=urgency>.65?'HIGH VOLUME':'MODERATE SIGNAL';
+  const topSources=sig.sources.join(' · ');
+  // Build cluster summary — show trending events
+  const clusterLines=(sig.clusters||[]).slice(0,4).map((c,i)=>{
+    const srcs=[...new Set(c.map(p=>p.source))].join('+');
+    const headline=c[0]?.title?.slice(0,90)||'';
+    return `[${c.length} REPORTS · ${srcs}] ${headline}${c[0]?.title?.length>90?'…':''}`;
+  }).join('\n\n');
+  const allPosts=(sig.clusters||[]).flat().slice(0,5);
   buildIntelBrief({
-    category:'⚠ UNCONFIRMED SOCIAL INTEL SIGNAL',
+    category:'⚠ CROWD-SOURCED INTEL SIGNAL',
     dotColor,
-    title:`${sig.country} — ${sig.count} Independent Reports`,
+    title:`${sig.country} — ${sig.count} Reports · ${sig.clusterCount||0} Corroborated Events`,
     iso:sig.iso,
     badges:[
-      {text:'NOT VERIFIED',style:'critical'},
-      {text:sig.count+' SOCIAL REPORTS',style:'blue'},
+      {text:'UNVERIFIED',style:'critical'},
       {text:alertLevel,style:urgency>.65?'critical':'blue'},
+      {text:sig.sources.length+' PLATFORMS',style:'blue'},
     ],
     stats:[
-      {val:sig.count,              key:'REPORTS'},
-      {val:xCount||'—',           key:'X/SOCIAL'},
-      {val:sig.lastUpdate,        key:'UPDATED'},
+      {val:sig.count,                  key:'TOTAL REPORTS'},
+      {val:sig.clusterCount||'—',      key:'CORROBORATED'},
+      {val:sig.lastUpdate,             key:'UPDATED'},
     ],
-    detail:'⚠ UNCONFIRMED INTELLIGENCE — This signal was flagged because a statistically significant number of independent social media users are reporting an event or situation involving this country. This does NOT constitute verified intelligence.\n\n'+
-      'This is how raw OSINT works: when enough unconnected people report the same thing from different accounts and platforms, it indicates something is likely occurring — even before mainstream media confirms it.\n\n'+
-      'PLATFORMS: '+topSources+'\n\n'+
-      'RECENT REPORTS:\n'+preview,
+    detail:'⚠ UNVERIFIED — Flagged when multiple independent social media users across different platforms report the same or nearly identical event. This is raw OSINT: volume and cross-platform agreement indicate something is likely occurring before official confirmation.\n\n'+
+      'PLATFORMS REPORTING: '+topSources+'\n\n'+
+      (clusterLines?'DETECTED EVENT CLUSTERS (corroborated by 2+ sources):\n'+clusterLines:
+       'RECENT SOCIAL REPORTS:\n'+(sig.posts||[]).slice(0,5).map(p=>`[${p.sub}] ${p.title}`).join('\n')),
     actors:sig.sources,
-    news:sig.posts.map(p=>`[${p.sub}] ${p.title} — ${p.time}`),
+    news:(sig.clusters||[]).flat().map(p=>`[${p.source}·${p.sub}] ${p.title} — ${p.time}`),
   });
 }
 
@@ -6158,46 +6201,16 @@ canvas.addEventListener('mouseup',e=>{
       }
       return;
     }
-    if(activeLayers.conflicts||showArcs){
-      const cf=conflictAt(e.clientX,e.clientY);
-      if(cf){openConflictBrief(cf);return;}
-    }
-    if(activeLayers.naval){
-      const na=navalAssetAt(e.clientX,e.clientY);
-      if(na){openNavalBrief(na);return;}
-    }
-    if(activeLayers.troops){
-      const tm=troopMovAt(e.clientX,e.clientY);
-      if(tm){openTroopMovBrief(tm);return;}
-    }
-    if(activeLayers.arms){
-      const af=armsFlowAt(e.clientX,e.clientY);
-      if(af){openArmsFlowBrief(af);return;}
-    }
-    if(activeLayers.money){
-      const ff=financialFlowAt(e.clientX,e.clientY);
-      if(ff){openFinancialFlowBrief(ff);return;}
-    }
-    if(activeLayers.refugees){
-      const rf=refugeeFlowAt(e.clientX,e.clientY);
-      if(rf){openRefugeeFlowBrief(rf);return;}
-    }
-    if(activeLayers.unverified){
-      const sig=unverifiedAt(e.clientX,e.clientY);
-      if(sig){openUnverifiedBrief(sig);return;}
-    }
-    if(activeLayers.sigint){
-      const sn=sigintAt(e.clientX,e.clientY);
-      if(sn){openSIGINTBrief(sn);return;}
-    }
-    if(activeLayers.cyber){
-      const co=cyberAt(e.clientX,e.clientY);
-      if(co){openCyberBrief(co);return;}
-    }
-    if(activeLayers.netdisrupt){
-      const nd=netDisruptAt(e.clientX,e.clientY);
-      if(nd){openNetDisruptBrief(nd);return;}
-    }
+    if(activeLayers.conflicts||showArcs){const cf=conflictAt(e.clientX,e.clientY);if(cf){if(layerDbl(cf.label,e.clientX,e.clientY))openConflictBrief(cf);else layerHint(cf.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.naval){const na=navalAssetAt(e.clientX,e.clientY);if(na){if(layerDbl(na.label,e.clientX,e.clientY))openNavalBrief(na);else layerHint(na.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.troops){const tm=troopMovAt(e.clientX,e.clientY);if(tm){if(layerDbl(tm.label,e.clientX,e.clientY))openTroopMovBrief(tm);else layerHint(tm.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.arms){const af=armsFlowAt(e.clientX,e.clientY);if(af){if(layerDbl(af.label,e.clientX,e.clientY))openArmsFlowBrief(af);else layerHint(af.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.money){const ff=financialFlowAt(e.clientX,e.clientY);if(ff){if(layerDbl(ff.label,e.clientX,e.clientY))openFinancialFlowBrief(ff);else layerHint(ff.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.refugees){const rf=refugeeFlowAt(e.clientX,e.clientY);if(rf){if(layerDbl(rf.label,e.clientX,e.clientY))openRefugeeFlowBrief(rf);else layerHint(rf.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.unverified){const sig=unverifiedAt(e.clientX,e.clientY);if(sig){if(layerDbl(sig.country,e.clientX,e.clientY))openUnverifiedBrief(sig);else layerHint('⚠ '+sig.country+' — '+sig.count+' reports',e.clientX,e.clientY);return;}}
+    if(activeLayers.sigint){const sn=sigintAt(e.clientX,e.clientY);if(sn){if(layerDbl(sn.label,e.clientX,e.clientY))openSIGINTBrief(sn);else layerHint(sn.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.cyber){const co=cyberAt(e.clientX,e.clientY);if(co){if(layerDbl(co.label,e.clientX,e.clientY))openCyberBrief(co);else layerHint(co.label,e.clientX,e.clientY);return;}}
+    if(activeLayers.netdisrupt){const nd=netDisruptAt(e.clientX,e.clientY);if(nd){if(layerDbl(nd.label,e.clientX,e.clientY))openNetDisruptBrief(nd);else layerHint(nd.label,e.clientX,e.clientY);return;}}
     // Country panel — requires double-click to avoid accidental opens while rotating
     const h=hitTest(e.clientX,e.clientY);
     if(h){
@@ -6283,46 +6296,16 @@ canvas.addEventListener('touchend',e=>{
           if(isDbl){openHotspot(hs);}
           return;
         }
-        if(activeLayers.conflicts||showArcs){
-          const cf=conflictAt(t.clientX,t.clientY);
-          if(cf){openConflictBrief(cf);return;}
-        }
-        if(activeLayers.naval){
-          const na=navalAssetAt(t.clientX,t.clientY);
-          if(na){openNavalBrief(na);return;}
-        }
-        if(activeLayers.troops){
-          const tm=troopMovAt(t.clientX,t.clientY);
-          if(tm){openTroopMovBrief(tm);return;}
-        }
-        if(activeLayers.arms){
-          const af=armsFlowAt(t.clientX,t.clientY);
-          if(af){openArmsFlowBrief(af);return;}
-        }
-        if(activeLayers.money){
-          const ff=financialFlowAt(t.clientX,t.clientY);
-          if(ff){openFinancialFlowBrief(ff);return;}
-        }
-        if(activeLayers.refugees){
-          const rf=refugeeFlowAt(t.clientX,t.clientY);
-          if(rf){openRefugeeFlowBrief(rf);return;}
-        }
-        if(activeLayers.unverified){
-          const sig=unverifiedAt(t.clientX,t.clientY);
-          if(sig){openUnverifiedBrief(sig);return;}
-        }
-        if(activeLayers.sigint){
-          const sn=sigintAt(t.clientX,t.clientY);
-          if(sn){openSIGINTBrief(sn);return;}
-        }
-        if(activeLayers.cyber){
-          const co=cyberAt(t.clientX,t.clientY);
-          if(co){openCyberBrief(co);return;}
-        }
-        if(activeLayers.netdisrupt){
-          const nd=netDisruptAt(t.clientX,t.clientY);
-          if(nd){openNetDisruptBrief(nd);return;}
-        }
+        if(activeLayers.conflicts||showArcs){const cf=conflictAt(t.clientX,t.clientY);if(cf){if(layerDbl(cf.label,t.clientX,t.clientY))openConflictBrief(cf);return;}}
+        if(activeLayers.naval){const na=navalAssetAt(t.clientX,t.clientY);if(na){if(layerDbl(na.label,t.clientX,t.clientY))openNavalBrief(na);return;}}
+        if(activeLayers.troops){const tm=troopMovAt(t.clientX,t.clientY);if(tm){if(layerDbl(tm.label,t.clientX,t.clientY))openTroopMovBrief(tm);return;}}
+        if(activeLayers.arms){const af=armsFlowAt(t.clientX,t.clientY);if(af){if(layerDbl(af.label,t.clientX,t.clientY))openArmsFlowBrief(af);return;}}
+        if(activeLayers.money){const ff=financialFlowAt(t.clientX,t.clientY);if(ff){if(layerDbl(ff.label,t.clientX,t.clientY))openFinancialFlowBrief(ff);return;}}
+        if(activeLayers.refugees){const rf=refugeeFlowAt(t.clientX,t.clientY);if(rf){if(layerDbl(rf.label,t.clientX,t.clientY))openRefugeeFlowBrief(rf);return;}}
+        if(activeLayers.unverified){const sig=unverifiedAt(t.clientX,t.clientY);if(sig){if(layerDbl(sig.country,t.clientX,t.clientY))openUnverifiedBrief(sig);return;}}
+        if(activeLayers.sigint){const sn=sigintAt(t.clientX,t.clientY);if(sn){if(layerDbl(sn.label,t.clientX,t.clientY))openSIGINTBrief(sn);return;}}
+        if(activeLayers.cyber){const co=cyberAt(t.clientX,t.clientY);if(co){if(layerDbl(co.label,t.clientX,t.clientY))openCyberBrief(co);return;}}
+        if(activeLayers.netdisrupt){const nd=netDisruptAt(t.clientX,t.clientY);if(nd){if(layerDbl(nd.label,t.clientX,t.clientY))openNetDisruptBrief(nd);return;}}
         // Country — double-tap on mobile
         const h=hitTest(t.clientX,t.clientY);
         if(h){
