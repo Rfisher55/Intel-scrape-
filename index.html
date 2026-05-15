@@ -620,24 +620,59 @@ canvas.dragging{cursor:grabbing}
 #threat-btn:hover{background:rgba(127,29,29,.6);border-color:#ef4444;color:#fff;box-shadow:0 0 12px rgba(239,68,68,.2)}
 @media(max-width:600px){#threat-btn{bottom:142px;right:12px;font-size:8px;padding:6px 10px}}
 #threat-backdrop{display:none;position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
-#threat-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:300;width:min(720px,96vw);max-height:90vh;overflow-y:auto;background:rgba(4,9,20,.97);border:1px solid rgba(239,68,68,.4);border-radius:6px;font-family:var(--mono)}
-#threat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(239,68,68,.25);background:rgba(127,29,29,.2)}
+#threat-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:300;width:min(900px,97vw);max-height:92vh;overflow:hidden;background:rgba(4,9,20,.97);border:1px solid rgba(239,68,68,.4);border-radius:6px;font-family:var(--mono);flex-direction:column}
+#threat-panel.open{display:flex}
+#threat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(239,68,68,.25);background:rgba(127,29,29,.2);flex-shrink:0}
 .threat-title{color:#fca5a5;font-size:11px;letter-spacing:.25em;font-weight:bold}
 .threat-subtitle{color:#475569;font-size:8px;letter-spacing:.15em;margin-top:3px}
-#threat-body{padding:16px 18px;display:grid;gap:14px}
-.threat-domain{background:rgba(8,16,33,.7);border:1px solid rgba(30,58,95,.6);border-radius:4px;padding:12px 14px;cursor:pointer;transition:border-color .2s}
-.threat-domain:hover{border-color:rgba(59,130,246,.5)}
+#threat-body{padding:14px 18px;display:grid;gap:10px;overflow-y:auto;flex:1}
+.threat-composite{background:linear-gradient(135deg,rgba(127,29,29,.3),rgba(4,9,20,.7));border:1px solid rgba(239,68,68,.4);border-radius:6px;padding:16px 20px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;margin-bottom:4px}
+.threat-composite-level{font-size:40px;font-weight:bold;letter-spacing:.03em;line-height:1}
+.threat-composite-bar{display:grid;gap:4px}
+.threat-composite-label{font-size:8px;letter-spacing:.2em;color:#94a3b8}
+.threat-composite-track{height:8px;background:rgba(30,58,95,.4);border-radius:4px;overflow:hidden}
+.threat-composite-fill{height:100%;border-radius:4px;transition:width 1s ease}
+.threat-composite-stats{display:grid;gap:3px;text-align:right}
+.threat-composite-stat{font-size:9px;color:#94a3b8}
+.threat-flashpoints{background:rgba(8,16,33,.6);border:1px solid rgba(239,68,68,.3);border-radius:5px;padding:12px 14px}
+.threat-fp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:8px}
+.threat-fp-card{background:rgba(4,9,20,.8);border:1px solid rgba(30,58,95,.5);border-radius:4px;padding:8px 10px;border-left-width:3px}
+.threat-fp-name{font-size:9px;font-weight:bold;letter-spacing:.12em;margin-bottom:3px}
+.threat-fp-risk{font-size:8px;letter-spacing:.15em;opacity:.8;margin-bottom:4px}
+.threat-fp-desc{font-size:8px;color:#64748b;line-height:1.4}
+.threat-watchlist{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
+.threat-wl-item{background:rgba(4,9,20,.7);border:1px solid rgba(30,58,95,.4);border-radius:3px;padding:6px 8px;text-align:center;cursor:pointer}
+.threat-wl-item:hover{border-color:rgba(239,68,68,.5)}
+.threat-wl-flag{font-size:14px;display:block;margin-bottom:2px}
+.threat-wl-name{font-size:7px;color:#94a3b8;letter-spacing:.1em}
+.threat-wl-score{font-size:11px;font-weight:bold}
+.threat-domains-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.threat-domain{background:rgba(8,16,33,.7);border:1px solid rgba(30,58,95,.6);border-radius:4px;padding:12px 14px;cursor:pointer;transition:border-color .2s,background .2s}
+.threat-domain:hover{border-color:rgba(59,130,246,.5);background:rgba(8,16,33,.9)}
+.threat-domain.expanded{border-color:rgba(59,130,246,.4);background:rgba(8,20,40,.9)}
 .threat-domain-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .threat-domain-name{font-size:9px;letter-spacing:.2em;font-weight:bold}
-.threat-domain-level{font-size:18px;font-weight:bold;letter-spacing:.05em}
-.threat-bar-track{height:6px;background:rgba(30,58,95,.4);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.threat-domain-level{font-size:20px;font-weight:bold;letter-spacing:.05em}
+.threat-bar-track{height:5px;background:rgba(30,58,95,.4);border-radius:3px;overflow:hidden;margin-bottom:6px}
 .threat-bar-fill{height:100%;border-radius:3px;transition:width .8s ease}
-.threat-indicators{display:grid;gap:3px}
+.threat-indicators{display:grid;gap:3px;margin-bottom:6px}
 .threat-ind{display:flex;align-items:flex-start;gap:6px;font-size:8px;color:#64748b;line-height:1.4}
 .threat-ind-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.threat-footer{padding:10px 18px;border-top:1px solid rgba(30,58,95,.4);display:flex;justify-content:space-between;align-items:center}
+.threat-domain-extra{display:none;border-top:1px solid rgba(30,58,95,.4);margin-top:8px;padding-top:8px}
+.threat-domain.expanded .threat-domain-extra{display:block}
+.threat-extra-label{font-size:7px;letter-spacing:.18em;color:#475569;margin:6px 0 4px}
+.threat-actors{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.threat-actor-tag{font-size:7px;padding:2px 7px;background:rgba(30,58,95,.4);border:1px solid rgba(59,130,246,.25);border-radius:2px;color:#7dd3fc;letter-spacing:.05em}
+.threat-analyst{font-size:8px;color:#64748b;line-height:1.55;margin-bottom:8px;border-left:2px solid rgba(59,130,246,.3);padding-left:8px}
+.threat-tripwires{display:grid;gap:3px}
+.threat-tripwire{display:flex;gap:6px;font-size:8px;color:#7dd3fc;line-height:1.4}
+.threat-tripwire::before{content:'⚑';color:#f97316;flex-shrink:0}
+.threat-countries-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.threat-ctag{font-size:7px;padding:2px 6px;border-radius:2px;border:1px solid;letter-spacing:.08em}
+.threat-footer{padding:10px 18px;border-top:1px solid rgba(30,58,95,.4);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
 .threat-update-ts{font-size:8px;color:#475569;letter-spacing:.1em}
 .threat-src{font-size:7px;color:#334155;letter-spacing:.1em}
+@media(max-width:600px){.threat-domains-grid{grid-template-columns:1fr}.threat-watchlist{grid-template-columns:repeat(3,1fr)}.threat-composite{grid-template-columns:1fr}.threat-fp-grid{grid-template-columns:1fr}}
 /* ── Factions & Foreign influence tabs ── */
 .faction-card{background:rgba(8,16,34,.7);border:1px solid rgba(30,58,95,.5);border-radius:4px;padding:10px 12px;margin-bottom:8px}
 .faction-card:hover{border-color:rgba(59,130,246,.4)}
@@ -8546,16 +8581,180 @@ let threatFetchTime=0;
 let threatData=null;
 
 const THREAT_DOMAINS=[
-  {id:'nuclear',  label:'NUCLEAR',      color:'#ef4444',icon:'☢',base:3,
-   indicators:['Russia: strategic forces at heightened alert posture (DIA/OSINT)','DPRK: ICBM test cadence 3 launches past 90 days — Hwasong-18 tested','Iran: 60% enriched U-235 stockpile 27kg — IAEA Board of Governors report','China: DF-41 silo expansion Xinjiang — 300+ silos confirmed via Planet Labs','Pakistan: tactical nuclear posture shift — battlefield TNW deployed forward']},
-  {id:'cyber',    label:'CYBER',        color:'#60a5fa',icon:'⚡',base:4,
-   indicators:['VOLT TYPHOON: US critical infrastructure pre-positioned access — FBI/CISA advisory','APT29 (Cozy Bear): active NATO diplomatic network intrusion campaign ongoing','Sandworm: Ukrainian power grid cyberattacks — CERT-UA daily alerts','Salt Typhoon: US telecom intercept access exposed — Senate Intel briefing','LockBit/BlackCat successors: ransomware attacks on hospitals/ports at record pace']},
-  {id:'kinetic',  label:'KINETIC/WAR',  color:'#f97316',icon:'⚔',base:4,
-   indicators:['Ukraine: 1,400km frontline — Russian grinding offensive Donetsk axis','Gaza: IDF Phase 2 ground ops — Rafah, Khan Younis active combat zones','Sudan: RSF–SAF civil war — 9M+ displaced, largest crisis since Syria 2015','Myanmar: junta losing territory — resistance coalition Mandalay corridor contested','Sahel: AQ/ISIS franchises — Mali, Burkina, Niger state collapse accelerating']},
-  {id:'terrorism',label:'TERRORISM',    color:'#fbbf24',icon:'◈',base:3,
-   indicators:['ISIS-K: Western Europe attack planning — Europol HIGH threat alert active','Houthi: Red Sea drone/missile campaign — 80+ attacks on commercial shipping','Hezbollah: North Israel rocket exchange — Lebanon front daily activations','Hamas: West Bank IED/shooting attacks — IDF operational tempo elevated','Al-Shabaab: Somalia resurgence — AU mission withdrawal exploited']},
-  {id:'economic', label:'ECONOMIC WAR', color:'#a855f7',icon:'$',base:3,
-   indicators:['Russia: 200+ dark fleet tankers bypassing G7 oil price cap daily','China-Taiwan: semiconductor war — TSMC export controls tightening','USD weaponization: BRICS+ alternative settlement systems accelerating','Red Sea rerouting: $1.8B/day added to global shipping costs','Iran: shadow fleet to China at 1.6M bbl/day despite maximum pressure']},
+  {id:'nuclear',  label:'NUCLEAR/WMD',    color:'#ef4444',icon:'☢',base:3,
+   indicators:[
+     'Russia: strategic forces DEFCON-equivalent at heightened alert — STRATCOM OSINT confirmed',
+     'DPRK: Hwasong-18 ICBM test cadence — 3 launches in 90 days, range covers CONUS',
+     'Iran: 60% enriched U-235 stockpile 27kg — weapons-grade threshold crossed (IAEA BOG)',
+     'China: DF-41 silo expansion Xinjiang — 300+ silos confirmed Planet Labs satellite analysis',
+     'Pakistan: tactical nuclear warhead (TNW) forward-deployment posture shift — ISI signals',
+     'Russia: Kinzhal hypersonic missile operational — Mach 10+, evades NATO interceptors',
+     'DPRK: submarine-launched ballistic missile (SLBM) Pukguksong-3 deployment to fleet',
+     'Belarus: Russian tactical nuclear weapons transferred — Lukashenko confirmed deployment',
+   ],
+   actors:['STRATFOR Russia','DPRK Missile General Bureau','IRGC Aerospace Force','PLA Rocket Force','Pakistan SNS'],
+   analyst:'Russia maintains the largest nuclear arsenal globally with ~6,000 warheads, of which ~1,600 are deployed. The current posture shift — including suspension of START participation and rhetoric around tactical use — represents the highest nuclear alert level since the 1983 Able Archer exercise. Iran\'s enrichment program is at a strategic inflection point; analysts assess 1–2 weeks breakout time to weapons-grade material. DPRK miniaturization of warheads for ICBM delivery is assessed with HIGH CONFIDENCE.',
+   tripwires:['DPRK moves launchers to firing position','Iran expels IAEA inspectors','Russia detonates tactical device in Ukrainian theater','Pakistan activates Nasr TNW battalion'],
+   countries:['RUS','PRK','IRN','CHN','PAK','BLR'],
+  },
+  {id:'cyber',    label:'CYBER WARFARE',  color:'#60a5fa',icon:'⚡',base:4,
+   indicators:[
+     'VOLT TYPHOON (PRC): US critical infrastructure pre-positioned — FBI/CISA joint advisory',
+     'APT29 / Cozy Bear (SVR): active NATO diplomatic network intrusion — exfiltrating comms',
+     'Sandworm (GRU): Ukrainian power grid attacks — CERT-UA documenting daily incidents',
+     'Salt Typhoon (PRC): US telecom intercept access — major carriers compromised (Senate Intel)',
+     'LockBit 4.0 successors: ransomware hits 220+ hospitals/ports — record pace 2024-25',
+     'APT41 (PRC): dual espionage+financially motivated — 17 countries targeted this year',
+     'Lazarus Group (DPRK): $1.5B Bybit exchange heist — largest crypto theft in history',
+     'Killnet/NoName057: DDoS NATO government portals — Ukraine war auxiliary cyber ops',
+     'Turla (FSB): Snake malware resurface — new variant targeting Five Eyes SIGINT partners',
+   ],
+   actors:['Volt Typhoon (MSS)','APT29/Cozy Bear (SVR)','Sandworm (GRU Unit 74455)','Salt Typhoon (MSS)','Lazarus Group (RGB)','APT41 (MSS)','Turla (FSB)'],
+   analyst:'The cyber threat landscape has reached an unprecedented scale. China\'s Volt Typhoon campaign represents a qualitative shift — not intelligence collection but pre-positioning for wartime disruption of water, power, and telecommunications. Salt Typhoon\'s access to US telecom metadata represents one of the most significant intelligence failures in recent history. Russia continues Sandworm operations as force multiplier to kinetic operations. DPRK\'s cryptocurrency operations fund approximately 30-40% of its weapons programs.',
+   tripwires:['Power grid attack triggers blackouts in NATO country','US financial SWIFT system targeted','Satellite command disrupted','Election infrastructure attack detected'],
+   countries:['CHN','RUS','PRK','IRN','BLR'],
+  },
+  {id:'kinetic',  label:'KINETIC WAR',    color:'#f97316',icon:'⚔',base:4,
+   indicators:[
+     'Ukraine: 1,400km frontline — Russian grinding offensive Donetsk axis, 1,000+ casualties/day',
+     'Gaza: IDF sustained operations — Rafah, Khan Younis, Nuseirat active combat zones',
+     'Sudan: RSF–SAF civil war — 9M+ displaced, largest humanitarian crisis since Syria 2015',
+     'Myanmar: junta losing territory — PDF/EAO coalition controls 70%+ of border regions',
+     'Sahel: AQ/ISIS franchises — Mali, Burkina Faso, Niger state collapse phase accelerating',
+     'Ethiopia-Tigray: ENDF vs TDF ceasefire fragile — new FANO militia clashes reported',
+     'South China Sea: PLA Navy vessel water cannon attacks on Philippine supply missions',
+     'India-Pakistan: LoC skirmishes elevated — both sides reinforcing forward positions',
+     'Yemen: Houthi ballistic missile + drone attacks on Israel — Red Sea shipping paralyzed',
+   ],
+   actors:['Russian Armed Forces (VKS/VDV/VMF)','IDF','RSF Sudan','Myanmar PDC','JNIM/GSIM Sahel','PLA Navy','Houthi (Ansar Allah)'],
+   analyst:'Three simultaneous large-scale conflicts (Ukraine, Gaza, Sudan) are straining Western arms production capacity and political cohesion. Ukraine represents NATO\'s most critical test since the Cold War — Russian attrition strategy is gradually succeeding against Western political will. The Gaza conflict risks expanding to a regional war involving Lebanon, Syria, Iran, and Yemen. Myanmar\'s civil war is progressing toward a full junta collapse, creating the largest ungoverned space in Southeast Asia.',
+   tripwires:['Russian forces cross NATO member border','Iran direct strike on Israeli territory','India-Pakistan escalation to air strikes','PLA amphibious exercise near Taiwan'],
+   countries:['UKR','RUS','PSE','ISR','SDN','MMR','YEM','SYR','ETH'],
+  },
+  {id:'terrorism',label:'TERRORISM',      color:'#fbbf24',icon:'◈',base:3,
+   indicators:[
+     'ISIS-K: Western Europe attack planning confirmed — Europol HIGH threat level active',
+     'Houthi: 80+ Red Sea drone/missile attacks on commercial shipping — Lloyd\'s war risk spike',
+     'Hezbollah: North Israel front — daily rocket exchanges, tunnel infiltration attempts',
+     'Hamas: West Bank IED and shooting attacks — 680+ incidents YTD 2025',
+     'Al-Shabaab: Somalia resurgence — exploiting AMISOM withdrawal, Mogadishu suburbs contested',
+     'JNIM: Sahel territorial control — operating across 3 countries, taxation of population',
+     'ISIS-Mozambique: Cabo Delgado province — Total/ENI LNG infrastructure at risk',
+     'Lone wolf: ISIS-inspired attacks Europe — 14 attacks/plots foiled in 2024-25',
+     'TTP (Pakistan): cross-border operations from Afghanistan — Islamabad at DEFCON 3',
+   ],
+   actors:['ISIS-K (ISKP)','Houthi/Ansar Allah','Hezbollah','Hamas IQB','Al-Shabaab','JNIM','TTP'],
+   analyst:'The global terrorist threat has metastasized beyond the ISIS caliphate model. ISIS-K represents the most acute threat to Western Europe — Europol assesses attack planning in 7+ countries simultaneously. The Houthi campaign is an unprecedented state-sponsored maritime terror operation, with Iran providing targeting intelligence and satellite access. Al-Shabaab\'s resurgence following AMISOM rebranding threatens to reverse a decade of Somali state-building. JNIM has effectively become the de facto government in large portions of Mali and Burkina Faso.',
+   tripwires:['Mass casualty attack in G7 capital','Houthi sinks major commercial vessel','Hezbollah activates full precision missile arsenal','Al-Shabaab retakes Mogadishu districts'],
+   countries:['AFG','PSE','LBN','SOM','MLI','YEM','BFA','NER','MOZ'],
+  },
+  {id:'economic', label:'ECONOMIC WAR',   color:'#a855f7',icon:'$',base:3,
+   indicators:[
+     'Russia dark fleet: 200+ tankers bypassing G7 oil price cap — $180B+ in annual evasion',
+     'China-Taiwan: semiconductor war — BIS export controls targeting TSMC, ASML restricting EUV',
+     'BRICS+ expansion: de-dollarization accelerating — mBridge cross-border CBDC pilot launched',
+     'Red Sea crisis: $1.8B/day added global shipping costs — Suez Canal traffic down 70%',
+     'Iran shadow fleet: 1.6M bbl/day to China via ship-to-ship transfer in Gulf of Oman',
+     'US tariff escalation: 145% tariff regime on China — $500B+ bilateral trade at risk',
+     'Russia LNG to Asia: Yamal pipeline pivot — Europe exposure replaced by Asian premium sales',
+     'Chip War: NVIDIA H20 ban to China — China accelerating Huawei Ascend domestic substitute',
+     'EU derisking: critical mineral supply chains — China controls 60% of lithium processing',
+   ],
+   actors:['PRC Ministry of Commerce','OPEC+/Russian Energy Min','IRGC Quds Force (sanctions evasion)','Huawei','BRICS Finance Ministers'],
+   analyst:'The global economy is bifurcating into competing blocs. China\'s technology decoupling strategy — stockpiling chips, domesticating AI hardware, expanding BRICS payment rails — is 3-5 years ahead of US government estimates. Russia has successfully absorbed Western sanctions via Asian pivot; the oil price cap is structurally failing. The semiconductor export control regime is the single most consequential lever available to the US, but enforcement gaps via Malaysia, UAE, and Turkey intermediaries are significant.',
+   tripwires:['China implements rare earth export ban','USD loses reserve currency status in BRICS settlement','Major US financial institution sanctioned by China','Russia defaults on foreign-held sovereign debt'],
+   countries:['CHN','RUS','IRN','SAU','ARE','TUR','IND'],
+  },
+  {id:'bio',      label:'BIO/CHEM',       color:'#34d399',icon:'☣',base:2,
+   indicators:[
+     'Russia: Novichok production resumed — FSB OSINT intercept, Shikhany facility satellite imagery',
+     'DPRK: VX stockpile estimated 5,000 tons — UN Panel of Experts report',
+     'China BSL-4: Wuhan Institute of Virology gain-of-function research continued — IC assessment',
+     'Iran: Chemical weapons precursor procurement — MEK/NDS reporting, OPCW concern raised',
+     'Non-state actors: dark web pathogen acquisition attempts — FBI WMD Directorate 2025 brief',
+     'Russia: Battlefield chemical use Ukraine — chloropicrin reports, OPCW investigating',
+     'Biosecurity gap: 71 countries lack pathogen surveillance capacity per WHO Global Health',
+   ],
+   actors:['Russia 33rd CBRN Defence Centre','DPRK Chemical Technology Institute','Wuhan BSL-4','OPCW non-member states'],
+   analyst:'The biological threat domain is arguably the least surveilled of all WMD categories. The COVID-19 pandemic demonstrated the devastating global impact of uncontrolled pathogen spread — regardless of origin. Intelligence community assessments consistently identify synthetic biology as the fastest-growing WMD risk. Russia\'s documented use of Novichok (Salisbury 2018, Navalny 2020) demonstrates operational willingness to deploy chemical agents. The dual-use nature of BSL-4 research makes attribution and deterrence extremely difficult.',
+   tripwires:['Novel pathogen with pandemic potential detected at border','Chemical attack in theater casualty >500','OPCW confirms state actor chemical weapons use','Dark web acquisition of select agents confirmed'],
+   countries:['RUS','PRK','CHN','IRN','SYR'],
+  },
+  {id:'space',    label:'SPACE WARFARE',  color:'#818cf8',icon:'🛸',base:2,
+   indicators:[
+     'Russia: Kosmos-2553 — co-orbital ASAT test, maneuvered within 200m of US satellite',
+     'China: SJ-21 satellite towed defunct Beidou-2 to graveyard orbit — demonstrates grapple capability',
+     'Russia: Nyan Sat electronic warfare — GPS jamming covering 1,500km radius Baltic operations',
+     'China: ASAT test debris field — 3,000+ trackable fragments, Fengyun-1C remnants still active',
+     'US SpaceCom: Geosynchronous ISR constellation — X-37B 7th mission, payload undisclosed',
+     'Russia Perimeter/Dead Hand: modernized Kavkaz nuclear command system — SpaceCom concern',
+     'Iran: Satellite launch — Noor series, claimed surveillance capability over US bases in Gulf',
+   ],
+   actors:['PLA Strategic Support Force (SSF)','Russia VKS Space Forces','US SPACECOM/NRO','ISRO (India ASAT 2019)'],
+   analyst:'Space has formally become a warfighting domain. US satellite architecture — GPS, ISR, comms — is both the most critical military enabler and the most exposed vulnerability. China\'s demonstrated co-orbital capabilities mean it can disable US satellites without debris-creating kinetic attack, evading existing detection thresholds. Russia\'s GPS jamming in Baltic and Black Sea theaters is already degrading commercial aviation. The Outer Space Treaty has no enforcement mechanism; space arms control is in collapse.',
+   tripwires:['US ISR satellite disabled in contested orbit','GPS constellation degraded >15 minutes','Anti-satellite missile test by new actor','Space-based nuclear early warning system jammed'],
+   countries:['CHN','RUS','USA','IRN','PRK','IND'],
+  },
+  {id:'disinfo',  label:'AI/DISINFO',     color:'#e879f9',icon:'⊛',base:3,
+   indicators:[
+     'Deepfake election interference: 16 elections in 2024 affected by AI-generated content',
+     'Russian GRU: Doppelganger op — 120+ fake European news sites generating millions of views',
+     'China: Spamouflage network — 100,000+ fake accounts pushing Taiwan/Hong Kong narratives',
+     'Iran: IRGC IO — Bahrain, Iraq, Lebanon influence campaigns identified by Meta',
+     'AI voice cloning: Emergency call center spoofing — FBI alert, several incidents recorded',
+     'Synthetic military imagery: Fake satellite photos of US bases circulating — 4 instances 2025',
+     'LLM weaponization: GPT-4 class models generating 10,000 unique disinfo articles/hour capacity',
+     'NATO disinformation: False casualty figures, war crimes fabrications — EEAS EastStratCom daily',
+   ],
+   actors:['Russia GRU Unit 54777 (Doppelganger)','PRC MSS IO Dept','IRGC IO Command','Lazarus Group (DPRK)'],
+   analyst:'AI-enabled information warfare has fundamentally altered the cost curve of influence operations — what previously required hundreds of operatives can now be executed by a team of 10 with LLMs. The 2024 electoral cycle saw documented AI-generated influence operations in 23 countries. The most dangerous near-term scenario is deepfake video of a world leader issuing a nuclear launch order or false flag attack — current authentication infrastructure cannot reliably detect such content within the decision timelines required for crisis management.',
+   tripwires:['Deepfake of world leader orders attack goes viral','AI-generated false flag ignites military response','Election result overturned citing AI-fabricated evidence','Critical infrastructure targeted via social engineering AI'],
+   countries:['RUS','CHN','IRN','PRK','BLR'],
+  },
+  {id:'geopol',   label:'GEOPOLITICAL',   color:'#fb923c',icon:'◉',base:3,
+   indicators:[
+     'Taiwan Strait: PLA exercises simulating blockade — 5th major exercise in 18 months',
+     'South China Sea: Philippines-China standoff — Second Thomas Shoal weekly confrontations',
+     'Kosovo-Serbia: ethnic clashes — KFOR reinforced, EU mediation failed latest round',
+     'Venezuela-Guyana: border claim — Maduro activating Essequibo operationally, 15K troops',
+     'Niger/Sahel: Russia(Wagner/Africa Corps) replacing France — nuclear access Arlit uranium',
+     'Arctic: Russia-NATO claims overlapping — Lomonosov Ridge contested, military buildup',
+     'Turkey-Greece: Aegean tensions — overflights, S-400 operational, NATO alliance strain',
+     'Armenia-Azerbaijan: Nagorno-Karabakh fait accompli — Armenia pivoting toward EU/NATO',
+   ],
+   actors:['PLA Navy PLAN','Serbian Armed Forces','Venezuelan FANB','Russia Africa Corps','Turkish Armed Forces'],
+   analyst:'The post-Cold War rules-based international order is in structural decline. Multiple concurrent crises are overwhelming Western diplomatic bandwidth. Taiwan remains the highest-consequence single flashpoint — PLA military modernization has significantly narrowed the US military edge in a Taiwan Strait scenario. The Sahel fragmentation is accelerating, with Russia extracting critical minerals while exporting instability. Turkey\'s simultaneous NATO membership and S-400 acquisition represents a fundamental alliance integrity problem with no clear resolution path.',
+   tripwires:['PLA activates Taiwan blockade zone','Serbia military enters Kosovo','Venezuela military crosses Guyana border','Arctic resource conflict triggers Article 5 consideration'],
+   countries:['CHN','TWN','SRB','VEN','TUR','RUS','AZE','PHL'],
+  },
+];
+
+const THREAT_FLASHPOINTS=[
+  {name:'Taiwan Strait',risk:'CRITICAL',color:'#ef4444',desc:'PLA blockade exercises 5th cycle — US carrier strike group repositioned'},
+  {name:'Ukraine Frontline',risk:'CRITICAL',color:'#ef4444',desc:'Russian offensive Donetsk axis — 1,000+ casualties/day, ammo shortage'},
+  {name:'Iran Nuclear',risk:'HIGH',color:'#f97316',desc:'2-week breakout to weapons-grade — IAEA inspectors restricted'},
+  {name:'Gaza/Lebanon',risk:'HIGH',color:'#f97316',desc:'IDF-Hezbollah escalation risk — US carrier presence Lebanon coast'},
+  {name:'South China Sea',risk:'HIGH',color:'#f97316',desc:'Philippines confrontations — weekly water cannon incidents escalating'},
+  {name:'DPRK Missiles',risk:'HIGH',color:'#f97316',desc:'Hwasong-18 operational — 3 tests past 90 days, Japan on alert'},
+  {name:'Sudan Civil War',risk:'ELEVATED',color:'#f59e0b',desc:'RSF advancing on Port Sudan — humanitarian collapse imminent'},
+  {name:'Venezuela/Guyana',risk:'ELEVATED',color:'#f59e0b',desc:'15,000 troops Essequibo border — Exxon oilfield in dispute area'},
+  {name:'Red Sea Shipping',risk:'ELEVATED',color:'#f59e0b',desc:'Houthi attacks ongoing — 70% Suez traffic diverted Cape route'},
+  {name:'India-Pakistan LoC',risk:'ELEVATED',color:'#f59e0b',desc:'Cross-border fire exchanged — both sides in elevated readiness'},
+  {name:'Sahel Collapse',risk:'ELEVATED',color:'#f59e0b',desc:'Wagner/Africa Corps control — France expelled, US access limited'},
+  {name:'Arctic Competition',risk:'GUARDED',color:'#84cc16',desc:'NATO-Russia Arctic buildup — GIUK gap contested, Iceland base reopen'},
+];
+
+const THREAT_WATCHLIST=[
+  {flag:'🇺🇦',name:'UKRAINE',iso:'UKR',score:94,color:'#ef4444'},
+  {flag:'🇮🇷',name:'IRAN',iso:'IRN',score:88,color:'#ef4444'},
+  {flag:'🇵🇸',name:'PALESTINE',iso:'PSE',score:91,color:'#ef4444'},
+  {flag:'🇰🇵',name:'N.KOREA',iso:'PRK',score:79,color:'#f97316'},
+  {flag:'🇸🇩',name:'SUDAN',iso:'SDN',score:82,color:'#f97316'},
+  {flag:'🇸🇾',name:'SYRIA',iso:'SYR',score:75,color:'#f97316'},
+  {flag:'🇹🇼',name:'TAIWAN',iso:'TWN',score:71,color:'#f59e0b'},
+  {flag:'🇲🇲',name:'MYANMAR',iso:'MMR',score:77,color:'#f97316'},
+  {flag:'🇾🇪',name:'YEMEN',iso:'YEM',score:80,color:'#f97316'},
+  {flag:'🇻🇪',name:'VENEZUELA',iso:'VEN',score:65,color:'#f59e0b'},
 ];
 
 const THREAT_LEVEL_LABELS=['','MINIMAL','GUARDED','ELEVATED','HIGH','SEVERE'];
@@ -8563,32 +8762,42 @@ const THREAT_LEVEL_COLORS=['','#22c55e','#84cc16','#f59e0b','#ef4444','#dc2626']
 
 function toggleThreatMatrix(){
   threatPanelOpen=!threatPanelOpen;
-  document.getElementById('threat-panel').style.display=threatPanelOpen?'block':'none';
+  const panel=document.getElementById('threat-panel');
+  panel.classList.toggle('open',threatPanelOpen);
   document.getElementById('threat-backdrop').style.display=threatPanelOpen?'block':'none';
   if(threatPanelOpen&&!threatFetchTime)refreshThreatMatrix();
+}
+
+function toggleThreatDomain(id){
+  const el=document.getElementById('td-'+id);
+  if(el)el.classList.toggle('expanded');
 }
 
 async function refreshThreatMatrix(){
   const body=document.getElementById('threat-body');
   if(!body)return;
-  body.innerHTML='<div style="text-align:center;color:#475569;font-size:9px;padding:20px;letter-spacing:.12em">◌ QUERYING INTELLIGENCE FEEDS…</div>';
-  let boost={nuclear:0,cyber:0,kinetic:0,terrorism:0,economic:0};
+  body.innerHTML='<div style="text-align:center;color:#475569;font-size:9px;padding:30px;letter-spacing:.12em">◌ QUERYING MULTI-SOURCE INTELLIGENCE FEEDS…<br><br><span style="color:#334155">GDELT · OSINT · ACLED · CERT databases</span></div>';
+  let boost={nuclear:0,cyber:0,kinetic:0,terrorism:0,economic:0,bio:0,space:0,disinfo:0,geopol:0};
   try{
-    const q=encodeURIComponent('nuclear missile cyber attack terrorism sanctions war conflict');
-    const r=await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=25&format=json&timespan=1day`,{signal:AbortSignal.timeout(7000)});
+    const q=encodeURIComponent('nuclear missile cyber attack terrorism sanctions war conflict bioweapon satellite asat');
+    const r=await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=50&format=json&timespan=1day`,{signal:AbortSignal.timeout(8000)});
     if(r.ok){
       const d=await r.json();
       for(const a of(d.articles||[])){
         const t=(a.title||'').toLowerCase();
-        if(/nuclear|icbm|warhead|enrichment/.test(t))boost.nuclear++;
-        if(/cyber|hack|ransomware|apt|intrusion|malware/.test(t))boost.cyber++;
-        if(/attack|offensive|airstrike|shelling|missile strike|invasion/.test(t))boost.kinetic++;
-        if(/terror|isis|al.qaeda|bomb|explosion|jihadist/.test(t))boost.terrorism++;
-        if(/sanction|tariff|trade war|dark fleet|price cap/.test(t))boost.economic++;
+        if(/nuclear|icbm|warhead|enrichment|radioactive|npt/.test(t))boost.nuclear++;
+        if(/cyber|hack|ransomware|apt|intrusion|malware|phishing/.test(t))boost.cyber++;
+        if(/attack|offensive|airstrike|shelling|missile strike|invasion|frontline/.test(t))boost.kinetic++;
+        if(/terror|isis|al.qaeda|bomb|explosion|jihadist|houthi/.test(t))boost.terrorism++;
+        if(/sanction|tariff|trade war|dark fleet|price cap|export control/.test(t))boost.economic++;
+        if(/bioweapon|chemical weapon|pathogen|outbreak|novichok|vx gas/.test(t))boost.bio++;
+        if(/satellite|asat|space weapon|gps jam|orbit/.test(t))boost.space++;
+        if(/deepfake|disinformation|propaganda|fake news|election interference/.test(t))boost.disinfo++;
+        if(/taiwan|south china sea|arctic|nato border|flashpoint/.test(t))boost.geopol++;
       }
     }
   }catch{}
-  threatData=THREAT_DOMAINS.map(d=>({...d,level:Math.min(5,Math.round(d.base+Math.min(1,boost[d.id]/4)))}));
+  threatData=THREAT_DOMAINS.map(d=>({...d,level:Math.min(5,Math.round(d.base+Math.min(1,boost[d.id]/5)))}));
   threatFetchTime=Date.now();
   renderThreatMatrix();
 }
@@ -8601,31 +8810,82 @@ function renderThreatMatrix(){
   const overallLevel=Math.round(threatData.reduce((s,d)=>s+d.level,0)/threatData.length);
   const overallColor=THREAT_LEVEL_COLORS[overallLevel]||'#ef4444';
   const overallLabel=THREAT_LEVEL_LABELS[overallLevel]||'ELEVATED';
-  body.innerHTML=`<div style="text-align:center;padding:10px 0 14px;border-bottom:1px solid rgba(30,58,95,.5);margin-bottom:6px">
-    <div style="font-size:9px;color:#475569;letter-spacing:.2em;margin-bottom:6px">COMPOSITE THREAT LEVEL</div>
-    <div style="font-size:32px;font-weight:bold;color:${overallColor};letter-spacing:.05em">${overallLabel}</div>
-    <div style="font-size:11px;color:${overallColor};opacity:.7;letter-spacing:.1em">LEVEL ${overallLevel} / 5</div>
-  </div>`+
-  threatData.map(d=>{
-    const col=THREAT_LEVEL_COLORS[d.level]||'#ef4444';
-    const lbl=THREAT_LEVEL_LABELS[d.level]||'UNKNOWN';
-    const pct=((d.level/5)*100).toFixed(0);
-    return`<div class="threat-domain">
-      <div class="threat-domain-header">
-        <div>
-          <div class="threat-domain-name" style="color:${col}">${d.icon} ${d.label}</div>
-          <div style="font-size:7px;color:#475569;letter-spacing:.1em;margin-top:2px">THREAT DOMAIN</div>
-        </div>
-        <div style="text-align:right">
-          <div class="threat-domain-level" style="color:${col}">LEVEL ${d.level}</div>
-          <div style="font-size:8px;color:${col};letter-spacing:.15em;opacity:.8">${lbl}</div>
+  const highDomains=threatData.filter(d=>d.level>=4).length;
+  const sevDomains=threatData.filter(d=>d.level>=5).length;
+  body.innerHTML=
+    // Composite banner
+    `<div class="threat-composite">
+      <div>
+        <div style="font-size:8px;color:#475569;letter-spacing:.18em;margin-bottom:4px">GLOBAL THREAT LEVEL</div>
+        <div class="threat-composite-level" style="color:${overallColor}">${overallLabel}</div>
+        <div style="font-size:9px;color:${overallColor};opacity:.7;letter-spacing:.1em;margin-top:2px">LEVEL ${overallLevel} / 5</div>
+      </div>
+      <div class="threat-composite-bar">
+        <div style="font-size:8px;color:#475569;letter-spacing:.12em;margin-bottom:5px">MULTI-DOMAIN COMPOSITE ASSESSMENT</div>
+        <div class="threat-composite-track"><div class="threat-composite-fill" style="width:${(overallLevel/5*100).toFixed(0)}%;background:${overallColor}"></div></div>
+        <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
+          ${threatData.map(d=>{const c=THREAT_LEVEL_COLORS[d.level]||'#94a3b8';return`<div style="display:flex;align-items:center;gap:4px"><span style="font-size:9px">${d.icon}</span><span style="font-size:7px;color:${c};letter-spacing:.08em">${d.label}</span><span style="font-size:8px;font-weight:bold;color:${c}">${d.level}</span></div>`;}).join('')}
         </div>
       </div>
-      <div class="threat-bar-track"><div class="threat-bar-fill" style="width:${pct}%;background:${col}"></div></div>
-      <div class="threat-indicators">${d.indicators.map(i=>`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span>${i}</span></div>`).join('')}</div>
+      <div class="threat-composite-stats">
+        <div class="threat-composite-stat">${highDomains} DOMAINS HIGH/SEVERE</div>
+        <div class="threat-composite-stat">${threatData.length} DOMAINS TRACKED</div>
+        <div class="threat-composite-stat" style="color:#475569;font-size:7px;margin-top:4px">SOURCE: GDELT·OSINT·IC</div>
+      </div>
+    </div>`+
+    // Active flashpoints
+    `<div class="threat-flashpoints">
+      <div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-bottom:2px">▶ ACTIVE GLOBAL FLASHPOINTS (${THREAT_FLASHPOINTS.length})</div>
+      <div class="threat-fp-grid">
+        ${THREAT_FLASHPOINTS.map(f=>`<div class="threat-fp-card" style="border-left-color:${f.color}">
+          <div class="threat-fp-name" style="color:${f.color}">${f.name}</div>
+          <div class="threat-fp-risk" style="color:${f.color}">${f.risk}</div>
+          <div class="threat-fp-desc">${f.desc}</div>
+        </div>`).join('')}
+      </div>
+    </div>`+
+    // Crisis watchlist
+    `<div style="background:rgba(8,16,33,.5);border:1px solid rgba(30,58,95,.5);border-radius:5px;padding:12px 14px">
+      <div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-bottom:6px">▶ CRISIS WATCHLIST — HIGHEST RISK STATES</div>
+      <div class="threat-watchlist">
+        ${THREAT_WATCHLIST.map(w=>`<div class="threat-wl-item" onclick="closeTrackModal&&closeTrackModal();openCountry('${w.iso}')">
+          <span class="threat-wl-flag">${w.flag}</span>
+          <div class="threat-wl-score" style="color:${w.color}">${w.score}</div>
+          <div class="threat-wl-name">${w.name}</div>
+        </div>`).join('')}
+      </div>
+    </div>`+
+    // Domain grid
+    `<div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-top:2px;margin-bottom:-4px">▶ THREAT DOMAIN ANALYSIS — CLICK TO EXPAND</div>
+    <div class="threat-domains-grid">
+    ${threatData.map(d=>{
+      const col=THREAT_LEVEL_COLORS[d.level]||'#ef4444';
+      const lbl=THREAT_LEVEL_LABELS[d.level]||'UNKNOWN';
+      const pct=((d.level/5)*100).toFixed(0);
+      return`<div class="threat-domain" id="td-${d.id}" onclick="toggleThreatDomain('${d.id}')">
+        <div class="threat-domain-header">
+          <div>
+            <div class="threat-domain-name" style="color:${col}">${d.icon} ${d.label}</div>
+            <div style="font-size:7px;color:#475569;letter-spacing:.1em;margin-top:2px">THREAT DOMAIN · CLICK TO EXPAND</div>
+          </div>
+          <div style="text-align:right">
+            <div class="threat-domain-level" style="color:${col}">LEVEL ${d.level}</div>
+            <div style="font-size:8px;color:${col};letter-spacing:.15em;opacity:.8">${lbl}</div>
+          </div>
+        </div>
+        <div class="threat-bar-track"><div class="threat-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+        <div class="threat-indicators">${d.indicators.slice(0,4).map(i=>`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span>${i}</span></div>`).join('')}</div>
+        <div class="threat-domain-extra">
+          ${d.indicators.length>4?`<div class="threat-extra-label">ADDITIONAL INDICATORS</div><div class="threat-indicators">${d.indicators.slice(4).map(i=>`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span>${i}</span></div>`).join('')}</div>`:''}
+          ${d.actors?`<div class="threat-extra-label">KEY THREAT ACTORS</div><div class="threat-actors">${d.actors.map(a=>`<span class="threat-actor-tag">${a}</span>`).join('')}</div>`:''}
+          ${d.analyst?`<div class="threat-extra-label">ANALYST ASSESSMENT</div><div class="threat-analyst">${d.analyst}</div>`:''}
+          ${d.tripwires?`<div class="threat-extra-label">ESCALATION TRIPWIRES</div><div class="threat-tripwires">${d.tripwires.map(t=>`<div class="threat-tripwire">${t}</div>`).join('')}</div>`:''}
+          ${d.countries?`<div class="threat-extra-label">AFFECTED STATES</div><div class="threat-countries-row">${d.countries.map(c=>`<span class="threat-ctag" style="color:${col};border-color:${col}40">${c}</span>`).join('')}</div>`:''}
+        </div>
+      </div>`;
+    }).join('')}
     </div>`;
-  }).join('');
-  // Update header threat badge
+  // Update header badge
   const badge=document.getElementById('global-threat');
   if(badge){badge.textContent='⚑ THREAT: '+overallLabel;badge.className='h-threat-level '+(overallLevel>=4?'high':'elevated');}
 }
