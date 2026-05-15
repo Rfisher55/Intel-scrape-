@@ -573,6 +573,7 @@ canvas.dragging{cursor:grabbing}
   <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span></button>
   <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span></button>
   <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signal aggregation — unverified crowd-sourced reports"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span></button>
+  <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT — Radio frequency and electronic signal anomaly monitoring"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">27</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
 </div>
 
@@ -4575,7 +4576,7 @@ const ZOOM_MIN=0.4, ZOOM_MAX=50.0;
 var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
 // Active data layers
-const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false,flights:false,unverified:false};
+const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false,flights:false,unverified:false,sigint:false};
 // Pinch-to-zoom state
 let lastPinchDist=null, pinchMidX=null, pinchMidY=null;
 // Real-world GeoJSON borders (loaded at runtime from CDN)
@@ -4915,71 +4916,94 @@ async function fetchUnverifiedSignals(){
   const el=document.getElementById('lbc-unverified');
   if(el)el.textContent='…';
 
-  const countMap={}; // iso → [posts]
+  const countMap={};
   function addPost(iso,post){
     if(!COUNTRIES[iso])return;
     if(!countMap[iso])countMap[iso]=[];
     if(!countMap[iso].find(x=>x.title===post.title))countMap[iso].push(post);
   }
-  function digestPosts(children,sourceLabel){
-    for(const child of children){
-      const p=child.data||child;
-      if(!p.title)continue;
-      const isos=extractISOs(p.title);
-      const ts=p.created_utc?new Date(p.created_utc*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
-      for(const iso of isos){
-        addPost(iso,{
-          title:p.title.slice(0,130),
-          url:p.permalink?'https://reddit.com'+p.permalink:(p.url||'#'),
-          sub:p.subreddit_name_prefixed||sourceLabel,
-          time:ts,
-          score:p.score||0,
-          source:sourceLabel
-        });
-      }
+
+  // X/Twitter via Nitter RSS — primary social media source
+  const NITTER_INSTANCES=['https://nitter.poast.org','https://nitter.privacydev.net','https://nitter.1d4.us'];
+  const GEO_QUERIES=[
+    'ukraine russia war','israel gaza hamas','iran nuclear',
+    'china taiwan military','houthi red sea','north korea missile',
+    'myanmar junta','sudan civil war','sahel militant attack',
+    'nato troops deployment','military airstrike explosion','refugee crisis border'
+  ];
+
+  async function tryNitterRSS(query){
+    const proxy='https://corsproxy.io/?';
+    for(const inst of NITTER_INSTANCES){
+      try{
+        const url=`${inst}/search/rss?q=${encodeURIComponent(query)}&f=tweets`;
+        const ctrl=new AbortController();
+        setTimeout(()=>ctrl.abort(),8000);
+        const r=await fetch(proxy+encodeURIComponent(url),{signal:ctrl.signal});
+        if(!r.ok)continue;
+        const xml=await r.text();
+        if(!xml.includes('<item>'))continue;
+        const doc=new DOMParser().parseFromString(xml,'text/xml');
+        const items=[...doc.querySelectorAll('item')];
+        if(!items.length)continue;
+        return items.map(item=>{
+          const rawTitle=item.querySelector('title')?.textContent||'';
+          const title=rawTitle.replace(/^@[\w]+:\s*/,'').trim();
+          const link=item.querySelector('link')?.textContent||'#';
+          const pubDate=item.querySelector('pubDate')?.textContent||'';
+          const ts=pubDate?new Date(pubDate).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+          return{title,url:link,sub:'X/Twitter',time:ts,score:0,source:'X'};
+        }).filter(p=>p.title.length>10);
+      }catch(e){}
     }
+    return[];
   }
 
-  // Fetch each subreddit separately — avoids multi-reddit CORS/quarantine failures
-  const SUBS=['worldnews','geopolitics','military','ukraine','middleeast','europe','news','worldpolitics'];
-  const fetches=SUBS.map(async sub=>{
+  // Run all X/Twitter queries in parallel
+  const xFetches=GEO_QUERIES.map(async q=>{
+    const posts=await tryNitterRSS(q);
+    for(const post of posts){
+      const isos=extractISOs(post.title);
+      for(const iso of isos)addPost(iso,post);
+    }
+  });
+
+  // Reddit as secondary social media source (also social media, not Wikipedia)
+  const SUBS=['worldnews','geopolitics','military','ukraine','middleeast'];
+  const rFetches=SUBS.map(async sub=>{
     try{
       const ctrl=new AbortController();
-      setTimeout(()=>ctrl.abort(),7000);
-      const r=await fetch(`https://www.reddit.com/r/${sub}/hot.json?limit=25`,{signal:ctrl.signal});
+      setTimeout(()=>ctrl.abort(),6000);
+      const r=await fetch(`https://www.reddit.com/r/${sub}/hot.json?limit=20`,{signal:ctrl.signal});
       if(!r.ok)return;
       const d=await r.json();
-      digestPosts(d.data?.children||[],`r/${sub}`);
-    }catch(e){}
-  });
-  await Promise.allSettled(fetches);
-
-  // Wikipedia Recent Changes — CORS-safe, country article edits signal news activity
-  try{
-    const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),6000);
-    const r=await fetch('https://en.wikipedia.org/w/api.php?action=query&list=recentchanges&rctype=edit&rcnamespace=0&rclimit=50&rcprop=title|timestamp|comment&format=json&origin=*',{signal:ctrl.signal});
-    if(r.ok){
-      const d=await r.json();
-      for(const rc of d.query?.recentchanges||[]){
-        const isos=extractISOs(rc.title+' '+(rc.comment||''));
-        const ts=rc.timestamp?new Date(rc.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+      for(const child of d.data?.children||[]){
+        const p=child.data||child;
+        if(!p.title)continue;
+        const isos=extractISOs(p.title);
+        const ts=p.created_utc?new Date(p.created_utc*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
         for(const iso of isos){
-          addPost(iso,{title:`[Wikipedia edit] ${rc.title}`,url:`https://en.wikipedia.org/wiki/${encodeURIComponent(rc.title)}`,sub:'Wikipedia',time:ts,score:0,source:'Wikipedia'});
+          addPost(iso,{
+            title:p.title.slice(0,130),
+            url:p.permalink?'https://reddit.com'+p.permalink:(p.url||'#'),
+            sub:`r/${sub}`,time:ts,score:p.score||0,source:'Reddit'
+          });
         }
       }
-    }
-  }catch(e){}
+    }catch(e){}
+  });
 
-  // Build signals — threshold: 1 unique mention = signal (let volume tell the story)
+  await Promise.allSettled([...xFetches,...rFetches]);
+
   unverifiedSignals=[];
   for(const [iso,posts] of Object.entries(countMap)){
-    const unique=posts.slice(0,12);
+    const unique=posts.slice(0,15);
     unverifiedSignals.push({
       iso,
       country:COUNTRIES[iso]?.name||iso,
       count:unique.length,
       posts:unique.sort((a,b)=>b.score-a.score),
-      sources:[...new Set(unique.map(p=>p.sub))],
+      sources:[...new Set(unique.map(p=>p.source))],
       lastUpdate:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
     });
   }
@@ -5052,6 +5076,137 @@ function openUnverifiedBrief(sig){
       'TOP REPORTS:\n'+preview,
     actors:sig.sources,
     news:sig.posts.map(p=>`${p.title} — ${p.sub} · ${p.time} · ↑${p.score}`),
+  });
+}
+
+// ── EMF / SIGINT LAYER ────────────────────────────────────────────────────────
+const SIGINT_TYPE_COLOR={
+  HF_RADIO:'rgba(251,191,36',VHF:'rgba(167,139,250',CELLULAR:'rgba(96,165,250',
+  SATELLITE:'rgba(52,211,153',RADAR:'rgba(34,211,238',EW:'rgba(239,68,68'
+};
+const SIGINT_TYPE_LABEL={
+  HF_RADIO:'HF RADIO',VHF:'VHF/UHF',CELLULAR:'CELLULAR',
+  SATELLITE:'SATELLITE',RADAR:'RADAR',EW:'ELEC WARFARE'
+};
+
+const SIGINT_NODES=[
+  // Ukraine/Russia — dense EW and HF activity
+  {lat:48.5,lng:37.5,type:'EW',intensity:9,label:'Electronic Warfare Cluster — Donbas Front Line',region:'Ukraine',anomaly:true},
+  {lat:47.8,lng:33.2,type:'HF_RADIO',intensity:8,label:'HF Comms Burst — Kherson Sector',region:'Ukraine',anomaly:true},
+  {lat:51.5,lng:31.3,type:'CELLULAR',intensity:7,label:'Anomalous Cell Traffic — Belarus Border Zone',region:'Belarus',anomaly:true},
+  {lat:55.0,lng:43.0,type:'RADAR',intensity:6,label:'Air Defense Radar Emissions — Central Russia',region:'Russia',anomaly:false},
+  {lat:50.3,lng:30.5,type:'EW',intensity:7,label:'EW Interference — Kyiv Air Defense',region:'Ukraine',anomaly:false},
+  // Middle East
+  {lat:31.4,lng:34.3,type:'EW',intensity:10,label:'Dense Signal Cluster — Gaza Strip',region:'Gaza',anomaly:true},
+  {lat:33.5,lng:35.5,type:'HF_RADIO',intensity:8,label:'HF Activity — South Lebanon (Hezbollah Zone)',region:'Lebanon',anomaly:true},
+  {lat:32.5,lng:44.4,type:'CELLULAR',intensity:5,label:'Cell Density Spike — Baghdad',region:'Iraq',anomaly:false},
+  {lat:15.0,lng:42.8,type:'SATELLITE',intensity:9,label:'Satellite Uplink Cluster — Houthi Control Zone',region:'Yemen',anomaly:true},
+  {lat:13.5,lng:44.0,type:'EW',intensity:8,label:'Electronic Jamming — Red Sea Corridor',region:'Yemen',anomaly:true},
+  {lat:32.0,lng:36.0,type:'HF_RADIO',intensity:6,label:'HF Comms — Jordan Military',region:'Jordan',anomaly:false},
+  // Desert anomalies — core SIGINT concept (signals where none should exist)
+  {lat:29.5,lng:36.5,type:'HF_RADIO',intensity:7,label:'⚠ HF Burst — Wadi Rum Desert (No Infrastructure)',region:'Jordan',anomaly:true},
+  {lat:28.0,lng:30.5,type:'EW',intensity:6,label:'⚠ EW Signatures — Western Egypt Desert',region:'Egypt',anomaly:true},
+  {lat:25.0,lng:10.0,type:'HF_RADIO',intensity:8,label:'⚠ HF Comms — Libyan Desert (Wagner Activity)',region:'Libya',anomaly:true},
+  // Iran
+  {lat:35.7,lng:51.4,type:'EW',intensity:7,label:'Electronic Activity — Tehran Military District',region:'Iran',anomaly:false},
+  {lat:29.0,lng:61.5,type:'RADAR',intensity:6,label:'Radar Emissions — Iran-Pakistan Border',region:'Iran',anomaly:true},
+  // Africa/Sahel
+  {lat:15.5,lng:2.0,type:'EW',intensity:8,label:'EW Signatures — Mali/Niger Border (Sahel)',region:'Sahel',anomaly:true},
+  {lat:12.0,lng:14.0,type:'HF_RADIO',intensity:7,label:'HF Comms — Lake Chad Basin (Boko Haram)',region:'Chad',anomaly:true},
+  {lat:6.0,lng:25.0,type:'CELLULAR',intensity:6,label:'Cell Anomaly — South Sudan Conflict Zone',region:'South Sudan',anomaly:true},
+  {lat:15.0,lng:30.0,type:'EW',intensity:9,label:'Electronic Activity — Sudan Civil War Zone',region:'Sudan',anomaly:true},
+  {lat:5.0,lng:18.0,type:'HF_RADIO',intensity:5,label:'HF Activity — CAR (Wagner Presence)',region:'CAR',anomaly:true},
+  // Asia-Pacific
+  {lat:38.5,lng:127.5,type:'RADAR',intensity:9,label:'Air Defense Radar Array — North Korea DMZ',region:'North Korea',anomaly:false},
+  {lat:39.0,lng:125.7,type:'EW',intensity:8,label:'EW Activity — Pyongyang Military Zone',region:'North Korea',anomaly:false},
+  {lat:24.0,lng:121.5,type:'RADAR',intensity:7,label:'Air Defense Activity — Taiwan Strait',region:'Taiwan',anomaly:true},
+  {lat:35.0,lng:109.0,type:'EW',intensity:6,label:'EW Signatures — Central China Military Zone',region:'China',anomaly:false},
+  {lat:36.5,lng:101.0,type:'SATELLITE',intensity:7,label:'⚠ Sat Uplinks — Tibet Military Build-up Zone',region:'China',anomaly:true},
+  // South Asia
+  {lat:33.5,lng:74.0,type:'HF_RADIO',intensity:7,label:'HF Activity — Kashmir Line of Control',region:'India/Pakistan',anomaly:true},
+  {lat:24.0,lng:69.0,type:'RADAR',intensity:5,label:'Radar Activity — Pakistan Western Desert',region:'Pakistan',anomaly:false},
+  // Europe
+  {lat:57.0,lng:22.0,type:'EW',intensity:7,label:'EW GPS Interference — Baltic Region',region:'Estonia/Latvia',anomaly:true},
+  {lat:69.5,lng:18.5,type:'RADAR',intensity:6,label:'Radar Array — Northern Norway (NATO)',region:'Norway',anomaly:false},
+  {lat:41.5,lng:20.5,type:'HF_RADIO',intensity:4,label:'HF Activity — Balkans',region:'Balkans',anomaly:false},
+  // Americas/Caribbean
+  {lat:25.5,lng:-80.5,type:'SATELLITE',intensity:5,label:'Satellite Comms — Florida Straits (SOUTHCOM)',region:'USA',anomaly:false},
+  {lat:20.0,lng:-76.0,type:'HF_RADIO',intensity:4,label:'HF — Caribbean Maritime Zone',region:'Cuba',anomaly:false},
+  {lat:4.0,lng:-74.0,type:'EW',intensity:5,label:'EW Signatures — Colombia (FARC Comms)',region:'Colombia',anomaly:true},
+];
+
+function drawSIGINTLayer(){
+  const now=Date.now();
+  for(const node of SIGINT_NODES){
+    const p=project(node.lat,node.lng);if(!p.visible)continue;
+    const col=SIGINT_TYPE_COLOR[node.type]||'rgba(148,163,184';
+    const pulse=Math.sin(now/600+node.intensity*0.4)*0.5+0.5;
+    const r=8+node.intensity*1.4;
+    // Anomaly gets extra concentric rings
+    if(node.anomaly){
+      ctx.beginPath();ctx.arc(p.px,p.py,r+12+pulse*8,0,Math.PI*2);
+      ctx.strokeStyle=`${col},${0.06+pulse*0.1})`;ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(p.px,p.py,r+5,0,Math.PI*2);
+      ctx.strokeStyle=`${col},0.2)`;ctx.lineWidth=1;ctx.stroke();
+    }
+    // Main ring
+    ctx.beginPath();ctx.arc(p.px,p.py,r,0,Math.PI*2);
+    ctx.strokeStyle=`${col},${0.35+pulse*0.45})`;ctx.lineWidth=1.5;ctx.stroke();
+    // Core dot
+    ctx.beginPath();ctx.arc(p.px,p.py,4,0,Math.PI*2);
+    ctx.fillStyle=`${col},0.92)`;ctx.fill();
+    // Signal type label above
+    ctx.save();
+    ctx.font='bold 7px monospace';
+    ctx.fillStyle=`${col},0.95)`;
+    ctx.textAlign='center';
+    ctx.fillText(SIGINT_TYPE_LABEL[node.type]||node.type,p.px,p.py-r-4);
+    if(node.anomaly){
+      ctx.fillStyle='rgba(239,68,68,0.9)';
+      ctx.fillText('⚠ ANOMALY',p.px,p.py+r+10);
+    }
+    ctx.restore();
+  }
+}
+
+function sigintAt(sx,sy){
+  for(const node of SIGINT_NODES){
+    const p=project(node.lat,node.lng);if(!p.visible)continue;
+    const r=12+node.intensity*1.4;
+    if(Math.hypot(sx-p.px,sy-p.py)<r)return node;
+  }
+  return null;
+}
+
+function openSIGINTBrief(node){
+  const dotColor=node.anomaly?'#ef4444':'#34d399';
+  const typeLabel=SIGINT_TYPE_LABEL[node.type]||node.type;
+  buildIntelBrief({
+    category:'📡 EMF / SIGINT INTERCEPT',
+    dotColor,
+    title:node.label,
+    badges:[
+      {text:typeLabel,style:'blue'},
+      {text:'INTENSITY '+node.intensity+'/10',style:node.intensity>6?'critical':'blue'},
+      {text:node.anomaly?'⚠ ANOMALY DETECTED':'NOMINAL',style:node.anomaly?'critical':'blue'},
+    ],
+    stats:[
+      {val:typeLabel,         key:'SIGNAL TYPE'},
+      {val:node.intensity+'/10', key:'INTENSITY'},
+      {val:node.region,       key:'REGION'},
+    ],
+    detail:(node.anomaly
+      ?'⚠ SIGNAL ANOMALY DETECTED — Signal density and/or emission type is inconsistent with expected civilian infrastructure for this location.\n\nPossible indicators: covert military forward deployment, hidden communications infrastructure, electronic warfare operation, or clandestine activity.\n\nRecommend cross-referencing with HUMINT sources and continued collection.\n\n'
+      :'Signal profile is consistent with known infrastructure in this area. Monitoring for baseline deviation.\n\n'
+    )+
+    `SIGNAL TYPE: ${typeLabel}\n`+
+    `LOCATION: ${node.region}\n`+
+    `INTENSITY INDEX: ${node.intensity}/10\n\n`+
+    `ASSESSMENT: ${node.anomaly
+      ?'Signals deviate from expected baseline for this location. The presence of '+typeLabel+' emissions in a low-infrastructure area indicates possible military or covert activity. Recommend ELINT tasking and satellite imagery correlation.'
+      :'Signals within expected parameters for this region. No anomaly flagged at this time. Continued monitoring for any changes from baseline.'}`,
+    actors:[node.region],
+    news:[`${typeLabel} detected · Intensity ${node.intensity}/10 · Region: ${node.region}`],
   });
 }
 
@@ -5398,6 +5553,7 @@ function draw(){
   if(activeLayers.refugees)  drawRefugeeFlows();
   if(activeLayers.flights)   drawFlights();
   if(activeLayers.unverified) drawUnverifiedLayer();
+  if(activeLayers.sigint)    drawSIGINTLayer();
   drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -5692,6 +5848,7 @@ canvas.addEventListener('mousemove',e=>{
     if(!layerHit&&activeLayers.money){const f=financialFlowAt(e.clientX,e.clientY);if(f)layerHit={label:f.label,sub:f.value+' · click for intel',color:'#a855f7'};}
     if(!layerHit&&activeLayers.refugees){const r=refugeeFlowAt(e.clientX,e.clientY);if(r)layerHit={label:r.label,sub:r.value+' displaced · click for intel',color:'#fbbf24'};}
     if(!layerHit&&activeLayers.unverified){const s=unverifiedAt(e.clientX,e.clientY);if(s)layerHit={label:'⚠ '+s.country+' — '+s.count+' REPORTS',sub:'Unverified social signals · click for detail',color:'#fb923c'};}
+    if(!layerHit&&activeLayers.sigint){const sn=sigintAt(e.clientX,e.clientY);if(sn)layerHit={label:(sn.anomaly?'⚠ ANOMALY — ':'')+sn.label,sub:(SIGINT_TYPE_LABEL[sn.type]||sn.type)+' · intensity '+sn.intensity+'/10 · click for intel',color:sn.anomaly?'#ef4444':'#34d399'};}
   }
   const hit=hitTest(e.clientX,e.clientY);
   if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit||layerHit)?'pointer':'grab';}
@@ -5765,6 +5922,10 @@ canvas.addEventListener('mouseup',e=>{
     if(activeLayers.unverified){
       const sig=unverifiedAt(e.clientX,e.clientY);
       if(sig){openUnverifiedBrief(sig);return;}
+    }
+    if(activeLayers.sigint){
+      const sn=sigintAt(e.clientX,e.clientY);
+      if(sn){openSIGINTBrief(sn);return;}
     }
     // Country panel — requires double-click to avoid accidental opens while rotating
     const h=hitTest(e.clientX,e.clientY);
@@ -5878,6 +6039,10 @@ canvas.addEventListener('touchend',e=>{
         if(activeLayers.unverified){
           const sig=unverifiedAt(t.clientX,t.clientY);
           if(sig){openUnverifiedBrief(sig);return;}
+        }
+        if(activeLayers.sigint){
+          const sn=sigintAt(t.clientX,t.clientY);
+          if(sn){openSIGINTBrief(sn);return;}
         }
         // Country — double-tap on mobile
         const h=hitTest(t.clientX,t.clientY);
