@@ -8969,7 +8969,18 @@ function toggleSatPanel(){
     document.getElementById('sat-date-in').value=satDate;
     if(!satLocSelected)showSatLocList();
     updateSatInfoBar();
-    // ResizeObserver handles canvas sizing reliably — no setTimeout needed
+    // Force canvas to match wrap after layout — use multiple timings for reliability
+    [0,50,120,250].forEach(ms=>setTimeout(()=>{
+      if(!satOpen)return;
+      const wrap=document.getElementById('sat-map-wrap');
+      const c=document.getElementById('sat-canvas');
+      if(!wrap||!c)return;
+      const w=wrap.offsetWidth,h=wrap.offsetHeight;
+      if(w>50&&h>50){
+        c.width=w;c.height=h;
+        if(satLocSelected)drawSatMap();
+      }
+    },ms));
   } else {
     panel.classList.remove('open');
     bd.style.display='none';
@@ -9066,13 +9077,25 @@ function satOpenAt(lat,lng,label,zoom,forceLayer){
   updateSatInfoBar();
   if(!satOpen){
     toggleSatPanel();
-    // Retry draw until canvas has real dimensions (up to 20 frames)
-    let _attempts=0;
+    // Wait for wrap to have real layout dimensions (canvas defaults to 300×150 — must exceed that)
+    let _att=0;
     const _tryDraw=()=>{
-      sizeSatCanvas();
+      const wrap=document.getElementById('sat-map-wrap');
       const c=document.getElementById('sat-canvas');
-      if(c&&c.width>50&&c.height>50){drawSatMap();}
-      else if(_attempts++<20){requestAnimationFrame(_tryDraw);}
+      if(!wrap||!c){if(_att++<40)requestAnimationFrame(_tryDraw);return;}
+      const w=wrap.offsetWidth,h=wrap.offsetHeight;
+      if(w>150&&h>150){
+        c.width=w;c.height=h;
+        drawSatMap();
+      } else if(_att++<40){
+        requestAnimationFrame(_tryDraw);
+      } else {
+        // Absolute fallback: use panel dimensions minus fixed header heights (~105px)
+        const panel=document.getElementById('sat-panel');
+        const fw=panel.offsetWidth||window.innerWidth*0.9;
+        const fh=(panel.offsetHeight||window.innerHeight*0.85)-110;
+        if(fw>50&&fh>50){c.width=fw;c.height=fh;drawSatMap();}
+      }
     };
     requestAnimationFrame(()=>requestAnimationFrame(_tryDraw));
   } else {
@@ -9117,10 +9140,15 @@ function sizeSatCanvas(){
   const wrap=document.getElementById('sat-map-wrap');
   const canvas=document.getElementById('sat-canvas');
   if(!wrap||!canvas)return;
-  // offsetWidth/Height are reliable after layout; getBoundingClientRect for fallback
-  const w=wrap.offsetWidth||Math.round(wrap.getBoundingClientRect().width)||900;
-  const h=wrap.offsetHeight||Math.round(wrap.getBoundingClientRect().height)||500;
-  if(w>10&&h>10){
+  let w=wrap.offsetWidth||Math.round(wrap.getBoundingClientRect().width);
+  let h=wrap.offsetHeight||Math.round(wrap.getBoundingClientRect().height);
+  // If wrap reports 0, compute from panel minus fixed headers
+  if(!w||!h){
+    const panel=document.getElementById('sat-panel');
+    w=w||(panel?.offsetWidth||Math.round(window.innerWidth*0.93));
+    h=h||((panel?.offsetHeight||Math.round(window.innerHeight*0.85))-110);
+  }
+  if(w>50&&h>50){
     if(canvas.width!==w)canvas.width=w;
     if(canvas.height!==h)canvas.height=h;
   }
