@@ -6209,24 +6209,8 @@ canvas.addEventListener('mouseup',e=>{
   if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
   const dx=e.clientX-lastX,dy=e.clientY-lastY;
   if(Math.abs(dx)<5&&Math.abs(dy)<5){
-    // Priority: flight → hotspot (double-click) → tracking layers → country (double-click)
+    // Priority: flight → active layers → hotspot → country
     if(activeLayers.flights){const fl=flightAt(e.clientX,e.clientY);if(fl){openFlightBrief(fl);return;}}
-    const hs=hotspotAt(e.clientX,e.clientY);
-    if(hs){
-      const now=Date.now();
-      const isDbl=(lastClickHS===hs.label&&now-lastClickHSTime<DBL_CLICK_MS&&Math.hypot(e.clientX-lastClickHSPX,e.clientY-lastClickHSPY)<DBL_CLICK_PX);
-      lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=e.clientX;lastClickHSPY=e.clientY;
-      if(isDbl){openHotspot(hs);}
-      else{
-        const tt=document.getElementById('tooltip');
-        document.getElementById('tt-name').textContent=hs.label;
-        document.getElementById('tt-alert').textContent='Double-click to open';
-        document.getElementById('tt-alert').style.color='#f59e0b';
-        tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
-        setTimeout(()=>{tt.style.opacity='0';},1400);
-      }
-      return;
-    }
     if(activeLayers.conflicts||showArcs){const cf=conflictAt(e.clientX,e.clientY);if(cf){if(layerDbl(cf.label,e.clientX,e.clientY))openConflictBrief(cf);else layerHint(cf.label,e.clientX,e.clientY);return;}}
     if(activeLayers.naval){const na=navalAssetAt(e.clientX,e.clientY);if(na){if(layerDbl(na.label,e.clientX,e.clientY))openNavalBrief(na);else layerHint(na.label,e.clientX,e.clientY);return;}}
     if(activeLayers.troops){const tm=troopMovAt(e.clientX,e.clientY);if(tm){if(layerDbl(tm.label,e.clientX,e.clientY))openTroopMovBrief(tm);else layerHint(tm.label,e.clientX,e.clientY);return;}}
@@ -6237,6 +6221,25 @@ canvas.addEventListener('mouseup',e=>{
     if(activeLayers.sigint){const sn=sigintAt(e.clientX,e.clientY);if(sn){if(layerDbl(sn.label,e.clientX,e.clientY))openSIGINTBrief(sn);else layerHint(sn.label,e.clientX,e.clientY);return;}}
     if(activeLayers.cyber){const co=cyberAt(e.clientX,e.clientY);if(co){if(layerDbl(co.label,e.clientX,e.clientY))openCyberBrief(co);else layerHint(co.label,e.clientX,e.clientY);return;}}
     if(activeLayers.netdisrupt){const nd=netDisruptAt(e.clientX,e.clientY);if(nd){if(layerDbl(nd.label,e.clientX,e.clientY))openNetDisruptBrief(nd);else layerHint(nd.label,e.clientX,e.clientY);return;}}
+    // Hotspot — fallback when no active layer item hit; only when dots are visible
+    if(showHotspots){
+      const hs=hotspotAt(e.clientX,e.clientY);
+      if(hs){
+        const now=Date.now();
+        const isDbl=(lastClickHS===hs.label&&now-lastClickHSTime<DBL_CLICK_MS&&Math.hypot(e.clientX-lastClickHSPX,e.clientY-lastClickHSPY)<DBL_CLICK_PX);
+        lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=e.clientX;lastClickHSPY=e.clientY;
+        if(isDbl){openHotspot(hs);}
+        else{
+          const tt=document.getElementById('tooltip');
+          document.getElementById('tt-name').textContent=hs.label;
+          document.getElementById('tt-alert').textContent='Double-click to open';
+          document.getElementById('tt-alert').style.color='#f59e0b';
+          tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
+          setTimeout(()=>{tt.style.opacity='0';},1400);
+        }
+        return;
+      }
+    }
     // Country panel — requires double-click to avoid accidental opens while rotating
     const h=hitTest(e.clientX,e.clientY);
     if(h){
@@ -6314,14 +6317,6 @@ canvas.addEventListener('touchend',e=>{
       const dx=t.clientX-lastX,dy=t.clientY-lastY;
       if(Math.abs(dx)<8&&Math.abs(dy)<8){
         if(activeLayers.flights){const fl=flightAt(t.clientX,t.clientY);if(fl){openFlightBrief(fl);return;}}
-        const hs=hotspotAt(t.clientX,t.clientY);
-        if(hs){
-          const now=Date.now();
-          const isDbl=(lastClickHS===hs.label&&now-lastClickHSTime<DBL_CLICK_MS&&Math.hypot(t.clientX-lastClickHSPX,t.clientY-lastClickHSPY)<DBL_CLICK_PX);
-          lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=t.clientX;lastClickHSPY=t.clientY;
-          if(isDbl){openHotspot(hs);}
-          return;
-        }
         if(activeLayers.conflicts||showArcs){const cf=conflictAt(t.clientX,t.clientY);if(cf){if(layerDbl(cf.label,t.clientX,t.clientY))openConflictBrief(cf);return;}}
         if(activeLayers.naval){const na=navalAssetAt(t.clientX,t.clientY);if(na){if(layerDbl(na.label,t.clientX,t.clientY))openNavalBrief(na);return;}}
         if(activeLayers.troops){const tm=troopMovAt(t.clientX,t.clientY);if(tm){if(layerDbl(tm.label,t.clientX,t.clientY))openTroopMovBrief(tm);return;}}
@@ -6332,6 +6327,16 @@ canvas.addEventListener('touchend',e=>{
         if(activeLayers.sigint){const sn=sigintAt(t.clientX,t.clientY);if(sn){if(layerDbl(sn.label,t.clientX,t.clientY))openSIGINTBrief(sn);return;}}
         if(activeLayers.cyber){const co=cyberAt(t.clientX,t.clientY);if(co){if(layerDbl(co.label,t.clientX,t.clientY))openCyberBrief(co);return;}}
         if(activeLayers.netdisrupt){const nd=netDisruptAt(t.clientX,t.clientY);if(nd){if(layerDbl(nd.label,t.clientX,t.clientY))openNetDisruptBrief(nd);return;}}
+        if(showHotspots){
+          const hs=hotspotAt(t.clientX,t.clientY);
+          if(hs){
+            const now=Date.now();
+            const isDbl=(lastClickHS===hs.label&&now-lastClickHSTime<DBL_CLICK_MS&&Math.hypot(t.clientX-lastClickHSPX,t.clientY-lastClickHSPY)<DBL_CLICK_PX);
+            lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=t.clientX;lastClickHSPY=t.clientY;
+            if(isDbl){openHotspot(hs);}
+            return;
+          }
+        }
         // Country — double-tap on mobile
         const h=hitTest(t.clientX,t.clientY);
         if(h){
