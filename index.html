@@ -7748,7 +7748,16 @@ const SAT_LOCATIONS=[
   {name:'Élysée Palace — Paris',lat:48.87,lng:2.32,zoom:15,cat:'VIP/CAPITAL'},
 ];
 
-function toggleSatPanel(){
+// Which location categories are meaningful to observe per imagery layer
+const SAT_LAYER_CATS={
+  esri:        ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','INTEL HQ','VIP/CAPITAL','SPACE/LAUNCH','MARITIME'],
+  sentinel:    ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','VIP/CAPITAL','SPACE/LAUNCH','MARITIME'],
+  modis:       ['CONFLICT','MARITIME','NUCLEAR/MISSILE','MILITARY','NAVAL'],
+  viirs_tc:    ['CONFLICT','MARITIME','NUCLEAR/MISSILE','MILITARY','NAVAL'],
+  viirs:       ['VIP/CAPITAL','MILITARY','NAVAL','MARITIME','SPACE/LAUNCH','NUCLEAR/MISSILE'],
+  thermal:     ['CONFLICT','NUCLEAR/MISSILE','MILITARY','NAVAL','MARITIME'],
+  false_color: ['CONFLICT','NUCLEAR/MISSILE','MARITIME','SPACE/LAUNCH','MILITARY'],
+};
   satOpen=!satOpen;
   const panel=document.getElementById('sat-panel');
   const bd=document.getElementById('sat-backdrop');
@@ -7780,8 +7789,10 @@ function satShowLocList(){
 
 function populateSatLocSel(){
   const sel=document.getElementById('sat-loc-sel');
-  if(sel.children.length>1)return;
-  const cats=[...new Set(SAT_LOCATIONS.map(l=>l.cat))];
+  const prev=sel.value;
+  while(sel.children.length>1)sel.removeChild(sel.lastChild);
+  const allowed=SAT_LAYER_CATS[satLayerKey]||[];
+  const cats=[...new Set(SAT_LOCATIONS.filter(l=>allowed.includes(l.cat)).map(l=>l.cat))];
   cats.forEach(cat=>{
     const og=document.createElement('optgroup');og.label=cat;
     SAT_LOCATIONS.filter(l=>l.cat===cat).forEach(loc=>{
@@ -7789,14 +7800,18 @@ function populateSatLocSel(){
     });
     sel.appendChild(og);
   });
+  if(prev)sel.value=prev;
 }
 
 function showSatLocList(){
   const list=document.getElementById('sat-loc-list');
-  const catColors={'CONFLICT':'#ef4444','NUCLEAR/MISSILE':'#f97316','MILITARY':'#fbbf24','NAVAL':'#22c55e','MARITIME':'#34d399','SIGINT':'#a855f7','VIP/CAPITAL':'#60a5fa'};
+  const catColors={'CONFLICT':'#ef4444','NUCLEAR/MISSILE':'#f97316','MILITARY':'#fbbf24','NAVAL':'#22c55e','MARITIME':'#34d399','INTEL HQ':'#a855f7','VIP/CAPITAL':'#60a5fa','SPACE/LAUNCH':'#38bdf8'};
+  const allowed=SAT_LAYER_CATS[satLayerKey]||[];
+  const filtered=SAT_LOCATIONS.filter(l=>allowed.includes(l.cat));
+  const layerLabel=(SAT_LAYERS[satLayerKey]?.label)||satLayerKey.toUpperCase();
   list.style.display='grid';
-  list.innerHTML=`<div style="grid-column:1/-1;font-size:8px;letter-spacing:.2em;color:var(--muted);padding:2px 0 10px;font-family:var(--mono)">▸ SELECT TARGET AREA — DRAG TO PAN · SCROLL TO ZOOM</div>`+
-    SAT_LOCATIONS.map(loc=>`
+  list.innerHTML=`<div style="grid-column:1/-1;font-size:8px;letter-spacing:.2em;color:var(--muted);padding:2px 0 10px;font-family:var(--mono)">▸ ${filtered.length} LOCATIONS FOR <span style="color:#34d399">${layerLabel}</span> · DRAG TO PAN · SCROLL TO ZOOM</div>`+
+    filtered.map(loc=>`
       <div class="sat-loc-item" onclick="satJumpToLocation('${loc.name.replace(/'/g,"\\'")}')">
         <div class="sat-loc-name">${loc.name}</div>
         <div class="sat-loc-cat" style="color:${catColors[loc.cat]||'#94a3b8'}">${loc.cat}</div>
@@ -7838,6 +7853,9 @@ function setSatLayer(key){
   document.getElementById('sl-'+key)?.classList.add('active');
   clearSatTileCache();
   updateSatInfoBar();
+  populateSatLocSel();
+  const list=document.getElementById('sat-loc-list');
+  if(list&&list.style.display!=='none')showSatLocList();
   if(satLocSelected)drawSatMap();
 }
 
