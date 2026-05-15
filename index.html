@@ -7584,26 +7584,33 @@ let satDragging=false,satDragLast={x:0,y:0};
 
 function clearSatTileCache(){satTileCache={};satCacheKeys=[];satTileRetries={};satInflight=0;satQueue.length=0;}
 
+const SAT_TILE_TIMEOUT=12000;
+
+function makeSatImg(){const img=new Image();img.referrerPolicy='no-referrer';return img;}
+
 function nextSatLoad(){
   while(satInflight<SAT_MAX_INFLIGHT&&satQueue.length){
     const {img,url,key}=satQueue.shift();
     if(!satTileCache[key]||satTileCache[key].state!=='loading')continue;
     satInflight++;
+    const timer=setTimeout(()=>{img.onerror&&img.onerror();},SAT_TILE_TIMEOUT);
     img.onload=()=>{
+      clearTimeout(timer);
       satInflight=Math.max(0,satInflight-1);
-      if(satTileCache[key])satTileCache[key].state='loaded';
+      if(satTileCache[key]&&satTileCache[key].img===img)satTileCache[key].state='loaded';
       drawSatMap();nextSatLoad();
     };
     img.onerror=()=>{
+      clearTimeout(timer);
+      img.onload=img.onerror=null; // prevent double-fire from timeout + real error
       satInflight=Math.max(0,satInflight-1);
       const retries=(satTileRetries[key]||0)+1;
       if(retries<=2){
         satTileRetries[key]=retries;
         setTimeout(()=>{
           if(!satTileCache[key]||satTileCache[key].state==='loaded')return;
-          // Fresh Image object — a failed img element can't reliably reload
-          const fresh=new Image();
-          if(satTileCache[key])satTileCache[key].img=fresh;
+          const fresh=makeSatImg();
+          satTileCache[key].img=fresh;
           satQueue.unshift({img:fresh,url,key});
           nextSatLoad();
         },retries*2000);
@@ -7919,7 +7926,7 @@ function drawSatMap(){
       const cPy=Math.round(ty*SAT_TS-center.y+H/2);
       const key=`${satLayerKey}/${satDate}/${satZoom}/${tx}/${ty}`;
       if(!satTileCache[key]){
-        const img=new Image();
+        const img=makeSatImg();
         satTileCache[key]={img,state:'loading'};
         satCacheKeys.push(key);
         if(satCacheKeys.length>SAT_CACHE_MAX){delete satTileCache[satCacheKeys.shift()];}
