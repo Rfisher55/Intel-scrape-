@@ -373,6 +373,8 @@ canvas.dragging{cursor:grabbing}
 .layer-btn.active .lb-dot{animation:blink 1s step-start infinite}
 .lb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.5}
 .layer-btn.active .lb-dot{opacity:1;box-shadow:0 0 4px currentColor}
+.lb-src{font-size:6px;letter-spacing:.06em;opacity:.65;margin-left:auto;padding-left:4px;white-space:nowrap}
+.lb-src.live{color:#22c55e;opacity:.9;animation:blink 2s step-start infinite}
 @media(max-width:600px){#layers-panel{left:8px;min-width:130px;padding:7px 6px}}
 
 /* ── Tracking arc colors ── */
@@ -565,17 +567,17 @@ canvas.dragging{cursor:grabbing}
 <!-- Data layer controls -->
 <div id="layers-panel">
   <div class="layers-title">DATA LAYERS</div>
-  <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS<span class="lb-count">98</span></button>
-  <button class="layer-btn" id="lb-troops"    onclick="toggleLayer('troops')"><span class="lb-dot" style="background:#ef4444"></span>TROOPS<span class="lb-count">30</span></button>
-  <button class="layer-btn" id="lb-arms"      onclick="toggleLayer('arms')"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS<span class="lb-count">29</span></button>
-  <button class="layer-btn" id="lb-naval"     onclick="toggleLayer('naval')"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS<span class="lb-count">10</span></button>
-  <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span></button>
-  <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span></button>
-  <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span></button>
-  <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signal aggregation — unverified crowd-sourced reports"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span></button>
-  <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT — Radio frequency and electronic signal anomaly monitoring"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">27</span></button>
-  <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Cyber Operations — Nation-state hacking, APT attacks, destructive malware"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">20</span></button>
-  <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network Disruption — Internet shutdowns, undersea cable cuts, GPS jamming, intercept nodes"><span class="lb-dot" style="background:#f59e0b"></span>🌐 NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span></button>
+  <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')" title="Real documented active conflicts — OSINT verified open-source intelligence database"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS<span class="lb-count">98</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-troops"    onclick="toggleLayer('troops')"    title="Troop deployments and movements — documented OSINT intelligence database"><span class="lb-dot" style="background:#ef4444"></span>TROOPS<span class="lb-count">30</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-arms"      onclick="toggleLayer('arms')"      title="Arms transfers and weapons flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS<span class="lb-count">29</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-naval"     onclick="toggleLayer('naval')"     title="Naval assets and operations — documented OSINT intelligence database"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS<span class="lb-count">10</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"     title="Financial flows and sanctions evasion — documented OSINT intelligence database"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"  title="Refugee and displacement flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"   title="Live military flights — ADS-B Exchange real-time feed (adsb.lol)"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span><span class="lb-src live">● LIVE</span></button>
+  <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signals — Reddit · Bluesky · Telegram · GDELT news · X/Twitter"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span><span class="lb-src live">● LIVE</span></button>
+  <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network disruptions — documented internet shutdowns, cable cuts, GPS jamming, intercept nodes (OSINT)"><span class="lb-dot" style="background:#f59e0b"></span>🌐 NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span><span class="lb-src">OSINT</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
 </div>
 
@@ -4594,6 +4596,16 @@ var selectedISO=null; let hoveredISO=null;
 let showArcs=false;
 // Active data layers
 const activeLayers={conflicts:false,troops:false,arms:false,naval:false,money:false,refugees:false,flights:false,unverified:false,sigint:false,cyber:false,netdisrupt:false};
+
+// When multiple node layers are active, fan their dots out so nothing stacks
+const SPREAD_NODE_LAYERS=['unverified','sigint','netdisrupt','naval'];
+function getNodeOffset(lyr){
+  const active=SPREAD_NODE_LAYERS.filter(l=>activeLayers[l]);
+  const idx=active.indexOf(lyr);
+  if(active.length<=1||idx<0)return{dx:0,dy:0};
+  const angle=(idx/active.length)*Math.PI*2-(Math.PI/2);
+  return{dx:Math.cos(angle)*28,dy:Math.sin(angle)*28};
+}
 // Pinch-to-zoom state
 let lastPinchDist=null, pinchMidX=null, pinchMidY=null;
 // Real-world GeoJSON borders (loaded at runtime from CDN)
@@ -5040,6 +5052,26 @@ async function fetchUnverifiedSignals(){
     }catch(e){}
   });
 
+  // ── GDELT — free real-time global event/news database (past 48h) ──────────
+  const gdeltFetch=(async()=>{
+    try{
+      const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),9000);
+      const r=await fetch(
+        'https://api.gdeltproject.org/api/v2/doc/doc?query=military+attack+conflict+war+explosion+airstrike+killed+troops+missile&mode=artlist&format=json&maxrecords=75&sort=DateDesc&timespan=2d',
+        {signal:ctrl.signal});
+      if(!r.ok)return;
+      const d=await r.json();
+      for(const a of d.articles||[]){
+        const text=a.title||'';if(text.length<10)continue;
+        const isos=extractISOs(text+' '+(a.sourcecountry||''));
+        // GDELT seendate: YYYYMMDDTHHMMSSZ
+        const raw=a.seendate||'';
+        const ts=raw.length>=15?new Date(raw.slice(0,4)+'-'+raw.slice(4,6)+'-'+raw.slice(6,8)+'T'+raw.slice(9,11)+':'+raw.slice(11,13)+':'+raw.slice(13,15)+'Z').toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+        for(const iso of isos)addPost(iso,{title:text.slice(0,140),url:a.url||'#',sub:'News/'+(a.domain||'GDELT'),time:ts,score:0,source:'News'});
+      }
+    }catch(e){}
+  })();
+
   // ── X/TWITTER via Nitter RSS (bonus — instances often down) ───────────────
   const NITTER=['https://nitter.poast.org','https://nitter.privacydev.net','https://nitter.nl'];
   const X_Q=['ukraine russia war','gaza hamas','iran nuclear','china taiwan military','houthi red sea'];
@@ -5065,47 +5097,43 @@ async function fetchUnverifiedSignals(){
     for(const post of posts){const isos=extractISOs(post.title);for(const iso of isos)addPost(iso,post);}
   });
 
-  await Promise.allSettled([...bFetches,...tFetches,...xFetches]);
-  buildSignals(); // final update after all social sources
+  await Promise.allSettled([...bFetches,...tFetches,...xFetches,gdeltFetch]);
+  buildSignals(); // final update — all sources: Reddit+Bluesky+Telegram+GDELT+X
 }
 
 function drawUnverifiedLayer(){
   const now=Date.now();
   if(now-unverifiedFetchTime>UNVERIFIED_REFRESH_MS)fetchUnverifiedSignals();
   const list=selectedISO?unverifiedSignals.filter(s=>s.iso===selectedISO):unverifiedSignals;
+  const {dx,dy}=getNodeOffset('unverified');
   for(const sig of list){
     const c=COUNTRIES[sig.iso];if(!c)continue;
     const p=project(c.lat,c.lng);if(!p.visible)continue;
+    const px=p.px+dx,py=p.py+dy;
     const pulse=Math.sin(now/700+sig.count*0.7)*0.5+0.5;
     const urgency=Math.min(sig.count/10,1);
     const col=urgency>.65?'rgba(239,68,68':urgency>.3?'rgba(251,146,60':'rgba(251,191,36';
-    // Outer pulse ring
-    ctx.beginPath();ctx.arc(p.px,p.py,16+pulse*6,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(px,py,16+pulse*6,0,Math.PI*2);
     ctx.strokeStyle=`${col},${0.12+pulse*0.18})`;ctx.lineWidth=1.5;ctx.stroke();
-    // Mid ring
-    ctx.beginPath();ctx.arc(p.px,p.py,9,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);
     ctx.strokeStyle=`${col},0.55)`;ctx.lineWidth=1;ctx.stroke();
-    // Diamond marker
-    ctx.save();ctx.translate(p.px,p.py);ctx.rotate(Math.PI/4);
+    ctx.save();ctx.translate(px,py);ctx.rotate(Math.PI/4);
     ctx.beginPath();ctx.rect(-5,-5,10,10);
     ctx.fillStyle=`${col},0.88)`;ctx.fill();
     ctx.restore();
-    // Report count badge
-    ctx.save();
-    ctx.font='bold 7.5px monospace';
-    ctx.fillStyle='rgba(254,215,170,0.95)';
-    ctx.textAlign='center';
-    ctx.fillText(sig.count+' RPT',p.px,p.py-19);
+    ctx.save();ctx.font='bold 7.5px monospace';ctx.fillStyle='rgba(254,215,170,0.95)';ctx.textAlign='center';
+    ctx.fillText(sig.count+' RPT',px,py-19);
     ctx.restore();
   }
 }
 
 function unverifiedAt(sx,sy){
+  const {dx,dy}=getNodeOffset('unverified');
   const list=selectedISO?unverifiedSignals.filter(s=>s.iso===selectedISO):unverifiedSignals;
   for(const sig of list){
     const c=COUNTRIES[sig.iso];if(!c)continue;
     const p=project(c.lat,c.lng);if(!p.visible)continue;
-    if(Math.hypot(sx-p.px,sy-p.py)<22)return sig;
+    if(Math.hypot(sx-(p.px+dx),sy-(p.py+dy))<22)return sig;
   }
   return null;
 }
@@ -5206,44 +5234,37 @@ const SIGINT_NODES=[
 function drawSIGINTLayer(){
   const now=Date.now();
   const nodes=selectedISO?SIGINT_NODES.filter(n=>n.iso===selectedISO):SIGINT_NODES;
+  const {dx,dy}=getNodeOffset('sigint');
   for(const node of nodes){
     const p=project(node.lat,node.lng);if(!p.visible)continue;
+    const px=p.px+dx,py=p.py+dy;
     const col=SIGINT_TYPE_COLOR[node.type]||'rgba(148,163,184';
     const pulse=Math.sin(now/600+node.intensity*0.4)*0.5+0.5;
     const r=8+node.intensity*1.4;
-    // Anomaly gets extra concentric rings
     if(node.anomaly){
-      ctx.beginPath();ctx.arc(p.px,p.py,r+12+pulse*8,0,Math.PI*2);
+      ctx.beginPath();ctx.arc(px,py,r+12+pulse*8,0,Math.PI*2);
       ctx.strokeStyle=`${col},${0.06+pulse*0.1})`;ctx.lineWidth=1;ctx.stroke();
-      ctx.beginPath();ctx.arc(p.px,p.py,r+5,0,Math.PI*2);
+      ctx.beginPath();ctx.arc(px,py,r+5,0,Math.PI*2);
       ctx.strokeStyle=`${col},0.2)`;ctx.lineWidth=1;ctx.stroke();
     }
-    // Main ring
-    ctx.beginPath();ctx.arc(p.px,p.py,r,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);
     ctx.strokeStyle=`${col},${0.35+pulse*0.45})`;ctx.lineWidth=1.5;ctx.stroke();
-    // Core dot
-    ctx.beginPath();ctx.arc(p.px,p.py,4,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);
     ctx.fillStyle=`${col},0.92)`;ctx.fill();
-    // Signal type label above
-    ctx.save();
-    ctx.font='bold 7px monospace';
-    ctx.fillStyle=`${col},0.95)`;
-    ctx.textAlign='center';
-    ctx.fillText(SIGINT_TYPE_LABEL[node.type]||node.type,p.px,p.py-r-4);
-    if(node.anomaly){
-      ctx.fillStyle='rgba(239,68,68,0.9)';
-      ctx.fillText('⚠ ANOMALY',p.px,p.py+r+10);
-    }
+    ctx.save();ctx.font='bold 7px monospace';ctx.fillStyle=`${col},0.95)`;ctx.textAlign='center';
+    ctx.fillText(SIGINT_TYPE_LABEL[node.type]||node.type,px,py-r-4);
+    if(node.anomaly){ctx.fillStyle='rgba(239,68,68,0.9)';ctx.fillText('⚠ ANOMALY',px,py+r+10);}
     ctx.restore();
   }
 }
 
 function sigintAt(sx,sy){
+  const {dx,dy}=getNodeOffset('sigint');
   const nodes=selectedISO?SIGINT_NODES.filter(n=>n.iso===selectedISO):SIGINT_NODES;
   for(const node of nodes){
     const p=project(node.lat,node.lng);if(!p.visible)continue;
     const r=12+node.intensity*1.4;
-    if(Math.hypot(sx-p.px,sy-p.py)<r)return node;
+    if(Math.hypot(sx-(p.px+dx),sy-(p.py+dy))<r)return node;
   }
   return null;
 }
@@ -5420,19 +5441,18 @@ const NET_DISRUPTIONS=[
 function drawNetDisruptLayer(){
   const now=Date.now();
   const list=selectedISO?NET_DISRUPTIONS.filter(n=>n.iso===selectedISO):NET_DISRUPTIONS;
+  const {dx,dy}=getNodeOffset('netdisrupt');
   for(const nd of list){
     const c=COUNTRIES[nd.iso];if(!c)continue;
     const p=project(nd.lat,nd.lng);if(!p.visible)continue;
+    const px=p.px+dx,py=p.py+dy;
     const col=NET_TYPE_COLOR[nd.type]||'rgba(148,163,184';
     const pulse=Math.sin(now/750+nd.lat*0.3)*0.5+0.5;
-    // Outer pulse ring
-    ctx.beginPath();ctx.arc(p.px,p.py,22+pulse*7,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(px,py,22+pulse*7,0,Math.PI*2);
     ctx.strokeStyle=`${col},${0.07+pulse*0.1})`;ctx.lineWidth=1;ctx.stroke();
-    // Main ring
-    ctx.beginPath();ctx.arc(p.px,p.py,14,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(px,py,14,0,Math.PI*2);
     ctx.strokeStyle=`${col},${0.4+pulse*0.35})`;ctx.lineWidth=2;ctx.stroke();
-    // Type-specific interior symbol
-    ctx.save();ctx.translate(p.px,p.py);
+    ctx.save();ctx.translate(px,py);
     const sc=`${col},0.9)`;
     if(nd.type==='shutdown'||nd.type==='throttle'){
       ctx.strokeStyle=sc;ctx.lineWidth=2.5;
@@ -5468,25 +5488,21 @@ function drawNetDisruptLayer(){
       ctx.fillStyle=sc;ctx.fill();
     }
     ctx.restore();
-    // Labels
-    ctx.save();ctx.textAlign='center';
-    ctx.font='bold 7px monospace';
+    ctx.save();ctx.textAlign='center';ctx.font='bold 7px monospace';
     ctx.fillStyle=`${col},0.9)`;
-    ctx.fillText(NET_TYPE_LABEL[nd.type]||nd.type,p.px,p.py-19);
-    if(nd.severity==='critical'){
-      ctx.fillStyle='rgba(239,68,68,0.85)';
-      ctx.fillText('CRITICAL',p.px,p.py+23);
-    }
+    ctx.fillText(NET_TYPE_LABEL[nd.type]||nd.type,px,py-19);
+    if(nd.severity==='critical'){ctx.fillStyle='rgba(239,68,68,0.85)';ctx.fillText('CRITICAL',px,py+23);}
     ctx.restore();
   }
 }
 
 function netDisruptAt(sx,sy){
+  const {dx,dy}=getNodeOffset('netdisrupt');
   const list=selectedISO?NET_DISRUPTIONS.filter(n=>n.iso===selectedISO):NET_DISRUPTIONS;
   for(const nd of list){
     const c=COUNTRIES[nd.iso];if(!c)continue;
     const p=project(nd.lat,nd.lng);if(!p.visible)continue;
-    if(Math.hypot(sx-p.px,sy-p.py)<24)return nd;
+    if(Math.hypot(sx-(p.px+dx),sy-(p.py+dy))<24)return nd;
   }
   return null;
 }
