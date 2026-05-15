@@ -9139,16 +9139,21 @@ const THREAT_FLASHPOINTS=[
 ];
 
 const THREAT_WATCHLIST=[
-  {flag:'🇺🇦',name:'UKRAINE',iso:'UKR',score:94,color:'#ef4444'},
-  {flag:'🇮🇷',name:'IRAN',iso:'IRN',score:88,color:'#ef4444'},
-  {flag:'🇵🇸',name:'PALESTINE',iso:'PSE',score:91,color:'#ef4444'},
-  {flag:'🇰🇵',name:'N.KOREA',iso:'PRK',score:79,color:'#f97316'},
-  {flag:'🇸🇩',name:'SUDAN',iso:'SDN',score:82,color:'#f97316'},
-  {flag:'🇸🇾',name:'SYRIA',iso:'SYR',score:75,color:'#f97316'},
-  {flag:'🇹🇼',name:'TAIWAN',iso:'TWN',score:71,color:'#f59e0b'},
-  {flag:'🇲🇲',name:'MYANMAR',iso:'MMR',score:77,color:'#f97316'},
-  {flag:'🇾🇪',name:'YEMEN',iso:'YEM',score:80,color:'#f97316'},
-  {flag:'🇻🇪',name:'VENEZUELA',iso:'VEN',score:65,color:'#f59e0b'},
+  {flag:'🇺🇦',name:'UKRAINE',iso:'UKR',score:94,color:'#ef4444',note:'Active war — 600K RUS troops'},
+  {flag:'🇵🇸',name:'PALESTINE',iso:'PSE',score:91,color:'#ef4444',note:'IDF Gaza campaign + West Bank'},
+  {flag:'🇮🇷',name:'IRAN',iso:'IRN',score:88,color:'#ef4444',note:'60% enrichment · proxy war'},
+  {flag:'🇸🇩',name:'SUDAN',iso:'SDN',score:85,color:'#ef4444',note:'SAF vs RSF civil war · 10M displaced'},
+  {flag:'🇾🇪',name:'YEMEN',iso:'YEM',score:81,color:'#f97316',note:'Houthi Red Sea + ASBM threat'},
+  {flag:'🇰🇵',name:'N.KOREA',iso:'PRK',score:79,color:'#f97316',note:'ICBM + troops in Russia'},
+  {flag:'🇲🇲',name:'MYANMAR',iso:'MMR',score:77,color:'#f97316',note:'Junta collapse · Brotherhood Alliance'},
+  {flag:'🇸🇾',name:'SYRIA',iso:'SYR',score:74,color:'#f97316',note:'HTS transition · ISIS resurgence'},
+  {flag:'🇲🇱',name:'MALI',iso:'MLI',score:72,color:'#f97316',note:'JNIM controls 50% territory'},
+  {flag:'🇹🇼',name:'TAIWAN',iso:'TWN',score:71,color:'#f59e0b',note:'PLA 5th blockade exercise · 2027 threshold'},
+  {flag:'🇵🇰',name:'PAKISTAN',iso:'PAK',score:68,color:'#f59e0b',note:'Nuclear + TTP terrorism + debt crisis'},
+  {flag:'🇻🇪',name:'VENEZUELA',iso:'VEN',score:65,color:'#f59e0b',note:'Maduro illegit. + Hezbollah networks'},
+  {flag:'🇸🇴',name:'SOMALIA',iso:'SOM',score:62,color:'#f59e0b',note:'Al-Shabaab 60% territory + ATMIS gap'},
+  {flag:'🇦🇿',name:'AZERBAIJAN',iso:'AZE',score:55,color:'#f59e0b',note:'Zangezur corridor demand vs Armenia'},
+  {flag:'🇧🇾',name:'BELARUS',iso:'BLR',score:52,color:'#f59e0b',note:'Russian tactical nukes deployed'},
 ];
 
 const THREAT_LEVEL_LABELS=['','MINIMAL','GUARDED','ELEVATED','HIGH','SEVERE'];
@@ -9242,10 +9247,13 @@ function renderThreatMatrix(){
     `<div style="background:rgba(8,16,33,.5);border:1px solid rgba(30,58,95,.5);border-radius:5px;padding:12px 14px">
       <div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-bottom:6px">▶ CRISIS WATCHLIST — HIGHEST RISK STATES</div>
       <div class="threat-watchlist">
-        ${THREAT_WATCHLIST.map(w=>`<div class="threat-wl-item" onclick="closeTrackModal&&closeTrackModal();openCountry('${w.iso}')">
+        ${THREAT_WATCHLIST.map(w=>`<div class="threat-wl-item" onclick="closeTrackModal&&closeTrackModal();openCountry('${w.iso}')" title="${w.note||''}">
           <span class="threat-wl-flag">${w.flag}</span>
           <div class="threat-wl-score" style="color:${w.color}">${w.score}</div>
-          <div class="threat-wl-name">${w.name}</div>
+          <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+            <div class="threat-wl-name">${w.name}</div>
+            ${w.note?`<div style="font-size:7px;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px">${w.note}</div>`:''}
+          </div>
         </div>`).join('')}
       </div>
     </div>`+
