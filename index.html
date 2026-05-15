@@ -506,7 +506,7 @@ canvas.dragging{cursor:grabbing}
   display:flex;justify-content:space-between;align-items:center;gap:12px;
 }
 #sat-map-wrap{flex:1;position:relative;overflow:hidden;background:#010408;min-height:0}
-#sat-canvas{display:block;cursor:crosshair}
+#sat-canvas{display:block;cursor:crosshair;position:absolute;inset:0;width:100%;height:100%}
 #sat-loc-list{
   position:absolute;inset:0;overflow-y:auto;
   background:rgba(4,10,22,.96);padding:14px;
@@ -530,9 +530,20 @@ canvas.dragging{cursor:grabbing}
   display:none;align-items:center;justify-content:center;
   font-family:var(--mono);font-size:10px;color:#34d399;letter-spacing:.2em;
 }
-@media(max-width:600px){#sat-panel{width:100%;height:85dvh;top:auto;bottom:0;left:0;transform:none!important;border-radius:14px 14px 0 0}
+@media(max-width:600px){
+  #sat-panel{width:100%;height:88dvh;top:auto;bottom:0;left:0;transform:none!important;border-radius:14px 14px 0 0}
   #sat-panel.open{transform:none!important}
-  #sat-btn{bottom:100px;right:12px;font-size:8px;padding:6px 10px}}
+  #sat-btn{bottom:100px;right:12px;font-size:8px;padding:6px 10px}
+  #sat-controls-bar{padding:5px 8px;gap:4px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+  #sat-controls-bar::-webkit-scrollbar{display:none}
+  #sat-controls-bar .sl-btn{font-size:9px;padding:4px 7px;white-space:nowrap;flex-shrink:0}
+  #sat-header-bar{padding:8px 10px}
+  #sat-mode-label{font-size:9px!important}
+  #sat-info-bar{padding:4px 8px;font-size:9px}
+  #sat-layer-desc{display:none}
+  #sat-loc-list{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:5px;padding:10px}
+  #sat-hud{font-size:10px;padding:4px 10px}
+}
 
 /* ── Intel Brief Modal (tracking layers) ── */
 #track-modal{
@@ -7482,18 +7493,18 @@ function openCountry(iso){
     ${cia?`
     <div class="sec-label" style="color:#f59e0b;border-color:rgba(245,158,11,.3)">CIA DIRECTORATE PROFILE — ${cia.intel_priority}</div>
     <div class="cia-profile-grid">
-      <div class="cia-metric"><div class="cia-label">GOVERNMENT</div><div class="cia-val" style="font-size:9px">${cia.gov}</div></div>
-      <div class="cia-metric"><div class="cia-label">NUCLEAR STATUS</div><div class="cia-val" style="font-size:9px;color:${cia.nuke.startsWith('NONE')?'#22c55e':'#ef4444'}">${cia.nuke}</div></div>
-      <div class="cia-metric"><div class="cia-label">MILITARY RATING</div><div class="cia-val"><span style="color:#f59e0b;letter-spacing:1px;font-size:10px">${milStars}</span> <span style="color:#94a3b8;font-size:9px">${cia.mil_rating}/10</span></div></div>
-      <div class="cia-metric"><div class="cia-label">GDP TREND</div><div class="cia-val" style="color:${gdpColor};font-weight:bold">${gdpArrow} ${cia.gdp_trend}</div></div>
-      <div class="cia-metric" style="grid-column:1/-1"><div class="cia-label">MILITARY FORCES</div><div class="cia-val" style="font-size:9px;line-height:1.5">${cia.mil_detail}</div></div>
-      <div class="cia-metric" style="grid-column:1/-1"><div class="cia-label">ECONOMIC PROFILE</div><div class="cia-val" style="font-size:9px">${cia.econ}</div></div>
-      <div class="cia-metric"><div class="cia-label">ALLIANCES</div><div class="cia-val" style="font-size:9px">${(cia.alliances||[]).map(a=>`<span style="display:inline-block;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:3px;padding:1px 5px;margin:1px;font-size:8px">${a}</span>`).join('')}</div></div>
-      <div class="cia-metric"><div class="cia-label">ADVERSARIES</div><div class="cia-val" style="font-size:9px">${(cia.adversaries||[]).map(a=>`<span style="display:inline-block;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:3px;padding:1px 5px;margin:1px;font-size:8px">${a}</span>`).join('')}</div></div>
-      <div class="cia-metric" style="grid-column:1/-1"><div class="cia-label">PRIMARY CONCERN</div><div class="cia-val" style="color:#fbbf24;font-size:10px">${cia.primary_concern}</div></div>
-      ${cia.vulnerabilities?.length?`<div class="cia-metric" style="grid-column:1/-1"><div class="cia-label">VULNERABILITIES</div><div class="cia-val" style="font-size:9px">${cia.vulnerabilities.map(v=>`<div style="padding:2px 0;border-bottom:1px solid rgba(30,58,95,.4)">⚠ ${v}</div>`).join('')}</div></div>`:''}
-      ${cia.intel_gaps?.length?`<div class="cia-metric" style="grid-column:1/-1"><div class="cia-label">INTELLIGENCE GAPS</div><div class="cia-val" style="font-size:9px">${cia.intel_gaps.map(g=>`<div style="padding:2px 0;border-bottom:1px solid rgba(30,58,95,.4);color:#94a3b8">◯ ${g}</div>`).join('')}</div></div>`:''}
-      ${cia.cia_note?`<div class="cia-metric" style="grid-column:1/-1;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2)"><div class="cia-label" style="color:#f59e0b">ANALYST NOTE</div><div class="cia-val" style="font-size:9px;color:#e2e8f0;font-style:italic;line-height:1.55">${cia.cia_note}</div></div>`:''}
+      <div class="cia-metric" style="cursor:pointer" onclick="intelPop('Government — ${iso}','POLITICAL',${JSON.stringify(cia.gov)},['${cia.intel_priority}'])"><div class="cia-label">GOVERNMENT ▸</div><div class="cia-val" style="font-size:9px">${cia.gov}</div></div>
+      <div class="cia-metric" style="cursor:pointer" onclick="intelPop('Nuclear / WMD Status — ${iso}','NUCLEAR',${JSON.stringify(cia.nuke)},['CBRN ASSESSMENT'])"><div class="cia-label">NUCLEAR STATUS ▸</div><div class="cia-val" style="font-size:9px;color:${cia.nuke.startsWith('NONE')?'#22c55e':'#ef4444'}">${cia.nuke}</div></div>
+      <div class="cia-metric" style="cursor:pointer" onclick="intelPop('Military Rating — ${iso}','MILITARY',${JSON.stringify(cia.mil_detail)},['RATING: ${cia.mil_rating}/10'])"><div class="cia-label">MILITARY RATING ▸</div><div class="cia-val"><span style="color:#f59e0b;letter-spacing:1px;font-size:10px">${milStars}</span> <span style="color:#94a3b8;font-size:9px">${cia.mil_rating}/10</span></div></div>
+      <div class="cia-metric" style="cursor:pointer" onclick="intelPop('Economic Profile — ${iso}','ECONOMIC',${JSON.stringify(cia.econ)},['GDP TREND: ${cia.gdp_trend}'])"><div class="cia-label">GDP TREND ▸</div><div class="cia-val" style="color:${gdpColor};font-weight:bold">${gdpArrow} ${cia.gdp_trend}</div></div>
+      <div class="cia-metric" style="grid-column:1/-1;cursor:pointer" onclick="intelPop('Military Forces — ${iso}','MILITARY',${JSON.stringify(cia.mil_detail)},[])"><div class="cia-label">MILITARY FORCES ▸</div><div class="cia-val" style="font-size:9px;line-height:1.5">${cia.mil_detail}</div></div>
+      <div class="cia-metric" style="grid-column:1/-1;cursor:pointer" onclick="intelPop('Economic Profile — ${iso}','ECONOMIC',${JSON.stringify(cia.econ)},[])"><div class="cia-label">ECONOMIC PROFILE ▸</div><div class="cia-val" style="font-size:9px">${cia.econ}</div></div>
+      <div class="cia-metric"><div class="cia-label">ALLIANCES</div><div class="cia-val" style="font-size:9px">${(cia.alliances||[]).map(a=>`<span onclick="intelPop('Alliance: ${iso} + '+${JSON.stringify(a.split(' ')[0])},'ALLIANCE',${JSON.stringify('Strategic partnership: '+a+'. This alliance provides mutual defense, intelligence sharing, economic ties, or diplomatic support. Click to see full profile of this partner in the country panel.')},['ALLIANCE'])" style="display:inline-block;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:3px;padding:1px 5px;margin:1px;font-size:8px;cursor:pointer" title="Click for alliance intel">${a}</span>`).join('')}</div></div>
+      <div class="cia-metric"><div class="cia-label">ADVERSARIES</div><div class="cia-val" style="font-size:9px">${(cia.adversaries||[]).map(a=>`<span onclick="intelPop('Adversary: ${iso} vs '+${JSON.stringify(a.split(' ')[0])},'THREAT ASSESSMENT',${JSON.stringify('Active adversarial relationship: '+a+'. This actor poses a direct threat through military posture, proxy conflict, sanctions, territorial disputes, or intelligence operations.')},['ADVERSARY'])" style="display:inline-block;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:3px;padding:1px 5px;margin:1px;font-size:8px;cursor:pointer" title="Click for adversary intel">${a}</span>`).join('')}</div></div>
+      <div class="cia-metric" style="grid-column:1/-1;cursor:pointer" onclick="intelPop('Primary Concern — ${iso}','THREAT ASSESSMENT',${JSON.stringify(cia.primary_concern+'\n\n'+cia.cia_note)},[])"><div class="cia-label">PRIMARY CONCERN ▸</div><div class="cia-val" style="color:#fbbf24;font-size:10px">${cia.primary_concern}</div></div>
+      ${cia.vulnerabilities?.length?`<div class="cia-metric" style="grid-column:1/-1;cursor:pointer" onclick="intelPop('Vulnerabilities — ${iso}','THREAT ASSESSMENT',${JSON.stringify(cia.vulnerabilities.join('\n\n'))},['${cia.vulnerabilities.length} IDENTIFIED'])"><div class="cia-label">VULNERABILITIES ▸</div><div class="cia-val" style="font-size:9px">${cia.vulnerabilities.map(v=>`<div style="padding:2px 0;border-bottom:1px solid rgba(30,58,95,.4)">⚠ ${v}</div>`).join('')}</div></div>`:''}
+      ${cia.intel_gaps?.length?`<div class="cia-metric" style="grid-column:1/-1;cursor:pointer" onclick="intelPop('Intelligence Gaps — ${iso}','INTELLIGENCE GAPS',${JSON.stringify('Key unknowns:\n\n'+cia.intel_gaps.join('\n\n'))},['${cia.intel_gaps.length} GAPS'])"><div class="cia-label">INTELLIGENCE GAPS ▸</div><div class="cia-val" style="font-size:9px">${cia.intel_gaps.map(g=>`<div style="padding:2px 0;border-bottom:1px solid rgba(30,58,95,.4);color:#94a3b8">◯ ${g}</div>`).join('')}</div></div>`:''}
+      ${cia.cia_note?`<div class="cia-metric" style="grid-column:1/-1;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);cursor:pointer" onclick="intelPop('Analyst Note — ${iso}','ANALYST NOTE',${JSON.stringify(cia.cia_note)},['TOP SECRET//ORCON'])"><div class="cia-label" style="color:#f59e0b">ANALYST NOTE ▸</div><div class="cia-val" style="font-size:9px;color:#e2e8f0;font-style:italic;line-height:1.55">${cia.cia_note}</div></div>`:''}
     </div>`:''}
     <div class="sec-label">SITUATION ASSESSMENT</div>
     <p class="summary-text">${intel.summary||'No data available.'}</p>
@@ -7576,6 +7587,23 @@ async function fetchCountryLiveThreat(iso){
   <div style="font-size:9px;color:#475569;margin-top:3px;letter-spacing:.06em">GDELT EVENT MONITOR · OSINT BASE · CONFLICT DATABASE</div>`;
 }
 
+// ── Intel Quick-Pop: click any annotated element for CIA explanation ──────
+function intelPop(title, category, detail, badges){
+  buildIntelBrief({
+    category: category||'INTEL ASSESSMENT',
+    dotColor: category==='FACTION'?'#f97316':category==='FOREIGN INFLUENCE'?'#ef4444':category==='NUCLEAR'?'#dc2626':category==='ALLIANCE'?'#3b82f6':'#f59e0b',
+    title: title,
+    badges: (badges||[]).map(b=>({text:b,style:'amber'})),
+    detail: detail||'No additional data.'
+  });
+  document.getElementById('track-modal').style.display='flex';
+}
+
+// ── Make flashpoint cards open satellite at their location ────────────────
+function fpOpenSat(lat,lng,name){
+  satOpenAt(lat,lng,'📍 FLASHPOINT: '+name,10,'esri');
+}
+
 function renderFactionsTab(iso){
   const factions=COUNTRY_FACTIONS[iso];
   const el=document.getElementById('tab-factions');
@@ -7615,10 +7643,15 @@ function renderFactionsTab(iso){
     +'<div class="sec-label">ARMED FACTIONS &amp; ORGANIZATIONS ('+factions.length+')</div>'
     +factions.map(f=>{
       const col=typeColors[f.type]||'#94a3b8';
-      return`<div class="faction-card">
-        <div class="faction-name">${f.name}</div>
+      const badges=[`STRENGTH: ${f.strength}/100`,f.type];
+      if(f.foreign)badges.push('FOREIGN BACKED');
+      return`<div class="faction-card" style="cursor:pointer" onclick="intelPop(${JSON.stringify(f.name)},'FACTION',${JSON.stringify((f.desc||'')+(f.foreign?'\n\nFOREIGN BACKING: '+f.foreign:'')+(f.vs&&f.vs.length?'\n\nHOSTILE TO: '+f.vs.join(', '):''))},${JSON.stringify(badges)})">
+        <div class="faction-name">${f.name} <span style="font-size:8px;color:#475569;font-weight:normal">▸ TAP FOR INTEL</span></div>
         <div class="faction-type" style="color:${col}">${f.type}</div>
-        <div class="faction-strength-bar"><div class="faction-strength-fill" style="width:${f.strength}%;background:${col}"></div></div>
+        <div title="Combat effectiveness ${f.strength}/100 — based on manpower, training, equipment and territorial control" style="cursor:help">
+          <div class="faction-strength-bar"><div class="faction-strength-fill" style="width:${f.strength}%;background:${col}"></div></div>
+          <div style="font-size:8px;color:#475569;letter-spacing:.06em;margin-top:2px">COMBAT EFFECTIVENESS: ${f.strength}/100</div>
+        </div>
         <div class="faction-meta">
           ${f.leader?`<div class="faction-meta-item"><span>LEADERSHIP</span>${f.leader}</div>`:''}
           ${f.control?`<div class="faction-meta-item"><span>AREA OF CONTROL</span>${f.control}</div>`:''}
@@ -7652,8 +7685,8 @@ function renderForeignTab(iso){
   el.innerHTML='<div class="sec-label">FOREIGN POWERS &amp; INFLUENCE VECTORS ('+influences.length+')</div>'+
     influences.map(f=>{
       const col=f.color||impactColors[f.impact]||'#94a3b8';
-      return`<div class="foreign-card" style="border-color:${col}">
-        <div class="foreign-country" style="color:${col}">${f.country}</div>
+      return`<div class="foreign-card" style="border-color:${col};cursor:pointer" onclick="intelPop(${JSON.stringify(f.country+' — '+f.type)},'FOREIGN INFLUENCE',${JSON.stringify(f.desc)},[${JSON.stringify('IMPACT: '+f.impact)},${JSON.stringify(f.type)}])">
+        <div class="foreign-country" style="color:${col}">${f.country} <span style="font-size:8px;color:#475569;font-weight:normal">▸ TAP FOR INTEL</span></div>
         <div class="foreign-type">${f.type}</div>
         <div class="foreign-desc">${f.desc}</div>
         <div class="foreign-impact" style="color:${col}">IMPACT LEVEL: ${f.impact}</div>
@@ -8724,7 +8757,8 @@ function satJumpToLocation(name){
   document.getElementById('sat-loc-sel').value=name;
   document.getElementById('sat-title-label').textContent=loc.name;
   document.getElementById('sat-back-btn').style.display='inline-flex';
-  sizeSatCanvas();drawSatMap();updateSatInfoBar();
+  updateSatInfoBar();
+  requestAnimationFrame(()=>{sizeSatCanvas();drawSatMap();});
 }
 
 function satOpenAt(lat,lng,label,zoom,forceLayer){
@@ -8750,7 +8784,15 @@ function satOpenAt(lat,lng,label,zoom,forceLayer){
   updateSatInfoBar();
   if(!satOpen){
     toggleSatPanel();
-    // ResizeObserver fires when wrap reaches real size → auto draws
+    // Retry draw until canvas has real dimensions (up to 20 frames)
+    let _attempts=0;
+    const _tryDraw=()=>{
+      sizeSatCanvas();
+      const c=document.getElementById('sat-canvas');
+      if(c&&c.width>50&&c.height>50){drawSatMap();}
+      else if(_attempts++<20){requestAnimationFrame(_tryDraw);}
+    };
+    requestAnimationFrame(()=>requestAnimationFrame(_tryDraw));
   } else {
     sizeSatCanvas();
     drawSatMap();
@@ -8793,11 +8835,13 @@ function sizeSatCanvas(){
   const wrap=document.getElementById('sat-map-wrap');
   const canvas=document.getElementById('sat-canvas');
   if(!wrap||!canvas)return;
-  // getBoundingClientRect is accurate even during CSS transitions; clientWidth can be 0 mid-animation
-  const r=wrap.getBoundingClientRect();
-  const w=Math.round(r.width)||wrap.clientWidth||900;
-  const h=Math.round(r.height)||wrap.clientHeight||500;
-  if(w>50&&h>50){canvas.width=w;canvas.height=h;}
+  // offsetWidth/Height are reliable after layout; getBoundingClientRect for fallback
+  const w=wrap.offsetWidth||Math.round(wrap.getBoundingClientRect().width)||900;
+  const h=wrap.offsetHeight||Math.round(wrap.getBoundingClientRect().height)||500;
+  if(w>10&&h>10){
+    if(canvas.width!==w)canvas.width=w;
+    if(canvas.height!==h)canvas.height=h;
+  }
 }
 
 function worldPx(lat,lng,z){
@@ -9352,10 +9396,11 @@ function renderThreatMatrix(){
     `<div class="threat-flashpoints">
       <div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-bottom:2px">▶ ACTIVE GLOBAL FLASHPOINTS (${THREAT_FLASHPOINTS.length})</div>
       <div class="threat-fp-grid">
-        ${THREAT_FLASHPOINTS.map(f=>`<div class="threat-fp-card" style="border-left-color:${f.color}">
-          <div class="threat-fp-name" style="color:${f.color}">${f.name}</div>
+        ${THREAT_FLASHPOINTS.map(f=>`<div class="threat-fp-card" style="border-left-color:${f.color};cursor:pointer" onclick="intelPop(${JSON.stringify(f.name)},'FLASHPOINT',${JSON.stringify(f.desc)},[${JSON.stringify('RISK: '+f.risk)}])">
+          <div class="threat-fp-name" style="color:${f.color}">${f.name} <span style="font-size:8px;color:#475569;font-weight:normal">▸ TAP</span></div>
           <div class="threat-fp-risk" style="color:${f.color}">${f.risk}</div>
           <div class="threat-fp-desc">${f.desc}</div>
+          ${f.lat!==undefined?`<div onclick="event.stopPropagation();toggleThreatMatrix();fpOpenSat(${f.lat},${f.lng},${JSON.stringify(f.name)})" style="margin-top:5px;font-size:8px;color:#34d399;cursor:pointer;letter-spacing:.1em;border:1px solid rgba(52,211,153,.3);border-radius:2px;padding:2px 6px;display:inline-block">🛰 VIEW SATELLITE</div>`:''}
         </div>`).join('')}
       </div>
     </div>`+
