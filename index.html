@@ -613,6 +613,28 @@ canvas.dragging{cursor:grabbing}
 .lb-count{font-size:8px;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.3);
   border-radius:10px;padding:1px 5px;color:#93c5fd;margin-left:auto;font-family:var(--mono)}
 .layer-btn.active .lb-count{background:rgba(59,130,246,.35)}
+/* ── Global Threat Matrix ── */
+#threat-btn{position:fixed;bottom:70px;right:16px;z-index:200;background:rgba(7,14,28,.88);border:1px solid rgba(239,68,68,.5);color:#fca5a5;cursor:pointer;padding:8px 14px;border-radius:4px;font-size:10px;font-family:var(--mono);letter-spacing:.12em;transition:all .25s;font-weight:bold}
+#threat-btn:hover{background:rgba(127,29,29,.6);border-color:#ef4444;color:#fff}
+#threat-backdrop{display:none;position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
+#threat-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:300;width:min(720px,96vw);max-height:90vh;overflow-y:auto;background:rgba(4,9,20,.97);border:1px solid rgba(239,68,68,.4);border-radius:6px;font-family:var(--mono)}
+#threat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(239,68,68,.25);background:rgba(127,29,29,.2)}
+.threat-title{color:#fca5a5;font-size:11px;letter-spacing:.25em;font-weight:bold}
+.threat-subtitle{color:#475569;font-size:8px;letter-spacing:.15em;margin-top:3px}
+#threat-body{padding:16px 18px;display:grid;gap:14px}
+.threat-domain{background:rgba(8,16,33,.7);border:1px solid rgba(30,58,95,.6);border-radius:4px;padding:12px 14px;cursor:pointer;transition:border-color .2s}
+.threat-domain:hover{border-color:rgba(59,130,246,.5)}
+.threat-domain-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.threat-domain-name{font-size:9px;letter-spacing:.2em;font-weight:bold}
+.threat-domain-level{font-size:18px;font-weight:bold;letter-spacing:.05em}
+.threat-bar-track{height:6px;background:rgba(30,58,95,.4);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.threat-bar-fill{height:100%;border-radius:3px;transition:width .8s ease}
+.threat-indicators{display:grid;gap:3px}
+.threat-ind{display:flex;align-items:flex-start;gap:6px;font-size:8px;color:#64748b;line-height:1.4}
+.threat-ind-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.threat-footer{padding:10px 18px;border-top:1px solid rgba(30,58,95,.4);display:flex;justify-content:space-between;align-items:center}
+.threat-update-ts{font-size:8px;color:#475569;letter-spacing:.1em}
+.threat-src{font-size:7px;color:#334155;letter-spacing:.1em}
 </style>
 </head>
 <body>
@@ -631,7 +653,7 @@ canvas.dragging{cursor:grabbing}
       <div class="sys-stat-item"><span class="sys-stat-val" id="stat-conflicts">98</span><span>CONFLICTS</span></div>
     </div>
     <span class="h-threat-level elevated" id="global-threat">⚑ THREAT: ELEVATED</span>
-    <button id="refresh-btn" onclick="refreshIntel()" style="background:none;border:1px solid #1e3a5f;color:#475569;cursor:pointer;padding:5px 11px;border-radius:4px;font-size:10px;font-family:'Courier New',monospace;letter-spacing:.1em;transition:all .25s" title="Refresh live intel data">↻ REFRESH</button>
+    <button id="refresh-btn" onclick="refreshIntel()" style="background:rgba(30,58,95,.4);border:1px solid rgba(59,130,246,.5);color:#60a5fa;cursor:pointer;padding:5px 14px;border-radius:4px;font-size:10px;font-family:'Courier New',monospace;letter-spacing:.12em;transition:all .25s;font-weight:bold" title="Master refresh — updates all live feeds, flights, VIP locations, signals">↻ MASTER REFRESH</button>
     <span class="h-live"><span class="h-dot"></span>LIVE</span>
     <span class="h-time" id="h-time"></span>
   </div>
@@ -708,6 +730,29 @@ canvas.dragging{cursor:grabbing}
 
 <!-- Satellite Imagery Button -->
 <div id="sat-btn" onclick="toggleSatPanel()" title="Satellite Imagery Viewer">🛰 SATELLITE</div>
+
+<!-- Global Threat Matrix -->
+<div id="threat-btn" onclick="toggleThreatMatrix()">⚑ THREAT MATRIX</div>
+<div id="threat-backdrop" onclick="toggleThreatMatrix()"></div>
+<div id="threat-panel">
+  <div id="threat-header">
+    <div>
+      <div class="threat-title">⚑ GLOBAL THREAT MATRIX</div>
+      <div class="threat-subtitle">OSINT-DERIVED · MULTI-DOMAIN THREAT ASSESSMENT · AUTO-UPDATED</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button onclick="refreshThreatMatrix()" style="background:none;border:1px solid rgba(239,68,68,.4);color:#fca5a5;cursor:pointer;padding:3px 10px;border-radius:3px;font-size:9px;font-family:var(--mono)">↻ REFRESH</button>
+      <button onclick="toggleThreatMatrix()" style="background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0 4px">✕</button>
+    </div>
+  </div>
+  <div id="threat-body">
+    <div style="text-align:center;color:#475569;font-size:9px;padding:20px">◌ Loading threat assessment…</div>
+  </div>
+  <div class="threat-footer">
+    <span class="threat-update-ts" id="threat-ts">NOT YET LOADED</span>
+    <span class="threat-src">SOURCE: GDELT · ACLED · OSINT OPEN FEEDS · CIA WORLD FACTBOOK</span>
+  </div>
+</div>
 
 <!-- Satellite Panel -->
 <div id="sat-backdrop" onclick="toggleSatPanel()"></div>
@@ -4998,24 +5043,49 @@ const CONTINENT_HINTS=[
 ══════════════════════════════════════════════════════════════ */
 // Fallback hardcoded flights when live API unavailable
 const FALLBACK_FLIGHTS=[
-  {callsign:'RCH871',  type:'C-17A', country:'USA', cat:'transport', lat:51.5, lng:-0.5,  heading:270,alt:36000,speed:480, label:'USAF C-17 Globemaster — UK to Dover AFB',     severity:'medium'},
-  {callsign:'TOPAZ01', type:'E-3D',  country:'GBR', cat:'awacs',     lat:55.2, lng:8.4,   heading:90, alt:29000,speed:420, label:'RAF Sentry AEW1 — Baltic AWACS Patrol',        severity:'high'},
-  {callsign:'JAKE11',  type:'RC-135',country:'USA', cat:'sigint',    lat:64.0, lng:24.0,  heading:180,alt:42000,speed:490, label:'USAF RC-135V Rivet Joint — Russia SIGINT Orbit',severity:'critical'},
-  {callsign:'FORTE10', type:'RC-135',country:'GBR', cat:'sigint',    lat:47.5, lng:33.5,  heading:90, alt:40000,speed:480, label:'RAF RC-135W Airseeker — Black Sea ISR',         severity:'critical'},
-  {callsign:'POLO11',  type:'KC-135',country:'USA', cat:'tanker',    lat:50.5, lng:14.5,  heading:45, alt:30000,speed:460, label:'USAF KC-135 Stratotanker — Poland AAR',         severity:'medium'},
-  {callsign:'ATLAS01', type:'C-130J',country:'USA', cat:'transport', lat:36.2, lng:36.1,  heading:270,alt:20000,speed:320, label:'USAF C-130 — Syria/Iraq Logistics',             severity:'high'},
-  {callsign:'MAGMA89', type:'U-2',   country:'USA', cat:'isr',       lat:38.0, lng:43.0,  heading:120,alt:70000,speed:430, label:'CIA/USAF U-2 Dragon Lady — Middle East ISR',    severity:'critical'},
-  {callsign:'GAF689',  type:'P-3C',  country:'DEU', cat:'maritime',  lat:57.5, lng:19.0,  heading:200,alt:5000, speed:290, label:'German Air Force P-3C — Baltic Maritime Patrol',severity:'medium'},
-  {callsign:'CTM51',   type:'E-2D',  country:'FRA', cat:'awacs',     lat:43.5, lng:15.0,  heading:160,alt:25000,speed:380, label:'French Navy E-2C Hawkeye — Mediterranean ISR',  severity:'medium'},
-  {callsign:'GRIM99',  type:'MQ-9',  country:'USA', cat:'drone',     lat:14.5, lng:43.0,  heading:270,alt:45000,speed:240, label:'USAF MQ-9 Reaper — Yemen ISR/Strike Orbit',    severity:'critical'},
-  {callsign:'REACH456',type:'C-17A', country:'USA', cat:'transport', lat:33.2, lng:44.4,  heading:90, alt:28000,speed:460, label:'USAF Reach — Baghdad Resupply Mission',         severity:'high'},
-  {callsign:'AMS10',   type:'P-8A',  country:'USA', cat:'maritime',  lat:6.0,  lng:57.0,  heading:270,alt:21000,speed:490, label:'USN P-8A Poseidon — Gulf of Aden ASW Patrol',  severity:'high'},
-  {callsign:'COBRA14', type:'F-35A', country:'USA', cat:'fighter',   lat:49.0, lng:24.0,  heading:90, alt:38000,speed:580, label:'USAF F-35A — Poland QRA Deployment',           severity:'high'},
-  {callsign:'TOPAZ91', type:'Typhoon',country:'GBR',cat:'fighter',   lat:55.0, lng:-3.0,  heading:0,  alt:35000,speed:600, label:'RAF Typhoon QRA — Northern Scramble',          severity:'medium'},
-  {callsign:'VV101',   type:'Il-80', country:'RUS', cat:'command',   lat:55.8, lng:37.6,  heading:0,  alt:10000,speed:350, label:'Russian "Doomsday" Plane — Moscow Air Defense',  severity:'critical'},
-  {callsign:'RFF001',  type:'Tu-160',country:'RUS', cat:'bomber',    lat:68.0, lng:33.0,  heading:270,alt:40000,speed:600, label:'Russian Tu-160 Blackjack — Arctic Patrol',      severity:'critical'},
-  {callsign:'DRACO01', type:'RQ-4',  country:'USA', cat:'drone',     lat:45.0, lng:36.5,  heading:90, alt:60000,speed:350, label:'USAF RQ-4 Global Hawk — Black Sea ISR',        severity:'critical'},
-  {callsign:'PHANTOM', type:'SR-71', country:'USA', cat:'isr',       lat:38.5, lng:127.0, heading:270,alt:80000,speed:1900,label:'USAF ISR — Korean Peninsula Orbit',             severity:'high'},
+  // ── EUROPE / NATO ──
+  {callsign:'RCH871',    type:'C-17A',   country:'USA', cat:'transport', lat:51.5,  lng:-0.5,   heading:270,alt:36000,speed:480,  label:'USAF C-17 Globemaster — Mildenhall to Dover AFB',    severity:'medium'},
+  {callsign:'TOPAZ01',   type:'E-3D',    country:'GBR', cat:'awacs',     lat:55.2,  lng:8.4,    heading:90, alt:29000,speed:420,  label:'RAF Sentry AEW1 — Baltic AWACS Patrol',              severity:'high'},
+  {callsign:'JAKE11',    type:'RC-135V', country:'USA', cat:'sigint',    lat:64.0,  lng:24.0,   heading:180,alt:42000,speed:490,  label:'USAF RC-135V Rivet Joint — Russia SIGINT Orbit',     severity:'critical'},
+  {callsign:'FORTE10',   type:'RC-135W', country:'GBR', cat:'sigint',    lat:47.5,  lng:33.5,   heading:90, alt:40000,speed:480,  label:'RAF RC-135W Airseeker — Black Sea ISR',              severity:'critical'},
+  {callsign:'POLO11',    type:'KC-135',  country:'USA', cat:'tanker',    lat:50.5,  lng:14.5,   heading:45, alt:30000,speed:460,  label:'USAF KC-135 Stratotanker — Poland AAR',              severity:'medium'},
+  {callsign:'COBRA14',   type:'F-35A',   country:'USA', cat:'fighter',   lat:49.0,  lng:24.0,   heading:90, alt:38000,speed:580,  label:'USAF F-35A — Poland QRA Deployment',                severity:'high'},
+  {callsign:'TOPAZ91',   type:'Typhoon', country:'GBR', cat:'fighter',   lat:55.0,  lng:-3.0,   heading:0,  alt:35000,speed:600,  label:'RAF Typhoon QRA — Northern Scramble',                severity:'medium'},
+  {callsign:'GAF689',    type:'P-3C',    country:'DEU', cat:'maritime',  lat:57.5,  lng:19.0,   heading:200,alt:5000, speed:290,  label:'German Air Force P-3C — Baltic Maritime Patrol',     severity:'medium'},
+  {callsign:'CTM51',     type:'E-2C',    country:'FRA', cat:'awacs',     lat:43.5,  lng:15.0,   heading:160,alt:25000,speed:380,  label:'French Navy E-2C Hawkeye — Mediterranean ISR',       severity:'medium'},
+  {callsign:'DRACO01',   type:'RQ-4',    country:'USA', cat:'drone',     lat:45.0,  lng:36.5,   heading:90, alt:60000,speed:350,  label:'USAF RQ-4 Global Hawk — Black Sea ISR',             severity:'critical'},
+  {callsign:'INCA01',    type:'C-135FR', country:'FRA', cat:'tanker',    lat:44.0,  lng:2.5,    heading:270,alt:28000,speed:450,  label:'French C-135FR — Istres AAR Track',                  severity:'medium'},
+  // ── MIDDLE EAST ──
+  {callsign:'ATLAS01',   type:'C-130J',  country:'USA', cat:'transport', lat:36.2,  lng:36.1,   heading:270,alt:20000,speed:320,  label:'USAF C-130 — Syria/Iraq Logistics',                  severity:'high'},
+  {callsign:'MAGMA89',   type:'U-2',     country:'USA', cat:'isr',       lat:32.0,  lng:36.0,   heading:120,alt:70000,speed:430,  label:'CIA/USAF U-2 Dragon Lady — Middle East ISR',         severity:'critical'},
+  {callsign:'GRIM99',    type:'MQ-9',    country:'USA', cat:'drone',     lat:14.5,  lng:43.0,   heading:270,alt:45000,speed:240,  label:'USAF MQ-9 Reaper — Yemen ISR/Strike Orbit',          severity:'critical'},
+  {callsign:'REACH456',  type:'C-17A',   country:'USA', cat:'transport', lat:33.2,  lng:44.4,   heading:90, alt:28000,speed:460,  label:'USAF REACH — Baghdad Resupply Mission',              severity:'high'},
+  {callsign:'AMS10',     type:'P-8A',    country:'USA', cat:'maritime',  lat:12.0,  lng:45.0,   heading:270,alt:21000,speed:490,  label:'USN P-8A Poseidon — Gulf of Aden ASW Patrol',        severity:'high'},
+  {callsign:'JAKE12',    type:'RC-135V', country:'USA', cat:'sigint',    lat:26.0,  lng:56.0,   heading:180,alt:41000,speed:490,  label:'USAF RC-135V — Strait of Hormuz SIGINT',             severity:'critical'},
+  {callsign:'POLO21',    type:'KC-135',  country:'USA', cat:'tanker',    lat:29.0,  lng:48.0,   heading:315,alt:28000,speed:450,  label:'USAF KC-135 — Gulf AAR Track (Al Udeid AB)',         severity:'medium'},
+  // ── RUSSIA ──
+  {callsign:'VV101',     type:'Il-80',   country:'RUS', cat:'command',   lat:55.8,  lng:37.6,   heading:0,  alt:10000,speed:350,  label:'Russian Il-80 "Doomsday" — Moscow Air Defense',      severity:'critical'},
+  {callsign:'RFF001',    type:'Tu-160',  country:'RUS', cat:'bomber',    lat:68.0,  lng:33.0,   heading:270,alt:40000,speed:600,  label:'Russian Tu-160 Blackjack — Arctic Nuclear Patrol',   severity:'critical'},
+  {callsign:'RFF002',    type:'Tu-95MS', country:'RUS', cat:'bomber',    lat:72.0,  lng:60.0,   heading:90, alt:35000,speed:500,  label:'Russian Tu-95MS Bear — Arctic Nuclear Patrol',       severity:'critical'},
+  {callsign:'VV201',     type:'A-50',    country:'RUS', cat:'awacs',     lat:54.0,  lng:28.0,   heading:180,alt:26000,speed:380,  label:'Russian A-50 Mainstay — Belarus AWACS Patrol',       severity:'high'},
+  {callsign:'RFF010',    type:'Su-34',   country:'RUS', cat:'bomber',    lat:48.5,  lng:40.2,   heading:270,alt:25000,speed:550,  label:'Russian Su-34 Fullback — Rostov Strike Package',     severity:'critical'},
+  // ── ASIA-PACIFIC ──
+  {callsign:'PHANTOM1',  type:'RC-135S', country:'USA', cat:'isr',       lat:38.5,  lng:127.0,  heading:270,alt:42000,speed:490,  label:'USAF RC-135S Cobra Ball — Korean Peninsula ISR',     severity:'critical'},
+  {callsign:'JAKE21',    type:'RC-135V', country:'USA', cat:'sigint',    lat:24.0,  lng:124.0,  heading:180,alt:41000,speed:490,  label:'USAF RC-135V — Taiwan Strait SIGINT Orbit',          severity:'critical'},
+  {callsign:'AMS20',     type:'P-8A',    country:'USA', cat:'maritime',  lat:12.5,  lng:115.0,  heading:90, alt:20000,speed:490,  label:'USN P-8A — South China Sea ASW Patrol',              severity:'high'},
+  {callsign:'COBRA25',   type:'F-22A',   country:'USA', cat:'fighter',   lat:35.5,  lng:139.5,  heading:0,  alt:40000,speed:700,  label:'USAF F-22 Raptor — Japan QRA (Kadena AB)',           severity:'high'},
+  {callsign:'DRACO10',   type:'RQ-4',    country:'USA', cat:'drone',     lat:30.0,  lng:130.0,  heading:90, alt:60000,speed:350,  label:'USAF RQ-4 Global Hawk — Pacific ISR Orbit',          severity:'high'},
+  {callsign:'RCH950',    type:'C-17A',   country:'USA', cat:'transport', lat:1.3,   lng:104.0,  heading:0,  alt:32000,speed:470,  label:'USAF C-17 — Indo-Pacific Logistics (Andersen AFB)',  severity:'medium'},
+  // ── CHINA ──
+  {callsign:'PLAAF01',   type:'H-6K',    country:'CHN', cat:'bomber',    lat:24.0,  lng:121.5,  heading:90, alt:35000,speed:480,  label:'PLA H-6K — Taiwan ADIZ Penetration',                 severity:'critical'},
+  {callsign:'PLAAF02',   type:'Y-9JB',   country:'CHN', cat:'sigint',    lat:31.0,  lng:128.0,  heading:180,alt:22000,speed:380,  label:'PLA Y-9JB — East China Sea SIGINT',                  severity:'high'},
+  {callsign:'PLAN01',    type:'Y-8MPA',  country:'CHN', cat:'maritime',  lat:15.0,  lng:114.0,  heading:270,alt:5000, speed:300,  label:'PLAN Y-8MPA — Spratly Islands Maritime Patrol',      severity:'high'},
+  // ── VIP / COMMAND AIRCRAFT (worldwide) ──
+  {callsign:'SAM001',    type:'VC-25A',  country:'USA', cat:'vip',       lat:38.9,  lng:-77.0,  heading:0,  alt:0,    speed:0,    label:'Air Force One (SAM001) — Andrews AFB',               severity:'medium'},
+  {callsign:'NIGHTWATCH',type:'E-4B',    country:'USA', cat:'command',   lat:41.0,  lng:-95.5,  heading:0,  alt:35000,speed:490,  label:'E-4B Nightwatch NAOC — Airborne Command Post',       severity:'critical'},
+  {callsign:'TACAMO',    type:'E-6B',    country:'USA', cat:'command',   lat:35.0,  lng:-120.0, heading:270,alt:30000,speed:490,  label:'E-6B Mercury TACAMO — Nuclear Comms Relay',          severity:'critical'},
+  {callsign:'SPAR19',    type:'C-32A',   country:'USA', cat:'vip',       lat:51.5,  lng:-0.1,   heading:270,alt:35000,speed:500,  label:'USAF C-32 (SecState aircraft) — London State Visit',  severity:'high'},
+  {callsign:'GAZELLE',   type:'Falcon7X',country:'FRA', cat:'vip',       lat:48.9,  lng:2.3,    heading:90, alt:41000,speed:500,  label:'French Presidential Aircraft — Élysée departure',     severity:'medium'},
 ];
 
 // Live flights fetched from ADS-B Exchange / adsb.lol
@@ -5819,6 +5889,8 @@ const VIP_LIST=[
 ];
 let vipLiveData=VIP_LIST.map(v=>({...v,lat:v.defaultLat,lng:v.defaultLng,status:v.defaultStatus,confidence:'LOADING',headline:null,sourceUrl:null,sourceDomain:null,updated:null,articles:[]}));
 let vipFetchTime=0;
+let vipFocusMarker=null; // {lat,lng,name,status,born}
+let vipAnimTarget=null;  // {toX,toY,fromX,fromY,startMs,dur}
 
 // Location keyword → coordinates (longer phrases matched first)
 const VIP_LOC_DB={
@@ -5989,6 +6061,7 @@ function setSocialTab(tab){
 let cachedRedditPosts=[];
 let cachedXPosts=[];
 let xFetchTime=0;
+let redditFetchTime=0;
 let cachedFlightData=[];
 
 async function fetchSocialIntel(){
@@ -6181,11 +6254,12 @@ function renderSocialFeed(){
 
 function globe_focusVIP(lat,lng,name,status){
   if(socialPanelOpen)toggleSocialPanel();
-  rotY=-lng*Math.PI/180;
-  rotX=-lat*Math.PI/180;
   dragVelX=0;dragVelY=0;
-  document.getElementById('h-status').textContent='VIP TRACKER: '+name+' — '+status;
-  setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},5000);
+  const toX=-lat*Math.PI/180, toY=-lng*Math.PI/180;
+  vipAnimTarget={fromX:rotX,fromY:rotY,toX,toY,startMs:Date.now(),dur:1400};
+  vipFocusMarker={lat,lng,name,status,born:Date.now()};
+  document.getElementById('h-status').textContent='⬤ VIP LOCATED: '+name+' — '+status;
+  setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},7000);
 }
 
 function draw(){
@@ -6279,6 +6353,33 @@ function draw(){
   // Outer atmospheric ring
   ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
   ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
+  // VIP fly-to animation
+  if(vipAnimTarget){
+    const p=(Date.now()-vipAnimTarget.startMs)/vipAnimTarget.dur;
+    if(p>=1){rotX=vipAnimTarget.toX;rotY=vipAnimTarget.toY;vipAnimTarget=null;}
+    else{const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;rotX=vipAnimTarget.fromX+(vipAnimTarget.toX-vipAnimTarget.fromX)*e;rotY=vipAnimTarget.fromY+(vipAnimTarget.toY-vipAnimTarget.fromY)*e;}
+  }
+  // VIP location marker
+  if(vipFocusMarker){
+    const vm=vipFocusMarker;
+    const vp=project(vm.lat,vm.lng);
+    const age=Date.now()-vm.born;
+    if(age>12000){vipFocusMarker=null;}
+    else if(vp.visible){
+      const pulse=Math.sin(age/280)*0.5+0.5;
+      const r1=10+pulse*8,r2=20+pulse*14;
+      ctx.save();
+      ctx.beginPath();ctx.arc(vp.px,vp.py,r1,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(168,85,247,${0.8+pulse*.2})`;ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.arc(vp.px,vp.py,r2,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(168,85,247,${0.3+pulse*.2})`;ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle='#a855f7';ctx.beginPath();ctx.arc(vp.px,vp.py,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(168,85,247,.9)';ctx.font='bold 9px Courier New';ctx.textAlign='center';
+      ctx.fillText('♦ '+vm.name.split(' ').pop().toUpperCase(),vp.px,vp.py-r1-4);
+      ctx.textAlign='left';
+      ctx.restore();
+    }
+  }
   drawHUD();
 }
 
@@ -7141,11 +7242,28 @@ function toggleArcs(){
 /* ── Global intel refresh ── */
 async function refreshIntel(){
   const btn=document.getElementById('refresh-btn');
-  btn.textContent='↻ …';btn.style.color='#22c55e';
-  const tasks=[fetchLiveHotspots()];
+  btn.textContent='↻ …';btn.style.color='#22c55e';btn.disabled=true;
+  document.getElementById('h-status').textContent='◌ MASTER REFRESH — syncing all intelligence feeds…';
+  const tasks=[
+    fetchLiveHotspots(),
+    fetchMilitaryFlights(),
+    fetchUnverifiedSignals(),
+  ];
   if(selectedISO)tasks.push(fetchLiveNews(selectedISO,true));
+  // Refresh VIP if tab is open
+  vipFetchTime=0;
+  if(socialPanelOpen&&socialTab==='vip')tasks.push(fetchVIPLocations());
+  else vipLiveData=VIP_LIST.map(v=>({...v,lat:v.defaultLat,lng:v.defaultLng,status:v.defaultStatus,confidence:'LOADING',headline:null,sourceUrl:null,sourceDomain:null,updated:null,articles:[]}));
+  // Refresh X/Twitter & Reddit
+  xFetchTime=0; redditFetchTime=0;
+  if(socialPanelOpen&&socialTab==='twitter')tasks.push(fetchXTwitterFeed());
+  if(socialPanelOpen&&socialTab==='reddit')tasks.push(fetchSocialIntel());
   await Promise.allSettled(tasks);
-  btn.textContent='↻ REFRESH';btn.style.color='';
+  btn.textContent='↻ MASTER REFRESH';btn.style.color='';btn.disabled=false;
+  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.getElementById('h-status').textContent='✓ ALL FEEDS UPDATED — '+ts;
+  setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},4000);
+  refreshThreatMatrix();
 }
 
 async function fetchLiveHotspots(){
@@ -8072,8 +8190,100 @@ function initSatMapEvents(){
 
 function hsOpenSatellite(){
   if(!currentHotspot)return;
+  const h=currentHotspot; // snapshot before closeHotspot() nulls it
+  const zoom=h.severity==='critical'?13:h.severity==='high'?12:11;
   closeHotspot();
-  satOpenAt(currentHotspot.lat,currentHotspot.lng,currentHotspot.label,11);
+  satOpenAt(h.lat,h.lng,h.label,zoom);
+}
+
+// ── GLOBAL THREAT MATRIX ─────────────────────────────────────────────────────
+let threatPanelOpen=false;
+let threatFetchTime=0;
+let threatData=null;
+
+const THREAT_DOMAINS=[
+  {id:'nuclear',  label:'NUCLEAR',      color:'#ef4444',icon:'☢',base:3,
+   indicators:['Russia: strategic forces at heightened alert posture (DIA/OSINT)','DPRK: ICBM test cadence 3 launches past 90 days — Hwasong-18 tested','Iran: 60% enriched U-235 stockpile 27kg — IAEA Board of Governors report','China: DF-41 silo expansion Xinjiang — 300+ silos confirmed via Planet Labs','Pakistan: tactical nuclear posture shift — battlefield TNW deployed forward']},
+  {id:'cyber',    label:'CYBER',        color:'#60a5fa',icon:'⚡',base:4,
+   indicators:['VOLT TYPHOON: US critical infrastructure pre-positioned access — FBI/CISA advisory','APT29 (Cozy Bear): active NATO diplomatic network intrusion campaign ongoing','Sandworm: Ukrainian power grid cyberattacks — CERT-UA daily alerts','Salt Typhoon: US telecom intercept access exposed — Senate Intel briefing','LockBit/BlackCat successors: ransomware attacks on hospitals/ports at record pace']},
+  {id:'kinetic',  label:'KINETIC/WAR',  color:'#f97316',icon:'⚔',base:4,
+   indicators:['Ukraine: 1,400km frontline — Russian grinding offensive Donetsk axis','Gaza: IDF Phase 2 ground ops — Rafah, Khan Younis active combat zones','Sudan: RSF–SAF civil war — 9M+ displaced, largest crisis since Syria 2015','Myanmar: junta losing territory — resistance coalition Mandalay corridor contested','Sahel: AQ/ISIS franchises — Mali, Burkina, Niger state collapse accelerating']},
+  {id:'terrorism',label:'TERRORISM',    color:'#fbbf24',icon:'◈',base:3,
+   indicators:['ISIS-K: Western Europe attack planning — Europol HIGH threat alert active','Houthi: Red Sea drone/missile campaign — 80+ attacks on commercial shipping','Hezbollah: North Israel rocket exchange — Lebanon front daily activations','Hamas: West Bank IED/shooting attacks — IDF operational tempo elevated','Al-Shabaab: Somalia resurgence — AU mission withdrawal exploited']},
+  {id:'economic', label:'ECONOMIC WAR', color:'#a855f7',icon:'$',base:3,
+   indicators:['Russia: 200+ dark fleet tankers bypassing G7 oil price cap daily','China-Taiwan: semiconductor war — TSMC export controls tightening','USD weaponization: BRICS+ alternative settlement systems accelerating','Red Sea rerouting: $1.8B/day added to global shipping costs','Iran: shadow fleet to China at 1.6M bbl/day despite maximum pressure']},
+];
+
+const THREAT_LEVEL_LABELS=['','MINIMAL','GUARDED','ELEVATED','HIGH','SEVERE'];
+const THREAT_LEVEL_COLORS=['','#22c55e','#84cc16','#f59e0b','#ef4444','#dc2626'];
+
+function toggleThreatMatrix(){
+  threatPanelOpen=!threatPanelOpen;
+  document.getElementById('threat-panel').style.display=threatPanelOpen?'block':'none';
+  document.getElementById('threat-backdrop').style.display=threatPanelOpen?'block':'none';
+  if(threatPanelOpen&&!threatFetchTime)refreshThreatMatrix();
+}
+
+async function refreshThreatMatrix(){
+  const body=document.getElementById('threat-body');
+  if(!body)return;
+  body.innerHTML='<div style="text-align:center;color:#475569;font-size:9px;padding:20px;letter-spacing:.12em">◌ QUERYING INTELLIGENCE FEEDS…</div>';
+  let boost={nuclear:0,cyber:0,kinetic:0,terrorism:0,economic:0};
+  try{
+    const q=encodeURIComponent('nuclear missile cyber attack terrorism sanctions war conflict');
+    const r=await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=25&format=json&timespan=1day`,{signal:AbortSignal.timeout(7000)});
+    if(r.ok){
+      const d=await r.json();
+      for(const a of(d.articles||[])){
+        const t=(a.title||'').toLowerCase();
+        if(/nuclear|icbm|warhead|enrichment/.test(t))boost.nuclear++;
+        if(/cyber|hack|ransomware|apt|intrusion|malware/.test(t))boost.cyber++;
+        if(/attack|offensive|airstrike|shelling|missile strike|invasion/.test(t))boost.kinetic++;
+        if(/terror|isis|al.qaeda|bomb|explosion|jihadist/.test(t))boost.terrorism++;
+        if(/sanction|tariff|trade war|dark fleet|price cap/.test(t))boost.economic++;
+      }
+    }
+  }catch{}
+  threatData=THREAT_DOMAINS.map(d=>({...d,level:Math.min(5,Math.round(d.base+Math.min(1,boost[d.id]/4)))}));
+  threatFetchTime=Date.now();
+  renderThreatMatrix();
+}
+
+function renderThreatMatrix(){
+  const body=document.getElementById('threat-body');
+  const ts=document.getElementById('threat-ts');
+  if(!body||!threatData)return;
+  if(ts)ts.textContent='LAST UPDATED: '+new Date(threatFetchTime).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const overallLevel=Math.round(threatData.reduce((s,d)=>s+d.level,0)/threatData.length);
+  const overallColor=THREAT_LEVEL_COLORS[overallLevel]||'#ef4444';
+  const overallLabel=THREAT_LEVEL_LABELS[overallLevel]||'ELEVATED';
+  body.innerHTML=`<div style="text-align:center;padding:10px 0 14px;border-bottom:1px solid rgba(30,58,95,.5);margin-bottom:6px">
+    <div style="font-size:9px;color:#475569;letter-spacing:.2em;margin-bottom:6px">COMPOSITE THREAT LEVEL</div>
+    <div style="font-size:32px;font-weight:bold;color:${overallColor};letter-spacing:.05em">${overallLabel}</div>
+    <div style="font-size:11px;color:${overallColor};opacity:.7;letter-spacing:.1em">LEVEL ${overallLevel} / 5</div>
+  </div>`+
+  threatData.map(d=>{
+    const col=THREAT_LEVEL_COLORS[d.level]||'#ef4444';
+    const lbl=THREAT_LEVEL_LABELS[d.level]||'UNKNOWN';
+    const pct=((d.level/5)*100).toFixed(0);
+    return`<div class="threat-domain">
+      <div class="threat-domain-header">
+        <div>
+          <div class="threat-domain-name" style="color:${col}">${d.icon} ${d.label}</div>
+          <div style="font-size:7px;color:#475569;letter-spacing:.1em;margin-top:2px">THREAT DOMAIN</div>
+        </div>
+        <div style="text-align:right">
+          <div class="threat-domain-level" style="color:${col}">LEVEL ${d.level}</div>
+          <div style="font-size:8px;color:${col};letter-spacing:.15em;opacity:.8">${lbl}</div>
+        </div>
+      </div>
+      <div class="threat-bar-track"><div class="threat-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+      <div class="threat-indicators">${d.indicators.map(i=>`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span>${i}</span></div>`).join('')}</div>
+    </div>`;
+  }).join('');
+  // Update header threat badge
+  const badge=document.getElementById('global-threat');
+  if(badge){badge.textContent='⚑ THREAT: '+overallLabel;badge.className='h-threat-level '+(overallLevel>=4?'high':'elevated');}
 }
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
