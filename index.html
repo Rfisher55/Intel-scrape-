@@ -11469,14 +11469,16 @@ async function renderCamerasTab(iso){
     grid.innerHTML=cams.map(cam=>{
       const {name,city,embed,thumb,classified,camLat,camLng}=cam;
       const clat=camLat||lat,clng=camLng||lng;
-      const onclick='openCamPlayer('+JSON.stringify(embed)+','+JSON.stringify(name)+','+clat+','+clng+')';
-      const displayName=classified?'CLASSIFIED NODE':name;
+      // Use &quot; so double quotes inside JSON.stringify don't break the HTML attribute
+      const safeEmbed=JSON.stringify(embed).replace(/"/g,'&quot;');
+      const safeName=JSON.stringify(name).replace(/"/g,'&quot;');
+      const onclick='openCamPlayer('+safeEmbed+','+safeName+','+clat+','+clng+')';
+      const displayName=classified?'COVERT NODE':name;
       const displayCity=classified?('SRC: '+cc2):city;
       return '<div class="cam-card" onclick="'+onclick+'">'
-        +(thumb&&!classified?'<img class="cam-thumb" src="'+thumb+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>&#128247;</div>\'">'
-               :'<div class="cam-thumb-ph" style="'+(classified?'color:rgba(239,68,68,.5);font-size:11px;letter-spacing:.1em':'')+'">'+( classified?'CLASSIFIED':'CAM')+'</div>')
+        +(thumb&&!classified?'<img class="cam-thumb" src="'+thumb+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>CAM</div>\'">'
+               :'<div class="cam-thumb-ph" style="'+(classified?'color:rgba(239,68,68,.45);font-size:10px;letter-spacing:.1em':'')+'">'+( classified?'COVERT':'CAM')+'</div>')
         +'<div class="cam-live-dot" style="'+(classified?'background:rgba(239,68,68,.9)':'')+'">'+( classified?'COVERT':'LIVE')+'</div>'
-        +(classified?'<div class="cam-classified-tag">TOP SECRET</div>':'')
         +'<div class="cam-play-icon">&#9654;</div>'
         +'<div class="cam-info"><div class="cam-name">'+displayName+'</div>'
         +(displayCity?'<div class="cam-city">'+displayCity+'</div>':'')
