@@ -742,10 +742,6 @@ canvas.dragging{cursor:grabbing}
 .p-sat-link{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#34d399;cursor:pointer;letter-spacing:.08em;padding:3px 8px;border:1px solid rgba(52,211,153,.3);border-radius:3px;margin-left:8px;transition:all .15s;vertical-align:middle;-webkit-tap-highlight-color:transparent}
 .p-sat-link:hover,.p-sat-link:active{border-color:rgba(52,211,153,.6);background:rgba(52,211,153,.08)}
 
-/* ── Layers panel mobile close ── */
-.layers-mobile-close{display:none;justify-content:center;margin-top:6px;padding-top:5px;border-top:1px solid var(--border2)}
-.layers-mobile-close button{background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:9px 16px;border-radius:3px;font-family:var(--mono);font-size:10px;width:100%;letter-spacing:.1em;-webkit-tap-highlight-color:transparent}
-
 /* ── Mobile-specific improvements ── */
 @media(max-width:600px){
   .p-close{min-width:44px!important;min-height:44px!important;font-size:16px!important;font-weight:bold}
@@ -760,7 +756,6 @@ canvas.dragging{cursor:grabbing}
   .hs-footer{flex-wrap:wrap}
   .hs-country-btn{min-height:44px}
   .tm-close{min-height:44px!important;font-size:13px!important;padding:8px 20px!important}
-  .layers-mobile-close{display:flex}
   .p-sat-link{padding:4px 10px;font-size:10px}
 }
 </style>
@@ -807,7 +802,6 @@ canvas.dragging{cursor:grabbing}
   <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network disruptions — documented internet shutdowns, cable cuts, GPS jamming, intercept nodes (OSINT)"><span class="lb-dot" style="background:#f59e0b"></span>🌐 NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn active" id="lb-hotspots" onclick="toggleHotspots()" title="Toggle always-visible hotspot alert markers on/off"><span class="lb-dot" style="background:#f87171"></span>● HOTSPOTS<span class="lb-src">VIZ</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
-  <div class="layers-mobile-close"><button onclick="toggleLayersPanel()" title="Collapse layers panel">✕ COLLAPSE LAYERS</button></div>
 </div>
 
 <!-- Social Intel Drawer -->
