@@ -742,8 +742,38 @@ canvas.dragging{cursor:grabbing}
 .p-sat-link{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#34d399;cursor:pointer;letter-spacing:.08em;padding:3px 8px;border:1px solid rgba(52,211,153,.3);border-radius:3px;margin-left:8px;transition:all .15s;vertical-align:middle;-webkit-tap-highlight-color:transparent}
 .p-sat-link:hover,.p-sat-link:active{border-color:rgba(52,211,153,.6);background:rgba(52,211,153,.08)}
 
-/* ── Mobile-specific improvements ── */
+/* ── Live Camera Viewer ── */
+.cam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+.cam-card{background:rgba(4,10,22,.9);border:1px solid rgba(52,211,153,.2);border-radius:5px;overflow:hidden;cursor:pointer;transition:all .15s;position:relative;-webkit-tap-highlight-color:transparent}
+.cam-card:hover,.cam-card:active{border-color:rgba(52,211,153,.55);transform:translateY(-1px);box-shadow:0 4px 16px rgba(52,211,153,.1)}
+.cam-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#010408;display:block}
+.cam-thumb-ph{width:100%;aspect-ratio:16/9;background:rgba(4,10,22,.9);display:flex;align-items:center;justify-content:center;color:#1e3a5f;font-size:24px}
+.cam-info{padding:7px 9px}
+.cam-name{font-size:10px;color:var(--text);letter-spacing:.03em;line-height:1.35;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cam-city{font-size:8px;color:var(--muted);letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cam-live-dot{position:absolute;top:5px;left:5px;background:rgba(239,68,68,.9);color:#fff;font-size:7px;font-weight:bold;padding:2px 5px;border-radius:2px;letter-spacing:.12em;pointer-events:none}
+.cam-play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;opacity:0;transition:opacity .15s;pointer-events:none;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.cam-card:hover .cam-play-icon{opacity:1}
+/* ── Camera player overlay ── */
+#cam-overlay{position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+#cam-overlay.open{display:flex}
+#cam-inner{position:relative;width:min(97vw,980px);height:min(90vh,640px);background:#000;border-radius:8px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.85),0 0 0 1px rgba(52,211,153,.15)}
+#cam-iframe{width:100%;height:100%;border:none;display:block}
+#cam-title-bar{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:linear-gradient(180deg,rgba(0,0,0,.9) 0%,transparent 100%);pointer-events:none}
+#cam-title-bar button{pointer-events:all}
+#cam-label{color:#e2e8f0;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-shadow:0 1px 4px rgba(0,0,0,.9);max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#cam-close-btn{background:rgba(127,29,29,.9);border:1.5px solid rgba(239,68,68,.7);color:#fca5a5;cursor:pointer;padding:7px 16px;border-radius:4px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;-webkit-tap-highlight-color:transparent;font-weight:bold}
+#cam-close-btn:hover,#cam-close-btn:active{background:rgba(185,28,28,.95)}
+.cam-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 20px;gap:10px;color:#475569;font-size:11px;letter-spacing:.1em;text-align:center}
+.cam-loading-spinner{width:32px;height:32px;border:2px solid rgba(52,211,153,.15);border-top-color:rgba(52,211,153,.6);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cam-search-box{max-width:300px;margin:0 auto;display:flex;flex-direction:column;gap:8px;padding:0 10px}
 @media(max-width:600px){
+  #cam-inner{width:100%;height:88dvh;border-radius:14px 14px 0 0;margin-top:auto}
+  #cam-overlay{align-items:flex-end}
+  .cam-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px}
+  #cam-close-btn{padding:9px 18px;font-size:12px;min-height:44px}
+  /* General mobile tap targets */
   .p-close{min-width:44px!important;min-height:44px!important;font-size:16px!important;font-weight:bold}
   .intel-expand-head{min-height:50px;padding:12px 14px}
   .intel-expand-summary{font-size:13px}
@@ -1010,6 +1040,7 @@ canvas.dragging{cursor:grabbing}
     <button class="tab-btn" onclick="showTab('foreign')">FOREIGN</button>
     <button class="tab-btn" onclick="showTab('news')">INTEL</button>
     <button class="tab-btn" onclick="showTab('conflicts')">CONFLICTS</button>
+    <button class="tab-btn" onclick="showTab('cameras');renderCamerasTab(selectedISO)">📷 CAMS</button>
   </div>
   <div class="p-content">
     <div class="tab-section active" id="tab-summary"></div>
@@ -1018,6 +1049,7 @@ canvas.dragging{cursor:grabbing}
     <div class="tab-section" id="tab-foreign"></div>
     <div class="tab-section" id="tab-news"></div>
     <div class="tab-section" id="tab-conflicts"></div>
+    <div class="tab-section" id="tab-cameras"></div>
   </div>
   <div class="p-foot">
     <span id="p-updated">—</span>
@@ -9184,7 +9216,7 @@ function openByISO(iso){
 }
 
 function openCountry(iso){
-  selectedISO=iso;showArcs=false;updateConnBtn();updateLayerFilterHint();
+  selectedISO=iso;camTabISO='';showArcs=false;updateConnBtn();updateLayerFilterHint();
   const panel=document.getElementById('panel');
   panel.classList.remove('minimized','fullscreen');
   document.getElementById('p-minimize').textContent='▼';
@@ -10196,8 +10228,13 @@ function updateConnBtn(){
 function showTab(name){
   document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b=>{if(b.textContent.toLowerCase()===name||b.textContent.toLowerCase()==='intel'&&name==='news')b.classList.add('active');});
+  const tabEl=document.getElementById('tab-'+name);
+  if(tabEl)tabEl.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    const t=b.textContent.toLowerCase().trim();
+    if(t===name||(name==='news'&&t==='intel')||(name==='cameras'&&t.includes('cams')))
+      b.classList.add('active');
+  });
 }
 function tick(){document.getElementById('h-time').textContent=new Date().toUTCString().slice(0,25)+' UTC';setTimeout(tick,1000);}
 // Expose for refresh button onclick attribute
@@ -11268,6 +11305,140 @@ async function fetchTickerLive(){
   setTimeout(fetchTickerLive,10*60*1000);
 }
 fetchTickerLive();
+
+// ── LIVE CAMERA VIEWER ────────────────────────────────────────────────────────
+const ISO3_TO_2={
+  ABW:'AW',AFG:'AF',AGO:'AO',ALB:'AL',AND:'AD',ARE:'AE',ARG:'AR',ARM:'AM',ATG:'AG',AUS:'AU',
+  AUT:'AT',AZE:'AZ',BDI:'BI',BEL:'BE',BEN:'BJ',BFA:'BF',BGD:'BD',BGR:'BG',BHR:'BH',BHS:'BS',
+  BIH:'BA',BLR:'BY',BLZ:'BZ',BOL:'BO',BRA:'BR',BRB:'BB',BRN:'BN',BTN:'BT',BWA:'BW',CAF:'CF',
+  CAN:'CA',CHE:'CH',CHL:'CL',CHN:'CN',CIV:'CI',CMR:'CM',COD:'CD',COG:'CG',COL:'CO',COM:'KM',
+  CPV:'CV',CRI:'CR',CUB:'CU',CYP:'CY',CZE:'CZ',DEU:'DE',DJI:'DJ',DMA:'DM',DNK:'DK',DOM:'DO',
+  DZA:'DZ',ECU:'EC',EGY:'EG',ERI:'ER',ESP:'ES',EST:'EE',ETH:'ET',FIN:'FI',FJI:'FJ',FRA:'FR',
+  FSM:'FM',GAB:'GA',GBR:'GB',GEO:'GE',GHA:'GH',GIN:'GN',GMB:'GM',GNB:'GW',GNQ:'GQ',GRC:'GR',
+  GRD:'GD',GTM:'GT',GUY:'GY',HKG:'HK',HND:'HN',HRV:'HR',HTI:'HT',HUN:'HU',IDN:'ID',IND:'IN',
+  IRL:'IE',IRN:'IR',IRQ:'IQ',ISL:'IS',ISR:'IL',ITA:'IT',JAM:'JM',JOR:'JO',JPN:'JP',KAZ:'KZ',
+  KEN:'KE',KGZ:'KG',KHM:'KH',KIR:'KI',KNA:'KN',KOR:'KR',KWT:'KW',LAO:'LA',LBN:'LB',LBR:'LR',
+  LBY:'LY',LCA:'LC',LIE:'LI',LKA:'LK',LSO:'LS',LTU:'LT',LUX:'LU',LVA:'LV',MAC:'MO',MAR:'MA',
+  MCO:'MC',MDA:'MD',MDG:'MG',MDV:'MV',MEX:'MX',MKD:'MK',MLI:'ML',MLT:'MT',MMR:'MM',MNE:'ME',
+  MNG:'MN',MOZ:'MZ',MRT:'MR',MUS:'MU',MWI:'MW',MYS:'MY',NAM:'NA',NER:'NE',NGA:'NG',NIC:'NI',
+  NLD:'NL',NOR:'NO',NPL:'NP',NRU:'NR',NZL:'NZ',OMN:'OM',PAK:'PK',PAN:'PA',PER:'PE',PHL:'PH',
+  PLW:'PW',PNG:'PG',POL:'PL',PRK:'KP',PRT:'PT',PRY:'PY',PSE:'PS',QAT:'QA',ROU:'RO',RUS:'RU',
+  RWA:'RW',SAU:'SA',SDN:'SD',SEN:'SN',SGP:'SG',SLB:'SB',SLE:'SL',SLV:'SV',SMR:'SM',SOM:'SO',
+  SRB:'RS',SSD:'SS',STP:'ST',SUR:'SR',SVK:'SK',SVN:'SI',SWE:'SE',SWZ:'SZ',SYC:'SC',SYR:'SY',
+  TCD:'TD',TGO:'TG',THA:'TH',TJK:'TJ',TKM:'TM',TLS:'TL',TON:'TO',TTO:'TT',TUN:'TN',TUR:'TR',
+  TUV:'TV',TWN:'TW',TZA:'TZ',UGA:'UG',UKR:'UA',URY:'UY',USA:'US',UZB:'UZ',VAT:'VA',VCT:'VC',
+  VEN:'VE',VNM:'VN',VUT:'VU',WSM:'WS',XKX:'XK',YEM:'YE',ZAF:'ZA',ZMB:'ZM',ZWE:'ZW',
+};
+
+let camTabISO='';
+
+async function renderCamerasTab(iso){
+  if(!iso)return;
+  const el=document.getElementById('tab-cameras');
+  if(!el)return;
+  if(camTabISO===iso)return;
+  camTabISO=iso;
+  const c=COUNTRIES[iso];
+  const countryName=c?.name||iso;
+  const cc2=ISO3_TO_2[iso]||'';
+
+  el.innerHTML=`
+    <div class="sec-label" style="display:flex;justify-content:space-between;align-items:center">
+      <span>📷 LIVE CAMS — ${countryName.toUpperCase()}</span>
+      <span style="color:#22c55e;font-size:9px;animation:blink 1.2s step-start infinite">● LIVE</span>
+    </div>
+    <div class="cam-loading" id="cam-status">
+      <div class="cam-loading-spinner"></div>
+      <span>SCANNING LIVE FEEDS…</span>
+    </div>`;
+
+  let cams=[];
+  if(cc2){
+    // Try Windy Webcams v2 (public endpoint)
+    try{
+      const r=await fetch(
+        'https://api.windy.com/api/webcams/v2/list/country='+cc2+'/orderby=popularity/limit=12?show=webcams:image,player,location',
+        {signal:AbortSignal.timeout(7000)}
+      );
+      if(r.ok){const d=await r.json();cams=d.webcams||[];}
+    }catch(e){}
+  }
+
+  const statusEl=document.getElementById('cam-status');
+  if(!statusEl)return;
+
+  if(cams.length>0){
+    statusEl.remove();
+    const grid=document.createElement('div');
+    grid.className='cam-grid';
+    grid.innerHTML=cams.map(cam=>{
+      const thumb=cam.image?.current?.thumbnail||cam.image?.current?.preview||'';
+      const playerUrl=cam.player?.day?.embed||('https://webcams.windy.com/webcam/'+cam.id+'/player');
+      const city=(cam.location?.city||cam.location?.region||'').trim();
+      const name=cam.title||'Live Camera';
+      return '<div class="cam-card" onclick="openCamPlayer('+JSON.stringify(playerUrl)+','+JSON.stringify(name)+')">'
+        +(thumb?'<img class="cam-thumb" src="'+thumb+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>📷</div>\'">'
+               :'<div class="cam-thumb-ph">📷</div>')
+        +'<div class="cam-live-dot">● LIVE</div>'
+        +'<div class="cam-play-icon">▶</div>'
+        +'<div class="cam-info"><div class="cam-name">'+name+'</div>'
+        +(city?'<div class="cam-city">'+city+'</div>':'')
+        +'</div></div>';
+    }).join('');
+    el.appendChild(grid);
+    // Add satellite fallback at bottom
+    el.insertAdjacentHTML('beforeend',
+      '<div class="drill-row" style="margin-top:14px;justify-content:center">'
+      +'<button class="drill-btn green" onclick="viewCountrySat(\''+iso+'\')">🛰 OPEN SATELLITE VIEW</button>'
+      +'</div>');
+  }else{
+    // Fallback — search links
+    const q=encodeURIComponent(countryName+' live camera 24 7');
+    const ytUrl='https://www.youtube.com/results?search_query='+q;
+    const windyUrl='https://www.windy.com/webcams'+(cc2?'?lang=en#'+cc2:'');
+    const earthUrl='https://www.earthcam.com/search.php?q='+encodeURIComponent(countryName);
+    statusEl.className='cam-loading';
+    statusEl.innerHTML=`
+      <div style="font-size:26px;margin-bottom:6px">📷</div>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:16px;max-width:260px">
+        Live camera API unavailable for ${countryName}.<br>Browse live feeds on external platforms:
+      </div>
+      <div class="cam-search-box">
+        <button class="drill-btn green" style="width:100%;justify-content:center" onclick="window.open('${ytUrl}','_blank')">▶ YouTube — ${countryName} Live Cams</button>
+        <button class="drill-btn blue" style="width:100%;justify-content:center" onclick="window.open('${windyUrl}','_blank')">🌊 Windy Webcams</button>
+        <button class="drill-btn orange" style="width:100%;justify-content:center" onclick="window.open('${earthUrl}','_blank')">🌍 EarthCam — ${countryName}</button>
+        <button class="drill-btn green" style="width:100%;justify-content:center" onclick="viewCountrySat('${iso}')">🛰 Open Satellite View</button>
+      </div>`;
+  }
+}
+
+function openCamPlayer(url,name){
+  const ov=document.getElementById('cam-overlay');
+  if(!ov)return;
+  document.getElementById('cam-iframe').src=url;
+  document.getElementById('cam-label').textContent='📷 '+name;
+  ov.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCamPlayer(){
+  const ov=document.getElementById('cam-overlay');
+  if(ov)ov.classList.remove('open');
+  const fr=document.getElementById('cam-iframe');
+  if(fr)fr.src='';
+  document.body.style.overflow='';
+}
 </script>
+
+<!-- Live Camera Player Overlay -->
+<div id="cam-overlay" onclick="if(event.target===this)closeCamPlayer()">
+  <div id="cam-inner">
+    <div id="cam-title-bar">
+      <span id="cam-label">📷 LIVE CAMERA</span>
+      <button id="cam-close-btn" onclick="closeCamPlayer()">✕ CLOSE</button>
+    </div>
+    <iframe id="cam-iframe" src="" allowfullscreen allow="autoplay;encrypted-media;picture-in-picture"></iframe>
+  </div>
+</div>
+
 </body>
 </html>
