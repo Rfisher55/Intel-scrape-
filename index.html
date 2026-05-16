@@ -711,6 +711,58 @@ canvas.dragging{cursor:grabbing}
 .cia-metric{background:rgba(8,16,33,.6);border:1px solid rgba(30,58,95,.5);border-radius:3px;padding:7px 10px;display:flex;flex-direction:column;gap:3px}
 .cia-label{font-size:9px;color:var(--muted);letter-spacing:.12em}
 .cia-val{font-size:11px;font-weight:bold;color:#93c5fd;letter-spacing:.04em;font-family:var(--mono)}
+
+/* ── Expandable Intel Sections ── */
+.intel-expand{border:1px solid var(--border2);border-radius:4px;margin-bottom:8px;overflow:hidden}
+.intel-expand-head{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(13,25,41,.55);cursor:pointer;user-select:none;min-height:44px;-webkit-tap-highlight-color:transparent;gap:8px}
+.intel-expand-head:hover,.intel-expand-head:active{background:rgba(30,58,95,.45)}
+.intel-expand-summary{flex:1;font-size:12px;color:var(--text);line-height:1.4;font-weight:600;letter-spacing:.04em}
+.intel-expand-meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.4;font-weight:normal}
+.intel-expand-arrow{font-size:13px;color:#60a5fa;transition:transform .22s;flex-shrink:0;font-weight:bold}
+.intel-expand.open .intel-expand-arrow{transform:rotate(90deg)}
+.intel-expand-body{display:none;padding:11px 13px;border-top:1px solid var(--border2);background:rgba(8,16,34,.6)}
+.intel-expand.open .intel-expand-body{display:block}
+
+/* ── Drill-down cross-link buttons ── */
+.drill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(30,58,95,.3)}
+.drill-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:3px;font-size:10px;font-family:var(--mono);letter-spacing:.07em;cursor:pointer;transition:all .15s;border:1px solid;min-height:36px;background:none;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.drill-btn.blue{border-color:rgba(59,130,246,.45);color:#93c5fd}
+.drill-btn.blue:hover,.drill-btn.blue:active{background:rgba(59,130,246,.15)}
+.drill-btn.green{border-color:rgba(52,211,153,.4);color:#34d399}
+.drill-btn.green:hover,.drill-btn.green:active{background:rgba(52,211,153,.1)}
+.drill-btn.orange{border-color:rgba(249,115,22,.45);color:#fb923c}
+.drill-btn.orange:hover,.drill-btn.orange:active{background:rgba(249,115,22,.12)}
+.drill-btn.amber{border-color:rgba(245,158,11,.45);color:#fbbf24}
+.drill-btn.amber:hover,.drill-btn.amber:active{background:rgba(245,158,11,.1)}
+.drill-btn.red{border-color:rgba(239,68,68,.4);color:#fca5a5}
+.drill-btn.red:hover,.drill-btn.red:active{background:rgba(239,68,68,.1)}
+.drill-btn:active{transform:scale(.96)}
+
+/* ── Satellite link chip in panel header ── */
+.p-sat-link{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#34d399;cursor:pointer;letter-spacing:.08em;padding:3px 8px;border:1px solid rgba(52,211,153,.3);border-radius:3px;margin-left:8px;transition:all .15s;vertical-align:middle;-webkit-tap-highlight-color:transparent}
+.p-sat-link:hover,.p-sat-link:active{border-color:rgba(52,211,153,.6);background:rgba(52,211,153,.08)}
+
+/* ── Layers panel mobile close ── */
+.layers-mobile-close{display:none;justify-content:center;margin-top:6px;padding-top:5px;border-top:1px solid var(--border2)}
+.layers-mobile-close button{background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:9px 16px;border-radius:3px;font-family:var(--mono);font-size:10px;width:100%;letter-spacing:.1em;-webkit-tap-highlight-color:transparent}
+
+/* ── Mobile-specific improvements ── */
+@media(max-width:600px){
+  .p-close{min-width:44px!important;min-height:44px!important;font-size:16px!important;font-weight:bold}
+  .intel-expand-head{min-height:50px;padding:12px 14px}
+  .intel-expand-summary{font-size:13px}
+  .intel-expand-meta{font-size:11px}
+  .drill-btn{font-size:11px;padding:10px 14px;min-height:44px}
+  .drill-row{gap:8px;margin-top:12px;padding-top:10px}
+  .faction-card{padding:12px 14px;margin-bottom:10px}
+  .foreign-card{padding:12px 14px;margin-bottom:10px}
+  .hs-close-btn{min-height:44px!important;font-size:13px!important;padding:10px 18px!important}
+  .hs-footer{flex-wrap:wrap}
+  .hs-country-btn{min-height:44px}
+  .tm-close{min-height:44px!important;font-size:13px!important;padding:8px 20px!important}
+  .layers-mobile-close{display:flex}
+  .p-sat-link{padding:4px 10px;font-size:10px}
+}
 </style>
 </head>
 <body>
@@ -755,6 +807,7 @@ canvas.dragging{cursor:grabbing}
   <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network disruptions — documented internet shutdowns, cable cuts, GPS jamming, intercept nodes (OSINT)"><span class="lb-dot" style="background:#f59e0b"></span>🌐 NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn active" id="lb-hotspots" onclick="toggleHotspots()" title="Toggle always-visible hotspot alert markers on/off"><span class="lb-dot" style="background:#f87171"></span>● HOTSPOTS<span class="lb-src">VIZ</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
+  <div class="layers-mobile-close"><button onclick="toggleLayersPanel()" title="Collapse layers panel">✕ COLLAPSE LAYERS</button></div>
 </div>
 
 <!-- Social Intel Drawer -->
@@ -9123,6 +9176,19 @@ const COUNTRY_FOREIGN={
 
 };
 
+// ── UI Helpers — expandable sections, cross-links, satellite ─────────────────
+function toggleExpandSection(el){
+  const sec=el.closest('.intel-expand');
+  if(sec)sec.classList.toggle('open');
+}
+function viewCountrySat(iso){
+  const c=COUNTRIES[iso];
+  if(c)satOpenAt(c.lat,c.lng,'📡 SATELLITE: '+c.name,6,'esri');
+}
+function openByISO(iso){
+  if(COUNTRIES[iso])openCountry(iso);
+}
+
 function openCountry(iso){
   selectedISO=iso;showArcs=false;updateConnBtn();updateLayerFilterHint();
   const panel=document.getElementById('panel');
@@ -9131,7 +9197,7 @@ function openCountry(iso){
   document.getElementById('p-expand').textContent='⤢';
   const c=COUNTRIES[iso];
   document.getElementById('p-name').textContent=c.name;
-  document.getElementById('p-cap').textContent='Capital: '+c.capital;
+  document.getElementById('p-cap').innerHTML='Capital: '+c.capital+'<span class="p-sat-link" onclick="viewCountrySat(this.dataset.iso)" data-iso="'+iso+'" title="Open satellite view">🛰 SATELLITE</span>';
   document.getElementById('h-status').innerHTML='VIEWING: <strong style="color:#93c5fd">'+c.name.toUpperCase()+'</strong>';
   const intel=INTEL[iso]||{};
   const badge=ALERT_BADGE[c.alertLevel]||ALERT_BADGE.LOW;
@@ -9166,12 +9232,12 @@ function openCountry(iso){
     </div>`:''}
     <div class="sec-label">SITUATION ASSESSMENT</div>
     <p class="summary-text">${intel.summary||'No data available.'}</p>
-    ${ex.political?`<div class="sec-label">POLITICAL ANALYSIS</div><p class="political-text">${ex.political}</p>`:''}
-    ${ex.military?`<div class="sec-label">MILITARY POSTURE</div><p class="military-text">${ex.military}</p>`:''}
-    ${intel.keyActors?.length?`<div class="sec-label">KEY ACTORS & ORGANIZATIONS</div><div class="actors-list">${intel.keyActors.map(a=>`<span class="actor-chip">${a}</span>`).join('')}</div>`:''}
-    ${intel.economic?`<div class="sec-label">ECONOMIC INDICATOR</div><p class="econ-text">${intel.economic}</p>`:''}
-    ${ex.signals?.length?`<div class="sec-label">SIGNALS &amp; INDICATORS</div><div>${ex.signals.map(s=>`<div class="signal-item"><span class="signal-dot" style="background:${s.color||'#f59e0b'}"></span><div><p class="signal-text">${s.text}</p><p class="signal-src">SOURCE: ${s.source||'HUMINT/SIGINT'}</p></div></div>`).join('')}</div>`:''}
-    ${ex.personalities?.length?`<div class="sec-label">KEY PERSONALITIES</div>${ex.personalities.map(p=>{const tc=p.threat==='CRITICAL'?'#ef4444':p.threat==='HIGH'?'#f97316':p.threat==='MEDIUM'?'#f59e0b':p.threat==='ELIMINATED'?'#94a3b8':'#22c55e';return`<div class="person-card"><span class="person-threat" style="color:${tc}">${p.threat}</span><div class="person-name">${p.name}</div><div class="person-role">${p.role}</div><p class="person-assess">${p.assess}</p></div>`}).join('')}`:''}
+    ${ex.political?`<div class="intel-expand"><div class="intel-expand-head" onclick="toggleExpandSection(this)"><div style="flex:1"><div class="intel-expand-summary">▸ POLITICAL ANALYSIS</div><div class="intel-expand-meta">${ex.political.length>110?ex.political.slice(0,110).trim()+'…':ex.political}</div></div><span class="intel-expand-arrow">▸</span></div><div class="intel-expand-body"><p class="political-text">${ex.political}</p></div></div>`:''}
+    ${ex.military?`<div class="intel-expand"><div class="intel-expand-head" onclick="toggleExpandSection(this)"><div style="flex:1"><div class="intel-expand-summary">▸ MILITARY POSTURE</div><div class="intel-expand-meta">${ex.military.length>110?ex.military.slice(0,110).trim()+'…':ex.military}</div></div><span class="intel-expand-arrow">▸</span></div><div class="intel-expand-body"><p class="military-text">${ex.military}</p></div></div>`:''}
+    ${intel.keyActors?.length?`<div class="sec-label">KEY ACTORS &amp; ORGANIZATIONS</div><div class="actors-list">${intel.keyActors.map(a=>`<span class="actor-chip" style="cursor:pointer" onclick="intelPop('Actor: '+${JSON.stringify(a)},'INTELLIGENCE ASSESSMENT','Key actor in this country: '+${JSON.stringify(a)}+'. Cross-reference Factions and Foreign Influence tabs for detailed intelligence on this entity and its connections.',['OSINT','KEY ACTOR'])">${a}</span>`).join('')}</div>`:''}
+    ${intel.economic?`<div class="intel-expand"><div class="intel-expand-head" onclick="toggleExpandSection(this)"><div style="flex:1"><div class="intel-expand-summary">▸ ECONOMIC PROFILE</div><div class="intel-expand-meta">${intel.economic.length>110?intel.economic.slice(0,110).trim()+'…':intel.economic}</div></div><span class="intel-expand-arrow">▸</span></div><div class="intel-expand-body"><p class="econ-text">${intel.economic}</p></div></div>`:''}
+    ${ex.signals?.length?`<div class="sec-label">SIGNALS &amp; INDICATORS</div><div>${ex.signals.map(s=>`<div class="intel-expand"><div class="intel-expand-head" onclick="toggleExpandSection(this)"><div style="flex:1;display:flex;align-items:flex-start;gap:8px"><span class="signal-dot" style="background:${s.color||'#f59e0b'};flex-shrink:0;margin-top:3px"></span><div class="intel-expand-summary">${s.text.length>90?s.text.slice(0,90).trim()+'…':s.text}</div></div><span class="intel-expand-arrow">▸</span></div><div class="intel-expand-body"><p class="signal-text">${s.text}</p><p class="signal-src">SOURCE: ${s.source||'HUMINT/SIGINT'}</p></div></div>`).join('')}</div>`:''}
+    ${ex.personalities?.length?`<div class="sec-label">KEY PERSONALITIES</div>${ex.personalities.map(p=>{const tc=p.threat==='CRITICAL'?'#ef4444':p.threat==='HIGH'?'#f97316':p.threat==='MEDIUM'?'#f59e0b':p.threat==='ELIMINATED'?'#94a3b8':'#22c55e';return`<div class="intel-expand"><div class="intel-expand-head" onclick="toggleExpandSection(this)"><div style="flex:1"><div class="intel-expand-summary"><span style="color:${tc};font-size:9px;font-weight:bold;margin-right:6px">[${p.threat}]</span>${p.name}</div><div class="intel-expand-meta">${p.role}</div></div><span class="intel-expand-arrow">▸</span></div><div class="intel-expand-body"><div class="person-card" style="margin:0"><span class="person-threat" style="color:${tc}">${p.threat}</span><div class="person-name">${p.name}</div><div class="person-role">${p.role}</div><p class="person-assess">${p.assess}</p></div></div></div>`}).join('')}`:''}
     <p class="source-line">CLASSIFICATION: OSINT COMPOSITE — Intel Globe Assessment Engine — For Authorized Use Only</p>
   `;
   // Threats — with confidence badges and probability bars
@@ -9182,7 +9248,7 @@ function openCountry(iso){
       const prob=t.probability||(t.severity==='critical'?85:t.severity==='high'?70:t.severity==='medium'?45:20);
       const confClass=conf==='HIGH'?'high':conf==='LOW'?'low':'medium';
       const probColor=prob>=75?'#ef4444':prob>=50?'#f97316':'#22c55e';
-      return`<div class="threat-item"><div class="threat-head"><span class="threat-type">${t.type.toUpperCase()}</span><div style="display:flex;gap:6px;align-items:center"><span class="conf-badge ${confClass}">${conf}</span><span class="threat-sev" style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span></div></div><p class="threat-desc">${t.description}</p>${t.source?`<p class="signal-src" style="margin-top:4px">SOURCE: ${t.source}</p>`:''}<div class="prob-bar-wrap"><div class="prob-label"><span>PROBABILITY OF ACTION</span><span style="color:${probColor};font-weight:bold">${prob}%</span></div><div class="prob-bar"><div class="prob-fill" style="width:${prob}%;background:${probColor}"></div></div></div></div>`;
+      return`<div class="intel-expand"><div class="intel-expand-head" onclick="toggleExpandSection(this)"><div style="flex:1"><div class="intel-expand-summary">${t.type.toUpperCase()}</div><div class="intel-expand-meta"><span style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span> &middot; <span style="font-size:9px;font-weight:bold">${conf} CONF</span> &middot; <span style="color:${probColor};font-weight:bold">${prob}%</span> probability</div></div><span class="intel-expand-arrow">▸</span></div><div class="intel-expand-body"><div class="threat-head" style="margin-bottom:8px"><span class="threat-type">${t.type.toUpperCase()}</span><div style="display:flex;gap:6px;align-items:center"><span class="conf-badge ${confClass}">${conf}</span><span class="threat-sev" style="color:${ALERT_SEV[t.severity]||'#94a3b8'}">● ${t.severity.toUpperCase()}</span></div></div><p class="threat-desc">${t.description}</p>${t.source?`<p class="signal-src" style="margin-top:4px">SOURCE: ${t.source}</p>`:''}<div class="prob-bar-wrap"><div class="prob-label"><span>PROBABILITY OF ACTION</span><span style="color:${probColor};font-weight:bold">${prob}%</span></div><div class="prob-bar"><div class="prob-fill" style="width:${prob}%;background:${probColor}"></div></div></div><div class="drill-row"><button class="drill-btn green" onclick="viewCountrySat('${iso}')">🛰 SATELLITE VIEW</button><button class="drill-btn blue" onclick="showTab('conflicts')">⚔ CONFLICTS</button><button class="drill-btn orange" onclick="showTab('foreign')">🌐 FOREIGN INTEL</button></div></div></div>`;
     }).join('')
     :'<p class="no-data">No active threats recorded.</p>';
   // News — show embedded items immediately, then fetch live
@@ -9192,7 +9258,7 @@ function openCountry(iso){
     ...c,fromName:COUNTRIES[c.from]?.name||c.from,toName:COUNTRIES[c.to]?.name||c.to
   }));
   document.getElementById('tab-conflicts').innerHTML=cfs.length
-    ?'<div class="sec-label">CONFLICT RELATIONSHIPS</div>'+cfs.map(c=>`<div class="conflict-item"><div class="cf-head"><span class="cf-countries">${c.fromName} → ${c.toName}</span><span class="cf-sev ${c.severity}">${c.severity.toUpperCase()}</span></div><div class="cf-meta"><span class="cf-type">${c.type.replace(/_/g,' ').toUpperCase()}</span><span class="cf-label">${c.label}</span></div></div>`).join('')
+    ?'<div class="sec-label">CONFLICT RELATIONSHIPS</div>'+cfs.map(c=>`<div class="conflict-item"><div class="cf-head"><span class="cf-countries">${c.fromName} → ${c.toName}</span><span class="cf-sev ${c.severity}">${c.severity.toUpperCase()}</span></div><div class="cf-meta"><span class="cf-type">${c.type.replace(/_/g,' ').toUpperCase()}</span><span class="cf-label">${c.label}</span></div><div class="drill-row"><button class="drill-btn blue" onclick="openByISO('${c.from}')">📋 ${c.fromName}</button><button class="drill-btn blue" onclick="openByISO('${c.to}')">📋 ${c.toName}</button><button class="drill-btn green" onclick="viewCountrySat('${c.from}')">🛰 SAT</button></div></div>`).join('')
     :'<p class="no-data">No active conflict relationships.</p>';
   document.getElementById('p-updated').textContent='Updated: '+new Date().toLocaleTimeString();
   panel.style.transform='';             // clear any drag offset
@@ -9246,7 +9312,7 @@ async function fetchCountryLiveThreat(iso){
 }
 
 // ── Intel Quick-Pop: click any annotated element for CIA explanation ──────
-function intelPop(title, category, detail, badges){
+function intelPop(title, category, detail, badges, contextISO){
   buildIntelBrief({
     category: category||'INTEL ASSESSMENT',
     dotColor: category==='FACTION'?'#f97316':category==='FOREIGN INFLUENCE'?'#ef4444':category==='NUCLEAR'?'#dc2626':category==='ALLIANCE'?'#3b82f6':'#f59e0b',
@@ -9255,6 +9321,23 @@ function intelPop(title, category, detail, badges){
     detail: detail||'No additional data.'
   });
   document.getElementById('track-modal').style.display='flex';
+  // ── Drill-down action buttons ──────────────────────────────────────────────
+  const btns=document.getElementById('tm-intel-btns');
+  if(btns){
+    const tiso=contextISO||selectedISO||title.match(/— ([A-Z]{2,3})\b/)?.[1]||null;
+    if(tiso&&COUNTRIES[tiso]){
+      const cn=COUNTRIES[tiso].name;
+      btns.style.display='flex';
+      btns.innerHTML=
+        `<button class="tm-intel-btn" onclick="closeTrackModal();openCountry('${tiso}')">📋 ${cn.toUpperCase()} INTEL</button>`+
+        `<button class="tm-intel-btn" style="border-color:rgba(52,211,153,.5);color:#34d399;background:rgba(52,211,153,.06)" onclick="closeTrackModal();viewCountrySat('${tiso}')">🛰 SATELLITE VIEW</button>`+
+        `<button class="tm-intel-btn" style="border-color:rgba(249,115,22,.4);color:#fb923c;background:rgba(249,115,22,.06)" onclick="closeTrackModal();showTab('factions')">⚔ FACTIONS</button>`+
+        `<button class="tm-intel-btn" style="border-color:rgba(239,68,68,.4);color:#fca5a5;background:rgba(239,68,68,.06)" onclick="closeTrackModal();showTab('foreign')">🌐 FOREIGN INTEL</button>`;
+    }else{
+      btns.style.display='none';
+      btns.innerHTML='';
+    }
+  }
 }
 
 // ── Make flashpoint cards open satellite at their location ────────────────
@@ -9303,7 +9386,7 @@ function renderFactionsTab(iso){
       const col=typeColors[f.type]||'#94a3b8';
       const badges=[`STRENGTH: ${f.strength}/100`,f.type];
       if(f.foreign)badges.push('FOREIGN BACKED');
-      return`<div class="faction-card" style="cursor:pointer" onclick="intelPop(${JSON.stringify(f.name)},'FACTION',${JSON.stringify((f.desc||'')+(f.foreign?'\n\nFOREIGN BACKING: '+f.foreign:'')+(f.vs&&f.vs.length?'\n\nHOSTILE TO: '+f.vs.join(', '):''))},${JSON.stringify(badges)})">
+      return`<div class="faction-card" style="cursor:pointer" onclick="intelPop(${JSON.stringify(f.name)},'FACTION',${JSON.stringify((f.desc||'')+(f.foreign?'\n\nFOREIGN BACKING: '+f.foreign:'')+(f.vs&&f.vs.length?'\n\nHOSTILE TO: '+f.vs.join(', '):''))},${JSON.stringify(badges)},'${iso}')">
         <div class="faction-name">${f.name} <span style="font-size:8px;color:#475569;font-weight:normal">▸ TAP FOR INTEL</span></div>
         <div class="faction-type" style="color:${col}">${f.type}</div>
         <div title="Combat effectiveness ${f.strength}/100 — based on manpower, training, equipment and territorial control" style="cursor:help">
@@ -9317,6 +9400,11 @@ function renderFactionsTab(iso){
         <p style="font-size:9px;color:#64748b;line-height:1.5;margin:0 0 4px">${f.desc||''}</p>
         ${f.vs&&f.vs.length?`<div class="faction-vs">&#9876; HOSTILE TO: ${f.vs.join(' &middot; ')}</div>`:''}
         ${f.foreign?`<div class="faction-foreign">&#9672; FOREIGN BACKING: ${f.foreign}</div>`:''}
+        <div class="drill-row" onclick="event.stopPropagation()">
+          <button class="drill-btn orange" onclick="showTab('foreign')">🌐 FOREIGN INTEL</button>
+          <button class="drill-btn green" onclick="viewCountrySat('${iso}')">🛰 SATELLITE</button>
+          <button class="drill-btn blue" onclick="showTab('conflicts')">⚔ CONFLICTS</button>
+        </div>
       </div>`;
     }).join('');
 }
@@ -9343,11 +9431,15 @@ function renderForeignTab(iso){
   el.innerHTML='<div class="sec-label">FOREIGN POWERS &amp; INFLUENCE VECTORS ('+influences.length+')</div>'+
     influences.map(f=>{
       const col=f.color||impactColors[f.impact]||'#94a3b8';
-      return`<div class="foreign-card" style="border-color:${col};cursor:pointer" onclick="intelPop(${JSON.stringify(f.country+' — '+f.type)},'FOREIGN INFLUENCE',${JSON.stringify(f.desc)},[${JSON.stringify('IMPACT: '+f.impact)},${JSON.stringify(f.type)}])">
+      return`<div class="foreign-card" style="border-color:${col};cursor:pointer" onclick="intelPop(${JSON.stringify(f.country+' — '+f.type)},'FOREIGN INFLUENCE',${JSON.stringify(f.desc)},[${JSON.stringify('IMPACT: '+f.impact)},${JSON.stringify(f.type)}],${JSON.stringify(f.iso||'')})">
         <div class="foreign-country" style="color:${col}">${f.country} <span style="font-size:8px;color:#475569;font-weight:normal">▸ TAP FOR INTEL</span></div>
         <div class="foreign-type">${f.type}</div>
         <div class="foreign-desc">${f.desc}</div>
         <div class="foreign-impact" style="color:${col}">IMPACT LEVEL: ${f.impact}</div>
+        <div class="drill-row" onclick="event.stopPropagation()">
+          ${f.iso&&COUNTRIES[f.iso]?`<button class="drill-btn blue" onclick="openByISO('${f.iso}')">📋 ${f.country} INTEL</button><button class="drill-btn green" onclick="viewCountrySat('${f.iso}')">🛰 SATELLITE</button>`:''}
+          <button class="drill-btn orange" onclick="showTab('factions')">⚔ FACTIONS</button>
+        </div>
       </div>`;
     }).join('');
 }
@@ -9520,6 +9612,11 @@ function renderNewsTab(iso,items,isLive){
       </div>
       ${n.url?`<a href="${n.url}" target="_blank" rel="noopener" class="news-title" style="text-decoration:none;cursor:pointer" title="Click to read full report">${n.title}</a>`
               :`<p class="news-title">${n.title}</p>`}
+      <div class="drill-row" style="margin-top:7px;padding-top:6px">
+        <button class="drill-btn green" onclick="viewCountrySat('${iso}')">🛰 SATELLITE</button>
+        <button class="drill-btn blue" onclick="showTab('summary')">📋 SUMMARY</button>
+        <button class="drill-btn orange" onclick="showTab('threats')">⚠ THREATS</button>
+      </div>
     </div>`;
   }).join('');
   document.getElementById('tab-news').innerHTML=label+refreshBtn+html;
