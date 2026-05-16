@@ -11332,6 +11332,19 @@ const ISO3_TO_2={
 
 let camTabISO='';
 
+function makeEmbedUrl(url){
+  if(!url||url.length<8)return'';
+  const wm=url.match(/windy\.com\/webcams\/(\d+)/i);
+  if(wm)return'https://webcams.windy.com/webcam/'+wm[1]+'/player';
+  const ym=url.match(/youtube\.com\/watch\?(?:.*&)?v=([A-Za-z0-9_-]{11})/);
+  if(ym)return'https://www.youtube.com/embed/'+ym[1]+'?autoplay=1&mute=1';
+  const ys=url.match(/youtu\.be\/([A-Za-z0-9_-]{11})/);
+  if(ys)return'https://www.youtube.com/embed/'+ys[1]+'?autoplay=1&mute=1';
+  if(url.includes('youtube.com/embed/')||url.includes('webcams.windy.com/webcam/'))return url;
+  if(url.startsWith('https://')&&(url.match(/\.(mjpg|mjpeg|cgi|php)/i)||url.includes('/stream')||url.includes('/video')||url.includes('/cam')))return url;
+  return'';
+}
+
 async function renderCamerasTab(iso){
   if(!iso)return;
   const el=document.getElementById('tab-cameras');
@@ -11341,6 +11354,7 @@ async function renderCamerasTab(iso){
   const c=COUNTRIES[iso];
   const countryName=c?.name||iso;
   const cc2=ISO3_TO_2[iso]||'';
+  const lat=c?.lat||0,lng=c?.lng||0;
 
   el.innerHTML=`
     <div class="sec-label" style="display:flex;justify-content:space-between;align-items:center">
@@ -11349,18 +11363,74 @@ async function renderCamerasTab(iso){
     </div>
     <div class="cam-loading" id="cam-status">
       <div class="cam-loading-spinner"></div>
-      <span>SCANNING LIVE FEEDS…</span>
+      <span>SCANNING LIVE FEEDS...</span>
     </div>`;
 
   let cams=[];
+
+  // Source 1: Windy Webcams v2
   if(cc2){
-    // Try Windy Webcams v2 (public endpoint)
     try{
       const r=await fetch(
-        'https://api.windy.com/api/webcams/v2/list/country='+cc2+'/orderby=popularity/limit=12?show=webcams:image,player,location',
-        {signal:AbortSignal.timeout(7000)}
+        'https://api.windy.com/api/webcams/v2/list/country='+cc2+'/orderby=popularity/limit=10?show=webcams:image,player,location',
+        {signal:AbortSignal.timeout(6000)}
       );
-      if(r.ok){const d=await r.json();cams=d.webcams||[];}
+      if(r.ok){
+        const d=await r.json();
+        cams=(d.webcams||[]).map(cam=>({
+          name:cam.title||'Live Camera',
+          city:(cam.location?.city||cam.location?.region||'').trim(),
+          embed:cam.player?.day?.embed||('https://webcams.windy.com/webcam/'+cam.id+'/player'),
+          thumb:cam.image?.current?.thumbnail||cam.image?.current?.preview||''
+        }));
+      }
+    }catch(e){}
+  }
+
+  // Source 2: OpenStreetMap Overpass (contact:webcam nodes) — runs if Windy returned fewer than 3
+  if(cams.length<3){
+    try{
+      const spread=8;
+      const bbox=`${lat-spread},${lng-spread},${lat+spread},${lng+spread}`;
+      const q=`[out:json][timeout:12];node["contact:webcam"](${bbox});out 12;`;
+      const r=await fetch(
+        'https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q),
+        {signal:AbortSignal.timeout(12000)}
+      );
+      if(r.ok){
+        const d=await r.json();
+        const osmCams=(d.elements||[]).map(e=>{
+          const raw=e.tags?.['contact:webcam']||'';
+          const embed=makeEmbedUrl(raw);
+          if(!embed)return null;
+          return{
+            name:e.tags?.name||e.tags?.description||'CCTV Camera',
+            city:e.tags?.['addr:city']||e.tags?.locality||'',
+            embed,
+            thumb:''
+          };
+        }).filter(Boolean);
+        cams=[...cams,...osmCams];
+      }
+    }catch(e){}
+  }
+
+  // Source 3: WorldCam.eu public list via proxy-friendly JSON feed
+  if(cams.length<3&&cc2){
+    try{
+      const r=await fetch(
+        'https://worldcam.eu/webcams/'+cc2.toLowerCase()+'?format=json',
+        {signal:AbortSignal.timeout(6000)}
+      );
+      if(r.ok){
+        const d=await r.json();
+        const wcs=(d.webcams||d.items||[]).slice(0,8).map(w=>{
+          const embed=makeEmbedUrl(w.embed||w.url||'');
+          if(!embed)return null;
+          return{name:w.title||w.name||'Live Camera',city:w.city||w.location||'',embed,thumb:w.thumbnail||w.thumb||''};
+        }).filter(Boolean);
+        cams=[...cams,...wcs];
+      }
     }catch(e){}
   }
 
@@ -11372,54 +11442,55 @@ async function renderCamerasTab(iso){
     const grid=document.createElement('div');
     grid.className='cam-grid';
     grid.innerHTML=cams.map(cam=>{
-      const thumb=cam.image?.current?.thumbnail||cam.image?.current?.preview||'';
-      const playerUrl=cam.player?.day?.embed||('https://webcams.windy.com/webcam/'+cam.id+'/player');
-      const city=(cam.location?.city||cam.location?.region||'').trim();
-      const name=cam.title||'Live Camera';
-      return '<div class="cam-card" onclick="openCamPlayer('+JSON.stringify(playerUrl)+','+JSON.stringify(name)+')">'
-        +(thumb?'<img class="cam-thumb" src="'+thumb+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>CAM</div>\'">'
+      const {name,city,embed,thumb}=cam;
+      return '<div class="cam-card" onclick="openCamPlayer('+JSON.stringify(embed)+','+JSON.stringify(name)+')">'
+        +(thumb?'<img class="cam-thumb" src="'+thumb+'" loading="lazy" alt="" onerror="this.parentNode.querySelector(\'.cam-thumb\')?.remove()">'
                :'<div class="cam-thumb-ph">CAM</div>')
-        +'<div class="cam-live-dot">● LIVE</div>'
-        +'<div class="cam-play-icon">▶</div>'
+        +'<div class="cam-live-dot">LIVE</div>'
+        +'<div class="cam-play-icon">&#9654;</div>'
         +'<div class="cam-info"><div class="cam-name">'+name+'</div>'
         +(city?'<div class="cam-city">'+city+'</div>':'')
         +'</div></div>';
     }).join('');
     el.appendChild(grid);
-    // Add satellite fallback at bottom
     el.insertAdjacentHTML('beforeend',
       '<div class="drill-row" style="margin-top:14px;justify-content:center">'
       +'<button class="drill-btn green" onclick="viewCountrySat(\''+iso+'\')">OPEN SATELLITE VIEW</button>'
+      +'<button class="drill-btn blue" onclick="camTabISO=\'\';renderCamerasTab(\''+iso+'\')">REFRESH</button>'
       +'</div>');
   }else{
-    // No cameras returned — stay in-app, offer satellite view
     statusEl.className='cam-loading';
-    statusEl.innerHTML=`
-      <div style="font-size:11px;letter-spacing:.2em;color:#334155;margin-bottom:8px">NO FEED DATA</div>
-      <div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:16px;max-width:260px">
-        Live camera feeds unavailable for ${countryName}.<br>
-        Check internet connection or try another country.
-      </div>
-      <div class="cam-search-box">
-        <button class="drill-btn green" style="width:100%;justify-content:center;min-height:44px" onclick="viewCountrySat('${iso}')">OPEN SATELLITE VIEW</button>
-        <button class="drill-btn blue" style="width:100%;justify-content:center;min-height:44px" onclick="camTabISO='';renderCamerasTab('${iso}')">RETRY</button>
-      </div>`;
+    statusEl.innerHTML=
+      '<div style="font-size:11px;letter-spacing:.2em;color:#334155;margin-bottom:8px">NO FEED DATA</div>'
+      +'<div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:16px;max-width:260px">'
+      +'Live camera feeds unavailable for '+countryName+'.<br>Check internet connection or try another country.</div>'
+      +'<div class="cam-search-box">'
+      +'<button class="drill-btn green" style="width:100%;justify-content:center;min-height:44px" onclick="viewCountrySat(\''+iso+'\')">OPEN SATELLITE VIEW</button>'
+      +'<button class="drill-btn blue" style="width:100%;justify-content:center;min-height:44px" onclick="camTabISO=\'\';renderCamerasTab(\''+iso+'\')">RETRY</button>'
+      +'</div>';
   }
 }
 
 function openCamPlayer(url,name){
   const ov=document.getElementById('cam-overlay');
   if(!ov)return;
-  document.getElementById('cam-iframe').src=url;
-  document.getElementById('cam-label').textContent=name;
+  document.getElementById('cam-label').textContent=name||'LIVE CAMERA';
+  const ct=document.getElementById('cam-iframe-container');
+  if(ct){
+    if(url.match(/\.(mjpg|mjpeg)(\?|$)/i)){
+      ct.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:contain;display:block" alt="Live Camera Feed">';
+    }else{
+      ct.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none;display:block" allowfullscreen allow="autoplay;encrypted-media;picture-in-picture"></iframe>';
+    }
+  }
   ov.classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeCamPlayer(){
   const ov=document.getElementById('cam-overlay');
   if(ov)ov.classList.remove('open');
-  const fr=document.getElementById('cam-iframe');
-  if(fr)fr.src='';
+  const ct=document.getElementById('cam-iframe-container');
+  if(ct)ct.innerHTML='';
   document.body.style.overflow='';
 }
 </script>
@@ -11431,7 +11502,7 @@ function closeCamPlayer(){
       <span id="cam-label">LIVE CAMERA</span>
       <button id="cam-close-btn" onclick="closeCamPlayer()">✕ CLOSE</button>
     </div>
-    <iframe id="cam-iframe" src="" allowfullscreen allow="autoplay;encrypted-media;picture-in-picture"></iframe>
+    <div id="cam-iframe-container" style="width:100%;height:100%;position:relative;overflow:hidden"></div>
   </div>
 </div>
 
