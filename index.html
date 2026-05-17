@@ -755,15 +755,6 @@ canvas.dragging{cursor:grabbing}
 #cam-overlay{position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
 #cam-overlay.open{display:flex}
 #cam-inner{position:relative;width:min(97vw,980px);height:min(90vh,640px);background:#000;border-radius:8px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.85),0 0 0 1px rgba(0,255,80,.12)}
-#cam-iframe{width:100%;height:100%;border:none;display:block}
-/* Classified HUD overlays */
-#cam-scanlines{position:absolute;inset:0;z-index:20;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.18) 3px,rgba(0,0,0,.18) 4px)}
-#cam-phosphor{position:absolute;inset:0;z-index:19;pointer-events:none;background:rgba(0,255,70,.03);mix-blend-mode:screen}
-#cam-corner-tl{position:absolute;top:8px;left:10px;z-index:25;font-family:var(--mono);font-size:8px;letter-spacing:.1em;color:rgba(0,255,80,.75);pointer-events:none;line-height:1.7;text-shadow:0 0 6px rgba(0,255,80,.5)}
-#cam-corner-tr{position:absolute;top:8px;right:10px;z-index:25;font-family:var(--mono);font-size:8px;letter-spacing:.1em;color:rgba(0,255,80,.75);pointer-events:none;line-height:1.7;text-align:right;text-shadow:0 0 6px rgba(0,255,80,.5)}
-#cam-corner-bl{position:absolute;bottom:8px;left:10px;z-index:25;font-family:var(--mono);font-size:8px;letter-spacing:.1em;color:rgba(239,68,68,.8);pointer-events:none;line-height:1.7;text-shadow:0 0 6px rgba(239,68,68,.4)}
-#cam-corner-br{position:absolute;bottom:8px;right:10px;z-index:25;font-family:var(--mono);font-size:8px;letter-spacing:.1em;color:rgba(0,255,80,.75);pointer-events:none;line-height:1.7;text-align:right;text-shadow:0 0 6px rgba(0,255,80,.5)}
-#cam-classified-stamp{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);z-index:22;font-family:var(--mono);font-size:clamp(18px,4vw,32px);font-weight:900;letter-spacing:.25em;color:rgba(239,68,68,.12);border:3px solid rgba(239,68,68,.12);padding:6px 18px;pointer-events:none;white-space:nowrap}
 #cam-title-bar{position:absolute;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:linear-gradient(180deg,rgba(0,0,0,.92) 0%,transparent 100%);pointer-events:none}
 #cam-title-bar button{pointer-events:all}
 #cam-label{color:#00ff50;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-shadow:0 0 8px rgba(0,255,80,.6);max-width:65%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -11382,18 +11373,32 @@ async function renderCamerasTab(iso){
   const lat=c?.lat||0,lng=c?.lng||0;
 
   el.innerHTML=`
-    <div class="sec-label" style="display:flex;justify-content:space-between;align-items:center;color:rgba(0,255,80,.85)">
-      <span style="letter-spacing:.12em">// SIGINT // ${countryName.toUpperCase()}</span>
-      <span style="color:rgba(239,68,68,.9);font-size:8px;letter-spacing:.15em;animation:blink 1s step-start infinite">● ACTIVE</span>
-    </div>
+    <div class="sec-label">LIVE CAMERAS — ${countryName.toUpperCase()}</div>
     <div class="cam-loading" id="cam-status">
-      <div class="cam-loading-spinner" style="border-top-color:rgba(0,255,80,.6)"></div>
-      <span style="color:rgba(0,255,80,.6);letter-spacing:.15em">SCANNING LIVE FEEDS...</span>
+      <div class="cam-loading-spinner"></div>
+      <span>SCANNING LIVE FEEDS...</span>
     </div>`;
 
   let cams=[];
 
-  // Source 1: Windy Webcams v2 — by country code
+  // Source 1: TfL JamCam — London traffic/CCTV cameras (UK only, free, no key)
+  if(cc2==='GB'){
+    try{
+      const r=await fetch('https://api.tfl.gov.uk/Place/Type/JamCam',{signal:AbortSignal.timeout(8000)});
+      if(r.ok){
+        const d=await r.json();
+        const tfl=(d||[]).filter((_,i)=>i<16).map(cam=>{
+          const imgProp=(cam.additionalProperties||[]).find(function(p){return p.key==='imageUrl';});
+          const url=imgProp?imgProp.value:'';
+          if(!url)return null;
+          return{name:cam.commonName||'Traffic Camera',city:'London',embed:url,thumb:url};
+        }).filter(Boolean);
+        cams=[...cams,...tfl];
+      }
+    }catch(e){}
+  }
+
+  // Source 2: Windy Webcams v2 — by country code
   if(cc2){
     try{
       const r=await fetch(
@@ -11471,7 +11476,7 @@ async function renderCamerasTab(iso){
   const windyMapUrl='https://embed.windy.com/embed2.html?lat='+lat+'&lon='+lng+'&zoom=5&overlay=webcams&product=ecmwf&menu=&message=&marker=true';
   const mapSection=
     '<div class="cam-map-section">'
-    +'<div class="cam-map-label">// LIVE CAMERA MAP — '+countryName.toUpperCase()+' — TAP ICONS TO VIEW</div>'
+    +'<div class="cam-map-label">CAMERA MAP — '+countryName.toUpperCase()+' — TAP ICONS TO VIEW</div>'
     +'<div class="cam-map-frame">'
     +'<iframe src="'+windyMapUrl+'" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>'
     +'</div>'
@@ -11483,11 +11488,10 @@ async function renderCamerasTab(iso){
     const grid=document.createElement('div');
     grid.className='cam-grid';
     grid.innerHTML=cams.map(cam=>{
-      const {name,city,embed,thumb,camLat,camLng}=cam;
-      const clat=camLat||lat,clng=camLng||lng;
+      const {name,city,embed,thumb}=cam;
       const safeEmbed=JSON.stringify(embed).replace(/"/g,'&quot;');
       const safeName=JSON.stringify(name).replace(/"/g,'&quot;');
-      const onclick='openCamPlayer('+safeEmbed+','+safeName+','+clat+','+clng+')';
+      const onclick='openCamPlayer('+safeEmbed+','+safeName+')';
       return '<div class="cam-card" onclick="'+onclick+'">'
         +(thumb?'<img class="cam-thumb" src="'+thumb+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>CAM</div>\'">'
                :'<div class="cam-thumb-ph">CAM</div>')
@@ -11508,9 +11512,8 @@ async function renderCamerasTab(iso){
     // No direct feeds found — show map as primary content
     const div=document.createElement('div');
     div.innerHTML=
-      '<div style="font-size:9px;color:rgba(239,68,68,.6);letter-spacing:.08em;line-height:1.8;margin-bottom:10px;padding:8px 11px;border:1px solid rgba(239,68,68,.15);border-radius:4px;font-family:var(--mono)">'
-      +'DIRECT FEEDS OFFLINE — '+countryName.toUpperCase()+'<br>'
-      +'<span style="color:#475569">Use the camera map below to browse all live feeds in this region.</span>'
+      '<div style="font-size:10px;color:var(--dim);line-height:1.7;margin-bottom:10px;padding:9px 11px;border:1px solid rgba(30,58,95,.3);border-radius:4px">'
+      +'No direct camera feeds found for '+countryName+'. Use the map below to browse cameras in this region — zoom in and tap any camera icon to view a live feed.'
       +'</div>'
       +mapSection
       +'<div class="drill-row" style="justify-content:center;margin-top:10px">'
@@ -11522,44 +11525,39 @@ async function renderCamerasTab(iso){
 }
 
 let _camHudInterval=null;
-function _startCamHUD(lat,lng,name){
-  const coordEl=document.getElementById('cam-hud-coords');
-  const timeEl=document.getElementById('cam-hud-time');
-  const srcEl=document.getElementById('cam-hud-src');
-  const nameEl=document.getElementById('cam-label-name');
-  if(coordEl&&lat&&lng)coordEl.textContent='LAT '+(+lat).toFixed(3)+' LNG '+(+lng).toFixed(3);
-  if(srcEl&&name)srcEl.textContent=name.toUpperCase().slice(0,20);
-  if(nameEl)nameEl.textContent=(name||'LIVE FEED').toUpperCase();
-  function tick(){if(timeEl)timeEl.textContent=new Date().toISOString().replace('T',' ').slice(0,19)+' UTC';}
-  tick();
-  if(_camHudInterval)clearInterval(_camHudInterval);
-  _camHudInterval=setInterval(tick,1000);
-}
-function _stopCamHUD(){
-  if(_camHudInterval){clearInterval(_camHudInterval);_camHudInterval=null;}
-}
 
-function openCamPlayer(url,name,lat,lng){
+function openCamPlayer(url,name){
   const ov=document.getElementById('cam-overlay');
   if(!ov)return;
-  _startCamHUD(lat,lng,name);
+  const lbl=document.getElementById('cam-label');
+  if(lbl)lbl.textContent=name||'LIVE FEED';
   const ct=document.getElementById('cam-iframe-container');
   if(ct){
-    ct.innerHTML='<div class="cam-loading" style="background:#000"><div class="cam-loading-spinner" style="border-top-color:rgba(0,255,80,.7)"></div><span style="color:rgba(0,255,80,.6);letter-spacing:.15em">ESTABLISHING INTERCEPT...</span></div>';
+    ct.innerHTML='<div class="cam-loading"><div class="cam-loading-spinner"></div><span>LOADING...</span></div>';
     setTimeout(function(){
       if(!ov.classList.contains('open'))return;
-      if(url.match(/\.(mjpg|mjpeg)(\?|$)/i)){
-        ct.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:contain;display:block;filter:saturate(.8) brightness(.9)" alt="Intercept Feed">';
+      if(_camHudInterval){clearInterval(_camHudInterval);_camHudInterval=null;}
+      if(url.match(/\.(jpg|jpeg|png)(\?|$)/i)||url.includes('jamcams.tfl.gov.uk')||url.includes('dot.ca.gov')){
+        // Auto-refreshing snapshot — traffic/CCTV cameras
+        const img=document.createElement('img');
+        img.src=url+'?t='+Date.now();
+        img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;background:#000';
+        img.alt='Live Camera';
+        ct.innerHTML='';
+        ct.appendChild(img);
+        _camHudInterval=setInterval(function(){img.src=url+'?t='+Date.now();},10000);
+      }else if(url.match(/\.(mjpg|mjpeg)(\?|$)/i)){
+        ct.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:contain;display:block;background:#000" alt="Live Camera">';
       }else{
         ct.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none;display:block" allowfullscreen allow="autoplay;encrypted-media;picture-in-picture" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>';
       }
-    },180);
+    },150);
   }
   ov.classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeCamPlayer(){
-  _stopCamHUD();
+  if(_camHudInterval){clearInterval(_camHudInterval);_camHudInterval=null;}
   const ov=document.getElementById('cam-overlay');
   if(ov)ov.classList.remove('open');
   const ct=document.getElementById('cam-iframe-container');
@@ -11568,24 +11566,13 @@ function closeCamPlayer(){
 }
 </script>
 
-<!-- Classified Camera Player Overlay -->
+<!-- Live Camera Player Overlay -->
 <div id="cam-overlay" onclick="if(event.target===this)closeCamPlayer()">
   <div id="cam-inner">
-    <!-- Classified visual effects -->
-    <div id="cam-scanlines"></div>
-    <div id="cam-phosphor"></div>
-    <div id="cam-classified-stamp">CLASSIFIED</div>
-    <!-- HUD corners -->
-    <div id="cam-corner-tl">SIGINT INTERCEPT<br><span id="cam-hud-coords">LAT 00.000 LNG 00.000</span></div>
-    <div id="cam-corner-tr"><span id="cam-hud-time">--:--:-- UTC</span><br>FEED ACTIVE</div>
-    <div id="cam-corner-bl">SRC: <span id="cam-hud-src">CLASSIFIED</span><br>ENCRYPTION: AES-256</div>
-    <div id="cam-corner-br">EYES ONLY<br>NEED-TO-KNOW BASIS</div>
-    <!-- Title bar -->
     <div id="cam-title-bar">
-      <span id="cam-label"><span id="cam-label-prefix">// INTERCEPT //</span><span id="cam-label-name">LIVE FEED</span></span>
+      <span id="cam-label">LIVE FEED</span>
       <button id="cam-close-btn" onclick="closeCamPlayer()">✕ CLOSE</button>
     </div>
-    <!-- Player -->
     <div id="cam-iframe-container" style="width:100%;height:100%;position:relative;overflow:hidden"></div>
   </div>
 </div>
