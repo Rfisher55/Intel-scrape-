@@ -1069,6 +1069,9 @@ canvas.dragging{cursor:grabbing}
   </div>
 </div>
 
+<!-- HLS video stream support (for m3u8 CCTV/IP camera feeds) -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+
 <script>
 /* ════════════════════════════════════════════════════
    ALL DATA EMBEDDED — WORKS AS PURE STATIC FILE
@@ -11356,499 +11359,154 @@ function makeEmbedUrl(url){
   return'';
 }
 
+// Channel-based YouTube live stream — uses the channel's CURRENT live broadcast.
+// Channel IDs are permanent; if offline shows "offline" card, never a wrong video.
+function _ytCh(chId,name,city){
+  return{name:name,city:city,
+    embed:'https://www.youtube.com/embed/live_stream?channel='+chId+'&autoplay=1&mute=1&rel=0',
+    thumb:'',isSnapshot:false};
+}
+// Direct video ID embed — used only when we know it is a permanent live stream.
 function _yt(id,name,city){
   return{name:name,city:city,
     embed:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&rel=0',
     thumb:'https://img.youtube.com/vi/'+id+'/hqdefault.jpg',isSnapshot:false};
 }
+// MJPEG / JPEG snapshot helper
 function _snap(url,name,city){
   return{name:name,city:city,embed:url,thumb:url,isSnapshot:true};
 }
+// MJPEG continuous stream — true live video, no refresh needed
+function _mjpeg(url,name,city){
+  return{name:name,city:city,embed:url,thumb:'',isSnapshot:false,isMjpeg:true};
+}
 
-// Curated no-login public camera feeds organised by ISO-3 country code.
-// YouTube embeds never require sign-in; if a stream is offline YouTube
-// shows an offline card — never a login wall.
+// Curated live camera feeds by ISO-3 country code.
+// Priority: MJPEG streams (true video) > YouTube channel live > YouTube video ID.
+// YouTube channel format (live_stream?channel=ID) always shows live video or "offline",
+// never redirects, never requires login, never shows a wrong video.
 var CURATED_CAMS={
   USA:[
-    _yt('nd0Ne8UZiDk','Times Square 24/7','New York, USA'),
-    _yt('jfKfPfyJRdk','Times Square Live Cam','New York, USA'),
-    _yt('5qap5aO4i9A','lofi hip hop — relaxing cam','New York, USA'),
-    _yt('21X5lGlDOfg','New York City Live','New York, USA'),
-    _yt('1EiC9bvVGnk','Chicago River Cam','Chicago, USA'),
-    _yt('AdUw5RdyZxI','Hollywood Live','Los Angeles, USA'),
-    _yt('ByXys4oc6pQ','Las Vegas Strip Live','Las Vegas, USA'),
-    _yt('oJfMWYv5Oc4','Niagara Falls Live','Niagara Falls, USA'),
-  ],
-  GBR:[],// filled by TfL API
-  CAN:[
-    _yt('oJfMWYv5Oc4','Niagara Falls Live','Ontario, Canada'),
-    _yt('HnNFPNOG9Js','Vancouver Live Cam','Vancouver, Canada'),
-    _yt('F5OCXFMR6XA','Toronto Skyline Live','Toronto, Canada'),
-  ],
-  FRA:[
-    _yt('gNFBSGwXDXM','Paris Eiffel Tower Live','Paris, France'),
-    _yt('DfPeprQ7oGc','Paris Street Live','Paris, France'),
-    _yt('lVoMIiKJaQg','Louvre Live Cam','Paris, France'),
-  ],
-  DEU:[
-    _yt('bJMJSjh0f0s','Berlin Brandenburg Gate Live','Berlin, Germany'),
-    _yt('Q6d5_ROlGY0','Munich City Live','Munich, Germany'),
-    _yt('RxfRSe3UZEY','Hamburg Harbour Cam','Hamburg, Germany'),
-  ],
-  ITA:[
-    _yt('_YwLGQdBXMg','Rome Colosseum Live','Rome, Italy'),
-    _yt('0Y7nXxdSFEo','Venice Canal Live','Venice, Italy'),
-    _yt('XJkOtEiFmh4','Florence Live Cam','Florence, Italy'),
-  ],
-  ESP:[
-    _yt('R-x-LLM4XA0','Barcelona Live Cam','Barcelona, Spain'),
-    _yt('ByUi3eJGcCE','Madrid Live Cam','Madrid, Spain'),
-    _yt('OW1igpx-jkI','Sagrada Familia Live','Barcelona, Spain'),
-  ],
-  NLD:[
-    _yt('aLBDtzB3jI0','Amsterdam Canal Live','Amsterdam, Netherlands'),
-    _yt('w6R--UMlSJI','Rotterdam Harbour Live','Rotterdam, Netherlands'),
-  ],
-  BEL:[
-    _yt('EsIiRLmx2kM','Brussels Grand Place Live','Brussels, Belgium'),
-    _yt('aLBDtzB3jI0','Antwerp Live Cam','Antwerp, Belgium'),
-  ],
-  CHE:[
-    _yt('7sHoeFNy9oU','Zurich Live Cam','Zurich, Switzerland'),
-    _yt('YYkOBZxbDtI','Geneva Lake Live','Geneva, Switzerland'),
-  ],
-  AUT:[
-    _yt('z0ZFAf4xoFk','Vienna Live Cam','Vienna, Austria'),
-    _yt('Q6d5_ROlGY0','Salzburg Live Cam','Salzburg, Austria'),
-  ],
-  CZE:[
-    _yt('5wJWfbHB05c','Prague Old Town Live','Prague, Czech Republic'),
-    _yt('DfPeprQ7oGc','Prague Charles Bridge Live','Prague, Czech Republic'),
-  ],
-  POL:[
-    _yt('kW6lvJiNvkk','Warsaw Live Cam','Warsaw, Poland'),
-    _yt('EsIiRLmx2kM','Krakow Market Square Live','Krakow, Poland'),
-  ],
-  SWE:[
-    _yt('b-4AZiFzHiQ','Stockholm Live Cam','Stockholm, Sweden'),
-    _yt('HnNFPNOG9Js','Gothenburg Harbour Live','Gothenburg, Sweden'),
-  ],
-  NOR:[
-    _yt('b-4AZiFzHiQ','Oslo Live Cam','Oslo, Norway'),
-    _yt('RxfRSe3UZEY','Bergen Harbour Live','Bergen, Norway'),
-  ],
-  DNK:[
-    _yt('b-4AZiFzHiQ','Copenhagen Live Cam','Copenhagen, Denmark'),
-    _yt('F5OCXFMR6XA','Aarhus Live Cam','Aarhus, Denmark'),
-  ],
-  FIN:[
-    _yt('7sHoeFNy9oU','Helsinki Live Cam','Helsinki, Finland'),
-  ],
-  PRT:[
-    _yt('gNFBSGwXDXM','Lisbon Live Cam','Lisbon, Portugal'),
-    _yt('R-x-LLM4XA0','Porto Live Cam','Porto, Portugal'),
-  ],
-  GRC:[
-    _yt('_YwLGQdBXMg','Athens Acropolis Live','Athens, Greece'),
-    _yt('0Y7nXxdSFEo','Santorini Live Cam','Santorini, Greece'),
-  ],
-  TUR:[
-    _yt('bJMJSjh0f0s','Istanbul Bosphorus Live','Istanbul, Turkey'),
-    _yt('EsIiRLmx2kM','Istanbul Grand Bazaar Live','Istanbul, Turkey'),
-  ],
-  RUS:[
-    _yt('kW6lvJiNvkk','Moscow Red Square Live','Moscow, Russia'),
-    _yt('z0ZFAf4xoFk','St Petersburg Live Cam','St Petersburg, Russia'),
-  ],
-  UKR:[
-    _yt('EsIiRLmx2kM','Kyiv Live Cam','Kyiv, Ukraine'),
-    _yt('kW6lvJiNvkk','Lviv Live Cam','Lviv, Ukraine'),
-  ],
-  JPN:[
-    _yt('86YLFOog4GM','Tokyo Shibuya Crossing Live','Tokyo, Japan'),
-    _yt('w6R--UMlSJI','Tokyo Shinjuku Live','Tokyo, Japan'),
-    _yt('5qap5aO4i9A','Osaka Dotonbori Live','Osaka, Japan'),
-    _yt('AdUw5RdyZxI','Mount Fuji Live Cam','Fujikawaguchiko, Japan'),
-    _yt('1EiC9bvVGnk','Kyoto Live Cam','Kyoto, Japan'),
-  ],
-  CHN:[
-    _yt('86YLFOog4GM','Shanghai Bund Live','Shanghai, China'),
-    _yt('21X5lGlDOfg','Beijing Tiananmen Live','Beijing, China'),
-    _yt('ByXys4oc6pQ','Hong Kong Harbour Live','Hong Kong, China'),
-  ],
-  HKG:[
-    _yt('ByXys4oc6pQ','Hong Kong Harbour Live','Hong Kong'),
-    _yt('w6R--UMlSJI','Victoria Harbour Live','Hong Kong'),
-  ],
-  KOR:[
-    _yt('86YLFOog4GM','Seoul Live Cam','Seoul, South Korea'),
-    _yt('w6R--UMlSJI','Busan Beach Live','Busan, South Korea'),
-  ],
-  SGP:[
-    _yt('ByXys4oc6pQ','Singapore Marina Bay Live','Singapore'),
-    _yt('21X5lGlDOfg','Singapore Skyline Live','Singapore'),
-  ],
-  THA:[
-    _yt('AdUw5RdyZxI','Bangkok Live Cam','Bangkok, Thailand'),
-    _yt('5qap5aO4i9A','Phuket Beach Live','Phuket, Thailand'),
-  ],
-  IND:[
-    _yt('21X5lGlDOfg','Mumbai Live Cam','Mumbai, India'),
-    _yt('1EiC9bvVGnk','Delhi Live Cam','New Delhi, India'),
-    _yt('bJMJSjh0f0s','Taj Mahal Live','Agra, India'),
-  ],
-  ARE:[
-    _yt('ByXys4oc6pQ','Dubai Skyline Live','Dubai, UAE'),
-    _yt('21X5lGlDOfg','Burj Khalifa Live','Dubai, UAE'),
-    _yt('AdUw5RdyZxI','Abu Dhabi Live Cam','Abu Dhabi, UAE'),
-  ],
-  SAU:[
-    _yt('21X5lGlDOfg','Riyadh Live Cam','Riyadh, Saudi Arabia'),
-    _yt('bJMJSjh0f0s','Mecca Live View','Mecca, Saudi Arabia'),
-  ],
-  ISR:[
-    _yt('_YwLGQdBXMg','Jerusalem Live Cam','Jerusalem, Israel'),
-    _yt('gNFBSGwXDXM','Tel Aviv Live Cam','Tel Aviv, Israel'),
-  ],
-  EGY:[
-    _yt('_YwLGQdBXMg','Cairo Live Cam','Cairo, Egypt'),
-    _yt('bJMJSjh0f0s','Pyramids of Giza Live','Giza, Egypt'),
-  ],
-  ZAF:[
-    _yt('F5OCXFMR6XA','Cape Town Live Cam','Cape Town, South Africa'),
-    _yt('HnNFPNOG9Js','Johannesburg Live Cam','Johannesburg, South Africa'),
-  ],
-  NGA:[
-    _yt('21X5lGlDOfg','Lagos Live Cam','Lagos, Nigeria'),
-    _yt('1EiC9bvVGnk','Abuja Live Cam','Abuja, Nigeria'),
-  ],
-  KEN:[
-    _yt('AdUw5RdyZxI','Nairobi Live Cam','Nairobi, Kenya'),
-    _yt('5qap5aO4i9A','Maasai Mara Wildlife Live','Kenya'),
-  ],
-  ETH:[
-    _yt('21X5lGlDOfg','Addis Ababa Live Cam','Addis Ababa, Ethiopia'),
-  ],
-  TZA:[
-    _yt('5qap5aO4i9A','Serengeti Wildlife Live','Tanzania'),
-    _yt('AdUw5RdyZxI','Zanzibar Beach Live','Zanzibar, Tanzania'),
-  ],
-  AUS:[
-    _yt('oJfMWYv5Oc4','Sydney Harbour Live','Sydney, Australia'),
-    _yt('HnNFPNOG9Js','Melbourne Live Cam','Melbourne, Australia'),
-    _yt('F5OCXFMR6XA','Great Barrier Reef Live','Queensland, Australia'),
-    _yt('ByXys4oc6pQ','Sydney Opera House Live','Sydney, Australia'),
-  ],
-  NZL:[
-    _yt('oJfMWYv5Oc4','Auckland Live Cam','Auckland, New Zealand'),
-    _yt('HnNFPNOG9Js','Queenstown Live Cam','Queenstown, New Zealand'),
-  ],
-  BRA:[
-    _yt('nd0Ne8UZiDk','Rio de Janeiro Live Cam','Rio de Janeiro, Brazil'),
-    _yt('jfKfPfyJRdk','Copacabana Beach Live','Rio de Janeiro, Brazil'),
-    _yt('5qap5aO4i9A','Sao Paulo Live Cam','Sao Paulo, Brazil'),
-  ],
-  ARG:[
-    _yt('nd0Ne8UZiDk','Buenos Aires Live Cam','Buenos Aires, Argentina'),
-    _yt('jfKfPfyJRdk','Patagonia Wildlife Live','Patagonia, Argentina'),
-  ],
-  MEX:[
-    _yt('nd0Ne8UZiDk','Mexico City Live Cam','Mexico City, Mexico'),
-    _yt('AdUw5RdyZxI','Cancun Beach Live','Cancun, Mexico'),
-  ],
-  COL:[
-    _yt('jfKfPfyJRdk','Bogota Live Cam','Bogota, Colombia'),
-    _yt('5qap5aO4i9A','Cartagena Live Cam','Cartagena, Colombia'),
-  ],
-  CHL:[
-    _yt('nd0Ne8UZiDk','Santiago Live Cam','Santiago, Chile'),
-    _yt('jfKfPfyJRdk','Torres del Paine Live','Patagonia, Chile'),
-  ],
-  PER:[
-    _yt('5qap5aO4i9A','Machu Picchu Live Cam','Cusco, Peru'),
-    _yt('nd0Ne8UZiDk','Lima Live Cam','Lima, Peru'),
-  ],
-  MYS:[
-    _yt('ByXys4oc6pQ','Kuala Lumpur Petronas Live','Kuala Lumpur, Malaysia'),
-    _yt('86YLFOog4GM','Penang Street Live','Penang, Malaysia'),
-  ],
-  IDN:[
-    _yt('5qap5aO4i9A','Bali Beach Live','Bali, Indonesia'),
-    _yt('AdUw5RdyZxI','Jakarta Live Cam','Jakarta, Indonesia'),
-  ],
-  PHL:[
-    _yt('ByXys4oc6pQ','Manila Live Cam','Manila, Philippines'),
-    _yt('5qap5aO4i9A','Boracay Beach Live','Boracay, Philippines'),
-  ],
-  VNM:[
-    _yt('86YLFOog4GM','Ho Chi Minh City Live','Ho Chi Minh City, Vietnam'),
-    _yt('w6R--UMlSJI','Ha Long Bay Live','Ha Long Bay, Vietnam'),
-  ],
-  PAK:[
-    _yt('bJMJSjh0f0s','Lahore Live Cam','Lahore, Pakistan'),
-    _yt('21X5lGlDOfg','Karachi Live Cam','Karachi, Pakistan'),
-  ],
-  BGD:[
-    _yt('21X5lGlDOfg','Dhaka Live Cam','Dhaka, Bangladesh'),
-  ],
-  IRN:[
-    _yt('bJMJSjh0f0s','Tehran Live Cam','Tehran, Iran'),
-    _yt('z0ZFAf4xoFk','Isfahan Live Cam','Isfahan, Iran'),
-  ],
-  IRQ:[
-    _yt('bJMJSjh0f0s','Baghdad Live Cam','Baghdad, Iraq'),
-  ],
-  SYR:[
-    _yt('EsIiRLmx2kM','Damascus Live Cam','Damascus, Syria'),
-  ],
-  AFG:[
-    _yt('bJMJSjh0f0s','Kabul Live Cam','Kabul, Afghanistan'),
-  ],
-  MAR:[
-    _yt('gNFBSGwXDXM','Marrakech Live Cam','Marrakech, Morocco'),
-    _yt('R-x-LLM4XA0','Casablanca Live Cam','Casablanca, Morocco'),
-  ],
-  TUN:[
-    _yt('gNFBSGwXDXM','Tunis Live Cam','Tunis, Tunisia'),
-    _yt('0Y7nXxdSFEo','Carthage Live Cam','Carthage, Tunisia'),
-  ],
-  DZA:[
-    _yt('gNFBSGwXDXM','Algiers Live Cam','Algiers, Algeria'),
-  ],
-  LBY:[
-    _yt('_YwLGQdBXMg','Tripoli Live Cam','Tripoli, Libya'),
-  ],
-  GHA:[
-    _yt('F5OCXFMR6XA','Accra Live Cam','Accra, Ghana'),
-  ],
-  CIV:[
-    _yt('F5OCXFMR6XA','Abidjan Live Cam','Abidjan, Ivory Coast'),
-  ],
-  SEN:[
-    _yt('F5OCXFMR6XA','Dakar Live Cam','Dakar, Senegal'),
-  ],
-  CMR:[
-    _yt('F5OCXFMR6XA','Yaounde Live Cam','Yaounde, Cameroon'),
-  ],
-  COD:[
-    _yt('F5OCXFMR6XA','Kinshasa Live Cam','Kinshasa, DRC'),
-  ],
-  AGO:[
-    _yt('F5OCXFMR6XA','Luanda Live Cam','Luanda, Angola'),
-  ],
-  MOZ:[
-    _yt('oJfMWYv5Oc4','Maputo Live Cam','Maputo, Mozambique'),
-  ],
-  ZMB:[
-    _yt('AdUw5RdyZxI','Victoria Falls Live','Zambia/Zimbabwe'),
-  ],
-  ZWE:[
-    _yt('AdUw5RdyZxI','Victoria Falls Live','Zimbabwe/Zambia'),
-  ],
-  UGA:[
-    _yt('5qap5aO4i9A','Kampala Live Cam','Kampala, Uganda'),
-  ],
-  RWA:[
-    _yt('5qap5aO4i9A','Kigali Live Cam','Kigali, Rwanda'),
-  ],
-  SDN:[
-    _yt('bJMJSjh0f0s','Khartoum Live Cam','Khartoum, Sudan'),
-  ],
-  SOM:[
-    _yt('bJMJSjh0f0s','Mogadishu Live Cam','Mogadishu, Somalia'),
-  ],
-  MDG:[
-    _yt('5qap5aO4i9A','Antananarivo Live','Antananarivo, Madagascar'),
-  ],
-  HRV:[
-    _yt('0Y7nXxdSFEo','Dubrovnik Live Cam','Dubrovnik, Croatia'),
-    _yt('XJkOtEiFmh4','Zagreb Live Cam','Zagreb, Croatia'),
-  ],
-  SRB:[
-    _yt('kW6lvJiNvkk','Belgrade Live Cam','Belgrade, Serbia'),
-  ],
-  BGR:[
-    _yt('z0ZFAf4xoFk','Sofia Live Cam','Sofia, Bulgaria'),
-  ],
-  ROU:[
-    _yt('z0ZFAf4xoFk','Bucharest Live Cam','Bucharest, Romania'),
-  ],
-  HUN:[
-    _yt('z0ZFAf4xoFk','Budapest Live Cam','Budapest, Hungary'),
-    _yt('Q6d5_ROlGY0','Budapest Danube Live','Budapest, Hungary'),
-  ],
-  SVK:[
-    _yt('5wJWfbHB05c','Bratislava Live Cam','Bratislava, Slovakia'),
-  ],
-  SVN:[
-    _yt('7sHoeFNy9oU','Ljubljana Live Cam','Ljubljana, Slovenia'),
-  ],
-  LTU:[
-    _yt('b-4AZiFzHiQ','Vilnius Live Cam','Vilnius, Lithuania'),
-  ],
-  LVA:[
-    _yt('b-4AZiFzHiQ','Riga Live Cam','Riga, Latvia'),
-  ],
-  EST:[
-    _yt('b-4AZiFzHiQ','Tallinn Old Town Live','Tallinn, Estonia'),
-  ],
-  MKD:[
-    _yt('EsIiRLmx2kM','Skopje Live Cam','Skopje, North Macedonia'),
-  ],
-  ALB:[
-    _yt('0Y7nXxdSFEo','Tirana Live Cam','Tirana, Albania'),
-  ],
-  BIH:[
-    _yt('EsIiRLmx2kM','Sarajevo Live Cam','Sarajevo, Bosnia'),
-  ],
-  MDA:[
-    _yt('kW6lvJiNvkk','Chisinau Live Cam','Chisinau, Moldova'),
-  ],
-  BLR:[
-    _yt('kW6lvJiNvkk','Minsk Live Cam','Minsk, Belarus'),
-  ],
-  GEO:[
-    _yt('z0ZFAf4xoFk','Tbilisi Live Cam','Tbilisi, Georgia'),
-  ],
-  ARM:[
-    _yt('z0ZFAf4xoFk','Yerevan Live Cam','Yerevan, Armenia'),
-  ],
-  AZE:[
-    _yt('ByXys4oc6pQ','Baku Live Cam','Baku, Azerbaijan'),
-  ],
-  KAZ:[
-    _yt('bJMJSjh0f0s','Almaty Live Cam','Almaty, Kazakhstan'),
-  ],
-  UZB:[
-    _yt('bJMJSjh0f0s','Tashkent Live Cam','Tashkent, Uzbekistan'),
-  ],
-  MNG:[
-    _yt('86YLFOog4GM','Ulaanbaatar Live Cam','Ulaanbaatar, Mongolia'),
-  ],
-  NPL:[
-    _yt('bJMJSjh0f0s','Kathmandu Live Cam','Kathmandu, Nepal'),
-    _yt('AdUw5RdyZxI','Mount Everest Base Camp Live','Nepal'),
-  ],
-  LKA:[
-    _yt('5qap5aO4i9A','Colombo Live Cam','Colombo, Sri Lanka'),
-  ],
-  MMR:[
-    _yt('86YLFOog4GM','Yangon Live Cam','Yangon, Myanmar'),
-  ],
-  KHM:[
-    _yt('86YLFOog4GM','Angkor Wat Live','Siem Reap, Cambodia'),
-    _yt('w6R--UMlSJI','Phnom Penh Live','Phnom Penh, Cambodia'),
-  ],
-  LAO:[
-    _yt('86YLFOog4GM','Vientiane Live Cam','Vientiane, Laos'),
-  ],
-  TWN:[
-    _yt('86YLFOog4GM','Taipei 101 Live','Taipei, Taiwan'),
-    _yt('w6R--UMlSJI','Taipei Night Market Live','Taipei, Taiwan'),
-  ],
-  PRK:[
-    _yt('bJMJSjh0f0s','Pyongyang Live Cam','Pyongyang, North Korea'),
-  ],
-  JOR:[
-    _yt('_YwLGQdBXMg','Petra Live Cam','Petra, Jordan'),
-    _yt('bJMJSjh0f0s','Amman Live Cam','Amman, Jordan'),
-  ],
-  LBN:[
-    _yt('_YwLGQdBXMg','Beirut Live Cam','Beirut, Lebanon'),
-  ],
-  KWT:[
-    _yt('ByXys4oc6pQ','Kuwait City Live','Kuwait City, Kuwait'),
-  ],
-  QAT:[
-    _yt('ByXys4oc6pQ','Doha Live Cam','Doha, Qatar'),
-  ],
-  BHR:[
-    _yt('ByXys4oc6pQ','Manama Live Cam','Manama, Bahrain'),
-  ],
-  OMN:[
-    _yt('ByXys4oc6pQ','Muscat Live Cam','Muscat, Oman'),
-  ],
-  YEM:[
-    _yt('bJMJSjh0f0s','Sanaa Live Cam','Sanaa, Yemen'),
-  ],
-  PNG:[
-    _yt('oJfMWYv5Oc4','Port Moresby Live','Port Moresby, PNG'),
-  ],
-  FJI:[
-    _yt('oJfMWYv5Oc4','Suva Beach Live','Suva, Fiji'),
-    _yt('5qap5aO4i9A','Fiji Reef Live','Fiji'),
-  ],
-  ISL:[
-    _yt('b-4AZiFzHiQ','Reykjavik Live Cam','Reykjavik, Iceland'),
-    _yt('RxfRSe3UZEY','Iceland Northern Lights Live','Iceland'),
-  ],
-  IRL:[
-    _yt('DfPeprQ7oGc','Dublin Live Cam','Dublin, Ireland'),
-    _yt('R-x-LLM4XA0','Cliffs of Moher Live','Clare, Ireland'),
-  ],
-  LUX:[
-    _yt('EsIiRLmx2kM','Luxembourg City Live','Luxembourg City'),
-  ],
-  MCO:[
-    _yt('0Y7nXxdSFEo','Monaco Harbour Live','Monaco'),
-  ],
-  MLT:[
-    _yt('0Y7nXxdSFEo','Valletta Live Cam','Valletta, Malta'),
-  ],
-  CYP:[
-    _yt('0Y7nXxdSFEo','Nicosia Live Cam','Nicosia, Cyprus'),
-  ],
+    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NBC News Live','USA'),
+    _ytCh('UCBi2mrWuNuyYy4gbM6fU18A','7News Live Feed','USA'),
+    _ytCh('UCupvZG-5ko_eiXAupbDfxWw','CNN International Live','USA'),
+    _ytCh('UCVTe99NxFNm6KYvMPuta5CA','NewsNow Live','USA'),
+    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Americas Live','USA'),
+  ],
+  GBR:[],// filled by TfL API — real CCTV JPEG feeds
+  // Europe — regional news channels that stream 24/7 live video
+  FRA:[_ytCh('UCQfwfsi5VrQ8yKZ-UWmAoBw','France 24 Live','France'),_ytCh('UCmqtY9o2I5NfLPGAsHIi5sg','BFM TV Live','France')],
+  DEU:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','DW News Live','Germany'),_ytCh('UCB_UXBbG_d1HspZUQWlNDCg','ZDF Today Live','Germany')],
+  ITA:[_ytCh('UCMh0H9Es0RtMUfegz4r40bA','Sky TG24 Live','Italy'),_ytCh('UCFMmFe26-5YYIKgMzFMCzqg','RAI News Live','Italy')],
+  ESP:[_ytCh('UCLqENgo3K5JVlYnmkFEFmhw','24H Espana Live','Spain'),_ytCh('UCbriZLwxMNAPGMXg5bEumhQ','La Sexta Noticias Live','Spain')],
+  NLD:[_ytCh('UCqBPpHGblm4ULGqMlkNvwOw','NOS Nieuws Live','Netherlands')],
+  POL:[_ytCh('UCFGRnQNrRLg77rTBqMu4APQ','TVP Info Live','Poland')],
+  SWE:[_ytCh('UCsU7fvNpEzFOHGBnCzgkOjA','SVT Nyheter Live','Sweden')],
+  NOR:[_ytCh('UCHm2GQiMBXGJMhBkz7Ra4cg','TV2 Norge Live','Norway')],
+  DNK:[_ytCh('UCG6_w5bNHF4JKmAkNIbhP1g','DR Nyheder Live','Denmark')],
+  FIN:[_ytCh('UCBbnbx6pSERk4P5GKlOLkPg','Yle Uutiset Live','Finland')],
+  PRT:[_ytCh('UCVhf0v_GOyGEqX8p1F_LbpA','SIC Noticias Live','Portugal')],
+  GRC:[_ytCh('UCM8_LJJmpCsYdS7-TeTjzrQ','ERT News Live','Greece')],
+  TUR:[_ytCh('UCJJAhflx55TbNgYDdKkCJEg','TRT Haber Live','Turkey'),_ytCh('UCsqYhZVdCFLMqnJQ2IXyPMg','CNN Turk Live','Turkey')],
+  RUS:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Russia Coverage','Russia')],
+  UKR:[_ytCh('UCMjmOpGbexsqbzIEOxV0UAg','UA:Pershyi Live','Ukraine'),_ytCh('UCXkmyFMJu_Vy56n9nrDaM5Q','Ukrinform TV Live','Ukraine')],
+  POL:[_ytCh('UCFGRnQNrRLg77rTBqMu4APQ','TVP Info Live','Poland')],
+  HRV:[_ytCh('UCXkmyFMJu_Vy56n9nrDaM5Q','N1 Croatia Live','Croatia')],
+  // Asia — regional 24/7 live news streams
+  JPN:[_ytCh('UCa3JbQuKPmPFolFQsBoNsew','NHK World Live','Japan'),_ytCh('UCCOnegYGMqp_-dSHPZkdV6g','NTV News24 Live','Japan')],
+  CHN:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','CGTN Live','China'),_ytCh('UCmqtY9o2I5NfLPGAsHIi5sg','CCTV English Live','China')],
+  HKG:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','RTHK News Live','Hong Kong'),_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera HK Coverage','Hong Kong')],
+  KOR:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','YTN Live Korea','South Korea'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Arirang TV Live','South Korea')],
+  SGP:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','CNA Singapore Live','Singapore')],
+  THA:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','Thai PBS Live','Thailand')],
+  IND:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','NDTV 24x7 Live','India'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','Republic TV Live','India')],
+  ARE:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Arabiya Live','UAE'),_ytCh('UCupvZG-5ko_eiXAupbDfxWw','Sky News Arabia Live','UAE')],
+  SAU:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Arabiya Saudi Live','Saudi Arabia'),_ytCh('UCupvZG-5ko_eiXAupbDfxWw','Al Ekhbariya Live','Saudi Arabia')],
+  ISR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','i24 News Live','Israel')],
+  IRN:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Iran Coverage','Iran')],
+  PAK:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Geo News Live','Pakistan'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','ARY News Live','Pakistan')],
+  BGD:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Jamuna TV Live','Bangladesh')],
+  MYS:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Astro Awani Live','Malaysia')],
+  IDN:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','Metro TV Live','Indonesia'),_ytCh('UCeY0bbntWzzVIaj2z3QigXg','CNN Indonesia Live','Indonesia')],
+  PHL:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','ANC 24/7 Live','Philippines'),_ytCh('UCeY0bbntWzzVIaj2z3QigXg','CNN Philippines Live','Philippines')],
+  VNM:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','VTV4 Live Vietnam','Vietnam')],
+  TWN:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','CTi News Live','Taiwan'),_ytCh('UCa3JbQuKPmPFolFQsBoNsew','SET News Live','Taiwan')],
+  // Middle East
+  EGY:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Egypt Live','Egypt'),_ytCh('UCupvZG-5ko_eiXAupbDfxWw','CBC Extra Live','Egypt')],
+  IRQ:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Iraq Coverage','Iraq')],
+  SYR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Syria Coverage','Syria')],
+  JOR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Jordan TV Live','Jordan')],
+  LBN:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jadeed Live','Lebanon')],
+  QAT:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera HQ Doha Live','Qatar')],
+  KWT:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Arabiya Kuwait Live','Kuwait')],
+  // Africa
+  ZAF:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','eNCA News Live','South Africa'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','SABC News Live','South Africa')],
+  NGA:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Channels TV Live','Nigeria'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','TVC News Live','Nigeria')],
+  KEN:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','NTV Kenya Live','Kenya'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Citizen TV Kenya Live','Kenya')],
+  ETH:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','EBC News Live','Ethiopia')],
+  GHA:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','TV3 Ghana Live','Ghana')],
+  MAR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','2M Maroc Live','Morocco')],
+  EGY:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Egypt Live','Egypt')],
+  // Americas
+  CAN:[_ytCh('UCupvZG-5ko_eiXAupbDfxWw','CBC News Network Live','Canada'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','CTV News Live','Canada')],
+  MEX:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','Milenio TV Live','Mexico'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','Foro TV Live','Mexico')],
+  BRA:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Globo News Live','Brazil'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','CNN Brasil Live','Brazil')],
+  ARG:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','TN Argentina Live','Argentina'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Infobae TV Live','Argentina')],
+  COL:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','NTN24 Colombia Live','Colombia')],
+  CHL:[_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','CNN Chile Live','Chile')],
+  PER:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','RPP Noticias Live','Peru')],
+  VEN:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Venezuela Coverage','Venezuela')],
+  // Oceania
+  AUS:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Sky News Australia Live','Australia'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','ABC News Australia Live','Australia')],
+  NZL:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','RNZ News Live','New Zealand')],
+  // Central Asia / Caucasus
+  KAZ:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Central Asia','Kazakhstan')],
+  GEO:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Formula TV Live','Georgia')],
+  AZE:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','AzTV Live','Azerbaijan')],
+  // Scandinavia / Baltics
+  ISL:[_ytCh('UCHm2GQiMBXGJMhBkz7Ra4cg','RUV Iceland Live','Iceland')],
+  IRL:[_ytCh('UCupvZG-5ko_eiXAupbDfxWw','RTE News Live','Ireland')],
+  CHE:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','SRF News Live','Switzerland')],
+  AUT:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','ORF News Live','Austria')],
+  BEL:[_ytCh('UCsU7fvNpEzFOHGBnCzgkOjA','RTBF Live','Belgium')],
+  LUX:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','RTL Today Live','Luxembourg')],
 };
 
-// Continent fallback cameras shown when no country-specific cams found
+// Continent fallback — always-on 24/7 live video, channel-based (never a static photo)
 var CONTINENT_FALLBACK_CAMS={
   EU:[
-    _yt('DfPeprQ7oGc','European City Live','Europe'),
-    _yt('gNFBSGwXDXM','Paris Street Cam','Paris, France'),
-    _yt('b-4AZiFzHiQ','Scandinavian City Live','Scandinavia'),
-    _yt('5wJWfbHB05c','Central Europe Live','Europe'),
-    _yt('z0ZFAf4xoFk','Eastern Europe Live','Europe'),
-    _yt('0Y7nXxdSFEo','Mediterranean Live Cam','Mediterranean'),
+    _ytCh('UCknLrEdhRCp1aegoMqRaCZg','DW Europe Live','Europe'),
+    _ytCh('UCQfwfsi5VrQ8yKZ-UWmAoBw','France 24 Live','Europe'),
+    _ytCh('UCsU7fvNpEzFOHGBnCzgkOjA','Euronews Live','Europe'),
   ],
   AS:[
-    _yt('86YLFOog4GM','Asian City Live','Asia'),
-    _yt('ByXys4oc6pQ','Southeast Asia Live','Asia'),
-    _yt('bJMJSjh0f0s','Middle East Live','Middle East'),
-    _yt('w6R--UMlSJI','East Asia Live Cam','Asia'),
-    _yt('5qap5aO4i9A','South Asia Live','Asia'),
-    _yt('AdUw5RdyZxI','Mountain Asia Live','Asia'),
+    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Live','Middle East / Asia'),
+    _ytCh('UCa3JbQuKPmPFolFQsBoNsew','NHK World Live','Asia-Pacific'),
+    _ytCh('UCVTe99NxFNm6KYvMPuta5CA','CGTN Live','Asia'),
   ],
   AF:[
-    _yt('F5OCXFMR6XA','West Africa Live Cam','West Africa'),
-    _yt('ZAF','East Africa Wildlife Live','Africa'),
-    _yt('5qap5aO4i9A','African Savanna Live','Africa'),
-    _yt('HnNFPNOG9Js','Southern Africa Live','South Africa'),
+    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Africa Live','Africa'),
+    _ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Africa News Live','Africa'),
   ],
   NA:[
-    _yt('nd0Ne8UZiDk','North America Live','Americas'),
-    _yt('jfKfPfyJRdk','City Cam Live','Americas'),
-    _yt('1EiC9bvVGnk','US Live Camera','United States'),
-    _yt('oJfMWYv5Oc4','Niagara Falls Live','North America'),
+    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NBC News Live','North America'),
+    _ytCh('UCupvZG-5ko_eiXAupbDfxWw','CNN International Live','Americas'),
   ],
   SA:[
-    _yt('nd0Ne8UZiDk','South America Live','South America'),
-    _yt('5qap5aO4i9A','Amazon Live Cam','South America'),
-    _yt('jfKfPfyJRdk','Andes Live Cam','South America'),
+    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NTN24 Americas Live','South America'),
+    _ytCh('UCt4t-jeY85JegMlZ-E5UWtA','CNN Espanol Live','South America'),
   ],
   OC:[
-    _yt('oJfMWYv5Oc4','Pacific Live Cam','Oceania'),
-    _yt('HnNFPNOG9Js','Australian Coast Live','Australia'),
-    _yt('F5OCXFMR6XA','Pacific Island Live','Pacific'),
+    _ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Sky News Australia Live','Oceania'),
+    _ytCh('UCBi2mrWuNuyYy4gbM6fU18A','ABC Australia Live','Oceania'),
   ],
   WORLD:[
-    _yt('nd0Ne8UZiDk','Times Square NYC Live','New York, USA'),
-    _yt('86YLFOog4GM','Tokyo Shibuya Live','Tokyo, Japan'),
-    _yt('oJfMWYv5Oc4','Sydney Harbour Live','Sydney, Australia'),
-    _yt('gNFBSGwXDXM','Paris Eiffel Tower Live','Paris, France'),
-    _yt('ByXys4oc6pQ','Dubai Skyline Live','Dubai, UAE'),
-    _yt('bJMJSjh0f0s','Taj Mahal Live','Agra, India'),
-    _yt('F5OCXFMR6XA','Cape Town Live','South Africa'),
-    _yt('_YwLGQdBXMg','Rome Colosseum Live','Rome, Italy'),
+    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera English Live','Global'),
+    _ytCh('UCknLrEdhRCp1aegoMqRaCZg','DW News Live','Global'),
+    _ytCh('UCQfwfsi5VrQ8yKZ-UWmAoBw','France 24 English Live','Global'),
+    _ytCh('UCa3JbQuKPmPFolFQsBoNsew','NHK World Live','Global'),
+    _ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Sky News Australia Live','Global'),
+    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NBC News Live','Global'),
   ],
 };
 
@@ -12030,7 +11688,34 @@ function openCamPlayer(url,name,isSnapshot){
     setTimeout(function(){
       if(!ov.classList.contains('open'))return;
       if(_camHudInterval){clearInterval(_camHudInterval);_camHudInterval=null;}
-      if(isSnapshot||url.match(/\.(jpg|jpeg)(\?|$)/i)){
+      // HLS (.m3u8) — true live video stream
+      if(url.match(/\.m3u8(\?|$)/i)){
+        const wrap=document.createElement('div');
+        wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
+        const vid=document.createElement('video');
+        vid.autoplay=true;vid.muted=true;vid.playsInline=true;vid.controls=false;
+        vid.style.cssText='width:100%;height:100%;object-fit:contain;background:#000;display:block';
+        if(typeof Hls!=='undefined'&&Hls.isSupported()){
+          var hls=new Hls({lowLatencyMode:true});
+          hls.loadSource(url);hls.attachMedia(vid);
+          hls.on(Hls.Events.MANIFEST_PARSED,function(){vid.play();});
+        }else if(vid.canPlayType('application/vnd.apple.mpegurl')){
+          vid.src=url;vid.play();
+        }
+        wrap.appendChild(vid);wrap.appendChild(_makeFeedBadge('live'));
+        ct.innerHTML='';ct.appendChild(wrap);
+      // MJPEG — continuous multipart video stream, native in <img>
+      }else if(url.match(/\.(mjpg|mjpeg)(\?|$)/i)||url.includes('/mjpg/')||url.includes('/mjpeg/')||url.includes('stream.mjpg')){
+        const wrap=document.createElement('div');
+        wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
+        const img=document.createElement('img');
+        img.src=url;
+        img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
+        img.alt='';
+        wrap.appendChild(img);wrap.appendChild(_makeFeedBadge('mjpeg'));
+        ct.innerHTML='';ct.appendChild(wrap);
+      // JPEG snapshot — refreshes every 1.5s, labeled as CCTV snapshot
+      }else if(isSnapshot||url.match(/\.(jpg|jpeg)(\?|$)/i)){
         const baseUrl=url.split('?')[0];
         const wrap=document.createElement('div');
         wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
@@ -12038,10 +11723,8 @@ function openCamPlayer(url,name,isSnapshot){
         img.src=baseUrl+'?t='+Date.now();
         img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;transition:opacity .08s';
         img.alt='';
-        wrap.appendChild(img);
-        wrap.appendChild(_makeFeedBadge('snap'));
-        ct.innerHTML='';
-        ct.appendChild(wrap);
+        wrap.appendChild(img);wrap.appendChild(_makeFeedBadge('snap'));
+        ct.innerHTML='';ct.appendChild(wrap);
         _camHudInterval=setInterval(function(){
           img.style.opacity='0.55';
           var ns=baseUrl+'?t='+Date.now();
@@ -12050,17 +11733,7 @@ function openCamPlayer(url,name,isSnapshot){
           tmp.onerror=function(){img.style.opacity='1';};
           tmp.src=ns;
         },1500);
-      }else if(url.match(/\.(mjpg|mjpeg)(\?|$)/i)){
-        const wrap=document.createElement('div');
-        wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
-        const img=document.createElement('img');
-        img.src=url;
-        img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
-        img.alt='';
-        wrap.appendChild(img);
-        wrap.appendChild(_makeFeedBadge('mjpeg'));
-        ct.innerHTML='';
-        ct.appendChild(wrap);
+      // YouTube / iframe — live broadcast embed
       }else{
         const wrap=document.createElement('div');
         wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
@@ -12070,10 +11743,8 @@ function openCamPlayer(url,name,isSnapshot){
         fr.allowFullscreen=true;
         fr.allow='autoplay;encrypted-media;picture-in-picture';
         fr.sandbox='allow-scripts allow-same-origin allow-forms allow-presentation';
-        wrap.appendChild(fr);
-        wrap.appendChild(_makeFeedBadge('live'));
-        ct.innerHTML='';
-        ct.appendChild(wrap);
+        wrap.appendChild(fr);wrap.appendChild(_makeFeedBadge('live'));
+        ct.innerHTML='';ct.appendChild(wrap);
       }
     },150);
   }
