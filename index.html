@@ -11385,130 +11385,37 @@ function _mjpeg(url,name,city){
 // Priority: MJPEG streams (true video) > YouTube channel live > YouTube video ID.
 // YouTube channel format (live_stream?channel=ID) always shows live video or "offline",
 // never redirects, never requires login, never shows a wrong video.
+// CURATED_CAMS: only entries with verified direct camera image URLs.
+// News channels removed — user wants actual street/traffic cameras.
+// API-sourced cams (TfL, NYC DOT, Norway Vegvesen) are fetched live.
+// Everything else comes from OSM webcam registry with expanding radius.
 var CURATED_CAMS={
-  USA:[
-    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NBC News Live','USA'),
-    _ytCh('UCBi2mrWuNuyYy4gbM6fU18A','7News Live Feed','USA'),
-    _ytCh('UCupvZG-5ko_eiXAupbDfxWw','CNN International Live','USA'),
-    _ytCh('UCVTe99NxFNm6KYvMPuta5CA','NewsNow Live','USA'),
-    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Americas Live','USA'),
-  ],
-  GBR:[],// filled by TfL API — real CCTV JPEG feeds
-  // Europe — regional news channels that stream 24/7 live video
-  FRA:[_ytCh('UCQfwfsi5VrQ8yKZ-UWmAoBw','France 24 Live','France'),_ytCh('UCmqtY9o2I5NfLPGAsHIi5sg','BFM TV Live','France')],
-  DEU:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','DW News Live','Germany'),_ytCh('UCB_UXBbG_d1HspZUQWlNDCg','ZDF Today Live','Germany')],
-  ITA:[_ytCh('UCMh0H9Es0RtMUfegz4r40bA','Sky TG24 Live','Italy'),_ytCh('UCFMmFe26-5YYIKgMzFMCzqg','RAI News Live','Italy')],
-  ESP:[_ytCh('UCLqENgo3K5JVlYnmkFEFmhw','24H Espana Live','Spain'),_ytCh('UCbriZLwxMNAPGMXg5bEumhQ','La Sexta Noticias Live','Spain')],
-  NLD:[_ytCh('UCqBPpHGblm4ULGqMlkNvwOw','NOS Nieuws Live','Netherlands')],
-  POL:[_ytCh('UCFGRnQNrRLg77rTBqMu4APQ','TVP Info Live','Poland')],
-  SWE:[_ytCh('UCsU7fvNpEzFOHGBnCzgkOjA','SVT Nyheter Live','Sweden')],
-  NOR:[_ytCh('UCHm2GQiMBXGJMhBkz7Ra4cg','TV2 Norge Live','Norway')],
-  DNK:[_ytCh('UCG6_w5bNHF4JKmAkNIbhP1g','DR Nyheder Live','Denmark')],
-  FIN:[_ytCh('UCBbnbx6pSERk4P5GKlOLkPg','Yle Uutiset Live','Finland')],
-  PRT:[_ytCh('UCVhf0v_GOyGEqX8p1F_LbpA','SIC Noticias Live','Portugal')],
-  GRC:[_ytCh('UCM8_LJJmpCsYdS7-TeTjzrQ','ERT News Live','Greece')],
-  TUR:[_ytCh('UCJJAhflx55TbNgYDdKkCJEg','TRT Haber Live','Turkey'),_ytCh('UCsqYhZVdCFLMqnJQ2IXyPMg','CNN Turk Live','Turkey')],
-  RUS:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Russia Coverage','Russia')],
-  UKR:[_ytCh('UCMjmOpGbexsqbzIEOxV0UAg','UA:Pershyi Live','Ukraine'),_ytCh('UCXkmyFMJu_Vy56n9nrDaM5Q','Ukrinform TV Live','Ukraine')],
-  POL:[_ytCh('UCFGRnQNrRLg77rTBqMu4APQ','TVP Info Live','Poland')],
-  HRV:[_ytCh('UCXkmyFMJu_Vy56n9nrDaM5Q','N1 Croatia Live','Croatia')],
-  // Asia — regional 24/7 live news streams
-  JPN:[_ytCh('UCa3JbQuKPmPFolFQsBoNsew','NHK World Live','Japan'),_ytCh('UCCOnegYGMqp_-dSHPZkdV6g','NTV News24 Live','Japan')],
-  CHN:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','CGTN Live','China'),_ytCh('UCmqtY9o2I5NfLPGAsHIi5sg','CCTV English Live','China')],
-  HKG:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','RTHK News Live','Hong Kong'),_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera HK Coverage','Hong Kong')],
-  KOR:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','YTN Live Korea','South Korea'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Arirang TV Live','South Korea')],
-  SGP:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','CNA Singapore Live','Singapore')],
-  THA:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','Thai PBS Live','Thailand')],
-  IND:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','NDTV 24x7 Live','India'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','Republic TV Live','India')],
-  ARE:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Arabiya Live','UAE'),_ytCh('UCupvZG-5ko_eiXAupbDfxWw','Sky News Arabia Live','UAE')],
-  SAU:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Arabiya Saudi Live','Saudi Arabia'),_ytCh('UCupvZG-5ko_eiXAupbDfxWw','Al Ekhbariya Live','Saudi Arabia')],
-  ISR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','i24 News Live','Israel')],
-  IRN:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Iran Coverage','Iran')],
-  PAK:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Geo News Live','Pakistan'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','ARY News Live','Pakistan')],
-  BGD:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Jamuna TV Live','Bangladesh')],
-  MYS:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Astro Awani Live','Malaysia')],
-  IDN:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','Metro TV Live','Indonesia'),_ytCh('UCeY0bbntWzzVIaj2z3QigXg','CNN Indonesia Live','Indonesia')],
-  PHL:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','ANC 24/7 Live','Philippines'),_ytCh('UCeY0bbntWzzVIaj2z3QigXg','CNN Philippines Live','Philippines')],
-  VNM:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','VTV4 Live Vietnam','Vietnam')],
-  TWN:[_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','CTi News Live','Taiwan'),_ytCh('UCa3JbQuKPmPFolFQsBoNsew','SET News Live','Taiwan')],
-  // Middle East
-  EGY:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Egypt Live','Egypt'),_ytCh('UCupvZG-5ko_eiXAupbDfxWw','CBC Extra Live','Egypt')],
-  IRQ:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Iraq Coverage','Iraq')],
-  SYR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Syria Coverage','Syria')],
-  JOR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Jordan TV Live','Jordan')],
-  LBN:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jadeed Live','Lebanon')],
-  QAT:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera HQ Doha Live','Qatar')],
-  KWT:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Arabiya Kuwait Live','Kuwait')],
-  // Africa
-  ZAF:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','eNCA News Live','South Africa'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','SABC News Live','South Africa')],
-  NGA:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Channels TV Live','Nigeria'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','TVC News Live','Nigeria')],
-  KEN:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','NTV Kenya Live','Kenya'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Citizen TV Kenya Live','Kenya')],
-  ETH:[_ytCh('UCVTe99NxFNm6KYvMPuta5CA','EBC News Live','Ethiopia')],
-  GHA:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','TV3 Ghana Live','Ghana')],
-  MAR:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','2M Maroc Live','Morocco')],
-  EGY:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Egypt Live','Egypt')],
-  // Americas
-  CAN:[_ytCh('UCupvZG-5ko_eiXAupbDfxWw','CBC News Network Live','Canada'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','CTV News Live','Canada')],
-  MEX:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','Milenio TV Live','Mexico'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','Foro TV Live','Mexico')],
-  BRA:[_ytCh('UCt4t-jeY85JegMlZ-E5UWtA','Globo News Live','Brazil'),_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','CNN Brasil Live','Brazil')],
-  ARG:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','TN Argentina Live','Argentina'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','Infobae TV Live','Argentina')],
-  COL:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','NTN24 Colombia Live','Colombia')],
-  CHL:[_ytCh('UCIvaR2IqtQ_AJtDuTrO5w8Q','CNN Chile Live','Chile')],
-  PER:[_ytCh('UCeY0bbntWzzVIaj2z3QigXg','RPP Noticias Live','Peru')],
-  VEN:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Venezuela Coverage','Venezuela')],
-  // Oceania
-  AUS:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Sky News Australia Live','Australia'),_ytCh('UCBi2mrWuNuyYy4gbM6fU18A','ABC News Australia Live','Australia')],
-  NZL:[_ytCh('UCRo4PkbNRkPtilKtFXsWFaA','RNZ News Live','New Zealand')],
-  // Central Asia / Caucasus
-  KAZ:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Central Asia','Kazakhstan')],
-  GEO:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Formula TV Live','Georgia')],
-  AZE:[_ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','AzTV Live','Azerbaijan')],
-  // Scandinavia / Baltics
-  ISL:[_ytCh('UCHm2GQiMBXGJMhBkz7Ra4cg','RUV Iceland Live','Iceland')],
-  IRL:[_ytCh('UCupvZG-5ko_eiXAupbDfxWw','RTE News Live','Ireland')],
-  CHE:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','SRF News Live','Switzerland')],
-  AUT:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','ORF News Live','Austria')],
-  BEL:[_ytCh('UCsU7fvNpEzFOHGBnCzgkOjA','RTBF Live','Belgium')],
-  LUX:[_ytCh('UCknLrEdhRCp1aegoMqRaCZg','RTL Today Live','Luxembourg')],
+  GBR:[],// TfL JamCam API — real London traffic CCTV
+  USA:[],// NYC DOT API — real NYC traffic cameras
+  NOR:[],// Norway Vegvesen API — real Norwegian road cameras
 };
 
-// Continent fallback — always-on 24/7 live video, channel-based (never a static photo)
-var CONTINENT_FALLBACK_CAMS={
-  EU:[
-    _ytCh('UCknLrEdhRCp1aegoMqRaCZg','DW Europe Live','Europe'),
-    _ytCh('UCQfwfsi5VrQ8yKZ-UWmAoBw','France 24 Live','Europe'),
-    _ytCh('UCsU7fvNpEzFOHGBnCzgkOjA','Euronews Live','Europe'),
-  ],
-  AS:[
-    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Live','Middle East / Asia'),
-    _ytCh('UCa3JbQuKPmPFolFQsBoNsew','NHK World Live','Asia-Pacific'),
-    _ytCh('UCVTe99NxFNm6KYvMPuta5CA','CGTN Live','Asia'),
-  ],
-  AF:[
-    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera Africa Live','Africa'),
-    _ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Africa News Live','Africa'),
-  ],
-  NA:[
-    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NBC News Live','North America'),
-    _ytCh('UCupvZG-5ko_eiXAupbDfxWw','CNN International Live','Americas'),
-  ],
-  SA:[
-    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NTN24 Americas Live','South America'),
-    _ytCh('UCt4t-jeY85JegMlZ-E5UWtA','CNN Espanol Live','South America'),
-  ],
-  OC:[
-    _ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Sky News Australia Live','Oceania'),
-    _ytCh('UCBi2mrWuNuyYy4gbM6fU18A','ABC Australia Live','Oceania'),
-  ],
-  WORLD:[
-    _ytCh('UCNye-wNBqNL5ZzHSJj3l8Bg','Al Jazeera English Live','Global'),
-    _ytCh('UCknLrEdhRCp1aegoMqRaCZg','DW News Live','Global'),
-    _ytCh('UCQfwfsi5VrQ8yKZ-UWmAoBw','France 24 English Live','Global'),
-    _ytCh('UCa3JbQuKPmPFolFQsBoNsew','NHK World Live','Global'),
-    _ytCh('UCRo4PkbNRkPtilKtFXsWFaA','Sky News Australia Live','Global'),
-    _ytCh('UCeY0bbntWzzVIaj2z3QigXg','NBC News Live','Global'),
-  ],
-};
+async function _fetchNorway(){
+  // Statens vegvesen public road camera API (no key required)
+  try{
+    var r=await fetch(
+      'https://nvdbapiles-v3.atlas.vegvesen.no/vegobjekter/95?inkluder=egenskaper&antall=30&srid=wgs84',
+      {signal:AbortSignal.timeout(10000),headers:{'Accept':'application/vnd.vegvesen.nvdb-v3-rev1+json'}}
+    );
+    if(!r.ok)return[];
+    var d=await r.json();
+    var objs=(d.objekter||[]).sort(function(){return Math.random()-.5;}).slice(0,16);
+    return objs.map(function(cam){
+      // Image URL pattern for Vegvesen cameras
+      var imgUrl='https://webkamera.atlas.vegvesen.no/public/kamera?id='+cam.id+'&res=m';
+      var nameProp=(cam.egenskaper||[]).find(function(p){return p.id===2315||p.navn==='Navn'||p.navn==='Name';});
+      return{name:nameProp?nameProp.verdi:'Road Camera',city:'Norway',embed:imgUrl,thumb:imgUrl,isSnapshot:true};
+    });
+  }catch(e){return[];}
+}
+
+// No continent fallback with news channels — be honest about coverage limits
+var CONTINENT_FALLBACK_CAMS={};
 
 function _getContinent(lat,lng){
   if(lat>35&&lat<71&&lng>-25&&lng<40)return'EU';
@@ -11549,21 +11456,29 @@ async function _fetchNYCDOT(){
 }
 
 async function _fetchOSM(lat,lng,sp,limit){
+  // Search for all webcam-related tags: contact:webcam, tourism=webcam,
+  // and surveillance nodes that have image URLs
   try{
     const b=(lat-sp)+','+(lng-sp)+','+(lat+sp)+','+(lng+sp);
-    const q='[out:json][timeout:20];(node["contact:webcam"]('+b+');node["tourism"="webcam"]('+b+'););out '+(limit||25)+';';
-    const r=await fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q),{signal:AbortSignal.timeout(20000)});
+    const q='[out:json][timeout:25];('
+      +'node["contact:webcam"]('+b+');'
+      +'node["tourism"="webcam"]('+b+');'
+      +'node["webcam"]('+b+');'
+      +');out '+(limit||40)+';';
+    const r=await fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q),{signal:AbortSignal.timeout(25000)});
     if(!r.ok)return[];
     const d=await r.json();
     return(d.elements||[]).map(function(e){
-      const raw=(e.tags&&(e.tags['contact:webcam']||e.tags['url']||e.tags['website']))||'';
+      const t=e.tags||{};
+      const raw=t['contact:webcam']||t['webcam']||t['url']||t['website']||'';
       const embed=makeEmbedUrl(raw);
       if(!embed)return null;
-      const isSnap=!!embed.match(/\.(jpg|jpeg)(\?|$)/i);
+      const isSnap=!!(embed.match(/\.(jpg|jpeg)(\?|$)/i));
+      const isMjpeg=!!(embed.match(/\.(mjpg|mjpeg)(\?|$)/i)||embed.includes('/mjpg/')||embed.includes('/mjpeg/'));
       return{
-        name:(e.tags&&(e.tags.name||e.tags.description))||'Street Camera',
-        city:(e.tags&&(e.tags['addr:city']||e.tags['addr:country']))||'',
-        embed:embed,thumb:isSnap?embed:'',isSnapshot:isSnap
+        name:t.name||t.description||t['operator']||'Street Camera',
+        city:t['addr:city']||t['addr:country']||t['is_in:city']||'',
+        embed:embed,thumb:isSnap?embed:'',isSnapshot:isSnap,isMjpeg:isMjpeg
       };
     }).filter(Boolean);
   }catch(e){return[];}
@@ -11590,39 +11505,18 @@ async function renderCamerasTab(iso){
 
   let cams=[];
 
-  // 1. Country-specific government APIs
-  if(cc2==='GB'){
-    const tfl=await _fetchTfL();
-    cams=[...cams,...tfl];
-  }
-  if(cc2==='US'){
-    const nyc=await _fetchNYCDOT();
-    cams=[...cams,...nyc];
-  }
+  // 1. Government traffic camera APIs (real local CCTV)
+  if(cc2==='GB'){const tfl=await _fetchTfL();cams=[...cams,...tfl];}
+  if(cc2==='US'){const nyc=await _fetchNYCDOT();cams=[...cams,...nyc];}
+  if(cc2==='NO'){const nor=await _fetchNorway();cams=[...cams,...nor];}
 
-  // 2. Curated database for this country
-  if(CURATED_CAMS[iso]&&CURATED_CAMS[iso].length){
-    cams=[...cams,..._dedupe(cams,CURATED_CAMS[iso])];
-  }
-
-  // 3. OSM Overpass — expanding radius until we have enough
-  var radii=cams.length>=8?[]:cams.length>=4?[20]:[10,25,50];
+  // 2. OSM webcam registry — expanding radius to find real local cameras
+  // Tries 8°, 18°, 35°, 70° — for sparse countries this sweeps neighbouring regions
+  var radii=cams.length>=10?[]:cams.length>=6?[18]:[8,18,35,70];
   for(var ri=0;ri<radii.length;ri++){
     if(cams.length>=8)break;
-    var osm=await _fetchOSM(lat,lng,radii[ri],30);
+    var osm=await _fetchOSM(lat,lng,radii[ri],40);
     cams=[...cams,..._dedupe(cams,osm)];
-  }
-
-  // 4. Continent fallback
-  if(cams.length<4){
-    var cont=_getContinent(lat,lng);
-    var fallback=(CONTINENT_FALLBACK_CAMS[cont]||CONTINENT_FALLBACK_CAMS.WORLD).slice(0,8);
-    cams=[...cams,..._dedupe(cams,fallback)];
-  }
-
-  // 5. World fallback — guaranteed to always show something
-  if(cams.length<4){
-    cams=[...cams,..._dedupe(cams,CONTINENT_FALLBACK_CAMS.WORLD)];
   }
 
   const statusEl=document.getElementById('cam-status');
@@ -11659,13 +11553,20 @@ async function renderCamerasTab(iso){
       +'</div>');
   }else{
     statusEl.outerHTML=
-      '<div class="drill-row" style="justify-content:center;margin-top:8px">'
+      '<div style="font-size:10px;color:var(--dim);line-height:2;padding:12px;border:1px solid rgba(30,58,95,.3);border-radius:4px;margin-bottom:10px">'
+      +'No public street cameras found for <b style="color:var(--text)">'+countryName+'</b>.<br>'
+      +'Live local cameras are available via open government APIs:<br>'
+      +'<span style="color:#60a5fa">&#9679;</span> <b style="color:#94a3b8">UK</b> — TfL JamCam (London traffic CCTV)<br>'
+      +'<span style="color:#60a5fa">&#9679;</span> <b style="color:#94a3b8">USA</b> — NYC DOT (New York traffic cameras)<br>'
+      +'<span style="color:#60a5fa">&#9679;</span> <b style="color:#94a3b8">Norway</b> — Statens vegvesen road cameras<br>'
+      +'<span style="color:#60a5fa">&#9679;</span> <b style="color:#94a3b8">Other</b> — OSM-tagged public webcams where available'
+      +'</div>'
+      +'<div class="drill-row" style="justify-content:center">'
       +'<button class="drill-btn green" onclick="viewCountrySat(\''+iso+'\')">SATELLITE VIEW</button>'
       +'<button class="drill-btn blue" onclick="camTabISO=\'\';renderCamerasTab(\''+iso+'\')">RETRY</button>'
       +'</div>';
   }
 }
-
 let _camHudInterval=null;
 
 function _makeFeedBadge(type){
