@@ -752,6 +752,13 @@ canvas.dragging{cursor:grabbing}
 .cam-live-dot{position:absolute;top:5px;left:5px;background:rgba(239,68,68,.9);color:#fff;font-size:7px;font-weight:bold;padding:2px 5px;border-radius:2px;letter-spacing:.12em;pointer-events:none}
 .cam-play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;opacity:0;transition:opacity .15s;pointer-events:none;text-shadow:0 2px 8px rgba(0,0,0,.8)}
 .cam-card:hover .cam-play-icon{opacity:1}
+.cam-thumb-live{width:100%;aspect-ratio:16/9;background:rgba(0,6,2,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#00c850;font-family:var(--mono);font-size:9px;letter-spacing:.14em;gap:7px}
+.cam-thumb-live .clr{width:18px;height:18px;border:2px solid rgba(0,200,80,.25);border-top-color:#00c850;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes camBadgePulse{0%,100%{opacity:1}50%{opacity:.4}}
+.cam-feed-badge{position:absolute;bottom:10px;left:10px;display:flex;align-items:center;gap:5px;background:rgba(0,0,0,.75);border:1px solid rgba(0,200,80,.35);color:#00c850;font-family:var(--mono);font-size:8px;padding:3px 8px;border-radius:2px;letter-spacing:.1em;pointer-events:none;z-index:20}
+.cam-feed-badge .dot{width:5px;height:5px;border-radius:50%;background:#00c850;animation:camBadgePulse 1.2s ease-in-out infinite;flex-shrink:0}
+.cam-feed-badge.snap{border-color:rgba(234,179,8,.35);color:#eab308}
+.cam-feed-badge.snap .dot{background:#eab308}
 /* ── Camera player overlay ── */
 #cam-overlay{position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
 #cam-overlay.open{display:flex}
@@ -11974,9 +11981,11 @@ async function renderCamerasTab(iso){
       const onclick='openCamPlayer('+safeEmbed+','+safeName+','+safeSnap+')';
       const camId='CAM-'+(String(i+1).padStart(3,'0'));
       return '<div class="cam-card" onclick="'+onclick+'">'
-        +(cam.thumb
+        +(cam.isSnapshot&&cam.thumb
           ?'<img class="cam-thumb" src="'+cam.thumb+'?t='+Date.now()+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>NO SIGNAL</div>\'">'
-          :'<div class="cam-thumb-ph">&#9654; LIVE</div>')
+          :cam.isSnapshot
+            ?'<div class="cam-thumb-ph">NO SIGNAL</div>'
+            :'<div class="cam-thumb-live"><span class="clr"></span>LIVE STREAM</div>')
         +'<div class="cam-live-dot">&#11044; REC</div>'
         +'<div class="cam-id-tag">'+camId+'</div>'
         +'<div class="cam-play-icon">&#9654;</div>'
@@ -12001,6 +12010,15 @@ async function renderCamerasTab(iso){
 
 let _camHudInterval=null;
 
+function _makeFeedBadge(type){
+  const b=document.createElement('div');
+  b.className='cam-feed-badge'+(type==='snap'?' snap':'');
+  const dot=document.createElement('span');dot.className='dot';
+  b.appendChild(dot);
+  b.appendChild(document.createTextNode(type==='snap'?'CCTV SNAPSHOT':type==='mjpeg'?'MJPEG STREAM':'LIVE VIDEO'));
+  return b;
+}
+
 function openCamPlayer(url,name,isSnapshot){
   const ov=document.getElementById('cam-overlay');
   if(!ov)return;
@@ -12014,17 +12032,48 @@ function openCamPlayer(url,name,isSnapshot){
       if(_camHudInterval){clearInterval(_camHudInterval);_camHudInterval=null;}
       if(isSnapshot||url.match(/\.(jpg|jpeg)(\?|$)/i)){
         const baseUrl=url.split('?')[0];
+        const wrap=document.createElement('div');
+        wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
         const img=document.createElement('img');
         img.src=baseUrl+'?t='+Date.now();
-        img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;background:#000';
-        img.alt='Live Camera';
+        img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;transition:opacity .08s';
+        img.alt='';
+        wrap.appendChild(img);
+        wrap.appendChild(_makeFeedBadge('snap'));
         ct.innerHTML='';
-        ct.appendChild(img);
-        _camHudInterval=setInterval(function(){img.src=baseUrl+'?t='+Date.now();},8000);
+        ct.appendChild(wrap);
+        _camHudInterval=setInterval(function(){
+          img.style.opacity='0.55';
+          var ns=baseUrl+'?t='+Date.now();
+          var tmp=new window.Image();
+          tmp.onload=function(){img.src=ns;img.style.opacity='1';};
+          tmp.onerror=function(){img.style.opacity='1';};
+          tmp.src=ns;
+        },1500);
       }else if(url.match(/\.(mjpg|mjpeg)(\?|$)/i)){
-        ct.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:contain;display:block;background:#000" alt="Live Camera">';
+        const wrap=document.createElement('div');
+        wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
+        const img=document.createElement('img');
+        img.src=url;
+        img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
+        img.alt='';
+        wrap.appendChild(img);
+        wrap.appendChild(_makeFeedBadge('mjpeg'));
+        ct.innerHTML='';
+        ct.appendChild(wrap);
       }else{
-        ct.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none;display:block" allowfullscreen allow="autoplay;encrypted-media;picture-in-picture" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>';
+        const wrap=document.createElement('div');
+        wrap.style.cssText='width:100%;height:100%;position:relative;background:#000;overflow:hidden';
+        const fr=document.createElement('iframe');
+        fr.src=url;
+        fr.style.cssText='width:100%;height:100%;border:none;display:block';
+        fr.allowFullscreen=true;
+        fr.allow='autoplay;encrypted-media;picture-in-picture';
+        fr.sandbox='allow-scripts allow-same-origin allow-forms allow-presentation';
+        wrap.appendChild(fr);
+        wrap.appendChild(_makeFeedBadge('live'));
+        ct.innerHTML='';
+        ct.appendChild(wrap);
       }
     },150);
   }
