@@ -748,6 +748,7 @@ canvas.dragging{cursor:grabbing}
 .cam-card:hover,.cam-card:active{border-color:rgba(52,211,153,.55);transform:translateY(-1px);box-shadow:0 4px 16px rgba(52,211,153,.1)}
 .cam-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#010408;display:block}
 .cam-thumb-ph{width:100%;aspect-ratio:16/9;background:rgba(4,10,22,.9);display:flex;align-items:center;justify-content:center;color:#1e3a5f;font-size:24px}
+.cam-id-tag{position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.75);color:#64748b;font-family:var(--mono);font-size:7px;padding:1px 4px;border-radius:2px;letter-spacing:.08em;pointer-events:none}
 .cam-live-dot{position:absolute;top:5px;left:5px;background:rgba(239,68,68,.9);color:#fff;font-size:7px;font-weight:bold;padding:2px 5px;border-radius:2px;letter-spacing:.12em;pointer-events:none}
 .cam-play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;opacity:0;transition:opacity .15s;pointer-events:none;text-shadow:0 2px 8px rgba(0,0,0,.8)}
 .cam-card:hover .cam-play-icon{opacity:1}
@@ -11339,26 +11340,13 @@ let camTabISO='';
 function makeEmbedUrl(url){
   if(!url||url.length<8)return'';
   url=url.replace(/^http:\/\//,'https://');
-  const wm=url.match(/windy\.com\/webcams\/(\d+)/i);
-  if(wm)return'https://webcams.windy.com/webcam/'+wm[1]+'/player';
   const ym=url.match(/youtube\.com\/watch\?(?:.*&)?v=([A-Za-z0-9_-]{11})/);
   if(ym)return'https://www.youtube.com/embed/'+ym[1]+'?autoplay=1&mute=1';
   const ys=url.match(/youtu\.be\/([A-Za-z0-9_-]{11})/);
   if(ys)return'https://www.youtube.com/embed/'+ys[1]+'?autoplay=1&mute=1';
-  if(url.includes('youtube.com/embed/')||url.includes('webcams.windy.com/webcam/'))return url;
-  if(url.startsWith('https://')&&(url.match(/\.(mjpg|mjpeg|cgi|php)/i)||url.includes('/stream')||url.includes('/video')||url.includes('/cam')))return url;
+  if(url.includes('youtube.com/embed/'))return url;
+  if(url.startsWith('https://')&&(url.match(/\.(mjpg|mjpeg)(\?|$)/i)||url.match(/\.(jpg|jpeg)(\?|$)/i)))return url;
   return'';
-}
-
-function _windyMapEmbed(lat,lng,countryName){
-  const url='https://embed.windy.com/embed2.html?lat='+lat+'&lon='+lng+'&zoom=5&overlay=webcams&product=ecmwf&menu=&message=&marker=true';
-  return '<div style="margin-top:14px;border-top:1px solid rgba(30,58,95,.3);padding-top:12px">'
-    +'<div style="font-size:9px;letter-spacing:.12em;color:rgba(0,255,80,.6);margin-bottom:6px">// OPEN-SOURCE CAMERA GRID — '+countryName.toUpperCase()+' // TAP ICONS TO INTERCEPT</div>'
-    +'<div style="position:relative;width:100%;padding-top:56%;border-radius:5px;overflow:hidden;border:1px solid rgba(52,211,153,.18)">'
-    +'<iframe src="'+url+'" style="position:absolute;inset:0;width:100%;height:100%;border:none" allowfullscreen loading="lazy"></iframe>'
-    +'</div>'
-    +'<div style="font-size:9px;color:#334155;margin-top:5px;line-height:1.5">Zoom in and tap camera icons to intercept live feeds. Node locations are classified.</div>'
-    +'</div>';
 }
 
 async function renderCamerasTab(iso){
@@ -11381,90 +11369,49 @@ async function renderCamerasTab(iso){
 
   let cams=[];
 
-  // Source 1: TfL JamCam — London traffic/CCTV cameras (UK only, free, no key)
+  // Source 1: TfL JamCam — London CCTV/traffic cameras (UK, free, no login required)
   if(cc2==='GB'){
     try{
       const r=await fetch('https://api.tfl.gov.uk/Place/Type/JamCam',{signal:AbortSignal.timeout(8000)});
       if(r.ok){
         const d=await r.json();
-        const tfl=(d||[]).filter((_,i)=>i<16).map(cam=>{
+        const shuffled=(d||[]).sort(function(){return Math.random()-.5;}).slice(0,20);
+        const tfl=shuffled.map(function(cam){
           const imgProp=(cam.additionalProperties||[]).find(function(p){return p.key==='imageUrl';});
           const url=imgProp?imgProp.value:'';
-          if(!url)return null;
-          return{name:cam.commonName||'Traffic Camera',city:'London',embed:url,thumb:url};
+          if(!url||!url.startsWith('https://'))return null;
+          return{name:cam.commonName||'Traffic Camera',city:'London, UK',embed:url,thumb:url,isSnapshot:true};
         }).filter(Boolean);
         cams=[...cams,...tfl];
       }
     }catch(e){}
   }
 
-  // Source 2: Windy Webcams v2 — by country code
-  if(cc2){
+  // Source 2: OSM Overpass — contact:webcam nodes (YouTube live streams + direct JPEG/MJPEG only)
+  if(cams.length<8){
     try{
-      const r=await fetch(
-        'https://api.windy.com/api/webcams/v2/list/country='+cc2+'/orderby=popularity/limit=12?show=webcams:image,player,location',
-        {signal:AbortSignal.timeout(7000)}
-      );
-      if(r.ok){
-        const d=await r.json();
-        cams=(d.webcams||[]).map(cam=>({
-          name:cam.title||'Live Camera',
-          city:(cam.location?.city||cam.location?.region||'').trim(),
-          embed:cam.player?.day?.embed||('https://webcams.windy.com/webcam/'+cam.id+'/player'),
-          thumb:cam.image?.current?.thumbnail||cam.image?.current?.preview||''
-        })).filter(cam=>cam.embed&&cam.embed.startsWith('https://'));
-      }
-    }catch(e){}
-  }
-
-  // Source 2: Windy Webcams v2 — by bounding box (wider area, catches sparse countries)
-  if(cams.length<4&&lat&&lng){
-    try{
-      const sp=12;
-      const boxStr=(lat-sp)+','+(lng-sp)+','+(lat+sp)+','+(lng+sp);
-      const r=await fetch(
-        'https://api.windy.com/api/webcams/v2/list/bbox='+boxStr+'/orderby=popularity/limit=8?show=webcams:image,player,location',
-        {signal:AbortSignal.timeout(7000)}
-      );
-      if(r.ok){
-        const d=await r.json();
-        const extra=(d.webcams||[]).map(cam=>({
-          name:cam.title||'Live Camera',
-          city:(cam.location?.city||cam.location?.region||'').trim(),
-          embed:cam.player?.day?.embed||('https://webcams.windy.com/webcam/'+cam.id+'/player'),
-          thumb:cam.image?.current?.thumbnail||cam.image?.current?.preview||''
-        })).filter(cam=>cam.embed&&cam.embed.startsWith('https://'));
-        // Merge, deduplicate by embed URL
-        const seen=new Set(cams.map(x=>x.embed));
-        cams=[...cams,...extra.filter(x=>!seen.has(x.embed))];
-      }
-    }catch(e){}
-  }
-
-  // Source 3: OpenStreetMap Overpass — contact:webcam tagged nodes
-  if(cams.length<4){
-    try{
-      const sp=10;
+      const sp=11;
       const bbox=(lat-sp)+','+(lng-sp)+','+(lat+sp)+','+(lng+sp);
-      const q='[out:json][timeout:14];node["contact:webcam"]('+bbox+');out 12;';
+      const q='[out:json][timeout:14];node["contact:webcam"]('+bbox+');out 20;';
       const r=await fetch(
         'https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q),
         {signal:AbortSignal.timeout(14000)}
       );
       if(r.ok){
         const d=await r.json();
-        const osmCams=(d.elements||[]).map(e=>{
+        const osmCams=(d.elements||[]).map(function(e){
           const raw=e.tags?.['contact:webcam']||'';
           const embed=makeEmbedUrl(raw);
           if(!embed)return null;
+          const isSnap=!!embed.match(/\.(jpg|jpeg)(\?|$)/i);
           return{
-            name:e.tags?.name||e.tags?.description||'Camera',
-            city:e.tags?.['addr:city']||e.tags?.locality||'',
-            embed,thumb:'',camLat:e.lat,camLng:e.lon
+            name:e.tags?.name||e.tags?.description||'Street Camera',
+            city:e.tags?.['addr:city']||e.tags?.['addr:country']||'',
+            embed,thumb:isSnap?embed:'',isSnapshot:isSnap
           };
         }).filter(Boolean);
-        const seen=new Set(cams.map(x=>x.embed));
-        cams=[...cams,...osmCams.filter(x=>!seen.has(x.embed))];
+        const seen=new Set(cams.map(function(x){return x.embed;}));
+        cams=[...cams,...osmCams.filter(function(x){return!seen.has(x.embed);})];
       }
     }catch(e){}
   }
@@ -11472,51 +11419,40 @@ async function renderCamerasTab(iso){
   const statusEl=document.getElementById('cam-status');
   if(!statusEl)return;
 
-  // Build the always-present sandboxed camera map (cannot navigate to external site)
-  const windyMapUrl='https://embed.windy.com/embed2.html?lat='+lat+'&lon='+lng+'&zoom=5&overlay=webcams&product=ecmwf&menu=&message=&marker=true';
-  const mapSection=
-    '<div class="cam-map-section">'
-    +'<div class="cam-map-label">CAMERA MAP — '+countryName.toUpperCase()+' — TAP ICONS TO VIEW</div>'
-    +'<div class="cam-map-frame">'
-    +'<iframe src="'+windyMapUrl+'" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>'
-    +'</div>'
-    +'<div style="font-size:9px;color:#334155;margin-top:4px;line-height:1.5">Zoom in and tap any camera icon on the map to open a live feed.</div>'
-    +'</div>';
-
   if(cams.length>0){
     statusEl.remove();
     const grid=document.createElement('div');
     grid.className='cam-grid';
-    grid.innerHTML=cams.map(cam=>{
-      const {name,city,embed,thumb}=cam;
-      const safeEmbed=JSON.stringify(embed).replace(/"/g,'&quot;');
-      const safeName=JSON.stringify(name).replace(/"/g,'&quot;');
-      const onclick='openCamPlayer('+safeEmbed+','+safeName+')';
+    grid.innerHTML=cams.map(function(cam,i){
+      const safeEmbed=JSON.stringify(cam.embed).replace(/"/g,'&quot;');
+      const safeName=JSON.stringify(cam.name).replace(/"/g,'&quot;');
+      const safeSnap=cam.isSnapshot?'true':'false';
+      const onclick='openCamPlayer('+safeEmbed+','+safeName+','+safeSnap+')';
+      const camId='CAM-'+(String(i+1).padStart(3,'0'));
       return '<div class="cam-card" onclick="'+onclick+'">'
-        +(thumb?'<img class="cam-thumb" src="'+thumb+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>CAM</div>\'">'
-               :'<div class="cam-thumb-ph">CAM</div>')
-        +'<div class="cam-live-dot">LIVE</div>'
+        +(cam.thumb
+          ?'<img class="cam-thumb" src="'+cam.thumb+'?t='+Date.now()+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>NO SIGNAL</div>\'">'
+          :'<div class="cam-thumb-ph">NO SIGNAL</div>')
+        +'<div class="cam-live-dot">&#11044; REC</div>'
+        +'<div class="cam-id-tag">'+camId+'</div>'
         +'<div class="cam-play-icon">&#9654;</div>'
-        +'<div class="cam-info"><div class="cam-name">'+name+'</div>'
-        +(city?'<div class="cam-city">'+city+'</div>':'')
+        +'<div class="cam-info"><div class="cam-name">'+cam.name+'</div>'
+        +(cam.city?'<div class="cam-city">'+cam.city+'</div>':'')
         +'</div></div>';
     }).join('');
     el.appendChild(grid);
     el.insertAdjacentHTML('beforeend',
-      mapSection
-      +'<div class="drill-row" style="justify-content:center;margin-top:10px">'
+      '<div class="drill-row" style="justify-content:center;margin-top:12px">'
       +'<button class="drill-btn green" onclick="viewCountrySat(\''+iso+'\')">SATELLITE VIEW</button>'
       +'<button class="drill-btn blue" onclick="camTabISO=\'\';renderCamerasTab(\''+iso+'\')">REFRESH</button>'
       +'</div>');
   }else{
-    // No direct feeds found — show map as primary content
     const div=document.createElement('div');
     div.innerHTML=
-      '<div style="font-size:10px;color:var(--dim);line-height:1.7;margin-bottom:10px;padding:9px 11px;border:1px solid rgba(30,58,95,.3);border-radius:4px">'
-      +'No direct camera feeds found for '+countryName+'. Use the map below to browse cameras in this region — zoom in and tap any camera icon to view a live feed.'
+      '<div style="font-size:10px;color:var(--dim);line-height:1.8;margin-bottom:12px;padding:10px 12px;border:1px solid rgba(30,58,95,.3);border-radius:4px">'
+      +'No public camera feeds found for '+countryName+'. Direct CCTV access requires open government APIs — currently available for UK and select cities.'
       +'</div>'
-      +mapSection
-      +'<div class="drill-row" style="justify-content:center;margin-top:10px">'
+      +'<div class="drill-row" style="justify-content:center">'
       +'<button class="drill-btn green" onclick="viewCountrySat(\''+iso+'\')">SATELLITE VIEW</button>'
       +'<button class="drill-btn blue" onclick="camTabISO=\'\';renderCamerasTab(\''+iso+'\')">RETRY</button>'
       +'</div>';
@@ -11526,26 +11462,26 @@ async function renderCamerasTab(iso){
 
 let _camHudInterval=null;
 
-function openCamPlayer(url,name){
+function openCamPlayer(url,name,isSnapshot){
   const ov=document.getElementById('cam-overlay');
   if(!ov)return;
   const lbl=document.getElementById('cam-label');
-  if(lbl)lbl.textContent=name||'LIVE FEED';
+  if(lbl)lbl.textContent=(name||'LIVE FEED').toUpperCase();
   const ct=document.getElementById('cam-iframe-container');
   if(ct){
-    ct.innerHTML='<div class="cam-loading"><div class="cam-loading-spinner"></div><span>LOADING...</span></div>';
+    ct.innerHTML='<div class="cam-loading"><div class="cam-loading-spinner"></div><span>LOADING FEED...</span></div>';
     setTimeout(function(){
       if(!ov.classList.contains('open'))return;
       if(_camHudInterval){clearInterval(_camHudInterval);_camHudInterval=null;}
-      if(url.match(/\.(jpg|jpeg|png)(\?|$)/i)||url.includes('jamcams.tfl.gov.uk')||url.includes('dot.ca.gov')){
-        // Auto-refreshing snapshot — traffic/CCTV cameras
+      if(isSnapshot||url.match(/\.(jpg|jpeg)(\?|$)/i)){
+        const baseUrl=url.split('?')[0];
         const img=document.createElement('img');
-        img.src=url+'?t='+Date.now();
+        img.src=baseUrl+'?t='+Date.now();
         img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;background:#000';
         img.alt='Live Camera';
         ct.innerHTML='';
         ct.appendChild(img);
-        _camHudInterval=setInterval(function(){img.src=url+'?t='+Date.now();},10000);
+        _camHudInterval=setInterval(function(){img.src=baseUrl+'?t='+Date.now();},8000);
       }else if(url.match(/\.(mjpg|mjpeg)(\?|$)/i)){
         ct.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:contain;display:block;background:#000" alt="Live Camera">';
       }else{
