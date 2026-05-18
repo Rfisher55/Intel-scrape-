@@ -678,6 +678,48 @@ canvas.dragging{cursor:grabbing}
 .threat-actors{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
 .threat-actor-tag{font-size:9px;padding:3px 8px;background:rgba(30,58,95,.4);border:1px solid rgba(59,130,246,.25);border-radius:2px;color:#7dd3fc;letter-spacing:.04em}
 .threat-analyst{font-size:10px;color:#94a3b8;line-height:1.6;margin-bottom:8px;border-left:2px solid rgba(59,130,246,.3);padding-left:8px}
+.threat-source-badge{display:inline-flex;align-items:center;font-size:6.5px;padding:1px 4px;border-radius:2px;letter-spacing:.1em;font-weight:bold;margin-right:3px;vertical-align:middle}
+.threat-src-osint{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.25);color:#7dd3fc}
+.threat-src-humint{background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.25);color:#c4b5fd}
+.threat-src-sigint{background:rgba(234,179,8,.15);border:1px solid rgba(234,179,8,.25);color:#fde047}
+.threat-src-imint{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.25);color:#6ee7b7}
+.threat-conf-badge{display:inline-flex;align-items:center;gap:2px;font-size:7px;padding:1px 5px;border-radius:2px;letter-spacing:.12em;font-weight:bold}
+.threat-conf-high{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.threat-conf-med{background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.3);color:#fde047}
+.threat-conf-low{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.threat-connected-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.threat-connected-chip{font-size:8px;padding:2px 7px;background:rgba(30,58,95,.35);border:1px solid rgba(59,130,246,.2);border-radius:2px;color:#93c5fd;cursor:pointer;letter-spacing:.07em;transition:background .15s,border-color .15s}
+.threat-connected-chip:hover{background:rgba(30,58,95,.7);border-color:rgba(59,130,246,.5)}
+.threat-recent-intel{display:grid;gap:5px;margin-top:4px}
+.threat-intel-item{display:grid;grid-template-columns:52px 1fr;gap:8px;align-items:start;padding:5px 8px;background:rgba(4,9,20,.5);border-left:2px solid rgba(59,130,246,.25);border-radius:0 3px 3px 0}
+.threat-intel-time{color:#475569;font-size:7px;letter-spacing:.08em;padding-top:1px;line-height:1.6}
+.threat-intel-text{font-size:9px;color:#94a3b8;line-height:1.45}
+.threat-history{font-size:10px;color:#cbd5e1;line-height:1.6;margin-bottom:8px;border-left:2px solid rgba(234,179,8,.3);padding-left:8px}
+.threat-fp-expanded{display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.07)}
+.threat-fp-card.fp-open .threat-fp-expanded{display:block}
+.threat-fp-timeline{display:grid;gap:4px;margin-top:4px;margin-bottom:6px}
+.threat-fp-tl-item{display:grid;grid-template-columns:60px 1fr;gap:8px;font-size:9px}
+.threat-fp-tl-date{color:#475569;font-size:7px;letter-spacing:.08em;padding-top:1px}
+.threat-fp-tl-event{color:#94a3b8;line-height:1.4}
+.threat-escalation-bar{height:5px;background:rgba(30,58,95,.4);border-radius:3px;overflow:hidden;margin-top:3px}
+.threat-escalation-fill{height:100%;border-radius:3px;transition:width .8s ease}
+.threat-actor-tag{cursor:pointer}
+.threat-actor-tag:hover{background:rgba(59,130,246,.25);border-color:rgba(96,165,250,.5)}
+#actor-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center}
+#actor-modal-overlay.open{display:flex}
+#actor-modal{background:rgba(4,9,20,.98);border:1px solid rgba(59,130,246,.35);border-radius:6px;width:min(560px,95vw);max-height:88vh;overflow-y:auto;font-family:var(--mono);padding:0}
+.actor-modal-hdr{display:flex;align-items:start;justify-content:space-between;padding:16px 18px;border-bottom:1px solid rgba(30,58,95,.5);background:rgba(8,20,45,.6)}
+.actor-modal-name{font-size:12px;font-weight:bold;color:#e2e8f0;letter-spacing:.06em;margin-bottom:3px}
+.actor-modal-type{font-size:8px;letter-spacing:.2em;color:#475569}
+.actor-modal-body{padding:14px 18px;display:grid;gap:10px}
+.actor-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.actor-meta-item{background:rgba(8,16,33,.6);border:1px solid rgba(30,58,95,.4);border-radius:3px;padding:8px 10px}
+.actor-meta-label{font-size:7px;color:#475569;letter-spacing:.15em;margin-bottom:3px}
+.actor-meta-val{font-size:9px;color:#94a3b8;line-height:1.4}
+.actor-methods{display:flex;flex-wrap:wrap;gap:4px}
+.actor-method-tag{font-size:8px;padding:2px 7px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:2px;color:#fca5a5;letter-spacing:.06em}
+.actor-ops-list{display:grid;gap:4px}
+.actor-op-item{font-size:9px;color:#94a3b8;line-height:1.4;padding:4px 8px;background:rgba(4,9,20,.5);border-left:2px solid rgba(239,68,68,.25);border-radius:0 3px 3px 0}
 .threat-tripwires{display:grid;gap:4px}
 .threat-tripwire{display:flex;gap:6px;font-size:10px;color:#7dd3fc;line-height:1.45}
 .threat-tripwire::before{content:'⚑';color:#f97316;flex-shrink:0}
@@ -916,6 +958,19 @@ canvas.dragging{cursor:grabbing}
   <div class="threat-footer">
     <span class="threat-update-ts" id="threat-ts">NOT YET LOADED</span>
     <span class="threat-src">SOURCE: GDELT · ACLED · OSINT OPEN FEEDS · CIA WORLD FACTBOOK</span>
+  </div>
+</div>
+
+<div id="actor-modal-overlay" onclick="if(event.target===this)closeActorProfile()">
+  <div id="actor-modal">
+    <div class="actor-modal-hdr">
+      <div>
+        <div class="actor-modal-name" id="actor-modal-name">ACTOR</div>
+        <div class="actor-modal-type" id="actor-modal-type">THREAT ACTOR PROFILE</div>
+      </div>
+      <button onclick="closeActorProfile()" style="background:none;border:none;color:#475569;cursor:pointer;font-size:16px;line-height:1;padding:0">&#x2715;</button>
+    </div>
+    <div class="actor-modal-body" id="actor-modal-body"></div>
   </div>
 </div>
 
@@ -11162,6 +11217,748 @@ const THREAT_WATCHLIST=[
   {flag:'🇧🇾',name:'BELARUS',iso:'BLR',score:52,color:'#f59e0b',note:'Russian tactical nukes deployed'},
 ];
 
+const ACTOR_PROFILES={
+  'STRATFOR Russia':{
+    type:'STATE STRATEGIC ACTOR',
+    origin:'Russian Federation — General Staff / Kremlin',
+    since:'1991 (post-Soviet reconstitution)',
+    attribution:'CONFIRMED — US IC, NATO assessments',
+    description:'Russia\'s military-strategic complex operates under Gerasimov Doctrine, blending kinetic, cyber, economic, and information warfare into a unified coercive framework. Current posture reflects deliberate escalation management to deter NATO intervention while sustaining the Ukraine offensive.',
+    methods:['Strategic nuclear signaling','Hybrid warfare (Gerasimov Doctrine)','Gray-zone operations','Energy coercion','Information warfare','Proxy force deployment'],
+    recentOps:['Suspension of New START participation — strategic signaling to NATO (2023–present)','Deployment of tactical nuclear warheads to Belarus — Lukashenko confirmed (Jun 2023)','Continuous Kinzhal hypersonic strike operations against Ukrainian infrastructure (2024–25)'],
+    targets:'NATO alliance cohesion, Ukrainian state, European energy markets, Western political institutions',
+  },
+  'DPRK Missile General Bureau':{
+    type:'STATE WMD PROGRAM',
+    origin:'Democratic People\'s Republic of Korea — RGB / KWP',
+    since:'1998 (Paektusan-1 launch)',
+    attribution:'CONFIRMED — US DIA, South Korean NIS, UN PoE',
+    description:'The Missile General Bureau oversees North Korea\'s ballistic missile and nuclear delivery program, which has achieved demonstrated ICBM capability with the solid-fueled Hwasong-18 capable of striking the continental United States. Miniaturization of nuclear warheads for ICBM delivery is assessed with HIGH CONFIDENCE.',
+    methods:['Solid-fuel ICBM development (Hwasong-18)','SLBM deployment (Pukguksong-3)','Underground silo construction','Hypersonic glide vehicle testing','MIRV warhead development'],
+    recentOps:['Hwasong-18 solid-fuel ICBM test series — 3 launches in 90 days (2024)','Pukguksong-3 SLBM deployed to ROMEO-class submarine fleet','Technology exchange with Russia: satellite + submarine tech for 12,000 troops committed to Ukraine front'],
+    targets:'Republic of Korea, Japan, US Indo-Pacific bases, CONUS',
+  },
+  'IRGC Aerospace Force':{
+    type:'STATE MILITARY — AEROSPACE/MISSILE',
+    origin:'Islamic Republic of Iran — IRGC',
+    since:'1988 (IRGC missile command formalized)',
+    attribution:'CONFIRMED — US CENTCOM, Israeli Mossad, IAEA',
+    description:'Iran\'s IRGC Aerospace Force controls the largest and most diverse ballistic missile arsenal in the Middle East, with over 3,000 missiles of varying range. The April 2024 direct strike on Israel — 170 drones, 120 ballistic missiles, 30 cruise missiles — demonstrated operational reach across the region.',
+    methods:['Ballistic missile strikes (Shahab, Emad, Kheibar Shekan)','Kamikaze drone swarms (Shahed-136)','Hypersonic missile development (Fattah)','Proxy force missile equipping','Underground missile cities'],
+    recentOps:['Operation True Promise: April 2024 direct strike on Israel — first in history (170 drones + 120 BMs)','Operation True Promise II: October 2024 ballistic missile salvo at Israel','Continued Houthi satellite targeting support and BM resupply via Yemen (2024–25)'],
+    targets:'Israel, US Gulf bases, Saudi Arabia, UAE, Red Sea shipping',
+  },
+  'PLA Rocket Force':{
+    type:'STATE STRATEGIC FORCE',
+    origin:'People\'s Republic of China — PLA',
+    since:'1966 (Second Artillery Corps)',
+    attribution:'CONFIRMED — US DIA China Military Power Report',
+    description:'The PLA Rocket Force is undergoing the largest nuclear expansion in Chinese history, with DOD assessing China will have 1,500 nuclear warheads by 2035. The DF-41 silo construction program in Xinjiang (300+ silos confirmed by commercial satellite analysis) represents a fundamental shift from minimum deterrence doctrine.',
+    methods:['DF-41 ICBM (MIRV, 15,000km range)','DF-5B silo-based ICBM','DF-21D ASBM (carrier-killer)','DF-26 IRBM (Guam Express)','Hypersonic glide vehicles (DF-17, DF-ZF)','Nuclear submarine (Jin-class, JL-3 SLBM)'],
+    recentOps:['DF-41 silo expansion Xinjiang — 300+ silos confirmed Planet Labs (2023–24)','DF-17 hypersonic glide vehicle operational deployment to Eastern Theater Command','PLA Rocket Force leadership purge (2023) — corruption investigation, followed by reconstitution under Xi loyalists'],
+    targets:'US INDOPACOM, Guam, Japan, Taiwan, US carrier strike groups',
+  },
+  'Pakistan SNS':{
+    type:'STATE NUCLEAR PROGRAM',
+    origin:'Islamic Republic of Pakistan — Strategic Plans Division',
+    since:'1972 (Bhutto nuclear program initiation)',
+    attribution:'CONFIRMED — US NIC, IISS',
+    description:'Pakistan\'s Strategic Nuclear Command (SNS/SPD) manages an estimated 160–170 nuclear warheads, including tactical battlefield weapons (Nasr/HATF-9) explicitly designed for first-use against conventional Indian incursions. The post-Pahalgam crisis (April 2025) produced the most explicit Pakistani nuclear signaling since Kargil 1999.',
+    methods:['Tactical nuclear weapons (Nasr TNW, 60km range)','Shaheen-III MRBM (2,750km)','Babur cruise missile (nuclear-capable)','Forward deployment posture','Full-spectrum deterrence doctrine'],
+    recentOps:['Nasr TNW battalion forward-deployment posture shift following Pahalgam attack (Apr 2025)','Shaheen-III test affirming India strike capability during crisis (Apr 2025)','SPD activation of nuclear command channels during India-Pakistan standoff (May 2025)'],
+    targets:'Indian Armed Forces, Indian strategic assets, potential US intervention forces',
+  },
+  'Volt Typhoon (MSS)':{
+    type:'STATE APT — CRITICAL INFRASTRUCTURE',
+    origin:'People\'s Republic of China — Ministry of State Security',
+    since:'2021 (first documented)',
+    attribution:'CONFIRMED — FBI/CISA joint advisory, Five Eyes',
+    description:'Volt Typhoon is a PRC state-sponsored APT assessed with HIGH CONFIDENCE to be pre-positioning within US critical infrastructure for wartime disruption rather than intelligence collection. The campaign targets water systems, power grids, and telecommunications to complicate US military mobilization in a Taiwan contingency.',
+    methods:['Living-off-the-land (LOTL) techniques','Compromised SOHO routers as proxy network','Lateral movement via legitimate admin tools','Long-term persistence (5+ years in some networks)','OT/ICS network access'],
+    recentOps:['FBI/CISA joint advisory confirming critical infrastructure pre-positioning across all 50 states (Feb 2024)','Hawaii water system infiltration — timing correlated with INDOPACOM exercises','Pacific telecommunications backbone access confirmed — multiple ISPs compromised'],
+    targets:'US critical infrastructure: water, power, comms, transport — specifically INDOPACOM support nodes',
+  },
+  'APT29/Cozy Bear (SVR)':{
+    type:'STATE APT — ESPIONAGE',
+    origin:'Russian Federation — SVR (Foreign Intelligence Service)',
+    since:'2008 (earliest attributed activity)',
+    attribution:'CONFIRMED — US IC, UK NCSC, EU ENISA',
+    description:'APT29 is Russia\'s premier foreign intelligence cyber unit, responsible for the SolarWinds supply chain compromise (2020) — the most significant espionage operation against US government networks in history. Currently conducting active NATO diplomatic network intrusions with focus on Ukraine policy communications.',
+    methods:['Supply chain compromise (SolarWinds SUNBURST)','Spear-phishing (NOBELIUM)','Credential harvesting','WellMess/WellMail malware','MagicWeb identity provider abuse','Covert C2 via legitimate cloud services'],
+    recentOps:['Active NATO diplomatic network intrusion — exfiltrating Ukraine policy communications (2024–25)','Microsoft corporate email breach — including executive communications on Russia policy (Jan 2024)','German SPD email system compromise — sustained access to Social Democratic Party networks (2024)'],
+    targets:'Western government networks, NATO, tech companies, COVID-19 vaccine research, Ukraine policy communications',
+  },
+  'Sandworm (GRU Unit 74455)':{
+    type:'STATE APT — DESTRUCTIVE CYBER',
+    origin:'Russian Federation — GRU (Military Intelligence)',
+    since:'2009 (BlackEnergy campaign)',
+    attribution:'CONFIRMED — US DoJ indictment, UK NCSC, Ukraine CERT-UA',
+    description:'Sandworm is the world\'s most destructive cyber threat actor, responsible for the only confirmed attacks causing physical power outages (Ukraine 2015/2016), NotPetya ($10B global damage), and continuous Ukrainian critical infrastructure attacks throughout the full-scale invasion. Operates as a force multiplier to GRU kinetic operations.',
+    methods:['ICS/SCADA attacks (Industroyer/CrashOverride)','Wiper malware (NotPetya, AcidRain, CaddyWiper)','VPN exploitation','Living-off-the-land','Telecom attacks (AcidPour)','GPS signal spoofing support'],
+    recentOps:['Ukrainian power grid attacks using Industroyer2 — CERT-UA documenting daily incidents (2024–25)','AcidPour wiper deployed against Ukrainian telecom Kyivstar — 24M subscribers disrupted (Dec 2023)','Coordination with VKS strike timing on Ukrainian energy infrastructure (ongoing 2025)'],
+    targets:'Ukrainian critical infrastructure, NATO logistics chains, Western financial institutions',
+  },
+  'Salt Typhoon (MSS)':{
+    type:'STATE APT — TELECOMMUNICATIONS INTERCEPT',
+    origin:'People\'s Republic of China — Ministry of State Security',
+    since:'2019 (earliest attributed)',
+    attribution:'CONFIRMED — US Senate Intelligence Committee, FBI, CISA',
+    description:'Salt Typhoon compromised at least 9 major US telecommunications carriers, gaining access to lawful intercept systems — the infrastructure used by US law enforcement and intelligence for court-authorized surveillance. This represents one of the most significant intelligence failures in recent US history, potentially providing China with years of metadata on US government communications.',
+    methods:['Telecom core network infiltration','CALEA lawful intercept system access','Metadata collection at scale','BGP route hijacking','SS7 protocol exploitation'],
+    recentOps:['Confirmed access to AT&T, Verizon, T-Mobile lawful intercept systems (Senate Intel, Oct 2024)','Access to Trump and Harris campaign phone communications during 2024 election cycle','Sustained metadata collection on US government officials — duration and scope still being assessed (2025)'],
+    targets:'US telecommunications infrastructure, government official communications, national security personnel',
+  },
+  'Lazarus Group (RGB)':{
+    type:'STATE APT — FINANCIAL/ESPIONAGE',
+    origin:'Democratic People\'s Republic of Korea — RGB (Reconnaissance General Bureau)',
+    since:'2009 (estimated)',
+    attribution:'CONFIRMED — US Treasury OFAC, FBI, UN Panel of Experts',
+    description:'Lazarus Group is North Korea\'s primary cyber warfare unit, unique in conducting both espionage and financially motivated operations to fund Pyongyang\'s WMD programs. The $1.5B Bybit exchange heist (February 2025) is the largest cryptocurrency theft in history and demonstrates DPRK\'s growing sophistication in financial system exploitation.',
+    methods:['Cryptocurrency exchange heists','Supply chain compromise','Spear-phishing (social engineering)','TraderTraitor malware (crypto focus)','SWIFT banking system attacks','AppleJeus trading app trojanization'],
+    recentOps:['$1.5B Bybit cryptocurrency exchange heist — largest crypto theft in history (Feb 2025)','TraderTraitor campaign targeting crypto firms — $600M stolen across multiple operations (2024)','WannaCry 2.0 precursor activity detected — NHS and transport sector targeting (Q1 2025)'],
+    targets:'Cryptocurrency exchanges, financial institutions, defense contractors, South Korean government',
+  },
+  'APT41 (MSS)':{
+    type:'STATE APT — DUAL ESPIONAGE/CRIMINAL',
+    origin:'People\'s Republic of China — Ministry of State Security',
+    since:'2012 (earliest attributed)',
+    attribution:'CONFIRMED — US DoJ indictment (5 defendants), Mandiant',
+    description:'APT41 is unique among state APTs in conducting both government-directed espionage and financially motivated cybercrime operations, blurring the line between intelligence collection and profit. Active across 17 countries in 2024, targeting healthcare, telecom, technology, and government sectors simultaneously.',
+    methods:['Supply chain compromise','Zero-day exploitation','Bootkit/rootkit deployment','Ransomware (for cover/profit)','MSSQL attacks','Web shell deployment','Financial fraud'],
+    recentOps:['17-country simultaneous targeting campaign — healthcare, telecom, tech sectors (2024)','US state government network compromise — election infrastructure adjacent access (2024)','KEYPLUG backdoor deployment across Southeast Asian government networks (Q4 2024)'],
+    targets:'Pharmaceutical/biotech IP, government policy data, telecom infrastructure, financial systems',
+  },
+  'Turla (FSB)':{
+    type:'STATE APT — ESPIONAGE',
+    origin:'Russian Federation — FSB (Federal Security Service)',
+    since:'1996 (Agent.BTZ precursor)',
+    attribution:'CONFIRMED — UK NCSC, US NSA advisory, ESET',
+    description:'Turla is the FSB\'s premier cyber espionage unit with a 25+ year operational history, notable for technical sophistication including hijacking other APTs\' infrastructure and deploying satellite-based C2 channels. The Snake malware platform has been active in 50+ countries and represents one of the most advanced persistent threat tools ever documented.',
+    methods:['Snake/Uroburos rootkit','Satellite-based C2 (hijacked Ku-band)','Hijacking other APT infrastructure','Carbon backdoor','LightNeuron email server implant','Watering hole attacks'],
+    recentOps:['Snake malware new variant targeting Five Eyes SIGINT partners — NZ, CA, AU affected (2024–25)','LightNeuron implant found in European Ministry of Foreign Affairs mail server (2024)','Hijacking Iranian APT infrastructure to conduct operations via Iran\'s IP space (documented NSA/GCHQ 2019, pattern continues)'],
+    targets:'Governments, military, diplomatic missions, Five Eyes partners, defense contractors',
+  },
+  'Russian Armed Forces (VKS/VDV/VMF)':{
+    type:'STATE CONVENTIONAL MILITARY',
+    origin:'Russian Federation — Ministry of Defence',
+    since:'1992 (post-Soviet)',
+    attribution:'CONFIRMED — US EUCOM, NATO, Ukrainian GUR',
+    description:'Russia\'s armed forces are engaged in the largest land war in Europe since 1945, deploying approximately 600,000 troops across the Ukrainian front. The VKS (Aerospace Forces), VDV (Airborne), and VMF (Navy) are conducting coordinated strike campaigns targeting Ukrainian critical infrastructure while sustaining grinding offensive operations in Donetsk.',
+    methods:['Massed artillery attrition','Glide bomb strikes (FAB-1500, FAB-3000)','Cruise missile/drone infrastructure campaign','Electronic warfare (EW) dominance','VDV assault operations','Submarine-launched Kalibr cruise missiles'],
+    recentOps:['Sustained Donetsk axis offensive — 1,000+ casualties/day on both sides (2024–25)','FAB-3000 glide bomb deployment — largest conventional bomb in active use in Europe','DPRK troop integration — 12,000 soldiers committed to Kursk/Donetsk sectors'],
+    targets:'Ukrainian Armed Forces, Ukrainian critical infrastructure, NATO resupply routes',
+  },
+  'IDF':{
+    type:'STATE CONVENTIONAL MILITARY',
+    origin:'State of Israel — Ministry of Defence',
+    since:'1948',
+    attribution:'CONFIRMED — IDF spokesperson, US CENTCOM',
+    description:'The Israel Defense Forces have been conducting sustained multi-front combat operations since October 7, 2023, spanning Gaza (Operation Iron Sword), Lebanon (Operation Northern Arrows), and response to Iranian ballistic missile attacks. IDF faces unprecedented simultaneous threat axes not seen since the 1973 Yom Kippur War.',
+    methods:['Precision air strikes (F-35I Adir)','Ground maneuver operations','Tunnel destruction operations','Targeted assassination (SIGINT-driven)','Iron Dome/Arrow III air defense','Maritime blockade'],
+    recentOps:['Rafah Phase 4 ground operation — tunnels 60% cleared, hostage rescue operations ongoing (2025)','Hezbollah HQ strike — eliminated Nasrallah + senior leadership (Sep 2024)','Response to Iranian Operation True Promise II — strike on Iranian radar/SAM sites (Oct 2024)'],
+    targets:'Hamas IQB, Hezbollah, Palestinian Islamic Jihad, Iranian proxy network, IRGC assets',
+  },
+  'RSF Sudan':{
+    type:'NON-STATE PARAMILITARY / FACTION',
+    origin:'Sudan — Rapid Support Forces (RSF)',
+    since:'2013 (formalized from Janjaweed)',
+    attribution:'CONFIRMED — UN Panel of Experts, ACLED, Human Rights Watch',
+    description:'The Rapid Support Forces under General Dagalo (Hemeti) control approximately 60% of Sudan including most of Khartoum, conducting a campaign of systematic ethnic cleansing in Darfur that UN experts assess as genocide. The RSF\'s advance on Port Sudan threatens to collapse the last SAF logistics lifeline.',
+    methods:['Armored vehicle assault','Aerial drone strikes (Bayraktar-type)','Ethnic targeting/mass atrocities','Looting as economic warfare','Mercenary recruitment','UAE-facilitated arms resupply'],
+    recentOps:['RSF advance on Port Sudan — siege of last SAF-controlled Red Sea access point (Q1 2025)','El Fasher Darfur siege — 800,000 civilians trapped, UN genocide alert (2024–25)','Khartoum consolidation — SAF expelled from capital, government relocated to Port Sudan'],
+    targets:'Sudanese Armed Forces (SAF), civilian population of Darfur, Khartoum administrative infrastructure',
+  },
+  'Myanmar PDC':{
+    type:'NON-STATE RESISTANCE COALITION',
+    origin:'Myanmar — People\'s Defence Force / EAO coalition',
+    since:'2021 (formed post-coup)',
+    attribution:'CONFIRMED — ACLED, International Crisis Group, UN Special Rapporteur',
+    description:'The People\'s Defence Force and allied Ethnic Armed Organizations (Brotherhood Alliance: MNDAA, TNLA, AA) have achieved a strategic reversal against the Tatmadaw, now controlling approximately 60% of Myanmar\'s territory. A full junta collapse scenario is assessed within 6–12 months by regional analysts.',
+    methods:['Guerrilla warfare','Captured armor/artillery operations','Urban combat','Border town seizures','Supply line interdiction','Drone-delivered munitions'],
+    recentOps:['Brotherhood Alliance captures Laukkai, Chinshwehaw — entire northern Shan State arc (late 2023–24)','PDC advance on Mandalay — second-largest city contested (2025)','Tatmadaw airbase seizures — PDF operating captured helicopters in combat'],
+    targets:'Myanmar military (Tatmadaw) positions, junta administrative centers, military-linked economic infrastructure',
+  },
+  'JNIM/GSIM Sahel':{
+    type:'JIHADIST INSURGENT ORGANIZATION',
+    origin:'Mali / Sahel — JNIM (Jama\'at Nusrat al-Islam wal-Muslimin)',
+    since:'2017 (merger of Ansar Dine, GSIM, AQIM Sahel)',
+    attribution:'CONFIRMED — UN Sanctions Committee, ACLED, French DGSE',
+    description:'JNIM has transformed from a terrorist organization into a proto-state, exercising taxation, judicial, and governance functions across 50%+ of Mali and expanding into Burkina Faso and Niger. The departure of French Barkhane forces and MINUSMA has removed the primary counterterrorism pressure.',
+    methods:['IED campaigns on military convoys','Vehicle-borne IED (VBIED) attacks','Population taxation and governance','Recruitment from economic migrants','Assassination of local officials','Alliance with Wagner/Africa Corps denial zones'],
+    recentOps:['Capture of Kidal — symbolic fall of last Tuareg stronghold to JNIM (Nov 2023)','Expanding into Benin, Togo — coastal state infiltration (2024–25)','Attack on Bamako military academy — first strike on capital in years (Sep 2024)'],
+    targets:'Malian/Burkinabe/Nigerien armed forces, UN peacekeepers, Western NGOs, traditional governance structures',
+  },
+  'PLA Navy PLAN':{
+    type:'STATE CONVENTIONAL MILITARY — NAVAL',
+    origin:'People\'s Republic of China — PLA',
+    since:'1949',
+    attribution:'CONFIRMED — US INDOPACOM, Japanese JCS, Philippine DFA',
+    description:'The PLA Navy has become the world\'s largest by hull count (370+ ships) and is executing an assertive South China Sea strategy combining coast guard, maritime militia, and naval forces in a "cabbage strategy" to overwhelm Philippine and other claimant state responses below the threshold of armed conflict.',
+    methods:['Maritime militia operations','Water cannon/laser attacks on supply missions','Island fortification (artificial islands)','DF-21D ASBM anti-access','PLAN carrier operations','Submarine patrol (SSBN deterrence patrols)'],
+    recentOps:['Second Thomas Shoal weekly confrontations — water cannon attacks on Philippine resupply missions (ongoing 2024–25)','PLAN 5th Taiwan Strait blockade exercise cycle — simulating full encirclement (2024)','Philippines-PRC maritime militia incident — laser blinding of Philippine Coast Guard crew (2024)'],
+    targets:'Taiwan, Philippine maritime claims, US carrier strike groups, Japanese SLOC',
+  },
+  'Houthi (Ansar Allah)':{
+    type:'IRAN-BACKED PROXY — MARITIME TERRORISM',
+    origin:'Yemen — Ansar Allah (Houthi movement)',
+    since:'2003 (founding), 2014 (state capture)',
+    attribution:'CONFIRMED — US CENTCOM, UN PoE, Lloyd\'s Market Association',
+    description:'The Houthi movement has demonstrated unprecedented capability for a non-state actor, conducting anti-ship ballistic missile attacks, drone strikes, and naval mine operations that have effectively paralyzed 70% of Red Sea commercial shipping. Iran provides targeting intelligence, satellite access, and weapons components.',
+    methods:['Anti-ship ballistic missiles (ASBMs)','Kamikaze drone swarms (Shahed derivatives)','Cruise missile strikes','Naval mines','Underwater drone attacks','C-802 anti-ship cruise missiles'],
+    recentOps:['80+ commercial ships attacked — Lloyd\'s war risk premium 300% above baseline (2024–25)','First confirmed ASBM hit on commercial vessel — Tutor sinking (Jun 2024)','US/UK Operation Prosperity Guardian strikes — degrading but not eliminating capability'],
+    targets:'Commercial shipping (Red Sea/Gulf of Aden), Israeli-linked vessels, US/UK naval forces',
+  },
+  'ISIS-K (ISKP)':{
+    type:'TRANSNATIONAL TERRORIST ORGANIZATION',
+    origin:'Afghanistan/Pakistan — Islamic State Khorasan Province',
+    since:'2015 (declared)',
+    attribution:'CONFIRMED — UN Analytical Support Team, Europol, US CENTCOM',
+    description:'ISIS-K (ISKP) has emerged as the most acute near-term terrorist threat to Western Europe and Central Asia, with Europol assessing simultaneous attack planning in 7+ countries. The Moscow Crocus City Hall attack (144 killed, March 2024) demonstrated operational capacity for mass-casualty strikes.',
+    methods:['Mass casualty bombings','Assault with firearms','Vehicle attacks','Insider threat recruitment','Online radicalization','Cross-border facilitation networks'],
+    recentOps:['Moscow Crocus City Hall attack — 144 killed, largest terrorist attack in Russia in 20 years (Mar 2024)','Vienna, Cologne, Madrid plots disrupted by Europol (2024–25)','Continued Kabul attacks targeting Taliban officials and Hazara civilians (ongoing)'],
+    targets:'Western Europe, Russia, Central Asia, Shia Muslims, Taliban government',
+  },
+  'Houthi/Ansar Allah':{
+    type:'IRAN-BACKED PROXY — MARITIME TERRORISM',
+    origin:'Yemen — Ansar Allah (Houthi movement)',
+    since:'2003 (founding), 2014 (state capture)',
+    attribution:'CONFIRMED — US CENTCOM, UN PoE, Lloyd\'s Market Association',
+    description:'The Houthi movement has demonstrated unprecedented capability for a non-state actor, conducting anti-ship ballistic missile attacks, drone strikes, and naval mine operations that have effectively paralyzed 70% of Red Sea commercial shipping. Iran provides targeting intelligence, satellite access, and weapons components.',
+    methods:['Anti-ship ballistic missiles (ASBMs)','Kamikaze drone swarms (Shahed derivatives)','Cruise missile strikes','Naval mines','Underwater drone attacks','C-802 anti-ship cruise missiles'],
+    recentOps:['80+ commercial ships attacked — Lloyd\'s war risk premium 300% above baseline (2024–25)','First confirmed ASBM hit on commercial vessel — Tutor sinking (Jun 2024)','US/UK Operation Prosperity Guardian strikes — degrading but not eliminating capability'],
+    targets:'Commercial shipping (Red Sea/Gulf of Aden), Israeli-linked vessels, US/UK naval forces',
+  },
+  'Hezbollah':{
+    type:'IRAN-BACKED PROXY — CONVENTIONAL/HYBRID',
+    origin:'Lebanon — Hezbollah (Party of God)',
+    since:'1982 (founded by IRGC)',
+    attribution:'CONFIRMED — US State Dept FTO designation, UN SC Resolution 1701',
+    description:'Hezbollah is the world\'s most heavily armed non-state actor, possessing 150,000+ rockets and missiles and a precision-guided munitions arsenal that survived the 2024 conflict with significant residual capability. Following the elimination of Nasrallah, the organization is reconstituting under new leadership with continued Iranian resupply via Syria.',
+    methods:['Precision-guided rocket/missile strikes','Anti-tank missile warfare (Kornet)','Tunnel infiltration networks','Drone reconnaissance and attack','IED/roadside bomb operations','Rocket artillery (Katyusha, Fajr-5)'],
+    recentOps:['Northern Israel front — daily rocket exchanges, 70,000+ Israelis displaced (2023–24)','Post-ceasefire reconstitution — Iran resupply via Syria continuing despite IDF strikes (2025)','Precision PGM arsenal preservation — estimated 30% of guided munitions intact post-conflict'],
+    targets:'Northern Israel, UNIFIL forces, Israeli strategic assets, Druze and Christian communities in Lebanon',
+  },
+  'Hamas IQB':{
+    type:'TERRORIST ORGANIZATION / RESISTANCE FACTION',
+    origin:'Gaza Strip, Palestinian Territories',
+    since:'1987 (founding)',
+    attribution:'CONFIRMED — US State Dept FTO, EU terrorist list, Israeli Shabak',
+    description:'Hamas\'s Izz ad-Din al-Qassam Brigades (IQB) executed the October 7, 2023 attack — the deadliest day for Jews since the Holocaust — killing 1,200 and taking 253 hostages. Despite 18 months of IDF operations eliminating most senior military commanders, the organization retains a reconstituting insurgent capability through the tunnel network.',
+    methods:['Tunnel network (300+ miles)','Rocket and mortar attacks (Qassam, Grad)','Anti-tank missile systems (Kornet, Tandem)','IED and booby-trap networks','Hostage-taking','Drone-dropped munitions'],
+    recentOps:['October 7 Nova massacre + kibbutz attack — 1,200 killed, 253 taken hostage (Oct 2023)','West Bank IED and shooting attacks — 680+ incidents YTD 2025','Tunnel network resistance — IDF estimates 60% of network neutralized after 18 months'],
+    targets:'Israeli civilian population, IDF forces, Israeli security infrastructure',
+  },
+  'Al-Shabaab':{
+    type:'AL-QAEDA AFFILIATE — INSURGENT',
+    origin:'Somalia — Harakat al-Shabaab al-Mujahideen',
+    since:'2006 (emerged from ICU)',
+    attribution:'CONFIRMED — US AFRICOM, UN Monitoring Group, AU Peace and Security Council',
+    description:'Al-Shabaab controls approximately 60% of Somalia\'s territory and is experiencing a resurgence following the AMISOM-to-ATMIS transition, exploiting reduced AU force numbers to retake territory lost since 2011. The group\'s Kenya external operations wing has conducted multiple attacks in Nairobi, demonstrating regional reach.',
+    methods:['Suicide bombing campaigns','Asymmetric ambush tactics','Taxation of population','Control of agricultural land','Nairobi external operations','IED networks'],
+    recentOps:['Retaking of key towns in Bay and Bakool regions following ATMIS drawdown (2024–25)','Garissa County Kenya cross-border attacks — 5 killed (2025)','Mogadishu hotel siege — continued capability for Mogadishu operations despite losses'],
+    targets:'Somali Federal Government, ATMIS forces, Kenyan security forces, Western interests in East Africa',
+  },
+  'JNIM':{
+    type:'AQ-AFFILIATE JIHADIST ORGANIZATION',
+    origin:'Mali / Sahel — Jama\'at Nusrat al-Islam wal-Muslimin',
+    since:'2017 (AQIM Sahel merger)',
+    attribution:'CONFIRMED — UN Sanctions Committee, ACLED, French DGSE',
+    description:'JNIM operates as both a terrorist organization and proto-state governance entity, controlling taxation, judicial processes, and civilian administration across large portions of Mali. The withdrawal of French Barkhane forces and MINUSMA created a security vacuum rapidly filled by JNIM territorial expansion.',
+    methods:['IED networks on military routes','VBIED attacks on urban centers','Population governance/taxation','Targeted assassination','Coalition with GSIM/AQIM','Exploitation of Wagner/Africa Corps anti-Western posture'],
+    recentOps:['Capture of Kidal — symbolic end of Tuareg autonomy in northern Mali (Nov 2023)','Bamako military academy attack — unprecedented strike on capital (Sep 2024)','Cross-border expansion into Benin and Togo — coastal state infiltration campaign (2024–25)'],
+    targets:'Malian/Burkinabe/Nigerien armed forces, UN/EU missions, traditional governance, Western interests',
+  },
+  'TTP':{
+    type:'TERRORIST ORGANIZATION — CROSS-BORDER',
+    origin:'Pakistan/Afghanistan — Tehrik-e-Taliban Pakistan',
+    since:'2007 (founding)',
+    attribution:'CONFIRMED — Pakistani ISI, US CENTCOM, UN PoE',
+    description:'The Tehrik-e-Taliban Pakistan has used Afghan Taliban-controlled territory as a sanctuary to dramatically escalate cross-border attacks into Pakistan, conducting 700+ attacks in 2024 — the highest tempo since the group\'s founding. TTP\'s relationship with the Afghan Taliban is complex: strategic tolerance in exchange for operational non-interference.',
+    methods:['Suicide bombings (VBIED, SVBIED)','Complex multi-vector attacks','Cross-border infiltration','IED networks','Targeted assassination of security forces','Tribal recruitment'],
+    recentOps:['700+ attacks in Pakistan — highest annual tempo ever recorded (2024)','Bannu Cantonment assault — 23 Pakistani soldiers killed (Jul 2024)','Cross-border operations from Kunar/Nuristan — Pakistan-Afghanistan relations at breaking point (2025)'],
+    targets:'Pakistani security forces, government officials, tribal leaders, Shia community',
+  },
+  'PRC Ministry of Commerce':{
+    type:'STATE ECONOMIC COERCION ACTOR',
+    origin:'People\'s Republic of China — MOFCOM',
+    since:'1952',
+    attribution:'CONFIRMED — WTO dispute filings, US BIS, EU Commission',
+    description:'China\'s Ministry of Commerce executes economic coercion as a systematic geopolitical tool, deploying export controls on critical minerals, informal import bans, and regulatory harassment against countries that take positions contrary to PRC interests. The rare earth export control mechanism represents China\'s most potent non-military deterrent.',
+    methods:['Critical mineral export controls (gallium, germanium, graphite)','Informal import bans','Anti-dumping investigations as political tool','Technology denial via regulatory review','Belt and Road leverage','BRICS payment rail development'],
+    recentOps:['Gallium and germanium export controls — targeting semiconductor manufacturing (Aug 2023)','Graphite export licensing — 80% of global supply controlled by China (Oct 2023)','145% tariff retaliation following US tariff escalation (2025)'],
+    targets:'US/EU semiconductor industry, technology decoupling efforts, countries supporting Taiwan',
+  },
+  'OPEC+/Russian Energy Min':{
+    type:'STATE ECONOMIC ACTOR — ENERGY',
+    origin:'Saudi Arabia / Russia — OPEC+ mechanism',
+    since:'2016 (OPEC+ formation)',
+    attribution:'CONFIRMED — IEA, OPEC public communications',
+    description:'The OPEC+/Russia energy axis has demonstrated willingness to weaponize oil production for geopolitical ends, with coordinated cuts to sustain prices above levels that would pressure Russia\'s war financing. Saudi Arabia\'s pivot toward China as primary crude customer has fundamentally altered the petrodollar architecture.',
+    methods:['Production quota manipulation','Strategic reserve coordination','Dollar-alternative settlement (mBridge)','Dark fleet facilitation','Price floor maintenance for war financing'],
+    recentOps:['1M bbl/day production cut extension through 2025 — sustaining $70+ price floor for Russian budget','mBridge CBDC pilot — enabling China-Gulf settlement outside SWIFT (2024)','Saudi Aramco China-denominated oil sales — accelerating petrodollar erosion'],
+    targets:'Western economic pressure mechanisms, oil price cap regime, G7 energy security',
+  },
+  'IRGC Quds Force (sanctions evasion)':{
+    type:'STATE SANCTIONS EVASION NETWORK',
+    origin:'Islamic Republic of Iran — IRGC Quds Force',
+    since:'1990s',
+    attribution:'CONFIRMED — US Treasury OFAC, UK FCDO, EU sanctions listings',
+    description:'The IRGC Quds Force operates a sophisticated global sanctions evasion network moving 1.6M barrels/day of Iranian crude to China via ship-to-ship transfers in the Gulf of Oman, generating approximately $35B/year in revenue that funds Iran\'s nuclear program, missile development, and proxy network.',
+    methods:['Dark fleet tanker operations','Ship-to-ship transfers (Gulf of Oman)','False flag vessel documentation','Cryptocurrency transactions','Front company networks (UAE, Turkey, Malaysia)','Gold and commodity barter'],
+    recentOps:['1.6M bbl/day to China via shadow fleet — record volume despite sanctions (2024)','UAE front company network disrupted — 12 entities sanctioned by US Treasury (Q2 2024)','Iran-Russia barter arrangement — weapons for oil/gas technology (ongoing 2024–25)'],
+    targets:'US/EU sanctions regime, Western financial system enforcement, OPEC market dynamics',
+  },
+  'Huawei':{
+    type:'STATE-LINKED TECHNOLOGY ACTOR',
+    origin:'People\'s Republic of China — Shenzhen',
+    since:'1987',
+    attribution:'ASSESSED — US HPSCI, UK NCSC, Australian ASD',
+    description:'Huawei operates as the primary technology instrument of Chinese telecommunications infrastructure dominance, with documented backdoors in carrier equipment affecting 140+ countries. The Ascend AI chip program represents China\'s strategic response to US export controls, with the Ascend 910B assessed to approach H100-level performance.',
+    methods:['Telecom infrastructure implantation','5G dominance in developing markets','Ascend AI chip domestic substitution','Belt and Road technology integration','Smart city surveillance export','Research collaboration with PLA units'],
+    recentOps:['Ascend 910C AI chip demonstrated — approaches NVIDIA H100 performance (2024)','Huawei Mate 70 with Kirin 9010 7nm chip — proves sanctions circumvention (2024)','5G network deployments in 50 African countries with surveillance capabilities (ongoing)'],
+    targets:'Global telecommunications infrastructure, AI chip supply chain independence, Belt and Road digital integration',
+  },
+  'Russia 33rd CBRN Defence Centre':{
+    type:'STATE WMD / CHEMICAL-BIOLOGICAL PROGRAM',
+    origin:'Russian Federation — Ministry of Defence, 27th Scientific Centre (Shikhany)',
+    since:'1927 (Soviet chemical weapons program)',
+    attribution:'CONFIRMED — OPCW, UK FCDO, Netherlands Joint Investigation Team (JIT)',
+    description:'Russia\'s 33rd CBRN Defence Centre (part of the Shikhany complex) maintains the world\'s only confirmed Novichok nerve agent production capability, with FSB operational use documented in the Salisbury (2018) and Navalny (2020) poisonings. Battlefield chloropicrin use in Ukraine is under active OPCW investigation.',
+    methods:['Novichok nerve agent production','Battlefield chemical use (chloropicrin, CS gas)','Assassination via chemical agent delivery','CBRN force protection deception','Dual-use research cover'],
+    recentOps:['Chloropicrin battlefield deployment in Ukrainian trenches — OPCW investigating (2024–25)','Shikhany facility satellite imagery shows resumed production signatures (commercial IMINT, 2024)','CBRN unit forward deployment to Zaporizhzhia sector (Ukrainian GUR reporting, Q1 2025)'],
+    targets:'Ukrainian Armed Forces, Russian opposition figures, Western intelligence assets',
+  },
+  'DPRK Chemical Technology Institute':{
+    type:'STATE WMD — CHEMICAL/BIOLOGICAL',
+    origin:'Democratic People\'s Republic of Korea',
+    since:'1950s (program inception)',
+    attribution:'CONFIRMED — UN Panel of Experts, US DIA, South Korean NIS',
+    description:'North Korea is assessed to possess 2,500–5,000 metric tons of chemical weapons agents including VX, sarin, mustard gas, and hydrogen cyanide — among the world\'s largest stockpiles. The Chemical Technology Institute oversees production and weaponization under the Munitions Industry Department.',
+    methods:['VX nerve agent production and weaponization','Sarin and tabun stockpiling','Chemical warhead integration with ballistic missiles','Assassination via VX (Kim Jong-nam, 2017)','Dual-use industrial cover'],
+    recentOps:['VX stockpile expansion — UN PoE estimates 5,000 metric tons (2024 assessment)','Kim Jong-nam assassination with VX in Kuala Lumpur airport — demonstrated willingness for overseas deployment (2017, ongoing capability)','Chemical warhead integration with Scud-C/D delivery systems assessed operational (DIA 2024)'],
+    targets:'South Korean civilian population, US Forces Korea, Japanese cities, political dissidents overseas',
+  },
+  'Wuhan BSL-4':{
+    type:'DUAL-USE RESEARCH FACILITY',
+    origin:'People\'s Republic of China — Wuhan Institute of Virology, Chinese Academy of Sciences',
+    since:'2018 (BSL-4 operational)',
+    attribution:'CONTESTED — US IC split assessment (FBI: lab leak; others: inconclusive)',
+    description:'The Wuhan Institute of Virology BSL-4 laboratory conducts gain-of-function research on bat coronaviruses with documented NIAID/EcoHealth Alliance funding links. The US IC remains split on COVID-19 origins; FBI and DOE assess laboratory incident with varying confidence levels.',
+    methods:['Gain-of-function coronavirus research','Serial passage experiments','Furin cleavage site insertion techniques','Bat coronavirus field sampling (Yunnan caves)','International research collaboration (cover for IP access)'],
+    recentOps:['Continued bat coronavirus gain-of-function research per US IC assessment (2024)','WIV database of 22,000 bat coronavirus samples taken offline (Sep 2019)','New joint research programs with WHO-designated partner institutions despite security concerns (2024)'],
+    targets:'Global biosecurity understanding, dual-use research oversight, pandemic preparedness infrastructure',
+  },
+  'PLA Strategic Support Force (SSF)':{
+    type:'STATE MILITARY — SPACE/CYBER/INFO',
+    origin:'People\'s Republic of China — PLA',
+    since:'2015 (established)',
+    attribution:'CONFIRMED — US DIA, DOD China Military Power Report',
+    description:'The PLA Strategic Support Force integrates space, cyber, and information warfare capabilities under unified command, representing China\'s recognition that future conflicts will be decided in these domains before kinetic engagement. The SSF controls China\'s ASAT capabilities, military satellite constellation, and offensive cyber operations.',
+    methods:['Co-orbital ASAT operations','Directed energy ASAT (ground-based laser)','Satellite jamming/spoofing','Offensive cyber (Volt Typhoon, Salt Typhoon support)','GPS/GNSS spoofing','Electronic warfare'],
+    recentOps:['SJ-21 satellite towed defunct Beidou-2 to graveyard orbit — demonstrated grapple/ASAT capability (2022, ongoing)','Shijian-21 co-orbital ASAT maneuvers within 100m of US satellites (2024)','GPS spoofing operations covering South China Sea and Taiwan Strait (ongoing 2024–25)'],
+    targets:'US ISR constellation, GPS architecture, US military C2 satellites, commercial earth observation',
+  },
+  'Russia VKS Space Forces':{
+    type:'STATE MILITARY — SPACE',
+    origin:'Russian Federation — VKS (Aerospace Forces)',
+    since:'2015 (Space Forces reintegrated into VKS)',
+    attribution:'CONFIRMED — US Space Command, UK Space Command',
+    description:'Russia\'s Space Forces operate co-orbital ASAT weapons, ground-based ASAT missiles (Nudol), and electronic warfare systems capable of jamming GPS across 1,500km radius. The Nyan Sat / Tirada-2S electronic warfare platform has been actively used in Baltic operations and Ukraine.',
+    methods:['Kosmos co-orbital ASAT (RPO capability)','Nudol direct-ascent ASAT missile','Nyan Sat EW platform (GPS jamming)','Luch/Olymp satellite (GEO inspector)','Satellite signal spoofing','Perimeter nuclear command via Molniya orbit'],
+    recentOps:['Kosmos-2553 co-orbital ASAT maneuvered within 200m of US satellite (2024)','GPS jamming covering Baltic states — commercial aviation NOTAM issued (ongoing 2024–25)','Anti-satellite missile test generating 1,500+ debris fragments (Kosmos-1408, Nov 2021, debris still tracked)'],
+    targets:'US/NATO ISR satellites, GPS constellation, commercial satellite communications, Starlink Ukraine',
+  },
+  'Russia GRU Unit 54777 (Doppelganger)':{
+    type:'STATE INFORMATION OPERATIONS',
+    origin:'Russian Federation — GRU / FSB coordination',
+    since:'2022 (operation launched)',
+    attribution:'CONFIRMED — EU EEAS, Meta Adversarial Threat Report, German BfV',
+    description:'Operation Doppelganger is Russia\'s largest documented European information operation, deploying 120+ fake news websites mimicking major European media brands (Spiegel, Le Monde, Guardian) and generating millions of social media impressions with anti-Ukraine, anti-NATO, and pro-Russia narratives.',
+    methods:['Fake news website network (brand spoofing)','Social media amplification (X/Facebook/Telegram)','SEO manipulation','Coordinated inauthentic behavior (CIB)','Paid advertising on European platforms','Influencer network purchasing'],
+    recentOps:['120+ fake European news sites operational — millions of views (ongoing 2024–25)','German Bundestag election interference campaign — fake Scholz/Merz statements circulated (2025)','French municipal election narrative seeding — anti-immigrant/anti-Zelensky content amplification (2024)'],
+    targets:'European public opinion, NATO alliance cohesion, Ukraine support in Europe, election outcomes',
+  },
+  'PRC MSS IO Dept':{
+    type:'STATE INFORMATION OPERATIONS',
+    origin:'People\'s Republic of China — Ministry of State Security',
+    since:'2017 (Spamouflage documented)',
+    attribution:'CONFIRMED — Meta Adversarial Threat Report, US State Dept GEC, Twitter/X',
+    description:'China\'s MSS Information Operations Department operates the Spamouflage network — 100,000+ fake social media accounts pushing narratives on Taiwan, Hong Kong, Xinjiang, and US domestic politics. Operation targeting has shifted in 2024–25 to focus on fracturing US-Taiwan ties and undermining confidence in Western democracy.',
+    methods:['Spamouflage network (100K+ accounts)','Inauthentic amplification','AI-generated content at scale','Influencer recruitment (witting/unwitting)','Academic and media infiltration','WeChat/Weibo overseas diaspora targeting'],
+    recentOps:['Spamouflage network disrupted by Meta — 4,789 accounts removed (Q3 2024)','Taiwan election influence operation — fake polling data, fabricated candidate statements (Jan 2024)','US congressional hearings targeted — fake constituent emails generated by AI (2024–25)'],
+    targets:'Taiwan public opinion, US-Taiwan relations, Hong Kong overseas diaspora, Xinjiang narrative management',
+  },
+  'IRGC IO Command':{
+    type:'STATE INFORMATION OPERATIONS',
+    origin:'Islamic Republic of Iran — IRGC',
+    since:'2012 (Liberty Front/Routed Bahrain operations)',
+    attribution:'CONFIRMED — US Treasury OFAC, Meta, Microsoft MSTIC',
+    description:'Iran\'s IRGC Information Operations Command conducts influence operations in Bahrain, Iraq, Lebanon, and Western countries, exploiting sectarian divisions and anti-Israel sentiment. Iran was the first state actor to use AI-generated content for large-scale political influence operations (documented 2023).',
+    methods:['AI-generated disinformation articles','Fake persona networks','Hack-and-leak operations (PelicanStorm)','WhatsApp messaging campaigns','Persian diaspora targeting','Arabic-language influence networks'],
+    recentOps:['PelicanStorm hack-and-leak targeting US politicians (2024)','AI-generated pro-Houthi/anti-Israel content network across 12 languages (2024–25)','Bahrain Shia community radicalization campaign — 50+ accounts removed by Meta (2024)'],
+    targets:'US political process, Israeli public morale, Bahrain/Saudi Shia communities, Iran diaspora',
+  },
+  'PLA Navy':{
+    type:'STATE CONVENTIONAL MILITARY — NAVAL',
+    origin:'People\'s Republic of China — PLA',
+    since:'1949',
+    attribution:'CONFIRMED — US INDOPACOM, Japanese JCS, Philippine DFA',
+    description:'The PLA Navy is the world\'s largest by hull count and is rapidly closing the capability gap with the US Navy through aircraft carrier development, Type 055 destroyers, and an aggressive submarine construction program. The PLAN\'s primary operational focus is Taiwan contingency planning and South China Sea assertion.',
+    methods:['Carrier strike group operations (Liaoning, Shandong, Fujian)','Type 055 Renhai destroyer fleet','Jin-class SSBN deterrence patrols','Maritime militia coordination','Amphibious assault capability (Type 075 LHD)','Anti-access/area denial (A2AD) network'],
+    recentOps:['PLAN 5th Taiwan Strait blockade exercise — simulating full encirclement of Taiwan (2024)','Fujian CATOBAR carrier commissioned — first electromagnetic catapult carrier outside US (2024)','Second Thomas Shoal resupply mission interdiction — water cannon attacks on Philippines (ongoing 2024–25)'],
+    targets:'Taiwan ROC, Philippine maritime claims, US carrier strike groups, Japanese sea lanes',
+  },
+  'Serbian Armed Forces':{
+    type:'STATE CONVENTIONAL MILITARY',
+    origin:'Republic of Serbia — Ministry of Defence',
+    since:'2006 (post-Montenegro independence)',
+    attribution:'CONFIRMED — NATO KFOR reporting, EU EULEX Kosovo',
+    description:'Serbian Armed Forces have been on elevated readiness along the Kosovo border since the Banjska ambush (September 2023), with NATO documenting a significant military buildup including tanks and artillery in positions inconsistent with normal training rotations. Serbia\'s military procurement from Russia and China creates NATO alliance complications.',
+    methods:['Conventional mechanized operations','Paramilitaries/parallel structures (KFOR incidents)','Cyber operations (attributed)','Political destabilization (Srpska Lista)','Russian military coordination'],
+    recentOps:['Banjska ambush — Serbian-linked paramilitaries kill Kosovo Police officer, triggering KFOR reinforcement (Sep 2023)','Tank deployment to Kosovo administrative line — NATO concern elevated (2024)','Joint exercises with Russian observers despite EU membership track'],
+    targets:'Kosovo sovereignty, NATO KFOR operations, Kosovar Albanian community',
+  },
+  'Venezuelan FANB':{
+    type:'STATE CONVENTIONAL MILITARY',
+    origin:'Bolivarian Republic of Venezuela — FANB (Bolivarian National Armed Forces)',
+    since:'1999 (Bolivarian restructuring)',
+    attribution:'CONFIRMED — US SOUTHCOM, Guyana Defence Force, IISS',
+    description:'Venezuela\'s FANB under Maduro has deployed approximately 15,000 troops to the Essequibo region border with Guyana, following a 2023 referendum in which 95% of Venezuelans voted to annex the 120,000 km² territory. The region contains the ExxonMobil Stabroek block — one of the world\'s largest offshore oil discoveries.',
+    methods:['Forward military deployment','Irregular forces/colectivos','Information operations (Essequibo annexation narrative)','Economic pressure','Proxy criminal network deployment'],
+    recentOps:['15,000 troops deployed to Essequibo border — highest concentration since Chavez era (2023–24)','Anauco military exercises — simulated border crossing operations (Q1 2024)','Colectivo infiltration of Essequibo communities — political preparation operations (2024–25)'],
+    targets:'Guyana territorial sovereignty, ExxonMobil Stabroek oilfield, CARICOM stability',
+  },
+  'Russia Africa Corps':{
+    type:'STATE PROXY / PARAMILITARY',
+    origin:'Russian Federation — Ministry of Defence (successor to Wagner Group)',
+    since:'2023 (Africa Corps formally established post-Prigozhin)',
+    attribution:'CONFIRMED — French DGSE, US AFRICOM, UN PoE',
+    description:'Russia\'s Africa Corps (formerly Wagner Group) operates across 6+ African countries, trading security services for mineral concessions, UN veto coverage, and anti-Western basing access. In Mali, Burkina Faso, Niger, and CAR, Africa Corps has replaced French forces and is extracting gold, uranium, and diamonds while facilitating JNIM expansion in areas it does not control.',
+    methods:['Conventional ground operations','Atrocity-based population control','Gold/mineral extraction','Anti-Western information operations','Parallel governance structures','Mercenary recruitment (African)'],
+    recentOps:['Moura massacre — 500+ civilians killed alongside Malian forces and Wagner (2022, accountability ongoing)','Niger uranium access secured post-coup — Arlit mines under Russian strategic protection (2024)','CAR diamond concession expansion — Africa Corps controls 3 major mining districts (2024)'],
+    targets:'French/Western influence in Africa, mineral wealth extraction, UN accountability mechanisms',
+  },
+  'Turkish Armed Forces':{
+    type:'STATE CONVENTIONAL MILITARY — NATO MEMBER',
+    origin:'Republic of Turkey — Turkish Armed Forces (TSK)',
+    since:'1923',
+    attribution:'CONFIRMED — NATO reports, US EUCOM, Kurdish/Syrian sources',
+    description:'Turkey\'s armed forces occupy a unique dual position as NATO\'s second-largest military while maintaining the S-400 Russian air defense system, conducting unilateral operations against US-backed Kurdish forces, and pursuing an independent foreign policy that simultaneously courts Russia, Ukraine, and Western institutions.',
+    methods:['F-16 strike operations','Bayraktar TB2/Akinci drone warfare','Special forces (Ozel Kuvvetler)','S-400 integrated air defense','Naval power projection (Anadolu LHD)','Proxy Syrian National Army forces'],
+    recentOps:['Operation Claw-Lock continuation — ongoing strikes on PKK in Iraqi Kurdistan (2024–25)','Bayraktar TB2 exports enabling proxy conflicts in 30+ countries (ongoing)','Post-HTS Syria engagement — Turkey-backed SNA forces controlling northern Syria corridor (2024–25)'],
+    targets:'Kurdish PKK/YPG forces, ISIS remnants, Assad-linked forces in Syria, Greek/Cypriot maritime claims (disputed)',
+  },
+};
+
+const THREAT_DOMAIN_EXTRA={
+  nuclear:{
+    trend:'worsening',
+    confidence:'HIGH',
+    history:'The nuclear threat environment has deteriorated to its most dangerous level since the 1983 Able Archer crisis. Three simultaneous nuclear-armed states (Russia, DPRK, Iran-threshold) are in active conflict or confrontation postures, while China\'s unprecedented silo expansion program signals a departure from minimum deterrence doctrine that has governed PRC strategy since 1964.',
+    connected:['cyber','kinetic','space'],
+    indicatorSrc:['OSINT','SIGINT','HUMINT','IMINT','HUMINT','OSINT','SIGINT','HUMINT'],
+    recentIntel:[
+      {ts:'6H AGO',text:'Russian strategic bomber TU-160 patrol sortie over Barents Sea — 3rd this week. NORAD tracking.',src:'SIGINT'},
+      {ts:'18H AGO',text:'IAEA Board of Governors emergency session called — Iran enrichment accelerating above 60% threshold.',src:'OSINT'},
+      {ts:'2D AGO',text:'DPRK Hwasong-18 fueling operations observed at Sanumdong — preparation indicators, not confirmed launch.',src:'IMINT'},
+    ],
+  },
+  cyber:{
+    trend:'critical',
+    confidence:'HIGH',
+    history:'State-sponsored cyber operations have evolved from espionage tools to strategic weapons capable of disabling critical infrastructure without kinetic engagement. The 2021 Colonial Pipeline and 2023 Kyivstar attacks demonstrated that cyber operations can achieve strategic effects equivalent to conventional strikes. The current threat landscape is characterized by pre-positioning for wartime activation rather than immediate exploitation.',
+    connected:['disinfo','space','kinetic'],
+    indicatorSrc:['OSINT','HUMINT','SIGINT','OSINT','OSINT','HUMINT','OSINT','OSINT','SIGINT'],
+    recentIntel:[
+      {ts:'3H AGO',text:'CISA advisory: new Volt Typhoon TTPs targeting US water treatment facilities — 12 utilities notified.',src:'OSINT'},
+      {ts:'1D AGO',text:'Sandworm variant detected in Polish railway SCADA systems — CERT Polska responding.',src:'SIGINT'},
+      {ts:'4D AGO',text:'Lazarus Group TraderTraitor campaign — $340M in new cryptocurrency theft across 4 exchanges confirmed.',src:'HUMINT'},
+    ],
+  },
+  kinetic:{
+    trend:'critical',
+    confidence:'HIGH',
+    history:'The post-Cold War assumption of decreasing interstate conflict has been decisively refuted. Russia\'s full-scale invasion of Ukraine in February 2022 represents the largest land war in Europe since 1945. Simultaneously, Gaza, Sudan, and Myanmar constitute major conflicts each exceeding 10,000 deaths per year. The combined humanitarian impact — 40M+ displaced globally — exceeds any period since World War II.',
+    connected:['nuclear','terrorism','economic'],
+    indicatorSrc:['OSINT','OSINT','OSINT','OSINT','OSINT','OSINT','IMINT','HUMINT','OSINT'],
+    recentIntel:[
+      {ts:'2H AGO',text:'Ukrainian GUR: Russian 25th Combined Arms Army buildup near Sumy — 40,000 troops, possible northern offensive.',src:'HUMINT'},
+      {ts:'12H AGO',text:'IDF: 14 Hamas tunnel shafts destroyed in Rafah corridor — Phase 4 operation day 47.',src:'OSINT'},
+      {ts:'3D AGO',text:'RSF artillery strikes on Port Sudan civilian infrastructure — 6 killed, 23 wounded (UN OCHA).',src:'OSINT'},
+    ],
+  },
+  terrorism:{
+    trend:'worsening',
+    confidence:'MEDIUM',
+    history:'The global counterterrorism gains of the 2015–2020 period — primarily the territorial defeat of ISIS in Syria/Iraq and degradation of Al-Qaeda core — have been substantially reversed. ISIS has reconstituted via provincial affiliates in West Africa, Mozambique, and Central Asia. The Houthi maritime terrorism campaign represents an unprecedented evolution: state-sponsored maritime terror at industrial scale.',
+    connected:['kinetic','economic','disinfo'],
+    indicatorSrc:['HUMINT','OSINT','HUMINT','OSINT','OSINT','OSINT','OSINT','OSINT','HUMINT'],
+    recentIntel:[
+      {ts:'5H AGO',text:'Europol: ISIS-K attack cell disrupted in Vienna — 4 arrested, C4 explosive and weapons seized.',src:'HUMINT'},
+      {ts:'1D AGO',text:'Houthi ASBM targeting data for Bab al-Mandeb transit — 3 vessels threatened with live fire.',src:'SIGINT'},
+      {ts:'5D AGO',text:'Al-Shabaab: ATMIS forward base attack near Jowhar — 9 AU troops killed, position overrun.',src:'OSINT'},
+    ],
+  },
+  economic:{
+    trend:'worsening',
+    confidence:'MEDIUM',
+    history:'The rules-based international economic order is bifurcating into competing blocs for the first time since the Cold War. The 2022 Russia sanctions demonstrated both the power and limitations of economic warfare — effective at imposing costs but insufficient to alter strategic behavior. China\'s accelerated de-dollarization strategy, if successful, would represent the most significant shift in global financial architecture since Bretton Woods.',
+    connected:['geopol','disinfo','kinetic'],
+    indicatorSrc:['OSINT','OSINT','OSINT','OSINT','OSINT','OSINT','OSINT','OSINT','OSINT'],
+    recentIntel:[
+      {ts:'4H AGO',text:'BRICS finance ministers meeting: mBridge CBDC expansion to 12 new member states confirmed.',src:'OSINT'},
+      {ts:'2D AGO',text:'BIS data: Chinese Renminbi share of SWIFT messaging reached 4.7% — record high.',src:'OSINT'},
+      {ts:'6D AGO',text:'US Treasury: 47 new OFAC designations targeting Russia dark fleet intermediaries in UAE.',src:'OSINT'},
+    ],
+  },
+  bio:{
+    trend:'stable',
+    confidence:'LOW',
+    history:'Biological and chemical weapons represent the domain with the greatest asymmetry between catastrophic potential and intelligence visibility. Russia\'s documented Novichok use (2018, 2020) established a precedent for chemical weapons deployment against individuals in peacetime. The COVID-19 pandemic demonstrated the civilizational-scale impact of uncontrolled pathogen spread regardless of origin.',
+    connected:['nuclear','kinetic','space'],
+    indicatorSrc:['HUMINT','SIGINT','HUMINT','HUMINT','OSINT','OSINT','OSINT'],
+    recentIntel:[
+      {ts:'12H AGO',text:'OPCW Technical Secretariat: chloropicrin samples from Ukraine frontline confirm chemical weapons use — attribution pending.',src:'HUMINT'},
+      {ts:'3D AGO',text:'WHO: novel bat coronavirus with pandemic potential detected in Yunnan surveillance — WIV sample sharing requested.',src:'OSINT'},
+      {ts:'1W AGO',text:'FBI WMD Directorate: dark web acquisition attempt of select agent (Yersinia pestis) — suspect identified.',src:'HUMINT'},
+    ],
+  },
+  space:{
+    trend:'worsening',
+    confidence:'MEDIUM',
+    history:'Space transitioned from an implicit nuclear-age sanctuary to an explicitly contested warfighting domain following China\'s 2007 ASAT test (which created 3,000+ debris fragments still tracked) and Russia\'s 2021 Nudol test. The US military\'s near-total dependence on space-based GPS, ISR, and communications creates a strategic vulnerability that adversaries are actively exploiting.',
+    connected:['cyber','nuclear','disinfo'],
+    indicatorSrc:['IMINT','IMINT','SIGINT','IMINT','OSINT','OSINT','OSINT'],
+    recentIntel:[
+      {ts:'8H AGO',text:'US SpaceCom: Kosmos-2576 co-orbital inspector maneuvering near NRO electro-optical satellite — tracking concern elevated.',src:'IMINT'},
+      {ts:'2D AGO',text:'GPS spoofing event Baltic airspace — 27 commercial flights affected, source attributed to Kaliningrad EW complex.',src:'SIGINT'},
+      {ts:'5D AGO',text:'PLA SSF Shijian-21 maneuvered to within 150m of US GEO communications satellite — no collision threat at this time.',src:'IMINT'},
+    ],
+  },
+  disinfo:{
+    trend:'worsening',
+    confidence:'MEDIUM',
+    history:'AI-enabled information warfare represents the most rapidly evolving threat domain. The cost curve for influence operations has collapsed by 99%+ with LLM availability — what previously required nation-state resources is now accessible to well-funded non-state actors. The 2024 electoral cycle was the most extensively AI-polluted information environment in history.',
+    connected:['cyber','geopol','terrorism'],
+    indicatorSrc:['OSINT','OSINT','OSINT','OSINT','OSINT','OSINT','OSINT','OSINT'],
+    recentIntel:[
+      {ts:'6H AGO',text:'EU EEAS: 14 new Doppelganger domains registered — mimicking Polish and Romanian state media.',src:'OSINT'},
+      {ts:'1D AGO',text:'Meta: Spamouflage network reactivated — 2,300 new accounts pushing Taiwan invasion inevitability narrative.',src:'OSINT'},
+      {ts:'3D AGO',text:'Deepfake audio of NATO SecGen authorizing Article 5 circulating on Telegram — confirmed synthetic, 2.3M views.',src:'OSINT'},
+    ],
+  },
+  geopol:{
+    trend:'worsening',
+    confidence:'HIGH',
+    history:'The post-1991 unipolar moment is definitively over. The return of great power competition is reshaping every regional security architecture simultaneously — from the Arctic to the South China Sea. The most consequential structural shift is China\'s emergence as a peer military competitor to the United States, a milestone US defense analysts had projected for 2030–2035 but which has arrived early in several domains.',
+    connected:['kinetic','economic','nuclear'],
+    indicatorSrc:['OSINT','IMINT','OSINT','OSINT','OSINT','OSINT','OSINT','HUMINT'],
+    recentIntel:[
+      {ts:'4H AGO',text:'PLA Eastern Theater Command: 78 military aircraft detected in Taiwan ADIZ — largest single-day incursion in 2025.',src:'OSINT'},
+      {ts:'1D AGO',text:'Venezuela FANB: additional 4,000 troops moved to Essequibo border — total now 19,000.',src:'IMINT'},
+      {ts:'4D AGO',text:'Serbia-Kosovo: KFOR intercepts Serbian paramilitary arms cache near Mitrovica — NATO force on heightened alert.',src:'HUMINT'},
+    ],
+  },
+};
+
+const FLASHPOINT_EXTRA=[
+  {
+    escalationProb:71,
+    parties:['PRC / PLA','Taiwan ROC / ROCAF','United States (MDT)','Japan (JSDF)','Australia'],
+    intlResponse:'US has repositioned USS Theodore Roosevelt CSG to Western Pacific. Japan placed JSDF on elevated readiness. G7 issued joint statement condemning PLA exercises. EU called for "restraint and dialogue" — assessed as insufficient deterrent.',
+    nextTrigger:'Taiwan presidential declaration of independence, PLA blockade of outlying islands (Kinmen/Matsu), or US arms delivery triggering PRC "red line" threshold.',
+    timeline:[
+      {date:'APR 2025',event:'PLA Eastern Theater Command 5th encirclement exercise — largest since 2022, includes live-fire amphibious assault rehearsal'},
+      {date:'JAN 2025',event:'Taiwan Legislative Yuan passes Enhanced Defense Appropriations Act — $8.5B increase, PRC condemns'},
+      {date:'NOV 2024',event:'US DoD China Military Power Report: PLA assessed to achieve invasion capability by 2027 with high confidence'},
+      {date:'MAY 2024',event:'PLA Joint Sword-2024B exercise — simulated precision strikes on Taiwan leadership infrastructure'},
+      {date:'JAN 2024',event:'Taiwan presidential election: Lai Ching-te (DPP) wins — PRC condemns as "separatist" victory'},
+    ],
+  },
+  {
+    escalationProb:58,
+    parties:['Russian Federation / VKS','Ukraine / ZSU','NATO (indirect)','DPRK (troops)','United States (ATACMS/F-16)'],
+    intlResponse:'NATO Article 5 not triggered. US authorized ATACMS deep strikes into Russia. UK/France considering direct advisory presence. Germany delivered Taurus cruise missile decision still pending. DPRK troops constitute foreign military intervention.',
+    nextTrigger:'Russian conventional forces cross NATO member border (Estonia/Latvia/Poland), Ukrainian government collapse, or Russia deploys tactical nuclear weapon in theater.',
+    timeline:[
+      {date:'MAY 2025',event:'Russian Donetsk axis offensive reaches outer Pokrovsk suburbs — logistics hub at risk, 800K civilians'},
+      {date:'MAR 2025',event:'DPRK troop commitment confirmed at 15,000 — second rotation, gaining combat effectiveness'},
+      {date:'NOV 2024',event:'ATACMS authorized for strikes on Russian territory — Bryansk fuel depot struck, Russia threatens nuclear response'},
+      {date:'AUG 2024',event:'Ukraine Kursk incursion — cross-border offensive captures 1,200 km², first foreign occupation of Russian soil since WWII'},
+      {date:'FEB 2024',event:'Avdiivka falls to Russian forces after 4-month siege — strategic Donetsk position lost'},
+    ],
+  },
+  {
+    escalationProb:64,
+    parties:['Islamic Republic of Iran / IRGC','Israel (IDF/Mossad)','United States (CENTCOM)','IAEA / UN Security Council','P5+1 remnants'],
+    intlResponse:'JCPOA dead. IAEA access severely restricted — 27 cameras removed. US CENTCOM repositioned B-52 bombers to Diego Garcia. Israel maintains active military option contingency. EU struggling to maintain diplomatic channel.',
+    nextTrigger:'Iran expels remaining IAEA inspectors, Iran announces weapons-grade enrichment, or Israel launches unilateral preventive strike on Fordow/Natanz.',
+    timeline:[
+      {date:'APR 2025',event:'IAEA: Iran 60% enriched U-235 stockpile reaches 274kg — analysts calculate 2-week weapons-grade breakout'},
+      {date:'OCT 2024',event:'Israel strikes Iran — Mossad operation kills key nuclear scientists, radar sites destroyed in Isfahan'},
+      {date:'OCT 2024',event:'Iran Operation True Promise II — 181 ballistic missiles launched at Israel, most intercepted'},
+      {date:'APR 2024',event:'Iran Operation True Promise I — first direct strike on Israel: 170 drones + 120 BMs'},
+      {date:'JAN 2024',event:'IAEA Board of Governors resolution condemning Iran enrichment — Iran removes 27 surveillance cameras'},
+    ],
+  },
+  {
+    escalationProb:45,
+    parties:['IDF (Israel)','Hamas IQB','Palestinian Islamic Jihad','Qatar / Egypt (mediators)','US (hostage negotiations)'],
+    intlResponse:'ICC arrest warrant issued for Netanyahu and Gallant. ICJ provisional measures ordering aid increase. US vetoed 3 UN ceasefire resolutions. EU suspended parts of Israel association agreement. Egypt-Israel Rafah corridor closed.',
+    nextTrigger:'Hostage execution by Hamas, IDF operation targeting Yahya Sinwar successors, Hamas collapse causing West Bank spillover, or Hezbollah re-entry into active conflict.',
+    timeline:[
+      {date:'MAY 2025',event:'IDF Phase 4 Rafah operation — humanitarian corridor disputed, 253 hostages: est. 101 alive'},
+      {date:'FEB 2025',event:'Hostage deal Phase 1 complete — 33 hostages released for 1,900 Palestinian prisoners; Phase 2 stalled'},
+      {date:'NOV 2024',event:'Yahya Sinwar killed by IDF in Rafah — Hamas military leadership decapitated, political wing in Qatar continues'},
+      {date:'MAY 2024',event:'ICJ: provisional measures order Israel to halt Rafah operation — Israel defies ruling'},
+      {date:'OCT 2023',event:'Hamas October 7 attack — 1,200 killed, 253 hostages taken; Operation Iron Sword launched'},
+    ],
+  },
+  {
+    escalationProb:42,
+    parties:['IDF (Israel)','Hezbollah / IRGC','Lebanese Armed Forces (LAF)','UNIFIL','Iran (resupply)'],
+    intlResponse:'UN Security Council extended UNIFIL mandate. New Lebanese president Joseph Aoun elected. Lebanese parliament formed government. Iran resupply via Syria ongoing despite IDF interdiction strikes. US provides LAF equipment.',
+    nextTrigger:'Hezbollah precision-guided missile cache reconstitution reaches operational threshold, Iran resupply breakthrough, IDF military response to Hezbollah rearmament, or internal Lebanese political collapse.',
+    timeline:[
+      {date:'MAY 2025',event:'IDF: 14 Iran resupply trucks destroyed in Syria Deir ez-Zor interdiction strike — 3rd this month'},
+      {date:'MAR 2025',event:'LAF deploys 5,000 troops to southern Lebanon — partial UNSCR 1701 implementation'},
+      {date:'JAN 2025',event:'Joseph Aoun elected Lebanese president — first in 2 years, US-backed candidate'},
+      {date:'NOV 2024',event:'Israel-Hezbollah ceasefire takes effect — Hezbollah estimated 3,000 fighters killed, Nasrallah eliminated'},
+      {date:'SEP 2024',event:'IDF pager attack: 3,000+ Hezbollah members killed/wounded — command structure disrupted'},
+    ],
+  },
+  {
+    escalationProb:48,
+    parties:['PRC / PLAN / CCG','Philippines (AFP/PCG)','United States (MDT tripwire)','Vietnam','Malaysia'],
+    intlResponse:'US-Philippines Mutual Defense Treaty formally invoked as covering Ayungin Shoal. US deployed additional P-8 Poseidon ISR. ASEAN issued statement of concern (non-binding). Australia conducting more frequent FON operations.',
+    nextTrigger:'PLA sinks or boards Philippine government vessel, PRC seizes BRP Sierra Madre hulk, or Philippines or US personnel killed in confrontation.',
+    timeline:[
+      {date:'APR 2025',event:'PCG vessel water-cannoned and boarded by CCG — Philippine sailor loses finger, US lodges formal protest'},
+      {date:'FEB 2025',event:'US-Philippines bilateral defense agreement: US rotational forces permanently stationed Subic Bay area'},
+      {date:'SEP 2024',event:'PLA laser blinds Philippine Coast Guard crew — US confirms "armed attack" threshold not yet met'},
+      {date:'MAR 2024',event:'BRP Sierra Madre resupply mission blocked 3 consecutive times — Marines airdrop supplies'},
+      {date:'JAN 2024',event:'Arbitral tribunal 2016 ruling reaffirmed — China rejects as "null and void"'},
+    ],
+  },
+  {
+    escalationProb:39,
+    parties:['DPRK (KPA / RGB)','Russia (technology exchange)','Republic of Korea (ROK)','United States (Forces Korea)','Japan'],
+    intlResponse:'UN Security Council sanctions regime collapsing due to Russian and Chinese vetoes. US-ROK-Japan trilateral security cooperation intensified. ROK declared end to 2018 inter-Korean military agreement. Japan increased JSDF readiness.',
+    nextTrigger:'DPRK nuclear test (7th), ICBM reentry vehicle test demonstrating CONUS strike capability, or military provocation across DMZ triggering ROK response.',
+    timeline:[
+      {date:'MAR 2025',event:'Hwasong-19 test: DPRK claims new ICBM variant, max range 18,000km — CONUS coverage confirmed if accurate'},
+      {date:'NOV 2024',event:'DPRK troops in Russia confirmed at 15,000 — Kim Jong Un visits Moscow, technology exchange formalized'},
+      {date:'SEP 2024',event:'DPRK detonates demolition charges on inter-Korean roads and railways — symbolic end of engagement era'},
+      {date:'APR 2024',event:'Pukguksong-3 SLBM test from submarine — operational deployment to fleet confirmed by NIS'},
+      {date:'JAN 2024',event:'Kim Jong Un declares ROK "primary foe" — constitutional change removing unification objective'},
+    ],
+  },
+  {
+    escalationProb:51,
+    parties:['Houthi / Ansar Allah','Iran (IRGC support)','United States (CENTCOM)','United Kingdom (RN)','Israel (target)'],
+    intlResponse:'US/UK conducting strikes on Houthi infrastructure since January 2024 — degrading but not eliminating capability. EU Operation Aspides (defensive only). Shipping rerouting via Cape of Good Hope — 70% of Suez traffic diverted. Lloyd\'s war risk premium 300%+ above baseline.',
+    nextTrigger:'Houthi sinks major commercial vessel with mass casualties, ASBM hits US Navy vessel, or Iran direct involvement confirmed triggering CENTCOM escalation.',
+    timeline:[
+      {date:'MAY 2025',event:'Houthi ASBM attack on US destroyer USS Gravely — intercepted, no casualties, first direct hit attempt on USN vessel'},
+      {date:'JAN 2025',event:'MV Tutor confirmed sunk — first vessel loss to Houthi ASBM strike (Jun 2024 date of sinking)'},
+      {date:'SEP 2024',event:'Operation Poseidon Archer expanded — US B-2 bombers strike underground Houthi facilities for first time'},
+      {date:'MAR 2024',event:'Suez Canal monthly transit volume reaches 40-year low — Cape of Good Hope rerouting adds 10-14 days'},
+      {date:'NOV 2023',event:'Houthi seizes MV Galaxy Leader — Israeli-linked car carrier, crew held hostage in Hodeidah'},
+    ],
+  },
+  {
+    escalationProb:35,
+    parties:['Rapid Support Forces (RSF) / Dagalo','Sudanese Armed Forces (SAF)','UAE (RSF support)','Egypt/Saudi Arabia (SAF support)','UN / AU (mediation)'],
+    intlResponse:'UN Security Council passed ceasefire resolution — ignored by both parties. AU mediation process stalled. US declared Darfur situation genocide (May 2024). UAE denies arms supply to RSF despite UN PoE evidence. International humanitarian access blocked.',
+    nextTrigger:'RSF captures Port Sudan airport or seaport — SAF loses last strategic supply line, state collapse accelerates.',
+    timeline:[
+      {date:'MAY 2025',event:'RSF drone strikes on Port Sudan — Red Sea coast city now under direct attack, 2M displaced from capital reach crisis point'},
+      {date:'MAR 2025',event:'UN Commission on Sudan: genocide findings in Darfur — West Darfur, North Darfur documented'},
+      {date:'SEP 2024',event:'RSF captures Wad Madani — SAF loses central Sudan, government retreats entirely to Port Sudan'},
+      {date:'MAY 2024',event:'US State Dept determination: RSF committed genocide in Darfur — triggers additional sanctions'},
+      {date:'APR 2023',event:'RSF-SAF conflict erupts in Khartoum — fighting at presidential palace, air force base; 10M eventually displaced'},
+    ],
+  },
+  {
+    escalationProb:67,
+    parties:['India (IAF / Army)','Pakistan (PAF / Army / SNS)','Kashmir militant groups (TRF/LeT)','United States (crisis management)','China (Pakistan support)'],
+    intlResponse:'US Secretary of State conducted emergency shuttle diplomacy. UK and Saudi Arabia also mediating. UN Security Council called emergency session. Both sides recalled ambassadors. Pakistan activated nuclear command chain (SNS full alert).',
+    nextTrigger:'India launches additional cross-border strike, Pakistan retaliates with air campaign, or tactical nuclear weapon moved to forward position — each escalates to strategic nuclear risk.',
+    timeline:[
+      {date:'MAY 2025',event:'Operation Sindoor: India strikes 9 Pakistani military targets — PAF responds, 4 Indian jets claimed shot down'},
+      {date:'APR 2025',event:'Pahalgam terrorist attack: 26 Indian tourists killed — India attributes to Pakistan-based LeT network'},
+      {date:'MAR 2025',event:'LoC skirmishing: 14 cross-border firing incidents in 30 days — highest since 2021'},
+      {date:'DEC 2024',event:'IB/RAW: Pakistan SNS Nasr TNW battalion moved to forward storage — India STRATCOM notified'},
+      {date:'FEB 2024',event:'Balakot precedent reaffirmed: India PM Modi states "new normal" of cross-border strikes'},
+    ],
+  },
+  {
+    escalationProb:38,
+    parties:['Tatmadaw (Myanmar Military)','People\'s Defence Force (PDF)','Brotherhood Alliance (MNDAA/TNLA/AA)','NUG (shadow government)','ASEAN (ineffective)'],
+    intlResponse:'ASEAN Five-Point Consensus failed. No bilateral state recognizes NUG. China maintaining Tatmadaw engagement while covertly tolerating MNDAA. US/EU impose sanctions on junta — limited effect. UN Special Rapporteur documents war crimes.',
+    nextTrigger:'Brotherhood Alliance captures Mandalay, Tatmadaw senior commanders negotiate surrender, or military splinter factions emerge — any of these constitutes junta collapse scenario.',
+    timeline:[
+      {date:'APR 2025',event:'PDF-aligned forces reach 15km from Mandalay city center — junta moving heavy assets to defend second city'},
+      {date:'JAN 2025',event:'Northern Alliance controls all major border crossings to China in Shan State — economic leverage over junta'},
+      {date:'AUG 2024',event:'MNDAA captures Lashio — largest city taken from Tatmadaw, Northern Command overrun'},
+      {date:'OCT 2023',event:'Operation 1027: Brotherhood Alliance offensive begins — captures 200+ Tatmadaw positions in 2 weeks'},
+      {date:'FEB 2021',event:'Tatmadaw coup — Aung San Suu Kyi arrested, NLD government overthrown; civil war begins'},
+    ],
+  },
+  {
+    escalationProb:29,
+    parties:['JNIM / Al-Qaeda Sahel','AES Alliance (Mali/BF/Niger)','Russia Africa Corps','ECOWAS (sidelined)','US AFRICOM (degraded access)'],
+    intlResponse:'France expelled from Mali, Burkina Faso, Niger — Barkhane terminated. MINUSMA withdrawn. US drone base in Niger (Air Base 201) ordered closed. EU training missions suspended. ECOWAS sanctions imposed then partially lifted. AU mediation inactive.',
+    nextTrigger:'JNIM captures Bamako suburbs or major regional capital, AES confederation formalizes mutual defense pact, or Niger uranium facility secured by non-state actor.',
+    timeline:[
+      {date:'MAR 2025',event:'JNIM attacks Niamey outer districts — first assault on Niger capital, 18 killed'},
+      {date:'DEC 2024',event:'AES Confederation treaty: Mali, Burkina Faso, Niger formalize mutual defense — anti-ECOWAS bloc'},
+      {date:'SEP 2024',event:'Bamako military academy attack — JNIM strikes closest to capital in years'},
+      {date:'NOV 2023',event:'JNIM captures Kidal — symbolic end of Tuareg resistance, northern Mali fully under jihadist influence'},
+      {date:'JUL 2023',event:'Niger coup — General Tchiani ousts Bazoum; France/EU suspended, Russia Africa Corps invited'},
+    ],
+  },
+  {
+    escalationProb:33,
+    parties:['Venezuelan FANB','Guyana (GDF / ExxonMobil)','United States (SOUTHCOM)','CARICOM','Brazil (mediating)'],
+    intlResponse:'US SOUTHCOM conducted air and naval exercises with Guyana. CARICOM condemned Venezuela referendum. ICJ provisional measures: Venezuela ordered not to alter status quo. Brazil offering quiet mediation. UK Royal Navy increased Caribbean patrols.',
+    nextTrigger:'Venezuelan military incursion across Essequibo border, Maduro government recognition crisis deepens forcing distraction, or ExxonMobil Stabroek production milestone triggering economic desperation.',
+    timeline:[
+      {date:'MAR 2025',event:'FANB "Anauco II" exercise — 19,000 troops simulating border crossing operation, observed by US satellite'},
+      {date:'DEC 2024',event:'ExxonMobil Stabroek block reaches 700,000 bbl/day — Venezuela accelerates territorial claim rhetoric'},
+      {date:'SEP 2024',event:'ICJ rejects Venezuela\'s jurisdiction challenge — case proceeds on merits, full ruling 2027'},
+      {date:'MAR 2024',event:'Venezuela and Guyana sign Argyle Agreement — no use of force pledged, implementation questionable'},
+      {date:'DEC 2023',event:'Venezuelan referendum: 95% vote to annex Essequibo — Maduro creates "Guayana Esequiba" state'},
+    ],
+  },
+  {
+    escalationProb:44,
+    parties:['Azerbaijan (AZAF)','Armenia (Armenian AF)','Russia (CSTO — inactive)','Iran (opposed to corridor)','Turkey (Azerbaijan ally)'],
+    intlResponse:'CSTO failed to defend Armenia in 2020 and 2023 — credibility destroyed. Armenia pursuing EU association, US bilateral defense cooperation. Russia losing influence in South Caucasus. Iran strongly opposed to Zangezur Corridor — direct Turkey-Azerbaijan link threatens Iranian transit role.',
+    nextTrigger:'Armenia refuses corridor demand under Azerbaijani military pressure, Azerbaijan military operation to seize corridor, or Iran intervenes militarily to block Turkish-Azerbaijani contiguity.',
+    timeline:[
+      {date:'APR 2025',event:'Azerbaijan ultimatum: corridor must be agreed by year-end or "other means" will be used — Aliyev statement'},
+      {date:'JAN 2025',event:'Armenia-EU Association Agreement signed — Yerevan accelerates Western pivot, Russia warns of consequences'},
+      {date:'SEP 2023',event:'Azerbaijan 24-hour offensive: Nagorno-Karabakh capitulates — 100,000 Armenians flee in 72 hours'},
+      {date:'MAY 2023',event:'Armenia-Azerbaijan border demarcation — Azerbaijan receives villages, retains military pressure on Syunik'},
+      {date:'NOV 2020',event:'44-day war: Azerbaijan recaptures 7 districts — Russian peacekeepers deployed to Lachin Corridor'},
+    ],
+  },
+  {
+    escalationProb:22,
+    parties:['Russia (Northern Fleet)','Norway (NATO)','Finland (NATO)','United States (EUCOM/NORTHCOM)','Canada'],
+    intlResponse:'Norway and Finland NATO accession reshapes Arctic balance — Russia now bordered by NATO on Kola Peninsula. Iceland Keflavik US base reactivated. NATO established dedicated Arctic command. Svalbard Treaty disputes ongoing. Canada increasing Arctic sovereignty patrols.',
+    nextTrigger:'Russian submarine collision or incident in contested Arctic waters, Svalbard Russian facility closure forced, or climate-driven resource competition triggers sovereignty crisis.',
+    timeline:[
+      {date:'MAR 2025',event:'NATO Cold Response 2025: 30,000 troops in Norway — largest Arctic exercise since Cold War'},
+      {date:'NOV 2024',event:'Russia Arctic strategy update: claims Lomonosov Ridge — overlapping with Canadian and Danish/Greenland claims'},
+      {date:'APR 2024',event:'Finland joins NATO — Russia\'s Arctic border with NATO doubles, Kola Peninsula fully NATO-adjacent'},
+      {date:'JAN 2024',event:'Norway reports Svalbard Russian helicopter violations — 4 incidents in 60 days'},
+      {date:'SEP 2023',event:'Northern Sea Route traffic record: 36M tons — Russia accelerating commercial exploitation ahead of NATO response'},
+    ],
+  },
+];
+
 const THREAT_LEVEL_LABELS=['','MINIMAL','GUARDED','ELEVATED','HIGH','SEVERE'];
 const THREAT_LEVEL_COLORS=['','#22c55e','#84cc16','#f59e0b','#ef4444','#dc2626'];
 
@@ -11207,6 +12004,10 @@ async function refreshThreatMatrix(){
   renderThreatMatrix();
 }
 
+function _trendArrow(t){return t==='critical'?'↑↑':t==='worsening'?'↑':t==='improving'?'↓':'→';}
+function _trendColor(t){return t==='critical'?'#ef4444':t==='worsening'?'#f97316':t==='improving'?'#22c55e':'#94a3b8';}
+function _confClass(c){return c==='HIGH'?'high':c==='LOW'?'low':'med';}
+
 function renderThreatMatrix(){
   const body=document.getElementById('threat-body');
   const ts=document.getElementById('threat-ts');
@@ -11216,9 +12017,8 @@ function renderThreatMatrix(){
   const overallColor=THREAT_LEVEL_COLORS[overallLevel]||'#ef4444';
   const overallLabel=THREAT_LEVEL_LABELS[overallLevel]||'ELEVATED';
   const highDomains=threatData.filter(d=>d.level>=4).length;
-  const sevDomains=threatData.filter(d=>d.level>=5).length;
+
   body.innerHTML=
-    // Composite banner
     `<div class="threat-composite">
       <div>
         <div style="font-size:8px;color:#475569;letter-spacing:.18em;margin-bottom:4px">GLOBAL THREAT LEVEL</div>
@@ -11238,19 +12038,39 @@ function renderThreatMatrix(){
         <div class="threat-composite-stat" style="color:#475569;font-size:7px;margin-top:4px">SOURCE: GDELT·OSINT·IC</div>
       </div>
     </div>`+
-    // Active flashpoints
     `<div class="threat-flashpoints">
       <div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-bottom:2px">▶ ACTIVE GLOBAL FLASHPOINTS (${THREAT_FLASHPOINTS.length})</div>
       <div class="threat-fp-grid">
-        ${THREAT_FLASHPOINTS.map(f=>`<div class="threat-fp-card" style="border-left-color:${f.color};cursor:pointer" onclick="intelPop(${JSON.stringify(f.name)},'FLASHPOINT',${JSON.stringify(f.desc)},[${JSON.stringify('RISK: '+f.risk)}])">
-          <div class="threat-fp-name" style="color:${f.color}">${f.name} <span style="font-size:8px;color:#475569;font-weight:normal">▸ TAP</span></div>
-          <div class="threat-fp-risk" style="color:${f.color}">${f.risk}</div>
-          <div class="threat-fp-desc">${f.desc}</div>
-          ${f.lat!==undefined?`<div onclick="event.stopPropagation();toggleThreatMatrix();fpOpenSat(${f.lat},${f.lng},${JSON.stringify(f.name)})" style="margin-top:5px;font-size:8px;color:#34d399;cursor:pointer;letter-spacing:.1em;border:1px solid rgba(52,211,153,.3);border-radius:2px;padding:2px 6px;display:inline-block">🛰 VIEW SATELLITE</div>`:''}
-        </div>`).join('')}
+        ${THREAT_FLASHPOINTS.map((f,fi)=>{
+          const fx=(typeof FLASHPOINT_EXTRA!=='undefined'&&FLASHPOINT_EXTRA[fi])||null;
+          const escProb=fx?fx.escalationProb:null;
+          const escColor=escProb>=70?'#ef4444':escProb>=50?'#f97316':escProb>=35?'#f59e0b':'#84cc16';
+          return`<div class="threat-fp-card" id="fp-card-${fi}" style="border-left-color:${f.color}">
+            <div style="cursor:pointer" onclick="toggleFlashpointCard(${fi})">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div class="threat-fp-name" style="color:${f.color}">${f.name}</div>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <span class="threat-fp-risk" style="color:${f.color}">${f.risk}</span>
+                  <span class="fp-toggle-arrow" style="font-size:8px;color:#475569">▼</span>
+                </div>
+              </div>
+              <div class="threat-fp-desc">${f.desc}</div>
+              ${escProb!==null?`<div style="margin-top:5px"><div style="font-size:7px;color:#475569;letter-spacing:.08em;margin-bottom:2px">ESCALATION PROBABILITY: <span style="color:${escColor};font-weight:bold">${escProb}%</span></div><div class="threat-escalation-bar"><div class="threat-escalation-fill" style="width:${escProb}%;background:${escColor}"></div></div></div>`:''}
+            </div>
+            <div class="threat-fp-expanded">
+              ${fx&&fx.timeline?`<div style="font-size:7px;color:#64748b;letter-spacing:.15em;margin-bottom:4px">TIMELINE</div><div class="threat-fp-timeline">${fx.timeline.map(tl=>`<div class="threat-fp-tl-item"><div class="threat-fp-tl-date">${tl.date}</div><div class="threat-fp-tl-event">${tl.event}</div></div>`).join('')}</div>`:''}
+              ${fx&&fx.parties?`<div style="font-size:7px;color:#64748b;letter-spacing:.15em;margin-bottom:3px;margin-top:4px">PARTIES INVOLVED</div><div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px">${fx.parties.map(p=>`<span style="font-size:8px;padding:2px 6px;background:rgba(30,58,95,.4);border:1px solid rgba(59,130,246,.2);border-radius:2px;color:#93c5fd">${p}</span>`).join('')}</div>`:''}
+              ${fx&&fx.intlResponse?`<div style="font-size:7px;color:#64748b;letter-spacing:.15em;margin-bottom:3px">INTERNATIONAL RESPONSE</div><div class="threat-analyst" style="margin-bottom:6px">${fx.intlResponse}</div>`:''}
+              ${fx&&fx.nextTrigger?`<div style="font-size:7px;color:#64748b;letter-spacing:.15em;margin-bottom:3px">NEXT ESCALATION TRIGGER</div><div style="font-size:9px;color:#fbbf24;line-height:1.45;padding:5px 8px;background:rgba(251,191,36,.07);border-left:2px solid rgba(251,191,36,.3);border-radius:0 3px 3px 0;margin-bottom:6px">${fx.nextTrigger}</div>`:''}
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+                <div onclick="event.stopPropagation();intelPop(${JSON.stringify(f.name)},'FLASHPOINT',${JSON.stringify(f.desc)},[${JSON.stringify('RISK: '+f.risk)}])" style="font-size:8px;color:#60a5fa;cursor:pointer;letter-spacing:.1em;border:1px solid rgba(96,165,250,.3);border-radius:2px;padding:2px 6px;display:inline-block">◈ INTEL BRIEF</div>
+                ${f.lat!==undefined?`<div onclick="event.stopPropagation();toggleThreatMatrix();fpOpenSat(${f.lat},${f.lng},${JSON.stringify(f.name)})" style="font-size:8px;color:#34d399;cursor:pointer;letter-spacing:.1em;border:1px solid rgba(52,211,153,.3);border-radius:2px;padding:2px 6px;display:inline-block">🛰 SATELLITE VIEW</div>`:''}
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
       </div>
     </div>`+
-    // Crisis watchlist
     `<div style="background:rgba(8,16,33,.5);border:1px solid rgba(30,58,95,.5);border-radius:5px;padding:12px 14px">
       <div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-bottom:6px">▶ CRISIS WATCHLIST — HIGHEST RISK STATES</div>
       <div class="threat-watchlist">
@@ -11264,18 +12084,27 @@ function renderThreatMatrix(){
         </div>`).join('')}
       </div>
     </div>`+
-    // Domain grid
     `<div style="font-size:8px;letter-spacing:.2em;color:#64748b;margin-top:2px;margin-bottom:-4px">▶ THREAT DOMAIN ANALYSIS — CLICK TO EXPAND</div>
     <div class="threat-domains-grid">
     ${threatData.map(d=>{
       const col=THREAT_LEVEL_COLORS[d.level]||'#ef4444';
       const lbl=THREAT_LEVEL_LABELS[d.level]||'UNKNOWN';
       const pct=((d.level/5)*100).toFixed(0);
+      const dx=(typeof THREAT_DOMAIN_EXTRA!=='undefined'&&THREAT_DOMAIN_EXTRA[d.id])||null;
+      const trend=dx?dx.trend:'stable';
+      const conf=dx?dx.confidence:'MEDIUM';
+      const tArrow=_trendArrow(trend);
+      const tColor=_trendColor(trend);
+      const cClass=_confClass(conf);
+      const srcMap={'OSINT':'osint','HUMINT':'humint','SIGINT':'sigint','IMINT':'imint'};
       return`<div class="threat-domain" id="td-${d.id}" onclick="toggleThreatDomain('${d.id}')">
         <div class="threat-domain-header">
           <div>
             <div class="threat-domain-name" style="color:${col}">${d.icon} ${d.label}</div>
-            <div style="font-size:7px;color:#475569;letter-spacing:.1em;margin-top:2px">THREAT DOMAIN · CLICK TO EXPAND</div>
+            <div style="font-size:7px;color:#475569;letter-spacing:.1em;margin-top:2px;display:flex;align-items:center;gap:5px">
+              <span style="color:${tColor};font-weight:bold">${tArrow} ${trend.toUpperCase()}</span>
+              <span class="threat-conf-badge threat-conf-${cClass}">${conf}</span>
+            </div>
           </div>
           <div style="text-align:right">
             <div class="threat-domain-level" style="color:${col}">LEVEL ${d.level}</div>
@@ -11283,20 +12112,66 @@ function renderThreatMatrix(){
           </div>
         </div>
         <div class="threat-bar-track"><div class="threat-bar-fill" style="width:${pct}%;background:${col}"></div></div>
-        <div class="threat-indicators">${d.indicators.slice(0,4).map(i=>`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span>${i}</span></div>`).join('')}</div>
+        <div class="threat-indicators">${d.indicators.slice(0,4).map((ind,ii)=>{
+          const src=dx&&dx.indicatorSrc&&dx.indicatorSrc[ii]?dx.indicatorSrc[ii]:'OSINT';
+          const sc=srcMap[src]||'osint';
+          return`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span class="threat-source-badge threat-src-${sc}">${src}</span><span>${ind}</span></div>`;
+        }).join('')}</div>
         <div class="threat-domain-extra">
-          ${d.indicators.length>4?`<div class="threat-extra-label">ADDITIONAL INDICATORS</div><div class="threat-indicators">${d.indicators.slice(4).map(i=>`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span>${i}</span></div>`).join('')}</div>`:''}
-          ${d.actors?`<div class="threat-extra-label">KEY THREAT ACTORS</div><div class="threat-actors">${d.actors.map(a=>`<span class="threat-actor-tag">${a}</span>`).join('')}</div>`:''}
+          ${d.indicators.length>4?`<div class="threat-extra-label">ADDITIONAL INDICATORS</div><div class="threat-indicators">${d.indicators.slice(4).map((ind,ii)=>{const src=dx&&dx.indicatorSrc&&dx.indicatorSrc[ii+4]?dx.indicatorSrc[ii+4]:'OSINT';const sc=srcMap[src]||'osint';return`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span class="threat-source-badge threat-src-${sc}">${src}</span><span>${ind}</span></div>`;}).join('')}</div>`:''}
+          ${dx&&dx.history?`<div class="threat-extra-label">HISTORICAL CONTEXT</div><div class="threat-history">${dx.history}</div>`:''}
+          ${d.actors?`<div class="threat-extra-label">KEY THREAT ACTORS</div><div class="threat-actors">${d.actors.map(a=>`<span class="threat-actor-tag" onclick="event.stopPropagation();openActorProfile('${a.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${a}</span>`).join('')}</div>`:''}
           ${d.analyst?`<div class="threat-extra-label">ANALYST ASSESSMENT</div><div class="threat-analyst">${d.analyst}</div>`:''}
           ${d.tripwires?`<div class="threat-extra-label">ESCALATION TRIPWIRES</div><div class="threat-tripwires">${d.tripwires.map(t=>`<div class="threat-tripwire">${t}</div>`).join('')}</div>`:''}
-          ${d.countries?`<div class="threat-extra-label">AFFECTED STATES</div><div class="threat-countries-row">${d.countries.map(c=>`<span class="threat-ctag" style="color:${col};border-color:${col}40">${c}</span>`).join('')}</div>`:''}
+          ${dx&&dx.connected&&dx.connected.length?`<div class="threat-extra-label">CONNECTED DOMAINS</div><div class="threat-connected-chips">${dx.connected.map(cid=>{const cd=threatData.find(x=>x.id===cid);return cd?`<span class="threat-connected-chip" onclick="event.stopPropagation();toggleThreatDomain('${cid}')">${cd.icon} ${cd.label}</span>`:''}).join('')}</div>`:''}
+          ${dx&&dx.recentIntel&&dx.recentIntel.length?`<div class="threat-extra-label">RECENT INTELLIGENCE</div><div class="threat-recent-intel">${dx.recentIntel.map(ri=>{const sc=srcMap[ri.src]||'osint';return`<div class="threat-intel-item"><div class="threat-intel-time">${ri.ts}<br><span class="threat-source-badge threat-src-${sc}">${ri.src}</span></div><div class="threat-intel-text">${ri.text}</div></div>`;}).join('')}</div>`:''}
+          ${d.countries?`<div class="threat-extra-label">AFFECTED STATES</div><div class="threat-countries-row">${d.countries.map(c=>`<span class="threat-ctag" style="color:${col};border-color:${col}40;cursor:pointer" onclick="event.stopPropagation();toggleThreatMatrix();openCountry('${c}')">${c}</span>`).join('')}</div>`:''}
         </div>
       </div>`;
     }).join('')}
     </div>`;
-  // Update header badge
   const badge=document.getElementById('global-threat');
   if(badge){badge.textContent='⚑ THREAT: '+overallLabel;badge.className='h-threat-level '+(overallLevel>=4?'high':'elevated');}
+}
+
+function openActorProfile(name){
+  const p=(typeof ACTOR_PROFILES!=='undefined')?ACTOR_PROFILES[name]:null;
+  const ov=document.getElementById('actor-modal-overlay');
+  const nameEl=document.getElementById('actor-modal-name');
+  const typeEl=document.getElementById('actor-modal-type');
+  const bodyEl=document.getElementById('actor-modal-body');
+  if(!ov||!bodyEl)return;
+  nameEl.textContent=name;
+  typeEl.textContent=p?(p.type||'THREAT ACTOR'):('THREAT ACTOR — NO PROFILE ON FILE');
+  if(!p){
+    bodyEl.innerHTML='<div style="color:#475569;font-size:9px;padding:20px;text-align:center;letter-spacing:.1em">NO DETAILED PROFILE AVAILABLE<br><br>CLASSIFICATION: UNVERIFIED</div>';
+  } else {
+    bodyEl.innerHTML=`
+      <div class="actor-meta-grid">
+        <div class="actor-meta-item"><div class="actor-meta-label">ORIGIN / SPONSOR</div><div class="actor-meta-val">${p.origin||'UNKNOWN'}</div></div>
+        <div class="actor-meta-item"><div class="actor-meta-label">ACTIVE SINCE</div><div class="actor-meta-val">${p.since||'UNKNOWN'}</div></div>
+        <div class="actor-meta-item"><div class="actor-meta-label">ATTRIBUTION</div><div class="actor-meta-val">${p.attribution||'UNKNOWN'}</div></div>
+        <div class="actor-meta-item"><div class="actor-meta-label">PRIMARY TARGETS</div><div class="actor-meta-val">${p.targets||'UNKNOWN'}</div></div>
+      </div>
+      ${p.description?`<div style="font-size:8px;color:#64748b;letter-spacing:.12em;margin-bottom:4px">ASSESSMENT</div><div class="threat-analyst" style="margin-bottom:0">${p.description}</div>`:''}
+      ${p.methods?`<div style="font-size:8px;color:#64748b;letter-spacing:.12em;margin-bottom:5px">KNOWN METHODS / TTPs</div><div class="actor-methods">${p.methods.map(m=>'<span class="actor-method-tag">'+m+'</span>').join('')}</div>`:''}
+      ${p.recentOps?`<div style="font-size:8px;color:#64748b;letter-spacing:.12em;margin:4px 0 5px">RECENT OPERATIONS</div><div class="actor-ops-list">${p.recentOps.map(o=>'<div class="actor-op-item">'+o+'</div>').join('')}</div>`:''}
+    `;
+  }
+  ov.classList.add('open');
+}
+
+function closeActorProfile(){
+  const ov=document.getElementById('actor-modal-overlay');
+  if(ov)ov.classList.remove('open');
+}
+
+function toggleFlashpointCard(idx){
+  const el=document.getElementById('fp-card-'+idx);
+  if(!el)return;
+  el.classList.toggle('fp-open');
+  const arrow=el.querySelector('.fp-toggle-arrow');
+  if(arrow)arrow.textContent=el.classList.contains('fp-open')?'▲':'▼';
 }
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
