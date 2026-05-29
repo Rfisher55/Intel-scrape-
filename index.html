@@ -79,23 +79,25 @@ canvas.dragging{cursor:grabbing}
 /* ── Tooltip ── */
 #tooltip{
   position:fixed;z-index:200;pointer-events:none;
-  background:rgba(4,10,22,.95);
-  border:1px solid rgba(59,130,246,.4);
-  border-top:2px solid rgba(59,130,246,.7);
-  border-radius:4px;padding:7px 12px;font-size:11px;
+  background:rgba(5,8,18,.97);
+  border:1px solid rgba(10,110,245,.35);
+  border-top:2px solid rgba(10,110,245,.8);
+  border-radius:2px;padding:6px 12px;font-size:10px;
   opacity:0;transition:opacity .15s;white-space:nowrap;
-  box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 0 1px rgba(59,130,246,.08) inset;
-  backdrop-filter:blur(8px);
+  box-shadow:0 8px 32px rgba(0,0,0,.7);
+  backdrop-filter:blur(12px);
+  letter-spacing:.04em;
 }
-#tooltip .tt-name{font-weight:bold;color:#bfdbfe;letter-spacing:.05em}
+#tooltip .tt-name{font-weight:600;color:#c0d4ff;letter-spacing:.06em}
 #tooltip .tt-alert{font-size:9px;margin-top:3px;letter-spacing:.08em}
 
 /* ── Legend ── */
 #legend{
   position:fixed;bottom:30px;left:20px;z-index:50;
-  background:rgba(5,12,26,.88);border:1px solid var(--border);
-  border-radius:6px;padding:12px 14px;min-width:130px;
-  backdrop-filter:blur(6px);
+  background:rgba(5,8,18,.94);border:1px solid var(--border);
+  border-radius:2px;padding:10px 12px;min-width:128px;
+  backdrop-filter:blur(12px);
+  border-top:1px solid rgba(10,110,245,.3);
 }
 .leg-title{font-size:10px;letter-spacing:.15em;color:var(--dim);margin-bottom:8px}
 .leg-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);margin-bottom:5px}
@@ -105,7 +107,7 @@ canvas.dragging{cursor:grabbing}
 
 /* ── Intel Panel ── */
 #panel{
-  position:fixed;top:56px;right:0;bottom:0;width:420px;z-index:200;
+  position:fixed;top:76px;right:0;bottom:0;width:420px;z-index:200;
   background:rgba(6,9,18,.97);
   border-left:1px solid rgba(10,110,245,.2);
   border-top:2px solid rgba(10,110,245,.5);
@@ -130,8 +132,8 @@ canvas.dragging{cursor:grabbing}
 .p-cap{font-size:12px;color:var(--dim);margin-top:3px}
 .p-controls{display:flex;align-items:center;gap:10px}
 .alert-badge{font-size:10px;font-weight:bold;letter-spacing:.12em;padding:3px 8px;border-radius:3px;border:1px solid}
-.p-close{background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 9px;border-radius:4px;font-size:12px;transition:all .2s}
-.p-close:hover{border-color:#ef4444;color:#ef4444}
+.p-close{background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:3px 8px;border-radius:2px;font-size:11px;transition:all .2s;letter-spacing:.05em}
+.p-close:hover{border-color:rgba(232,64,64,.6);color:#fca5a5}
 
 .connect-btn{
   width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
@@ -422,12 +424,12 @@ canvas.dragging{cursor:grabbing}
 /* ── Live ticker ── */
 #live-ticker{
   position:fixed;bottom:0;left:0;right:0;z-index:50;
-  background:rgba(4,10,22,.92);border-top:1px solid rgba(59,130,246,.25);
-  height:28px;display:flex;align-items:center;overflow:hidden;
-  font-size:11px;color:var(--dim);letter-spacing:.05em;
-  backdrop-filter:blur(4px);
+  background:rgba(4,7,15,.97);border-top:1px solid rgba(10,110,245,.18);
+  height:26px;display:flex;align-items:center;overflow:hidden;
+  font-size:10px;color:var(--dim);letter-spacing:.06em;
+  backdrop-filter:blur(8px);
 }
-.ticker-label{padding:0 14px;color:#ef4444;font-weight:bold;letter-spacing:.2em;font-size:10px;white-space:nowrap;flex-shrink:0;border-right:1px solid rgba(59,130,246,.3);background:rgba(127,29,29,.15)}
+.ticker-label{padding:0 14px;color:var(--danger);font-weight:700;letter-spacing:.22em;font-size:8px;white-space:nowrap;flex-shrink:0;border-right:1px solid var(--border-hi);background:rgba(232,64,64,.1);text-transform:uppercase}
 .ticker-track{display:flex;gap:0;animation:ticker 90s linear infinite;white-space:nowrap}
 .ticker-item{padding:0 28px;border-right:1px solid rgba(30,58,95,.4);color:var(--text)}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -864,10 +866,133 @@ canvas.dragging{cursor:grabbing}
   .tm-close{min-height:44px!important;font-size:13px!important;padding:8px 20px!important}
   .p-sat-link{padding:4px 10px;font-size:10px}
 }
+
+/* ══════════════════════════════════════
+   PALANTIR GOTHAM DESIGN SYSTEM
+══════════════════════════════════════ */
+
+/* Corner bracket decoration */
+.panel-corner{position:relative}
+.panel-corner::before,.panel-corner::after{
+  content:'';position:absolute;width:10px;height:10px;pointer-events:none;z-index:1;
+}
+.panel-corner::before{top:-1px;left:-1px;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.panel-corner::after{top:-1px;right:-1px;border-top:2px solid var(--accent);border-right:2px solid var(--accent)}
+
+/* Operaional status chip */
+.op-status{display:inline-flex;align-items:center;gap:4px;font-size:8px;letter-spacing:.16em;padding:2px 7px;border-radius:1px;border:1px solid;text-transform:uppercase;font-weight:600}
+.op-status.active{background:rgba(0,217,126,.08);border-color:rgba(0,217,126,.3);color:var(--live)}
+.op-status.standby{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);color:var(--warn)}
+.op-status.offline{background:rgba(232,64,64,.08);border-color:rgba(232,64,64,.3);color:var(--danger)}
+.op-status-dot{width:4px;height:4px;border-radius:50%;background:currentColor;animation:blink 1.6s step-start infinite}
+
+/* Data row pattern */
+.data-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border2);font-size:10px}
+.data-row:last-child{border-bottom:none}
+.data-row-label{color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-size:8px}
+.data-row-val{color:var(--text);font-weight:500}
+
+/* Intel score bar */
+.score-bar{height:2px;background:var(--border);border-radius:1px;overflow:hidden;margin-top:3px}
+.score-fill{height:100%;border-radius:1px;background:var(--accent);transition:width .8s ease}
+
+/* Classification tag */
+.classif-tag{display:inline-block;font-size:7px;letter-spacing:.2em;padding:1px 6px;border:1px solid;text-transform:uppercase;font-weight:700;border-radius:1px}
+.classif-tag.u{border-color:rgba(0,217,126,.4);color:var(--live);background:rgba(0,217,126,.06)}
+.classif-tag.c{border-color:rgba(245,158,11,.4);color:var(--warn);background:rgba(245,158,11,.06)}
+.classif-tag.s{border-color:rgba(232,64,64,.4);color:var(--danger);background:rgba(232,64,64,.06)}
+
+/* Accent divider */
+.accent-div{height:1px;background:linear-gradient(90deg,var(--accent),transparent);margin:10px 0;opacity:.4}
+
+/* Code/hash display */
+.hash-display{font-size:8px;color:var(--muted);letter-spacing:.08em;font-family:var(--mono);opacity:.6}
+
+/* Threat matrix — Palantir style overrides */
+#threat-panel{border-radius:2px;border-color:rgba(232,64,64,.35)}
+#threat-panel.open{display:flex}
+#threat-header{background:rgba(20,5,5,.6);border-bottom-color:rgba(232,64,64,.2)}
+.threat-title{letter-spacing:.28em;font-size:10px}
+.threat-domain{border-radius:2px}
+.threat-domain.expanded{border-top:1px solid rgba(10,110,245,.3)}
+.threat-actor-tag{border-radius:1px;font-size:8px;letter-spacing:.06em}
+.threat-fp-card{border-radius:1px}
+.threat-conf-badge{border-radius:1px}
+
+/* Layers panel — Palantir style */
+#layers-panel{border-radius:2px;border-top:1px solid rgba(10,110,245,.35)}
+
+/* HUD corners — Palantir command center aesthetic */
+#hud-corners svg .hud-bracket{stroke:rgba(10,110,245,.35)!important}
+
+/* Panel slide animation — faster, crisper */
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* News items — cleaner */
+.news-item{border-left-color:rgba(10,110,245,.5);border-radius:1px}
+.news-src{color:rgba(10,110,245,.8);letter-spacing:.12em;text-transform:uppercase;font-size:9px}
+
+/* Conflict items */
+.conflict-item{border-radius:2px}
+.cf-sev{border-radius:1px;letter-spacing:.12em}
+
+/* Hs modal card */
+#hs-card{border-radius:2px;border-top:2px solid rgba(10,110,245,.5)}
+.hs-country-btn{border-radius:2px;font-size:9px;letter-spacing:.14em;text-transform:uppercase}
+.hs-close-btn{border-radius:2px}
+
+/* Actor chip */
+.actor-chip{border-radius:1px;font-size:10px;letter-spacing:.06em}
+
+/* Person card */
+.person-card{border-radius:2px;border-left-color:var(--accent)}
+
+/* Scrollbar — thinner, accent colored */
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(10,110,245,.25);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(10,110,245,.45)}
+* {scrollbar-width:thin;scrollbar-color:rgba(10,110,245,.2) transparent}
+
+/* Section labels — accent bar prefix */
+.sec-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase}
+
+/* Buttons — squared off Palantir style */
+button{border-radius:2px!important}
+.drill-btn{border-radius:2px!important;letter-spacing:.12em;text-transform:uppercase;font-size:8px}
+
+/* Alert badge */
+.alert-badge{border-radius:1px!important;letter-spacing:.1em;font-size:8px!important}
+
+/* Panel footer */
+.p-foot{font-size:9px;letter-spacing:.08em;border-top-color:var(--border)}
+
+/* Ticker item separator */
+.ticker-item{border-right-color:rgba(10,110,245,.15);font-size:10px;letter-spacing:.05em}
+
+/* Threat btn */
+#threat-btn{border-radius:2px;font-size:8px;letter-spacing:.18em;text-transform:uppercase;border-color:rgba(232,64,64,.35)}
+
+/* Sat panel */
+#sat-panel{border-radius:2px}
+
+/* Cam overlay */
+#cam-overlay{border-radius:2px}
+
+/* Intel pop */
+#intel-pop-overlay .intel-pop-card{border-radius:2px;border-top:2px solid var(--accent)}
+
+/* Legend */
+.leg-title{letter-spacing:.22em;text-transform:uppercase;font-size:9px}
+.leg-item{font-size:10px}
+
+/* p-cap */
+.p-cap{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
 </style>
 </head>
 <body>
 
+<div id="classif-bar">INTEL GLOBE &nbsp;&#47;&#47;&nbsp; OPEN SOURCE INTELLIGENCE PLATFORM &nbsp;&#47;&#47;&nbsp; OSINT-DERIVED &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
 <div id="header">
   <div class="h-logo">
     <span class="h-icon">◎</span>
