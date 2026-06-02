@@ -1156,6 +1156,9 @@ button{border-radius:2px!important}
 .diplo-treaty{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border2);font-size:9px;}
 .diplo-treaty-name{color:var(--text);flex:1;}
 .diplo-treaty-status{color:var(--live);font-size:8px;letter-spacing:.1em;}
+#proxy-btn{position:fixed;top:95px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(168,85,247,.35);border-radius:2px;color:#c084fc;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#proxy-btn:hover{background:rgba(168,85,247,.12);border-color:#a855f7;}
+#proxy-btn.active{color:#e9d5ff;border-color:#a855f7;background:rgba(168,85,247,.2);}
 </style>
 </head>
 <body>
@@ -1199,6 +1202,9 @@ button{border-radius:2px!important}
   <button class="layer-btn" id="lb-seismic" onclick="toggleSeismicLayer()" title="USGS earthquake data — live seismic monitoring"><span class="lb-dot" style="background:#fbbf24"></span>SEISMIC<span class="lb-src">USGS</span></button>
   <button class="layer-btn" id="lb-airdom" onclick="toggleAirDomain()" title="Real aircraft positions over conflict zones (OpenSky Network)"><span class="lb-dot" style="background:#38bdf8"></span>AIR DOMAIN<span class="lb-src live">LIVE</span></button>
   <button class="layer-btn" id="lb-maritime" onclick="toggleMaritimeLayer()" title="Live maritime incidents — Houthi Red Sea, South China Sea, chokepoints (GDELT + OSINT)"><span class="lb-dot" style="background:#22d3ee"></span>&#x1F6A2; MARITIME<span class="lb-count" id="lbc-maritime">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+  <button class="layer-btn" id="lb-bioint" onclick="toggleBiointLayer()" title="Biosurveillance — disease outbreaks, epidemics, bio incidents (GDELT 72h)"><span class="lb-dot" style="background:#a3e635"></span>&#x1F9EB; BIOINT<span class="lb-count" id="lbc-bioint">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+  <button class="layer-btn" id="lb-infra" onclick="toggleInfraLayer()" title="Critical infrastructure attacks — pipelines, power grids, cyber (GDELT 48h)"><span class="lb-dot" style="background:#f97316"></span>&#x26A1; INFRACON<span class="lb-count" id="lbc-infra">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+  <button class="layer-btn" id="lb-weapons" onclick="toggleWeaponsLayer()" title="Missile and weapons tests — ICBM, hypersonic, nuclear, military exercises (GDELT 7d)"><span class="lb-dot" style="background:#fbbf24"></span>&#x1F680; WEAPONS<span class="lb-count" id="lbc-weapons">&#x2014;</span><span class="lb-src live">LIVE</span></button>
   <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signals — Reddit · Bluesky · Telegram · GDELT news · X/Twitter"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span><span class="lb-src live">● LIVE</span></button>
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
@@ -1318,6 +1324,7 @@ button{border-radius:2px!important}
   <div id="nuke-grid"></div>
 </div>
 <div id="rankings-btn" onclick="toggleRankings()">⬡ RANKINGS</div>
+<button id="proxy-btn" onclick="toggleProxyNet()">&#x1F578; PROXY NET</button>
 <div id="rankings-panel">
   <div style="padding:8px 12px;border-bottom:1px solid rgba(249,115,22,.15);background:rgba(249,115,22,.05);display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
     <div style="font-size:9px;color:#fb923c;letter-spacing:.2em;font-weight:700">GLOBAL RISK RANKINGS</div>
@@ -14200,6 +14207,225 @@ async function renderDiploTab(iso){
       <div class="diplo-section-hdr">LIVE DIPLOMATIC FEED — 48H (GDELT)</div>
       ${incidentsHtml}
     </div>`;
+}
+
+// PHASE 6: BIOINT Layer
+const _BIOINT_Q='outbreak epidemic disease virus cholera ebola avian flu mpox dengue plague anthrax quarantine contamination';
+let _biointActive=false,_biointTimer=null,_biointCache=null,_biointCacheTs=0;
+async function _fetchBiointData(){
+  const now=Date.now();
+  if(_biointCache&&now-_biointCacheTs<20*60*1000)return _biointCache;
+  try{
+    const q=encodeURIComponent(_BIOINT_Q);
+    const r=await fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+q+'&mode=pointdata&format=geojson&timespan=72h&maxpoints=60',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    _biointCache=d;_biointCacheTs=now;
+    return d;
+  }catch(e){return null;}
+}
+async function toggleBiointLayer(){
+  _biointActive=!_biointActive;
+  const btn=document.getElementById('lb-bioint');
+  const cnt=document.getElementById('lbc-bioint');
+  if(_biointActive){
+    if(btn)btn.classList.add('active');
+    const d=await _fetchBiointData();
+    if(d&&d.features){
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.5,color:'rgba(163,230,53,0.85)',label:(f.properties.name||'BIO EVENT'),_layer:'bioint'};});
+      const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='bioint';});
+      globe.pointsData([...existing,...pts]);
+      if(cnt)cnt.textContent=pts.length;
+      _pushAlert('BIOINT: '+pts.length+' bio/disease events detected in 72h window',false);
+    }
+    _biointTimer=setInterval(async function(){
+      if(!_biointActive)return;
+      _biointCacheTs=0;
+      const d=await _fetchBiointData();
+      if(d&&d.features){
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.5,color:'rgba(163,230,53,0.85)',label:(f.properties.name||'BIO EVENT'),_layer:'bioint'};});
+        const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='bioint';});
+        globe.pointsData([...existing,...pts]);
+        if(cnt)cnt.textContent=pts.length;
+      }
+    },20*60*1000);
+  }else{
+    if(btn)btn.classList.remove('active');
+    clearInterval(_biointTimer);_biointTimer=null;
+    const pts=(globe.pointsData()||[]).filter(function(p){return p._layer!=='bioint';});
+    globe.pointsData(pts);
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 6: INFRACON Layer
+const _INFRA_Q='pipeline explosion cyberattack power grid attack energy infrastructure sabotage bombing bridge rail oil refinery nuclear plant';
+let _infraActive=false,_infraTimer=null,_infraCache=null,_infraCacheTs=0;
+async function _fetchInfraData(){
+  const now=Date.now();
+  if(_infraCache&&now-_infraCacheTs<15*60*1000)return _infraCache;
+  try{
+    const q=encodeURIComponent(_INFRA_Q);
+    const r=await fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+q+'&mode=pointdata&format=geojson&timespan=48h&maxpoints=50',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    _infraCache=d;_infraCacheTs=now;
+    return d;
+  }catch(e){return null;}
+}
+async function toggleInfraLayer(){
+  _infraActive=!_infraActive;
+  const btn=document.getElementById('lb-infra');
+  const cnt=document.getElementById('lbc-infra');
+  if(_infraActive){
+    if(btn)btn.classList.add('active');
+    const d=await _fetchInfraData();
+    if(d&&d.features){
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.6,color:'rgba(249,115,22,0.85)',label:(f.properties.name||'INFRA EVENT'),_layer:'infra'};});
+      const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='infra';});
+      globe.pointsData([...existing,...pts]);
+      if(cnt)cnt.textContent=pts.length;
+      _pushAlert('INFRACON: '+pts.length+' infrastructure attack/incident events in 48h',false);
+    }
+    _infraTimer=setInterval(async function(){
+      if(!_infraActive)return;
+      _infraCacheTs=0;
+      const d=await _fetchInfraData();
+      if(d&&d.features){
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.6,color:'rgba(249,115,22,0.85)',label:(f.properties.name||'INFRA EVENT'),_layer:'infra'};});
+        const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='infra';});
+        globe.pointsData([...existing,...pts]);
+        if(cnt)cnt.textContent=pts.length;
+      }
+    },15*60*1000);
+  }else{
+    if(btn)btn.classList.remove('active');
+    clearInterval(_infraTimer);_infraTimer=null;
+    const pts=(globe.pointsData()||[]).filter(function(p){return p._layer!=='infra';});
+    globe.pointsData(pts);
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 6: WEAPONS TEST Layer
+const _WEAPONS_Q='missile test ballistic ICBM hypersonic launch military exercise fire artillery rocket bomb nuclear test warhead detonation';
+let _weaponsActive=false,_weaponsTimer=null,_weaponsCache=null,_weaponsCacheTs=0;
+async function _fetchWeaponsData(){
+  const now=Date.now();
+  if(_weaponsCache&&now-_weaponsCacheTs<30*60*1000)return _weaponsCache;
+  try{
+    const q=encodeURIComponent(_WEAPONS_Q);
+    const r=await fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+q+'&mode=pointdata&format=geojson&timespan=168h&maxpoints=60',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    _weaponsCache=d;_weaponsCacheTs=now;
+    return d;
+  }catch(e){return null;}
+}
+async function toggleWeaponsLayer(){
+  _weaponsActive=!_weaponsActive;
+  const btn=document.getElementById('lb-weapons');
+  const cnt=document.getElementById('lbc-weapons');
+  if(_weaponsActive){
+    if(btn)btn.classList.add('active');
+    const d=await _fetchWeaponsData();
+    if(d&&d.features){
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.7,color:'rgba(251,191,36,0.85)',label:(f.properties.name||'WEAPONS TEST'),_layer:'weapons'};});
+      const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='weapons';});
+      globe.pointsData([...existing,...pts]);
+      if(cnt)cnt.textContent=pts.length;
+      _pushAlert('WEAPONS: '+pts.length+' missile/weapons events detected in 7d window',false);
+    }
+    _weaponsTimer=setInterval(async function(){
+      if(!_weaponsActive)return;
+      _weaponsCacheTs=0;
+      const d=await _fetchWeaponsData();
+      if(d&&d.features){
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.7,color:'rgba(251,191,36,0.85)',label:(f.properties.name||'WEAPONS TEST'),_layer:'weapons'};});
+        const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='weapons';});
+        globe.pointsData([...existing,...pts]);
+        if(cnt)cnt.textContent=pts.length;
+      }
+    },30*60*1000);
+  }else{
+    if(btn)btn.classList.remove('active');
+    clearInterval(_weaponsTimer);_weaponsTimer=null;
+    const pts=(globe.pointsData()||[]).filter(function(p){return p._layer!=='weapons';});
+    globe.pointsData(pts);
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 6: Proxy Arc Network
+const PROXY_ARCS=[
+  {s:'RUS',c:'PRK',label:'RUS→DPRK: munitions/missiles patron',color:'rgba(239,68,68,0.7)'},
+  {s:'RUS',c:'BLR',label:'RUS→BLR: dependent client state',color:'rgba(239,68,68,0.6)'},
+  {s:'IRN',c:'LBN',label:'IRN→Hezbollah: missiles/training/funding',color:'rgba(249,115,22,0.7)'},
+  {s:'IRN',c:'YEM',label:'IRN→Houthis: Shahed/ASBM/training',color:'rgba(249,115,22,0.7)'},
+  {s:'IRN',c:'IRQ',label:'IRN→PMF: IRGC Quds commanded',color:'rgba(249,115,22,0.6)'},
+  {s:'IRN',c:'PSE',label:'IRN→Hamas: rockets/training',color:'rgba(249,115,22,0.6)'},
+  {s:'IRN',c:'SYR',label:'IRN→Syria: Quds remnant network',color:'rgba(249,115,22,0.5)'},
+  {s:'CHN',c:'PRK',label:'CHN→DPRK: patron/diplomatic cover',color:'rgba(251,191,36,0.6)'},
+  {s:'USA',c:'ISR',label:'USA→ISR: $3.8B FMF/yr + weapons',color:'rgba(0,217,126,0.6)'},
+  {s:'USA',c:'UKR',label:'USA→UKR: HIMARS/Abrams/ATACMS',color:'rgba(0,217,126,0.7)'},
+  {s:'USA',c:'KOR',label:'USA→KOR: mutual defense/28k troops',color:'rgba(0,217,126,0.5)'},
+  {s:'USA',c:'JPN',label:'USA→JPN: mutual defense/54k troops',color:'rgba(0,217,126,0.5)'},
+  {s:'TUR',c:'SYR',label:'TUR→HTS/TFSA: patronage N.Syria',color:'rgba(168,85,247,0.6)'},
+  {s:'QAT',c:'PSE',label:'QAT→Hamas: political/financial',color:'rgba(168,85,247,0.5)'},
+  {s:'SAU',c:'YEM',label:'SAU→ROYG: anti-Houthi coalition',color:'rgba(56,189,248,0.5)'},
+  {s:'RUS',c:'SYR',label:'RUS→Syria: Tartus/Khmeimim bases',color:'rgba(239,68,68,0.5)'},
+  {s:'GBR',c:'UKR',label:'GBR→UKR: Storm Shadow/military aid',color:'rgba(0,217,126,0.4)'},
+  {s:'PRK',c:'RUS',label:'DPRK→RUS: artillery/shells supply',color:'rgba(239,68,68,0.5)'},
+];
+
+// ISO -> lat/lng centroids for arc endpoints
+const _ISO_COORDS={
+  'USA':{lat:38.9,lng:-77.0},'RUS':{lat:55.8,lng:37.6},'CHN':{lat:39.9,lng:116.4},
+  'GBR':{lat:51.5,lng:-0.1},'FRA':{lat:48.9,lng:2.3},'DEU':{lat:52.5,lng:13.4},
+  'IRN':{lat:35.7,lng:51.4},'IRQ':{lat:33.3,lng:44.4},'SYR':{lat:33.5,lng:36.3},
+  'LBN':{lat:33.9,lng:35.5},'PSE':{lat:31.9,lng:35.2},'YEM':{lat:15.4,lng:44.2},
+  'SAU':{lat:24.7,lng:46.7},'ISR':{lat:31.8,lng:35.2},'PRK':{lat:39.0,lng:125.8},
+  'KOR':{lat:37.6,lng:127.0},'JPN':{lat:35.7,lng:139.7},'UKR':{lat:50.4,lng:30.5},
+  'TUR':{lat:39.9,lng:32.9},'BLR':{lat:53.9,lng:27.6},'QAT':{lat:25.3,lng:51.5},
+  'IND':{lat:28.6,lng:77.2},'PAK':{lat:33.7,lng:73.1},'EGY':{lat:30.1,lng:31.2},
+  'GRC':{lat:37.9,lng:23.7},'AUS':{lat:-35.3,lng:149.1},'CAN':{lat:45.4,lng:-75.7},
+};
+
+let _proxyNetActive=false;
+function toggleProxyNet(){
+  _proxyNetActive=!_proxyNetActive;
+  const btn=document.getElementById('proxy-btn');
+  if(!btn)return;
+  if(_proxyNetActive){
+    btn.classList.add('active');
+    btn.textContent='\u{1F578} PROXY NET ■';
+    _renderProxyArcs();
+    _pushAlert('PROXY NET: '+PROXY_ARCS.length+' documented proxy/patron relationships plotted on globe',false);
+  }else{
+    btn.classList.remove('active');
+    btn.textContent='\u{1F578} PROXY NET';
+    if(typeof globe!=='undefined')globe.arcsData([]);
+  }
+}
+function _renderProxyArcs(){
+  if(typeof globe==='undefined')return;
+  const arcs=PROXY_ARCS.filter(function(a){return _ISO_COORDS[a.s]&&_ISO_COORDS[a.c];}).map(function(a){
+    const src=_ISO_COORDS[a.s];const dst=_ISO_COORDS[a.c];
+    return{
+      startLat:src.lat,startLng:src.lng,
+      endLat:dst.lat,endLng:dst.lng,
+      color:a.color,
+      label:a.label
+    };
+  });
+  globe
+    .arcsData(arcs)
+    .arcColor('color')
+    .arcDashLength(0.4)
+    .arcDashGap(0.2)
+    .arcDashAnimateTime(2000)
+    .arcStroke(1.2)
+    .arcLabel('label');
 }
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
