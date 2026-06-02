@@ -1199,6 +1199,32 @@ button{border-radius:2px!important}
 .tc-bar-fill{height:100%;border-radius:1px;transition:width .6s ease;}
 .tc-pct{font-size:8px;min-width:28px;text-align:right;letter-spacing:.04em;}
 .tc-footer{padding:4px 10px;font-size:7px;color:var(--muted);border-top:1px solid var(--border);}
+#matrix-btn{position:fixed;top:215px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(52,211,153,.35);border-radius:2px;color:#34d399;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#matrix-btn:hover{background:rgba(52,211,153,.1);border-color:#10b981;}
+#matrix-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow:hidden;font-family:var(--mono);}
+#matrix-overlay.open{display:flex;flex-direction:column;}
+.mx-hdr{background:var(--panel);border-bottom:2px solid rgba(52,211,153,.5);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.mx-hdr h2{color:#34d399;font-size:12px;letter-spacing:.25em;margin:0;}
+.mx-close{background:none;border:1px solid var(--border-hi);color:var(--dim);padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;}
+.mx-close:hover{border-color:#34d399;color:#34d399;}
+.mx-meta{padding:5px 20px;font-size:8px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;gap:20px;flex-shrink:0;flex-wrap:wrap;}
+.mx-legend{display:flex;gap:10px;align-items:center;font-size:8px;}
+.mx-legend-item{display:flex;align-items:center;gap:4px;}
+.mx-leg-dot{width:8px;height:8px;border-radius:1px;}
+#matrix-body{overflow-y:auto;flex:1;}
+.mx-table{width:100%;border-collapse:collapse;}
+.mx-table thead tr{background:rgba(13,18,32,1);position:sticky;top:0;z-index:5;}
+.mx-th{padding:6px 8px;font-size:8px;letter-spacing:.15em;color:var(--muted);text-align:center;border-bottom:2px solid var(--border-hi);white-space:nowrap;}
+.mx-th:first-child{text-align:left;min-width:120px;}
+.mx-tr{border-bottom:1px solid var(--border2);cursor:pointer;transition:background .15s;}
+.mx-tr:hover{background:rgba(52,211,153,.04);}
+.mx-td{padding:5px 8px;text-align:center;font-size:9px;}
+.mx-td:first-child{text-align:left;color:var(--text);font-size:9px;letter-spacing:.06em;white-space:nowrap;padding-left:14px;}
+.mx-cell{display:inline-flex;align-items:center;justify-content:center;width:36px;height:18px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:.04em;}
+.mx-tier{display:inline-block;font-size:7px;letter-spacing:.1em;padding:1px 4px;border:1px solid currentColor;margin-right:6px;vertical-align:middle;}
+.mx-tier.t1{color:var(--danger);}
+.mx-tier.t2{color:var(--warn);}
+.mx-tier.t3{color:var(--dim);}
 </style>
 </head>
 <body>
@@ -1226,7 +1252,7 @@ button{border-radius:2px!important}
 </div>
 
 <div id="globe-wrap"><canvas id="globe"></canvas></div>
-<div id="zoom-hint">Scroll to zoom · Drag to pan · ESC = close panels · / = search · R = rankings</div>
+<div id="zoom-hint">Scroll to zoom · Drag to pan · ESC = close panels · / = search · R = rankings · M = matrix</div>
 <div id="hud-corners"></div>
 
 <!-- Data layer controls -->
@@ -1373,6 +1399,45 @@ button{border-radius:2px!important}
 
 <button id="icbrief-btn" onclick="openICBrief()">&#x1F4CB; IC BRIEF</button>
 <button id="threatcast-btn" onclick="toggleThreatcast()">&#x26A1; THREATCAST</button>
+<button id="matrix-btn" onclick="openIntelMatrix()">&#x25A6; INTEL MATRIX</button>
+
+<div id="matrix-overlay">
+  <div class="mx-hdr">
+    <h2>&#x25A6; GLOBAL INTELLIGENCE ASSESSMENT MATRIX</h2>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:.1em;" id="matrix-timestamp">—</span>
+      <button class="mx-close" onclick="closeIntelMatrix()">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="mx-meta">
+    <div class="mx-legend">
+      <div class="mx-legend-item"><div class="mx-leg-dot" style="background:#ef4444"></div>CRITICAL (80-100)</div>
+      <div class="mx-legend-item"><div class="mx-leg-dot" style="background:#f97316"></div>HIGH (60-79)</div>
+      <div class="mx-legend-item"><div class="mx-leg-dot" style="background:#fbbf24"></div>ELEVATED (40-59)</div>
+      <div class="mx-legend-item"><div class="mx-leg-dot" style="background:#22c55e"></div>LOW (0-39)</div>
+    </div>
+    <span style="color:var(--muted)">DIMENSIONS: THREAT · MILITARY · NUCLEAR · CYBER · ECONOMIC · POLITICAL · LIVE SIGNALS</span>
+    <span style="color:var(--muted)">CLICK ROW → COUNTRY INTEL FILE</span>
+  </div>
+  <div id="matrix-body">
+    <table class="mx-table">
+      <thead>
+        <tr>
+          <th class="mx-th" style="text-align:left">COUNTRY</th>
+          <th class="mx-th">THREAT</th>
+          <th class="mx-th">MILITARY</th>
+          <th class="mx-th">NUCLEAR</th>
+          <th class="mx-th">CYBER</th>
+          <th class="mx-th">ECONOMIC</th>
+          <th class="mx-th">POLITICAL</th>
+          <th class="mx-th">LIVE SIG</th>
+          <th class="mx-th">COMPOSITE</th>
+        </tr>
+      </thead>
+      <tbody id="matrix-tbody"></tbody>
+    </table>
+  </div>
+</div>
 <div id="threatcast-panel">
   <div class="tc-hdr"><span>48H ESCALATION FORECAST</span><button onclick="toggleThreatcast()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px">&#x2715;</button></div>
   <div class="tc-sub">COMPOSITE: ALERT LEVEL · MILITARY · VULNERABILITIES · LIVE SIGNALS · GDP TREND</div>
@@ -14911,8 +14976,125 @@ document.addEventListener('keydown',function(e){
     if(typeof openIntelSearch==='function')openIntelSearch();
   }else if(e.key==='r'&&!e.ctrlKey&&!e.metaKey&&document.activeElement.tagName!=='INPUT'){
     if(typeof toggleRankings==='function')toggleRankings();
+  }else if(e.key==='m'&&!e.ctrlKey&&!e.metaKey&&document.activeElement.tagName!=='INPUT'){
+    if(typeof openIntelMatrix==='function'){
+      var ov=document.getElementById('matrix-overlay');
+      if(ov&&ov.classList.contains('open'))closeIntelMatrix();else openIntelMatrix();
+    }
   }
 });
+
+// PHASE 10: Intelligence Assessment Matrix
+function openIntelMatrix(){
+  document.getElementById('matrix-overlay').classList.add('open');
+  _renderIntelMatrix();
+}
+function closeIntelMatrix(){
+  document.getElementById('matrix-overlay').classList.remove('open');
+}
+
+function _mxThreatScore(c){
+  var m={'CRITICAL':95,'HIGH':75,'ELEVATED':55,'MEDIUM':38,'GUARDED':22,'LOW':12,'MINIMAL':5};
+  return m[c.alertLevel]||12;
+}
+function _mxMilScore(c){
+  return Math.min((c.mil_rating||0)*10,100);
+}
+function _mxNukeScore(c){
+  var n=(c.nuke||'').toLowerCase();
+  if(!n||n.indexOf('none')>-1)return 0;
+  if(/enrichment|breakout|enrich/i.test(n))return 45;
+  var m=n.match(/(\d[\d,]+)\s*warhead/i);
+  if(m){var w=parseInt(m[1].replace(/,/g,''),10);if(w>1000)return 100;if(w>200)return 90;if(w>50)return 80;if(w>10)return 70;return 60;}
+  if(/undeclared/i.test(n))return 55;
+  return 30;
+}
+function _mxCyberScore(c){
+  var d=(c.mil_detail||'')+(c.cia_note||'');
+  var s=0;
+  if(/unit 8200|nsa|gchq|cyber command|apt|lazarus|volt typhoon|sandworm|fancy bear/i.test(d))s+=40;
+  if(/cyber|electronic warfare|ew |sigint|hacking|malware/i.test(d))s+=20;
+  if(/advanced persistent/i.test(d))s+=20;
+  if(c.mil_rating&&c.mil_rating>=7)s+=15;
+  return Math.min(s,100);
+}
+function _mxEconScore(c){
+  var s=0;
+  if(c.gdp_trend==='DOWN')s+=40;
+  else if(c.gdp_trend==='STABLE')s+=15;
+  var v=(c.vulnerabilities||[]);
+  var econV=v.filter(function(x){return/currency|debt|bankrupt|default|inflation|recession|sanction|poverty/i.test(x);});
+  s+=econV.length*15;
+  var econ=(c.econ||'');
+  if(/%\s*inflation|hyperinfla/i.test(econ))s+=20;
+  if(/war|collapsed|crisis/i.test(econ))s+=15;
+  return Math.min(s,100);
+}
+function _mxPolitScore(c){
+  var s=0;
+  var v=(c.vulnerabilities||[]);
+  var g=(c.intel_gaps||[]);
+  var gov=(c.gov||'').toLowerCase();
+  if(/succession|health|died|aging/i.test(gov+v.join(' ')+g.join(' ')))s+=25;
+  if(/coup|junta|military rule/i.test(gov))s+=30;
+  if(/civil war|secession|separatist/i.test(v.join(' ')))s+=20;
+  if(/authoritar|autocrac|totalitar/i.test(gov))s+=15;
+  if(c.alertLevel==='CRITICAL')s+=20;
+  else if(c.alertLevel==='HIGH')s+=10;
+  return Math.min(s,100);
+}
+function _mxLiveSigScore(c){
+  if(typeof liveHotspots==='undefined')return 0;
+  var hs=liveHotspots.filter(function(h){return h.country===c.iso;});
+  var s=0;
+  hs.forEach(function(h){s+=h.severity==='critical'?25:h.severity==='high'?12:h.severity==='medium'?5:2;});
+  return Math.min(s,100);
+}
+function _mxCell(score){
+  var col=score>=80?'rgba(239,68,68,.8)':score>=60?'rgba(249,115,22,.8)':score>=40?'rgba(251,191,36,.7)':score>=20?'rgba(34,197,94,.6)':'rgba(71,85,105,.5)';
+  var txt=score>=80?'#fff':score>=60?'#fff':score>=40?'#1a1a1a':'#fff';
+  return'<span class="mx-cell" style="background:'+col+';color:'+txt+'">'+score+'</span>';
+}
+
+function _renderIntelMatrix(){
+  var tbody=document.getElementById('matrix-tbody');
+  var ts=document.getElementById('matrix-timestamp');
+  if(!tbody)return;
+  var countries=Object.values(typeof COUNTRIES!=='undefined'?COUNTRIES:{}).filter(function(c){
+    return c.iso&&(c.intel_priority==='TIER 1'||c.intel_priority==='TIER 2'||c.mil_rating>=5||(c.alertLevel==='CRITICAL'||c.alertLevel==='HIGH'));
+  });
+  var rows=countries.map(function(c){
+    var th=_mxThreatScore(c);
+    var mi=_mxMilScore(c);
+    var nu=_mxNukeScore(c);
+    var cy=_mxCyberScore(c);
+    var ec=_mxEconScore(c);
+    var po=_mxPolitScore(c);
+    var li=_mxLiveSigScore(c);
+    var composite=Math.round((th*2+mi+nu+cy+ec+po+li*1.5)/8.5);
+    return{c:c,th:th,mi:mi,nu:nu,cy:cy,ec:ec,po:po,li:li,composite:composite};
+  }).sort(function(a,b){return b.composite-a.composite;});
+  var tierClass=function(c){return c.intel_priority==='TIER 1'?'t1':c.intel_priority==='TIER 2'?'t2':'t3';};
+  var tierLabel=function(c){return c.intel_priority||'TIER 3';};
+  tbody.innerHTML=rows.map(function(r){
+    var compBg=r.composite>=80?'rgba(239,68,68,.9)':r.composite>=60?'rgba(249,115,22,.9)':r.composite>=40?'rgba(251,191,36,.85)':'rgba(34,197,94,.7)';
+    var compTxt=r.composite>=40?'#fff':'#0a0f1a';
+    var nameStr=(r.c.name||r.c.iso).toUpperCase().slice(0,16);
+    var tierStr=tierLabel(r.c).replace('TIER ','T');
+    return'<tr class="mx-tr" onclick="if(typeof closeIntelMatrix===\'function\')closeIntelMatrix();if(typeof openCountry===\'function\')openCountry(\''+r.c.iso+'\')">'
+      +'<td class="mx-td"><span class="mx-tier '+tierClass(r.c)+'">'+tierStr+'</span>'+nameStr+'</td>'
+      +'<td class="mx-td">'+_mxCell(r.th)+'</td>'
+      +'<td class="mx-td">'+_mxCell(r.mi)+'</td>'
+      +'<td class="mx-td">'+_mxCell(r.nu)+'</td>'
+      +'<td class="mx-td">'+_mxCell(r.cy)+'</td>'
+      +'<td class="mx-td">'+_mxCell(r.ec)+'</td>'
+      +'<td class="mx-td">'+_mxCell(r.po)+'</td>'
+      +'<td class="mx-td">'+_mxCell(r.li)+'</td>'
+      +'<td class="mx-td"><span class="mx-cell" style="background:'+compBg+';color:'+compTxt+';font-size:10px;width:40px;height:20px;font-weight:900">'+r.composite+'</span></td>'
+      +'</tr>';
+  }).join('');
+  if(ts)ts.textContent='GENERATED '+new Date().toISOString().slice(0,19).replace('T',' ')+' UTC · '+rows.length+' COUNTRIES ASSESSED';
+}
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
 // Initialize watchlist system if items exist
