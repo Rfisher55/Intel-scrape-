@@ -1305,6 +1305,53 @@ button{border-radius:2px!important}
 #ticker-inner{display:inline-flex;align-items:center;height:100%;white-space:nowrap;}
 .tki{color:var(--text);font-size:9px;font-family:var(--mono);padding:0 50px 0 0;}
 .tki-src{color:#0a6ef5;font-size:8px;margin-right:8px;font-weight:700;}
+#alliance-btn{position:fixed;top:455px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(34,211,238,.35);border-radius:2px;color:#22d3ee;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#alliance-btn:hover{background:rgba(34,211,238,.1);border-color:#06b6d4;}
+#sanctions-btn{position:fixed;top:495px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(245,158,11,.35);border-radius:2px;color:#f59e0b;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#sanctions-btn:hover{background:rgba(245,158,11,.1);border-color:#d97706;}
+#sanctions-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#sanctions-overlay.open{display:block;}
+.sanc-hdr{background:var(--panel);border-bottom:2px solid rgba(245,158,11,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.sanc-hdr h2{color:#f59e0b;font-size:12px;letter-spacing:.2em;margin:0;}
+.sanc-body{padding:16px 24px;max-width:1100px;}
+.sanc-filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.sanc-filter{background:var(--panel2);border:1px solid var(--border);color:var(--dim);padding:4px 10px;font-size:9px;letter-spacing:.08em;cursor:pointer;font-family:var(--mono);}
+.sanc-filter.active{background:rgba(245,158,11,.15);border-color:#f59e0b;color:#f59e0b;}
+.sanc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.sanc-col{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.sanc-col-hdr{font-size:8px;letter-spacing:.18em;color:var(--dim);margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.sanc-item{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.sanc-item-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:2px;}
+.sanc-item-meta{color:var(--dim);font-size:8px;}
+#weather-btn{position:fixed;top:535px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(56,189,248,.35);border-radius:2px;color:#38bdf8;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#weather-btn:hover{background:rgba(56,189,248,.1);border-color:#0ea5e9;}
+#weather-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#weather-overlay.open{display:block;}
+.wx-hdr{background:var(--panel);border-bottom:2px solid rgba(56,189,248,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.wx-hdr h2{color:#38bdf8;font-size:12px;letter-spacing:.2em;margin:0;}
+.wx-body{padding:16px 24px;}
+.wx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.wx-card{background:var(--panel2);border:1px solid var(--border);padding:12px;position:relative;}
+.wx-card-loc{font-size:8px;letter-spacing:.12em;color:var(--dim);margin-bottom:6px;}
+.wx-card-label{font-size:10px;color:var(--text);margin-bottom:8px;font-weight:700;}
+.wx-stat{display:flex;justify-content:space-between;font-size:9px;margin-bottom:3px;}
+.wx-stat-label{color:var(--dim);}
+.wx-stat-value{color:var(--text);}
+.wx-threat{position:absolute;top:8px;right:8px;font-size:7px;padding:2px 5px;border-radius:1px;}
+#defcon-display{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(4,8,15,.95);border:1px solid var(--border-hi);border-radius:2px;padding:4px 16px;display:flex;align-items:center;gap:10px;font-family:var(--mono);backdrop-filter:blur(10px);cursor:default;}
+#defcon-label-text{font-size:7px;letter-spacing:.22em;color:var(--dim);}
+#defcon-level-num{font-size:20px;font-weight:900;transition:color .5s;}
+#defcon-desc-text{font-size:7px;letter-spacing:.1em;color:var(--dim);}
+.defcon-5{color:#22d3ee;}
+.defcon-4{color:#00d97e;}
+.defcon-3{color:#f59e0b;}
+.defcon-2{color:#f97316;}
+.defcon-1{color:#ef4444;animation:defcon1pulse 0.8s infinite;}
+@keyframes defcon1pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.alliance-legend{position:fixed;top:455px;right:345px;z-index:200;background:rgba(4,8,15,.92);border:1px solid var(--border);padding:8px 10px;font-family:var(--mono);display:none;}
+.alliance-legend.open{display:block;}
+.al-row{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:8px;color:var(--dim);}
+.al-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -7606,6 +7653,7 @@ function draw(){
   if(activeLayers.netdisrupt)  drawNetDisruptLayer();
   if(_proxyNetActive)drawProxyArcs();
   if(_agencyActive)drawAgencyArcs();
+  if(_allianceActive)drawAllianceLayer();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -15398,7 +15446,188 @@ async function initNewsTicker(){
   if(!_tickerRAF)_tickerRAF=requestAnimationFrame(_animTicker);
   setTimeout(initNewsTicker,300000);
 }
-resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();
+const ALLIANCE_BLOCS=[
+  {name:'NATO',color:'rgba(59,130,246,0.85)',iso:['US','CA','GB','FR','DE','IT','ES','PL','TR','NL','BE','NO','DK','PT','GR','CZ','HU','RO','BG','HR','SK','SI','AL','ME','MK','LT','LV','EE','FI','SE']},
+  {name:'SCO',color:'rgba(239,68,68,0.85)',iso:['CN','RU','IN','PK','KZ','KG','TJ','UZ','IR','BY']},
+  {name:'BRICS+',color:'rgba(245,158,11,0.85)',iso:['BR','RU','IN','CN','ZA','EG','ET','IR','AE','SA','AR']},
+  {name:'CSTO',color:'rgba(190,18,60,0.85)',iso:['RU','BY','KZ','KG','TJ','AM']},
+  {name:'QUAD',color:'rgba(34,211,238,0.85)',iso:['US','IN','AU','JP']},
+  {name:'AUKUS',color:'rgba(129,140,248,0.85)',iso:['AU','GB','US']}
+];
+let _allianceActive=false;
+function toggleAllianceLayer(){
+  _allianceActive=!_allianceActive;
+  const btn=document.getElementById('alliance-btn');
+  const leg=document.getElementById('alliance-legend');
+  if(btn){
+    btn.style.borderColor=_allianceActive?'rgba(34,211,238,.9)':'rgba(34,211,238,.35)';
+    btn.style.background=_allianceActive?'rgba(34,211,238,.18)':'rgba(4,8,18,.95)';
+    btn.style.color=_allianceActive?'#67e8f9':'#22d3ee';
+  }
+  if(leg){
+    if(_allianceActive)leg.classList.add('open');
+    else leg.classList.remove('open');
+  }
+}
+function drawAllianceLayer(){
+  const t=(Date.now()%2000)/2000;
+  for(const bloc of ALLIANCE_BLOCS){
+    for(const iso of bloc.iso){
+      const coord=_ISO_COORDS[iso];
+      if(!coord)continue;
+      const p=project(coord.lat,coord.lng);
+      if(!p||!p.visible)continue;
+      const pulse=Math.sin(t*Math.PI*2+bloc.iso.indexOf(iso))*0.3+0.7;
+      ctx.save();
+      ctx.globalAlpha=pulse*0.7;
+      ctx.beginPath();
+      ctx.arc(p.px,p.py,5,0,Math.PI*2);
+      ctx.fillStyle=bloc.color;
+      ctx.fill();
+      ctx.globalAlpha=pulse*0.25;
+      ctx.beginPath();
+      ctx.arc(p.px,p.py,9,0,Math.PI*2);
+      ctx.fillStyle=bloc.color;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+}
+function openSanctions(){
+  document.getElementById('sanctions-overlay').classList.add('open');
+  loadSanctions('sanctions OR sanctioned OR OFAC OR blacklist');
+}
+function closeSanctions(){
+  document.getElementById('sanctions-overlay').classList.remove('open');
+}
+async function loadSanctions(query){
+  document.querySelectorAll('.sanc-filter').forEach(function(f){f.classList.remove('active');});
+  const el=document.getElementById('sanctions-content');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;padding:12px 0;">Querying sanctions intelligence...</div>';
+  const queries=[
+    {label:'CURRENT SANCTIONS ACTIONS',q:query+' new imposed'},
+    {label:'ENFORCEMENT & EVASION',q:query+' enforcement evasion violation penalty'},
+    {label:'SECONDARY IMPACTS',q:query+' impact economy trade export'}
+  ];
+  let html='<div class="sanc-grid">';
+  for(const qc of queries){
+    html+='<div class="sanc-col"><div class="sanc-col-hdr" style="color:#f59e0b;">'+qc.label+'</div>';
+    try{
+      const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(qc.q)+'&mode=artlist&maxrecords=10&format=json';
+      const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+      const d=await r.json();
+      const arts=(d.articles||[]).slice(0,8);
+      if(!arts.length){html+='<div style="color:var(--dim);font-size:9px;">No current activity.</div>';html+='</div>';continue;}
+      arts.forEach(function(a){
+        const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,120);
+        const src=(a.domain||'').substring(0,30);
+        const seendate=a.seendate||'';
+        const ts=seendate?seendate.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+        html+='<div class="sanc-item"><div class="sanc-item-title">'+title+'</div><div class="sanc-item-meta">'+src+' &middot; '+ts+'</div></div>';
+      });
+    }catch(e){
+      html+='<div style="color:var(--danger);font-size:9px;">Collection error: '+e.message+'</div>';
+    }
+    html+='</div>';
+  }
+  html+='</div>';
+  el.innerHTML=html;
+}
+const WX_CODES={0:'Clear',1:'Mostly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Icing fog',51:'Light drizzle',61:'Light rain',63:'Moderate rain',65:'Heavy rain',71:'Light snow',73:'Moderate snow',75:'Heavy snow',80:'Rain showers',95:'Thunderstorm',96:'Thunderstorm+hail',99:'Severe thunderstorm'};
+function openWeatherIntel(){
+  document.getElementById('weather-overlay').classList.add('open');
+  _refreshWeatherIntel();
+}
+function closeWeatherIntel(){
+  document.getElementById('weather-overlay').classList.remove('open');
+}
+async function _refreshWeatherIntel(){
+  const el=document.getElementById('weather-content');
+  if(!el)return;
+  const hotZones=liveHotspots.filter(function(h){return!h.iss;}).slice(0,8);
+  const staticZones=[
+    {lat:33.3,lng:44.4,label:'Baghdad, Iraq'},
+    {lat:50.4,lng:30.5,label:'Kyiv, Ukraine'},
+    {lat:35.7,lng:51.4,label:'Tehran, Iran'},
+    {lat:34.5,lng:69.2,label:'Kabul, Afghanistan'},
+    {lat:15.5,lng:32.6,label:'Khartoum, Sudan'},
+    {lat:13.5,lng:2.1,label:'Niamey, Niger'},
+    {lat:33.5,lng:36.3,label:'Damascus, Syria'},
+    {lat:31.5,lng:34.5,label:'Gaza Strip'}
+  ];
+  const zones=hotZones.length>=4?hotZones.map(function(h){return{lat:h.lat,lng:h.lng,label:h.label||'Active Hotspot'};}).concat(staticZones).slice(0,8):staticZones;
+  el.innerHTML='<div class="wx-grid" id="wx-grid-inner"></div>';
+  const grid=document.getElementById('wx-grid-inner');
+  if(!grid)return;
+  const ops=zones.map(function(z){
+    return fetch('https://api.open-meteo.com/v1/forecast?latitude='+z.lat+'&longitude='+z.lng+'&current=temperature_2m,wind_speed_10m,wind_direction_10m,precipitation,weather_code&wind_speed_unit=mph&temperature_unit=fahrenheit',{signal:AbortSignal.timeout(8000)})
+      .then(function(r){return r.json();})
+      .then(function(d){return{zone:z,data:d};})
+      .catch(function(){return{zone:z,data:null};});
+  });
+  const results=await Promise.allSettled(ops);
+  grid.innerHTML='';
+  results.forEach(function(res){
+    if(res.status!=='fulfilled'){return;}
+    const {zone,data}=res.value;
+    if(!data||!data.current){
+      grid.innerHTML+='<div class="wx-card"><div class="wx-card-label">'+zone.label.replace(/</g,'&lt;')+'</div><div style="color:var(--dim);font-size:9px;">No data</div></div>';
+      return;
+    }
+    const c=data.current;
+    const temp=c.temperature_2m!==undefined?Math.round(c.temperature_2m)+'°F':'N/A';
+    const wind=c.wind_speed_10m!==undefined?Math.round(c.wind_speed_10m)+' mph':'N/A';
+    const wdir=c.wind_direction_10m!==undefined?c.wind_direction_10m+'°':'N/A';
+    const precip=c.precipitation!==undefined?c.precipitation+' mm':'N/A';
+    const wcode=c.weather_code||0;
+    const wxdesc=WX_CODES[wcode]||('Code '+wcode);
+    const isSevere=wcode>=80||precip!=='0 mm';
+    const threatColor=isSevere?'var(--warn)':'var(--live)';
+    const threatLabel=isSevere?'ADVERSE':'CLEAR';
+    grid.innerHTML+='<div class="wx-card"><div class="wx-threat" style="background:'+threatColor+';color:#000;">'+threatLabel+'</div><div class="wx-card-loc">'+z.lat.toFixed(1)+'N / '+z.lng.toFixed(1)+'E</div><div class="wx-card-label">'+zone.label.replace(/</g,'&lt;')+'</div><div class="wx-stat"><span class="wx-stat-label">CONDITION</span><span class="wx-stat-value">'+wxdesc+'</span></div><div class="wx-stat"><span class="wx-stat-label">TEMPERATURE</span><span class="wx-stat-value">'+temp+'</span></div><div class="wx-stat"><span class="wx-stat-label">WIND</span><span class="wx-stat-value">'+wind+' @ '+wdir+'</span></div><div class="wx-stat"><span class="wx-stat-label">PRECIPITATION</span><span class="wx-stat-value">'+precip+'</span></div></div>';
+  });
+}
+const DEFCON_LEVELS=[
+  {level:1,label:'COCKED PISTOL',color:'defcon-1',desc:'NUCLEAR WAR IMMINENT'},
+  {level:2,label:'FAST PACE',color:'defcon-2',desc:'ARMED FORCES READY'},
+  {level:3,label:'ROUND HOUSE',color:'defcon-3',desc:'ELEVATED READINESS'},
+  {level:4,label:'DOUBLE TAKE',color:'defcon-4',desc:'INCREASED MONITORING'},
+  {level:5,label:'FADE OUT',color:'defcon-5',desc:'LOWEST READINESS'}
+];
+function _calcDEFCON(){
+  let score=0;
+  const critHot=liveHotspots.filter(function(h){return h.severity==='critical';}).length;
+  const highHot=liveHotspots.filter(function(h){return h.severity==='high';}).length;
+  const nukeHot=liveHotspots.filter(function(h){return h.type==='nuclear'||h.type==='wmd'||h.type==='cbrn';}).length;
+  score+=critHot*3+highHot*1.5+nukeHot*5;
+  if(typeof COUNTRIES!=='undefined'){
+    Object.values(COUNTRIES).forEach(function(c){
+      if(c.intel_priority==='critical'){
+        if(c.alertLevel==='CRITICAL')score+=4;
+        else if(c.alertLevel==='HIGH')score+=2;
+        else if(c.alertLevel==='ELEVATED')score+=1;
+      }
+    });
+  }
+  if(score>=50)return 1;
+  if(score>=30)return 2;
+  if(score>=12)return 3;
+  if(score>=4)return 4;
+  return 5;
+}
+function _updateDEFCON(){
+  const level=_calcDEFCON();
+  const d=DEFCON_LEVELS.find(function(x){return x.level===level;})||DEFCON_LEVELS[2];
+  const num=document.getElementById('defcon-level-num');
+  const desc=document.getElementById('defcon-desc-text');
+  if(num){
+    num.className=d.color;
+    num.textContent=String(level);
+  }
+  if(desc)desc.textContent=d.desc;
+}
+resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
 // Show alert bell if header has h-right div (it does)
@@ -15994,6 +16223,57 @@ function filterSIGINT(query){
 <div id="newsticker">
   <div id="ticker-label">&#x25BA; LIVE INTEL</div>
   <div id="ticker-track"><div id="ticker-inner"><div class="tki"><span class="tki-src">SYSTEM</span>Initializing live intelligence feed collection...</div></div></div>
+</div>
+<button id="alliance-btn" onclick="toggleAllianceLayer()">&#x1F5FA; ALLIANCES</button>
+<div class="alliance-legend" id="alliance-legend">
+  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:6px;">ALLIANCE BLOCS</div>
+  <div class="al-row"><div class="al-dot" style="background:#3b82f6;"></div>NATO (32)</div>
+  <div class="al-row"><div class="al-dot" style="background:#ef4444;"></div>SCO (10)</div>
+  <div class="al-row"><div class="al-dot" style="background:#f59e0b;"></div>BRICS+ (11)</div>
+  <div class="al-row"><div class="al-dot" style="background:#be123c;"></div>CSTO (6)</div>
+  <div class="al-row"><div class="al-dot" style="background:#22d3ee;"></div>QUAD (4)</div>
+  <div class="al-row"><div class="al-dot" style="background:#818cf8;"></div>AUKUS (3)</div>
+</div>
+<button id="sanctions-btn" onclick="openSanctions()">&#x1F6AB; SANCTIONS</button>
+<div id="sanctions-overlay">
+  <div class="sanc-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ECONOMIC COERCION INTELLIGENCE // LIVE GDELT COLLECTION</div>
+      <h2>&#x1F6AB; GLOBAL ECONOMIC SANCTIONS TRACKER</h2>
+    </div>
+    <button onclick="closeSanctions()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="sanc-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:10px;letter-spacing:.08em;">REAL-TIME SANCTIONS MONITORING &middot; GDELT OPEN-SOURCE COLLECTION &middot; OFAC / EU / UN / UK SECONDARY SANCTIONS</div>
+    <div class="sanc-filters">
+      <div class="sanc-filter active" onclick="loadSanctions('sanctions OR sanctioned OR OFAC OR blacklist')">ALL SANCTIONS</div>
+      <div class="sanc-filter" onclick="loadSanctions('Russia sanctions OR Russian sanctions SWIFT')">RUSSIA</div>
+      <div class="sanc-filter" onclick="loadSanctions('China sanctions OR Chinese sanctions technology')">CHINA</div>
+      <div class="sanc-filter" onclick="loadSanctions('Iran sanctions nuclear JCPOA')">IRAN</div>
+      <div class="sanc-filter" onclick="loadSanctions('North Korea sanctions DPRK nuclear')">DPRK</div>
+      <div class="sanc-filter" onclick="loadSanctions('secondary sanctions evasion enforcement')">EVASION</div>
+    </div>
+    <div id="sanctions-content"><div style="color:var(--dim);font-size:9px;padding:20px 0;">Loading sanctions intelligence...</div></div>
+  </div>
+</div>
+<button id="weather-btn" onclick="openWeatherIntel()">&#x26C8; WEATHER INTEL</button>
+<div id="weather-overlay">
+  <div class="wx-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">METEOROLOGICAL INTELLIGENCE // THEATER WEATHER ASSESSMENT</div>
+      <h2>&#x26C8; WEATHER INTELLIGENCE AT CONFLICT ZONES</h2>
+    </div>
+    <button onclick="closeWeatherIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="wx-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">LIVE METAR / OpenMeteo COLLECTION &middot; CONDITIONS AT ACTIVE HOTSPOT LOCATIONS &middot; TACTICAL WEATHER ASSESSMENT</div>
+    <div id="weather-content"><div style="color:var(--dim);font-size:9px;">Acquiring meteorological data from active hotspot locations...</div></div>
+  </div>
+</div>
+<div id="defcon-display">
+  <div id="defcon-label-text">DEFCON</div>
+  <div id="defcon-level-num" class="defcon-3">3</div>
+  <div id="defcon-desc-text">ELEVATED READINESS</div>
 </div>
 </body>
 </html>
