@@ -1352,6 +1352,29 @@ button{border-radius:2px!important}
 .alliance-legend.open{display:block;}
 .al-row{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:8px;color:var(--dim);}
 .al-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+#kleader-btn{position:fixed;top:55px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(251,191,36,.35);border-radius:2px;color:#fbbf24;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#kleader-btn:hover{background:rgba(251,191,36,.1);border-color:#d97706;}
+#kleader-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#kleader-overlay.open{display:block;}
+.kl-hdr{background:var(--panel);border-bottom:2px solid rgba(251,191,36,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.kl-hdr h2{color:#fbbf24;font-size:12px;letter-spacing:.2em;margin:0;}
+.kl-body{padding:16px 24px;}
+.kl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.kl-card{background:var(--panel2);border:1px solid var(--border);padding:10px;position:relative;}
+.kl-card:hover{border-color:var(--border-hi);}
+.kl-threat{font-size:7px;padding:2px 5px;margin-bottom:8px;display:inline-block;letter-spacing:.12em;}
+.kl-name{font-size:11px;color:var(--text);font-weight:700;margin-bottom:2px;}
+.kl-role{font-size:8px;color:var(--dim);margin-bottom:6px;letter-spacing:.06em;}
+.kl-country{font-size:9px;color:#60a5fa;margin-bottom:8px;}
+.kl-stat{display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;}
+.kl-stat-label{color:var(--dim);}
+.kl-stat-value{color:var(--text);}
+.kl-bar{height:4px;background:var(--panel);margin-top:6px;border-radius:1px;overflow:hidden;}
+.kl-bar-fill{height:100%;border-radius:1px;transition:width .5s;}
+#infra-btn{position:fixed;top:95px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(249,115,22,.35);border-radius:2px;color:#f97316;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#infra-btn:hover{background:rgba(249,115,22,.1);border-color:#ea580c;}
+#threadvec-btn{position:fixed;top:135px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.35);border-radius:2px;color:#f87171;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#threadvec-btn:hover{background:rgba(239,68,68,.1);border-color:#dc2626;}
 </style>
 </head>
 <body>
@@ -7654,6 +7677,8 @@ function draw(){
   if(_proxyNetActive)drawProxyArcs();
   if(_agencyActive)drawAgencyArcs();
   if(_allianceActive)drawAllianceLayer();
+  if(_infraSitesActive)drawInfraLayer();
+  if(_threatVecActive)drawThreatVectors();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -15627,6 +15652,170 @@ function _updateDEFCON(){
   }
   if(desc)desc.textContent=d.desc;
 }
+const KEY_LEADERS=[
+  {name:'Vladimir Putin',country:'Russia',role:'President / C-in-C',threat:'CRITICAL',iso:'RU',gdelt_q:'Putin'},
+  {name:'Xi Jinping',country:'China',role:'General Secretary / President',threat:'CRITICAL',iso:'CN',gdelt_q:'Xi Jinping'},
+  {name:'Kim Jong Un',country:'North Korea',role:'Supreme Leader / Marshal',threat:'CRITICAL',iso:'KP',gdelt_q:'"Kim Jong Un"'},
+  {name:'Ali Khamenei',country:'Iran',role:'Supreme Leader',threat:'HIGH',iso:'IR',gdelt_q:'Khamenei'},
+  {name:'Volodymyr Zelensky',country:'Ukraine',role:'President',threat:'HIGH',iso:'UA',gdelt_q:'Zelensky'},
+  {name:'Benjamin Netanyahu',country:'Israel',role:'Prime Minister',threat:'HIGH',iso:'IL',gdelt_q:'Netanyahu'},
+  {name:'Recep Tayyip Erdogan',country:'Turkey',role:'President',threat:'MEDIUM',iso:'TR',gdelt_q:'Erdogan'},
+  {name:'Narendra Modi',country:'India',role:'Prime Minister',threat:'MEDIUM',iso:'IN',gdelt_q:'Modi India'},
+  {name:'Nicolas Maduro',country:'Venezuela',role:'President',threat:'MEDIUM',iso:'VE',gdelt_q:'Maduro Venezuela'},
+  {name:'Alexander Lukashenko',country:'Belarus',role:'President',threat:'HIGH',iso:'BY',gdelt_q:'Lukashenko'}
+];
+const THREAT_COLORS={CRITICAL:'#ef4444',HIGH:'#f97316',MEDIUM:'#f59e0b',LOW:'#22d3ee',MINIMAL:'#22d3ee'};
+function openKLeader(){
+  document.getElementById('kleader-overlay').classList.add('open');
+  _loadKLeaderProfiles();
+}
+function closeKLeader(){
+  document.getElementById('kleader-overlay').classList.remove('open');
+}
+async function _loadKLeaderProfiles(){
+  const grid=document.getElementById('kleader-grid');
+  if(!grid)return;
+  grid.innerHTML='<div style="color:var(--dim);font-size:9px;grid-column:1/-1;">Fetching leadership intelligence...</div>';
+  const cards=await Promise.allSettled(KEY_LEADERS.map(async function(leader){
+    let mentionCount=0;
+    let tone=0;
+    try{
+      const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(leader.gdelt_q)+'&mode=artlist&maxrecords=10&format=json';
+      const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
+      const d=await r.json();
+      mentionCount=(d.articles||[]).length;
+      tone=mentionCount>5?-0.3:-0.1;
+    }catch(e){}
+    return {leader:leader,mentions:mentionCount,tone:tone};
+  }));
+  const threatOrder={CRITICAL:0,HIGH:1,MEDIUM:2,LOW:3,MINIMAL:4};
+  const sorted=cards.filter(function(c){return c.status==='fulfilled';}).map(function(c){return c.value;}).sort(function(a,b){return (threatOrder[a.leader.threat]||9)-(threatOrder[b.leader.threat]||9);});
+  grid.innerHTML=sorted.map(function(item){
+    const l=item.leader;
+    const tc=THREAT_COLORS[l.threat]||'#8896b3';
+    const activityPct=Math.min(100,item.mentions*10);
+    const coord=_ISO_COORDS[l.iso];
+    const hotInRegion=coord?liveHotspots.filter(function(h){return Math.abs(h.lat-coord.lat)<15&&Math.abs(h.lng-coord.lng)<20;}).length:0;
+    return '<div class="kl-card">'+
+      '<div class="kl-threat" style="background:'+tc+';color:#000;">'+l.threat+'</div>'+
+      '<div class="kl-name">'+l.name.replace(/</g,'&lt;')+'</div>'+
+      '<div class="kl-role">'+l.role.replace(/</g,'&lt;')+'</div>'+
+      '<div class="kl-country">'+l.country.replace(/</g,'&lt;')+'</div>'+
+      '<div class="kl-stat"><span class="kl-stat-label">MEDIA ACTIVITY</span><span class="kl-stat-value">'+item.mentions+'/10 articles</span></div>'+
+      '<div class="kl-stat"><span class="kl-stat-label">REGIONAL EVENTS</span><span class="kl-stat-value">'+hotInRegion+' hotspots</span></div>'+
+      '<div class="kl-bar"><div class="kl-bar-fill" style="width:'+activityPct+'%;background:'+tc+';"></div></div>'+
+      '</div>';
+  }).join('');
+}
+const CRITICAL_INFRA=[
+  {name:'Hormuz',type:'chokepoint',lat:26.5,lng:56.5,label:'Strait of Hormuz'},
+  {name:'Malacca',type:'chokepoint',lat:2.5,lng:101.5,label:'Strait of Malacca'},
+  {name:'Bosporus',type:'chokepoint',lat:41.0,lng:29.0,label:'Bosphorus Strait'},
+  {name:'Suez',type:'chokepoint',lat:30.5,lng:32.3,label:'Suez Canal'},
+  {name:'Panama',type:'chokepoint',lat:9.1,lng:-79.6,label:'Panama Canal'},
+  {name:'Gibraltar',type:'chokepoint',lat:36.0,lng:-5.4,label:'Strait of Gibraltar'},
+  {name:'Bab-el-Mandeb',type:'chokepoint',lat:12.5,lng:43.5,label:'Bab el-Mandeb Strait'},
+  {name:'ZPNPP',type:'nuclear_plant',lat:47.5,lng:34.6,label:'Zaporizhzhia NPP (conflict zone)'},
+  {name:'Khark',type:'oil',lat:29.2,lng:50.3,label:'Kharg Island Oil Terminal'},
+  {name:'Ras Tanura',type:'oil',lat:26.6,lng:50.1,label:'Ras Tanura Oil Terminal'},
+  {name:'BTC Pipeline',type:'pipeline',lat:41.0,lng:45.0,label:'Baku-Tbilisi-Ceyhan Pipeline'},
+  {name:'Trans-Saharan',type:'pipeline',lat:23.0,lng:8.0,label:'Trans-Saharan Gas Pipeline'},
+  {name:'Taiwan Strait',type:'chokepoint',lat:24.0,lng:119.5,label:'Taiwan Strait'},
+  {name:'GIUK Gap',type:'chokepoint',lat:62.0,lng:-15.0,label:'GIUK Gap (NATO choke)'},
+  {name:'Diego Garcia',type:'mil_base',lat:-7.3,lng:72.4,label:'Diego Garcia (US/UK Base)'},
+  {name:'Incirlik',type:'mil_base',lat:37.0,lng:35.4,label:'Incirlik Air Base (NATO)'},
+  {name:'Rammstein',type:'mil_base',lat:49.4,lng:7.6,label:'Ramstein AB (USAF)'},
+  {name:'Camp Lemonnier',type:'mil_base',lat:11.5,lng:43.1,label:'Camp Lemonnier (AFRICOM)'}
+];
+const INFRA_COLORS={chokepoint:'rgba(239,68,68,0.9)',nuclear_plant:'rgba(251,191,36,0.9)',oil:'rgba(249,115,22,0.9)',pipeline:'rgba(168,85,247,0.9)',mil_base:'rgba(59,130,246,0.9)'};
+const INFRA_SHAPES={chokepoint:'diamond',nuclear_plant:'triangle',oil:'square',pipeline:'circle',mil_base:'star'};
+let _infraSitesActive=false;
+function toggleInfraSites(){
+  _infraSitesActive=!_infraSitesActive;
+  const btn=document.getElementById('infra-btn');
+  if(btn){
+    btn.style.borderColor=_infraSitesActive?'rgba(249,115,22,.9)':'rgba(249,115,22,.35)';
+    btn.style.background=_infraSitesActive?'rgba(249,115,22,.18)':'rgba(4,8,18,.95)';
+    btn.style.color=_infraSitesActive?'#fed7aa':'#f97316';
+  }
+}
+function drawInfraLayer(){
+  const pulse=(Math.sin(Date.now()/600)*0.3+0.7);
+  for(const site of CRITICAL_INFRA){
+    const p=project(site.lat,site.lng);
+    if(!p||!p.visible)continue;
+    const color=INFRA_COLORS[site.type]||'rgba(255,255,255,0.8)';
+    ctx.save();
+    ctx.globalAlpha=pulse;
+    ctx.fillStyle=color;
+    ctx.strokeStyle=color;
+    ctx.lineWidth=1;
+    const s=5;
+    if(site.type==='chokepoint'){
+      ctx.beginPath();ctx.moveTo(p.px,p.py-s);ctx.lineTo(p.px+s,p.py);ctx.lineTo(p.px,p.py+s);ctx.lineTo(p.px-s,p.py);ctx.closePath();ctx.fill();
+    } else if(site.type==='nuclear_plant'){
+      ctx.beginPath();ctx.moveTo(p.px,p.py-s);ctx.lineTo(p.px+s,p.py+s);ctx.lineTo(p.px-s,p.py+s);ctx.closePath();ctx.fill();
+    } else if(site.type==='mil_base'){
+      ctx.beginPath();ctx.arc(p.px,p.py,s,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(p.px-s,p.py);ctx.lineTo(p.px+s,p.py);ctx.moveTo(p.px,p.py-s);ctx.lineTo(p.px,p.py+s);ctx.stroke();
+    } else {
+      ctx.beginPath();ctx.arc(p.px,p.py,s*0.8,0,Math.PI*2);ctx.fill();
+    }
+    ctx.globalAlpha=0.85;
+    ctx.fillStyle=color;
+    ctx.font='6px "IBM Plex Mono",monospace';
+    ctx.textAlign='left';
+    ctx.fillText(site.name,p.px+7,p.py+2);
+    ctx.restore();
+  }
+}
+let _threatVecActive=false;
+const _THREAT_PAIRS=[];
+(function _buildThreatPairs(){
+  if(typeof COUNTRIES==='undefined')return;
+  const seen=new Set();
+  Object.values(COUNTRIES).forEach(function(c){
+    if(!c.adversaries||!c.iso||!c.lat||!c.lng)return;
+    c.adversaries.forEach(function(adv){
+      const ac=Object.values(COUNTRIES).find(function(x){return x.iso===adv||x.name===adv;});
+      if(!ac||!ac.lat||!ac.lng)return;
+      const key=[c.iso,ac.iso||adv].sort().join('-');
+      if(seen.has(key))return;
+      seen.add(key);
+      _THREAT_PAIRS.push({a:{lat:c.lat,lng:c.lng,name:c.name},b:{lat:ac.lat,lng:ac.lng,name:ac.name||adv}});
+    });
+  });
+})();
+function toggleThreatVectors(){
+  _threatVecActive=!_threatVecActive;
+  const btn=document.getElementById('threadvec-btn');
+  if(btn){
+    btn.style.borderColor=_threatVecActive?'rgba(239,68,68,.9)':'rgba(239,68,68,.35)';
+    btn.style.background=_threatVecActive?'rgba(239,68,68,.14)':'rgba(4,8,18,.95)';
+    btn.style.color=_threatVecActive?'#fca5a5':'#f87171';
+  }
+}
+function drawThreatVectors(){
+  const t=(Date.now()%3500)/3500;
+  ctx.save();
+  ctx.strokeStyle='rgba(239,68,68,0.35)';
+  ctx.lineWidth=0.6;
+  ctx.setLineDash([3,8]);
+  ctx.lineDashOffset=-t*22;
+  for(const pair of _THREAT_PAIRS){
+    const pa=project(pair.a.lat,pair.a.lng);
+    const pb=project(pair.b.lat,pair.b.lng);
+    if(!pa||!pb)continue;
+    if(!pa.visible&&!pb.visible)continue;
+    const mx=(pa.px+pb.px)/2;
+    const my=(pa.py+pb.py)/2-40;
+    ctx.beginPath();
+    ctx.moveTo(pa.px,pa.py);
+    ctx.quadraticCurveTo(mx,my,pb.px,pb.py);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -16275,5 +16464,23 @@ function filterSIGINT(query){
   <div id="defcon-level-num" class="defcon-3">3</div>
   <div id="defcon-desc-text">ELEVATED READINESS</div>
 </div>
+<button id="kleader-btn" onclick="openKLeader()">&#x1F451; KEY LEADERS</button>
+<div id="kleader-overlay">
+  <div class="kl-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">LEADERSHIP INTELLIGENCE // KEY DECISION MAKER TRACKING // GDELT COLLECTION</div>
+      <h2>&#x1F451; KEY LEADER INTELLIGENCE PROFILES</h2>
+    </div>
+    <button onclick="closeKLeader()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="kl-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:14px;letter-spacing:.08em;">REAL-TIME GDELT MENTION TRACKING &middot; MEDIA ACTIVITY INDEX &middot; THREAT POSTURE ASSESSMENT &middot; UPDATED ON OPEN</div>
+    <div class="kl-grid" id="kleader-grid">
+      <div style="color:var(--dim);font-size:9px;grid-column:1/-1;">Loading leadership intelligence profiles...</div>
+    </div>
+  </div>
+</div>
+<button id="infra-btn" onclick="toggleInfraSites()">&#x26A1; CRITICAL INFRA</button>
+<button id="threadvec-btn" onclick="toggleThreatVectors()">&#x2194; THREAT VECTORS</button>
 </body>
 </html>
