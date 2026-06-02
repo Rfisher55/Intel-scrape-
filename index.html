@@ -1424,6 +1424,47 @@ button{border-radius:2px!important}
 .nb-bar-label{font-size:7px;color:var(--dim);margin-bottom:2px;}
 .nb-bar{height:3px;background:var(--panel);border-radius:1px;overflow:hidden;margin-bottom:3px;}
 .nb-bar-fill{height:100%;border-radius:1px;}
+#armstrade-btn{position:fixed;top:295px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(251,146,60,.35);border-radius:2px;color:#fb923c;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#armstrade-btn:hover{background:rgba(251,146,60,.1);border-color:#ea580c;}
+#geotimeline-btn{position:fixed;top:335px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(129,140,248,.35);border-radius:2px;color:#818cf8;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#geotimeline-btn:hover{background:rgba(129,140,248,.1);border-color:#6366f1;}
+#geotimeline-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#geotimeline-overlay.open{display:block;}
+.gt-hdr{background:var(--panel);border-bottom:2px solid rgba(129,140,248,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.gt-hdr h2{color:#818cf8;font-size:12px;letter-spacing:.2em;margin:0;}
+.gt-body{padding:16px 24px;max-width:1000px;}
+.gt-controls{display:flex;gap:8px;margin-bottom:14px;align-items:center;flex-wrap:wrap;}
+.gt-select{background:var(--panel2);border:1px solid var(--border-hi);color:var(--text);font-family:var(--mono);font-size:9px;padding:5px 8px;outline:none;min-width:220px;}
+.gt-chart-wrap{background:var(--panel2);border:1px solid var(--border);padding:12px;margin-bottom:12px;}
+.gt-chart-title{font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:8px;}
+.gt-chart{width:100%;height:120px;display:block;}
+.gt-event-list{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.gt-event-hdr{font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;}
+.gt-event-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:9px;}
+.gt-event-title{color:var(--text);line-height:1.4;}
+.gt-event-meta{color:var(--dim);font-size:8px;}
+#refugee-btn{position:fixed;top:375px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(168,85,247,.35);border-radius:2px;color:#c084fc;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#refugee-btn:hover{background:rgba(168,85,247,.1);border-color:#9333ea;}
+#refugee-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#refugee-overlay.open{display:block;}
+.rf-hdr{background:var(--panel);border-bottom:2px solid rgba(168,85,247,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.rf-hdr h2{color:#c084fc;font-size:12px;letter-spacing:.2em;margin:0;}
+.rf-body{padding:16px 24px;max-width:1100px;}
+.rf-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.rf-stat{background:var(--panel2);border:1px solid var(--border);padding:10px;text-align:center;}
+.rf-stat-num{font-size:18px;font-weight:900;color:#c084fc;}
+.rf-stat-label{font-size:7px;color:var(--dim);letter-spacing:.12em;margin-top:2px;}
+.rf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.rf-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid rgba(168,85,247,.6);padding:10px;}
+.rf-card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.rf-card-name{font-size:10px;font-weight:700;color:var(--text);}
+.rf-card-count{font-size:9px;color:#c084fc;font-weight:700;}
+.rf-card-detail{font-size:8px;color:var(--dim);line-height:1.5;margin-bottom:6px;}
+.rf-bar{height:3px;background:var(--panel);border-radius:1px;overflow:hidden;}
+.rf-bar-fill{height:100%;background:rgba(168,85,247,.7);border-radius:1px;}
+.rf-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:8px;}
+.rf-news-title{color:var(--text);line-height:1.4;margin-bottom:1px;}
+.rf-news-meta{color:var(--dim);font-size:7px;}
 </style>
 </head>
 <body>
@@ -7727,6 +7768,7 @@ function draw(){
   if(_agencyActive)drawAgencyArcs();
   if(_allianceActive)drawAllianceLayer();
   if(_infraSitesActive)drawInfraLayer();
+  if(_armsTradeActive)drawArmsTradeNet();
   if(_threatVecActive)drawThreatVectors();
   if(showHotspots)drawHotspots();
   // Globe border ring
@@ -16012,6 +16054,210 @@ function _renderNukeOOB(){
       '</div>';
   }).join('');
 }
+const ARMS_TRADE_DATA=[
+  {supplier:'US',color:'rgba(59,130,246,0.55)',recipients:['SA','AE','IL','TW','PL','UA','JP','KR','AU','IN','MA','QA']},
+  {supplier:'RU',color:'rgba(239,68,68,0.55)',recipients:['IN','DZ','EG','VN','CN','SY','ET','AO']},
+  {supplier:'CN',color:'rgba(239,68,68,0.4)',recipients:['PK','BD','MM','NG','VE','SD','TZ','ZM']},
+  {supplier:'FR',color:'rgba(96,165,250,0.5)',recipients:['IN','SA','EG','AE','GR','AU','ID']},
+  {supplier:'GB',color:'rgba(96,165,250,0.45)',recipients:['SA','OM','IN','AU','QA']},
+  {supplier:'DE',color:'rgba(251,191,36,0.45)',recipients:['KR','DZ','IL','GR','SG','AU']},
+  {supplier:'IL',color:'rgba(251,191,36,0.5)',recipients:['IN','AZ','VN','PH','KE','RW']},
+];
+let _armsTradeActive=false;
+function toggleArmsTradeNet(){
+  _armsTradeActive=!_armsTradeActive;
+  const btn=document.getElementById('armstrade-btn');
+  if(btn){
+    btn.style.borderColor=_armsTradeActive?'rgba(251,146,60,.9)':'rgba(251,146,60,.35)';
+    btn.style.background=_armsTradeActive?'rgba(251,146,60,.18)':'rgba(4,8,18,.95)';
+    btn.style.color=_armsTradeActive?'#fed7aa':'#fb923c';
+  }
+}
+function drawArmsTradeNet(){
+  const t=(Date.now()%4000)/4000;
+  for(const supplier of ARMS_TRADE_DATA){
+    const srcCoord=_ISO_COORDS[supplier.supplier];
+    if(!srcCoord)continue;
+    const sp=project(srcCoord.lat,srcCoord.lng);
+    if(!sp)continue;
+    for(const recISO of supplier.recipients){
+      const dstCoord=_ISO_COORDS[recISO];
+      if(!dstCoord)continue;
+      const dp=project(dstCoord.lat,dstCoord.lng);
+      if(!dp)continue;
+      if(!sp.visible&&!dp.visible)continue;
+      const mx=(sp.px+dp.px)/2;
+      const my=(sp.py+dp.py)/2-55;
+      ctx.save();
+      ctx.strokeStyle=supplier.color;
+      ctx.lineWidth=0.8;
+      ctx.setLineDash([4,6]);
+      ctx.lineDashOffset=-t*20;
+      ctx.globalAlpha=0.6;
+      ctx.beginPath();
+      ctx.moveTo(sp.px,sp.py);
+      ctx.quadraticCurveTo(mx,my,dp.px,dp.py);
+      ctx.stroke();
+      ctx.restore();
+    }
+    if(sp.visible){
+      ctx.save();
+      ctx.fillStyle=supplier.color;
+      ctx.globalAlpha=0.9;
+      ctx.font='bold 6px "IBM Plex Mono",monospace';
+      ctx.textAlign='center';
+      ctx.fillText(supplier.supplier,sp.px,sp.py-10);
+      ctx.restore();
+    }
+  }
+}
+function openGeoTimeline(){
+  document.getElementById('geotimeline-overlay').classList.add('open');
+}
+function closeGeoTimeline(){
+  document.getElementById('geotimeline-overlay').classList.remove('open');
+}
+async function loadGeoTimeline(country){
+  if(!country)return;
+  const status=document.getElementById('gt-status');
+  const container=document.getElementById('gt-chart-container');
+  if(status)status.textContent='Loading timeline for '+country+'...';
+  if(container)container.style.display='none';
+  try{
+    const q=encodeURIComponent(country+' war OR military OR attack OR sanctions OR conflict');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=timelinevol&format=json&timespan=30d';
+    const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    const d=await r.json();
+    const timeline=(d.timeline&&d.timeline[0]&&d.timeline[0].data)||[];
+    if(!timeline.length){
+      if(status)status.textContent='No timeline data for '+country+'.';
+      return;
+    }
+    if(status)status.textContent='';
+    if(container)container.style.display='block';
+    const titleEl=document.getElementById('gt-chart-title');
+    if(titleEl)titleEl.textContent='GDELT MEDIA VOLUME: '+country.toUpperCase()+' (30 DAYS)';
+    _drawGTChart(timeline);
+    const q2=encodeURIComponent(country+' war OR military OR attack OR conflict');
+    const url2='https://api.gdeltproject.org/api/v2/doc/doc?query='+q2+'&mode=artlist&maxrecords=10&format=json';
+    const r2=await fetch(url2,{signal:AbortSignal.timeout(10000)});
+    const d2=await r2.json();
+    const arts=(d2.articles||[]).slice(0,8);
+    const evEl=document.getElementById('gt-events');
+    if(evEl){
+      if(!arts.length){evEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent events found.</div>';return;}
+      evEl.innerHTML=arts.map(function(a){
+        const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+        const src=(a.domain||'').substring(0,30);
+        const sd=a.seendate||'';
+        const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+        return '<div class="gt-event-item"><div class="gt-event-title">'+title+'</div><div class="gt-event-meta">'+src+' &middot; '+ts+'</div></div>';
+      }).join('');
+    }
+  }catch(e){
+    if(status)status.textContent='Error loading timeline: '+e.message;
+  }
+}
+function _drawGTChart(data){
+  const canvas=document.getElementById('gt-chart');
+  if(!canvas)return;
+  const W=canvas.offsetWidth||800;
+  const H=120;
+  canvas.width=W;
+  canvas.height=H;
+  const c=canvas.getContext('2d');
+  if(!c)return;
+  c.clearRect(0,0,W,H);
+  const values=data.map(function(d){return typeof d.value==='number'?d.value:(typeof d[1]==='number'?d[1]:0);});
+  const maxVal=Math.max.apply(null,values)||1;
+  const barW=Math.max(2,Math.floor(W/values.length)-1);
+  values.forEach(function(v,i){
+    const h=Math.floor((v/maxVal)*(H-10));
+    const x=i*(barW+1);
+    const y=H-h;
+    const alpha=0.4+0.6*(v/maxVal);
+    c.fillStyle='rgba(10,110,245,'+alpha.toFixed(2)+')';
+    c.fillRect(x,y,barW,h);
+  });
+  c.strokeStyle='rgba(129,140,248,0.4)';
+  c.lineWidth=1;
+  c.setLineDash([2,4]);
+  c.beginPath();
+  values.forEach(function(v,i){
+    const h=Math.floor((v/maxVal)*(H-10));
+    const x=i*(barW+1)+barW/2;
+    const y=H-h;
+    if(i===0)c.moveTo(x,y);else c.lineTo(x,y);
+  });
+  c.stroke();
+  c.setLineDash([]);
+}
+const DISPLACEMENT_CRISES=[
+  {country:'Sudan',iso:'SD',refugees:8200000,idps:10800000,cause:'Civil war - SAF vs RSF - Apr 2023',trend:'CRITICAL'},
+  {country:'Ukraine',iso:'UA',refugees:6500000,idps:5100000,cause:'Russian invasion - Feb 2022',trend:'HIGH'},
+  {country:'Syria',iso:'SY',refugees:6900000,idps:6600000,cause:'Civil war - 2011-present',trend:'HIGH'},
+  {country:'Afghanistan',iso:'AF',refugees:5700000,idps:3400000,cause:'Taliban takeover - Aug 2021',trend:'HIGH'},
+  {country:'Venezuela',iso:'VE',refugees:7700000,idps:0,cause:'Political/economic collapse',trend:'ELEVATED'},
+  {country:'Myanmar',iso:'MM',refugees:1300000,idps:2700000,cause:'Military coup - Feb 2021',trend:'CRITICAL'},
+  {country:'DRC',iso:'CD',refugees:2600000,idps:6900000,cause:'M23 insurgency / eastern conflict',trend:'CRITICAL'},
+  {country:'Somalia',iso:'SO',refugees:1100000,idps:3800000,cause:'al-Shabaab / drought / clan violence',trend:'HIGH'},
+  {country:'Ethiopia',iso:'ET',refugees:900000,idps:4200000,cause:'Tigray war aftermath / Amhara conflict',trend:'ELEVATED'},
+  {country:'Gaza/Palestine',iso:'PS',refugees:1200000,idps:1700000,cause:'Oct 2023 war - mass displacement',trend:'CRITICAL'},
+];
+function openRefugeeTracker(){
+  document.getElementById('refugee-overlay').classList.add('open');
+  _renderRefugeeTracker();
+  _fetchRefugeeNews();
+}
+function closeRefugeeTracker(){
+  document.getElementById('refugee-overlay').classList.remove('open');
+}
+function _renderRefugeeTracker(){
+  const grid=document.getElementById('refugee-grid');
+  if(!grid)return;
+  const maxRef=Math.max.apply(null,DISPLACEMENT_CRISES.map(function(c){return c.refugees+c.idps;}));
+  const trendColors={CRITICAL:'#ef4444',HIGH:'#f97316',ELEVATED:'#f59e0b',MODERATE:'#22d3ee'};
+  grid.innerHTML=DISPLACEMENT_CRISES.map(function(c){
+    const total=c.refugees+c.idps;
+    const pct=Math.round((total/maxRef)*100);
+    const tc=trendColors[c.trend]||'#8896b3';
+    const refM=(c.refugees/1e6).toFixed(1)+'M';
+    const idpM=c.idps>0?(c.idps/1e6).toFixed(1)+'M':'N/A';
+    return '<div class="rf-card">'+
+      '<div class="rf-card-hdr">'+
+      '<span class="rf-card-name">'+c.country+'</span>'+
+      '<span class="rf-card-count" style="color:'+tc+';">'+(total/1e6).toFixed(1)+'M displaced</span>'+
+      '</div>'+
+      '<div class="rf-card-detail">'+
+      '<span style="color:var(--dim);">REFUGEES: </span><span style="color:#c084fc;">'+refM+'</span> &nbsp; '+
+      '<span style="color:var(--dim);">IDPs: </span><span style="color:#c084fc;">'+idpM+'</span><br>'+
+      '<span style="color:var(--dim);">CAUSE: </span>'+c.cause.replace(/</g,'&lt;')+'<br>'+
+      '<span style="color:var(--dim);">TREND: </span><span style="color:'+tc+';">'+c.trend+'</span>'+
+      '</div>'+
+      '<div class="rf-bar"><div class="rf-bar-fill" style="width:'+pct+'%;"></div></div>'+
+      '</div>';
+  }).join('');
+}
+async function _fetchRefugeeNews(){
+  const el=document.getElementById('refugee-news');
+  if(!el)return;
+  try{
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent('refugees displaced crisis humanitarian aid camps')+'&mode=artlist&maxrecords=10&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent events.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,120);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="rf-news-item"><div class="rf-news-title">'+title+'</div><div class="rf-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -16738,6 +16984,81 @@ function filterSIGINT(query){
       </div>
     </div>
     <div class="nb-grid" id="nukoob-grid"></div>
+  </div>
+</div>
+<button id="armstrade-btn" onclick="toggleArmsTradeNet()">&#x1F4E6; ARMS TRADE</button>
+<button id="geotimeline-btn" onclick="openGeoTimeline()">&#x1F4C8; GEO TIMELINE</button>
+<div id="geotimeline-overlay">
+  <div class="gt-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">GEOPOLITICAL INTELLIGENCE TIMELINE // GDELT MEDIA VOLUME ANALYSIS</div>
+      <h2>&#x1F4C8; GEOPOLITICAL EVENT TIMELINE BROWSER</h2>
+    </div>
+    <button onclick="closeGeoTimeline()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="gt-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:10px;letter-spacing:.08em;">SELECT A COUNTRY TO VIEW GDELT MEDIA ACTIVITY TIMELINE &middot; VOLUME = GEOPOLITICAL EVENT INTENSITY &middot; UPDATED CONTINUOUSLY</div>
+    <div class="gt-controls">
+      <select id="gt-country-select" class="gt-select" onchange="loadGeoTimeline(this.value)">
+        <option value="">-- SELECT COUNTRY --</option>
+        <option value="Russia">Russia</option>
+        <option value="China">China</option>
+        <option value="Ukraine">Ukraine</option>
+        <option value="Iran">Iran</option>
+        <option value="North Korea">North Korea</option>
+        <option value="Israel">Israel</option>
+        <option value="United States">United States</option>
+        <option value="Taiwan">Taiwan</option>
+        <option value="Syria">Syria</option>
+        <option value="Yemen">Yemen</option>
+        <option value="Afghanistan">Afghanistan</option>
+        <option value="Sudan">Sudan</option>
+        <option value="Pakistan">Pakistan</option>
+        <option value="Turkey">Turkey</option>
+        <option value="Venezuela">Venezuela</option>
+        <option value="Myanmar">Myanmar</option>
+        <option value="Ethiopia">Ethiopia</option>
+        <option value="Somalia">Somalia</option>
+        <option value="Libya">Libya</option>
+        <option value="Iraq">Iraq</option>
+      </select>
+      <button onclick="loadGeoTimeline(document.getElementById('gt-country-select').value)" style="background:rgba(129,140,248,.15);border:1px solid rgba(129,140,248,.4);color:#818cf8;cursor:pointer;padding:5px 12px;font-family:var(--mono);font-size:8px;letter-spacing:.12em;">REFRESH</button>
+    </div>
+    <div id="gt-chart-container" style="display:none;">
+      <div class="gt-chart-wrap">
+        <div class="gt-chart-title" id="gt-chart-title">MEDIA ACTIVITY VOLUME</div>
+        <canvas id="gt-chart" class="gt-chart"></canvas>
+      </div>
+      <div class="gt-event-list">
+        <div class="gt-event-hdr">RECENT EVENTS</div>
+        <div id="gt-events"></div>
+      </div>
+    </div>
+    <div id="gt-status" style="color:var(--dim);font-size:9px;padding:20px 0;">Select a country to load timeline data.</div>
+  </div>
+</div>
+<button id="refugee-btn" onclick="openRefugeeTracker()">&#x1F6F6; DISPLACEMENT</button>
+<div id="refugee-overlay">
+  <div class="rf-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">HUMANITARIAN INTELLIGENCE // UNHCR OPEN DATA // FORCED DISPLACEMENT TRACKING</div>
+      <h2>&#x1F6F6; GLOBAL REFUGEE &amp; DISPLACEMENT INTELLIGENCE</h2>
+    </div>
+    <button onclick="closeRefugeeTracker()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="rf-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">SOURCE: UNHCR GLOBAL TRENDS &middot; GDELT COLLECTION &middot; DATA AS OF 2024 ESTIMATE</div>
+    <div class="rf-stats">
+      <div class="rf-stat"><div class="rf-stat-num">117.3M</div><div class="rf-stat-label">FORCIBLY DISPLACED</div></div>
+      <div class="rf-stat"><div class="rf-stat-num">43.4M</div><div class="rf-stat-label">REFUGEES</div></div>
+      <div class="rf-stat"><div class="rf-stat-num">62.5M</div><div class="rf-stat-label">INTERNALLY DISPLACED</div></div>
+      <div class="rf-stat"><div class="rf-stat-num">6.9M</div><div class="rf-stat-label">ASYLUM SEEKERS</div></div>
+    </div>
+    <div class="rf-grid" id="refugee-grid"></div>
+    <div style="margin-top:12px;background:var(--panel2);border:1px solid var(--border);padding:10px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE DISPLACEMENT EVENTS (GDELT)</div>
+      <div id="refugee-news"></div>
+    </div>
   </div>
 </div>
 </body>
