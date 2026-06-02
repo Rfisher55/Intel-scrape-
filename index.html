@@ -1225,6 +1225,49 @@ button{border-radius:2px!important}
 .mx-tier.t1{color:var(--danger);}
 .mx-tier.t2{color:var(--warn);}
 .mx-tier.t3{color:var(--dim);}
+#sitrep-btn{position:fixed;top:255px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(34,211,238,.35);border-radius:2px;color:#22d3ee;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#sitrep-btn:hover{background:rgba(34,211,238,.1);border-color:#06b6d4;}
+#sitrep-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#sitrep-overlay.open{display:block;}
+.sr-hdr{background:var(--panel);border-bottom:2px solid rgba(34,211,238,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.sr-hdr h2{color:#22d3ee;font-size:12px;letter-spacing:.3em;margin:0;}
+.sr-close{background:none;border:1px solid var(--border-hi);color:var(--dim);padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;}
+.sr-close:hover{border-color:#22d3ee;color:#22d3ee;}
+.sr-body{padding:20px 28px;max-width:900px;margin:0 auto;}
+.sr-classification{text-align:center;color:var(--danger);font-size:10px;letter-spacing:.25em;border:1px solid rgba(232,64,64,.4);padding:5px;margin-bottom:16px;background:rgba(232,64,64,.08);}
+.sr-section{margin-bottom:18px;}
+.sr-section-title{color:#22d3ee;font-size:10px;letter-spacing:.2em;border-bottom:1px solid rgba(34,211,238,.25);padding-bottom:4px;margin-bottom:8px;}
+.sr-paragraph{color:var(--text);font-size:10px;line-height:2.0;white-space:pre-wrap;}
+.sr-item{padding:4px 0;border-bottom:1px solid var(--border2);color:var(--dim);font-size:9px;line-height:1.7;}
+.sr-item .sr-item-hdr{color:var(--text);font-size:10px;}
+.sr-stat-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;}
+.sr-stat{background:var(--panel);border:1px solid var(--border-hi);padding:8px 14px;font-size:9px;}
+.sr-stat-val{display:block;font-size:16px;color:var(--text);margin-bottom:2px;}
+.sr-stat-lbl{color:var(--muted);font-size:8px;letter-spacing:.1em;}
+.sr-footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);color:var(--muted);font-size:8px;letter-spacing:.1em;}
+#compare-btn{position:fixed;top:295px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(99,102,241,.35);border-radius:2px;color:#818cf8;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#compare-btn:hover{background:rgba(99,102,241,.1);border-color:#6366f1;}
+#compare-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.96);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#compare-overlay.open{display:block;}
+.cmp-hdr{background:var(--panel);border-bottom:2px solid rgba(99,102,241,.5);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.cmp-hdr h2{color:#818cf8;font-size:12px;letter-spacing:.25em;margin:0;}
+.cmp-close{background:none;border:1px solid var(--border-hi);color:var(--dim);padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;}
+.cmp-close:hover{border-color:#818cf8;color:#818cf8;}
+.cmp-selectors{padding:12px 20px;display:flex;gap:12px;border-bottom:1px solid var(--border);background:rgba(9,12,24,.8);}
+.cmp-select{flex:1;background:var(--panel2);border:1px solid var(--border-hi);color:var(--text);font-family:var(--mono);font-size:9px;padding:5px 8px;cursor:pointer;}
+.cmp-run{background:rgba(99,102,241,.2);border:1px solid rgba(99,102,241,.5);color:#818cf8;font-family:var(--mono);font-size:9px;padding:5px 14px;cursor:pointer;letter-spacing:.1em;}
+.cmp-run:hover{background:rgba(99,102,241,.35);}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;}
+.cmp-col{padding:16px 20px;border-right:1px solid var(--border);}
+.cmp-col:last-child{border-right:none;}
+.cmp-col-name{color:var(--text);font-size:14px;letter-spacing:.15em;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:8px;margin-bottom:14px;}
+.cmp-metric{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border2);font-size:9px;}
+.cmp-metric-lbl{color:var(--muted);letter-spacing:.1em;}
+.cmp-metric-val{color:var(--text);font-size:10px;text-align:right;max-width:60%;}
+.cmp-bar-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:8px;}
+.cmp-bar-lbl{color:var(--muted);min-width:70px;letter-spacing:.06em;}
+.cmp-bar{height:6px;border-radius:1px;transition:width .5s;}
+.cmp-cia{color:var(--dim);font-size:8px;line-height:1.7;margin-top:10px;padding:8px;background:rgba(9,12,24,.6);border:1px solid var(--border);}
 </style>
 </head>
 <body>
@@ -1401,6 +1444,36 @@ button{border-radius:2px!important}
 <button id="threatcast-btn" onclick="toggleThreatcast()">&#x26A1; THREATCAST</button>
 <button id="matrix-btn" onclick="openIntelMatrix()">&#x25A6; INTEL MATRIX</button>
 
+<button id="sitrep-btn" onclick="openSITREP()">&#x1F4CB; SITREP</button>
+
+<div id="sitrep-overlay">
+  <div class="sr-hdr">
+    <h2>&#x1F4CB; SITUATION REPORT &#x2014; GLOBAL INTELLIGENCE SUMMARY</h2>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button onclick="_refreshSITREP()" style="background:none;border:1px solid rgba(34,211,238,.4);color:#22d3ee;font-family:var(--mono);font-size:8px;padding:3px 10px;cursor:pointer;letter-spacing:.1em;">&#x21BA; REFRESH</button>
+      <button class="sr-close" onclick="closeSITREP()">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div id="sitrep-body" class="sr-body">
+    <div style="color:var(--muted);font-size:9px;text-align:center;padding:40px">GENERATING SITUATION REPORT...</div>
+  </div>
+</div>
+
+<button id="compare-btn" onclick="openCompare()">&#x2194; COMPARE</button>
+
+<div id="compare-overlay">
+  <div class="cmp-hdr">
+    <h2>&#x2194; COUNTRY INTELLIGENCE COMPARISON</h2>
+    <button class="cmp-close" onclick="closeCompare()">&#x2715; CLOSE</button>
+  </div>
+  <div class="cmp-selectors">
+    <select id="cmp-sel-a" class="cmp-select"><option value="">Select Country A...</option></select>
+    <select id="cmp-sel-b" class="cmp-select"><option value="">Select Country B...</option></select>
+    <button class="cmp-run" onclick="_runCompare()">&#x25B6; COMPARE</button>
+  </div>
+  <div id="cmp-grid" class="cmp-grid"></div>
+</div>
+
 <div id="matrix-overlay">
   <div class="mx-hdr">
     <h2>&#x25A6; GLOBAL INTELLIGENCE ASSESSMENT MATRIX</h2>
@@ -1565,6 +1638,7 @@ button{border-radius:2px!important}
     <span id="sigint-count" style="margin-left:auto;font-size:8px;color:#4a5878;letter-spacing:.1em;align-self:center"></span>
   </div>
   <div class="sigint-body">
+    <input id="sigint-filter" type="text" placeholder="Filter signals..." oninput="filterSIGINT(this.value)" style="width:calc(100% - 16px);background:var(--panel2);border:1px solid var(--border-hi);border-radius:0;color:var(--text);font-family:var(--mono);font-size:9px;padding:4px 8px;margin:5px 8px;box-sizing:border-box;outline:none;letter-spacing:.05em;display:block;" />
     <div class="sigint-feed" id="sigint-feed">
       <div class="sigint-loading">&#x25CC; INITIALIZING SIGINT FEED&#8230;<br><br><span style="color:#2a3548">GDELT PROJECT &middot; MULTI-SOURCE INTELLIGENCE AGGREGATION</span></div>
     </div>
@@ -15473,6 +15547,159 @@ function closeCamPlayer(){
   const ct=document.getElementById('cam-iframe-container');
   if(ct)ct.innerHTML='';
   document.body.style.overflow='';
+}
+
+// PHASE 11: SITREP Auto-Generator
+function openSITREP(){
+  document.getElementById('sitrep-overlay').classList.add('open');
+  _refreshSITREP();
+}
+function closeSITREP(){
+  document.getElementById('sitrep-overlay').classList.remove('open');
+}
+async function _refreshSITREP(){
+  const body=document.getElementById('sitrep-body');
+  if(!body)return;
+  body.innerHTML='<div style="color:var(--muted);font-size:9px;text-align:center;padding:40px">GENERATING SITUATION REPORT...</div>';
+  const now=new Date();
+  const dtStr=now.toISOString().slice(0,19).replace('T',' ')+' UTC';
+
+  // Aggregate data
+  const critHotspots=(typeof liveHotspots!=='undefined'?liveHotspots:[]).filter(function(h){return h.severity==='critical';});
+  const highHotspots=(typeof liveHotspots!=='undefined'?liveHotspots:[]).filter(function(h){return h.severity==='high';});
+  const tier1=(typeof COUNTRIES!=='undefined'?Object.values(COUNTRIES):[]).filter(function(c){return c.intel_priority==='TIER 1';});
+  const critCountries=(typeof COUNTRIES!=='undefined'?Object.values(COUNTRIES):[]).filter(function(c){return c.alertLevel==='CRITICAL';});
+  const highCountries=(typeof COUNTRIES!=='undefined'?Object.values(COUNTRIES):[]).filter(function(c){return c.alertLevel==='HIGH';});
+
+  // Fetch live GDELT headline
+  let topHeadline='N/A';
+  try{
+    const q=encodeURIComponent('war military attack nuclear missile conflict airstrike');
+    const r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=5&format=json&timespan=2h',{signal:AbortSignal.timeout(6000)});
+    if(r.ok){const d=await r.json();const arts=d.articles||[];if(arts.length)topHeadline=arts[0].title||'N/A';}
+  }catch(e){}
+
+  // Fetch space weather
+  let kpStatus='UNKNOWN';
+  const kwEl=document.getElementById('space-wx-ind');
+  if(kwEl)kpStatus=kwEl.textContent||'UNKNOWN';
+
+  // Build SITREP
+  const sr_sections=[];
+
+  // Header block
+  sr_sections.push('<div class="sr-classification">TOP SECRET // OSINT AGGREGATE // OPEN-SOURCE INTELLIGENCE — UNCLASSIFIED COMPOSITE // FOR EDUCATIONAL USE ONLY</div>');
+
+  sr_sections.push('<div class="sr-stat-row">'
+    +'<div class="sr-stat"><span class="sr-stat-val" style="color:var(--danger)">'+critCountries.length+'</span><span class="sr-stat-lbl">CRITICAL STATES</span></div>'
+    +'<div class="sr-stat"><span class="sr-stat-val" style="color:var(--warn)">'+highCountries.length+'</span><span class="sr-stat-lbl">HIGH ALERT STATES</span></div>'
+    +'<div class="sr-stat"><span class="sr-stat-val" style="color:var(--danger)">'+critHotspots.length+'</span><span class="sr-stat-lbl">CRITICAL EVENTS</span></div>'
+    +'<div class="sr-stat"><span class="sr-stat-val" style="color:var(--warn)">'+highHotspots.length+'</span><span class="sr-stat-lbl">HIGH EVENTS</span></div>'
+    +'<div class="sr-stat"><span class="sr-stat-val" style="color:var(--text)">'+tier1.length+'</span><span class="sr-stat-lbl">TIER 1 COUNTRIES</span></div>'
+    +'<div class="sr-stat"><span class="sr-stat-val" style="color:var(--live)">'+kpStatus+'</span><span class="sr-stat-lbl">SPACE WX (KP)</span></div>'
+    +'</div>');
+
+  // Strategic environment
+  const critNames=critCountries.map(function(c){return c.name;}).join(', ')||'None';
+  const highNames=highCountries.slice(0,5).map(function(c){return c.name;}).join(', ');
+  sr_sections.push('<div class="sr-section">'
+    +'<div class="sr-section-title">1. STRATEGIC ENVIRONMENT</div>'
+    +'<div class="sr-paragraph">AS OF '+dtStr+', the global threat environment remains ELEVATED. '+critCountries.length+' nation-state actors are assessed at CRITICAL alert level ('+critNames+'). An additional '+highCountries.length+' states are at HIGH alert, including: '+highNames+(highCountries.length>5?' and others':'')+'.\n\nTotal live intelligence events active: '+(critHotspots.length+highHotspots.length)+' significant ('+critHotspots.length+' critical, '+highHotspots.length+' high-priority). GDELT open-source lead item: "'+topHeadline.slice(0,120)+'"</div>'
+    +'</div>');
+
+  // TIER 1 assessments
+  const tierItems=tier1.slice(0,6).map(function(c){
+    return '<div class="sr-item"><div class="sr-item-hdr">'+(c.name||c.iso).toUpperCase()+' ['+c.alertLevel+']</div>'+(c.primary_concern||'No assessment available')+'</div>';
+  }).join('');
+  sr_sections.push('<div class="sr-section"><div class="sr-section-title">2. TIER 1 COUNTRY ASSESSMENTS</div>'+tierItems+'</div>');
+
+  // Critical hotspots
+  const critItems=critHotspots.slice(0,8).map(function(h){
+    return '<div class="sr-item"><div class="sr-item-hdr">&#x25CF; '+(h.label||'UNKNOWN EVENT')+'</div>'+(h.country||'')+' \xB7 '+(h.type||'')+'</div>';
+  }).join('');
+  sr_sections.push('<div class="sr-section"><div class="sr-section-title">3. CRITICAL INTELLIGENCE EVENTS ('+critHotspots.length+')</div>'+(critItems||'<div class="sr-item">No critical events in active layers</div>')+'</div>');
+
+  // Collection gaps
+  const gaps=tier1.slice(0,5).flatMap(function(c){return(c.intel_gaps||[]).slice(0,1).map(function(g){return{country:c.name,gap:g};});});
+  const gapItems=gaps.map(function(g){return '<div class="sr-item"><div class="sr-item-hdr">'+g.country.toUpperCase()+'</div>'+g.gap+'</div>';}).join('');
+  sr_sections.push('<div class="sr-section"><div class="sr-section-title">4. KEY COLLECTION REQUIREMENTS</div>'+(gapItems||'<div class="sr-item">No gaps recorded</div>')+'</div>');
+
+  // Footer
+  sr_sections.push('<div class="sr-footer">PREPARED BY: OSINT AGGREGATE ENGINE \xB7 '+dtStr+' \xB7 SOURCE: GDELT PROJECT / USGS / CISA KEV / WORLD BANK / OPEN-SOURCE INTELLIGENCE<br>CLASSIFICATION: UNCLASSIFIED — OPEN-SOURCE AGGREGATE — FOR EDUCATIONAL AND RESEARCH USE ONLY</div>');
+
+  body.innerHTML=sr_sections.join('');
+}
+
+// PHASE 11: Country Comparison Tool
+function openCompare(){
+  document.getElementById('compare-overlay').classList.add('open');
+  _populateCompareSelects();
+}
+function closeCompare(){
+  document.getElementById('compare-overlay').classList.remove('open');
+}
+function _populateCompareSelects(){
+  const selA=document.getElementById('cmp-sel-a');
+  const selB=document.getElementById('cmp-sel-b');
+  if(!selA||!selB||selA.options.length>1)return;
+  const countries=Object.values(typeof COUNTRIES!=='undefined'?COUNTRIES:{}).sort(function(a,b){return (a.name||'').localeCompare(b.name||'');});
+  const opts=countries.map(function(c){return '<option value="'+c.iso+'">'+(c.name||c.iso)+'</option>';}).join('');
+  selA.innerHTML='<option value="">Select Country A...</option>'+opts;
+  selB.innerHTML='<option value="">Select Country B...</option>'+opts;
+}
+function _cmpScore(c,dim){
+  if(dim==='threat'){const m={'CRITICAL':95,'HIGH':75,'ELEVATED':55,'MEDIUM':38,'GUARDED':22,'LOW':12,'MINIMAL':5};return m[c.alertLevel]||12;}
+  if(dim==='mil')return Math.min((c.mil_rating||0)*10,100);
+  if(dim==='nuke'){const n=(c.nuke||'').toLowerCase();if(!n||n.indexOf('none')>-1)return 0;if(/enrichment/i.test(n))return 45;const m=n.match(/(\d[\d,]+)\s*warhead/i);if(m){const w=parseInt(m[1].replace(/,/g,''),10);return w>1000?100:w>200?90:w>50?80:70;}return 40;}
+  if(dim==='econ'){let s=0;if(c.gdp_trend==='DOWN')s+=40;(c.vulnerabilities||[]).forEach(function(v){if(/currency|debt|bankrupt|inflation/i.test(v))s+=15;});return Math.min(s,100);}
+  return 0;
+}
+function _cmpBar(score){
+  const col=score>=80?'#ef4444':score>=60?'#f97316':score>=40?'#fbbf24':'#22c55e';
+  return '<div class="cmp-bar-row"><div class="cmp-bar" style="width:'+Math.max(score,3)+'%;background:'+col+';max-width:200px"></div><span style="color:'+col+';font-size:9px">'+score+'</span></div>';
+}
+function _cmpColumn(c){
+  if(!c)return '<div class="cmp-col"><div style="color:var(--muted);font-size:9px;padding:20px">No country selected</div></div>';
+  const lsCount=(typeof liveHotspots!=='undefined'?liveHotspots:[]).filter(function(h){return h.country===c.iso;}).length;
+  return '<div class="cmp-col">'
+    +'<div class="cmp-col-name">'+(c.name||c.iso).toUpperCase()+'</div>'
+    +'<div class="cmp-metric"><span class="cmp-metric-lbl">ALERT LEVEL</span><span class="cmp-metric-val" style="color:'+(c.alertLevel==='CRITICAL'?'#ef4444':c.alertLevel==='HIGH'?'#f97316':'#fbbf24')+'">'+(c.alertLevel||'—')+'</span></div>'
+    +'<div class="cmp-metric"><span class="cmp-metric-lbl">GOVT</span><span class="cmp-metric-val">'+(c.gov||'—').slice(0,60)+'</span></div>'
+    +'<div class="cmp-metric"><span class="cmp-metric-lbl">NUCLEAR STATUS</span><span class="cmp-metric-val" style="color:'+((c.nuke||'NONE').indexOf('NONE')>-1?'#22c55e':'#ef4444')+'">'+(c.nuke||'NONE').slice(0,50)+'</span></div>'
+    +'<div class="cmp-metric"><span class="cmp-metric-lbl">ECONOMY</span><span class="cmp-metric-val">'+(c.econ||'—').slice(0,60)+'</span></div>'
+    +'<div class="cmp-metric"><span class="cmp-metric-lbl">GDP TREND</span><span class="cmp-metric-val" style="color:'+(c.gdp_trend==='DOWN'?'#ef4444':c.gdp_trend==='UP'?'#22c55e':'#fbbf24')+'">'+(c.gdp_trend||'—')+'</span></div>'
+    +'<div class="cmp-metric"><span class="cmp-metric-lbl">LIVE EVENTS</span><span class="cmp-metric-val">'+lsCount+'</span></div>'
+    +'<div style="margin:8px 0 4px;color:var(--muted);font-size:8px;letter-spacing:.1em">INTELLIGENCE SCORES</div>'
+    +'<div class="cmp-bar-row"><span class="cmp-bar-lbl">THREAT</span>'+_cmpBar(_cmpScore(c,'threat'))+'</div>'
+    +'<div class="cmp-bar-row"><span class="cmp-bar-lbl">MILITARY</span>'+_cmpBar(_cmpScore(c,'mil'))+'</div>'
+    +'<div class="cmp-bar-row"><span class="cmp-bar-lbl">NUCLEAR</span>'+_cmpBar(_cmpScore(c,'nuke'))+'</div>'
+    +'<div class="cmp-bar-row"><span class="cmp-bar-lbl">ECONOMIC</span>'+_cmpBar(_cmpScore(c,'econ'))+'</div>'
+    +'<div style="margin-top:10px;color:var(--muted);font-size:8px;letter-spacing:.1em">PRIMARY CONCERN</div>'
+    +'<div class="cmp-cia">'+(c.primary_concern||'No data')+'</div>'
+    +'<div style="margin-top:8px;color:var(--muted);font-size:8px;letter-spacing:.1em">CIA ASSESSMENT</div>'
+    +'<div class="cmp-cia">'+(c.cia_note||'No data').slice(0,300)+'</div>'
+    +'</div>';
+}
+function _runCompare(){
+  const selA=document.getElementById('cmp-sel-a');
+  const selB=document.getElementById('cmp-sel-b');
+  const grid=document.getElementById('cmp-grid');
+  if(!selA||!selB||!grid)return;
+  const ca=typeof COUNTRIES!=='undefined'?COUNTRIES[selA.value]:null;
+  const cb=typeof COUNTRIES!=='undefined'?COUNTRIES[selB.value]:null;
+  grid.innerHTML=_cmpColumn(ca)+_cmpColumn(cb);
+}
+
+// PHASE 11: SIGINT Feed Filter
+function filterSIGINT(query){
+  const list=document.getElementById('sigint-feed');
+  if(!list)return;
+  const items=list.querySelectorAll('.sigint-item,.si-item,[class*="sigint"]');
+  const q=(query||'').toLowerCase();
+  items.forEach(function(el){
+    const text=(el.textContent||'').toLowerCase();
+    el.style.display=(!q||text.indexOf(q)>-1)?'':'none';
+  });
 }
 </script>
 
