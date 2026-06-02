@@ -1185,6 +1185,20 @@ button{border-radius:2px!important}
 .icb-open{margin-top:8px;background:none;border:1px solid var(--border);color:var(--accent);font-family:var(--mono);font-size:8px;padding:2px 8px;cursor:pointer;}
 .icb-open:hover{border-color:var(--accent);background:var(--accent-dim);}
 @media(max-width:768px){.icb-body{grid-template-columns:1fr;}}
+#threatcast-btn{position:fixed;top:175px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.4);border-radius:2px;color:#f87171;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#threatcast-btn:hover{background:rgba(239,68,68,.12);border-color:#ef4444;}
+#threatcast-panel{position:fixed;top:202px;right:220px;width:290px;max-height:480px;overflow-y:auto;background:rgba(4,8,18,.97);border:1px solid rgba(239,68,68,.3);z-index:200;display:none;font-family:var(--mono);backdrop-filter:blur(12px);}
+#threatcast-panel.open{display:block;}
+.tc-hdr{padding:7px 10px;border-bottom:1px solid rgba(239,68,68,.2);font-size:9px;color:#f87171;letter-spacing:.18em;display:flex;justify-content:space-between;align-items:center;}
+.tc-sub{font-size:7px;color:var(--muted);padding:3px 10px 4px;border-bottom:1px solid var(--border);letter-spacing:.08em;}
+.tc-row{display:flex;align-items:center;gap:6px;padding:3px 10px;border-bottom:1px solid var(--border2);cursor:pointer;}
+.tc-row:hover{background:rgba(239,68,68,.05);}
+.tc-rank{font-size:8px;color:var(--muted);min-width:14px;text-align:right;}
+.tc-name{font-size:9px;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.04em;}
+.tc-bar-wrap{width:55px;height:4px;background:rgba(30,45,66,.7);border-radius:1px;overflow:hidden;flex-shrink:0;}
+.tc-bar-fill{height:100%;border-radius:1px;transition:width .6s ease;}
+.tc-pct{font-size:8px;min-width:28px;text-align:right;letter-spacing:.04em;}
+.tc-footer{padding:4px 10px;font-size:7px;color:var(--muted);border-top:1px solid var(--border);}
 </style>
 </head>
 <body>
@@ -1231,6 +1245,8 @@ button{border-radius:2px!important}
   <button class="layer-btn" id="lb-bioint" onclick="toggleBiointLayer()" title="Biosurveillance — disease outbreaks, epidemics, bio incidents (GDELT 72h)"><span class="lb-dot" style="background:#a3e635"></span>&#x1F9EB; BIOINT<span class="lb-count" id="lbc-bioint">&#x2014;</span><span class="lb-src live">LIVE</span></button>
   <button class="layer-btn" id="lb-infra" onclick="toggleInfraLayer()" title="Critical infrastructure attacks — pipelines, power grids, cyber (GDELT 48h)"><span class="lb-dot" style="background:#f97316"></span>&#x26A1; INFRACON<span class="lb-count" id="lbc-infra">&#x2014;</span><span class="lb-src live">LIVE</span></button>
   <button class="layer-btn" id="lb-weapons" onclick="toggleWeaponsLayer()" title="Missile and weapons tests — ICBM, hypersonic, nuclear, military exercises (GDELT 7d)"><span class="lb-dot" style="background:#fbbf24"></span>&#x1F680; WEAPONS<span class="lb-count" id="lbc-weapons">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+  <button class="layer-btn" id="lb-econint" onclick="toggleEconintLayer()" title="Economic stress — GDP contraction, currency crisis, debt risk nations (COUNTRIES + World Bank)"><span class="lb-dot" style="background:#eab308"></span>&#x1F4B0; ECONINT<span class="lb-count" id="lbc-econint">&#x2014;</span><span class="lb-src">LIVE</span></button>
+  <button class="layer-btn" id="lb-darkweb" onclick="toggleDarkwebLayer()" title="Cyber crime and dark web signals — ransomware, breach, dark web (GDELT 24h)"><span class="lb-dot" style="background:#a78bfa"></span>&#x1F3AD; DARKWEB<span class="lb-count" id="lbc-darkweb">&#x2014;</span><span class="lb-src live">LIVE</span></button>
   <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signals — Reddit · Bluesky · Telegram · GDELT news · X/Twitter"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span><span class="lb-src live">● LIVE</span></button>
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
@@ -1353,6 +1369,13 @@ button{border-radius:2px!important}
 <button id="proxy-btn" onclick="toggleProxyNet()">&#x1F578; PROXY NET</button>
 
 <button id="icbrief-btn" onclick="openICBrief()">&#x1F4CB; IC BRIEF</button>
+<button id="threatcast-btn" onclick="toggleThreatcast()">&#x26A1; THREATCAST</button>
+<div id="threatcast-panel">
+  <div class="tc-hdr"><span>48H ESCALATION FORECAST</span><button onclick="toggleThreatcast()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px">&#x2715;</button></div>
+  <div class="tc-sub">COMPOSITE: ALERT LEVEL · MILITARY · VULNERABILITIES · LIVE SIGNALS · GDP TREND</div>
+  <div id="threatcast-list"><div style="color:var(--muted);font-size:9px;text-align:center;padding:20px">COMPUTING...</div></div>
+  <div class="tc-footer" id="threatcast-updated">—</div>
+</div>
 
 <div id="icbrief-overlay">
   <div class="icb-hdr">
@@ -2358,6 +2381,8 @@ const HOTSPOT_COLORS={
   infra:'rgba(249,115,22,1)',
   weapons:'rgba(251,191,36,1)',
   iss:'rgba(0,255,200,1)',
+  econint:'rgba(234,179,8,1)',
+  darkweb:'rgba(167,139,250,1)',
 };
 let liveHotspots=[];
 
@@ -14539,6 +14564,160 @@ function _renderICBrief(){
   }).join('');
 }
 
+// PHASE 8: THREATCAST Predictive Escalation Engine
+let _threatcastOpen=false;
+function toggleThreatcast(){
+  _threatcastOpen=!_threatcastOpen;
+  const panel=document.getElementById('threatcast-panel');
+  if(!panel)return;
+  if(_threatcastOpen){panel.classList.add('open');_renderThreatcast();}
+  else{panel.classList.remove('open');}
+}
+function _tcScore(c){
+  const AW={'CRITICAL':40,'HIGH':28,'ELEVATED':18,'MEDIUM':12,'GUARDED':6,'LOW':3,'MINIMAL':1};
+  let s=AW[c.alertLevel]||3;
+  s+=(c.mil_rating||0)*3;
+  const v=c.vulnerabilities||[];
+  s+=v.length*3;
+  if(c.nuke&&c.nuke.indexOf('NONE')<0&&c.nuke.indexOf('warhead')>-1)s+=15;
+  if(c.gdp_trend==='DOWN')s+=10;
+  if(c.intel_priority==='TIER 1')s+=8;
+  const hs=(typeof liveHotspots!=='undefined'?liveHotspots:[]).filter(function(h){return h.country===c.iso;});
+  s+=hs.filter(function(h){return h.severity==='critical';}).length*10;
+  s+=hs.filter(function(h){return h.severity==='high';}).length*5;
+  s+=hs.filter(function(h){return h.severity==='medium';}).length*2;
+  return Math.min(s,120);
+}
+function _renderThreatcast(){
+  const list=document.getElementById('threatcast-list');
+  const upd=document.getElementById('threatcast-updated');
+  if(!list)return;
+  const countries=Object.values(typeof COUNTRIES!=='undefined'?COUNTRIES:{}).filter(function(c){return c.iso;});
+  const scored=countries.map(function(c){return{iso:c.iso,name:c.name,s:_tcScore(c)};})
+    .sort(function(a,b){return b.s-a.s;}).slice(0,22);
+  const mx=scored.length&&scored[0].s>0?scored[0].s:1;
+  const pct=function(s){return Math.round((s/mx)*100);};
+  const col=function(p){return p>=78?'#ef4444':p>=55?'#f97316':p>=35?'#fbbf24':'#22c55e';};
+  list.innerHTML=scored.map(function(c,i){
+    const p=pct(c.s);
+    return`<div class="tc-row" onclick="if(typeof openCountry===\'function\')openCountry(\'${c.iso}\')">
+      <span class="tc-rank">${i+1}</span>
+      <span class="tc-name">${(c.name||c.iso).toUpperCase().slice(0,17)}</span>
+      <div class="tc-bar-wrap"><div class="tc-bar-fill" style="width:${p}%;background:${col(p)}"></div></div>
+      <span class="tc-pct" style="color:${col(p)}">${p}%</span>
+    </div>`;
+  }).join('');
+  if(upd)upd.textContent='COMPUTED '+new Date().toISOString().slice(11,19)+' UTC · AUTO-REFRESH 15 MIN';
+}
+setInterval(function(){if(_threatcastOpen)_renderThreatcast();},15*60*1000);
+
+// PHASE 8: ECONINT Layer — marks economically stressed nations
+let _econintActive=false;
+function toggleEconintLayer(){
+  _econintActive=!_econintActive;
+  const btn=document.getElementById('lb-econint');
+  const cnt=document.getElementById('lbc-econint');
+  if(_econintActive){
+    if(btn)btn.classList.add('active');
+    const stressed=Object.values(typeof COUNTRIES!=='undefined'?COUNTRIES:{}).filter(function(c){
+      return c.lat&&c.lng&&(c.gdp_trend==='DOWN'||(c.vulnerabilities||[]).some(function(v){
+        return/currency|debt|bankrupt|default|inflation|recession/i.test(v);
+      }));
+    });
+    const pins=stressed.map(function(c){
+      const sev=(c.alertLevel==='CRITICAL'||c.alertLevel==='HIGH')?'high':'medium';
+      const vuln=(c.vulnerabilities||[]).filter(function(v){return/currency|debt|bankrupt|default|inflation|recession/i.test(v);}).slice(0,1).join(' · ');
+      return{lat:c.lat,lng:c.lng,type:'econint',severity:sev,label:(c.name||c.iso)+' — '+(vuln||'GDP contraction'),country:c.iso,econint:true};
+    });
+    liveHotspots=[...liveHotspots.filter(function(h){return!h.econint;}),...pins];
+    if(cnt)cnt.textContent=pins.length;
+    _pushAlert('ECONINT: '+pins.length+' economically stressed nations flagged',false);
+  }else{
+    if(btn)btn.classList.remove('active');
+    liveHotspots=liveHotspots.filter(function(h){return!h.econint;});
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 8: DARKWEB/Cyber Crime Layer
+const _DARKWEB_Q='ransomware hack breach cyberattack malware botnet dark web data leak credential phishing zero-day exploit';
+let _darkwebActive=false,_darkwebTimer=null,_darkwebCache=null,_darkwebCacheTs=0;
+async function _fetchDarkwebData(){
+  const now=Date.now();
+  if(_darkwebCache&&now-_darkwebCacheTs<20*60*1000)return _darkwebCache;
+  try{
+    const q=encodeURIComponent(_DARKWEB_Q);
+    const r=await fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+q+'&mode=pointdata&format=geojson&timespan=24h&maxpoints=50',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    _darkwebCache=d;_darkwebCacheTs=now;
+    return d;
+  }catch(e){return null;}
+}
+async function toggleDarkwebLayer(){
+  _darkwebActive=!_darkwebActive;
+  const btn=document.getElementById('lb-darkweb');
+  const cnt=document.getElementById('lbc-darkweb');
+  if(_darkwebActive){
+    if(btn)btn.classList.add('active');
+    const d=await _fetchDarkwebData();
+    if(d&&d.features){
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'darkweb',severity:'medium',label:(f.properties.name||'CYBER/DARKWEB EVENT'),darkweb:true};});
+      liveHotspots=[...liveHotspots.filter(function(h){return!h.darkweb;}),...pts];
+      if(cnt)cnt.textContent=pts.length;
+      _pushAlert('DARKWEB: '+pts.length+' cyber/dark-web incidents in 24h',false);
+    }
+    _darkwebTimer=setInterval(async function(){
+      if(!_darkwebActive)return;
+      _darkwebCacheTs=0;
+      const d=await _fetchDarkwebData();
+      if(d&&d.features){
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'darkweb',severity:'medium',label:(f.properties.name||'CYBER/DARKWEB EVENT'),darkweb:true};});
+        liveHotspots=[...liveHotspots.filter(function(h){return!h.darkweb;}),...pts];
+        if(cnt)cnt.textContent=pts.length;
+      }
+    },20*60*1000);
+  }else{
+    if(btn)btn.classList.remove('active');
+    clearInterval(_darkwebTimer);_darkwebTimer=null;
+    liveHotspots=liveHotspots.filter(function(h){return!h.darkweb;});
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 8: News Surge Detector — detects abnormal GDELT news volume
+let _surgeLastRun=0;
+const _SURGE_WATCH=['Ukraine','Russia','Israel','China','Iran','North Korea','Taiwan','Yemen'];
+async function detectNewsSurges(){
+  const now=Date.now();
+  if(now-_surgeLastRun<20*60*1000)return;
+  _surgeLastRun=now;
+  const results=await Promise.allSettled(_SURGE_WATCH.slice(0,4).map(async function(country){
+    const q=encodeURIComponent(country+' military attack conflict');
+    const r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=20&format=json&timespan=2h',{signal:AbortSignal.timeout(7000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    return{country,count:(d.articles||[]).length};
+  }));
+  const baseline=await Promise.allSettled(_SURGE_WATCH.slice(0,4).map(async function(country){
+    const q=encodeURIComponent(country+' military attack conflict');
+    const r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=50&format=json&timespan=48h',{signal:AbortSignal.timeout(7000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    return{country,count:(d.articles||[]).length};
+  }));
+  results.forEach(function(res,i){
+    if(res.status!=='fulfilled'||!res.value)return;
+    const base=baseline[i];
+    if(base.status!=='fulfilled'||!base.value)return;
+    const r2h=res.value.count;const r48h=base.value.count;
+    const expectedPer2h=r48h/24;
+    if(expectedPer2h>0&&r2h/expectedPer2h>3.5){
+      _pushAlert('[SURGE ALERT] '+res.value.country+' news volume '+Math.round(r2h/expectedPer2h*100)+'% above baseline — possible breaking event',true);
+    }
+  });
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -14553,6 +14732,8 @@ setTimeout(function(){
   setInterval(injectCisaKevToSIGINT,60*60*1000);
   runLeaderMonitor();
   setInterval(runLeaderMonitor,15*60*1000);
+  detectNewsSurges();
+  setInterval(detectNewsSurges,20*60*1000);
 },2000);
 fetchSpaceWeather();
 // Live ticker update every 10 minutes
