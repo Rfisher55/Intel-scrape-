@@ -1375,6 +1375,55 @@ button{border-radius:2px!important}
 #infra-btn:hover{background:rgba(249,115,22,.1);border-color:#ea580c;}
 #threadvec-btn{position:fixed;top:135px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.35);border-radius:2px;color:#f87171;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
 #threadvec-btn:hover{background:rgba(239,68,68,.1);border-color:#dc2626;}
+#inflops-btn{position:fixed;top:175px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(167,139,250,.35);border-radius:2px;color:#a78bfa;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#inflops-btn:hover{background:rgba(167,139,250,.1);border-color:#7c3aed;}
+#inflops-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#inflops-overlay.open{display:block;}
+.io-hdr{background:var(--panel);border-bottom:2px solid rgba(167,139,250,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.io-hdr h2{color:#a78bfa;font-size:12px;letter-spacing:.2em;margin:0;}
+.io-body{padding:16px 24px;max-width:1200px;}
+.io-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.io-col{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.io-col-hdr{font-size:8px;letter-spacing:.18em;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.io-item{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.io-item-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:2px;}
+.io-item-meta{color:var(--dim);font-size:8px;}
+#terror-btn{position:fixed;top:215px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.35);border-radius:2px;color:#f87171;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#terror-btn:hover{background:rgba(239,68,68,.1);border-color:#b91c1c;}
+#terror-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#terror-overlay.open{display:block;}
+.tw-hdr{background:var(--panel);border-bottom:2px solid rgba(239,68,68,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.tw-hdr h2{color:#f87171;font-size:12px;letter-spacing:.2em;margin:0;}
+.tw-body{padding:16px 24px;max-width:1200px;}
+.tw-org{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--danger);padding:10px 12px;margin-bottom:8px;}
+.tw-org-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.tw-org-name{color:var(--danger);font-size:10px;font-weight:700;letter-spacing:.08em;}
+.tw-org-status{font-size:7px;padding:2px 6px;letter-spacing:.12em;}
+.tw-org-detail{font-size:8px;color:var(--dim);margin-bottom:6px;line-height:1.5;}
+.tw-org-events{font-size:9px;color:var(--text);}
+#nukoob-btn{position:fixed;top:255px;right:335px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.5);border-radius:2px;color:#fca5a5;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;animation:nukepulse 3s infinite;}
+#nukoob-btn:hover{background:rgba(239,68,68,.15);border-color:#ef4444;}
+@keyframes nukepulse{0%,100%{border-color:rgba(239,68,68,.5);}50%{border-color:rgba(239,68,68,.9);}}
+#nukoob-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#nukoob-overlay.open{display:block;}
+.nb-hdr{background:var(--panel);border-bottom:2px solid rgba(239,68,68,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.nb-hdr h2{color:#f87171;font-size:12px;letter-spacing:.2em;margin:0;}
+.nb-body{padding:16px 24px;}
+.nb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.nb-card{background:var(--panel2);border:1px solid var(--border);padding:12px;}
+.nb-card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.nb-country{font-size:11px;font-weight:700;color:var(--text);}
+.nb-status{font-size:7px;padding:2px 6px;letter-spacing:.12em;}
+.nb-stat-row{display:flex;justify-content:space-between;font-size:9px;margin-bottom:4px;}
+.nb-stat-label{color:var(--dim);}
+.nb-stat-val{color:var(--text);font-weight:700;}
+.nb-systems{margin-top:8px;padding-top:6px;border-top:1px solid var(--border);}
+.nb-sys-hdr{font-size:7px;letter-spacing:.15em;color:var(--dim);margin-bottom:4px;}
+.nb-sys-item{font-size:8px;color:#60a5fa;padding:1px 0;}
+.nb-bar-wrap{margin-top:6px;}
+.nb-bar-label{font-size:7px;color:var(--dim);margin-bottom:2px;}
+.nb-bar{height:3px;background:var(--panel);border-radius:1px;overflow:hidden;margin-bottom:3px;}
+.nb-bar-fill{height:100%;border-radius:1px;}
 </style>
 </head>
 <body>
@@ -15816,6 +15865,153 @@ function drawThreatVectors(){
   }
   ctx.restore();
 }
+function openInflOps(){
+  document.getElementById('inflops-overlay').classList.add('open');
+  _refreshInflOps();
+}
+function closeInflOps(){
+  document.getElementById('inflops-overlay').classList.remove('open');
+}
+async function _refreshInflOps(){
+  const grid=document.getElementById('inflops-grid');
+  if(!grid)return;
+  const cols=[
+    {label:'RUSSIAN DISINFO (SVR/GRU)',color:'#ef4444',q:'Russia disinformation propaganda influence operation fake news'},
+    {label:'CHINESE INFLUENCE OPS (MSS)',color:'#f59e0b',q:'China disinformation propaganda influence operation CCP narrative'},
+    {label:'IRANIAN PSYOP (IRGC/MOIS)',color:'#a78bfa',q:'Iran disinformation propaganda influence operation IRGC narrative'}
+  ];
+  grid.innerHTML='';
+  for(const col of cols){
+    const div=document.createElement('div');
+    div.className='io-col';
+    div.innerHTML='<div class="io-col-hdr" style="color:'+col.color+';">'+col.label+'</div><div class="io-col-items">Loading...</div>';
+    grid.appendChild(div);
+    const itemsEl=div.querySelector('.io-col-items');
+    fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(col.q)+'&mode=artlist&maxrecords=12&format=json',{signal:AbortSignal.timeout(10000)})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        const arts=(d.articles||[]).slice(0,10);
+        if(!arts.length){itemsEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No current collection.</div>';return;}
+        itemsEl.innerHTML=arts.map(function(a){
+          const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,120);
+          const src=(a.domain||'').substring(0,28);
+          const sd=a.seendate||'';
+          const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+          return '<div class="io-item"><div class="io-item-title">'+title+'</div><div class="io-item-meta">'+src+' &middot; '+ts+'</div></div>';
+        }).join('');
+      })
+      .catch(function(e){itemsEl.innerHTML='<div style="color:var(--danger);font-size:9px;">Error: '+e.message+'</div>';});
+  }
+}
+const TERROR_ORGS=[
+  {name:'ISIS/ISIL/Daesh',threat:'CRITICAL',status:'ACTIVE',region:'Global / Sahel / MENA / SE Asia',detail:'Transnational jihadist organization. Maintains wilayat (provinces) across Iraq, Syria, Libya, Sahel, APAC. Ongoing IED, SVBIED, lone wolf attack methodology.',q:'ISIS ISIL Daesh attack claimed'},
+  {name:'al-Qaeda (AQ/AQI/AQAP)',threat:'CRITICAL',status:'ACTIVE',region:'Yemen / South Asia / Sahel',detail:'Global salafi-jihadist movement. AQAP remains most operationally active branch. Maintains safe havens in Yemen, Somalia, Mali. Targets aviation and Western interests.',q:'al-Qaeda AQAP attack plot'},
+  {name:'Hamas / PIJ',threat:'HIGH',status:'ACTIVE',region:'Gaza Strip / West Bank',detail:'Designated terrorist organization. Controls Gaza Strip. Rocket attacks, tunnel network, October 7 2023 attack. Palestinian Islamic Jihad operates in parallel.',q:'Hamas PIJ attack rocket Gaza'},
+  {name:'Hezbollah',threat:'HIGH',status:'ACTIVE',region:'Lebanon / Syria / Iraq',detail:'Iran-backed Lebanese Shia militant organization. 150,000+ rocket arsenal targeting Israel. Operates as proxy across Levant. Involved in Lebanon conflict escalation.',q:'Hezbollah attack Lebanon rockets Iran'},
+  {name:'al-Shabaab',threat:'HIGH',status:'ACTIVE',region:'Somalia / East Africa',detail:'Al-Qaeda affiliate controlling significant territory in southern Somalia. Conducts complex attacks in Mogadishu, Nairobi. Revenue from taxation and charcoal trade.',q:'al-Shabaab attack Somalia'},
+  {name:'Boko Haram / ISWAP',threat:'HIGH',status:'ACTIVE',region:'Lake Chad Basin / Nigeria',detail:'Islamic State West Africa Province (ISWAP) separated 2016. Controls territory in NE Nigeria, Niger, Chad, Cameroon. Kidnapping and mass atrocity tactics.',q:'Boko Haram ISWAP attack Nigeria'},
+  {name:'Taliban (TTP)',threat:'MEDIUM',status:'GOVERNING/ACTIVE',region:'Afghanistan / Pakistan',detail:'TTP (Tehrik-i-Taliban Pakistan) separate from Afghan Taliban. Attacks Pakistani military and government. Afghan Taliban provides governance while harboring AQ elements.',q:'Taliban TTP attack Pakistan Afghanistan'},
+  {name:'Houthis (Ansar Allah)',threat:'HIGH',status:'ACTIVE',region:'Yemen / Red Sea',detail:'Iran-backed Yemeni militant group. Maritime drone and missile attacks on Red Sea shipping. Ballistic missile attacks on Israel and Saudi Arabia. Controls northwestern Yemen.',q:'Houthis Ansar Allah attack Red Sea ship'}
+];
+const TERROR_COLORS={CRITICAL:'#ef4444',HIGH:'#f97316',MEDIUM:'#f59e0b',LOW:'#22d3ee'};
+function openTerrorWatch(){
+  document.getElementById('terror-overlay').classList.add('open');
+  _refreshTerrorWatch();
+}
+function closeTerrorWatch(){
+  document.getElementById('terror-overlay').classList.remove('open');
+}
+async function _refreshTerrorWatch(){
+  const el=document.getElementById('terror-orgs-list');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;">Querying terrorism databases...</div>';
+  const results=await Promise.allSettled(TERROR_ORGS.map(async function(org){
+    let count=0;
+    try{
+      const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(org.q)+'&mode=artlist&maxrecords=5&format=json';
+      const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
+      const d=await r.json();
+      count=(d.articles||[]).length;
+    }catch(e){}
+    return {org:org,events:count};
+  }));
+  el.innerHTML=results.filter(function(r){return r.status==='fulfilled';}).map(function(r){
+    const {org,events}=r.value;
+    const tc=TERROR_COLORS[org.threat]||'#8896b3';
+    const actBar=Math.min(100,events*20);
+    return '<div class="tw-org">'+
+      '<div class="tw-org-hdr">'+
+      '<span class="tw-org-name">'+org.name.replace(/</g,'&lt;')+'</span>'+
+      '<span class="tw-org-status" style="background:'+tc+';color:#000;">'+org.threat+'</span>'+
+      '</div>'+
+      '<div class="tw-org-detail">'+
+      '<span style="color:var(--dim);">REGION: </span><span style="color:#60a5fa;">'+org.region+'</span> &nbsp;|&nbsp; '+
+      '<span style="color:var(--dim);">STATUS: </span><span style="color:'+tc+';">'+org.status+'</span> &nbsp;|&nbsp; '+
+      '<span style="color:var(--dim);">RECENT EVENTS: </span><span style="color:var(--text);">'+events+'/5</span>'+
+      '</div>'+
+      '<div style="font-size:9px;color:var(--dim);line-height:1.5;margin-bottom:6px;">'+org.detail.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'+
+      '<div style="height:3px;background:var(--panel);border-radius:1px;overflow:hidden;">'+
+      '<div style="height:100%;width:'+actBar+'%;background:'+tc+';border-radius:1px;"></div>'+
+      '</div>'+
+      '</div>';
+  }).join('');
+}
+const NUKE_OOB_DATA=[
+  {country:'Russia',iso:'RU',total:5889,deployed:1674,tactical:1912,status:'ELEVATED',statusColor:'#f97316',
+   systems:['RS-28 Sarmat ICBM','Topol-M ICBM','RS-24 Yars ICBM','Bulava SLBM (Borei-class)','Kh-102 ALCM','Kinzhal Hypersonic','Avangard HGV']},
+  {country:'USA',iso:'US',total:5244,deployed:1670,tactical:100,status:'NORMAL',statusColor:'#22d3ee',
+   systems:['LGM-30G Minuteman III ICBM','UGM-133A Trident II D5 SLBM','B61-12 Gravity Bomb','B83-1 Gravity Bomb','AGM-86B ALCM','LGM-35A Sentinel (dev)']},
+  {country:'China',iso:'CN',total:500,deployed:350,tactical:0,status:'EXPANDING',statusColor:'#f59e0b',
+   systems:['DF-5B ICBM','DF-41 ICBM','DF-31AG ICBM','JL-2 SLBM','JL-3 SLBM','DF-21 MRBM','DF-17 HGV']},
+  {country:'France',iso:'FR',total:290,deployed:280,tactical:50,status:'NORMAL',statusColor:'#22d3ee',
+   systems:['M51 SLBM (Triomphant-class)','ASMP-A ALCM (Rafale)']},
+  {country:'UK',iso:'GB',total:225,deployed:120,tactical:0,status:'NORMAL',statusColor:'#22d3ee',
+   systems:['UGM-133A Trident II D5 SLBM (Vanguard-class)']},
+  {country:'Pakistan',iso:'PK',total:170,deployed:0,tactical:60,status:'ELEVATED',statusColor:'#f97316',
+   systems:['Shaheen-III MRBM','Ghauri MRBM','Babur GLCM','Nasr SRBM (tactical)']},
+  {country:'India',iso:'IN',total:164,deployed:0,tactical:0,status:'NORMAL',statusColor:'#22d3ee',
+   systems:['Agni-V ICBM','Agni-IV IRBM','K-4 SLBM (Arihant-class)','BrahMos dual-use']},
+  {country:'Israel',iso:'IL',total:90,deployed:0,tactical:0,status:'UNDISCLOSED',statusColor:'#a78bfa',
+   systems:['Jericho-III IRBM (estimated)','F-35I dual-capable (est)']},
+  {country:'DPRK',iso:'KP',total:50,deployed:0,tactical:10,status:'CRITICAL',statusColor:'#ef4444',
+   systems:['Hwasong-17 ICBM','Hwasong-18 ICBM','Hwasong-15 ICBM','Pukguksong-3 SLBM','KN-23 SRBM (tactical)']}
+];
+function openNukeOOB(){
+  document.getElementById('nukoob-overlay').classList.add('open');
+  _renderNukeOOB();
+}
+function closeNukeOOB(){
+  document.getElementById('nukoob-overlay').classList.remove('open');
+}
+function _renderNukeOOB(){
+  const grid=document.getElementById('nukoob-grid');
+  if(!grid)return;
+  const maxTotal=Math.max.apply(null,NUKE_OOB_DATA.map(function(n){return n.total;}));
+  grid.innerHTML=NUKE_OOB_DATA.map(function(n){
+    const pctTotal=Math.round((n.total/maxTotal)*100);
+    const pctDeploy=n.total>0?Math.round((n.deployed/n.total)*100):0;
+    const pctTactical=n.total>0?Math.round((n.tactical/n.total)*100):0;
+    return '<div class="nb-card">'+
+      '<div class="nb-card-hdr">'+
+      '<span class="nb-country">'+n.country+'</span>'+
+      '<span class="nb-status" style="background:'+n.statusColor+';color:#000;">'+n.status+'</span>'+
+      '</div>'+
+      '<div class="nb-stat-row"><span class="nb-stat-label">TOTAL WARHEADS</span><span class="nb-stat-val" style="color:#ef4444;">'+n.total.toLocaleString()+'</span></div>'+
+      '<div class="nb-stat-row"><span class="nb-stat-label">DEPLOYED</span><span class="nb-stat-val" style="color:#f97316;">'+n.deployed.toLocaleString()+'</span></div>'+
+      '<div class="nb-stat-row"><span class="nb-stat-label">TACTICAL</span><span class="nb-stat-val" style="color:#f59e0b;">'+n.tactical.toLocaleString()+'</span></div>'+
+      '<div class="nb-bar-wrap">'+
+      '<div class="nb-bar-label">ARSENAL SIZE</div>'+
+      '<div class="nb-bar"><div class="nb-bar-fill" style="width:'+pctTotal+'%;background:#ef4444;"></div></div>'+
+      '<div class="nb-bar-label">DEPLOYMENT RATE</div>'+
+      '<div class="nb-bar"><div class="nb-bar-fill" style="width:'+pctDeploy+'%;background:#f97316;"></div></div>'+
+      '</div>'+
+      '<div class="nb-systems">'+
+      '<div class="nb-sys-hdr">DELIVERY SYSTEMS</div>'+
+      n.systems.map(function(s){return '<div class="nb-sys-item">&rsaquo; '+s+'</div>';}).join('')+
+      '</div>'+
+      '</div>';
+  }).join('');
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -16482,5 +16678,67 @@ function filterSIGINT(query){
 </div>
 <button id="infra-btn" onclick="toggleInfraSites()">&#x26A1; CRITICAL INFRA</button>
 <button id="threadvec-btn" onclick="toggleThreatVectors()">&#x2194; THREAT VECTORS</button>
+<button id="inflops-btn" onclick="openInflOps()">&#x1F9E0; INFLUENCE OPS</button>
+<div id="inflops-overlay">
+  <div class="io-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">INFLUENCE OPERATIONS INTELLIGENCE // DISINFORMATION MONITORING // IO/PSYOP COLLECTION</div>
+      <h2>&#x1F9E0; GLOBAL INFLUENCE OPERATIONS MONITOR</h2>
+    </div>
+    <button onclick="closeInflOps()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="io-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">DETECTING STATE-SPONSORED DISINFORMATION &middot; INFLUENCE OPERATIONS &middot; PSYOP INDICATORS &middot; GDELT OPEN-SOURCE COLLECTION</div>
+    <div class="io-grid" id="inflops-grid">
+      <div style="color:var(--dim);font-size:9px;grid-column:1/-1;padding:12px 0;">Loading influence operations intelligence...</div>
+    </div>
+  </div>
+</div>
+<button id="terror-btn" onclick="openTerrorWatch()">&#x26A0; TERROR WATCH</button>
+<div id="terror-overlay">
+  <div class="tw-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">TERRORIST ORGANIZATION TRACKING // THREAT LEVEL ASSESSMENT // OPEN SOURCE COLLECTION</div>
+      <h2>&#x26A0; GLOBAL TERRORISM &amp; EXTREMISM WATCH</h2>
+    </div>
+    <button onclick="closeTerrorWatch()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="tw-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">DESIGNATED TERRORIST ORGANIZATIONS &middot; ACTIVE THREAT ASSESSMENT &middot; GDELT EVENT TRACKING &middot; OSINT COLLECTION</div>
+    <div id="terror-orgs-list"><div style="color:var(--dim);font-size:9px;">Loading terrorism intelligence...</div></div>
+  </div>
+</div>
+<button id="nukoob-btn" onclick="openNukeOOB()">&#x2622; NUKE OOB</button>
+<div id="nukoob-overlay">
+  <div class="nb-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">NUCLEAR ORDER OF BATTLE // TS/SCI // OSINT-DERIVED // NOT FOR DISTRIBUTION</div>
+      <h2>&#x2622; GLOBAL NUCLEAR ORDER OF BATTLE</h2>
+    </div>
+    <button onclick="closeNukeOOB()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="nb-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">SOURCE: FAS / SIPRI / OPEN-SOURCE OSINT &middot; ESTIMATES AS OF 2024 &middot; CLASSIFIED DATA NOT INCLUDED</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+      <div style="background:var(--panel2);border:1px solid var(--border);padding:8px;text-align:center;">
+        <div style="font-size:20px;font-weight:900;color:#ef4444;" id="nb-total-warheads">12,512</div>
+        <div style="font-size:7px;color:var(--dim);letter-spacing:.12em;">TOTAL WARHEADS</div>
+      </div>
+      <div style="background:var(--panel2);border:1px solid var(--border);padding:8px;text-align:center;">
+        <div style="font-size:20px;font-weight:900;color:#f97316;" id="nb-deployed">3,844</div>
+        <div style="font-size:7px;color:var(--dim);letter-spacing:.12em;">DEPLOYED</div>
+      </div>
+      <div style="background:var(--panel2);border:1px solid var(--border);padding:8px;text-align:center;">
+        <div style="font-size:20px;font-weight:900;color:#fbbf24;">9</div>
+        <div style="font-size:7px;color:var(--dim);letter-spacing:.12em;">NUCLEAR STATES</div>
+      </div>
+      <div style="background:var(--panel2);border:1px solid var(--border);padding:8px;text-align:center;">
+        <div style="font-size:20px;font-weight:900;color:#f59e0b;">DEFCON 3</div>
+        <div style="font-size:7px;color:var(--dim);letter-spacing:.12em;">GLOBAL POSTURE</div>
+      </div>
+    </div>
+    <div class="nb-grid" id="nukoob-grid"></div>
+  </div>
+</div>
 </body>
 </html>
