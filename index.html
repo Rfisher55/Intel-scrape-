@@ -1031,6 +1031,49 @@ button{border-radius:2px!important}
 #seismic-indicator{position:fixed;bottom:30px;left:180px;z-index:150;display:none;background:rgba(4,8,18,.92);border:1px solid rgba(251,191,36,.35);border-radius:2px;padding:5px 10px;font-size:8px;letter-spacing:.14em;color:#fbbf24;font-family:var(--mono);backdrop-filter:blur(8px);cursor:pointer}
 #seismic-indicator:hover{background:rgba(251,191,36,.1)}
 .seismic-alert-dot{width:5px;height:5px;border-radius:50%;background:#fbbf24;display:inline-block;margin-right:5px;animation:blink 1s step-start infinite}
+
+/* Intel Search Terminal */
+#intel-search-btn{position:fixed;bottom:182px;right:20px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(10,110,245,.4);border-radius:2px;color:#a8c4ff;cursor:pointer;padding:7px 12px;font-size:9px;font-family:var(--mono);letter-spacing:.18em;transition:all .2s;font-weight:700;display:flex;align-items:center;gap:6px;backdrop-filter:blur(10px);white-space:nowrap}
+#intel-search-btn:hover{background:rgba(10,110,245,.15);border-color:#0a6ef5;color:#fff}
+@media(max-width:600px){#intel-search-btn{display:none}}
+#search-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:400;width:min(700px,95vw);max-height:85vh;background:rgba(4,7,16,.99);border:1px solid rgba(10,110,245,.3);border-top:2px solid rgba(10,110,245,.6);border-radius:2px;font-family:var(--mono);flex-direction:column;overflow:hidden}
+#search-modal.open{display:flex}
+#search-backdrop{display:none;position:fixed;inset:0;z-index:398;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}
+.search-header{padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(10,110,245,.06)}
+.search-input-row{display:flex;gap:8px;padding:12px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2)}
+#search-input{flex:1;background:rgba(9,14,28,.9);border:1px solid rgba(10,110,245,.3);border-radius:2px;color:#e8edf8;font-family:var(--mono);font-size:11px;padding:8px 12px;letter-spacing:.04em;outline:none}
+#search-input:focus{border-color:rgba(10,110,245,.6)}
+#search-input::placeholder{color:#2a3548}
+.search-submit{background:rgba(10,110,245,.2);border:1px solid rgba(10,110,245,.4);color:#a8c4ff;cursor:pointer;padding:8px 16px;border-radius:2px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;transition:all .15s;text-transform:uppercase}
+.search-submit:hover{background:rgba(10,110,245,.35);border-color:#0a6ef5}
+.search-results{flex:1;overflow-y:auto;padding:12px 18px;scrollbar-width:thin;scrollbar-color:rgba(10,110,245,.2) transparent}
+.search-source-label{font-size:8px;color:#4a5470;letter-spacing:.2em;text-transform:uppercase;margin:10px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.search-result-item{padding:6px 9px;background:rgba(8,14,28,.7);border-left:2px solid rgba(10,110,245,.3);border-radius:0 2px 2px 0;margin-bottom:4px;cursor:pointer;transition:background .15s}
+.search-result-item:hover{background:rgba(10,110,245,.08)}
+.search-result-title{font-size:9.5px;color:#c8d8ff;line-height:1.35;margin-bottom:2px}
+.search-result-meta{font-size:7.5px;color:#4a5470;letter-spacing:.06em}
+
+/* Alert/Watchlist System */
+#alert-bell{position:fixed;top:28px;right:180px;z-index:110;display:none;align-items:center;justify-content:center;width:28px;height:28px;background:none;border:none;cursor:pointer;color:#4a5470;font-size:14px;transition:color .2s}
+#alert-bell:hover{color:#fbbf24}
+#alert-bell.has-alerts{color:#fbbf24;animation:blink 1.2s step-start infinite}
+#alert-bell .alert-count{position:absolute;top:-2px;right:-4px;background:#ef4444;color:#fff;font-size:6px;border-radius:50%;width:12px;height:12px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700}
+#alert-modal{display:none;position:fixed;top:55px;right:20px;z-index:350;width:340px;max-height:70vh;background:rgba(4,7,16,.99);border:1px solid rgba(251,191,36,.3);border-top:2px solid rgba(251,191,36,.5);border-radius:2px;font-family:var(--mono);flex-direction:column;overflow:hidden}
+#alert-modal.open{display:flex}
+.alert-modal-header{padding:10px 14px;border-bottom:1px solid rgba(251,191,36,.15);background:rgba(251,191,36,.05);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.alert-modal-title{color:#fbbf24;font-size:9px;letter-spacing:.22em;font-weight:700}
+.alert-list{flex:1;overflow-y:auto;padding:8px;scrollbar-width:thin}
+.alert-item{padding:6px 9px;background:rgba(251,191,36,.06);border-left:2px solid rgba(251,191,36,.4);border-radius:0 2px 2px 0;margin-bottom:4px}
+.alert-item.critical{border-left-color:rgba(239,68,68,.6);background:rgba(239,68,68,.06)}
+.alert-time{font-size:7px;color:#4a5470;letter-spacing:.08em}
+.alert-text{font-size:9px;color:#e8edf8;line-height:1.35;margin-top:1px}
+.watchlist-section{padding:8px;border-top:1px solid rgba(251,191,36,.15);flex-shrink:0}
+.watchlist-input-row{display:flex;gap:5px;margin-top:5px}
+#watchlist-input{flex:1;background:rgba(9,14,28,.9);border:1px solid rgba(251,191,36,.25);border-radius:2px;color:#e8edf8;font-family:var(--mono);font-size:9px;padding:4px 7px;outline:none}
+.watchlist-add-btn{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);color:#fbbf24;cursor:pointer;padding:4px 10px;border-radius:2px;font-family:var(--mono);font-size:8px;letter-spacing:.1em}
+.watchlist-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.watchlist-chip{font-size:8px;padding:2px 7px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:1px;color:#fbbf24;letter-spacing:.06em;cursor:pointer}
+.watchlist-chip:hover{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:#fca5a5}
 </style>
 </head>
 <body>
@@ -1052,6 +1095,7 @@ button{border-radius:2px!important}
     <span class="h-threat-level elevated" id="global-threat">⚑ THREAT: ELEVATED</span>
     <button id="refresh-btn" onclick="refreshIntel()" style="background:rgba(30,58,95,.4);border:1px solid rgba(59,130,246,.5);color:#60a5fa;cursor:pointer;padding:5px 14px;border-radius:4px;font-size:10px;font-family:'Courier New',monospace;letter-spacing:.12em;transition:all .25s;font-weight:bold" title="Master refresh — updates all live feeds, flights, VIP locations, signals">↻ MASTER REFRESH</button>
     <span class="h-live"><span class="h-dot"></span>LIVE</span>
+    <button id="alert-bell" onclick="toggleAlertModal()" title="Intelligence Alerts">🔔<span class="alert-count" id="alert-count" style="display:none">0</span></button>
     <span class="h-time" id="h-time"></span>
   </div>
 </div>
@@ -1071,6 +1115,7 @@ button{border-radius:2px!important}
   <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"  title="Refugee and displacement flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"   title="Live military flights — ADS-B Exchange real-time feed (adsb.lol)"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span><span class="lb-src live">● LIVE</span></button>
   <button class="layer-btn" id="lb-seismic" onclick="toggleSeismicLayer()" title="USGS earthquake data — live seismic monitoring"><span class="lb-dot" style="background:#fbbf24"></span>SEISMIC<span class="lb-src">USGS</span></button>
+  <button class="layer-btn" id="lb-airdom" onclick="toggleAirDomain()" title="Real aircraft positions over conflict zones (OpenSky Network)"><span class="lb-dot" style="background:#38bdf8"></span>AIR DOMAIN<span class="lb-src live">LIVE</span></button>
   <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signals — Reddit · Bluesky · Telegram · GDELT news · X/Twitter"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span><span class="lb-src live">● LIVE</span></button>
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
@@ -1162,6 +1207,49 @@ button{border-radius:2px!important}
       <button onclick="closeActorProfile()" style="background:none;border:none;color:#475569;cursor:pointer;font-size:16px;line-height:1;padding:0">&#x2715;</button>
     </div>
     <div class="actor-modal-body" id="actor-modal-body"></div>
+  </div>
+</div>
+
+<div id="intel-search-btn" onclick="openIntelSearch()">🔍 INTEL SEARCH</div>
+<div id="search-backdrop" onclick="closeIntelSearch()"></div>
+<div id="search-modal">
+  <div class="search-header">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="color:#a8c4ff;font-size:10px;letter-spacing:.25em;font-weight:700">◈ INTELLIGENCE SEARCH TERMINAL</div>
+        <div style="color:#4a5470;font-size:8px;letter-spacing:.14em;margin-top:2px">MULTI-SOURCE OSINT QUERY · GDELT · REDDIT · WIKIPEDIA</div>
+      </div>
+      <button onclick="closeIntelSearch()" style="background:none;border:none;color:#4a5470;cursor:pointer;font-size:14px">✕</button>
+    </div>
+  </div>
+  <div class="search-input-row">
+    <input id="search-input" type="text" placeholder="Search intelligence: country, person, event, threat actor…" onkeydown="if(event.key==='Enter')executeIntelSearch()">
+    <button class="search-submit" onclick="executeIntelSearch()">SEARCH</button>
+  </div>
+  <div class="search-results" id="search-results">
+    <div style="color:#4a5470;font-size:9px;text-align:center;padding:30px;letter-spacing:.12em">
+      ENTER QUERY TO SEARCH ACROSS GDELT, REDDIT, AND WIKIPEDIA<br>
+      <span style="color:#2a3548;font-size:8px;margin-top:6px;display:block">Examples: "Russia military", "DPRK nuclear", "cyber attack infrastructure"</span>
+    </div>
+  </div>
+</div>
+
+<div id="alert-modal">
+  <div class="alert-modal-header">
+    <div class="alert-modal-title">🔔 INTELLIGENCE ALERTS</div>
+    <button onclick="toggleAlertModal()" style="background:none;border:none;color:#4a5470;cursor:pointer;font-size:12px">✕</button>
+  </div>
+  <div class="alert-list" id="alert-list">
+    <div style="color:#4a5470;font-size:9px;text-align:center;padding:16px;letter-spacing:.1em">NO ALERTS — ADD WATCHLIST ITEMS BELOW</div>
+  </div>
+  <div class="watchlist-section">
+    <div style="font-size:8px;color:#4a5470;letter-spacing:.16em;margin-bottom:4px">WATCHLIST — COUNTRIES OR KEYWORDS</div>
+    <div class="watchlist-input-row">
+      <input id="watchlist-input" type="text" placeholder="Add country or keyword…" onkeydown="if(event.key==='Enter')addWatchlistItem()">
+      <button class="watchlist-add-btn" onclick="addWatchlistItem()">ADD</button>
+    </div>
+    <div class="watchlist-chips" id="watchlist-chips"></div>
+    <div style="font-size:7px;color:#2a3548;margin-top:6px;letter-spacing:.1em">GDELT polled every 5 min · Browser notifications if granted</div>
   </div>
 </div>
 
@@ -1360,6 +1448,7 @@ button{border-radius:2px!important}
     <button class="tab-btn" onclick="showTab('news')">INTEL</button>
     <button class="tab-btn" onclick="showTab('conflicts')">CONFLICTS</button>
     <button class="tab-btn" onclick="showTab('cameras');renderCamerasTab(selectedISO)">CAMS</button>
+    <button class="tab-btn" onclick="showTab('live');renderLiveIntelTab(selectedISO)" id="live-tab-btn">LIVE</button>
   </div>
   <div class="p-content">
     <div class="tab-section active" id="tab-summary"></div>
@@ -1369,6 +1458,7 @@ button{border-radius:2px!important}
     <div class="tab-section" id="tab-news"></div>
     <div class="tab-section" id="tab-conflicts"></div>
     <div class="tab-section" id="tab-cameras"></div>
+    <div class="tab-section" id="tab-live"></div>
   </div>
   <div class="p-foot">
     <span id="p-updated">—</span>
@@ -2063,6 +2153,7 @@ const HOTSPOT_COLORS={
   humanitarian:'rgba(168,85,247,1)',instability:'rgba(245,158,11,1)',
   military_ops:'rgba(59,130,246,1)',cyber:'rgba(34,197,94,1)',
   hybrid:'rgba(168,85,247,1)',wmd:'rgba(239,68,68,1)',
+  air_domain:'rgba(56,189,248,1)',
 };
 let liveHotspots=[];
 
@@ -9621,42 +9712,76 @@ function openCountry(iso){
 }
 
 async function fetchCountryLiveThreat(iso){
-  const countryName=COUNTRIES[iso]?.name||iso;
+  const countryName=(COUNTRIES[iso]&&COUNTRIES[iso].name)||iso;
+  const iso2=ISO3_TO_2[iso]||'';
   const el=document.getElementById('live-threat-score');
   if(!el)return;
-  el.innerHTML='<span style="color:#475569;font-size:9px">◌ computing…</span>';
+  el.innerHTML='<div style="color:#4a5470;font-size:8px;letter-spacing:.14em;padding:6px 0">◌ COMPUTING MULTI-SOURCE THREAT ASSESSMENT…</div>';
   let score=0;
+  const factors=[];
+  const sources=[];
+  // Base: static conflict + threat data
   const intel=INTEL[iso]||{};
-  // Base from existing threat data
-  const sevMap={critical:4,high:3,medium:2,low:1};
-  (intel.threats||[]).forEach(t=>score+=sevMap[t.severity]||0);
-  score=Math.min(score,12);
-  // Boost from GDELT
-  try{
-    const q=encodeURIComponent(`"${countryName}" attack OR war OR strike OR explosion OR offensive OR killed OR missiles`);
-    const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=20&format=json&timespan=24h`;
-    const res=await fetch(url,{signal:AbortSignal.timeout(5000)});
-    if(res.ok){
-      const d=await res.json();
-      const art=d.articles||[];
-      const boost=Math.min(art.length*0.4,4);
-      score=Math.min(score+boost,15);
-    }
-  }catch{}
-  // Conflict count boost
+  const sevMap={critical:8,high:5,medium:3,low:1};
+  (intel.threats||[]).forEach(t=>{score+=sevMap[t.severity]||0;});
+  score=Math.min(score,25);
   const cfCount=CONFLICTS.filter(c=>c.from===iso||c.to===iso).length;
-  score=Math.min(score+cfCount*0.3,15);
-  const pct=((score/15)*100).toFixed(0);
-  const color=score>=10?'#ef4444':score>=7?'#f97316':score>=4?'#fbbf24':'#22c55e';
-  const label=score>=10?'CRITICAL':score>=7?'HIGH':score>=4?'ELEVATED':'GUARDED';
+  score=Math.min(score+cfCount,35);
+  // GDELT 24h event volume and tone
+  try{
+    const q=encodeURIComponent('"'+countryName+'" attack OR war OR strike OR explosion OR killed OR sanctions OR protest OR crisis');
+    const r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=30&format=json&timespan=24h',{signal:AbortSignal.timeout(7000)});
+    if(r.ok){
+      const d=await r.json();
+      const art=d.articles||[];
+      const boost=Math.min(art.length*0.8,20);
+      score=Math.min(score+boost,65);
+      const tones=art.filter(a=>typeof a.tone==='number').map(a=>a.tone);
+      const avgTone=tones.length?tones.reduce((s,t)=>s+t,0)/tones.length:0;
+      const toneBoost=Math.min(Math.max(-avgTone*0.5,0),10);
+      score=Math.min(score+toneBoost,75);
+      if(art.length>0)factors.push(art.length+' GDELT events (24h), tone: '+avgTone.toFixed(1));
+      sources.push('GDELT');
+    }
+  }catch(e){}
+  // Seismic proximity (if seismicData loaded)
+  const c=COUNTRIES[iso];
+  if(c&&typeof seismicData!=='undefined'&&seismicData.length){
+    const nearby=seismicData.filter(e=>typeof _haversineKm==='function'?_haversineKm(e.lat,e.lng,c.lat,c.lng)<500:false);
+    if(nearby.length>0){
+      const maxMag=Math.max(...nearby.map(e=>e.mag));
+      if(maxMag>=6.0){score=Math.min(score+8,83);factors.push('M'+maxMag.toFixed(1)+' earthquake in region');}
+      const susp=nearby.filter(e=>e.suspicious);
+      if(susp.length){score=Math.min(score+15,95);factors.push('SUSPICIOUS SEISMIC — POSSIBLE NUCLEAR TEST');}
+      sources.push('USGS');
+    }
+  }
+  // ReliefWeb active crises
+  try{
+    const rr=await fetch('https://api.reliefweb.int/v1/disasters?appname=intelglobe&filter[field]=country.iso3&filter[value]='+iso+'&fields[include][]=status&limit=5',{signal:AbortSignal.timeout(5000)});
+    if(rr.ok){
+      const rd=await rr.json();
+      const active=(rd.data||[]).filter(d=>d.fields&&(d.fields.status==='current'||d.fields.status==='alert'));
+      if(active.length){score=Math.min(score+active.length*5,90);factors.push(active.length+' active UN crisis declaration(s)');}
+      sources.push('UN RELIEFWEB');
+    }
+  }catch(e){}
+  score=Math.min(Math.round(score),100);
+  const pct=score;
+  const color=score>=80?'#ef4444':score>=60?'#f97316':score>=40?'#fbbf24':score>=20?'#84cc16':'#22c55e';
+  const label=score>=80?'CRITICAL':score>=60?'HIGH':score>=40?'ELEVATED':score>=20?'GUARDED':'MINIMAL';
   el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
-    <span style="font-size:10px;color:${color};font-weight:bold;letter-spacing:.1em">LIVE THREAT INDEX: <span style="font-size:14px">${label}</span></span>
-    <span style="font-size:11px;color:${color};font-weight:bold">${score.toFixed(1)}/15</span>
+    <div>
+      <div style="font-size:7px;color:#4a5470;letter-spacing:.22em;margin-bottom:2px">COMPOSITE THREAT INDEX</div>
+      <div style="font-size:12px;color:${color};font-weight:700;letter-spacing:.08em">${label} <span style="font-size:9px;opacity:.7">${score}/100</span></div>
+    </div>
+    <div style="text-align:right">${sources.map(s=>`<div style="font-size:7px;color:#2a3548;letter-spacing:.08em">${s}</div>`).join('')}</div>
   </div>
-  <div style="height:5px;background:rgba(30,58,95,.4);border-radius:3px;overflow:hidden">
-    <div style="width:${pct}%;height:100%;background:${color};border-radius:3px;transition:width 1s ease"></div>
+  <div style="height:3px;background:rgba(30,58,95,.3);border-radius:1px;overflow:hidden;margin-bottom:5px">
+    <div style="width:${pct}%;height:100%;background:${color};border-radius:1px;transition:width 1.2s ease"></div>
   </div>
-  <div style="font-size:9px;color:#475569;margin-top:3px;letter-spacing:.06em">GDELT EVENT MONITOR · OSINT BASE · CONFLICT DATABASE</div>`;
+  ${factors.length?`<div style="font-size:8px;color:#4a5470;letter-spacing:.05em;line-height:1.5">${factors.map(f=>'⬡ '+f).join(' &nbsp;·&nbsp; ')}</div>`:''}
+  <div style="font-size:7px;color:#2a3548;margin-top:3px;letter-spacing:.1em">GDELT · USGS · UN RELIEFWEB · CONFLICT DB · OSINT</div>`;
 }
 
 // ── Intel Quick-Pop: click any annotated element for CIA explanation ──────
@@ -12890,7 +13015,429 @@ function renderReliefWebCrises(container,crises){
     '<div style="font-size:7px;color:#2a3548;letter-spacing:.1em;margin-top:6px;border-top:1px solid var(--border);padding-top:5px">SOURCE: UN OCHA RELIEFWEB · CLASSIFICATION: UNCLASSIFIED</div>';
 }
 
+// ── COUNTRY LIVE INTEL TAB ───────────────────────────────────────────────────
+let liveTabISO='';
+let liveTabCache={};
+
+async function renderLiveIntelTab(iso){
+  if(!iso)return;
+  const tab=document.getElementById('tab-live');
+  if(!tab)return;
+  liveTabISO=iso;
+  const countryName=(COUNTRIES[iso]&&COUNTRIES[iso].name)||iso;
+  const iso2=ISO3_TO_2[iso]||'';
+  const c=COUNTRIES[iso];
+  tab.innerHTML=`<div style="font-size:8px;color:#4a5470;letter-spacing:.15em;text-align:center;padding:24px">
+    ◌ FETCHING LIVE INTELLIGENCE FOR ${countryName.toUpperCase()}…<br>
+    <span style="color:#2a3548;font-size:7px;margin-top:6px;display:block">GDELT · WORLD BANK · UN · USGS · REDDIT</span>
+  </div>`;
+  // Parallel fetch
+  const [gdeltRes,wbGdp,wbMil,wbPop,rwCrises,redditRes]=await Promise.allSettled([
+    // GDELT events for country
+    fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent('"'+countryName+'"')+'&mode=artlist&maxrecords=20&format=json&timespan=12h',{signal:AbortSignal.timeout(8000)}).then(r=>r.ok?r.json():null),
+    // World Bank GDP growth
+    iso2?fetch('https://api.worldbank.org/v2/country/'+iso2+'/indicator/NY.GDP.MKTP.KD.ZG?format=json&mrv=2',{signal:AbortSignal.timeout(6000)}).then(r=>r.ok?r.json():null):Promise.resolve(null),
+    // World Bank military spending
+    iso2?fetch('https://api.worldbank.org/v2/country/'+iso2+'/indicator/MS.MIL.XPND.GD.ZS?format=json&mrv=2',{signal:AbortSignal.timeout(6000)}).then(r=>r.ok?r.json():null):Promise.resolve(null),
+    // World Bank population
+    iso2?fetch('https://api.worldbank.org/v2/country/'+iso2+'/indicator/SP.POP.TOTL?format=json&mrv=1',{signal:AbortSignal.timeout(6000)}).then(r=>r.ok?r.json():null):Promise.resolve(null),
+    // ReliefWeb crises
+    typeof fetchReliefWebCrises==='function'?fetchReliefWebCrises():Promise.resolve([]),
+    // Reddit worldnews
+    fetch('https://www.reddit.com/r/worldnews/search.json?q='+encodeURIComponent(countryName)+'&limit=6&sort=new&t=week&restrict_sr=1',{signal:AbortSignal.timeout(6000),headers:{'Accept':'application/json'}}).then(r=>r.ok?r.json():null),
+  ]);
+  if(liveTabISO!==iso)return; // Country changed while fetching
+  // Parse results
+  const gdeltArticles=(gdeltRes.status==='fulfilled'&&gdeltRes.value&&gdeltRes.value.articles)||[];
+  const wbGdpVal=_wbVal(wbGdp);
+  const wbMilVal=_wbVal(wbMil);
+  const wbPopVal=_wbVal(wbPop);
+  const allCrises=(rwCrises.status==='fulfilled'?rwCrises.value:[])||[];
+  const countryCrises=allCrises.filter(cr=>cr.iso3===iso||cr.country.toLowerCase().includes(countryName.toLowerCase()));
+  const redditPosts=(redditRes.status==='fulfilled'&&redditRes.value&&redditRes.value.data&&redditRes.value.data.children)||[];
+  // Seismic nearby
+  let nearbyQuakes=[];
+  if(c&&typeof seismicData!=='undefined'&&seismicData.length&&typeof _haversineKm==='function'){
+    nearbyQuakes=seismicData.filter(e=>_haversineKm(e.lat,e.lng,c.lat,c.lng)<500).sort((a,b)=>b.mag-a.mag).slice(0,5);
+  }
+  // Tone calc
+  const tones=gdeltArticles.filter(a=>typeof a.tone==='number').map(a=>a.tone);
+  const avgTone=tones.length?tones.reduce((s,t)=>s+t,0)/tones.length:0;
+  const toneColor=avgTone<-5?'#ef4444':avgTone<-2?'#f97316':avgTone<0?'#fbbf24':avgTone>2?'#22c55e':'#8896b3';
+  // Render
+  const ts=new Date().toISOString().slice(0,19).replace('T',' ')+' UTC';
+  tab.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0 10px;margin-bottom:10px;border-bottom:1px solid var(--border)">
+      <div style="font-size:7px;color:#4a5470;letter-spacing:.2em;text-transform:uppercase">LIVE INTELLIGENCE — ${countryName.toUpperCase()}</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:7px;color:#2a3548;letter-spacing:.06em">${ts}</span>
+        <button onclick="renderLiveIntelTab('${iso}')" style="background:none;border:1px solid var(--border);color:#4a5470;cursor:pointer;padding:2px 7px;border-radius:2px;font-size:7px;font-family:var(--mono);letter-spacing:.1em">↻</button>
+      </div>
+    </div>
+    <!-- GDELT Events -->
+    <div style="margin-bottom:14px">
+      <div class="sec-label">GDELT EVENT MONITOR (12H) &nbsp;<span style="color:#4a5470;font-weight:400">${gdeltArticles.length} EVENTS · AVG TONE: <span style="color:${toneColor}">${avgTone.toFixed(1)}</span></span></div>
+      ${gdeltArticles.length===0?'<div style="color:#4a5470;font-size:9px;text-align:center;padding:12px">NO EVENTS DETECTED IN 12H WINDOW</div>':
+        gdeltArticles.slice(0,12).map(a=>{
+          const et=_classifyEvent&&_classifyEvent(a.title)||'other';
+          const col=et==='conflict'?'#ef4444':et==='military'?'#f97316':et==='nuclear'?'#00d97e':et==='cyber'?'#60a5fa':et==='protest'?'#fbbf24':'#4a5470';
+          return`<div style="padding:5px 8px;background:rgba(8,14,28,.6);border-left:2px solid ${col}30;border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="window.open('${(a.url||'').replace(/'/g,'%27')}','_blank')">
+            <div style="font-size:9px;color:#c8d8ff;line-height:1.35;margin-bottom:2px">${(a.title||'').replace(/</g,'&lt;').slice(0,90)}</div>
+            <div style="display:flex;gap:6px;font-size:7.5px;color:#4a5470">
+              <span style="color:${col}">${et.toUpperCase()}</span>
+              <span>${(a.domain||'').slice(0,20)}</span>
+              ${typeof a.tone==='number'?'<span style="color:'+_sigintToneColor(a.tone)+'">'+a.tone.toFixed(1)+'</span>':''}
+            </div>
+          </div>`;
+        }).join('')
+      }
+    </div>
+    <!-- World Bank Economic -->
+    <div style="margin-bottom:14px">
+      <div class="sec-label">ECONOMIC INTELLIGENCE (WORLD BANK)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        ${_wbCard('GDP GROWTH',wbGdpVal!=null?wbGdpVal.toFixed(1)+'%':'N/A',wbGdpVal!=null&&wbGdpVal<0?'#ef4444':wbGdpVal!=null&&wbGdpVal>3?'#22c55e':'#fbbf24')}
+        ${_wbCard('MILITARY SPEND',wbMilVal!=null?wbMilVal.toFixed(1)+'% GDP':'N/A',wbMilVal!=null&&wbMilVal>4?'#ef4444':wbMilVal!=null&&wbMilVal>2?'#fbbf24':'#22c55e')}
+        ${_wbCard('POPULATION',wbPopVal!=null?_fmtPop(wbPopVal):'N/A','#8896b3')}
+        ${_wbCard('DATA SOURCE','WORLD BANK API','#2a3548')}
+      </div>
+    </div>
+    <!-- UN Crisis -->
+    <div style="margin-bottom:14px">
+      <div class="sec-label">UN RELIEFWEB CRISIS STATUS</div>
+      ${countryCrises.length===0?
+        '<div style="color:#4a5470;font-size:9px;padding:6px 0;letter-spacing:.08em">NO ACTIVE UN CRISIS DECLARATIONS FOR THIS COUNTRY</div>':
+        countryCrises.map(cr=>`<div style="padding:5px 8px;background:rgba(239,68,68,.06);border-left:2px solid #ef444440;border-radius:0 2px 2px 0;margin-bottom:4px">
+          <div style="font-size:9px;color:#fca5a5;margin-bottom:2px">${(cr.name||'').replace(/</g,'&lt;').slice(0,80)}</div>
+          <div style="font-size:7.5px;color:#4a5470">${cr.country} · ${cr.type} · <span style="color:${cr.status==='current'?'#ef4444':'#f97316'}">${(cr.status||'').toUpperCase()}</span></div>
+        </div>`).join('')
+      }
+    </div>
+    <!-- Seismic -->
+    <div style="margin-bottom:14px">
+      <div class="sec-label">SEISMIC ACTIVITY — 500KM RADIUS (USGS)</div>
+      ${nearbyQuakes.length===0?
+        '<div style="color:#4a5470;font-size:9px;padding:6px 0;letter-spacing:.08em">NO M4.5+ SEISMIC EVENTS IN REGION (7-DAY WINDOW)</div>':
+        nearbyQuakes.map(eq=>`<div style="padding:5px 8px;background:rgba(251,191,36,.04);border-left:2px solid ${eq.suspicious?'#ef4444':'#fbbf2430'};border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="openSeismicAlert&&openSeismicAlert(${JSON.stringify(eq)})">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:${eq.mag>=6?'#ef4444':eq.mag>=5?'#f97316':'#fbbf24'};font-weight:700">M${eq.mag}</span>
+            <span style="font-size:7px;color:#4a5470">${eq.depth}km depth</span>
+          </div>
+          <div style="font-size:8.5px;color:#8896b3;margin-top:1px">${(eq.place||'').replace(/</g,'&lt;')}</div>
+          ${eq.suspicious?'<div style="font-size:7px;color:#ef4444;letter-spacing:.1em;margin-top:2px">⚠ NEAR KNOWN NUCLEAR TEST SITE</div>':''}
+        </div>`).join('')
+      }
+    </div>
+    <!-- Reddit OSINT -->
+    <div style="margin-bottom:14px">
+      <div class="sec-label">SOCIAL MEDIA OSINT (REDDIT/r/WORLDNEWS)</div>
+      ${redditPosts.length===0?
+        '<div style="color:#4a5470;font-size:9px;padding:6px 0;letter-spacing:.08em">NO RECENT REDDIT MENTIONS FOUND</div>':
+        redditPosts.slice(0,5).map(p=>{
+          const pd=p.data||{};
+          const score=pd.score||0;
+          const comments=pd.num_comments||0;
+          return`<div style="padding:5px 8px;background:rgba(8,14,28,.6);border-left:2px solid rgba(10,110,245,.25);border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="window.open('https://reddit.com${(pd.permalink||'').replace(/'/g,'%27')}','_blank')">
+            <div style="font-size:9px;color:#c8d8ff;line-height:1.35;margin-bottom:2px">${(pd.title||'').replace(/</g,'&lt;').slice(0,90)}</div>
+            <div style="font-size:7.5px;color:#4a5470">▲ ${score} &nbsp;·&nbsp; ${comments} comments &nbsp;·&nbsp; r/${pd.subreddit||'worldnews'}</div>
+          </div>`;
+        }).join('')
+      }
+    </div>
+    <div style="font-size:7px;color:#2a3548;letter-spacing:.1em;border-top:1px solid var(--border);padding-top:6px;margin-top:4px">
+      SOURCES: GDELT PROJECT · WORLD BANK API · UN OCHA RELIEFWEB · USGS · REDDIT<br>
+      CLASSIFICATION: UNCLASSIFIED // OPEN SOURCE INTELLIGENCE // OSINT
+    </div>
+  `;
+}
+
+function _wbVal(res){
+  try{
+    if(res.status!=='fulfilled'||!res.value)return null;
+    const data=res.value;
+    if(!Array.isArray(data)||data.length<2)return null;
+    const rows=data[1];
+    if(!Array.isArray(rows)||!rows.length)return null;
+    for(const row of rows){if(row.value!==null&&row.value!==undefined)return row.value;}
+    return null;
+  }catch{return null;}
+}
+
+function _wbCard(label,val,color){
+  return`<div style="background:rgba(8,14,28,.7);border:1px solid var(--border);border-radius:2px;padding:7px 9px">
+    <div style="font-size:7px;color:#4a5470;letter-spacing:.15em;margin-bottom:3px">${label}</div>
+    <div style="font-size:11px;color:${color};font-weight:600">${val}</div>
+  </div>`;
+}
+
+function _fmtPop(n){
+  if(n>=1e9)return(n/1e9).toFixed(2)+'B';
+  if(n>=1e6)return(n/1e6).toFixed(1)+'M';
+  if(n>=1e3)return(n/1e3).toFixed(0)+'K';
+  return String(n);
+}
+
+// ── INTELLIGENCE SEARCH TERMINAL ─────────────────────────────────────────────
+function openIntelSearch(){
+  document.getElementById('search-modal').classList.add('open');
+  document.getElementById('search-backdrop').style.display='block';
+  setTimeout(()=>document.getElementById('search-input').focus(),100);
+}
+
+function closeIntelSearch(){
+  document.getElementById('search-modal').classList.remove('open');
+  document.getElementById('search-backdrop').style.display='none';
+}
+
+async function executeIntelSearch(){
+  const query=(document.getElementById('search-input').value||'').trim();
+  if(!query)return;
+  const results=document.getElementById('search-results');
+  results.innerHTML='<div style="color:#4a5470;font-size:9px;text-align:center;padding:30px;letter-spacing:.12em">◌ QUERYING INTELLIGENCE SOURCES…<br><span style="color:#2a3548;font-size:8px;margin-top:6px;display:block">GDELT · REDDIT · WIKIPEDIA</span></div>';
+  const [gdeltR,redditNewsR,redditGeoR,wikiR]=await Promise.allSettled([
+    fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(query)+'&mode=artlist&maxrecords=20&format=json&timespan=7d',{signal:AbortSignal.timeout(10000)}).then(r=>r.ok?r.json():null),
+    fetch('https://www.reddit.com/r/worldnews/search.json?q='+encodeURIComponent(query)+'&limit=8&sort=new&t=month',{signal:AbortSignal.timeout(6000),headers:{Accept:'application/json'}}).then(r=>r.ok?r.json():null),
+    fetch('https://www.reddit.com/r/geopolitics/search.json?q='+encodeURIComponent(query)+'&limit=5&sort=new&t=month',{signal:AbortSignal.timeout(6000),headers:{Accept:'application/json'}}).then(r=>r.ok?r.json():null),
+    fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(query),{signal:AbortSignal.timeout(5000)}).then(r=>r.ok?r.json():null),
+  ]);
+  let html='';
+  // Wikipedia summary
+  if(wikiR.status==='fulfilled'&&wikiR.value&&wikiR.value.extract){
+    const w=wikiR.value;
+    html+=`<div class="search-source-label">◉ WIKIPEDIA INTELLIGENCE SUMMARY</div>
+    <div style="background:rgba(8,14,28,.7);border:1px solid var(--border);border-radius:2px;padding:10px 12px;margin-bottom:8px">
+      <div style="font-size:10px;color:#c8d8ff;font-weight:600;margin-bottom:5px">${(w.title||'').replace(/</g,'&lt;')}</div>
+      <div style="font-size:9.5px;color:#8896b3;line-height:1.55">${(w.extract||'').slice(0,400).replace(/</g,'&lt;')}${w.extract.length>400?'…':''}</div>
+      ${w.content_urls&&w.content_urls.desktop?`<a href="${w.content_urls.desktop.page}" target="_blank" style="font-size:8px;color:rgba(10,110,245,.7);letter-spacing:.1em;margin-top:6px;display:inline-block">VIEW FULL ARTICLE →</a>`:''}
+    </div>`;
+  }
+  // GDELT articles
+  const gdeltArticles=(gdeltR.status==='fulfilled'&&gdeltR.value&&gdeltR.value.articles)||[];
+  if(gdeltArticles.length){
+    html+=`<div class="search-source-label">⬡ GDELT NEWS INTELLIGENCE (${gdeltArticles.length} RESULTS)</div>`;
+    html+=gdeltArticles.slice(0,12).map(a=>{
+      const et=_classifyEvent&&_classifyEvent(a.title)||'other';
+      const col=et==='conflict'?'#ef4444':et==='military'?'#f97316':et==='nuclear'?'#00d97e':et==='cyber'?'#60a5fa':'#4a5470';
+      return`<div class="search-result-item" onclick="window.open('${(a.url||'').replace(/'/g,'%27')}','_blank')">
+        <div class="search-result-title">${(a.title||'').replace(/</g,'&lt;').slice(0,100)}</div>
+        <div class="search-result-meta"><span style="color:${col}">${et.toUpperCase()}</span> &nbsp;·&nbsp; ${a.domain||''} &nbsp;${typeof a.tone==='number'?'&nbsp;·&nbsp; TONE: <span style="color:'+_sigintToneColor(a.tone)+'">'+a.tone.toFixed(1)+'</span>':''}</div>
+      </div>`;
+    }).join('');
+  }
+  // Reddit
+  const redditNewsItems=((redditNewsR.status==='fulfilled'&&redditNewsR.value&&redditNewsR.value.data&&redditNewsR.value.data.children)||[]).slice(0,6);
+  const redditGeoItems=((redditGeoR.status==='fulfilled'&&redditGeoR.value&&redditGeoR.value.data&&redditGeoR.value.data.children)||[]).slice(0,4);
+  const redditAll=[...redditNewsItems,...redditGeoItems];
+  if(redditAll.length){
+    html+=`<div class="search-source-label">◈ SOCIAL MEDIA OSINT (REDDIT)</div>`;
+    html+=redditAll.map(p=>{
+      const pd=p.data||{};
+      return`<div class="search-result-item" onclick="window.open('https://reddit.com${(pd.permalink||'').replace(/'/g,'%27')}','_blank')">
+        <div class="search-result-title">${(pd.title||'').replace(/</g,'&lt;').slice(0,100)}</div>
+        <div class="search-result-meta">▲ ${pd.score||0} &nbsp;·&nbsp; r/${pd.subreddit||'worldnews'} &nbsp;·&nbsp; ${pd.num_comments||0} comments</div>
+      </div>`;
+    }).join('');
+  }
+  if(!html)html='<div style="color:#ef4444;font-size:9px;text-align:center;padding:20px;letter-spacing:.12em">NO RESULTS FOUND — TRY DIFFERENT TERMS</div>';
+  html+=`<div style="font-size:7px;color:#2a3548;letter-spacing:.1em;border-top:1px solid var(--border);padding-top:6px;margin-top:10px">SOURCES: GDELT PROJECT · REDDIT · WIKIPEDIA · CLASSIFICATION: UNCLASSIFIED // OSINT</div>`;
+  results.innerHTML=html;
+}
+
+// ── ALERT/WATCHLIST SYSTEM ────────────────────────────────────────────────────
+let alertQueue=[];
+let alertModalOpen=false;
+let watchlistItems=JSON.parse(localStorage.getItem('intel-watchlist')||'[]');
+let watchlistLastCheck={};
+let watchlistTimer=null;
+
+function toggleAlertModal(){
+  alertModalOpen=!alertModalOpen;
+  const m=document.getElementById('alert-modal');
+  if(m)m.classList.toggle('open',alertModalOpen);
+  if(alertModalOpen){
+    renderAlertList();
+    renderWatchlistChips();
+    // Clear alert badge
+    const bell=document.getElementById('alert-bell');
+    const cnt=document.getElementById('alert-count');
+    if(bell)bell.classList.remove('has-alerts');
+    if(cnt)cnt.style.display='none';
+    alertQueue.forEach(a=>{a.read=true;});
+  }
+}
+
+function addWatchlistItem(){
+  const inp=document.getElementById('watchlist-input');
+  const val=(inp?inp.value:'').trim();
+  if(!val)return;
+  if(!watchlistItems.includes(val)){
+    watchlistItems.push(val);
+    localStorage.setItem('intel-watchlist',JSON.stringify(watchlistItems));
+    renderWatchlistChips();
+    inp.value='';
+    scheduleWatchlistPoll();
+  }
+}
+
+function removeWatchlistItem(val){
+  watchlistItems=watchlistItems.filter(w=>w!==val);
+  localStorage.setItem('intel-watchlist',JSON.stringify(watchlistItems));
+  renderWatchlistChips();
+}
+
+function renderWatchlistChips(){
+  const c=document.getElementById('watchlist-chips');
+  if(!c)return;
+  c.innerHTML=watchlistItems.map(w=>`<span class="watchlist-chip" onclick="removeWatchlistItem('${w.replace(/'/g,'\\'+'\'')}')" title="Click to remove">${w} ✕</span>`).join('');
+}
+
+function renderAlertList(){
+  const l=document.getElementById('alert-list');
+  if(!l)return;
+  if(!alertQueue.length){l.innerHTML='<div style="color:#4a5470;font-size:9px;text-align:center;padding:16px;letter-spacing:.1em">NO ALERTS — ADD WATCHLIST ITEMS BELOW</div>';return;}
+  l.innerHTML=alertQueue.slice().reverse().slice(0,20).map(a=>`<div class="alert-item${a.critical?' critical':''}">
+    <div class="alert-time">${a.time}</div>
+    <div class="alert-text">${(a.text||'').replace(/</g,'&lt;').slice(0,120)}</div>
+  </div>`).join('');
+}
+
+function _pushAlert(text,critical){
+  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' UTC';
+  alertQueue.push({text,critical:!!critical,time:ts,read:alertModalOpen});
+  if(!alertModalOpen){
+    const bell=document.getElementById('alert-bell');
+    const cnt=document.getElementById('alert-count');
+    const unread=alertQueue.filter(a=>!a.read).length;
+    if(bell)bell.classList.add('has-alerts');
+    if(cnt){cnt.textContent=unread>9?'9+':String(unread);cnt.style.display='flex';}
+    // Browser notification
+    if(Notification.permission==='granted'){
+      try{new Notification('Intel Globe Alert',{body:text,icon:'/favicon.ico'});}catch(e){}
+    }
+  }
+  if(alertModalOpen)renderAlertList();
+}
+
+async function pollWatchlistItem(item){
+  try{
+    const last=watchlistLastCheck[item]||0;
+    const timespan=last?'15m':'1h';
+    const q=encodeURIComponent('"'+item+'" attack OR war OR strike OR arrested OR sanctions');
+    const r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=5&format=json&timespan='+timespan,{signal:AbortSignal.timeout(6000)});
+    if(!r.ok)return;
+    const d=await r.json();
+    const arts=(d.articles||[]);
+    if(arts.length&&last>0){
+      // Check if any are genuinely new
+      const tones=arts.filter(a=>typeof a.tone==='number').map(a=>a.tone);
+      const avgTone=tones.length?tones.reduce((s,t)=>s+t,0)/tones.length:0;
+      const isCritical=avgTone<-5||arts.length>=3;
+      if(arts.length>=2||avgTone<-4){
+        _pushAlert('['+item.toUpperCase()+'] '+arts[0].title,isCritical);
+      }
+    }
+    watchlistLastCheck[item]=Date.now();
+  }catch(e){}
+}
+
+function scheduleWatchlistPoll(){
+  if(watchlistTimer)return;
+  const bell=document.getElementById('alert-bell');
+  if(bell)bell.style.display='flex';
+  watchlistTimer=setInterval(async()=>{
+    for(const item of watchlistItems)await pollWatchlistItem(item);
+  },5*60*1000);
+  // Poll immediately if we have items
+  if(watchlistItems.length)watchlistItems.forEach(item=>pollWatchlistItem(item));
+  // Request notification permission
+  if(Notification&&Notification.permission==='default'){
+    Notification.requestPermission().catch(()=>{});
+  }
+}
+
+// ── AIR DOMAIN AWARENESS (OpenSky Network) ───────────────────────────────────
+let airDomainActive=false;
+let airDomainTimer=null;
+let airDomainPins=[];
+
+const AIR_ZONES=[
+  {name:'MIDDLE EAST',lamin:12,lomin:28,lamax:42,lomax:62},
+  {name:'EUROPE/UKRAINE',lamin:44,lomin:22,lamax:55,lomax:42},
+  {name:'SOUTH CHINA SEA',lamin:15,lomin:110,lamax:32,lomax:130},
+  {name:'KOREAN PENINSULA',lamin:34,lomin:124,lamax:42,lomax:132},
+];
+
+const MIL_CALLSIGN_PATTERNS=/^(RCH|CTM|JAKE|MAGIC|REAPER|GHOST|POLO|EXEC|REACH|ATLAS|EAGLE|VENOM|KNIFE|DOOM|SPAR|SAM\d|AFO|UAV|NATO|USAF|USN |USMC|RAF |RAAF|NATO)/i;
+
+async function fetchOpenSkyZone(zone){
+  try{
+    const url=`https://opensky-network.org/api/states/all?lamin=${zone.lamin}&lomin=${zone.lomin}&lamax=${zone.lamax}&lomax=${zone.lomax}`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return[];
+    const d=await r.json();
+    return(d.states||[]).map(s=>{
+      const callsign=(s[1]||'').trim();
+      const lng=s[5],lat=s[6];
+      const alt=s[7]; // baro altitude in meters
+      const vel=s[9]; // velocity m/s
+      const onGround=s[8];
+      if(!lat||!lng||onGround)return null;
+      const isMil=MIL_CALLSIGN_PATTERNS.test(callsign);
+      return{lat,lng,callsign:callsign||'N/A',country:s[2]||'',alt:Math.round(alt||0),vel:Math.round((vel||0)*1.944), // kts
+        isMil,zone:zone.name,icao:s[0]||''};
+    }).filter(Boolean);
+  }catch{return[];}
+}
+
+async function refreshAirDomain(){
+  const results=await Promise.allSettled(AIR_ZONES.map(z=>fetchOpenSkyZone(z)));
+  let allAircraft=[];
+  for(const r of results){if(r.status==='fulfilled')allAircraft=[...allAircraft,...r.value];}
+  // Update globe pins
+  airDomainPins=allAircraft.map(a=>({
+    lat:a.lat,lng:a.lng,type:'air_domain',
+    severity:a.isMil?'high':'low',
+    label:(a.isMil?'[MIL] ':'')+a.callsign+' — '+a.zone+(a.alt?' @ FL'+Math.round(a.alt/30.48):''),
+    live:true,airDomain:true,isMil:a.isMil,
+    country:'',
+  }));
+  // Merge into liveHotspots
+  liveHotspots=[...liveHotspots.filter(h=>!h.airDomain),...airDomainPins];
+  // Update button label
+  const btn=document.getElementById('lb-airdom');
+  const milCount=allAircraft.filter(a=>a.isMil).length;
+  if(btn){
+    btn.innerHTML=`<span class="lb-dot" style="background:#38bdf8;opacity:1;box-shadow:0 0 4px #38bdf8"></span>AIR DOMAIN <span style="color:#38bdf8;margin-left:2px">${allAircraft.length}</span> <span class="lb-src live">LIVE</span>`;
+  }
+  if(milCount>0&&airDomainActive){
+    _pushAlert('AIR: '+milCount+' military callsign(s) detected in conflict zones',false);
+  }
+}
+
+function toggleAirDomain(){
+  airDomainActive=!airDomainActive;
+  const btn=document.getElementById('lb-airdom');
+  if(btn)btn.classList.toggle('active',airDomainActive);
+  if(airDomainActive){
+    refreshAirDomain();
+    airDomainTimer=setInterval(refreshAirDomain,30000);
+  } else {
+    clearInterval(airDomainTimer);airDomainTimer=null;
+    liveHotspots=liveHotspots.filter(h=>!h.airDomain);
+    if(btn)btn.innerHTML='<span class="lb-dot" style="background:#38bdf8"></span>AIR DOMAIN<span class="lb-src live">LIVE</span>';
+  }
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
+// Initialize watchlist system if items exist
+if(watchlistItems.length){scheduleWatchlistPoll();}
+// Show alert bell if header has h-right div (it does)
+setTimeout(function(){
+  const bell=document.getElementById('alert-bell');
+  if(bell)bell.style.display='flex';
+  // 10-minute GDELT globe refresh
+  setInterval(fetchLiveHotspots,10*60*1000);
+},2000);
 // Live ticker update every 10 minutes
 async function fetchTickerLive(){
   try{
