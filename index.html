@@ -1100,6 +1100,20 @@ button{border-radius:2px!important}
 #space-wx-ind:hover{background:rgba(56,189,248,.08)}
 #space-wx-ind.kp-warn{border-color:rgba(249,115,22,.5);color:#fb923c}
 #space-wx-ind.kp-danger{border-color:rgba(239,68,68,.5);color:#ef4444;animation:blink 1.2s step-start infinite}
+/* Maritime */
+#space-wx-ind.kp-storm{border-color:rgba(239,68,68,.5);color:#ef4444;animation:blink 1.2s step-start infinite}
+/* Global Risk Rankings */
+#rankings-btn{position:fixed;top:55px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(249,115,22,.35);border-radius:2px;color:#fb923c;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px}
+#rankings-btn:hover{background:rgba(249,115,22,.12);border-color:#f97316}
+#rankings-panel{display:none;position:fixed;top:82px;right:20px;z-index:350;width:300px;max-height:75vh;background:rgba(4,7,16,.99);border:1px solid rgba(249,115,22,.3);border-top:2px solid rgba(249,115,22,.6);border-radius:2px;font-family:var(--mono);flex-direction:column;overflow:hidden}
+#rankings-panel.open{display:flex}
+.rank-row{display:flex;align-items:center;padding:5px 10px;border-bottom:1px solid rgba(30,45,66,.4);cursor:pointer;gap:5px}
+.rank-row:hover{background:rgba(249,115,22,.06)}
+.rank-num{font-size:8px;color:#4a5470;min-width:18px;text-align:right;flex-shrink:0}
+.rank-name{font-size:9px;color:#c8d8ff;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-bar-wrap{width:50px;height:4px;background:rgba(30,45,66,.6);border-radius:1px;overflow:hidden;flex-shrink:0}
+.rank-bar-fill{height:100%;border-radius:1px;transition:width .8s ease}
+.rank-level{font-size:7px;min-width:55px;text-align:right;letter-spacing:.05em;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -1142,6 +1156,7 @@ button{border-radius:2px!important}
   <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"   title="Live military flights — ADS-B Exchange real-time feed (adsb.lol)"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span><span class="lb-src live">● LIVE</span></button>
   <button class="layer-btn" id="lb-seismic" onclick="toggleSeismicLayer()" title="USGS earthquake data — live seismic monitoring"><span class="lb-dot" style="background:#fbbf24"></span>SEISMIC<span class="lb-src">USGS</span></button>
   <button class="layer-btn" id="lb-airdom" onclick="toggleAirDomain()" title="Real aircraft positions over conflict zones (OpenSky Network)"><span class="lb-dot" style="background:#38bdf8"></span>AIR DOMAIN<span class="lb-src live">LIVE</span></button>
+  <button class="layer-btn" id="lb-maritime" onclick="toggleMaritimeLayer()" title="Live maritime incidents — Houthi Red Sea, South China Sea, chokepoints (GDELT + OSINT)"><span class="lb-dot" style="background:#22d3ee"></span>&#x1F6A2; MARITIME<span class="lb-count" id="lbc-maritime">&#x2014;</span><span class="lb-src live">LIVE</span></button>
   <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signals — Reddit · Bluesky · Telegram · GDELT news · X/Twitter"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span><span class="lb-src live">● LIVE</span></button>
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
@@ -1239,6 +1254,16 @@ button{border-radius:2px!important}
 <div id="intel-search-btn" onclick="openIntelSearch()">🔍 INTEL SEARCH</div>
 <div id="icc-btn" onclick="openICC()">⬡ COMMAND CTR</div>
 <div id="export-btn" onclick="exportIntelBrief()">⬇ EXPORT BRIEF</div>
+<div id="rankings-btn" onclick="toggleRankings()">⬡ RANKINGS</div>
+<div id="rankings-panel">
+  <div style="padding:8px 12px;border-bottom:1px solid rgba(249,115,22,.15);background:rgba(249,115,22,.05);display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
+    <div style="font-size:9px;color:#fb923c;letter-spacing:.2em;font-weight:700">GLOBAL RISK RANKINGS</div>
+    <button onclick="toggleRankings()" style="background:none;border:none;color:#4a5470;cursor:pointer;font-size:12px">✕</button>
+  </div>
+  <div style="font-size:7px;color:#4a5470;letter-spacing:.1em;padding:5px 10px;border-bottom:1px solid var(--border);flex-shrink:0">COMPOSITE: ALERT LEVEL · HOTSPOTS · UN CRISES · OSINT</div>
+  <div style="overflow-y:auto;flex:1" id="rankings-list"><div style="color:#4a5470;font-size:9px;text-align:center;padding:20px">COMPUTING…</div></div>
+  <div style="font-size:7px;color:#2a3548;padding:5px 10px;border-top:1px solid var(--border);flex-shrink:0;letter-spacing:.08em">GDELT · UN OCHA · OSINT // UNCLASSIFIED</div>
+</div>
 <div id="icc-overlay">
   <div id="icc-header">
     <div>
@@ -2214,6 +2239,7 @@ const HOTSPOT_COLORS={
   military_ops:'rgba(59,130,246,1)',cyber:'rgba(34,197,94,1)',
   hybrid:'rgba(168,85,247,1)',wmd:'rgba(239,68,68,1)',
   air_domain:'rgba(56,189,248,1)',
+  maritime:'rgba(34,211,238,1)',
 };
 let liveHotspots=[];
 
@@ -13734,6 +13760,167 @@ async function renderGdeltTrend(iso,container){
   }catch(e){container.innerHTML='<div style="color:#4a5470;font-size:8px">TREND UNAVAILABLE</div>';}
 }
 
+// ── MARITIME DOMAIN INTELLIGENCE ─────────────────────────────────────────────
+const MARITIME_CHOKEPOINTS=[
+  {name:'Strait of Hormuz',lat:26.58,lng:56.25,risk:'critical',desc:'20% of global oil. Iran interdiction threat. IRGC naval harassment ongoing.'},
+  {name:'Bab el-Mandeb Strait',lat:12.6,lng:43.4,risk:'critical',desc:'Houthi anti-ship missiles since Oct 2023. EU/US naval escort operations active.'},
+  {name:'South China Sea',lat:10.5,lng:114.0,risk:'high',desc:'PRC island fortifications. PLAN patrols. Philippine Coast Guard confrontations ongoing.'},
+  {name:'Strait of Malacca',lat:2.5,lng:101.5,risk:'medium',desc:'One-third of global trade. Piracy risk. Singapore/Indonesia/Malaysia joint patrols.'},
+  {name:'Taiwan Strait',lat:24.0,lng:120.0,risk:'high',desc:'PLA Navy frequent transits. US carrier deterrence. Blockade scenario rehearsals.'},
+  {name:'Suez Canal',lat:30.5,lng:32.5,risk:'medium',desc:'Global container chokepoint. Houthi threat diverted traffic via Cape of Good Hope.'},
+  {name:'Black Sea',lat:44.0,lng:32.0,risk:'high',desc:'Russian naval blockade Ukraine grain corridor. Mine hazards. NATO monitoring.'},
+  {name:'Kerch Strait',lat:45.34,lng:36.62,risk:'high',desc:'Ukraine struck Crimea Bridge. Russian Black Sea Fleet access route. Contested.'},
+  {name:'Luzon Strait',lat:19.5,lng:122.0,risk:'medium',desc:'Key PLAN access from Pacific to SCS. US/Japan submarine patrol corridor.'},
+  {name:'Cape of Good Hope',lat:-34.4,lng:18.5,risk:'low',desc:'Alternative to Suez. Traffic surged 40% due to Houthi Red Sea attacks.'},
+];
+
+let _maritimeActive=false,_maritimeTimer=null,_maritimeCacheTs=0,_maritimeCacheData=null;
+
+async function fetchMaritimeIncidents(){
+  const now=Date.now();
+  if(_maritimeCacheData&&now-_maritimeCacheTs<15*60*1000)return _maritimeCacheData;
+  const queries=[
+    'Houthi ship attack Red Sea missile',
+    'South China Sea vessel Philippines China',
+    'Strait Hormuz Iran tanker',
+    'Black Sea naval Ukraine Russia',
+  ];
+  const results=await Promise.allSettled(queries.map(function(q){
+    return fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+encodeURIComponent(q)+'&mode=pointdata&format=geojson&timespan=48h',{signal:AbortSignal.timeout(6000)})
+      .then(function(r){return r.ok?r.json():null;});
+  }));
+  const pins=[];
+  const seen=new Set();
+  results.forEach(function(r,i){
+    if(r.status!=='fulfilled'||!r.value)return;
+    (r.value.features||[]).slice(0,6).forEach(function(f){
+      if(!f.geometry||!f.geometry.coordinates)return;
+      const lng=f.geometry.coordinates[0],lat=f.geometry.coordinates[1];
+      const key=Math.round(lat*2)+','+Math.round(lng*2);
+      if(seen.has(key))return;
+      seen.add(key);
+      const props=f.properties||{};
+      pins.push({lat:lat,lng:lng,type:'maritime',severity:'high',label:((props.name||props.title||queries[i]).replace(/</g,'&lt;').slice(0,60)),live:true,maritime:true,country:''});
+    });
+  });
+  MARITIME_CHOKEPOINTS.forEach(function(cp){
+    pins.push({lat:cp.lat,lng:cp.lng,type:'maritime',severity:cp.risk,label:cp.name,live:false,maritime:true,isChokepoint:true,detail:cp.desc,country:''});
+  });
+  _maritimeCacheTs=now;_maritimeCacheData=pins;
+  return pins;
+}
+
+async function toggleMaritimeLayer(){
+  _maritimeActive=!_maritimeActive;
+  const btn=document.getElementById('lb-maritime');
+  if(btn)btn.classList.toggle('active',_maritimeActive);
+  if(!_maritimeActive){
+    liveHotspots=liveHotspots.filter(function(h){return!h.maritime;});
+    const cntEl=document.getElementById('lbc-maritime');
+    if(cntEl)cntEl.textContent='—';
+    return;
+  }
+  const pins=await fetchMaritimeIncidents();
+  liveHotspots=[...liveHotspots.filter(function(h){return!h.maritime;}),...pins];
+  const cntEl=document.getElementById('lbc-maritime');
+  if(cntEl)cntEl.textContent=String(pins.length);
+  if(btn)btn.innerHTML='<span class="lb-dot" style="background:#22d3ee;box-shadow:0 0 4px #22d3ee"></span>\u{1F6A2} MARITIME<span class="lb-count" id="lbc-maritime">'+pins.length+'</span><span class="lb-src live">LIVE</span>';
+  if(_maritimeTimer)clearInterval(_maritimeTimer);
+  _maritimeTimer=setInterval(async function(){
+    if(!_maritimeActive){clearInterval(_maritimeTimer);_maritimeTimer=null;return;}
+    _maritimeCacheTs=0;
+    const np=await fetchMaritimeIncidents();
+    liveHotspots=[...liveHotspots.filter(function(h){return!h.maritime;}),...np];
+  },15*60*1000);
+}
+
+// ── GLOBAL RISK RANKINGS ─────────────────────────────────────────────────────
+let _rankingsOpen=false;
+
+function toggleRankings(){
+  _rankingsOpen=!_rankingsOpen;
+  const p=document.getElementById('rankings-panel');
+  if(p)p.classList.toggle('open',_rankingsOpen);
+  if(_rankingsOpen)_renderRankings();
+}
+
+async function _renderRankings(){
+  const el=document.getElementById('rankings-list');
+  if(!el)return;
+  const ALERT_SCORE={'CRITICAL':40,'HIGH':25,'ELEVATED':15,'MEDIUM':10,'GUARDED':5,'LOW':2,'MINIMAL':1};
+  const hsMap={};
+  (typeof liveHotspots!=='undefined'?liveHotspots:[]).forEach(function(h){
+    if(h.country)hsMap[h.country]=(hsMap[h.country]||0)+(h.severity==='critical'?8:h.severity==='high'?4:h.severity==='medium'?2:1);
+  });
+  let crisisMap={};
+  try{
+    const crises=await(typeof fetchReliefWebCrises==='function'?fetchReliefWebCrises():Promise.resolve([]));
+    (crises||[]).forEach(function(c){if(c.iso3&&(c.status==='current'||c.status==='alert'))crisisMap[c.iso3]=(crisisMap[c.iso3]||0)+12;});
+  }catch(e){}
+  const scored=Object.values(typeof COUNTRIES!=='undefined'?COUNTRIES:{}).map(function(c){
+    const base=ALERT_SCORE[c.alertLevel]||0;
+    const hs=hsMap[c.iso]||0;
+    const crisis=crisisMap[c.iso]||0;
+    return{iso:c.iso,name:c.name,alertLevel:c.alertLevel||'LOW',score:base+hs+crisis};
+  }).sort(function(a,b){return b.score-a.score;}).slice(0,25);
+  const maxScore=scored.length&&scored[0].score>0?scored[0].score:1;
+  const LEVEL_COLORS={'CRITICAL':'#ef4444','HIGH':'#f97316','ELEVATED':'#fbbf24','MEDIUM':'#84cc16','GUARDED':'#22c55e','LOW':'#4a5470','MINIMAL':'#2a3548'};
+  el.innerHTML=scored.map(function(c,i){
+    const col=LEVEL_COLORS[c.alertLevel]||'#4a5470';
+    const pct=Math.round(c.score/maxScore*100);
+    return'<div class="rank-row" onclick="openCountry&&openCountry(\''+c.iso.replace(/'/g,'')+'\')">'
+      +'<span class="rank-num">'+(i+1)+'</span>'
+      +'<span class="rank-name">'+c.name.replace(/</g,'&lt;')+'</span>'
+      +'<div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+pct+'%;background:'+col+'"></div></div>'
+      +'<span class="rank-level" style="color:'+col+'">'+c.alertLevel+'</span>'
+      +'</div>';
+  }).join('');
+}
+
+// ── CISA KEV CYBER INTELLIGENCE ──────────────────────────────────────────────
+let _cisaKevTs=0,_cisaKevData=null;
+
+async function fetchCisaKev(){
+  const now=Date.now();
+  if(_cisaKevData&&now-_cisaKevTs<60*60*1000)return _cisaKevData;
+  try{
+    const r=await fetch('https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json',{signal:AbortSignal.timeout(10000)});
+    if(!r.ok)return null;
+    const data=await r.json();
+    _cisaKevTs=now;_cisaKevData=data;
+    return data;
+  }catch(e){return null;}
+}
+
+async function injectCisaKevToSIGINT(){
+  const data=await fetchCisaKev();
+  if(!data||!data.vulnerabilities)return;
+  const cutoff=new Date(Date.now()-30*24*60*60*1000);
+  const recent=data.vulnerabilities
+    .filter(function(v){return v.dateAdded&&new Date(v.dateAdded)>cutoff;})
+    .sort(function(a,b){return new Date(b.dateAdded)-new Date(a.dateAdded);})
+    .slice(0,8);
+  if(!recent.length)return;
+  const entries=recent.map(function(v){
+    return{
+      title:'CISA KEV: '+v.cveID+' — '+v.vendorProject+' '+v.product+' ('+v.shortDescription.slice(0,60)+')',
+      url:'https://www.cisa.gov/known-exploited-vulnerabilities-catalog',
+      domain:'cisa.gov',
+      tone:-6,
+      type:'cyber',
+      datePublish:v.dateAdded,
+      cveId:v.cveID
+    };
+  });
+  if(typeof window._sigintFeedItems!=='undefined'){
+    window._sigintFeedItems=[...entries,...(window._sigintFeedItems||[]).filter(function(e){return!e.cveId;})];
+    if(typeof renderSIGINTFeed==='function')renderSIGINTFeed();
+  }
+  if(recent.length>0&&typeof _pushAlert==='function'){
+    _pushAlert('CISA KEV: '+recent.length+' new vulnerabilities added — '+recent[0].vendorProject+' '+recent[0].product,false);
+  }
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -13743,6 +13930,9 @@ setTimeout(function(){
   if(bell)bell.style.display='flex';
   // 10-minute GDELT globe refresh
   setInterval(fetchLiveHotspots,10*60*1000);
+  // CISA KEV initial load + hourly refresh
+  injectCisaKevToSIGINT();
+  setInterval(injectCisaKevToSIGINT,60*60*1000);
 },2000);
 fetchSpaceWeather();
 // Live ticker update every 10 minutes
