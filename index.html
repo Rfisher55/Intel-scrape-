@@ -1226,7 +1226,7 @@ button{border-radius:2px!important}
 </div>
 
 <div id="globe-wrap"><canvas id="globe"></canvas></div>
-<div id="zoom-hint">Scroll to zoom · Drag to pan · Pinch on mobile</div>
+<div id="zoom-hint">Scroll to zoom · Drag to pan · ESC = close panels · / = search · R = rankings</div>
 <div id="hud-corners"></div>
 
 <!-- Data layer controls -->
@@ -1251,6 +1251,9 @@ button{border-radius:2px!important}
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network disruptions — documented internet shutdowns, cable cuts, GPS jamming, intercept nodes (OSINT)"><span class="lb-dot" style="background:#f59e0b"></span>🌐 NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span><span class="lb-src">OSINT</span></button>
+  <button class="layer-btn" id="lb-cbrn" onclick="toggleCbrnLayer()" title="CBRN/WMD incidents — chemical, biological, radiological, nuclear events (GDELT 72h)"><span class="lb-dot" style="background:#ff3b3b"></span>&#x2623; CBRN/WMD<span class="lb-count" id="lbc-cbrn">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+  <button class="layer-btn" id="lb-space" onclick="toggleSpaceLayer()" title="Space domain events — satellite launches, ASAT tests, orbital debris (GDELT 7d)"><span class="lb-dot" style="background:#c084fc"></span>&#x1F6F8; SPACE DOM<span class="lb-count" id="lbc-space">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+  <button class="layer-btn" id="lb-couprisk" onclick="toggleCoupRiskLayer()" title="Coup and regime-change risk — military mutiny, protests, instability signals (GDELT 48h)"><span class="lb-dot" style="background:#fb923c"></span>&#x2694; COUP RISK<span class="lb-count" id="lbc-couprisk">&#x2014;</span><span class="lb-src live">LIVE</span></button>
   <button class="layer-btn active" id="lb-hotspots" onclick="toggleHotspots()" title="Toggle always-visible hotspot alert markers on/off"><span class="lb-dot" style="background:#f87171"></span>● HOTSPOTS<span class="lb-src">VIZ</span></button>
   <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
 </div>
@@ -2383,6 +2386,10 @@ const HOTSPOT_COLORS={
   iss:'rgba(0,255,200,1)',
   econint:'rgba(234,179,8,1)',
   darkweb:'rgba(167,139,250,1)',
+  cbrn:'rgba(255,59,59,1)',
+  diplo:'rgba(96,165,250,1)',
+  space:'rgba(192,132,252,1)',
+  couprisk:'rgba(251,146,60,1)',
 };
 let liveHotspots=[];
 
@@ -14717,6 +14724,195 @@ async function detectNewsSurges(){
     }
   });
 }
+
+// PHASE 9: CBRN/WMD Intelligence Layer
+const _CBRN_Q='chemical weapon attack sarin novichok VX nerve agent biological weapon anthrax smallpox radiation radiological dirty bomb nuclear leak contamination decontamination hazmat';
+let _cbrnActive=false,_cbrnTimer=null,_cbrnCache=null,_cbrnCacheTs=0;
+async function _fetchCbrnData(){
+  const now=Date.now();
+  if(_cbrnCache&&now-_cbrnCacheTs<30*60*1000)return _cbrnCache;
+  try{
+    const q=encodeURIComponent(_CBRN_Q);
+    const r=await fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+q+'&mode=pointdata&format=geojson&timespan=72h&maxpoints=50',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    _cbrnCache=d;_cbrnCacheTs=now;
+    return d;
+  }catch(e){return null;}
+}
+async function toggleCbrnLayer(){
+  _cbrnActive=!_cbrnActive;
+  const btn=document.getElementById('lb-cbrn');
+  const cnt=document.getElementById('lbc-cbrn');
+  if(_cbrnActive){
+    if(btn)btn.classList.add('active');
+    const d=await _fetchCbrnData();
+    if(d&&d.features){
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'cbrn',severity:'critical',label:(f.properties.name||'CBRN EVENT'),cbrn:true};});
+      liveHotspots=[...liveHotspots.filter(function(h){return!h.cbrn;}),...pts];
+      if(cnt)cnt.textContent=pts.length;
+      if(pts.length)_pushAlert('CBRN ALERT: '+pts.length+' chemical/biological/radiological/nuclear events in 72h',true);
+    }
+    _cbrnTimer=setInterval(async function(){
+      if(!_cbrnActive)return;
+      _cbrnCacheTs=0;
+      const d=await _fetchCbrnData();
+      if(d&&d.features){
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'cbrn',severity:'critical',label:(f.properties.name||'CBRN EVENT'),cbrn:true};});
+        liveHotspots=[...liveHotspots.filter(function(h){return!h.cbrn;}),...pts];
+        if(cnt)cnt.textContent=pts.length;
+      }
+    },30*60*1000);
+  }else{
+    if(btn)btn.classList.remove('active');
+    clearInterval(_cbrnTimer);_cbrnTimer=null;
+    liveHotspots=liveHotspots.filter(function(h){return!h.cbrn;});
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 9: Space Domain Awareness Layer
+const _SPACE_Q='satellite launch rocket ASAT anti-satellite test orbital debris intercept space weapon X-37B Starlink military satellite spy reconnaissance';
+let _spaceActive=false,_spaceTimer=null,_spaceCache=null,_spaceCacheTs=0;
+async function _fetchSpaceData(){
+  const now=Date.now();
+  if(_spaceCache&&now-_spaceCacheTs<60*60*1000)return _spaceCache;
+  try{
+    const q=encodeURIComponent(_SPACE_Q);
+    const r=await fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+q+'&mode=pointdata&format=geojson&timespan=168h&maxpoints=40',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    _spaceCache=d;_spaceCacheTs=now;
+    return d;
+  }catch(e){return null;}
+}
+const LAUNCH_SITES=[
+  {lat:45.9,lng:63.3,label:'Baikonur Cosmodrome — RUS',type:'space',severity:'medium',space:true},
+  {lat:28.6,lng:-80.6,label:'Kennedy Space Center — USA',type:'space',severity:'medium',space:true},
+  {lat:5.2,lng:-52.8,label:'Kourou Space Centre — FRA',type:'space',severity:'medium',space:true},
+  {lat:28.2,lng:102.0,label:'Xichang Satellite Launch Center — CHN',type:'space',severity:'medium',space:true},
+  {lat:30.4,lng:111.0,label:'Wenchang Space Launch Site — CHN',type:'space',severity:'medium',space:true},
+  {lat:30.4,lng:130.9,label:'Tanegashima Space Center — JPN',type:'space',severity:'medium',space:true},
+  {lat:13.7,lng:80.2,label:'Satish Dhawan Space Centre — IND',type:'space',severity:'medium',space:true},
+  {lat:37.8,lng:-120.6,label:'Vandenberg SFB — USA',type:'space',severity:'medium',space:true},
+  {lat:68.6,lng:25.1,label:'Plesetsk Cosmodrome — RUS',type:'space',severity:'medium',space:true},
+  {lat:40.5,lng:-3.6,label:'Torrejón Air Base (X-37B tracked) — USA',type:'space',severity:'low',space:true},
+];
+async function toggleSpaceLayer(){
+  _spaceActive=!_spaceActive;
+  const btn=document.getElementById('lb-space');
+  const cnt=document.getElementById('lbc-space');
+  if(_spaceActive){
+    if(btn)btn.classList.add('active');
+    const d=await _fetchSpaceData();
+    let gdeltPts=[];
+    if(d&&d.features){
+      gdeltPts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'space',severity:'medium',label:(f.properties.name||'SPACE EVENT'),space:true};});
+    }
+    const allPts=[...gdeltPts,...LAUNCH_SITES];
+    liveHotspots=[...liveHotspots.filter(function(h){return!h.space;}),...allPts];
+    if(cnt)cnt.textContent=allPts.length;
+    _pushAlert('SPACE DOM: '+allPts.length+' space domain events + launch sites active',false);
+    _spaceTimer=setInterval(async function(){
+      if(!_spaceActive)return;
+      _spaceCacheTs=0;
+      const d=await _fetchSpaceData();
+      if(d&&d.features){
+        const gdeltPts2=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'space',severity:'medium',label:(f.properties.name||'SPACE EVENT'),space:true};});
+        const allPts2=[...gdeltPts2,...LAUNCH_SITES];
+        liveHotspots=[...liveHotspots.filter(function(h){return!h.space;}),...allPts2];
+        if(cnt)cnt.textContent=allPts2.length;
+      }
+    },60*60*1000);
+  }else{
+    if(btn)btn.classList.remove('active');
+    clearInterval(_spaceTimer);_spaceTimer=null;
+    liveHotspots=liveHotspots.filter(function(h){return!h.space;});
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 9: Coup Risk / Regime Change Layer
+const _COUP_Q='coup military mutiny protest uprising revolution overthrow government collapse political crisis emergency martial law crackdown';
+let _coupActive=false,_coupTimer=null,_coupCache=null,_coupCacheTs=0;
+async function _fetchCoupData(){
+  const now=Date.now();
+  if(_coupCache&&now-_coupCacheTs<20*60*1000)return _coupCache;
+  try{
+    const q=encodeURIComponent(_COUP_Q);
+    const r=await fetch('https://api.gdeltproject.org/api/v2/geo/geo?query='+q+'&mode=pointdata&format=geojson&timespan=48h&maxpoints=50',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    _coupCache=d;_coupCacheTs=now;
+    return d;
+  }catch(e){return null;}
+}
+function _getHighCoupRiskCountries(){
+  const pins=[];
+  const highRiskTerms=/coup|junta|military rule|instability|succession|civil war|putsch/i;
+  Object.values(typeof COUNTRIES!=='undefined'?COUNTRIES:{}).forEach(function(c){
+    if(!c.lat||!c.lng)return;
+    const vulnsText=(c.vulnerabilities||[]).join(' ');
+    const gapText=(c.intel_gaps||[]).join(' ');
+    const govText=c.gov||'';
+    if(highRiskTerms.test(vulnsText)||highRiskTerms.test(govText)||(c.alertLevel==='CRITICAL'&&highRiskTerms.test(gapText))){
+      pins.push({lat:c.lat,lng:c.lng,type:'couprisk',severity:'high',label:(c.name||c.iso)+' — coup/instability risk',country:c.iso,couprisk:true,_static:true});
+    }
+  });
+  return pins;
+}
+async function toggleCoupRiskLayer(){
+  _coupActive=!_coupActive;
+  const btn=document.getElementById('lb-couprisk');
+  const cnt=document.getElementById('lbc-couprisk');
+  if(_coupActive){
+    if(btn)btn.classList.add('active');
+    const [gdeltData]=await Promise.allSettled([_fetchCoupData()]);
+    let gdeltPts=[];
+    if(gdeltData.status==='fulfilled'&&gdeltData.value&&gdeltData.value.features){
+      gdeltPts=gdeltData.value.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'couprisk',severity:'medium',label:(f.properties.name||'INSTABILITY'),couprisk:true};});
+    }
+    const staticPts=_getHighCoupRiskCountries();
+    const all=[...gdeltPts,...staticPts];
+    liveHotspots=[...liveHotspots.filter(function(h){return!h.couprisk;}),...all];
+    if(cnt)cnt.textContent=all.length;
+    _pushAlert('COUP RISK: '+all.length+' regime-change/instability signals active',false);
+    _coupTimer=setInterval(async function(){
+      if(!_coupActive)return;
+      _coupCacheTs=0;
+      const d=await _fetchCoupData();
+      if(d&&d.features){
+        const gp=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'couprisk',severity:'medium',label:(f.properties.name||'INSTABILITY'),couprisk:true};});
+        const sp=_getHighCoupRiskCountries();
+        const a=[...gp,...sp];
+        liveHotspots=[...liveHotspots.filter(function(h){return!h.couprisk;}),...a];
+        if(cnt)cnt.textContent=a.length;
+      }
+    },20*60*1000);
+  }else{
+    if(btn)btn.classList.remove('active');
+    clearInterval(_coupTimer);_coupTimer=null;
+    liveHotspots=liveHotspots.filter(function(h){return!h.couprisk;});
+    if(cnt)cnt.textContent='—';
+  }
+}
+
+// PHASE 9: Keyboard shortcuts
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    ['nuke-overlay','icc-overlay','icbrief-overlay','search-backdrop','alert-modal','rankings-panel','threatcast-panel'].forEach(function(id){
+      const el=document.getElementById(id);
+      if(el){el.classList.remove('open');el.style.display='none';}
+    });
+    const cp=document.getElementById('country-panel');
+    if(cp&&cp.classList.contains('open'))cp.classList.remove('open');
+  }else if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();
+    if(typeof openIntelSearch==='function')openIntelSearch();
+  }else if(e.key==='r'&&!e.ctrlKey&&!e.metaKey&&document.activeElement.tagName!=='INPUT'){
+    if(typeof toggleRankings==='function')toggleRankings();
+  }
+});
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
 // Initialize watchlist system if items exist
