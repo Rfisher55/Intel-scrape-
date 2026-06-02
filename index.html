@@ -1159,6 +1159,32 @@ button{border-radius:2px!important}
 #proxy-btn{position:fixed;top:95px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(168,85,247,.35);border-radius:2px;color:#c084fc;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
 #proxy-btn:hover{background:rgba(168,85,247,.12);border-color:#a855f7;}
 #proxy-btn.active{color:#e9d5ff;border-color:#a855f7;background:rgba(168,85,247,.2);}
+#icbrief-btn{position:fixed;top:135px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(251,191,36,.35);border-radius:2px;color:#fbbf24;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#icbrief-btn:hover{background:rgba(251,191,36,.12);border-color:#f59e0b;}
+#icbrief-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#icbrief-overlay.open{display:block;}
+.icb-hdr{background:var(--panel);border-bottom:2px solid var(--warn);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+.icb-hdr h2{color:var(--warn);font-size:12px;letter-spacing:.25em;margin:0;}
+.icb-close{background:none;border:1px solid var(--border-hi);color:var(--dim);padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;}
+.icb-close:hover{border-color:var(--warn);color:var(--warn);}
+.icb-classification{background:rgba(232,64,64,.15);border:1px solid rgba(232,64,64,.5);color:var(--danger);text-align:center;padding:5px;font-size:9px;letter-spacing:.2em;margin:10px 24px 0;}
+.icb-date{color:var(--muted);font-size:9px;letter-spacing:.15em;padding:6px 24px;border-bottom:1px solid var(--border);}
+.icb-body{padding:16px 24px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.icb-item{background:var(--panel);border:1px solid var(--border-hi);padding:12px;}
+.icb-item:hover{border-color:var(--warn);}
+.icb-item-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.icb-tier{font-size:7px;letter-spacing:.15em;padding:2px 5px;border:1px solid currentColor;}
+.icb-tier.t1{color:var(--danger);}
+.icb-tier.t2{color:var(--warn);}
+.icb-cname{color:var(--text);font-size:11px;font-weight:700;letter-spacing:.1em;flex:1;}
+.icb-concern{color:var(--warn);font-size:8px;margin-bottom:6px;line-height:1.5;}
+.icb-note{color:var(--dim);font-size:8px;line-height:1.7;}
+.icb-gaps{margin-top:8px;font-size:8px;}
+.icb-gap-lbl{color:var(--muted);font-size:7px;letter-spacing:.1em;margin-bottom:3px;}
+.icb-gap-item{color:var(--accent2);padding:2px 0;border-bottom:1px solid var(--border2);}
+.icb-open{margin-top:8px;background:none;border:1px solid var(--border);color:var(--accent);font-family:var(--mono);font-size:8px;padding:2px 8px;cursor:pointer;}
+.icb-open:hover{border-color:var(--accent);background:var(--accent-dim);}
+@media(max-width:768px){.icb-body{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -1325,6 +1351,22 @@ button{border-radius:2px!important}
 </div>
 <div id="rankings-btn" onclick="toggleRankings()">⬡ RANKINGS</div>
 <button id="proxy-btn" onclick="toggleProxyNet()">&#x1F578; PROXY NET</button>
+
+<button id="icbrief-btn" onclick="openICBrief()">&#x1F4CB; IC BRIEF</button>
+
+<div id="icbrief-overlay">
+  <div class="icb-hdr">
+    <h2>&#x1F4CB; INTELLIGENCE COMMUNITY DAILY BRIEF</h2>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:.1em;">SOURCES: OSINT AGGREGATE · GDELT · OPEN-SOURCE</span>
+      <button class="icb-close" onclick="closeICBrief()">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="icb-classification">TOP SECRET // OSINT // NOT FOR PUBLIC DISSEMINATION — OPEN-SOURCE INTELLIGENCE COMPILATION ONLY</div>
+  <div class="icb-date" id="icb-date-line">—</div>
+  <div class="icb-body" id="icb-body"></div>
+</div>
+
 <div id="rankings-panel">
   <div style="padding:8px 12px;border-bottom:1px solid rgba(249,115,22,.15);background:rgba(249,115,22,.05);display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
     <div style="font-size:9px;color:#fb923c;letter-spacing:.2em;font-weight:700">GLOBAL RISK RANKINGS</div>
@@ -2312,6 +2354,10 @@ const HOTSPOT_COLORS={
   hybrid:'rgba(168,85,247,1)',wmd:'rgba(239,68,68,1)',
   air_domain:'rgba(56,189,248,1)',
   maritime:'rgba(34,211,238,1)',
+  bioint:'rgba(163,230,53,1)',
+  infra:'rgba(249,115,22,1)',
+  weapons:'rgba(251,191,36,1)',
+  iss:'rgba(0,255,200,1)',
 };
 let liveHotspots=[];
 
@@ -7350,6 +7396,7 @@ function draw(){
   if(activeLayers.sigint)      drawSIGINTLayer();
   if(activeLayers.cyber)       drawCyberLayer();
   if(activeLayers.netdisrupt)  drawNetDisruptLayer();
+  if(_proxyNetActive)drawProxyArcs();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -14022,11 +14069,8 @@ async function _fetchISSPos(){
 }
 
 function _updateISSGlobe(lat,lon){
-  if(typeof globe==='undefined')return;
-  const allPts=globe.pointsData()||[];
-  const filtered=allPts.filter(p=>!p._iss);
-  const issPoint={lat,lng:lon,_iss:true,size:1.5,color:'rgba(0,255,200,1)',label:'ISS'};
-  globe.pointsData([...filtered,issPoint]);
+  const issPoint={lat:lat,lng:lon,type:'iss',severity:'medium',label:'ISS · Low Earth Orbit',iss:true};
+  liveHotspots=[...liveHotspots.filter(function(h){return!h.iss;}),issPoint];
 }
 
 function toggleISS(){
@@ -14048,10 +14092,7 @@ function toggleISS(){
     ind.style.display='none';
     clearInterval(_issTimer);
     _issTimer=null;
-    if(typeof globe!=='undefined'){
-      const pts=(globe.pointsData()||[]).filter(p=>!p._iss);
-      globe.pointsData(pts);
-    }
+    liveHotspots=liveHotspots.filter(function(h){return!h.iss;});
   }
 }
 
@@ -14232,9 +14273,8 @@ async function toggleBiointLayer(){
     if(btn)btn.classList.add('active');
     const d=await _fetchBiointData();
     if(d&&d.features){
-      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.5,color:'rgba(163,230,53,0.85)',label:(f.properties.name||'BIO EVENT'),_layer:'bioint'};});
-      const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='bioint';});
-      globe.pointsData([...existing,...pts]);
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'bioint',severity:'medium',label:(f.properties.name||'BIO EVENT'),bioint:true};});
+      liveHotspots=[...liveHotspots.filter(function(h){return!h.bioint;}),...pts];
       if(cnt)cnt.textContent=pts.length;
       _pushAlert('BIOINT: '+pts.length+' bio/disease events detected in 72h window',false);
     }
@@ -14243,17 +14283,15 @@ async function toggleBiointLayer(){
       _biointCacheTs=0;
       const d=await _fetchBiointData();
       if(d&&d.features){
-        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.5,color:'rgba(163,230,53,0.85)',label:(f.properties.name||'BIO EVENT'),_layer:'bioint'};});
-        const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='bioint';});
-        globe.pointsData([...existing,...pts]);
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'bioint',severity:'medium',label:(f.properties.name||'BIO EVENT'),bioint:true};});
+        liveHotspots=[...liveHotspots.filter(function(h){return!h.bioint;}),...pts];
         if(cnt)cnt.textContent=pts.length;
       }
     },20*60*1000);
   }else{
     if(btn)btn.classList.remove('active');
     clearInterval(_biointTimer);_biointTimer=null;
-    const pts=(globe.pointsData()||[]).filter(function(p){return p._layer!=='bioint';});
-    globe.pointsData(pts);
+    liveHotspots=liveHotspots.filter(function(h){return!h.bioint;});
     if(cnt)cnt.textContent='—';
   }
 }
@@ -14281,9 +14319,8 @@ async function toggleInfraLayer(){
     if(btn)btn.classList.add('active');
     const d=await _fetchInfraData();
     if(d&&d.features){
-      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.6,color:'rgba(249,115,22,0.85)',label:(f.properties.name||'INFRA EVENT'),_layer:'infra'};});
-      const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='infra';});
-      globe.pointsData([...existing,...pts]);
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'infra',severity:'medium',label:(f.properties.name||'INFRA EVENT'),infra:true};});
+      liveHotspots=[...liveHotspots.filter(function(h){return!h.infra;}),...pts];
       if(cnt)cnt.textContent=pts.length;
       _pushAlert('INFRACON: '+pts.length+' infrastructure attack/incident events in 48h',false);
     }
@@ -14292,17 +14329,15 @@ async function toggleInfraLayer(){
       _infraCacheTs=0;
       const d=await _fetchInfraData();
       if(d&&d.features){
-        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.6,color:'rgba(249,115,22,0.85)',label:(f.properties.name||'INFRA EVENT'),_layer:'infra'};});
-        const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='infra';});
-        globe.pointsData([...existing,...pts]);
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'infra',severity:'medium',label:(f.properties.name||'INFRA EVENT'),infra:true};});
+        liveHotspots=[...liveHotspots.filter(function(h){return!h.infra;}),...pts];
         if(cnt)cnt.textContent=pts.length;
       }
     },15*60*1000);
   }else{
     if(btn)btn.classList.remove('active');
     clearInterval(_infraTimer);_infraTimer=null;
-    const pts=(globe.pointsData()||[]).filter(function(p){return p._layer!=='infra';});
-    globe.pointsData(pts);
+    liveHotspots=liveHotspots.filter(function(h){return!h.infra;});
     if(cnt)cnt.textContent='—';
   }
 }
@@ -14330,9 +14365,8 @@ async function toggleWeaponsLayer(){
     if(btn)btn.classList.add('active');
     const d=await _fetchWeaponsData();
     if(d&&d.features){
-      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.7,color:'rgba(251,191,36,0.85)',label:(f.properties.name||'WEAPONS TEST'),_layer:'weapons'};});
-      const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='weapons';});
-      globe.pointsData([...existing,...pts]);
+      const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'weapons',severity:'high',label:(f.properties.name||'WEAPONS TEST'),weapons:true};});
+      liveHotspots=[...liveHotspots.filter(function(h){return!h.weapons;}),...pts];
       if(cnt)cnt.textContent=pts.length;
       _pushAlert('WEAPONS: '+pts.length+' missile/weapons events detected in 7d window',false);
     }
@@ -14341,17 +14375,15 @@ async function toggleWeaponsLayer(){
       _weaponsCacheTs=0;
       const d=await _fetchWeaponsData();
       if(d&&d.features){
-        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],size:0.7,color:'rgba(251,191,36,0.85)',label:(f.properties.name||'WEAPONS TEST'),_layer:'weapons'};});
-        const existing=(globe.pointsData()||[]).filter(function(p){return p._layer!=='weapons';});
-        globe.pointsData([...existing,...pts]);
+        const pts=d.features.map(function(f){return{lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],type:'weapons',severity:'high',label:(f.properties.name||'WEAPONS TEST'),weapons:true};});
+        liveHotspots=[...liveHotspots.filter(function(h){return!h.weapons;}),...pts];
         if(cnt)cnt.textContent=pts.length;
       }
     },30*60*1000);
   }else{
     if(btn)btn.classList.remove('active');
     clearInterval(_weaponsTimer);_weaponsTimer=null;
-    const pts=(globe.pointsData()||[]).filter(function(p){return p._layer!=='weapons';});
-    globe.pointsData(pts);
+    liveHotspots=liveHotspots.filter(function(h){return!h.weapons;});
     if(cnt)cnt.textContent='—';
   }
 }
@@ -14404,28 +14436,107 @@ function toggleProxyNet(){
   }else{
     btn.classList.remove('active');
     btn.textContent='\u{1F578} PROXY NET';
-    if(typeof globe!=='undefined')globe.arcsData([]);
   }
 }
 function _renderProxyArcs(){
-  if(typeof globe==='undefined')return;
-  const arcs=PROXY_ARCS.filter(function(a){return _ISO_COORDS[a.s]&&_ISO_COORDS[a.c];}).map(function(a){
-    const src=_ISO_COORDS[a.s];const dst=_ISO_COORDS[a.c];
-    return{
-      startLat:src.lat,startLng:src.lng,
-      endLat:dst.lat,endLng:dst.lng,
-      color:a.color,
-      label:a.label
-    };
+  // proxy arcs drawn by drawProxyArcs() in the canvas render loop
+}
+
+function drawProxyArcs(){
+  const t=(Date.now()%3000)/3000;
+  for(const arc of PROXY_ARCS){
+    const src=_ISO_COORDS[arc.s];const dst=_ISO_COORDS[arc.c];
+    if(!src||!dst)continue;
+    const p1=project(src.lat,src.lng);const p2=project(dst.lat,dst.lng);
+    if(!p1.visible&&!p2.visible)continue;
+    const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
+    const dx=p2.px-p1.px,dy=p2.py-p1.py;
+    const len=Math.sqrt(dx*dx+dy*dy);if(len<4)continue;
+    const off=len*0.35;
+    const cpX=mx-dy/len*off,cpY=my+dx/len*off;
+    // Glow
+    ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
+    ctx.strokeStyle=arc.color.replace(/[\d.]+\)$/,'0.12)');ctx.lineWidth=5;ctx.stroke();
+    // Animated dash
+    ctx.beginPath();ctx.setLineDash([8,6]);ctx.lineDashOffset=-t*50;
+    ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
+    ctx.strokeStyle=arc.color;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.setLineDash([]);
+    // Arrow at endpoint
+    const ex=2*cpX-p1.px,ey=2*cpY-p1.py;
+    const angle=Math.atan2(p2.py-ey,p2.px-ex);
+    ctx.beginPath();
+    ctx.moveTo(p2.px,p2.py);
+    ctx.lineTo(p2.px-8*Math.cos(angle-.45),p2.py-8*Math.sin(angle-.45));
+    ctx.lineTo(p2.px-8*Math.cos(angle+.45),p2.py-8*Math.sin(angle+.45));
+    ctx.closePath();ctx.fillStyle=arc.color;ctx.fill();
+  }
+}
+
+// Leader Monitor — GDELT news alerts for top world leaders
+const LEADER_MONITOR=[
+  {name:'Putin',country:'RUS',iso:'RUS'},
+  {name:'Xi Jinping',country:'CHN',iso:'CHN'},
+  {name:'Kim Jong Un',country:'PRK',iso:'PRK'},
+  {name:'Khamenei',country:'IRN',iso:'IRN'},
+  {name:'Zelensky',country:'UKR',iso:'UKR'},
+  {name:'Netanyahu',country:'ISR',iso:'ISR'},
+  {name:'MBS',country:'SAU',iso:'SAU'},
+  {name:'Kim Yo Jong',country:'PRK',iso:'PRK'},
+  {name:'Erdogan',country:'TUR',iso:'TUR'},
+  {name:'Modi',country:'IND',iso:'IND'},
+];
+let _leaderMonitorActive=false,_leaderLastCheck=0;
+async function runLeaderMonitor(){
+  const now=Date.now();
+  if(now-_leaderLastCheck<15*60*1000)return;
+  _leaderLastCheck=now;
+  const results=await Promise.allSettled(LEADER_MONITOR.slice(0,5).map(async function(l){
+    const q=encodeURIComponent(l.name+' health resign successor military crisis threat');
+    const r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=3&format=json&timespan=2h',{signal:AbortSignal.timeout(6000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    return{leader:l,articles:(d.articles||[])};
+  }));
+  results.forEach(function(res){
+    if(res.status!=='fulfilled'||!res.value||!res.value.articles.length)return;
+    const{leader,articles}=res.value;
+    if(articles.length>=2){
+      const title=articles[0].title||'';
+      _pushAlert('[LEADER MONITOR] '+leader.name+' — '+title.slice(0,80),false);
+    }
   });
-  globe
-    .arcsData(arcs)
-    .arcColor('color')
-    .arcDashLength(0.4)
-    .arcDashGap(0.2)
-    .arcDashAnimateTime(2000)
-    .arcStroke(1.2)
-    .arcLabel('label');
+}
+
+function openICBrief(){
+  document.getElementById('icbrief-overlay').classList.add('open');
+  _renderICBrief();
+}
+function closeICBrief(){
+  document.getElementById('icbrief-overlay').classList.remove('open');
+}
+function _renderICBrief(){
+  const dl=document.getElementById('icb-date-line');
+  const body=document.getElementById('icb-body');
+  if(!dl||!body)return;
+  dl.textContent='DATE: '+new Date().toISOString().slice(0,10)+' | PREPARED FOR: AUTHORIZED RECIPIENTS | DISTRIBUTION: CONTROLLED';
+  // Get TIER 1 countries first, then TIER 2
+  const tier1=Object.entries(COUNTRIES).filter(function(e){return e[1].intel_priority==='TIER 1';});
+  const tier2=Object.entries(COUNTRIES).filter(function(e){return e[1].intel_priority==='TIER 2';}).slice(0,8);
+  const items=[...tier1,...tier2];
+  body.innerHTML=items.map(function(e){
+    const iso=e[0];const c=e[1];
+    const tier=c.intel_priority==='TIER 1'?'<span class="icb-tier t1">TIER 1</span>':'<span class="icb-tier t2">TIER 2</span>';
+    const gaps=(c.intel_gaps||[]).map(function(g){return'<div class="icb-gap-item">&#x25B8; '+g+'</div>';}).join('');
+    const concern=c.primary_concern?'<div class="icb-concern">&#x26A0; '+c.primary_concern+'</div>':'';
+    const note=c.cia_note?'<div class="icb-note">'+c.cia_note.slice(0,300)+(c.cia_note.length>300?'...':'')+'</div>':'';
+    return`<div class="icb-item">
+      <div class="icb-item-hdr">${tier}<span class="icb-cname">${(c.name||iso).toUpperCase()}</span></div>
+      ${concern}${note}
+      ${gaps?'<div class="icb-gaps"><div class="icb-gap-lbl">COLLECTION REQUIREMENTS</div>'+gaps+'</div>':''}
+      <button class="icb-open" onclick="closeICBrief();openCountry('${iso}')">OPEN COUNTRY FILE &#x2192;</button>
+    </div>`;
+  }).join('');
 }
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
@@ -14440,6 +14551,8 @@ setTimeout(function(){
   // CISA KEV initial load + hourly refresh
   injectCisaKevToSIGINT();
   setInterval(injectCisaKevToSIGINT,60*60*1000);
+  runLeaderMonitor();
+  setInterval(runLeaderMonitor,15*60*1000);
 },2000);
 fetchSpaceWeather();
 // Live ticker update every 10 minutes
