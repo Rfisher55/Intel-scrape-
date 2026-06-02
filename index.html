@@ -1114,6 +1114,48 @@ button{border-radius:2px!important}
 .rank-bar-wrap{width:50px;height:4px;background:rgba(30,45,66,.6);border-radius:1px;overflow:hidden;flex-shrink:0}
 .rank-bar-fill{height:100%;border-radius:1px;transition:width .8s ease}
 .rank-level{font-size:7px;min-width:55px;text-align:right;letter-spacing:.05em;flex-shrink:0}
+#iss-btn{position:fixed;bottom:299px;right:14px;width:160px;height:32px;background:var(--panel2);border:1px solid var(--border-hi);color:var(--dim);font-family:var(--mono);font-size:10px;cursor:pointer;letter-spacing:.08em;display:flex;align-items:center;justify-content:space-between;padding:0 10px;z-index:800;}
+#iss-btn.active{color:var(--live);border-color:var(--live);}
+#iss-indicator{position:fixed;bottom:335px;right:14px;width:160px;background:var(--panel);border:1px solid var(--border-hi);padding:8px 10px;font-family:var(--mono);font-size:9px;color:var(--dim);z-index:800;display:none;line-height:1.7;}
+#iss-indicator .iss-val{color:var(--text);font-size:10px;}
+#nuke-btn{position:fixed;bottom:338px;right:14px;width:160px;height:32px;background:var(--panel2);border:1px solid var(--border-hi);color:var(--dim);font-family:var(--mono);font-size:10px;cursor:pointer;letter-spacing:.08em;display:flex;align-items:center;justify-content:space-between;padding:0 10px;z-index:800;}
+#nuke-btn:hover{border-color:var(--danger);color:var(--danger);}
+#nuke-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.95);z-index:2000;display:none;overflow-y:auto;font-family:var(--mono);}
+#nuke-overlay.open{display:block;}
+#nuke-hdr{background:var(--panel);border-bottom:2px solid var(--danger);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+#nuke-hdr h2{color:var(--danger);font-size:14px;letter-spacing:.2em;margin:0;}
+#nuke-close{background:none;border:1px solid var(--border-hi);color:var(--dim);padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;}
+#nuke-close:hover{border-color:var(--danger);color:var(--danger);}
+.nuke-banner{background:rgba(232,64,64,.12);border:1px solid rgba(232,64,64,.4);color:var(--danger);text-align:center;padding:6px;font-size:9px;letter-spacing:.15em;margin:12px 24px 0;}
+#nuke-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;padding:20px 24px;}
+.nuke-card{background:var(--panel);border:1px solid var(--border-hi);padding:14px;}
+.nuke-card:hover{border-color:rgba(232,64,64,.5);}
+.nuke-card-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.nuke-flag{font-size:22px;}
+.nuke-cname{color:var(--text);font-size:12px;font-weight:700;letter-spacing:.08em;}
+.nuke-warhead{color:var(--danger);font-size:11px;margin-left:auto;}
+.nuke-detail{color:var(--dim);font-size:9px;line-height:1.8;word-break:break-word;}
+.nuke-open-btn{margin-top:8px;background:none;border:1px solid var(--border);color:var(--accent);font-family:var(--mono);font-size:9px;padding:3px 8px;cursor:pointer;letter-spacing:.06em;}
+.nuke-open-btn:hover{border-color:var(--accent);background:var(--accent-dim);}
+.nuke-undeclared{color:var(--warn);}
+.nuke-enriching{color:var(--warn);}
+#nuke-summary{padding:8px 24px 0;display:flex;gap:20px;flex-wrap:wrap;}
+.nuke-stat{background:var(--panel2);border:1px solid var(--border);padding:8px 16px;font-size:10px;}
+.nuke-stat-val{color:var(--text);font-size:14px;display:block;margin-bottom:2px;}
+.nuke-stat-lbl{color:var(--muted);font-size:9px;letter-spacing:.1em;}
+.diplo-section{margin-bottom:14px;}
+.diplo-section-hdr{color:var(--accent);font-size:9px;letter-spacing:.15em;padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.diplo-ally{display:inline-block;background:rgba(0,217,126,.1);border:1px solid rgba(0,217,126,.3);color:var(--live);font-size:9px;padding:2px 7px;margin:2px;cursor:pointer;letter-spacing:.05em;}
+.diplo-ally:hover{background:rgba(0,217,126,.2);}
+.diplo-enemy{display:inline-block;background:rgba(232,64,64,.1);border:1px solid rgba(232,64,64,.3);color:var(--danger);font-size:9px;padding:2px 7px;margin:2px;cursor:pointer;letter-spacing:.05em;}
+.diplo-enemy:hover{background:rgba(232,64,64,.2);}
+.diplo-neutral{display:inline-block;background:var(--panel2);border:1px solid var(--border);color:var(--dim);font-size:9px;padding:2px 7px;margin:2px;cursor:pointer;letter-spacing:.05em;}
+.diplo-neutral:hover{border-color:var(--accent);}
+.diplo-incident{padding:5px 0;border-bottom:1px solid var(--border2);font-size:9px;color:var(--dim);line-height:1.6;}
+.diplo-incident-title{color:var(--text);font-size:10px;margin-bottom:2px;}
+.diplo-treaty{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border2);font-size:9px;}
+.diplo-treaty-name{color:var(--text);flex:1;}
+.diplo-treaty-status{color:var(--live);font-size:8px;letter-spacing:.1em;}
 </style>
 </head>
 <body>
@@ -1254,6 +1296,27 @@ button{border-radius:2px!important}
 <div id="intel-search-btn" onclick="openIntelSearch()">🔍 INTEL SEARCH</div>
 <div id="icc-btn" onclick="openICC()">⬡ COMMAND CTR</div>
 <div id="export-btn" onclick="exportIntelBrief()">⬇ EXPORT BRIEF</div>
+<button id="iss-btn" onclick="toggleISS()">&#x1F6F0; ISS TRACKER<span id="iss-status" style="color:var(--muted)">OFF</span></button>
+<div id="iss-indicator">
+  <div>LAT <span class="iss-val" id="iss-lat">—</span> &nbsp; LON <span class="iss-val" id="iss-lon">—</span></div>
+  <div>ALT <span class="iss-val">~408 km</span> &nbsp; SPD <span class="iss-val">~27,600 km/h</span></div>
+  <div>CREW <span class="iss-val" id="iss-crew">—</span></div>
+  <div style="margin-top:4px;color:var(--muted);font-size:8px;" id="iss-updated">—</div>
+</div>
+<button id="nuke-btn" onclick="openNukeDash()">&#x2622; NUCLEAR INTEL</button>
+
+<div id="nuke-overlay">
+  <div id="nuke-hdr">
+    <h2>&#x2622; NUCLEAR INTELLIGENCE DASHBOARD</h2>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:.1em;">SOURCES: SIPRI · FAS · IAEA · NTI</span>
+      <button id="nuke-close" onclick="closeNukeDash()">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="nuke-banner">OSINT AGGREGATE — UNCLASSIFIED OPEN-SOURCE ESTIMATES — NOT OFFICIAL US GOVERNMENT DATA</div>
+  <div id="nuke-summary"></div>
+  <div id="nuke-grid"></div>
+</div>
 <div id="rankings-btn" onclick="toggleRankings()">⬡ RANKINGS</div>
 <div id="rankings-panel">
   <div style="padding:8px 12px;border-bottom:1px solid rgba(249,115,22,.15);background:rgba(249,115,22,.05);display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
@@ -1534,6 +1597,7 @@ button{border-radius:2px!important}
     <button class="tab-btn" onclick="showTab('conflicts')">CONFLICTS</button>
     <button class="tab-btn" onclick="showTab('cameras');renderCamerasTab(selectedISO)">CAMS</button>
     <button class="tab-btn" onclick="showTab('live');renderLiveIntelTab(selectedISO)" id="live-tab-btn">LIVE</button>
+    <button class="tab-btn" onclick="showTab('diplo');renderDiploTab(selectedISO)" id="diplo-tab-btn">DIPLO</button>
   </div>
   <div class="p-content">
     <div class="tab-section active" id="tab-summary"></div>
@@ -1544,6 +1608,7 @@ button{border-radius:2px!important}
     <div class="tab-section" id="tab-conflicts"></div>
     <div class="tab-section" id="tab-cameras"></div>
     <div class="tab-section" id="tab-live"></div>
+    <div class="tab-section" id="tab-diplo"></div>
   </div>
   <div class="p-foot">
     <span id="p-updated">—</span>
@@ -13919,6 +13984,222 @@ async function injectCisaKevToSIGINT(){
   if(recent.length>0&&typeof _pushAlert==='function'){
     _pushAlert('CISA KEV: '+recent.length+' new vulnerabilities added — '+recent[0].vendorProject+' '+recent[0].product,false);
   }
+}
+
+// ISS Real-Time Tracker
+let _issActive=false,_issTimer=null,_issMarker=null;
+const ISS_API='http://api.open-notify.org/iss-now.json';
+const ISS_CREW_API='http://api.open-notify.org/astros.json';
+
+async function _fetchISSPos(){
+  try{
+    const [posR,crewR]=await Promise.allSettled([
+      fetch(ISS_API,{signal:AbortSignal.timeout(5000)}),
+      fetch(ISS_CREW_API,{signal:AbortSignal.timeout(5000)})
+    ]);
+    if(posR.status==='fulfilled'&&posR.value.ok){
+      const d=await posR.value.json();
+      const lat=parseFloat(d.iss_position.latitude);
+      const lon=parseFloat(d.iss_position.longitude);
+      document.getElementById('iss-lat').textContent=lat.toFixed(2)+'\xb0';
+      document.getElementById('iss-lon').textContent=lon.toFixed(2)+'\xb0';
+      document.getElementById('iss-updated').textContent='UPD '+new Date().toISOString().slice(11,19)+' UTC';
+      _updateISSGlobe(lat,lon);
+    }
+    if(crewR.status==='fulfilled'&&crewR.value.ok){
+      const d=await crewR.value.json();
+      const issCount=(d.people||[]).filter(p=>p.craft==='ISS').length;
+      document.getElementById('iss-crew').textContent=issCount+' aboard';
+    }
+  }catch(e){}
+}
+
+function _updateISSGlobe(lat,lon){
+  if(typeof globe==='undefined')return;
+  const allPts=globe.pointsData()||[];
+  const filtered=allPts.filter(p=>!p._iss);
+  const issPoint={lat,lng:lon,_iss:true,size:1.5,color:'rgba(0,255,200,1)',label:'ISS'};
+  globe.pointsData([...filtered,issPoint]);
+}
+
+function toggleISS(){
+  _issActive=!_issActive;
+  const btn=document.getElementById('iss-btn');
+  const ind=document.getElementById('iss-indicator');
+  const st=document.getElementById('iss-status');
+  if(_issActive){
+    btn.classList.add('active');
+    st.textContent='LIVE';
+    st.style.color='var(--live)';
+    ind.style.display='block';
+    _fetchISSPos();
+    _issTimer=setInterval(_fetchISSPos,5000);
+  }else{
+    btn.classList.remove('active');
+    st.textContent='OFF';
+    st.style.color='var(--muted)';
+    ind.style.display='none';
+    clearInterval(_issTimer);
+    _issTimer=null;
+    if(typeof globe!=='undefined'){
+      const pts=(globe.pointsData()||[]).filter(p=>!p._iss);
+      globe.pointsData(pts);
+    }
+  }
+}
+
+// Nuclear Intelligence Dashboard
+const NUCLEAR_STATES=[
+  {iso:'USA',flag:'🇺🇸',name:'United States'},
+  {iso:'RUS',flag:'🇷🇺',name:'Russia'},
+  {iso:'CHN',flag:'🇨🇳',name:'China'},
+  {iso:'GBR',flag:'🇬🇧',name:'United Kingdom'},
+  {iso:'FRA',flag:'🇫🇷',name:'France'},
+  {iso:'IND',flag:'🇮🇳',name:'India'},
+  {iso:'PAK',flag:'🇵🇰',name:'Pakistan'},
+  {iso:'PRK',flag:'🇰🇵',name:'North Korea'},
+  {iso:'ISR',flag:'🇮🇱',name:'Israel'},
+  {iso:'IRN',flag:'🇮🇷',name:'Iran'}
+];
+
+function _nukeWarheadCount(nukeStr){
+  if(!nukeStr)return'—';
+  const m=nukeStr.match(/(\d[\d,]+)\s*warhead/i);
+  if(m)return m[1].replace(/,/g,'');
+  if(/enrichment|breakout/i.test(nukeStr))return'ENRICHING';
+  if(/undeclared/i.test(nukeStr))return'UNDECLARED';
+  return'—';
+}
+
+function openNukeDash(){
+  const ov=document.getElementById('nuke-overlay');
+  ov.classList.add('open');
+  _renderNukeDash();
+}
+
+function closeNukeDash(){
+  document.getElementById('nuke-overlay').classList.remove('open');
+}
+
+function _renderNukeDash(){
+  const grid=document.getElementById('nuke-grid');
+  const summary=document.getElementById('nuke-summary');
+  let totalWarheads=0;let deployedCount=0;let cards='';
+  NUCLEAR_STATES.forEach(function(ns){
+    const c=COUNTRIES[ns.iso]||{};
+    const nd=c.nuke||'No data';
+    const wc=_nukeWarheadCount(nd);
+    const num=parseInt((wc||'').replace(/,/g,''),10);
+    if(!isNaN(num)){totalWarheads+=num;}
+    const dm=nd.match(/(\d[\d,]+)\s*deployed/i);
+    if(dm)deployedCount+=parseInt(dm[1].replace(/,/g,''),10);
+    const isUndeclared=/undeclared/i.test(nd);
+    const isEnriching=/enrichment|breakout/i.test(nd);
+    const warheadDisp=isUndeclared?'<span class="nuke-undeclared">UNDECLARED</span>':isEnriching?'<span class="nuke-enriching">ENRICHING</span>':wc+' WH';
+    cards+=`<div class="nuke-card">
+      <div class="nuke-card-hdr">
+        <span class="nuke-flag">${ns.flag}</span>
+        <span class="nuke-cname">${ns.name.toUpperCase()}</span>
+        <span class="nuke-warhead">${warheadDisp}</span>
+      </div>
+      <div class="nuke-detail">${nd.replace(/·/g,'<br>·')}</div>
+      <button class="nuke-open-btn" onclick="closeNukeDash();openCountry('${ns.iso}')">OPEN COUNTRY FILE →</button>
+    </div>`;
+  });
+  grid.innerHTML=cards;
+  summary.innerHTML=`
+    <div class="nuke-stat"><span class="nuke-stat-val" style="color:var(--danger)">${totalWarheads.toLocaleString()}</span><span class="nuke-stat-lbl">EST. TOTAL WARHEADS</span></div>
+    <div class="nuke-stat"><span class="nuke-stat-val" style="color:var(--warn)">${deployedCount.toLocaleString()}</span><span class="nuke-stat-lbl">DEPLOYED STRATEGIC</span></div>
+    <div class="nuke-stat"><span class="nuke-stat-val" style="color:var(--text)">9</span><span class="nuke-stat-lbl">DECLARED STATES</span></div>
+    <div class="nuke-stat"><span class="nuke-stat-val" style="color:var(--warn)">2</span><span class="nuke-stat-lbl">THRESHOLD STATES</span></div>
+    <div class="nuke-stat"><span class="nuke-stat-val" style="color:var(--live)">191</span><span class="nuke-stat-lbl">NPT SIGNATORIES</span></div>`;
+}
+
+// Diplomatic Relations Tab
+async function renderDiploTab(iso){
+  const tab=document.getElementById('tab-diplo');
+  if(!tab)return;
+  tab.innerHTML='<div style="color:var(--muted);font-size:9px;padding:10px 0;">LOADING DIPLOMATIC DATA...</div>';
+  const c=COUNTRIES[iso]||{};
+  const name=c.name||iso;
+  const alliances=c.alliances||[];
+  const adversaries=c.adversaries||[];
+
+  const allyTags=alliances.map(function(a){
+    return`<span class="diplo-ally" onclick="openCountry('${a}')" title="${a}">${a}</span>`;
+  }).join('');
+  const enemyTags=adversaries.map(function(a){
+    return`<span class="diplo-enemy" onclick="openCountry('${a}')" title="${a}">${a}</span>`;
+  }).join('');
+
+  let incidentsHtml='<div style="color:var(--muted);font-size:9px;">Loading live incidents...</div>';
+  try{
+    const q=encodeURIComponent(name+' diplomacy sanctions treaty alliance talks meeting');
+    const r=await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=8&format=json&timespan=48h`,{signal:AbortSignal.timeout(8000)});
+    if(r.ok){
+      const d=await r.json();
+      const arts=(d.articles||[]).slice(0,8);
+      if(arts.length){
+        incidentsHtml=arts.map(function(a){
+          const ts=a.seendate?a.seendate.slice(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+          return`<div class="diplo-incident">
+            <div class="diplo-incident-title">${(a.title||'').slice(0,100)}</div>
+            <span style="color:var(--muted)">${ts}</span> &nbsp;
+            <a href="${a.url}" target="_blank" style="color:var(--accent);font-size:8px;">SOURCE ↗</a>
+          </div>`;
+        }).join('');
+      }else{
+        incidentsHtml='<div style="color:var(--muted);font-size:9px;">No recent diplomatic incidents found.</div>';
+      }
+    }
+  }catch(e){
+    incidentsHtml='<div style="color:var(--muted);font-size:9px;">Live feed unavailable.</div>';
+  }
+
+  const TREATY_MEMBERSHIPS={
+    'USA':['NATO','UN Security Council (P5)','NPT','CTBT-Signatory','Five Eyes'],
+    'RUS':['UN Security Council (P5)','NPT','CSTO','SCO'],
+    'CHN':['UN Security Council (P5)','NPT','SCO','BRICS'],
+    'GBR':['NATO','UN Security Council (P5)','NPT','CTBT','Five Eyes'],
+    'FRA':['NATO','UN Security Council (P5)','NPT','CTBT','EU'],
+    'DEU':['NATO','EU','NPT','CTBT'],
+    'JPN':['US-Japan Mutual Defense','UN','NPT','CTBT','Quad'],
+    'IND':['SCO','BRICS','Quad','UN','NPT-Non-Signatory'],
+    'PAK':['SCO','OIC','UN','NPT'],
+    'ISR':['UN','NPT-Non-Signatory'],
+    'IRN':['NPT','SCO-Observer','OIC'],
+    'PRK':['NPT-Withdrew','DPRK-Russia Treaty'],
+    'SAU':['Arab League','OIC','GCC','UN'],
+    'UKR':['UN','NATO-Partner','Budapest Memorandum'],
+    'TUR':['NATO','UN','OIC'],
+    'BRA':['UN','BRICS','Mercosur'],
+    'AUS':['Five Eyes','AUKUS','Quad','ANZUS'],
+    'CAN':['NATO','Five Eyes','G7','UN'],
+    'KOR':['US-Korea Mutual Defense','UN','NPT'],
+    'TWN':[]
+  };
+  const treaties=TREATY_MEMBERSHIPS[iso]||[];
+  const treatyHtml=treaties.length?treaties.map(function(t){
+    return`<div class="diplo-treaty"><span class="diplo-treaty-name">${t}</span><span class="diplo-treaty-status">MEMBER</span></div>`;
+  }).join(''):'<div style="color:var(--muted);font-size:9px;">No treaty data available.</div>';
+
+  tab.innerHTML=`
+    <div class="diplo-section">
+      <div class="diplo-section-hdr">ALLIANCES &amp; PARTNERS (${alliances.length})</div>
+      <div>${allyTags||'<span style="color:var(--muted);font-size:9px;">None recorded</span>'}</div>
+    </div>
+    <div class="diplo-section">
+      <div class="diplo-section-hdr">ADVERSARIES &amp; TENSIONS (${adversaries.length})</div>
+      <div>${enemyTags||'<span style="color:var(--muted);font-size:9px;">None recorded</span>'}</div>
+    </div>
+    <div class="diplo-section">
+      <div class="diplo-section-hdr">TREATY MEMBERSHIPS</div>
+      ${treatyHtml}
+    </div>
+    <div class="diplo-section">
+      <div class="diplo-section-hdr">LIVE DIPLOMATIC FEED — 48H (GDELT)</div>
+      ${incidentsHtml}
+    </div>`;
 }
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
