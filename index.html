@@ -1465,6 +1465,63 @@ button{border-radius:2px!important}
 .rf-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:8px;}
 .rf-news-title{color:var(--text);line-height:1.4;margin-bottom:1px;}
 .rf-news-meta{color:var(--dim);font-size:7px;}
+#econintel-btn{position:fixed;top:55px;right:455px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(34,197,94,.35);border-radius:2px;color:#22c55e;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#econintel-btn:hover{background:rgba(34,197,94,.1);border-color:#16a34a;}
+#econintel-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#econintel-overlay.open{display:block;}
+.ei-hdr{background:var(--panel);border-bottom:2px solid rgba(34,197,94,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.ei-hdr h2{color:#22c55e;font-size:12px;letter-spacing:.2em;margin:0;}
+.ei-body{padding:16px 24px;max-width:1200px;}
+.ei-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.ei-card{background:var(--panel2);border:1px solid var(--border);padding:10px;text-align:center;}
+.ei-card-label{font-size:7px;letter-spacing:.14em;color:var(--dim);margin-bottom:4px;}
+.ei-card-value{font-size:16px;font-weight:900;color:var(--text);}
+.ei-card-change{font-size:8px;margin-top:3px;}
+.ei-section{background:var(--panel2);border:1px solid var(--border);padding:10px;margin-bottom:10px;}
+.ei-section-hdr{font-size:8px;letter-spacing:.16em;color:var(--dim);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.ei-fx-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:4px;}
+.ei-fx-item{text-align:center;padding:6px;}
+.ei-fx-pair{font-size:8px;color:var(--dim);margin-bottom:3px;}
+.ei-fx-rate{font-size:12px;font-weight:700;color:var(--text);}
+.ei-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ei-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.ei-news-meta{color:var(--dim);font-size:8px;}
+#apt-btn{position:fixed;top:95px;right:455px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.4);border-radius:2px;color:#f87171;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#apt-btn:hover{background:rgba(239,68,68,.1);border-color:#dc2626;}
+#apt-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#apt-overlay.open{display:block;}
+.apt-hdr{background:var(--panel);border-bottom:2px solid rgba(239,68,68,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.apt-hdr h2{color:#f87171;font-size:12px;letter-spacing:.2em;margin:0;}
+.apt-body{padding:16px 24px;max-width:1200px;}
+.apt-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.apt-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:12px;}
+.apt-card-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.apt-name{font-size:11px;font-weight:700;}
+.apt-nation{font-size:8px;padding:2px 6px;letter-spacing:.1em;}
+.apt-sponsor{font-size:8px;color:var(--dim);margin-bottom:6px;}
+.apt-row{font-size:8px;margin-bottom:4px;line-height:1.5;}
+.apt-row-label{color:var(--dim);}
+.apt-ttps{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+.apt-ttp{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);color:#f87171;font-size:7px;padding:1px 5px;letter-spacing:.06em;}
+.apt-activity-bar{height:3px;background:var(--panel);border-radius:1px;overflow:hidden;margin-top:8px;}
+.apt-activity-fill{height:100%;border-radius:1px;}
+#drone-btn{position:fixed;top:135px;right:455px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(245,158,11,.35);border-radius:2px;color:#fbbf24;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#drone-btn:hover{background:rgba(245,158,11,.1);border-color:#d97706;}
+#drone-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#drone-overlay.open{display:block;}
+.dr-hdr{background:var(--panel);border-bottom:2px solid rgba(245,158,11,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.dr-hdr h2{color:#fbbf24;font-size:12px;letter-spacing:.2em;margin:0;}
+.dr-body{padding:16px 24px;max-width:1100px;}
+.dr-platforms{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.dr-plat{background:var(--panel2);border:1px solid var(--border);padding:8px;}
+.dr-plat-name{font-size:9px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.dr-plat-nation{font-size:7px;color:var(--dim);margin-bottom:4px;}
+.dr-plat-detail{font-size:8px;color:var(--dim);line-height:1.4;}
+.dr-feed{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.dr-feed-hdr{font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:8px;}
+.dr-item{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.dr-item-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:2px;}
+.dr-item-meta{color:var(--dim);font-size:8px;}
 </style>
 </head>
 <body>
@@ -16258,6 +16315,160 @@ async function _fetchRefugeeNews(){
     el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
   }
 }
+function openEconIntel(){
+  document.getElementById('econintel-overlay').classList.add('open');
+  _refreshEconIntel();
+}
+function closeEconIntel(){
+  document.getElementById('econintel-overlay').classList.remove('open');
+}
+async function _refreshEconIntel(){
+  _fetchFXRates();
+  _fetchCommodityNews();
+}
+async function _fetchFXRates(){
+  const fxEl=document.getElementById('ei-fx-grid');
+  if(!fxEl)return;
+  const pairs=[
+    {code:'EUR',label:'EUR/USD',flag:'EU'},
+    {code:'GBP',label:'GBP/USD',flag:'UK'},
+    {code:'JPY',label:'USD/JPY',flag:'JP'},
+    {code:'CNY',label:'USD/CNY',flag:'CN'},
+    {code:'RUB',label:'USD/RUB',flag:'RU'},
+    {code:'TRY',label:'USD/TRY',flag:'TR'}
+  ];
+  try{
+    const r=await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CNY,RUB,TRY',{signal:AbortSignal.timeout(8000)});
+    const d=await r.json();
+    const rates=d.rates||{};
+    fxEl.innerHTML=pairs.map(function(p){
+      const rate=rates[p.code];
+      const display=rate?rate.toFixed(p.code==='JPY'||p.code==='RUB'||p.code==='TRY'?1:4):'N/A';
+      const intel={EUR:'NATO bloc currency',GBP:'Sterling / UK BoE',JPY:'Yen safe haven',CNY:'Renminbi / PBoC',RUB:'Ruble (sanctioned)',TRY:'Lira / CBRT'};
+      return '<div class="ei-fx-item"><div class="ei-fx-pair">'+p.label+'</div><div class="ei-fx-rate">'+display+'</div><div style="font-size:7px;color:var(--dim);margin-top:2px;">'+(intel[p.code]||'')+'</div></div>';
+    }).join('');
+  }catch(e){
+    fxEl.innerHTML='<div style="color:var(--dim);font-size:9px;">FX data unavailable: '+e.message+'</div>';
+  }
+}
+async function _fetchCommodityNews(){
+  const el=document.getElementById('ei-econ-news');
+  if(!el)return;
+  try{
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent('oil price gold sanctions currency economic warfare trade war inflation')+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No economic intelligence available.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="ei-news-item"><div class="ei-news-title">'+title+'</div><div class="ei-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection error: '+e.message+'</div>';
+  }
+}
+const APT_DB=[
+  {name:'APT28 / Fancy Bear',nation:'Russia',sponsor:'GRU Unit 26165',threat:'CRITICAL',color:'#ef4444',
+   targets:'NATO nations, Ukraine, US political orgs, European governments',
+   ttps:['Spearphishing','X-Agent RAT','SOFACY framework','Credential theft','Disinformation support'],
+   recent:'Ukrainian infrastructure (2022-24), Polish/Czech gov phishing (2023), French political (2024)',
+   gdelt_q:'APT28 Fancy Bear Russia cyberattack hack GRU'},
+  {name:'APT29 / Cozy Bear',nation:'Russia',sponsor:'SVR (Foreign Intelligence)',threat:'CRITICAL',color:'#ef4444',
+   targets:'US/EU governments, think tanks, healthcare research, SolarWinds supply chain',
+   ttps:['Supply chain attacks','NOBELIUM malware','Cloud service abuse','WellMess','BEATDROP'],
+   recent:'SolarWinds compromise (2020), USAID attack (2021), Microsoft email breach (2023-24)',
+   gdelt_q:'APT29 Cozy Bear SVR SolarWinds cyberattack espionage'},
+  {name:'Sandworm / Voodoo Bear',nation:'Russia',sponsor:'GRU Unit 74455',threat:'CRITICAL',color:'#ef4444',
+   targets:'Ukrainian power grid, European elections, Olympic Games, critical infrastructure',
+   ttps:['ICS/SCADA attacks','NotPetya wiper','Industroyer','ELECTRUM framework','FoxBlade'],
+   recent:'Ukrainian energy grid attacks (2022-24), NATO logistics targeting (2023)',
+   gdelt_q:'Sandworm GRU Russia Ukraine power grid cyberattack'},
+  {name:'Lazarus Group / HIDDEN COBRA',nation:'North Korea',sponsor:'RGB Reconnaissance Bureau',threat:'CRITICAL',color:'#f97316',
+   targets:'Cryptocurrency exchanges, global banks, defense contractors, aerospace firms',
+   ttps:['SWIFT banking attacks','WannaCry ransomware','Crypto theft','LinkedIn social engineering'],
+   recent:'Ronin bridge hack $600M (2022), multiple exchange thefts (2023-24)',
+   gdelt_q:'Lazarus Group North Korea DPRK cryptocurrency hack theft'},
+  {name:'APT41 / Double Dragon',nation:'China',sponsor:'MSS / Chengdu 404',threat:'HIGH',color:'#f59e0b',
+   targets:'Healthcare, telecoms, technology, video games (financial crime), government',
+   ttps:['Dual espionage + financial crime','PlugX RAT','POISONPLUG','Supply chain compromise'],
+   recent:'US state gov attacks (2021), healthcare intrusions (2023), telecom targeting (2024)',
+   gdelt_q:'APT41 China MSS cyberattack hack espionage'},
+  {name:'Volt Typhoon',nation:'China',sponsor:'PLA/MSS',threat:'CRITICAL',color:'#f59e0b',
+   targets:'US critical infrastructure, power grids, water systems, Guam military networks',
+   ttps:['Living-off-the-land (LOTL)','KV-botnet','SOHO router compromise','Pre-positioning for conflict'],
+   recent:'CISA/NSA/FBI joint advisory (2023-24), Guam military network pre-positioning confirmed',
+   gdelt_q:'"Volt Typhoon" China infrastructure cyberattack FBI CISA'},
+  {name:'Salt Typhoon',nation:'China',sponsor:'PLA/MSS',threat:'CRITICAL',color:'#f59e0b',
+   targets:'US telecom providers (AT&T, Verizon, Lumen), CALEA intercept systems, political communications',
+   ttps:['Telecom backbone persistent access','CALEA intercept compromise','Long-dwell espionage'],
+   recent:'AT&T/Verizon breach confirmed (2024), Senate communications compromised (2024)',
+   gdelt_q:'"Salt Typhoon" telecom China hack wiretap AT&T'},
+  {name:'APT33 / Elfin',nation:'Iran',sponsor:'IRGC Cyber Command',threat:'HIGH',color:'#a78bfa',
+   targets:'Aerospace, energy sector, Saudi Arabia, US defense contractors',
+   ttps:['SHAPESHIFT malware','Aviation sector spearphishing','DROPSHOT','Shamoon wiper (related)'],
+   recent:'Energy sector phishing (2023), defense contractor targeting (2024)',
+   gdelt_q:'APT33 Iran IRGC cyberattack aerospace energy hack'}
+];
+function openAPT(){
+  document.getElementById('apt-overlay').classList.add('open');
+  _renderAPT();
+}
+function closeAPT(){
+  document.getElementById('apt-overlay').classList.remove('open');
+}
+function _renderAPT(){
+  const grid=document.getElementById('apt-grid');
+  if(!grid)return;
+  grid.innerHTML=APT_DB.map(function(apt){
+    const ttpsHtml=apt.ttps.map(function(t){return '<span class="apt-ttp">'+t.replace(/</g,'&lt;')+'</span>';}).join('');
+    return '<div class="apt-card" style="border-left-color:'+apt.color+';">'+
+      '<div class="apt-card-hdr">'+
+      '<div><div class="apt-name" style="color:'+apt.color+';">'+apt.name.replace(/</g,'&lt;')+'</div>'+
+      '<div class="apt-sponsor">'+apt.sponsor.replace(/</g,'&lt;')+'</div></div>'+
+      '<span class="apt-nation" style="background:'+apt.color+';color:#000;">'+apt.nation+'</span>'+
+      '</div>'+
+      '<div class="apt-row"><span class="apt-row-label">TARGETS: </span>'+apt.targets.replace(/</g,'&lt;')+'</div>'+
+      '<div class="apt-row"><span class="apt-row-label">RECENT: </span>'+apt.recent.replace(/</g,'&lt;')+'</div>'+
+      '<div class="apt-ttps">'+ttpsHtml+'</div>'+
+      '<div class="apt-activity-bar"><div class="apt-activity-fill" style="width:'+({CRITICAL:95,HIGH:70,MEDIUM:45}[apt.threat]||40)+'%;background:'+apt.color+';"></div></div>'+
+      '</div>';
+  }).join('');
+}
+function openDroneOps(){
+  document.getElementById('drone-overlay').classList.add('open');
+  _refreshDroneOps();
+}
+function closeDroneOps(){
+  document.getElementById('drone-overlay').classList.remove('open');
+}
+async function _refreshDroneOps(){
+  const el=document.getElementById('drone-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;">Scanning drone operations intelligence...</div>';
+  try{
+    const q='("drone strike" OR "drone attack" OR "UAV attack" OR "Shahed" OR "kamikaze drone" OR "Bayraktar" OR "loitering munition" OR "UAS attack")';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=20&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent drone operations found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      const isStrike=/(strike|attack|hit|destroy)/i.test(a.title||'');
+      const dotColor=isStrike?'var(--danger)':'var(--warn)';
+      return '<div class="dr-item"><div class="dr-item-title"><span style="color:'+dotColor+';margin-right:5px;">&#x25CF;</span>'+title+'</div><div class="dr-item-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -17058,6 +17269,74 @@ function filterSIGINT(query){
     <div style="margin-top:12px;background:var(--panel2);border:1px solid var(--border);padding:10px;">
       <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE DISPLACEMENT EVENTS (GDELT)</div>
       <div id="refugee-news"></div>
+    </div>
+  </div>
+</div>
+<button id="econintel-btn" onclick="openEconIntel()">&#x1F4B9; ECON INTEL</button>
+<div id="econintel-overlay">
+  <div class="ei-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ECONOMIC INTELLIGENCE // FX RATES // COMMODITY MARKETS // ECONOMIC WARFARE INDICATORS</div>
+      <h2>&#x1F4B9; ECONOMIC INTELLIGENCE DASHBOARD</h2>
+    </div>
+    <button onclick="closeEconIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="ei-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">LIVE FX RATES: FRANKFURTER API &middot; COMMODITY INTELLIGENCE &middot; SANCTIONS INDICATORS &middot; ECONOMIC WARFARE TRACKING</div>
+    <div class="ei-grid" id="ei-commodity-grid">
+      <div class="ei-card"><div class="ei-card-label">WTI CRUDE OIL</div><div class="ei-card-value" id="ei-wti">--</div><div class="ei-card-change" id="ei-wti-c" style="color:var(--dim);">Loading...</div></div>
+      <div class="ei-card"><div class="ei-card-label">BRENT CRUDE</div><div class="ei-card-value" id="ei-brent">--</div><div class="ei-card-change" id="ei-brent-c" style="color:var(--dim);">Loading...</div></div>
+      <div class="ei-card"><div class="ei-card-label">GOLD (XAU/USD)</div><div class="ei-card-value" id="ei-gold">--</div><div class="ei-card-change" id="ei-gold-c" style="color:var(--dim);">Loading...</div></div>
+      <div class="ei-card"><div class="ei-card-label">US DOLLAR INDEX</div><div class="ei-card-value" id="ei-dxy">~104</div><div class="ei-card-change" style="color:var(--dim);">ESTIMATED</div></div>
+    </div>
+    <div class="ei-section">
+      <div class="ei-section-hdr">STRATEGIC CURRENCY MONITOR (USD BASE)</div>
+      <div class="ei-fx-grid" id="ei-fx-grid"><div style="color:var(--dim);font-size:9px;">Loading exchange rates...</div></div>
+    </div>
+    <div class="ei-section">
+      <div class="ei-section-hdr">ECONOMIC WARFARE &amp; SANCTIONS INTELLIGENCE (GDELT)</div>
+      <div id="ei-econ-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="apt-btn" onclick="openAPT()">&#x1F4BB; APT GROUPS</button>
+<div id="apt-overlay">
+  <div class="apt-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CYBER THREAT INTELLIGENCE // APT GROUP DATABASE // STATE-SPONSORED THREAT ACTORS</div>
+      <h2>&#x1F4BB; ADVANCED PERSISTENT THREAT (APT) DATABASE</h2>
+    </div>
+    <button onclick="closeAPT()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="apt-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">CONFIRMED STATE-SPONSORED THREAT ACTORS &middot; MITRE ATT&amp;CK ALIGNED &middot; GDELT ACTIVITY TRACKING &middot; OSINT SOURCES</div>
+    <div class="apt-grid" id="apt-grid"><div style="color:var(--dim);font-size:9px;grid-column:1/-1;">Loading APT threat database...</div></div>
+  </div>
+</div>
+<button id="drone-btn" onclick="openDroneOps()">&#x1F6F0; DRONE OPS</button>
+<div id="drone-overlay">
+  <div class="dr-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">UAS/DRONE OPERATIONS INTELLIGENCE // GLOBAL STRIKE TRACKING // UAV WARFARE MONITOR</div>
+      <h2>&#x1F6F0; GLOBAL DRONE &amp; UAS OPERATIONS TRACKER</h2>
+    </div>
+    <button onclick="closeDroneOps()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="dr-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">GLOBAL DRONE STRIKE INTELLIGENCE &middot; KNOWN UAS PLATFORMS &middot; GDELT COLLECTION &middot; REAL-TIME OPERATIONAL TRACKING</div>
+    <div class="dr-platforms">
+      <div class="dr-plat"><div class="dr-plat-name">Shahed-136/131</div><div class="dr-plat-nation">&#x1F1EE;&#x1F1F7; Iran / Russia</div><div class="dr-plat-detail">Loitering munition. 2,500km range. Used extensively in Ukraine. ~$20K unit cost. Geranium-2 (Russian designation).</div></div>
+      <div class="dr-plat"><div class="dr-plat-name">TB2 Bayraktar</div><div class="dr-plat-nation">&#x1F1F9;&#x1F1F7; Turkey</div><div class="dr-plat-detail">Armed MALE UAV. 27hr endurance. MAM-L smart micro munitions. Operated in Ukraine, Libya, Azerbaijan, Somalia.</div></div>
+      <div class="dr-plat"><div class="dr-plat-name">MQ-9 Reaper</div><div class="dr-plat-nation">&#x1F1FA;&#x1F1F8; USA</div><div class="dr-plat-detail">MALE hunter-killer. Hellfire missiles. Active in Somalia, Syria, Iraq, Yemen. 27hr endurance, 50,000ft ceiling.</div></div>
+      <div class="dr-plat"><div class="dr-plat-name">Wing Loong II</div><div class="dr-plat-nation">&#x1F1E8;&#x1F1F3; China</div><div class="dr-plat-detail">MALE armed UAV. Exported to UAE, Saudi Arabia, Iraq, Nigeria, Ethiopia. 20hr endurance. AR-1 missiles.</div></div>
+      <div class="dr-plat"><div class="dr-plat-name">Hermes 900</div><div class="dr-plat-nation">&#x1F1EE;&#x1F1F1; Israel</div><div class="dr-plat-detail">Multi-mission MALE UAV. Operated by IDF, Colombia, Azerbaijan, Philippines. Spike NLOS guided missiles.</div></div>
+      <div class="dr-plat"><div class="dr-plat-name">Mohajer-6</div><div class="dr-plat-nation">&#x1F1EE;&#x1F1F7; Iran / Houthis</div><div class="dr-plat-detail">MALE drone. Used by Houthis in Yemen Red Sea operations. Satellite dish targeting, Qaem-5 munitions.</div></div>
+      <div class="dr-plat"><div class="dr-plat-name">Lancet-3</div><div class="dr-plat-nation">&#x1F1F7;&#x1F1FA; Russia</div><div class="dr-plat-detail">Loitering munition. Used in Ukraine vs armor/artillery. TV-guided. 40km range. Paired with Zala ZALA recon drone.</div></div>
+      <div class="dr-plat"><div class="dr-plat-name">Switchblade 600</div><div class="dr-plat-nation">&#x1F1FA;&#x1F1F8; USA/Ukraine</div><div class="dr-plat-detail">Anti-armor loitering munition. 40km range. Shaped charge warhead for tanks. Backpack portable.</div></div>
+    </div>
+    <div class="dr-feed">
+      <div class="dr-feed-hdr">LIVE DRONE STRIKE INTELLIGENCE FEED (GDELT)</div>
+      <div id="drone-feed"><div style="color:var(--dim);font-size:9px;">Loading drone operations intelligence...</div></div>
     </div>
   </div>
 </div>
