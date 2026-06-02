@@ -988,6 +988,49 @@ button{border-radius:2px!important}
 
 /* p-cap */
 .p-cap{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* SIGINT Terminal Panel */
+#sigint-btn{position:fixed;bottom:143px;right:20px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(0,217,126,.4);border-radius:2px;color:#00d97e;cursor:pointer;padding:7px 12px;font-size:9px;font-family:var(--mono);letter-spacing:.18em;transition:all .2s;font-weight:700;display:flex;align-items:center;gap:6px;backdrop-filter:blur(10px);white-space:nowrap}
+#sigint-btn:hover{background:rgba(0,217,126,.12);border-color:#00d97e;color:#fff;box-shadow:0 0 12px rgba(0,217,126,.2)}
+@media(max-width:600px){#sigint-btn{bottom:182px;right:12px;font-size:8px;padding:6px 10px}}
+#sigint-backdrop{display:none;position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.55);backdrop-filter:blur(2px)}
+#sigint-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:300;width:min(1100px,97vw);max-height:90vh;overflow:hidden;background:rgba(4,7,16,.98);border:1px solid rgba(0,217,126,.3);border-top:2px solid rgba(0,217,126,.6);border-radius:2px;font-family:var(--mono);flex-direction:column}
+#sigint-panel.open{display:flex}
+.sigint-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid rgba(0,217,126,.2);background:rgba(0,217,126,.06);flex-shrink:0}
+.sigint-title{color:#00d97e;font-size:11px;letter-spacing:.3em;font-weight:700}
+.sigint-subtitle{color:#4a5878;font-size:8px;letter-spacing:.15em;margin-top:2px}
+.sigint-body{display:grid;grid-template-columns:1fr 360px;gap:0;flex:1;overflow:hidden;min-height:0}
+.sigint-feed{overflow-y:auto;border-right:1px solid rgba(0,217,126,.12);padding:12px;display:flex;flex-direction:column;gap:4px;scrollbar-width:thin;scrollbar-color:rgba(0,217,126,.2) transparent}
+.sigint-sidebar{overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin}
+.sigint-filter-bar{display:flex;gap:6px;padding:8px 12px;border-bottom:1px solid rgba(0,217,126,.12);flex-shrink:0;flex-wrap:wrap;background:rgba(0,0,0,.2)}
+.sigint-filter-btn{font-size:8px;padding:3px 9px;border:1px solid rgba(0,217,126,.2);border-radius:1px;color:#4a5878;cursor:pointer;letter-spacing:.12em;text-transform:uppercase;background:none;font-family:var(--mono);transition:all .15s}
+.sigint-filter-btn.active{border-color:rgba(0,217,126,.6);color:#00d97e;background:rgba(0,217,126,.08)}
+.sigint-event{display:grid;grid-template-columns:52px 1fr;gap:8px;padding:6px 8px;border-left:2px solid;border-radius:0 2px 2px 0;background:rgba(9,14,25,.6);transition:background .15s;cursor:pointer}
+.sigint-event:hover{background:rgba(0,217,126,.06)}
+.sigint-event-time{font-size:7px;color:#4a5878;letter-spacing:.06em;line-height:1.6;padding-top:1px}
+.sigint-event-body{min-width:0}
+.sigint-event-title{font-size:9.5px;color:#c8d8ff;line-height:1.4;margin-bottom:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.sigint-event-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sigint-event-country{font-size:7.5px;color:#4a5878;letter-spacing:.08em;text-transform:uppercase}
+.sigint-event-type{font-size:7px;padding:1px 5px;border-radius:1px;letter-spacing:.1em;font-weight:600;text-transform:uppercase}
+.sigint-tone{font-size:8px;letter-spacing:.06em}
+.sigint-loading{text-align:center;color:#4a5878;font-size:9px;padding:40px;letter-spacing:.12em}
+.sigint-section-label{font-size:8px;color:#4a5878;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid rgba(0,217,126,.12)}
+.sigint-stat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,217,126,.07);font-size:9px}
+.sigint-stat-label{color:#4a5878;letter-spacing:.06em}
+.sigint-stat-val{color:#c8d8ff;font-weight:600}
+.sigint-country-item{display:flex;align-items:center;justify-content:space-between;padding:4px 6px;background:rgba(9,14,25,.5);border-radius:2px;margin-bottom:3px;cursor:pointer}
+.sigint-country-item:hover{background:rgba(0,217,126,.07)}
+.sigint-country-name{font-size:9px;color:#8896b3;letter-spacing:.06em}
+.sigint-country-count{font-size:9px;color:#00d97e;font-weight:600;min-width:20px;text-align:right}
+.sigint-refresh-ts{font-size:7px;color:#4a5878;letter-spacing:.1em}
+.sigint-footer{padding:8px 16px;border-top:1px solid rgba(0,217,126,.15);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(0,0,0,.2)}
+@media(max-width:700px){.sigint-body{grid-template-columns:1fr}.sigint-sidebar{display:none}}
+
+/* Seismic Intel */
+#seismic-indicator{position:fixed;bottom:30px;left:180px;z-index:150;display:none;background:rgba(4,8,18,.92);border:1px solid rgba(251,191,36,.35);border-radius:2px;padding:5px 10px;font-size:8px;letter-spacing:.14em;color:#fbbf24;font-family:var(--mono);backdrop-filter:blur(8px);cursor:pointer}
+#seismic-indicator:hover{background:rgba(251,191,36,.1)}
+.seismic-alert-dot{width:5px;height:5px;border-radius:50%;background:#fbbf24;display:inline-block;margin-right:5px;animation:blink 1s step-start infinite}
 </style>
 </head>
 <body>
@@ -1027,6 +1070,7 @@ button{border-radius:2px!important}
   <button class="layer-btn" id="lb-money"     onclick="toggleLayer('money')"     title="Financial flows and sanctions evasion — documented OSINT intelligence database"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-refugees"  onclick="toggleLayer('refugees')"  title="Refugee and displacement flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-flights"   onclick="toggleLayer('flights')"   title="Live military flights — ADS-B Exchange real-time feed (adsb.lol)"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span><span class="lb-src live">● LIVE</span></button>
+  <button class="layer-btn" id="lb-seismic" onclick="toggleSeismicLayer()" title="USGS earthquake data — live seismic monitoring"><span class="lb-dot" style="background:#fbbf24"></span>SEISMIC<span class="lb-src">USGS</span></button>
   <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signals — Reddit · Bluesky · Telegram · GDELT news · X/Twitter"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span><span class="lb-src live">● LIVE</span></button>
   <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>📡 EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
   <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>💻 CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
@@ -1120,6 +1164,67 @@ button{border-radius:2px!important}
     <div class="actor-modal-body" id="actor-modal-body"></div>
   </div>
 </div>
+
+<div id="sigint-btn" onclick="toggleSIGINT()">&#x2B21; SIGINT LIVE</div>
+<div id="sigint-backdrop" onclick="toggleSIGINT()"></div>
+<div id="sigint-panel">
+  <div class="sigint-header">
+    <div>
+      <div class="sigint-title">&#x2B21; SIGNALS INTELLIGENCE &#8212; LIVE EVENT STREAM</div>
+      <div class="sigint-subtitle">SOURCE: GDELT PROJECT &middot; 100+ GLOBAL NEWS NETWORKS &middot; UPDATED EVERY 15 MINUTES</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button onclick="refreshSIGINT()" id="sigint-refresh-btn" style="background:none;border:1px solid rgba(0,217,126,.4);color:#00d97e;cursor:pointer;padding:3px 10px;border-radius:2px;font-size:9px;font-family:var(--mono);letter-spacing:.12em">&#8635; REFRESH</button>
+      <button onclick="toggleSIGINT()" style="background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0 4px">&#x2715;</button>
+    </div>
+  </div>
+  <div class="sigint-filter-bar" id="sigint-filters">
+    <button class="sigint-filter-btn active" data-filter="all" onclick="setSIGINTFilter('all')">ALL EVENTS</button>
+    <button class="sigint-filter-btn" data-filter="conflict" onclick="setSIGINTFilter('conflict')">&#x2694; CONFLICT</button>
+    <button class="sigint-filter-btn" data-filter="military" onclick="setSIGINTFilter('military')">&#x26A1; MILITARY</button>
+    <button class="sigint-filter-btn" data-filter="nuclear" onclick="setSIGINTFilter('nuclear')">&#x2622; NUCLEAR/WMD</button>
+    <button class="sigint-filter-btn" data-filter="cyber" onclick="setSIGINTFilter('cyber')">&#x229B; CYBER</button>
+    <button class="sigint-filter-btn" data-filter="protest" onclick="setSIGINTFilter('protest')">&#x25C8; UNREST</button>
+    <button class="sigint-filter-btn" data-filter="diplomatic" onclick="setSIGINTFilter('diplomatic')">&#x25C9; DIPLOMATIC</button>
+    <button class="sigint-filter-btn" data-filter="economic" onclick="setSIGINTFilter('economic')">$ ECONOMIC</button>
+    <span id="sigint-count" style="margin-left:auto;font-size:8px;color:#4a5878;letter-spacing:.1em;align-self:center"></span>
+  </div>
+  <div class="sigint-body">
+    <div class="sigint-feed" id="sigint-feed">
+      <div class="sigint-loading">&#x25CC; INITIALIZING SIGINT FEED&#8230;<br><br><span style="color:#2a3548">GDELT PROJECT &middot; MULTI-SOURCE INTELLIGENCE AGGREGATION</span></div>
+    </div>
+    <div class="sigint-sidebar" id="sigint-sidebar">
+      <div>
+        <div class="sigint-section-label">SYSTEM STATUS</div>
+        <div class="sigint-stat-row"><span class="sigint-stat-label">GDELT FEED</span><span class="sigint-stat-val" id="sstat-gdelt" style="color:#4a5878">STANDBY</span></div>
+        <div class="sigint-stat-row"><span class="sigint-stat-label">EVENTS LOADED</span><span class="sigint-stat-val" id="sstat-count">0</span></div>
+        <div class="sigint-stat-row"><span class="sigint-stat-label">LAST UPDATE</span><span class="sigint-stat-val" id="sstat-ts" style="font-size:8px">&#8212;</span></div>
+        <div class="sigint-stat-row"><span class="sigint-stat-label">SOURCES ACTIVE</span><span class="sigint-stat-val">100+</span></div>
+        <div class="sigint-stat-row"><span class="sigint-stat-label">COVERAGE</span><span class="sigint-stat-val" style="color:#00d97e">GLOBAL</span></div>
+      </div>
+      <div>
+        <div class="sigint-section-label">TOP ACTIVE COUNTRIES</div>
+        <div id="sigint-countries"></div>
+      </div>
+      <div>
+        <div class="sigint-section-label">EVENT DISTRIBUTION</div>
+        <div id="sigint-distribution"></div>
+      </div>
+      <div style="font-size:8px;color:#2a3548;line-height:1.6;border-top:1px solid rgba(0,217,126,.08);padding-top:8px;margin-top:4px">
+        DATA SOURCE: GDELT PROJECT (gdeltproject.org)<br>
+        Global Database of Events, Language, and Tone<br>
+        Updates every 15 minutes from 100+ global sources<br>
+        CLASSIFICATION: UNCLASSIFIED // OSINT
+      </div>
+    </div>
+  </div>
+  <div class="sigint-footer">
+    <span class="sigint-refresh-ts" id="sigint-last-refresh">NOT YET LOADED</span>
+    <span style="font-size:7px;color:#2a3548;letter-spacing:.1em">GDELT PROJECT &middot; OPEN SOURCE &middot; GLOBAL COVERAGE &middot; UNCLASSIFIED</span>
+  </div>
+</div>
+
+<div id="seismic-indicator"></div>
 
 <!-- Satellite Panel -->
 <div id="sat-backdrop" onclick="toggleSatPanel()"></div>
@@ -10032,35 +10137,82 @@ async function refreshIntel(){
 }
 
 async function fetchLiveHotspots(){
+  // Check cache — 10 minute TTL
+  if(window._gdeltHotspotCache&&Date.now()-window._gdeltHotspotCache.ts<600000){
+    liveHotspots=window._gdeltHotspotCache.data;
+    return;
+  }
   try{
-    // GDELT GEO API — geo-coded events (violence/explosions) in Middle East
-    const q=encodeURIComponent('explosion bombing airstrike attack missile (Iraq OR Syria OR Yemen OR Iran OR Gaza OR Lebanon OR Israel)');
-    const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=15&format=json&timespan=3days`;
-    const res=await fetch(url,{signal:AbortSignal.timeout(7000)});
-    if(!res.ok)return;
-    const data=await res.json();
-    if(!data.articles)return;
-    // Map article locations to approximate hotspot pins
+    const queries=[
+      {q:'attack explosion bombing airstrike missile killed',type:'active_conflict',sev:'high'},
+      {q:'nuclear ballistic troops military forces warship deploy',type:'military_movement',sev:'critical'},
+      {q:'protest riot coup uprising unrest demonstration',type:'protest',sev:'medium'},
+    ];
+    const reqs=queries.map(({q})=>
+      fetch(`https://api.gdeltproject.org/api/v2/geo/geo?query=${encodeURIComponent(q)}&mode=pointdata&format=geojson&timespan=24h`,
+        {signal:AbortSignal.timeout(10000)})
+      .then(r=>r.ok?r.json():null).catch(()=>null)
+    );
+    const results=await Promise.allSettled(reqs);
     const fresh=[];
-    for(const a of data.articles){
-      if(!a.socialimage&&!a.url)continue;
-      // GDELT includes sourceurl and sometimes SOURCEURL has country in domain
-      // Use title keyword matching to assign approximate coordinates
-      const ti=(a.title||'').toLowerCase();
-      let found=null;
-      for(const[iso,c]of Object.entries(COUNTRIES)){
-        if(ti.includes(c.name.toLowerCase())||ti.includes(iso.toLowerCase())){found=c;break;}
-      }
-      if(found){
-        // Small random scatter so pins don't perfectly stack
-        const scatter=()=>(Math.random()-0.5)*1.5;
-        fresh.push({lat:found.lat+scatter(),lng:found.lng+scatter(),
-          country:found.iso,type:'active_conflict',
-          label:(a.title||'').slice(0,60)+'…',severity:'medium',live:true});
+    const seen=new Set();
+    for(let i=0;i<results.length;i++){
+      const res=results[i];
+      if(res.status!=='fulfilled'||!res.value||!res.value.features)continue;
+      const {type,sev}=queries[i];
+      for(const f of res.value.features){
+        if(!f.geometry||!f.geometry.coordinates)continue;
+        const [lng,lat]=f.geometry.coordinates;
+        if(typeof lat!=='number'||typeof lng!=='number')continue;
+        // Deduplicate within 0.5 degrees
+        const key=`${Math.round(lat*2)}_${Math.round(lng*2)}`;
+        if(seen.has(key))continue;
+        seen.add(key);
+        const p=f.properties||{};
+        fresh.push({
+          lat,lng,type,severity:sev,live:true,
+          label:(p.title||p.name||'GDELT Event').slice(0,80),
+          country:'',source:'GDELT',
+          url:p.url||'',
+        });
       }
     }
-    if(fresh.length)liveHotspots=fresh.slice(0,12);
-  }catch{}
+    // Shuffle for visual variety, cap at 60
+    fresh.sort(()=>Math.random()-.5);
+    liveHotspots=fresh.slice(0,60);
+    window._gdeltHotspotCache={ts:Date.now(),data:liveHotspots};
+  }catch(e){
+    // Fallback to GDELT doc API title matching
+    try{
+      const q=encodeURIComponent('explosion bombing airstrike attack missile killed war');
+      const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=25&format=json&timespan=1day`;
+      const res=await fetch(url,{signal:AbortSignal.timeout(7000)});
+      if(!res.ok)return;
+      const data=await res.json();
+      if(!data.articles)return;
+      const fresh=[];
+      for(const a of data.articles){
+        const ti=(a.title||'').toLowerCase();
+        let found=null;
+        for(const[,c]of Object.entries(COUNTRIES)){
+          if(ti.includes(c.name.toLowerCase())){found=c;break;}
+        }
+        if(found){
+          const scatter=()=>(Math.random()-.5)*2;
+          fresh.push({lat:found.lat+scatter(),lng:found.lng+scatter(),
+            country:found.iso,type:'active_conflict',
+            label:(a.title||'').slice(0,60),severity:'medium',live:true});
+        }
+      }
+      if(fresh.length)liveHotspots=fresh.slice(0,20);
+    }catch{}
+  }
+}
+
+function refreshGDELTLayer(){
+  window._gdeltHotspotCache=null;
+  fetchLiveHotspots();
+  setTimeout(refreshGDELTLayer,600000);
 }
 
 /* ── RSS helper (fetches via allorigins CORS proxy, parses XML) ── */
@@ -12319,6 +12471,423 @@ function toggleFlashpointCard(idx){
   el.classList.toggle('fp-open');
   const arrow=el.querySelector('.fp-toggle-arrow');
   if(arrow)arrow.textContent=el.classList.contains('fp-open')?'▲':'▼';
+}
+
+// ── SIGINT MODULE ────────────────────────────────────────────────────────────
+let sigintOpen=false;
+let sigintData=[];
+let sigintFilter='all';
+let sigintFetched=false;
+let sigintRefreshTimer=null;
+
+const SIGINT_EVENT_TYPES={
+  conflict:{label:'CONFLICT',color:'#ef4444',bg:'rgba(239,68,68,.12)'},
+  military:{label:'MILITARY',color:'#f97316',bg:'rgba(249,115,22,.12)'},
+  nuclear: {label:'WMD/NUCLEAR',color:'#00d97e',bg:'rgba(0,217,126,.1)'},
+  cyber:   {label:'CYBER',color:'#60a5fa',bg:'rgba(96,165,250,.12)'},
+  protest: {label:'UNREST',color:'#fbbf24',bg:'rgba(251,191,36,.12)'},
+  diplomatic:{label:'DIPLOMATIC',color:'#a78bfa',bg:'rgba(167,139,250,.12)'},
+  economic:{label:'ECONOMIC',color:'#e879f9',bg:'rgba(232,121,249,.12)'},
+  other:   {label:'INTEL',color:'#8896b3',bg:'rgba(136,150,179,.1)'},
+};
+
+function _classifyEvent(title){
+  const t=(title||'').toLowerCase();
+  if(/nuclear|wmd|chemical weapon|bioweapon|radiolog|dirty bomb|enrichment|warhead|icbm|ballistic/.test(t))return'nuclear';
+  if(/cyber|hack|malware|ransomware|intrusion|data breach|apt |zero.?day|phishing/.test(t))return'cyber';
+  if(/attack|bomb|explo|airstrike|shelling|assault|strike|ambush|shot|killed|casualt|war|battle|frontline/.test(t))return'conflict';
+  if(/troops|military|forces|army|navy|air force|missile|tanks|deploy|weapon/.test(t))return'military';
+  if(/sanction|tariff|trade war|embargo|export control|economic|gdp|inflation|currency/.test(t))return'economic';
+  if(/protest|riot|uprising|demonstration|civil unrest|coup|revolution|strike|opposition/.test(t))return'protest';
+  if(/summit|diplomacy|treaty|agreement|ceasefire|negotiation|foreign minister|ambassador|sanctions/.test(t))return'diplomatic';
+  return'other';
+}
+
+function _sigintToneColor(tone){
+  if(typeof tone!=='number')return'#4a5878';
+  if(tone<-5)return'#ef4444';
+  if(tone<-2)return'#f97316';
+  if(tone<0)return'#fbbf24';
+  if(tone>2)return'#00d97e';
+  return'#8896b3';
+}
+
+async function fetchSIGINTFeed(){
+  const queries=[
+    'attack explosion bombing airstrike missile killed wounded war conflict',
+    'nuclear missile ballistic troops military forces deploy warship sanctions',
+    'cyber hack protest coup unrest uprising diplomatic ceasefire economic',
+  ];
+  const timespan='6h';
+  let allArticles=[];
+  try{
+    const reqs=queries.map(q=>
+      fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(q)}&mode=artlist&maxrecords=60&format=json&timespan=${timespan}`,
+        {signal:AbortSignal.timeout(12000)})
+      .then(r=>r.ok?r.json():null).catch(()=>null)
+    );
+    const results=await Promise.allSettled(reqs);
+    for(const r of results){
+      if(r.status==='fulfilled'&&r.value&&r.value.articles){
+        allArticles=[...allArticles,...r.value.articles];
+      }
+    }
+  }catch{}
+  // Deduplicate by URL
+  const seen=new Set();
+  const deduped=[];
+  for(const a of allArticles){
+    const key=a.url||a.title||'';
+    if(!seen.has(key)){seen.add(key);deduped.push(a);}
+  }
+  // Sort by date descending, classify, annotate
+  return deduped.sort((a,b)=>(b.seendate||'')>(a.seendate||'')?1:-1).slice(0,200).map(a=>({
+    title:a.title||'',
+    url:a.url||'',
+    source:a.sourcecountry||a.domain||'',
+    domain:a.domain||'',
+    date:a.seendate||'',
+    tone:typeof a.tone==='number'?a.tone:parseFloat(a.tone)||0,
+    eventType:_classifyEvent(a.title),
+    socialimage:a.socialimage||'',
+  }));
+}
+
+function _formatSIGINTDate(dateStr){
+  if(!dateStr||dateStr.length<8)return'--';
+  try{
+    const y=dateStr.slice(0,4),mo=dateStr.slice(4,6),d=dateStr.slice(6,8);
+    const h=dateStr.slice(8,10)||'00',mi=dateStr.slice(10,12)||'00';
+    const dt=new Date(Date.UTC(+y,+mo-1,+d,+h,+mi));
+    const now=Date.now();
+    const diff=Math.round((now-dt.getTime())/60000);
+    if(diff<1)return'JUST NOW';
+    if(diff<60)return diff+'M AGO';
+    if(diff<1440)return Math.floor(diff/60)+'H AGO';
+    return Math.floor(diff/1440)+'D AGO';
+  }catch{return'--';}
+}
+
+function renderSIGINTFeed(){
+  const feed=document.getElementById('sigint-feed');
+  if(!feed)return;
+  const filtered=sigintFilter==='all'?sigintData:sigintData.filter(e=>e.eventType===sigintFilter);
+  const countEl=document.getElementById('sigint-count');
+  if(countEl)countEl.textContent=filtered.length+' EVENTS';
+  const scountEl=document.getElementById('sstat-count');
+  if(scountEl)scountEl.textContent=sigintData.length;
+  const sgdeltEl=document.getElementById('sstat-gdelt');
+  if(sgdeltEl){sgdeltEl.textContent='ONLINE';sgdeltEl.style.color='#00d97e';}
+  const stsEl=document.getElementById('sstat-ts');
+  if(stsEl)stsEl.textContent=new Date().toISOString().slice(0,19).replace('T',' ')+' UTC';
+  const lrEl=document.getElementById('sigint-last-refresh');
+  if(lrEl)lrEl.textContent='LAST REFRESH: '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' UTC';
+
+  if(!filtered.length){
+    feed.innerHTML='<div style="color:#4a5878;font-size:9px;text-align:center;padding:30px;letter-spacing:.12em">NO EVENTS MATCH CURRENT FILTER</div>';
+  } else {
+    feed.innerHTML=filtered.map(ev=>{
+      const et=SIGINT_EVENT_TYPES[ev.eventType]||SIGINT_EVENT_TYPES.other;
+      const tColor=_sigintToneColor(ev.tone);
+      const tStr=typeof ev.tone==='number'?(ev.tone>0?'+':'')+ev.tone.toFixed(1):'';
+      const safeUrl=ev.url.replace(/'/g,'%27');
+      const safeTitle=ev.title.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const safeDomain=(ev.domain||'').slice(0,16);
+      const safeSource=ev.source||'';
+      return'<div class="sigint-event" style="border-left-color:'+et.color+'40;background:'+et.bg+'" onclick="window.open(\''+safeUrl+'\',\'_blank\')">'+
+        '<div class="sigint-event-time">'+_formatSIGINTDate(ev.date)+'<br><span style="font-size:6px;color:#2a3548">'+safeDomain+'</span></div>'+
+        '<div class="sigint-event-body">'+
+          '<div class="sigint-event-title">'+safeTitle+'</div>'+
+          '<div class="sigint-event-meta">'+
+            '<span class="sigint-event-type" style="background:'+et.bg+';color:'+et.color+';border:1px solid '+et.color+'40">'+et.label+'</span>'+
+            (safeSource?'<span class="sigint-event-country">'+safeSource+'</span>':'')+
+            (tStr?'<span class="sigint-tone" style="color:'+tColor+'">TONE: '+tStr+'</span>':'')+
+          '</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+  // Update sidebar: top countries
+  const countryCounts={};
+  sigintData.forEach(e=>{if(e.source)countryCounts[e.source]=(countryCounts[e.source]||0)+1;});
+  const topCountries=Object.entries(countryCounts).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const cDiv=document.getElementById('sigint-countries');
+  if(cDiv)cDiv.innerHTML=topCountries.map(([c,n])=>'<div class="sigint-country-item"><span class="sigint-country-name">'+c+'</span><span class="sigint-country-count">'+n+'</span></div>').join('');
+  // Event distribution
+  const typeCounts={};
+  sigintData.forEach(e=>{typeCounts[e.eventType]=(typeCounts[e.eventType]||0)+1;});
+  const dDiv=document.getElementById('sigint-distribution');
+  if(dDiv)dDiv.innerHTML=Object.entries(typeCounts).sort((a,b)=>b[1]-a[1]).map(([type,count])=>{
+    const et=SIGINT_EVENT_TYPES[type]||SIGINT_EVENT_TYPES.other;
+    const pct=Math.round(count/sigintData.length*100);
+    return'<div style="margin-bottom:5px">'+
+      '<div style="display:flex;justify-content:space-between;font-size:8px;margin-bottom:2px">'+
+        '<span style="color:'+et.color+';letter-spacing:.06em">'+et.label+'</span>'+
+        '<span style="color:#4a5878">'+count+' ('+pct+'%)</span>'+
+      '</div>'+
+      '<div style="height:2px;background:rgba(30,58,95,.3);border-radius:1px"><div style="height:100%;width:'+pct+'%;background:'+et.color+';border-radius:1px"></div></div>'+
+    '</div>';
+  }).join('');
+}
+
+async function refreshSIGINT(){
+  const btn=document.getElementById('sigint-refresh-btn');
+  if(btn)btn.textContent='↻ LOADING…';
+  const feedEl=document.getElementById('sigint-feed');
+  if(feedEl)feedEl.innerHTML='<div class="sigint-loading">◌ QUERYING GDELT INTELLIGENCE FEEDS…<br><br><span style="color:#2a3548">SCANNING 100+ GLOBAL NEWS SOURCES</span></div>';
+  try{
+    sigintData=await fetchSIGINTFeed();
+    renderSIGINTFeed();
+    sigintFetched=true;
+  }catch(e){
+    if(feedEl)feedEl.innerHTML='<div class="sigint-loading" style="color:#ef4444">⚠ FEED ERROR — RETRY IN 60S<br><br><span style="color:#4a5878">'+(e&&e.message?e.message:'')+'</span></div>';
+  }
+  if(btn)btn.textContent='↻ REFRESH';
+}
+
+function setSIGINTFilter(f){
+  sigintFilter=f;
+  document.querySelectorAll('.sigint-filter-btn').forEach(function(b){
+    b.classList.toggle('active',b.dataset.filter===f);
+  });
+  renderSIGINTFeed();
+}
+
+function toggleSIGINT(){
+  sigintOpen=!sigintOpen;
+  const panel=document.getElementById('sigint-panel');
+  panel.classList.toggle('open',sigintOpen);
+  document.getElementById('sigint-backdrop').style.display=sigintOpen?'block':'none';
+  if(sigintOpen&&!sigintFetched)refreshSIGINT();
+  if(sigintOpen&&!sigintRefreshTimer)sigintRefreshTimer=setInterval(refreshSIGINT,5*60*1000);
+  if(!sigintOpen&&sigintRefreshTimer){clearInterval(sigintRefreshTimer);sigintRefreshTimer=null;}
+}
+
+// ── SEISMIC INTELLIGENCE MODULE ──────────────────────────────────────────────
+let seismicData=[];
+let seismicLayerActive=false;
+let seismicTimer=null;
+
+const NUCLEAR_TEST_SITES=[
+  {name:'DPRK Punggye-ri',lat:41.33,lng:129.08,country:'PRK'},
+  {name:'China Lop Nor',lat:41.57,lng:89.52,country:'CHN'},
+  {name:'Pakistan Chaghi',lat:29.11,lng:64.91,country:'PAK'},
+  {name:'India Pokhran',lat:27.07,lng:71.73,country:'IND'},
+  {name:'Iran Parchin',lat:35.43,lng:51.78,country:'IRN'},
+  {name:'Russia Novaya Zemlya',lat:73.5,lng:54.8,country:'RUS'},
+];
+
+function _haversineKm(lat1,lon1,lat2,lon2){
+  const R=6371;
+  const dLat=(lat2-lat1)*Math.PI/180;
+  const dLon=(lon2-lon1)*Math.PI/180;
+  const a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function _isNearTestSite(lat,lng){
+  for(const site of NUCLEAR_TEST_SITES){
+    if(_haversineKm(lat,lng,site.lat,site.lng)<250)return site;
+  }
+  return null;
+}
+
+async function fetchSeismicData(){
+  try{
+    const r=await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson',
+      {signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return;
+    const d=await r.json();
+    seismicData=(d.features||[]).map(function(f){
+      const p=f.properties;
+      const coords=f.geometry&&f.geometry.coordinates;
+      if(!coords)return null;
+      const lng=coords[0],lat=coords[1],depth=coords[2];
+      const nearSite=depth<10?_isNearTestSite(lat,lng):null;
+      return{
+        lat,lng,depth,
+        mag:p.mag,
+        place:p.place||'Unknown',
+        time:p.time,
+        type:p.type||'earthquake',
+        nearSite,
+        suspicious:!!(nearSite&&depth<10&&p.mag>=3.5),
+      };
+    }).filter(Boolean);
+    _updateSeismicGlobeLayer();
+    // Check for suspicious events
+    const suspicious=seismicData.filter(function(e){return e.suspicious;});
+    const indicator=document.getElementById('seismic-indicator');
+    if(indicator){
+      if(suspicious.length){
+        indicator.style.display='flex';
+        indicator.innerHTML='<span class="seismic-alert-dot"></span>SEISMIC ALERT: '+suspicious.length+' NEAR TEST SITE'+(suspicious.length>1?'S':'');
+        indicator.onclick=function(){openSeismicAlert(suspicious[0]);};
+      } else {
+        indicator.style.display=seismicLayerActive?'flex':'none';
+        indicator.innerHTML=seismicData.length+' SEISMIC EVENTS (M4.5+, 7D)';
+        indicator.style.alignItems='center';
+        indicator.onclick=null;
+      }
+    }
+  }catch(e){}
+}
+
+function _updateSeismicGlobeLayer(){
+  if(!seismicLayerActive)return;
+  const seismicPins=seismicData.map(function(e){
+    const severity=e.suspicious?'critical':e.mag>=6.0?'high':e.mag>=5.0?'medium':'low';
+    const label='M'+e.mag+' '+e.place+(e.suspicious?' [NEAR NUCLEAR TEST SITE]':'');
+    return{lat:e.lat,lng:e.lng,type:'seismic',severity:severity,label:label,live:true,
+      country:'',mag:e.mag,depth:e.depth,seismic:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return!h.seismic;}),...seismicPins.slice(0,30)];
+}
+
+function openSeismicAlert(ev){
+  const siteNote=ev.suspicious?'\n\n⚠ NUCLEAR CORRELATION: '+ev.nearSite.name+' — Depth '+ev.depth+'km, M'+ev.mag+'. Shallow seismic events (<10km) near known test infrastructure require OSINT follow-up.':'';
+  const depthClass=ev.depth<10?'SHALLOW (potential artificial)':ev.depth<70?'INTERMEDIATE':'DEEP';
+  intelPop(
+    'SEISMIC EVENT: M'+ev.mag+' — '+ev.place,
+    'USGS SEISMIC INTELLIGENCE',
+    'Magnitude: '+ev.mag+' | Depth: '+ev.depth+'km\nLocation: '+ev.place+'\nTime: '+new Date(ev.time).toUTCString()+'\nDepth Classification: '+depthClass+siteNote,
+    ['SOURCE: USGS EARTHQUAKE HAZARDS PROGRAM','CLASSIFICATION: UNCLASSIFIED // OSINT']
+  );
+}
+
+function toggleSeismicLayer(){
+  seismicLayerActive=!seismicLayerActive;
+  const btn=document.getElementById('lb-seismic');
+  if(btn)btn.classList.toggle('active',seismicLayerActive);
+  const indicator=document.getElementById('seismic-indicator');
+  if(seismicLayerActive){
+    fetchSeismicData();
+    if(!seismicTimer)seismicTimer=setInterval(fetchSeismicData,5*60*1000);
+    if(indicator){indicator.style.display='flex';indicator.style.alignItems='center';}
+  } else {
+    if(seismicTimer){clearInterval(seismicTimer);seismicTimer=null;}
+    liveHotspots=liveHotspots.filter(function(h){return!h.seismic;});
+    if(indicator)indicator.style.display='none';
+  }
+}
+
+// ── CISA CYBER INTELLIGENCE ───────────────────────────────────────────────────
+let cisaKEVData=null;
+let cisaFetchTime=0;
+
+async function fetchCISAKEV(){
+  if(cisaKEVData&&Date.now()-cisaFetchTime<3600000)return cisaKEVData;
+  try{
+    const r=await fetch('https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json',
+      {signal:AbortSignal.timeout(12000)});
+    if(!r.ok)return null;
+    const d=await r.json();
+    cisaKEVData=d;
+    cisaFetchTime=Date.now();
+    return d;
+  }catch{return null;}
+}
+
+async function renderCISACyberPanel(container){
+  if(!container)return;
+  container.innerHTML='<div style="color:#4a5878;font-size:9px;text-align:center;padding:20px;letter-spacing:.12em">◌ LOADING CISA KEV FEED…</div>';
+  const data=await fetchCISAKEV();
+  if(!data||!data.vulnerabilities){
+    container.innerHTML='<div style="color:#ef4444;font-size:9px;padding:12px">⚠ CISA FEED UNAVAILABLE</div>';
+    return;
+  }
+  const recent=data.vulnerabilities.slice().sort(function(a,b){return b.dateAdded>a.dateAdded?1:-1;}).slice(0,20);
+  const today=new Date().toISOString().slice(0,10);
+  const weekAgo=new Date(Date.now()-86400000*7).toISOString().slice(0,10);
+  container.innerHTML=
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)">'+
+      '<div>'+
+        '<div style="font-size:10px;color:#60a5fa;letter-spacing:.15em;font-weight:700">CISA KNOWN EXPLOITED VULNERABILITIES</div>'+
+        '<div style="font-size:8px;color:#4a5878;letter-spacing:.1em;margin-top:2px">TOTAL CATALOG: '+data.count+' CVEs · CATALOG v'+data.catalogVersion+'</div>'+
+      '</div>'+
+      '<div style="text-align:right;font-size:8px;color:#4a5878">RELEASED: '+(data.dateReleased||'—')+'</div>'+
+    '</div>'+
+    '<div style="font-size:8px;color:#4a5878;letter-spacing:.18em;margin-bottom:6px;text-transform:uppercase">RECENTLY ADDED (TOP 20)</div>'+
+    recent.map(function(v){
+      const isNew=v.dateAdded===today||v.dateAdded>=weekAgo;
+      return'<div style="background:rgba(8,16,33,.7);border:1px solid var(--border);border-left:2px solid '+(isNew?'#ef4444':'#1e3a5f')+';border-radius:2px;padding:8px 10px;margin-bottom:6px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:4px">'+
+          '<span style="font-size:9px;color:#60a5fa;font-weight:700;letter-spacing:.05em">'+v.cveID+'</span>'+
+          (isNew?'<span style="font-size:7px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#fca5a5;padding:1px 5px;border-radius:1px;letter-spacing:.1em">NEW</span>':'<span style="font-size:7px;color:#4a5878">'+v.dateAdded+'</span>')+
+        '</div>'+
+        '<div style="font-size:9px;color:#e8edf8;margin-bottom:3px;line-height:1.4">'+(v.vulnerabilityName||'').replace(/</g,'&lt;')+'</div>'+
+        '<div style="font-size:8px;color:#8896b3;margin-bottom:3px">'+v.vendorProject+' — '+v.product+'</div>'+
+        '<div style="font-size:8px;color:#64748b;line-height:1.4">'+(v.shortDescription||'').slice(0,120).replace(/</g,'&lt;')+'…</div>'+
+        (v.knownRansomwareCampaignUse==='Known'?'<div style="margin-top:4px;font-size:7px;color:#fbbf24;letter-spacing:.1em">⚠ ACTIVE RANSOMWARE CAMPAIGN</div>':'')+
+      '</div>';
+    }).join('')+
+    '<div style="font-size:7px;color:#2a3548;letter-spacing:.1em;margin-top:8px;border-top:1px solid var(--border);padding-top:6px">SOURCE: CISA · CYBERSECURITY AND INFRASTRUCTURE SECURITY AGENCY · CLASSIFICATION: UNCLASSIFIED</div>';
+}
+
+// ── RELIEFWEB CRISIS INTELLIGENCE ────────────────────────────────────────────
+async function fetchReliefWebCrises(){
+  try{
+    const r=await fetch(
+      'https://api.reliefweb.int/v1/disasters?appname=intelglobe&limit=20&sort[]=date:desc&fields[include][]=name&fields[include][]=status&fields[include][]=country&fields[include][]=date&fields[include][]=glide&fields[include][]=type',
+      {signal:AbortSignal.timeout(10000)}
+    );
+    if(!r.ok)return[];
+    const d=await r.json();
+    return(d.data||[]).map(function(item){
+      const f=item.fields||{};
+      const country=(f.country&&f.country[0]&&f.country[0].name)||'Unknown';
+      const iso3=(f.country&&f.country[0]&&f.country[0].iso3)||'';
+      const type=(f.type&&f.type[0]&&f.type[0].name)||'Disaster';
+      const status=f.status||'alert';
+      const date=(f.date&&f.date.created)||'';
+      return{name:f.name||'Unknown',country,iso3,type,status,date,glide:f.glide||'',id:item.id};
+    });
+  }catch{return[];}
+}
+
+async function fetchReliefWebReports(iso3){
+  try{
+    const filter=iso3?'&filter[field]=country.iso3&filter[value]='+iso3:'&filter[field]=theme.name&filter[value]=Security';
+    const r=await fetch(
+      'https://api.reliefweb.int/v1/reports?appname=intelglobe&limit=10&sort[]=date:desc&fields[include][]=title&fields[include][]=date&fields[include][]=source&fields[include][]=country&fields[include][]=body-html'+filter,
+      {signal:AbortSignal.timeout(10000)}
+    );
+    if(!r.ok)return[];
+    const d=await r.json();
+    return(d.data||[]).map(function(item){
+      const f=item.fields||{};
+      const country=(f.country&&f.country[0]&&f.country[0].name)||'';
+      const source=(f.source&&f.source[0]&&f.source[0].name)||'UN';
+      const dateStr=(f.date&&f.date.created)||'';
+      return{title:f.title||'',country,source,date:dateStr,id:item.id,
+        url:'https://reliefweb.int/report/'+item.id};
+    });
+  }catch{return[];}
+}
+
+function renderReliefWebCrises(container,crises){
+  if(!container)return;
+  if(!crises||!crises.length){
+    container.innerHTML='<div style="color:#4a5878;font-size:9px;text-align:center;padding:20px">NO ACTIVE DISASTERS IN RELIEFWEB FEED</div>';
+    return;
+  }
+  const statusColors={current:'#ef4444',alert:'#f97316',past:'#4a5878'};
+  container.innerHTML=
+    '<div style="font-size:8px;color:#4a5878;letter-spacing:.18em;margin-bottom:8px;text-transform:uppercase">ACTIVE DISASTERS & CRISES — UN RELIEFWEB</div>'+
+    crises.map(function(c){
+      const sc=statusColors[c.status]||'#4a5878';
+      const safeName=c.name.replace(/</g,'&lt;').slice(0,70);
+      const safeIso=c.iso3;
+      return'<div style="background:rgba(8,16,33,.7);border:1px solid var(--border);border-left:2px solid '+sc+';border-radius:2px;padding:8px 10px;margin-bottom:6px;cursor:pointer" onclick="openCountry(\''+safeIso+'\')">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">'+
+          '<span style="font-size:9px;color:#e8edf8;font-weight:600">'+safeName+'</span>'+
+          '<span style="font-size:7px;padding:1px 5px;background:'+sc+'22;border:1px solid '+sc+'55;color:'+sc+';border-radius:1px;letter-spacing:.08em;white-space:nowrap;margin-left:8px">'+c.status.toUpperCase()+'</span>'+
+        '</div>'+
+        '<div style="font-size:8px;color:#8896b3">'+c.country+' · '+c.type+'</div>'+
+        (c.glide?'<div style="font-size:7px;color:#4a5878;margin-top:2px">GLIDE: '+c.glide+'</div>':'')+
+      '</div>';
+    }).join('')+
+    '<div style="font-size:7px;color:#2a3548;letter-spacing:.1em;margin-top:6px;border-top:1px solid var(--border);padding-top:5px">SOURCE: UN OCHA RELIEFWEB · CLASSIFICATION: UNCLASSIFIED</div>';
 }
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();
