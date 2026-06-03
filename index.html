@@ -2461,6 +2461,74 @@ button{border-radius:2px!important}
 .choke-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .choke-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .choke-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === COLUMN 8 buttons (right:1030px) === */
+#icstruct-btn{position:fixed;top:55px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#icstruct-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#terrortrack-btn{position:fixed;top:95px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#terrortrack-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#geocal-btn{position:fixed;top:135px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#geocal-btn:hover{border-color:#eab308;color:#fde047;}
+
+/* IC Structure overlay */
+#icstruct-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ics-agency-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.ics-agency-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.ics-abbr{font-size:18px;font-weight:700;letter-spacing:2px;}
+.ics-type-badge{font-size:8px;padding:3px 9px;border-radius:3px;letter-spacing:1px;font-weight:700;background:rgba(30,41,59,.7);border:1px solid rgba(100,116,139,.4);color:#94a3b8;}
+.ics-name{font-size:10px;color:#94a3b8;letter-spacing:.3px;margin-bottom:6px;}
+.ics-row{display:flex;gap:6px;margin-bottom:4px;align-items:flex-start;}
+.ics-row-label{font-size:8px;color:#475569;letter-spacing:.15em;min-width:90px;flex-shrink:0;font-weight:700;text-transform:uppercase;padding-top:1px;}
+.ics-row-val{font-size:9px;color:#e2e8f0;line-height:1.5;flex:1;}
+.ics-mission{font-size:9px;color:#94a3b8;line-height:1.6;border-left:3px solid rgba(100,116,139,.3);padding-left:8px;margin-top:6px;}
+.ics-products{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.ics-product-chip{font-size:8px;padding:2px 7px;background:rgba(30,41,59,.6);border:1px solid rgba(100,116,139,.25);color:#94a3b8;border-radius:3px;}
+.ics-budget-bar-wrap{height:8px;background:rgba(30,41,59,.7);border-radius:4px;overflow:hidden;margin-top:3px;}
+.ics-budget-bar{height:100%;border-radius:4px;transition:width .5s;}
+.ics-fveyes-card{background:rgba(15,23,42,0.7);border:2px solid rgba(59,130,246,.35);border-radius:6px;padding:16px;margin-bottom:14px;}
+.ics-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ics-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ics-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Terror Track overlay */
+#terrortrack-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.terror-country-row{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:6px;}
+.terror-level-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.terror-lvl-critical{background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;animation:nukepulse 3s infinite;}
+.terror-lvl-high{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.terror-lvl-elevated{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.terror-attack-card{background:rgba(15,23,42,0.7);border-left:4px solid #ef4444;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 6px 6px 0;padding:12px;margin-bottom:10px;}
+.terror-attack-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+.terror-attack-name{font-size:11px;font-weight:700;color:#e2e8f0;letter-spacing:.5px;}
+.terror-attack-killed{font-size:18px;font-weight:900;color:#ef4444;}
+.terror-severity-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;}
+.terror-sev-masscasualty{background:rgba(127,29,29,.7);border:1px solid #7f1d1d;color:#fca5a5;animation:nukepulse 2s infinite;}
+.terror-sev-attack{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.terror-foiled-card{background:rgba(15,23,42,0.5);border:1px solid rgba(34,197,94,.2);border-left:3px solid #22c55e;border-radius:0 4px 4px 0;padding:10px;margin-bottom:8px;}
+.terror-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.terror-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.terror-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Geo Calendar overlay */
+#geocal-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.geocal-event-card{background:rgba(15,23,42,0.7);border-left:4px solid #ef4444;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 6px 6px 0;padding:14px;margin-bottom:12px;}
+.geocal-event-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.geocal-event-title{font-size:13px;font-weight:700;color:#e2e8f0;letter-spacing:.8px;}
+.geocal-event-date{font-size:9px;color:#64748b;margin-top:3px;letter-spacing:.3px;}
+.geocal-risk-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.geocal-risk-critical{background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;animation:nukepulse 3s infinite;}
+.geocal-risk-high{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.geocal-risk-elevated{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.geocal-detail{font-size:9px;color:#94a3b8;line-height:1.6;margin-bottom:6px;}
+.geocal-watchfor{font-size:9px;color:#fde047;line-height:1.5;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;}
+.geocal-type-chip{font-size:8px;padding:2px 7px;background:rgba(30,41,59,.6);border:1px solid rgba(100,116,139,.25);color:#94a3b8;border-radius:3px;display:inline-block;margin-bottom:4px;}
+.geocal-indicator-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:6px;}
+.geocal-indicator-name{font-size:9px;color:#e2e8f0;flex:1;min-width:200px;}
+.geocal-indicator-status{font-size:8px;color:#64748b;}
+.geocal-indicator-impact{font-size:8px;color:#94a3b8;flex:2;min-width:200px;}
+.geocal-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.geocal-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.geocal-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -21520,6 +21588,414 @@ async function fetchChokepointsGDELT(){
 
 // ===== END PHASE 32 =====
 
+// ===== PHASE 33: IC STRUCTURE, TERROR TRACK, GEO CALENDAR =====
+
+const IC_AGENCIES = [
+  {"name":"Office of the Director of National Intelligence","abbr":"ODNI","type":"COORDINATOR","budget_share":2,"personnel":"~1,750","color":"#3b82f6",
+   "mission":"Overall IC coordination and integration. Produces National Intelligence Estimates (NIEs). Manages NCTC, NCPC, NCSC.",
+   "director":"Tulsi Gabbard (2025-)","hq":"Liberty Crossing, McLean VA","established":2004,
+   "keyProducts":["President\'s Daily Brief (PDB)","National Intelligence Estimates","World Intelligence Review (WIRe)"]},
+  {"name":"Central Intelligence Agency","abbr":"CIA","type":"HUMINT/ANALYSIS","budget_share":15,"personnel":"~21,000 (est)","color":"#3b82f6",
+   "mission":"Foreign intelligence collection, covert action, all-source analysis. HUMINT primary.",
+   "director":"John Ratcliffe (2025-)","hq":"Langley, Virginia","established":1947,
+   "keyProducts":["National Intelligence Estimates","Country assessments","Covert action findings"]},
+  {"name":"National Security Agency","abbr":"NSA","type":"SIGINT/CYBERSECURITY","budget_share":25,"personnel":"~30,000-40,000 (est)","color":"#8b5cf6",
+   "mission":"SIGINT collection (comms intercept, cyber intelligence). COMSEC for USG. CYBERCOM dual-hatted.",
+   "director":"Gen. Timothy Haugh (2024-)","hq":"Fort Meade, Maryland","established":1952,
+   "keyProducts":["SIGINT reports","MINIMIZATION procedures","NSA/CSS technical extracts"]},
+  {"name":"Defense Intelligence Agency","abbr":"DIA","type":"MILITARY INTELLIGENCE","budget_share":8,"personnel":"~16,500","color":"#22c55e",
+   "mission":"Military intelligence to warfighters. Foreign military capabilities. OSINT. HUMINT via attaches.",
+   "director":"Lt. Gen. Jeffrey Kruse (2023-)","hq":"Bolling AFB, Washington DC","established":1961,
+   "keyProducts":["Military Intelligence Digest","Defense Intelligence Reports","Order of Battle assessments"]},
+  {"name":"National Geospatial-Intelligence Agency","abbr":"NGA","type":"GEOSPATIAL/IMINT","budget_share":10,"personnel":"~14,500","color":"#eab308",
+   "mission":"Geospatial intelligence (GEOINT). Satellite imagery analysis. Maps/charts for military/IC.",
+   "director":"Frank Whitworth (2023-)","hq":"Springfield, Virginia","established":1996,
+   "keyProducts":["GEOINT products","Foundation GEOINT","Imagery-derived intelligence"]},
+  {"name":"National Reconnaissance Office","abbr":"NRO","type":"SPACE COLLECTION","budget_share":15,"personnel":"~3,000 + contractors","color":"#a78bfa",
+   "mission":"Design, build, launch, operate spy satellites. Largest IC capital budget. Coordinates with NGA/NSA.",
+   "director":"Christopher Scolese (2019-)","hq":"Chantilly, Virginia","established":1961,
+   "keyProducts":["Overhead collection systems","Imagery satellites","SIGINT satellites"]},
+  {"name":"Federal Bureau of Investigation","abbr":"FBI","type":"COUNTERINTEL/DOMESTIC","budget_share":5,"personnel":"~35,000","color":"#f97316",
+   "mission":"Counterintelligence, counterterrorism, cybercrime within US. Foreign intelligence threats on US soil.",
+   "director":"Kash Patel (2025-)","hq":"Hoover Building, Washington DC","established":1908,
+   "keyProducts":["Counterintelligence investigations","Threat assessments","Electronic surveillance (FISA)"]},
+  {"name":"Defense Advanced Research Projects Agency","abbr":"DARPA","type":"R&D (ADJACENT)","budget_share":3,"personnel":"~220 (program managers) + contractors","color":"#64748b",
+   "mission":"Breakthrough technology for national security. Not strictly IC but funds advanced collection systems.",
+   "director":"Dr. Stefanie Tompkins (2021-)","hq":"Arlington, Virginia","established":1958,
+   "keyProducts":["Advanced sensor systems","AI/ML for IC","Quantum/bio tech research"]}
+];
+
+const IC_BUDGET = {
+  "nipa_total": "$70.5B (FY2024 National Intelligence Program)",
+  "mip_total": "$26.3B (FY2024 Military Intelligence Program)",
+  "combined": "$96.8B total IC budget",
+  "breakdown_nipa": [
+    {"agency":"NSA","pct":25,"color":"#8b5cf6"},
+    {"agency":"CIA","pct":15,"color":"#3b82f6"},
+    {"agency":"NRO","pct":15,"color":"#a78bfa"},
+    {"agency":"NGA","pct":10,"color":"#eab308"},
+    {"agency":"DIA","pct":8,"color":"#22c55e"},
+    {"agency":"Other (FBI CI, DEA, DHS Intel, State INR, etc.)","pct":27,"color":"#64748b"}
+  ]
+};
+
+const FIVE_EYES = {
+  "name":"FIVE EYES (FVEY)",
+  "members":["USA (NSA/CIA)","UK (GCHQ/MI6/MI5)","Canada (CSE/CSIS)","Australia (ASD/ASIS)","New Zealand (GCSB/NZSIS)"],
+  "formed":1946,
+  "scope":"SIGINT sharing, HUMINT cooperation, analysis sharing. Deepest intelligence alliance in history.",
+  "extensions":["NINE EYES (+ Netherlands, France, Denmark, Norway)","FOURTEEN EYES (+ Germany, Belgium, Italy, Sweden, Spain)"]
+};
+
+const COUNTRY_THREAT_LEVELS = [
+  {"country":"Somalia","iso":"SO","level":"CRITICAL","alert":5,"lat":2,"lng":45,"threat":"Al-Shabaab controls significant territory. ATMIS withdrawal leaving gaps."},
+  {"country":"Mali","iso":"ML","level":"CRITICAL","alert":5,"lat":17,"lng":-4,"threat":"JNIM controls 60%+ of territory. Mass casualty attacks on military."},
+  {"country":"Burkina Faso","iso":"BF","level":"CRITICAL","alert":5,"lat":12,"lng":-2,"threat":"ISIS Sahel + JNIM controlling northern/eastern regions. 2M displaced."},
+  {"country":"Niger","iso":"NE","level":"CRITICAL","alert":5,"lat":17,"lng":8,"threat":"ISIS Sahel + JNIM active. Post-coup security collapse. Wagner present."},
+  {"country":"Nigeria","iso":"NG","level":"HIGH","alert":4,"lat":10,"lng":8,"threat":"ISWAP controlling Lake Chad Basin. Boko Haram splinters. Northeast active."},
+  {"country":"Afghanistan","iso":"AF","level":"HIGH","alert":4,"lat":34,"lng":67,"threat":"IS-K conducting mass casualty attacks on Shia/foreign targets despite Taliban suppression."},
+  {"country":"Iraq","iso":"IQ","level":"HIGH","alert":4,"lat":33,"lng":44,"threat":"ISF + PMF fragmentation. ISIS reconstitution in Anbar/Kirkuk. PMF Iran links."},
+  {"country":"Syria","iso":"SY","level":"HIGH","alert":4,"lat":35,"lng":38,"threat":"ISIS resurgence in Badia desert. Post-HTS transition instability. Multiple armed factions."},
+  {"country":"Pakistan","iso":"PK","level":"HIGH","alert":4,"lat":30,"lng":70,"threat":"TTP attacks on military/police 40%+ increase 2024. ISKP active near Kabul border."},
+  {"country":"Libya","iso":"LY","level":"HIGH","alert":4,"lat":27,"lng":17,"threat":"Multiple militias, JNIM north African networks, Wagner presence."},
+  {"country":"Yemen","iso":"YE","level":"HIGH","alert":4,"lat":15,"lng":48,"threat":"Houthi control of north. AQAP in south/east. Ongoing air campaign."},
+  {"country":"France","iso":"FR","level":"ELEVATED","alert":3,"lat":48,"lng":2,"threat":"Highest terrorism arrest rate in EU. IS-K external attack planning. Lone wolf knife attacks."},
+  {"country":"Belgium","iso":"BE","level":"ELEVATED","alert":3,"lat":51,"lng":4,"threat":"OCAD threat level 3 of 4. Foreign fighter returnees. Brussels 2016 legacy network."},
+  {"country":"Russia","iso":"RU","level":"ELEVATED","alert":3,"lat":56,"lng":37,"threat":"IS-K Crocus City Hall March 2024 (145 killed). North Caucasus residual. Ukraine sabotage operations."},
+  {"country":"Israel","iso":"IL","level":"CRITICAL","alert":5,"lat":31,"lng":35,"threat":"Hamas rockets, Hezbollah rebuilding, West Bank violence, Iran proxies attacking."},
+  {"country":"Egypt","iso":"EG","level":"ELEVATED","alert":3,"lat":27,"lng":30,"threat":"ISIS Sinai (ISWAP) — contained by ISF. Muslim Brotherhood monitoring."},
+  {"country":"Turkey","iso":"TR","level":"ELEVATED","alert":3,"lat":39,"lng":35,"threat":"PKK/TAK attacks. ISIS external attack facilitation via Turkey hub."},
+  {"country":"India","iso":"IN","level":"ELEVATED","alert":3,"lat":22,"lng":80,"threat":"Kashmir LeT/JeM cross-border operations. NE insurgencies. Urban Naxal."}
+];
+
+const RECENT_ATTACKS = [
+  {"date":"Mar 22 2024","location":"Moscow, Russia","attack":"Crocus City Hall mass shooting","killed":145,"group":"IS-K","lat":55.8,"lng":37.4,"severity":"MASS CASUALTY"},
+  {"date":"Jan 3 2024","location":"Kerman, Iran","attack":"Twin ISIS-K suicide bombings at Qasem Soleimani memorial","killed":94,"group":"IS-K","lat":30.3,"lng":57.1,"severity":"MASS CASUALTY"},
+  {"date":"Aug 2024","location":"Solingen, Germany","attack":"Knife attack at city festival","killed":3,"group":"ISIS (claimed)","lat":51.2,"lng":7.1,"severity":"ATTACK"},
+  {"date":"Oct 2024","location":"Acre, Israel","attack":"Shooting attack on busy street","killed":7,"group":"Hamas-linked","lat":32.9,"lng":35.1,"severity":"ATTACK"},
+  {"date":"Dec 2024","location":"Magdeburg, Germany","attack":"Vehicle ramming at Christmas market","killed":6,"group":"Individual (far-right motivation)","lat":52.1,"lng":11.6,"severity":"ATTACK"},
+  {"date":"Jan 2025","location":"New Orleans, USA","attack":"Vehicle ramming on Bourbon Street (New Year\'s)","killed":14,"group":"ISIS-inspired","lat":29.9,"lng":-90.1,"severity":"MASS CASUALTY"}
+];
+
+const FOILED_PLOTS_2024 = [
+  {"country":"USA","target":"Trump rallies / Jewish institutions","group":"ISIS-inspired (multiple)","detail":"FBI disrupted 8+ plots targeting US soil 2024"},
+  {"country":"UK","target":"Taylor Swift concerts Vienna/London","group":"ISIS-K linked","detail":"Austrian authorities arrested 3 IS-K suspects Jul 2024 before concerts"},
+  {"country":"Germany","target":"European Championship stadiums","group":"ISIS-K","detail":"BKA arrested cell planning attacks on Euro 2024 venues"},
+  {"country":"Australia","target":"Melbourne area churches/synagogues","group":"ISIS-inspired","detail":"ASIO disrupted planning by 16-year-old cell Jan 2025"},
+  {"country":"Canada","target":"Jewish community centers","group":"Iran MOIS linked","detail":"RCMP disrupted Iranian-linked plot 2024"},
+  {"country":"France","target":"Paris Olympics venues","group":"IS-K and Chechen networks","detail":"DST/DGSI made multiple arrests pre-Olympics 2024"}
+];
+
+const GEO_CALENDAR_EVENTS = [
+  {"date":"2026-Q2","event":"Russia-Ukraine War — 4+ Years","type":"CONFLICT","risk":"CRITICAL","color":"#ef4444",
+   "detail":"No ceasefire in sight as of June 2026. Russian offensive pressure in Kharkiv, Donetsk continuing. NATO aid fatigue increasing.",
+   "watchFor":"Ceasefire negotiations, Russian escalation, Western arms supply decisions"},
+  {"date":"2026-Q2","event":"Gaza Ceasefire/Reconstruction Status","type":"CONFLICT","risk":"CRITICAL","color":"#ef4444",
+   "detail":"Post-October 2023 war reconstruction phase. Hostage deal negotiations ongoing. Palestinian Authority governance question unresolved.",
+   "watchFor":"Hamas political future, Palestinian state recognition, Israeli settlement expansion"},
+  {"date":"2026-Q3","event":"Iran Nuclear Talks / JCPOA Window","type":"DIPLOMATIC","risk":"HIGH","color":"#f97316",
+   "detail":"Iran enriching at 60%+ near weapons-grade. International talks on new framework ongoing. Military strike option being assessed by Israel.",
+   "watchFor":"Breakout timeline, new deal parameters, Israeli military preemption"},
+  {"date":"2026-Q3","event":"US-China Taiwan Policy","type":"DIPLOMATIC/MILITARY","risk":"CRITICAL","color":"#ef4444",
+   "detail":"PLA military pressure on Taiwan continuing. US arms sales pipeline. TSMC Arizona fabs coming online.",
+   "watchFor":"PLA exercise frequency, US freedom of navigation ops, Taiwan election aftermath"},
+  {"date":"2026-H2","event":"German Federal Elections (if snap elections)","type":"ELECTION","risk":"ELEVATED","color":"#eab308",
+   "detail":"CDU-SPD coalition under Merz. AfD continuing rise. Russian interference ongoing.",
+   "watchFor":"AfD electoral gains, coalition stability, NATO commitment"},
+  {"date":"2026","event":"North Korea ICBM/SLBM Testing","type":"PROLIFERATION","risk":"HIGH","color":"#f97316",
+   "detail":"Kim Jong-un stated 2024 nuclear arsenal expansion goal. ICBM tests expected. Weapons sales to Russia ongoing.",
+   "watchFor":"Solid-fuel ICBM deployment, submarine test, nuclear test resumption"},
+  {"date":"2026-2027","event":"New START Treaty Expired (Feb 2026)","type":"ARMS CONTROL","risk":"CRITICAL","color":"#ef4444",
+   "detail":"US-Russia New START treaty expired Feb 2026. No replacement negotiations ongoing. Nuclear arsenals no longer treaty-limited.",
+   "watchFor":"Russian arsenal expansion, US modernization acceleration, arms race indicators"},
+  {"date":"2026","event":"Taiwan Legislative Elections (possible)","type":"ELECTION","risk":"ELEVATED","color":"#eab308",
+   "detail":"Taiwan political landscape post-2024 presidential election. DPP-KMT balance in legislature.",
+   "watchFor":"China influence ops in Taiwan elections, cross-strait tension indicators"},
+  {"date":"2026-2027","event":"Africa Coup Belt Consolidation","type":"POLITICAL","risk":"HIGH","color":"#f97316",
+   "detail":"Sahel junta nations (Mali, Burkina, Niger) consolidating. ECOWAS weakness. Russian influence expanding.",
+   "watchFor":"Additional coups in West/Central Africa, French military withdrawal completion, Wagner expansion"},
+  {"date":"2026","event":"South China Sea — ASEAN Summit / COC Negotiations","type":"DIPLOMATIC","risk":"ELEVATED","color":"#eab308",
+   "detail":"Code of Conduct negotiations between China and ASEAN. Meanwhile China continuing coercive operations against Philippines.",
+   "watchFor":"COC breakthrough or collapse, Philippines-China incidents, US-Philippines base usage"},
+  {"date":"2026-2027","event":"US Presidential Term — Policy Windows","type":"POLITICAL","risk":"HIGH","color":"#f97316",
+   "detail":"Trump administration mid-term policy reviews. NATO commitment, Ukraine aid, China tariff escalation all in flux.",
+   "watchFor":"NATO summit outcomes, Ukraine funding votes, China decoupling pace"},
+  {"date":"2027","event":"PLA Modernization Target Year","type":"MILITARY","risk":"CRITICAL","color":"#ef4444",
+   "detail":"Xi Jinping ordered PLA to be capable of fighting and winning wars by 2027 (100th PLA anniversary). Taiwan invasion capability target.",
+   "watchFor":"PLA readiness indicators, amphibious fleet expansion, rocket force test rates"}
+];
+
+const RISK_INDICATORS = [
+  {"indicator":"New START expiry (Feb 2026)","status":"OCCURRED","impact":"First time since 1972 major nuclear powers operate without treaty","severity":"CRITICAL"},
+  {"indicator":"Iran 60%+ enrichment","status":"ONGOING","impact":"2-3 weeks from weapons-grade if decision made","severity":"CRITICAL"},
+  {"indicator":"Russia mobilization capacity","status":"MONITOR","impact":"Russia recruiting 30,000+/month — war sustainable 2+ years","severity":"HIGH"},
+  {"indicator":"DPRK-Russia arms cooperation","status":"ACTIVE","impact":"DPRK gaining ballistic missile, satellite, submarine tech in exchange for shells","severity":"HIGH"},
+  {"indicator":"China military budget","status":"TREND","impact":"+7.2% annual growth — gap narrowing vs US DoD","severity":"ELEVATED"}
+];
+
+// --- IC STRUCTURE functions ---
+var _icstructOpen=false;
+function openICStruct(){
+  var ov=document.getElementById('icstruct-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _icstructOpen=true;
+  renderICStruct();
+  fetchICStructGDELT();
+}
+function closeICStruct(){
+  var ov=document.getElementById('icstruct-overlay');
+  if(ov)ov.style.display='none';
+  _icstructOpen=false;
+}
+function renderICStruct(){
+  var el=document.getElementById('ics-agency-list');
+  if(!el)return;
+  el.innerHTML=IC_AGENCIES.map(function(ag){
+    var pct=ag.budget_share;
+    return '<div class="ics-agency-card" style="border-color:'+ag.color+'33;">'
+      +'<div class="ics-agency-header">'
+      +'<div><div class="ics-abbr" style="color:'+ag.color+'">'+ag.abbr+'</div>'
+      +'<div class="ics-name">'+ag.name+'</div></div>'
+      +'<span class="ics-type-badge">'+ag.type+'</span>'
+      +'</div>'
+      +'<div class="ics-row"><span class="ics-row-label">Director</span><span class="ics-row-val" style="color:#fde047;">'+ag.director+'</span></div>'
+      +'<div class="ics-row"><span class="ics-row-label">HQ</span><span class="ics-row-val">'+ag.hq+'</span></div>'
+      +'<div class="ics-row"><span class="ics-row-label">Personnel</span><span class="ics-row-val">'+ag.personnel+'</span></div>'
+      +'<div class="ics-row"><span class="ics-row-label">Est.</span><span class="ics-row-val">'+ag.established+'</span></div>'
+      +'<div class="ics-row"><span class="ics-row-label">NIP Share</span><span class="ics-row-val">'
+      +'<div class="ics-budget-bar-wrap"><div class="ics-budget-bar" style="width:'+Math.min(pct*4,100)+'%;background:'+ag.color+';"></div></div>'
+      +'<span style="font-size:9px;color:'+ag.color+';">'+pct+'%</span>'
+      +'</span></div>'
+      +'<div class="ics-mission">'+ag.mission+'</div>'
+      +'<div class="ics-products">'+ag.keyProducts.map(function(p){return '<span class="ics-product-chip">'+p+'</span>';}).join('')+'</div>'
+      +'</div>';
+  }).join('');
+
+  var bel=document.getElementById('ics-budget-breakdown');
+  if(bel){
+    bel.innerHTML='<div style="font-size:9px;color:#64748b;margin-bottom:8px;">NIP Estimated Breakdown (FY2024):</div>'
+      +IC_BUDGET.breakdown_nipa.map(function(b){
+        return '<div style="margin-bottom:6px;"><div style="display:flex;justify-content:space-between;font-size:9px;margin-bottom:2px;"><span style="color:'+b.color+';">'+b.agency+'</span><span style="color:#94a3b8;">'+b.pct+'%</span></div>'
+          +'<div class="ics-budget-bar-wrap"><div class="ics-budget-bar" style="width:'+b.pct+'%;background:'+b.color+';"></div></div>'
+          +'</div>';
+      }).join('');
+  }
+
+  var fvel=document.getElementById('ics-fveyes');
+  if(fvel){
+    fvel.innerHTML='<div class="ics-fveyes-card">'
+      +'<div style="font-size:14px;font-weight:700;letter-spacing:2px;color:#3b82f6;margin-bottom:6px;">'+FIVE_EYES.name+' — Est. '+FIVE_EYES.formed+'</div>'
+      +'<div style="font-size:9px;color:#94a3b8;line-height:1.6;margin-bottom:8px;">'+FIVE_EYES.scope+'</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">'
+      +FIVE_EYES.members.map(function(m){return '<span class="ics-product-chip" style="border-color:rgba(59,130,246,.4);color:#93c5fd;">'+m+'</span>';}).join('')
+      +'</div>'
+      +'<div style="font-size:8px;color:#475569;letter-spacing:.2em;font-weight:700;margin-bottom:4px;">EXTENSIONS:</div>'
+      +FIVE_EYES.extensions.map(function(e){return '<div style="font-size:9px;color:#64748b;padding:3px 0;">&#x2192; '+e+'</div>';}).join('')
+      +'</div>';
+  }
+}
+async function fetchICStructGDELT(){
+  var el=document.getElementById('ics-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed&#x2026;</div>';
+  try{
+    var q=encodeURIComponent('intelligence community CIA NSA FBI budget oversight');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="ics-gdelt-item"><div class="ics-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="ics-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// --- TERROR TRACK functions ---
+var _terrorHotspots=[];
+var _terrorTrackOpen=false;
+function openTerrorTrack(){
+  var ov=document.getElementById('terrortrack-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _terrorTrackOpen=true;
+  renderTerrorTrack();
+  addTerrorGlobeHotspots();
+  fetchTerrorGDELT();
+}
+function closeTerrorTrack(){
+  var ov=document.getElementById('terrortrack-overlay');
+  if(ov)ov.style.display='none';
+  _terrorTrackOpen=false;
+  removeTerrorGlobeHotspots();
+}
+function addTerrorGlobeHotspots(){
+  removeTerrorGlobeHotspots();
+  COUNTRY_THREAT_LEVELS.forEach(function(c){
+    if(c.level==='CRITICAL'||c.level==='HIGH'){
+      var col=c.level==='CRITICAL'?'#ef4444':'#f97316';
+      var pt={lat:c.lat,lng:c.lng,label:c.country+' ('+c.level+')',color:col,intensity:c.level==='CRITICAL'?1.0:0.8,_terror:true};
+      _terrorHotspots.push(pt);
+      if(typeof hotspots!=='undefined')hotspots.push(pt);
+    }
+  });
+  RECENT_ATTACKS.forEach(function(a){
+    if(typeof a.lat==='number'&&typeof a.lng==='number'){
+      var pt={lat:a.lat,lng:a.lng,label:a.location+': '+a.attack,color:'#ef4444',intensity:1.0,_terror:true};
+      _terrorHotspots.push(pt);
+      if(typeof hotspots!=='undefined')hotspots.push(pt);
+    }
+  });
+}
+function removeTerrorGlobeHotspots(){
+  if(typeof hotspots!=='undefined'){
+    hotspots=hotspots.filter(function(h){return !h._terror;});
+  }
+  _terrorHotspots=[];
+}
+function renderTerrorTrack(){
+  var cl=document.getElementById('terror-country-list');
+  if(cl){
+    var sorted=COUNTRY_THREAT_LEVELS.slice().sort(function(a,b){return b.alert-a.alert;});
+    cl.innerHTML=sorted.map(function(c){
+      var lvlClass='terror-lvl-elevated';
+      if(c.level==='CRITICAL')lvlClass='terror-lvl-critical';
+      else if(c.level==='HIGH')lvlClass='terror-lvl-high';
+      return '<div class="terror-country-row">'
+        +'<div style="min-width:110px;font-size:10px;font-weight:700;color:#e2e8f0;letter-spacing:.5px;">'+c.country+'</div>'
+        +'<span class="terror-level-badge '+lvlClass+'">'+c.level+'</span>'
+        +'<div style="font-size:8px;color:#94a3b8;flex:1;min-width:200px;padding-left:8px;">'+c.threat+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  var al=document.getElementById('terror-attacks-list');
+  if(al){
+    al.innerHTML=RECENT_ATTACKS.map(function(a){
+      var sevClass=a.severity==='MASS CASUALTY'?'terror-sev-masscasualty':'terror-sev-attack';
+      return '<div class="terror-attack-card">'
+        +'<div class="terror-attack-header">'
+        +'<div>'
+        +'<div class="terror-attack-name">'+a.attack+'</div>'
+        +'<div style="font-size:8px;color:#64748b;margin-top:2px;">'+a.date+' &bull; '+a.location+'</div>'
+        +'</div>'
+        +'<div style="text-align:right;">'
+        +'<div class="terror-attack-killed">'+a.killed+'</div>'
+        +'<div style="font-size:8px;color:#94a3b8;">killed</div>'
+        +'<span class="terror-severity-badge '+sevClass+'" style="margin-top:4px;display:inline-block;">'+a.severity+'</span>'
+        +'</div>'
+        +'</div>'
+        +'<div style="font-size:9px;color:#fde047;letter-spacing:.3px;"><span style="color:#475569;">GROUP: </span>'+a.group+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  var fl=document.getElementById('terror-foiled-list');
+  if(fl){
+    fl.innerHTML=FOILED_PLOTS_2024.map(function(p){
+      return '<div class="terror-foiled-card">'
+        +'<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:4px;">'
+        +'<span style="font-size:10px;font-weight:700;color:#86efac;">'+p.country+'</span>'
+        +'<span style="font-size:8px;color:#fde047;padding:2px 7px;border:1px solid rgba(234,179,8,.3);border-radius:2px;">'+p.group+'</span>'
+        +'</div>'
+        +'<div style="font-size:9px;color:#94a3b8;margin-bottom:3px;"><span style="color:#475569;">TARGET: </span>'+p.target+'</div>'
+        +'<div style="font-size:8px;color:#64748b;line-height:1.5;">'+p.detail+'</div>'
+        +'</div>';
+    }).join('');
+  }
+}
+async function fetchTerrorGDELT(){
+  var el=document.getElementById('terror-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed&#x2026;</div>';
+  try{
+    var q=encodeURIComponent('terrorism attack plot arrest ISIS jihadist');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="terror-gdelt-item"><div class="terror-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="terror-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// --- GEO CALENDAR functions ---
+var _geocalOpen=false;
+function openGeoCal(){
+  var ov=document.getElementById('geocal-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _geocalOpen=true;
+  renderGeoCal();
+  fetchGeoCalGDELT();
+}
+function closeGeoCal(){
+  var ov=document.getElementById('geocal-overlay');
+  if(ov)ov.style.display='none';
+  _geocalOpen=false;
+}
+function renderGeoCal(){
+  var el=document.getElementById('geocal-events-list');
+  if(!el)return;
+  var riskOrder={'CRITICAL':0,'HIGH':1,'ELEVATED':2};
+  var sorted=GEO_CALENDAR_EVENTS.slice().sort(function(a,b){
+    return (riskOrder[a.risk]||3)-(riskOrder[b.risk]||3);
+  });
+  el.innerHTML=sorted.map(function(ev){
+    var riskClass='geocal-risk-elevated';
+    if(ev.risk==='CRITICAL')riskClass='geocal-risk-critical';
+    else if(ev.risk==='HIGH')riskClass='geocal-risk-high';
+    return '<div class="geocal-event-card" style="border-left-color:'+ev.color+';">'
+      +'<div class="geocal-event-header">'
+      +'<div>'
+      +'<span class="geocal-type-chip">'+ev.type+'</span>'
+      +'<div class="geocal-event-title">'+ev.event+'</div>'
+      +'<div class="geocal-event-date">'+ev.date+'</div>'
+      +'</div>'
+      +'<span class="geocal-risk-badge '+riskClass+'">'+ev.risk+'</span>'
+      +'</div>'
+      +'<div class="geocal-detail">'+ev.detail+'</div>'
+      +'<div class="geocal-watchfor"><span style="color:#475569;font-size:8px;letter-spacing:.15em;font-weight:700;">WATCH: </span>'+ev.watchFor+'</div>'
+      +'</div>';
+  }).join('');
+
+  var ril=document.getElementById('geocal-risk-indicators');
+  if(ril){
+    ril.innerHTML=RISK_INDICATORS.map(function(ri){
+      var sevColor='#fde047';
+      if(ri.severity==='CRITICAL')sevColor='#fca5a5';
+      else if(ri.severity==='HIGH')sevColor='#fdba74';
+      return '<div class="geocal-indicator-row">'
+        +'<div class="geocal-indicator-name">'+ri.indicator+'</div>'
+        +'<div class="geocal-indicator-status" style="color:'+sevColor+';font-size:8px;padding:2px 7px;border:1px solid '+sevColor+'33;border-radius:2px;white-space:nowrap;">'+ri.status+'</div>'
+        +'<div class="geocal-indicator-impact">'+ri.impact+'</div>'
+        +'</div>';
+    }).join('');
+  }
+}
+async function fetchGeoCalGDELT(){
+  var el=document.getElementById('geocal-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed&#x2026;</div>';
+  try{
+    var q=encodeURIComponent('geopolitical risk treaty election summit diplomatic crisis');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="geocal-gdelt-item"><div class="geocal-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fde047;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="geocal-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 33 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -23308,6 +23784,97 @@ function filterSIGINT(query){
   <div id="mar-disputes-list" style="margin-bottom:20px;"></div>
   <div style="font-size:9px;letter-spacing:2px;color:#06b6d4;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE MARITIME INTELLIGENCE FEED</div>
   <div id="mar-gdelt-feed"></div>
+</div>
+
+<!-- COLUMN 8 BUTTONS -->
+<button id="icstruct-btn" onclick="openICStruct()">IC STRUCTURE</button>
+<button id="terrortrack-btn" onclick="openTerrorTrack()">TERROR TRACK</button>
+<button id="geocal-btn" onclick="openGeoCal()">GEO CALENDAR</button>
+
+<!-- IC STRUCTURE OVERLAY -->
+<div id="icstruct-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#3b82f6;font-size:11px;letter-spacing:3px;">US INTELLIGENCE COMMUNITY</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">IC STRUCTURE &amp; BUDGET INTELLIGENCE</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">Combined Budget: $96.8B &bull; 18 Agencies &bull; ODNI Coordinated</div>
+    </div>
+    <button onclick="closeICStruct()" style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">IC AGENCIES &amp; COMPONENTS</div>
+      <div id="ics-agency-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">BUDGET OVERVIEW</div>
+      <div style="background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:4px;">$70.5B — NIP (FY2024)</div>
+        <div style="font-size:9px;color:#64748b;margin-bottom:10px;">National Intelligence Program</div>
+        <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:4px;">$26.3B — MIP (FY2024)</div>
+        <div style="font-size:9px;color:#64748b;margin-bottom:10px;">Military Intelligence Program</div>
+        <div style="font-size:13px;font-weight:900;color:#fde047;border-top:1px solid #1e293b;padding-top:10px;">$96.8B COMBINED TOTAL</div>
+      </div>
+      <div id="ics-budget-breakdown" style="background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;"></div>
+      <div id="ics-fveyes"></div>
+    </div>
+  </div>
+  <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE IC &amp; OVERSIGHT INTELLIGENCE FEED</div>
+  <div id="ics-gdelt-feed"></div>
+</div>
+
+<!-- TERROR TRACK OVERLAY -->
+<div id="terrortrack-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">GLOBAL TERRORISM THREAT INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">TERROR TRACK — THREAT MATRIX</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">Country Threat Levels &bull; Recent Attacks &bull; Foiled Plots &bull; GDELT Live Feed</div>
+    </div>
+    <button onclick="closeTerrorTrack()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:10px;border-bottom:1px solid #1e293b;padding-bottom:6px;">COUNTRY THREAT LEVELS</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+        <span style="font-size:8px;padding:2px 8px;background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;border-radius:2px;">&#x25cf; CRITICAL — Imminent mass-casualty risk</span>
+        <span style="font-size:8px;padding:2px 8px;background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;border-radius:2px;">&#x25cf; HIGH — Frequent attacks</span>
+        <span style="font-size:8px;padding:2px 8px;background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;border-radius:2px;">&#x25cf; ELEVATED — Threat planning</span>
+      </div>
+      <div id="terror-country-list" style="background:rgba(15,23,42,0.5);border:1px solid #1e293b;border-radius:6px;overflow:hidden;"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:10px;border-bottom:1px solid #1e293b;padding-bottom:6px;">RECENT SIGNIFICANT ATTACKS (2024-2025)</div>
+      <div id="terror-attacks-list"></div>
+    </div>
+  </div>
+  <div style="font-size:9px;letter-spacing:2px;color:#22c55e;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">FOILED PLOTS 2024-2025 — INTELLIGENCE SUCCESSES</div>
+  <div id="terror-foiled-list" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE TERRORISM INTELLIGENCE FEED</div>
+  <div id="terror-gdelt-feed"></div>
+</div>
+
+<!-- GEO CALENDAR OVERLAY -->
+<div id="geocal-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#eab308;font-size:11px;letter-spacing:3px;">GEOPOLITICAL RISK INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">GEO CALENDAR — RISK TIMELINE</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">Conflicts &bull; Elections &bull; Treaty Deadlines &bull; Proliferation Windows</div>
+    </div>
+    <button onclick="closeGeoCal()" style="background:rgba(234,179,8,0.15);border:1px solid rgba(234,179,8,0.3);color:#fde047;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+    <span style="font-size:8px;padding:2px 8px;background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;border-radius:2px;">&#x25cf; CRITICAL</span>
+    <span style="font-size:8px;padding:2px 8px;background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;border-radius:2px;">&#x25cf; HIGH</span>
+    <span style="font-size:8px;padding:2px 8px;background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;border-radius:2px;">&#x25cf; ELEVATED</span>
+    <span style="font-size:9px;color:#475569;align-self:center;">Sorted by risk level — most urgent first</span>
+  </div>
+  <div id="geocal-events-list" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#eab308;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">RISK INDICATORS — CURRENT STATUS</div>
+  <div id="geocal-risk-indicators" style="background:rgba(15,23,42,0.5);border:1px solid #1e293b;border-radius:6px;overflow:hidden;margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#eab308;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE GEOPOLITICAL RISK INTELLIGENCE FEED</div>
+  <div id="geocal-gdelt-feed"></div>
 </div>
 
 <!-- COLUMN 7 BUTTONS -->
