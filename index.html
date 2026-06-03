@@ -5092,6 +5092,33 @@ button{border-radius:2px!important}
 #p60korea-btn{position:fixed;top:135px;right:2065px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
 #p60korea-btn:hover{border-color:#eab308;color:#fde047;}
 
+/* Phase 61-63 buttons — Col17 completions + Col18 (right:2065px / right:2180px) */
+#p61trade-btn{position:fixed;top:175px;right:2065px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p61trade-btn:hover{border-color:#f59e0b;color:#fcd34d;}
+#p61milec-btn{position:fixed;top:215px;right:2065px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p61milec-btn:hover{border-color:#92400e;color:#d97706;}
+#p61nukesec-btn{position:fixed;top:255px;right:2065px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p61nukesec-btn:hover{border-color:#dc2626;color:#fca5a5;}
+#p61dedollar-btn{position:fixed;top:295px;right:2065px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p61dedollar-btn:hover{border-color:#22c55e;color:#86efac;}
+#p61merc-btn{position:fixed;top:335px;right:2065px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p61merc-btn:hover{border-color:#7c3aed;color:#c4b5fd;}
+#p62georisk-btn{position:fixed;top:375px;right:2065px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p62georisk-btn:hover{border-color:#0ea5e9;color:#7dd3fc;}
+/* Col 18 buttons */
+#p63gpc-btn{position:fixed;top:55px;right:2180px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p63gpc-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#p63techcw-btn{position:fixed;top:95px;right:2180px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p63techcw-btn:hover{border-color:#06b6d4;color:#67e8f9;}
+#p63regsurv-btn{position:fixed;top:135px;right:2180px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p63regsurv-btn:hover{border-color:#c026d3;color:#e879f9;}
+#p63alliance-btn{position:fixed;top:175px;right:2180px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p63alliance-btn:hover{border-color:#0369a1;color:#38bdf8;}
+#p63border-btn{position:fixed;top:215px;right:2180px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p63border-btn:hover{border-color:#b45309;color:#fbbf24;}
+#p63coerce-btn{position:fixed;top:255px;right:2180px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p63coerce-btn:hover{border-color:#dc2626;color:#fca5a5;}
+
 /* South China Sea overlay */
 #p60scs-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
 .p60scs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
@@ -19786,10 +19813,16 @@ async function _refreshTerrorWatch(){
  const results=await Promise.allSettled(TERROR_ORGS.map(async function(org){
  let count=0;
  try{
- const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(org.q)+'&mode=artlist&maxrecords=5&format=json';
- const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
+ const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(org.q)+'&mode=artlist&maxrecords=5&format=json&timespan=168H';
+ const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
  const d=await r.json();
  count=(d.articles||[]).length;
+ if(!count){
+ const url2='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(org.name.split('/')[0].trim())+'&mode=artlist&maxrecords=5&format=json&timespan=168H';
+ const r2=await fetch(url2,{signal:AbortSignal.timeout(10000)});
+ const d2=await r2.json();
+ count=(d2.articles||[]).length;
+ }
  }catch(e){}
  return {org:org,events:count};
  }));
@@ -21004,7 +21037,7 @@ async function _fetchPsychNews(name) {
  if (!el) return;
  try {
  const url = 'https://api.gdeltproject.org/api/v2/doc/doc?query=' + encodeURIComponent(name) + '&mode=artlist&maxrecords=5&format=json';
- const resp = await fetch(url);
+ const resp = await fetch(url, {signal:AbortSignal.timeout(12000)});
  const data = await resp.json();
  const arts = data.articles || [];
  if (!arts.length) { el.innerHTML = '<div style="color:var(--dim);font-size:9px;">No recent articles found.</div>'; return; }
@@ -21202,7 +21235,7 @@ async function _fetchClimateNews() {
  try {
  const q = 'climate security conflict displacement food water';
  const url = 'https://api.gdeltproject.org/api/v2/doc/doc?query=' + encodeURIComponent(q) + '&mode=artlist&maxrecords=15&format=json';
- const resp = await fetch(url);
+ const resp = await fetch(url, {signal:AbortSignal.timeout(12000)});
  const data = await resp.json();
  const arts = data.articles || [];
  if (!arts.length) { el.innerHTML = '<div style="color:var(--dim);font-size:9px;">No recent articles found.</div>'; return; }
@@ -21425,7 +21458,7 @@ async function fetchPandemicGDELT(){
  try{
  const q=encodeURIComponent('disease outbreak pandemic epidemic');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -21500,7 +21533,7 @@ async function fetchElecGDELT(){
  try{
  const q=encodeURIComponent('election interference disinformation foreign influence');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -21571,7 +21604,7 @@ async function fetchNarcoGDELT(){
  try{
  const q=encodeURIComponent('drug trafficking cartel narcotics seizure');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -21707,7 +21740,7 @@ async function fetchTrafficGDELT(){
  try{
  const q=encodeURIComponent('human trafficking modern slavery forced labor');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -21826,7 +21859,7 @@ async function fetchIllicitFinGDELT(){
  try{
  const q=encodeURIComponent('money laundering sanctions evasion financial crime');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -21951,7 +21984,7 @@ async function fetchCableGDELT(){
  try{
  const q=encodeURIComponent('undersea cable cut sabotage submarine infrastructure');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22060,7 +22093,7 @@ async function fetchMilitiaGDELT(){
  try{
  const q=encodeURIComponent('militia armed group rebel insurgent non-state actor');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22167,7 +22200,7 @@ async function fetchInfoOpsGDELT(){
  try{
  const q=encodeURIComponent('disinformation influence operation propaganda fake news cognitive warfare');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22280,7 +22313,7 @@ async function fetchDisplacementGDELT(){
  try{
  const q=encodeURIComponent('refugee displacement humanitarian crisis internally displaced');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22386,7 +22419,7 @@ async function _fetchTechWarGDELT(){
  try{
  const q=encodeURIComponent('semiconductor chip technology war China export controls ASML TSMC NVIDIA');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22493,7 +22526,7 @@ async function _fetchCovertOpsGDELT(){
  try{
  const q=encodeURIComponent('covert operation intelligence CIA Mossad special operations clandestine');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22720,7 +22753,7 @@ async function _fetchShadowFleetGDELT(){
  try{
  const q=encodeURIComponent('shadow fleet sanctions evasion tanker oil Russia Iran');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22807,7 +22840,7 @@ async function _fetchFFGDELT(){
  try{
  const q=encodeURIComponent('foreign fighters ISIS Ukraine Syria mercenary');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -22914,7 +22947,7 @@ async function _fetchEconWarGDELT(){
  try{
  const q=encodeURIComponent('sanctions economic warfare export controls de-dollarization');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -23100,7 +23133,7 @@ async function _fetchInsiderThreatGDELT(){
  try{
  const q=encodeURIComponent('espionage spy counterintelligence FBI arrested');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -23186,7 +23219,7 @@ async function _fetchNukeDocGDELT(){
  try{
  const q=encodeURIComponent('nuclear weapons doctrine deterrence escalation');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -23242,7 +23275,7 @@ async function _fetchMaritimeGDELT(){
  try{
  const q=encodeURIComponent('maritime dispute South China Sea Taiwan Strait Hormuz shipping');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url);const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -23457,7 +23490,7 @@ async function fetchLAWSGdelt(){
  try{
  var q=encodeURIComponent('autonomous weapons drone AI military lethal');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d&sort=datedesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -23546,7 +23579,7 @@ async function fetchBioGdelt(){
  try{
  var q=encodeURIComponent('bioweapons biological weapons pathogen laboratory');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d&sort=datedesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -23610,7 +23643,7 @@ async function fetchCloseCallsGdelt(){
  try{
  var q=encodeURIComponent('nuclear close call risk escalation accident');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d&sort=datedesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -23771,7 +23804,7 @@ async function _fetchCoupGdelt(){
  try{
  var q=encodeURIComponent('coup attempt government overthrow military junta instability');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
@@ -23882,7 +23915,7 @@ async function _fetchGPCGdelt(){
  try{
  var q=encodeURIComponent('US China Russia great power competition geopolitics');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
@@ -24019,7 +24052,7 @@ async function _fetchIntelFailGdelt(){
  try{
  var q=encodeURIComponent('intelligence failure warning missed surprise attack');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=7d&sort=DateDesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
@@ -24162,7 +24195,7 @@ async function fetchHybridGDELT(){
  try{
  var q=encodeURIComponent('hybrid warfare gray zone operations information warfare subversion');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -24238,7 +24271,7 @@ async function fetchMilExerGDELT(){
  try{
  var q=encodeURIComponent('military exercise NATO Russia China troops drills');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -24323,7 +24356,7 @@ async function fetchChokepointsGDELT(){
  try{
  var q=encodeURIComponent('shipping chokepoint Hormuz Malacca Suez Strait disruption');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -24550,7 +24583,7 @@ async function fetchICStructGDELT(){
  try{
  var q=encodeURIComponent('intelligence community CIA NSA FBI budget oversight');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -24659,7 +24692,7 @@ async function fetchTerrorGDELT(){
  try{
  var q=encodeURIComponent('terrorism attack plot arrest ISIS jihadist');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -24731,7 +24764,7 @@ async function fetchGeoCalGDELT(){
  try{
  var q=encodeURIComponent('geopolitical risk treaty election summit diplomatic crisis');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -24859,7 +24892,7 @@ async function _fetchCWGdelt(){
  try{
  var q=encodeURIComponent('chemical weapons attack OPCW sarin chlorine CWC');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=2weeks';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=d.articles||[];
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -24989,7 +25022,7 @@ async function _fetchSpaceWarGdelt(){
  try{
  var q=encodeURIComponent('space warfare satellite ASAT anti-satellite weapons space force');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=2weeks';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=d.articles||[];
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25097,7 +25130,7 @@ async function _fetchSOFGdelt(){
  try{
  var q=encodeURIComponent('special operations forces commando raid Seal Delta SAS');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=2weeks';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=d.articles||[];
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25679,7 +25712,7 @@ async function fetchEmergTechGDELT(){
  try{
  var q=encodeURIComponent('AI deepfake autonomous weapons synthetic biology quantum technology threat');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=72h&sort=DateDesc';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25760,7 +25793,7 @@ async function fetchPiracyGDELT(){
  try{
  var q=encodeURIComponent('piracy ship attack maritime Houthi Somali Gulf Guinea');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=72h&sort=DateDesc';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25858,7 +25891,7 @@ async function fetchArmsEmbGDELT(){
  try{
  var q=encodeURIComponent('arms embargo violation weapons smuggling UN sanctions violations');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=72h&sort=DateDesc';
- var r=await fetch(url);var d=await r.json();
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});var d=await r.json();
  var arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26095,7 +26128,7 @@ async function fetchPolPrisGDELT(){
  try{
  var q=encodeURIComponent('political prisoner human rights detained journalist arrested');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=12&timespan=48h&sort=hybridrel&format=json';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -26159,7 +26192,7 @@ async function fetchWaterSecGDELT(){
  try{
  var q=encodeURIComponent('water conflict dam dispute river transboundary water security');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=12&timespan=48h&sort=hybridrel&format=json';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -26247,7 +26280,7 @@ async function fetchConfMinGDELT(){
  try{
  var q=encodeURIComponent('conflict minerals cobalt lithium rare earth DRC mining');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=12&timespan=48h&sort=hybridrel&format=json';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -26434,7 +26467,7 @@ async function _fetchProtestsGDELT(){
  try{
  var q=encodeURIComponent('protest demonstrations uprising civil unrest government');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=20&format=json&timespan=48H&sort=DateDesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d&&d.articles)||[];
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -26512,7 +26545,7 @@ async function _fetchStratInvGDELT(){
  try{
  var q=encodeURIComponent('China BRI investment port infrastructure Belt Road strategic');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=20&format=json&timespan=48H&sort=DateDesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d&&d.articles)||[];
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -26598,7 +26631,7 @@ async function _fetchIntLawGDELT(){
  try{
  var q=encodeURIComponent('international law violation ICJ UNSC veto war crimes accountability');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=20&format=json&timespan=48H&sort=DateDesc';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d&&d.articles)||[];
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
@@ -27703,7 +27736,7 @@ async function _fetchHsGdelt(){
  try{
  var q = encodeURIComponent('pandemic health emergency outbreak WHO disease surveillance');
  var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
- var r = await fetch(url);
+ var r = await fetch(url, {signal:AbortSignal.timeout(12000)});
  var d = await r.json();
  var arts = (d&&d.articles)||[];
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
@@ -27777,7 +27810,7 @@ async function _fetchMmGdelt(){
  try{
  var q = encodeURIComponent('military modernization defense procurement weapons program NATO China Russia');
  var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
- var r = await fetch(url);
+ var r = await fetch(url, {signal:AbortSignal.timeout(12000)});
  var d = await r.json();
  var arts = (d&&d.articles)||[];
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
@@ -27879,7 +27912,7 @@ async function _fetchCorruptGdelt(){
  try{
  var q = encodeURIComponent('corruption bribery kleptocracy government fraud anti-corruption');
  var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
- var r = await fetch(url);
+ var r = await fetch(url, {signal:AbortSignal.timeout(12000)});
  var d = await r.json();
  var arts = (d&&d.articles)||[];
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
@@ -28128,7 +28161,7 @@ async function _fetchFsGdelt(){
  try{
  var q=encodeURIComponent('failed state fragile conflict governance collapse instability');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d&&d.articles)||[];
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
@@ -28214,7 +28247,7 @@ async function _fetchMiGdelt(){
  try{
  var q=encodeURIComponent('media freedom journalism propaganda state media disinformation');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d&&d.articles)||[];
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
@@ -28297,7 +28330,7 @@ async function _fetchReGdelt(){
  try{
  var q=encodeURIComponent('democracy resilience hybrid warfare disinformation social cohesion');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
- var r=await fetch(url);
+ var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
  var d=await r.json();
  var arts=(d&&d.articles)||[];
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
@@ -35135,7 +35168,7 @@ document.addEventListener('click', function(e) {
   var overlayId = rawId.replace(/-btn$/, '-overlay');
   setTimeout(function(){
     var ov = document.getElementById(overlayId);
-    if (ov && (ov.style.display === 'flex' || ov.style.display === 'block')) {
+    if (ov && (ov.style.display === 'flex' || ov.style.display === 'block' || ov.classList.contains('open'))) {
       _ulfInjectFeed(ov);
     }
   }, 150);
