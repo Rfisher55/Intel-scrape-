@@ -26015,6 +26015,430 @@ function _closeCorruption(){
 
 // ===== END PHASE 41 =====
 
+// ===== PHASE 42: Failed States, Media Intel, Societal Resilience =====
+
+const FRAGILE_STATES = [
+  {"country":"Yemen","iso":"YE","lat":15.6,"lng":48.5,"fsi_score":111.7,"rank":1,"color":"#ef4444","tier":"VERY HIGH ALERT",
+   "indicators":{"Security":"10/10","Factionalized Elites":"9.5/10","Group Grievance":"9.5/10","Human Flight":"9/10","Economy":"9.5/10","Legitimacy":"9.8/10"},
+   "detail":"Civil war since 2015. Multiple governments. No functional state. 21M needing aid. 2M displaced. Houthi Red Sea campaign.",
+   "trajectory":"WORSENING","driver":"Houthi-Saudi conflict. Iranian proxy. Economic collapse."},
+  {"country":"Somalia","iso":"SO","lat":5.1,"lng":46.2,"fsi_score":110.9,"rank":2,"color":"#ef4444","tier":"VERY HIGH ALERT",
+   "indicators":{"Security":"9.8/10","Economy":"9.5/10","Services":"9.7/10","Human Flight":"9.3/10"},
+   "detail":"30+ years of state failure. Al-Shabaab controls 40%+ territory. Mogadishu government fragile. ATMIS drawdown threatening gains.",
+   "trajectory":"SLIGHT IMPROVEMENT","driver":"Al-Shabaab, clan conflict, droughts."},
+  {"country":"South Sudan","iso":"SS","lat":7.0,"lng":30.0,"fsi_score":110.5,"rank":3,"color":"#ef4444","tier":"VERY HIGH ALERT",
+   "indicators":{"Security":"10/10","Legitimacy":"9.8/10","Human Flight":"9.5/10"},
+   "detail":"World\'s youngest country (2011) immediately collapsed. Two civil wars. Oil wealth looted by elites. 4.3M displaced.",
+   "trajectory":"STABLE","driver":"Elite factional conflict, oil dependency."},
+  {"country":"Congo DRC","iso":"CD","lat":-3.9,"lng":21.7,"fsi_score":109.6,"rank":4,"color":"#ef4444","tier":"VERY HIGH ALERT",
+   "indicators":{"Security":"9.7/10","Services":"9.8/10","Human Flight":"9.4/10"},
+   "detail":"Eastern DRC never stable. M23/Rwanda proxy war. 100+ armed groups. 7M internally displaced. Mineral wealth curse.",
+   "trajectory":"WORSENING","driver":"Mineral resources, regional proxy war, governance vacuum."},
+  {"country":"Sudan","iso":"SD","lat":15.0,"lng":30.5,"fsi_score":109.2,"rank":5,"color":"#ef4444","tier":"VERY HIGH ALERT",
+   "indicators":{"Security":"10/10","Legitimacy":"9.9/10","Economy":"9.5/10"},
+   "detail":"SAF vs RSF civil war since Apr 2023. 13M displaced — worst displacement crisis globally. Khartoum destroyed. Famine declared.",
+   "trajectory":"RAPIDLY WORSENING","driver":"SAF-RSF elite conflict, power vacuum after coup."},
+  {"country":"Haiti","iso":"HT","lat":18.9,"lng":-72.3,"fsi_score":107.4,"rank":7,"color":"#ef4444","tier":"VERY HIGH ALERT",
+   "indicators":{"Security":"9.9/10","Legitimacy":"9.8/10","Services":"9.6/10"},
+   "detail":"Gang control of 90% Port-au-Prince. No functioning government. Presidential vacuum since Moise assassination 2021. Kenya MSS struggling.",
+   "trajectory":"RAPIDLY WORSENING","driver":"Gang insurrection, political collapse, earthquake impact."},
+  {"country":"Afghanistan","iso":"AF","lat":33.9,"lng":67.7,"fsi_score":107.0,"rank":9,"color":"#ef4444","tier":"VERY HIGH ALERT",
+   "indicators":{"Security":"9.5/10","Human Rights":"9.9/10","Legitimacy":"9.5/10"},
+   "detail":"Taliban control. 97% population in poverty. Women erased from public life and education. IS-K conducting mass casualty attacks.",
+   "trajectory":"STABLE","driver":"Taliban governance, sanctions, economic collapse."},
+  {"country":"Myanmar","iso":"MM","lat":19.7,"lng":96.1,"fsi_score":105.4,"rank":13,"color":"#f97316","tier":"HIGH ALERT",
+   "indicators":{"Security":"9.6/10","Factionalized Elites":"9.5/10","Human Flight":"9.3/10"},
+   "detail":"Military coup Feb 2021. Civil war. Junta controls 30% territory. Ethnic armies + PDF resistance. 3M displaced.",
+   "trajectory":"WORSENING","driver":"Tatmadaw coup, ethnic armies, civil resistance."},
+  {"country":"Libya","iso":"LY","lat":26.3,"lng":17.2,"fsi_score":104.8,"rank":14,"color":"#f97316","tier":"HIGH ALERT",
+   "indicators":{"Security":"9.4/10","Legitimacy":"9.7/10","Factionalized Elites":"9.6/10"},
+   "detail":"Two governments (Tripoli GNU + Benghazi HoR). Haftar LNA controls east. Wagner/Russia + Turkey + UAE competing. Oil revenues disputed.",
+   "trajectory":"STABLE","driver":"Post-Gaddafi vacuum, external interference."},
+  {"country":"Syria","iso":"SY","lat":34.8,"lng":38.1,"fsi_score":104.1,"rank":16,"color":"#f97316","tier":"HIGH ALERT",
+   "indicators":{"Security":"9.8/10","Human Flight":"9.9/10","Economy":"9.7/10"},
+   "detail":"Assad fled Dec 2024 after HTS-led offensive. New transitional government. Massive reconstruction needed. Multiple armed groups.",
+   "trajectory":"TRANSITION","driver":"Post-Assad transition, jihadist presence, international neglect."}
+];
+
+const FSI_INDICATORS = [
+  {"indicator":"Security Apparatus","desc":"Internal conflict, violence, coup attempts, rebel control"},
+  {"indicator":"Factionalized Elites","desc":"Elite power struggles, coups, ethnic/religious political divisions"},
+  {"indicator":"Group Grievance","desc":"Inter-group violence, discrimination, ethnic/religious tension"},
+  {"indicator":"Human Flight/Brain Drain","desc":"Refugee flows, emigration of professionals, skills exodus"},
+  {"indicator":"Economic Decline","desc":"GDP collapse, inequality, poverty rates, informal economy"},
+  {"indicator":"State Legitimacy","desc":"Corruption, government effectiveness, democratic deficit, opposition"},
+  {"indicator":"Public Services","desc":"Health/education/infrastructure capacity vs demand"},
+  {"indicator":"Human Rights","desc":"Press freedom, civil liberties, rule of law, arbitrary detention"},
+  {"indicator":"Demographic Pressures","desc":"Overpopulation, youth bulge, resource competition, disease burden"},
+  {"indicator":"External Intervention","desc":"Foreign military presence, sanctions, aid dependency, debt"}
+];
+
+const STATE_MEDIA_NETWORKS = [
+  {"name":"RT (Russia Today) Network","country":"Russia","color":"#ef4444","budget":"$400M+/year (Kremlin-funded)","reach":"100+ countries, 700M+ potential viewers",
+   "languages":["English","Arabic","Spanish","German","French"],
+   "role":"Primary Russian information warfare tool. Amplify Western divisions. Spread pro-Kremlin narrative. Recruit Western \'useful idiots\'.",
+   "tactics":["False balance (equal platform to fringe)","Amplify anti-establishment narratives","COVID disinfo","Election interference narratives","Hosting extremist voices mainstream media won\'t"],
+   "status":"Banned EU/UK 2022. Available via VPN. Social media presence continues.",
+   "intel_value":"Key signal for Russian active measures narrative shifts."},
+  {"name":"Xinhua / CGTN / China Daily","country":"China","color":"#f97316","budget":"$7B+/year (estimated CCP media)","reach":"Global — 170+ countries with Xinhua bureaus",
+   "languages":["English","Spanish","French","Arabic","Russian","Swahili","Portuguese"],
+   "role":"Shape positive CCP narrative. Counter Western human rights coverage. Rent space in foreign newspapers (China Watch inserts). Replace local media in Global South.",
+   "tactics":["Content agreements with local media (ghostwritten Xinhua articles)","China Watch newspaper supplements","Confucius Institute media training","TikTok ByteDance algorithm","WeChat diaspora manipulation"],
+   "status":"Operating globally. EU flagged as foreign agent concern. Xinhua US registered as foreign agent.",
+   "intel_value":"Xinhua has journalistic cover for intelligence collection globally."},
+  {"name":"Al Jazeera Network","country":"Qatar (state-funded)","color":"#22c55e","budget":"$700M+/year","reach":"400M+ viewers Arabic + English",
+   "languages":["Arabic","English"],
+   "role":"Platform for Qatar foreign policy. Muslim Brotherhood-sympathetic coverage. Hamas platform (Qatar hosts Hamas political bureau). But also genuine journalism.",
+   "tactics":["Muslim Brotherhood editorial perspective","Hamas/Palestinian advocacy","Egypt and Saudi Arabia hostility as editorial line","Balanced on Qatar interests"],
+   "status":"Banned Egypt/Saudi/UAE (2017-2021 crisis). Allowed back post-reconciliation. Israel banned Al Jazeera May 2024.",
+   "intel_value":"Reflects Qatar foreign policy interests. Hamas leadership interviews provide intelligence value."},
+  {"name":"Press TV / IRIB (Iran)","country":"Iran","color":"#8b5cf6","budget":"$100M+/year","reach":"Global English + regional",
+   "languages":["English","Arabic","French","Spanish"],
+   "role":"IRGC narrative amplification. Anti-US/Israel propaganda. Reach into Muslim-majority world.",
+   "tactics":["Holocaust denial amplification","Antisemitic tropes","US imperialism narratives","Khomeini ideology promotion"],
+   "status":"Banned UK/EU. Operating via satellite.",
+   "intel_value":"Reflects IRGC political priorities and framing of current crises."},
+  {"name":"Sputnik Network","country":"Russia","color":"#ef4444","budget":"$100M+/year","reach":"Primarily Russian-speaking regions + Arab world",
+   "languages":["Russian","Arabic","English","Spanish","Portuguese"],
+   "role":"Complement to RT. Amplify pro-Russian narratives in post-Soviet space. Reach Arab/Latin America.",
+   "tactics":["Coordinated with RT for narrative amplification","Emphasis on US/NATO failures","COVID vaccine disinformation"],
+   "status":"Sanctioned EU/US. Banned in EU.",
+   "intel_value":"Coordination with RT narrates Russian active measures themes."},
+  {"name":"Voice of America / Radio Free Europe","country":"USA (USAGM-funded)","color":"#3b82f6","budget":"$900M+/year (USAGM total)","reach":"Russia, China, Middle East, SE Asia — 350M weekly",
+   "languages":["Russian","Chinese","Persian","Arabic","Ukrainian","50+ languages"],
+   "role":"Counter authoritarian disinformation. Provide objective news in media-restricted environments. Originally Cold War propaganda — now journalism-focused.",
+   "tactics":["Independent journalism in closed societies","Signal jamming resistance (shortwave + digital)","Circumvention tools distribution"],
+   "status":"USAGM independence under pressure (Trump DOGE cuts 2025). RFE shut down some services.",
+   "intel_value":"Audience data reveals information hunger in closed societies."}
+];
+
+const PRESS_FREEDOM_INDEX = [
+  {"country":"Norway","iso":"NO","score":95,"rank":1,"color":"#22c55e"},
+  {"country":"Denmark","iso":"DK","score":93,"rank":2,"color":"#22c55e"},
+  {"country":"Sweden","iso":"SE","score":92,"rank":3,"color":"#22c55e"},
+  {"country":"USA","iso":"US","score":73,"rank":55,"color":"#eab308","note":"Trump press hostility. Media consolidation."},
+  {"country":"UK","iso":"GB","score":78,"rank":23,"color":"#eab308"},
+  {"country":"Hungary","iso":"HU","score":50,"rank":67,"color":"#f97316","note":"Orban media capture. State-friendly oligarchs control 90% media."},
+  {"country":"Russia","iso":"RU","score":22,"rank":164,"color":"#ef4444","note":"Independent media destroyed. Journalists killed/jailed."},
+  {"country":"China","iso":"CN","score":22,"rank":172,"color":"#ef4444","note":"CCP total control. Journalists in prison (highest globally)."},
+  {"country":"Iran","iso":"IR","score":28,"rank":176,"color":"#ef4444","note":"Journalists executed. Internet shutdowns."},
+  {"country":"North Korea","iso":"KP","score":5,"rank":180,"color":"#ef4444","note":"No free media. State media only."},
+  {"country":"Eritrea","iso":"ER","score":5,"rank":180,"color":"#ef4444","note":"No journalists. Only state media."}
+];
+
+const RESILIENCE_SCORES = [
+  {"country":"Finland","iso":"FI","lat":64,"lng":26,"resilience_score":92,"color":"#22c55e",
+   "strengths":["Highest trust in government (86%)","Media literacy programs in schools","Comprehensive preparedness culture (civil defense)","Total Defense concept (whole-of-society)","Sisu cultural resilience"],
+   "vulnerabilities":["Russian border (1,340km)","Energy import dependence pre-2022","Small population"],
+   "hybrid_resistance":"EXCELLENT","note":"World\'s benchmark for hybrid warfare resilience. Teaches disinformation resistance in schools."},
+  {"country":"Estonia","iso":"EE","lat":59,"lng":25,"resilience_score":88,"color":"#22c55e",
+   "strengths":["Digital society — world\'s most advanced e-governance","Cyber defense (NATO CCDCOE in Tallinn)","High civic digital literacy","Strong national identity despite Russian minority","Data embassies (backup systems abroad)"],
+   "vulnerabilities":["25% Russian-speaking minority (potential subversion target)","Tiny military (conscription + reserves)","Energy grid integration challenges"],
+   "hybrid_resistance":"EXCELLENT","note":"Survived 2007 Russian cyberattack. Now NATO\'s cyber defense center."},
+  {"country":"Sweden","iso":"SE","lat":62,"lng":15,"resilience_score":86,"color":"#22c55e",
+   "strengths":["Total Defense concept revived 2018","Psychological Defense Agency (MPF) established 2022","High social trust","Media literacy","NATO membership 2024"],
+   "vulnerabilities":["Decades of demilitarization (remediated post-2015)","Gang violence weakening social cohesion","Immigration integration challenges"],
+   "hybrid_resistance":"STRONG","note":""},
+  {"country":"USA","iso":"US","lat":38,"lng":-97,"resilience_score":61,"color":"#eab308",
+   "strengths":["Military-industrial capability","Innovation ecosystem","Geographic distance from adversaries","Free press (weakened but present)"],
+   "vulnerabilities":["Political polarization (worst in 50+ years)","Social media disinformation vulnerability","Infrastructure aging","Low trust in institutions","Gun violence as societal stress"],
+   "hybrid_resistance":"MODERATE","note":"Polarization is primary vulnerability. Russian/Chinese active measures exploit divisions effectively."},
+  {"country":"Germany","iso":"DE","lat":51,"lng":10,"resilience_score":67,"color":"#eab308",
+   "strengths":["Strong democratic institutions","Free press","BfV active on disinformation","Economic resilience"],
+   "vulnerabilities":["Historical taboos on military (remediated post-2022)","Ostpolitik legacy — business community Russia-friendly","AfD Russian narrative amplification","Turkish community influence operations"],
+   "hybrid_resistance":"MODERATE","note":"Energy dependence on Russia was critical vulnerability — remediated at cost."},
+  {"country":"Hungary","iso":"HU","lat":47.5,"lng":19,"resilience_score":32,"color":"#ef4444",
+   "strengths":["NATO membership","EU membership"],
+   "vulnerabilities":["Government-controlled media (90%)","Orban-Putin personal relationship","Russian energy dependence maintained deliberately","Anti-LGBTQ+ laws used by Russia as template","FIDESZ blocking EU sanctions"],
+   "hybrid_resistance":"POOR","note":"Hungary represents partial Russian capture of NATO/EU member. Most concerning case of alliance subversion."},
+  {"country":"Ukraine","iso":"UA","lat":49,"lng":32,"resilience_score":79,"color":"#22c55e",
+   "strengths":["War-forged national identity","High combat motivation","Western support","Zelensky leadership","Tech-savvy defense (Starlink, drones, cyber)"],
+   "vulnerabilities":["3+ years of war exhaustion","Diaspora — 6M abroad","Economic damage","Corruption (improving)"],
+   "hybrid_resistance":"STRONG","note":"Ukraine\'s societal resilience surprised Russia. \'Russian speakers would welcome us\' assumption was catastrophically wrong."},
+  {"country":"Taiwan","iso":"TW","lat":23.8,"lng":121,"resilience_score":74,"color":"#eab308",
+   "strengths":["Strong democratic identity","High tech capability","Civil defense improving (All-Out Defense Mobilization)","US arms sales","TSMC as deterrent asset"],
+   "vulnerabilities":["Chinese-language information environment (shared with PRC)","Economic dependence on China","Geographic isolation","2.2M military reserves (small)"],
+   "hybrid_resistance":"MODERATE","note":"Taiwan the primary target of Chinese cognitive warfare. 24 million people defending democracy against 1.4 billion authoritarian neighbor."}
+];
+
+const RESILIENCE_DIMENSIONS = [
+  {"dim":"Social Trust","desc":"Trust in government, media, institutions. Low trust = disinformation vulnerability.","best":"Nordics","worst":"Yemen, Haiti"},
+  {"dim":"Civil Defense","desc":"Whole-of-society preparedness. Emergency systems. Population training.","best":"Finland, Estonia, Sweden","worst":"Most of Global South"},
+  {"dim":"Information Environment","desc":"Media plurality, digital literacy, disinformation resistance tools.","best":"Finland, Netherlands","worst":"Russia, China, North Korea"},
+  {"dim":"Political Cohesion","desc":"Elite consensus, low polarization, shared national identity.","best":"Singapore, Denmark","worst":"USA, Hungary, Lebanon"},
+  {"dim":"Economic Resilience","desc":"Supply chain diversity, debt sustainability, energy independence.","best":"Norway, USA","worst":"Venezuela, Lebanon, Somalia"},
+  {"dim":"Military-Civil Integration","desc":"Conscription culture, civil-military cooperation, defense industry.","best":"Israel, Finland, Estonia","worst":"Most developing nations"}
+];
+
+// ---- Failed States render functions ----
+function _fsTrajClass(t){
+  if(t.indexOf('RAPID')>-1) return 'fs-traj-RAPID';
+  if(t.indexOf('WORSENING')>-1) return 'fs-traj-WORSENING';
+  if(t.indexOf('TRANSITION')>-1) return 'fs-traj-TRANSITION';
+  if(t.indexOf('IMPROVEMENT')>-1||t.indexOf('IMPROVING')>-1) return 'fs-traj-IMPROVING';
+  return 'fs-traj-STABLE';
+}
+function _fsTierClass(tier){
+  return tier.indexOf('VERY')>-1?'fs-tier-VERY':'fs-tier-HIGH';
+}
+function _renderFailedStates(){
+  var grid=document.getElementById('fs-cards-grid');
+  if(!grid) return;
+  grid.innerHTML=FRAGILE_STATES.map(function(s){
+    var inds=Object.keys(s.indicators).map(function(k){
+      return '<span class="fs-ind-chip">'+k+': '+s.indicators[k]+'</span>';
+    }).join('');
+    return '<div class="fs-card" style="border-top-color:'+s.color+';border-color:'+s.color+'22;">'+
+      '<div class="fs-card-header">'+
+        '<div>'+
+          '<div class="fs-country">'+s.country+'</div>'+
+          '<div class="fs-rank">FSI RANK #'+s.rank+'</div>'+
+        '</div>'+
+        '<div style="text-align:right;">'+
+          '<div class="fs-score" style="color:'+s.color+';">'+s.fsi_score+'</div>'+
+          '<div class="fs-tier-badge '+_fsTierClass(s.tier)+'">'+s.tier+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="fs-row"><b>DETAIL:</b> '+s.detail+'</div>'+
+      '<div class="fs-row"><b>DRIVER:</b> '+s.driver+'</div>'+
+      '<div class="fs-indicators">'+inds+'</div>'+
+      '<div><span class="fs-traj-badge '+_fsTrajClass(s.trajectory)+'">'+s.trajectory+'</span></div>'+
+    '</div>';
+  }).join('');
+  var tbody=document.getElementById('fs-ind-tbody');
+  if(tbody){
+    tbody.innerHTML=FSI_INDICATORS.map(function(i){
+      return '<tr><td class="fs-ind-name">'+i.indicator+'</td><td>'+i.desc+'</td></tr>';
+    }).join('');
+  }
+}
+async function _fetchFsGdelt(){
+  var feed=document.getElementById('fs-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML='<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q=encodeURIComponent('failed state fragile conflict governance collapse instability');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
+    feed.innerHTML=arts.map(function(a){
+      return '<div class="fs-gdelt-item">'+
+        '<div class="fs-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="fs-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';
+  }
+}
+function _addFragileHotspots(){
+  var extras=FRAGILE_STATES.filter(function(s){
+    return s.tier==='VERY HIGH ALERT'||s.tier==='HIGH ALERT';
+  }).map(function(s){
+    return {lat:s.lat,lng:s.lng,type:'instability',severity:s.tier==='VERY HIGH ALERT'?'critical':'high',label:s.country+' FSI#'+s.rank,_fragile:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._fragile;}), ...extras];
+}
+function _removeFragileHotspots(){
+  liveHotspots=liveHotspots.filter(function(h){return !h._fragile;});
+}
+function _openFailedStates(){
+  var ov=document.getElementById('failedstates-overlay');
+  if(ov){ov.style.display='flex';_renderFailedStates();_fetchFsGdelt();_addFragileHotspots();}
+}
+function _closeFailedStates(){
+  var ov=document.getElementById('failedstates-overlay');
+  if(ov) ov.style.display='none';
+  _removeFragileHotspots();
+}
+
+// ---- Media Intel render functions ----
+const MEDIA_HQ = [
+  {name:'RT Moscow',lat:55.7,"lng":37.6,_media:true},
+  {name:'Xinhua Beijing',lat:39.9,"lng":116.4,_media:true},
+  {name:'Al Jazeera Doha',lat:25.3,"lng":51.5,_media:true},
+  {name:'Press TV Tehran',lat:35.7,"lng":51.4,_media:true},
+  {name:'VOA Washington',lat:38.9,"lng":-77.0,_media:true}
+];
+function _renderMediaIntel(){
+  var grid=document.getElementById('mi-networks-grid');
+  if(!grid) return;
+  grid.innerHTML=STATE_MEDIA_NETWORKS.map(function(n){
+    var langs=n.languages.map(function(l){return '<span class="mi-tactic-chip">'+l+'</span>';}).join('');
+    var tactics=n.tactics.map(function(t){return '<span class="mi-tactic-chip">'+t+'</span>';}).join('');
+    return '<div class="mi-card" style="border-left-color:'+n.color+';">'+
+      '<div class="mi-card-header">'+
+        '<div>'+
+          '<div class="mi-name">'+n.name+'</div>'+
+          '<div class="mi-country">'+n.country+'</div>'+
+        '</div>'+
+        '<div class="mi-budget">'+n.budget+'</div>'+
+      '</div>'+
+      '<div class="mi-row"><b>REACH:</b> '+n.reach+'</div>'+
+      '<div class="mi-row"><b>ROLE:</b> '+n.role+'</div>'+
+      '<div class="mi-row"><b>LANGUAGES:</b></div><div class="mi-tactics">'+langs+'</div>'+
+      '<div class="mi-row" style="margin-top:6px;"><b>TACTICS:</b></div><div class="mi-tactics">'+tactics+'</div>'+
+      '<div class="mi-row" style="margin-top:6px;"><b>STATUS:</b> '+n.status+'</div>'+
+      '<div class="mi-intel-value">INTEL VALUE: '+n.intel_value+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody=document.getElementById('mi-pf-tbody');
+  if(tbody){
+    tbody.innerHTML=PRESS_FREEDOM_INDEX.map(function(p){
+      var barW=Math.round(p.score)+'%';
+      return '<tr>'+
+        '<td style="color:#e2e8f0;font-weight:700;">'+p.country+'</td>'+
+        '<td><span class="mi-pf-score" style="color:'+p.color+';">'+p.score+'</span>'+
+          '<span class="mi-pf-bar-wrap"><span class="mi-pf-bar" style="width:'+barW+';background:'+p.color+';"></span></span></td>'+
+        '<td style="color:#94a3b8;">#'+p.rank+'</td>'+
+        '<td style="color:#94a3b8;">'+(p.note||'&mdash;')+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+}
+async function _fetchMiGdelt(){
+  var feed=document.getElementById('mi-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML='<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q=encodeURIComponent('media freedom journalism propaganda state media disinformation');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
+    feed.innerHTML=arts.map(function(a){
+      return '<div class="mi-gdelt-item">'+
+        '<div class="mi-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="mi-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';
+  }
+}
+function _addMediaHotspots(){
+  var extras=MEDIA_HQ.map(function(h){
+    return {lat:h.lat,lng:h.lng,type:'cyber',severity:'medium',label:h.name,_media:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._media;}), ...extras];
+}
+function _removeMediaHotspots(){
+  liveHotspots=liveHotspots.filter(function(h){return !h._media;});
+}
+function _openMediaIntel(){
+  var ov=document.getElementById('mediaintel-overlay');
+  if(ov){ov.style.display='flex';_renderMediaIntel();_fetchMiGdelt();_addMediaHotspots();}
+}
+function _closeMediaIntel(){
+  var ov=document.getElementById('mediaintel-overlay');
+  if(ov) ov.style.display='none';
+  _removeMediaHotspots();
+}
+
+// ---- Resilience render functions ----
+function _reHybridClass(h){
+  if(h.indexOf('EXCELLENT')>-1) return 're-hybrid-EXCELLENT';
+  if(h.indexOf('STRONG')>-1) return 're-hybrid-STRONG';
+  if(h.indexOf('POOR')>-1) return 're-hybrid-POOR';
+  return 're-hybrid-MODERATE';
+}
+function _renderResilience(){
+  var grid=document.getElementById('re-scores-grid');
+  if(!grid) return;
+  grid.innerHTML=RESILIENCE_SCORES.map(function(s){
+    var strengths=s.strengths.map(function(x){return '<span class="re-strength-chip">'+x+'</span>';}).join('');
+    var vulns=s.vulnerabilities.map(function(x){return '<span class="re-vuln-chip">'+x+'</span>';}).join('');
+    var barW=s.resilience_score+'%';
+    var hClass=_reHybridClass(s.hybrid_resistance);
+    return '<div class="re-card" style="border-top-color:'+s.color+';border-color:'+s.color+'22;">'+
+      '<div class="re-card-header">'+
+        '<div>'+
+          '<div class="re-country">'+s.country+'</div>'+
+          '<div style="margin-top:4px;">'+
+            '<span class="re-score" style="color:'+s.color+';">'+s.resilience_score+'</span>'+
+            '<span class="re-score-bar-wrap"><span class="re-score-bar" style="width:'+barW+';background:'+s.color+';"></span></span>'+
+          '</div>'+
+        '</div>'+
+        '<span class="re-hybrid-badge '+hClass+'">'+s.hybrid_resistance+'</span>'+
+      '</div>'+
+      '<div class="re-row"><b>STRENGTHS:</b></div><div class="re-chip-list">'+strengths+'</div>'+
+      '<div class="re-row" style="margin-top:6px;"><b>VULNERABILITIES:</b></div><div class="re-chip-list">'+vulns+'</div>'+
+      (s.note?'<div class="re-note">'+s.note+'</div>':'')+
+    '</div>';
+  }).join('');
+  var tbody=document.getElementById('re-dim-tbody');
+  if(tbody){
+    tbody.innerHTML=RESILIENCE_DIMENSIONS.map(function(d){
+      return '<tr>'+
+        '<td class="re-dim-name">'+d.dim+'</td>'+
+        '<td>'+d.desc+'</td>'+
+        '<td style="color:#86efac;">'+d.best+'</td>'+
+        '<td style="color:#fca5a5;">'+d.worst+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+}
+async function _fetchReGdelt(){
+  var feed=document.getElementById('re-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML='<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q=encodeURIComponent('democracy resilience hybrid warfare disinformation social cohesion');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
+    feed.innerHTML=arts.map(function(a){
+      return '<div class="re-gdelt-item">'+
+        '<div class="re-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="re-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';
+  }
+}
+function _addResilienceHotspots(){
+  var extras=RESILIENCE_SCORES.filter(function(s){return s.resilience_score<40;}).map(function(s){
+    return {lat:s.lat,lng:s.lng,type:'instability',severity:'high',label:s.country+' Resilience:'+s.resilience_score,_resilience:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._resilience;}), ...extras];
+}
+function _removeResilienceHotspots(){
+  liveHotspots=liveHotspots.filter(function(h){return !h._resilience;});
+}
+function _openResilience(){
+  var ov=document.getElementById('resilience-overlay');
+  if(ov){ov.style.display='flex';_renderResilience();_fetchReGdelt();_addResilienceHotspots();}
+}
+function _closeResilience(){
+  var ov=document.getElementById('resilience-overlay');
+  if(ov) ov.style.display='none';
+  _removeResilienceHotspots();
+}
+
+// ---- Wire up Phase 42 button events ----
+(function(){
+  var btnFs=document.getElementById('failedstates-btn');
+  var clsFs=document.getElementById('failedstates-close');
+  if(btnFs) btnFs.addEventListener('click',_openFailedStates);
+  if(clsFs) clsFs.addEventListener('click',_closeFailedStates);
+  var btnMi=document.getElementById('mediaintel-btn');
+  var clsMi=document.getElementById('mediaintel-close');
+  if(btnMi) btnMi.addEventListener('click',_openMediaIntel);
+  if(clsMi) clsMi.addEventListener('click',_closeMediaIntel);
+  var btnRe=document.getElementById('resilience-btn');
+  var clsRe=document.getElementById('resilience-close');
+  if(btnRe) btnRe.addEventListener('click',_openResilience);
+  if(clsRe) clsRe.addEventListener('click',_closeResilience);
+})();
+
+// ===== END PHASE 42 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
