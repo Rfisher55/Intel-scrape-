@@ -2318,6 +2318,89 @@ button{border-radius:2px!important}
 .cc-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .cc-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .cc-gdelt-meta{font-size:8px;color:#475569;}
+/* PHASE 31: Coup Watch */
+#coupwatch-btn{position:fixed;top:175px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#coupwatch-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#coupwatch-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.coup-card{background:rgba(15,23,42,0.7);border-left:4px solid #ef4444;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 6px 6px 0;padding:14px;margin-bottom:12px;}
+.coup-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.coup-country{font-size:13px;font-weight:700;color:#e2e8f0;letter-spacing:1px;}
+.coup-date{font-size:8px;color:#64748b;margin-top:2px;letter-spacing:.5px;}
+.coup-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.coup-succeeded{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.coup-failed{background:rgba(120,53,15,.3);border:1px solid #eab308;color:#fde047;}
+.coup-conflict{background:rgba(127,29,29,.35);border:1px solid #f97316;color:#fdba74;}
+.coup-transition{background:rgba(30,58,95,.4);border:1px solid #3b82f6;color:#93c5fd;}
+.coup-contested{background:rgba(76,29,149,.35);border:1px solid #8b5cf6;color:#c4b5fd;}
+.coup-crisis{background:rgba(30,41,59,.5);border:1px solid #64748b;color:#94a3b8;}
+.coup-section{font-size:8px;letter-spacing:.2em;color:#475569;margin-bottom:4px;margin-top:10px;font-weight:700;text-transform:uppercase;}
+.coup-who{font-size:9px;color:#e2e8f0;line-height:1.6;border-left:3px solid rgba(239,68,68,.4);padding-left:8px;}
+.coup-driver{font-size:9px;color:#fde047;line-height:1.6;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;}
+.coup-aftermath{font-size:9px;color:#94a3b8;line-height:1.6;}
+.coup-significance{font-size:9px;color:#86efac;line-height:1.6;border-left:3px solid rgba(34,197,94,.4);padding-left:8px;font-style:italic;}
+.coup-risk-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;margin-bottom:8px;}
+.coup-risk-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;}
+.coup-risk-country{font-size:10px;font-weight:700;color:#e2e8f0;letter-spacing:.5px;}
+.coup-risk-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;}
+.coup-risk-critical{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.coup-risk-high{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.coup-risk-elevated{background:rgba(120,53,15,.2);border:1px solid #eab308;color:#fde047;}
+.coup-risk-factors{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.coup-factor-chip{font-size:8px;padding:2px 7px;background:rgba(30,41,59,.6);border:1px solid rgba(100,116,139,.3);color:#94a3b8;border-radius:3px;}
+.coup-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.coup-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.coup-gdelt-meta{font-size:8px;color:#475569;}
+/* PHASE 31: GPC Scorecard */
+#gpc-btn{position:fixed;top:215px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#gpc-btn:hover{border-color:#06b6d4;color:#67e8f9;}
+#gpc-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.gpc-dim-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.gpc-dim-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+.gpc-dim-title{font-size:11px;font-weight:700;color:#e2e8f0;letter-spacing:.8px;}
+.gpc-dim-leader{font-size:8px;color:#64748b;letter-spacing:.3px;}
+.gpc-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.gpc-bar-label{font-size:9px;font-weight:700;min-width:42px;letter-spacing:.5px;}
+.gpc-bar-track{flex:1;height:7px;background:rgba(30,41,59,.8);border-radius:3px;overflow:hidden;}
+.gpc-bar-fill{height:100%;border-radius:3px;transition:width .6s ease;}
+.gpc-bar-score{font-size:8px;min-width:24px;text-align:right;font-weight:700;}
+.gpc-note{font-size:8px;color:#64748b;line-height:1.5;margin-top:2px;padding-left:50px;}
+.gpc-composite-table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+.gpc-composite-table th{font-size:8px;letter-spacing:.15em;color:#475569;padding:6px 10px;border-bottom:2px solid #1e293b;text-align:left;}
+.gpc-composite-table td{font-size:9px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);}
+.gpc-rank-cell{font-size:14px;font-weight:900;}
+.gpc-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.gpc-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.gpc-gdelt-meta{font-size:8px;color:#475569;}
+/* PHASE 31: Intel Failures */
+#intelfail-btn{position:fixed;top:255px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#intelfail-btn:hover{border-color:#a855f7;color:#d8b4fe;}
+#intelfail-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ifail-card{background:rgba(15,23,42,0.7);border-left:4px solid #ef4444;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 6px 6px 0;padding:14px;margin-bottom:12px;}
+.ifail-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.ifail-name{font-size:13px;font-weight:700;color:#e2e8f0;letter-spacing:.8px;}
+.ifail-meta{font-size:8px;color:#64748b;margin-top:3px;letter-spacing:.4px;}
+.ifail-sev-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.ifail-sev-catastrophic{background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;}
+.ifail-sev-critical{background:rgba(127,29,29,.4);border:1px solid #ef4444;color:#fca5a5;}
+.ifail-sev-high{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.ifail-section{font-size:8px;letter-spacing:.2em;color:#475569;margin-bottom:4px;margin-top:10px;font-weight:700;text-transform:uppercase;}
+.ifail-what{font-size:9px;color:#e2e8f0;line-height:1.7;border-left:3px solid rgba(239,68,68,.4);padding-left:8px;}
+.ifail-causes{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.ifail-cause-chip{font-size:8px;padding:2px 7px;background:rgba(127,29,29,.2);border:1px solid rgba(239,68,68,.25);color:#fca5a5;border-radius:3px;line-height:1.5;}
+.ifail-result{font-size:9px;color:#fde047;line-height:1.6;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;}
+.ifail-reform{font-size:9px;color:#86efac;line-height:1.6;border-left:3px solid rgba(34,197,94,.4);padding-left:8px;}
+.ifail-stats-box{background:rgba(76,29,149,0.15);border:1px solid rgba(139,92,246,.3);border-radius:6px;padding:14px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;}
+.ifail-stat{text-align:center;}
+.ifail-stat-num{font-size:22px;font-weight:900;color:#c4b5fd;}
+.ifail-stat-label{font-size:8px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.ifail-bias-box{background:rgba(15,23,42,0.6);border:1px solid rgba(139,92,246,.2);border-radius:4px;padding:12px;margin-bottom:16px;}
+.ifail-bias-title{font-size:8px;letter-spacing:.2em;color:#a855f7;font-weight:700;margin-bottom:10px;}
+.ifail-bias-row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ifail-bias-name{font-size:9px;font-weight:700;color:#d8b4fe;min-width:140px;flex-shrink:0;}
+.ifail-bias-desc{font-size:9px;color:#94a3b8;line-height:1.5;flex:1;}
+.ifail-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ifail-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ifail-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -20664,6 +20747,416 @@ async function fetchCloseCallsGdelt(){
 }
 // ===== END PHASE 30 =====
 
+// ===== PHASE 31: COUP WATCH, GPC SCORECARD, INTEL FAILURES =====
+
+const RECENT_COUPS = [
+  {"country":"Niger","iso":"NE","date":"Jul 2023","status":"COMPLETED","outcome":"SUCCEEDED",
+   "lat":13.5,"lng":2.1,"color":"#ef4444",
+   "who":"Presidential Guard (Gen. Abdourahamane Tchiani) ousted President Bazoum",
+   "driver":"Anti-French sentiment, JNIM insurgency pressure, elite dissatisfaction with Bazoum",
+   "aftermath":"France expelled, ECOWAS sanctions failed, Russia/Wagner welcomed. US partially maintained relations.",
+   "significance":"3rd Sahel coup in 2 years. Completes French exclusion from Mali-Burkina Faso-Niger axis."},
+  {"country":"Gabon","iso":"GA","date":"Aug 2023","status":"COMPLETED","outcome":"SUCCEEDED",
+   "lat":-0.8,"lng":11.6,"color":"#ef4444",
+   "who":"Republican Guard ousted President Ali Bongo (third-generation dynasty)",
+   "driver":"Contested election results, elite dissatisfaction, Bongo family corruption",
+   "aftermath":"Gen. Brice Oligui Nguema transitional president. France relations maintained. CEMI suspended.",
+   "significance":"8th African coup in 3 years. French Africa sphere collapsing."},
+  {"country":"Myanmar","iso":"MM","date":"Feb 2021","status":"COMPLETED","outcome":"ONGOING CONFLICT",
+   "lat":21,"lng":96,"color":"#ef4444",
+   "who":"Tatmadaw (SAC) ousted Aung San Suu Kyi and NLD government",
+   "driver":"2020 election results disputed, fear of NLD constitutional amendment restricting military",
+   "aftermath":"Civil war. PDF resistance. SAC controls 30% of territory. Ethnic armies control rest. 3M displaced.",
+   "significance":"Severe humanitarian crisis. Chinese and Russian backing. ASEAN process stalled."},
+  {"country":"Sudan","iso":"SD","date":"Oct 2021","status":"COMPLETED","outcome":"COLLAPSED INTO CIVIL WAR",
+   "lat":15,"lng":30,"color":"#ef4444",
+   "who":"SAF Gen. Burhan ousted civilian PM Hamdok in joint SAF-RSF coup",
+   "driver":"Civilian-military transition power struggle. RSF Dagalo vs SAF Burhan rivalry grew into civil war Apr 2023.",
+   "aftermath":"SAF vs RSF civil war since Apr 2023. 13M displaced. Khartoum largely destroyed.",
+   "significance":"Most severe humanitarian crisis globally as of 2024."},
+  {"country":"Guinea","iso":"GN","date":"Sep 2021","status":"COMPLETED","outcome":"TRANSITION",
+   "lat":11,"lng":-10.9,"color":"#f97316",
+   "who":"CMRD Special Forces (Mamadi Doumbouya) ousted President Alpha Conde",
+   "driver":"Conde\'s unconstitutional third term, corruption, ethnic tension",
+   "aftermath":"Military junta in power. Transition timeline disputed. AU/ECOWAS pressure limited.",
+   "significance":"Resource-rich state (bauxite/iron) with Russian mining interest post-coup."},
+  {"country":"Bolivia","iso":"BO","date":"Jun 2024","status":"ATTEMPTED","outcome":"FAILED",
+   "lat":-17,"lng":-65,"color":"#eab308",
+   "who":"Gen. Juan Jose Zuniga armored column assaulted Plaza Murillo (presidential palace)",
+   "driver":"Internal military faction. Disputed motives (anti-Arce, pro-Morales, or staged).",
+   "aftermath":"Zuniga arrested within hours. Arce government survived. Military restructured.",
+   "significance":"First attempted coup in Bolivia since 1980. Demonstrated military restiveness."},
+  {"country":"Pakistan","iso":"PK","date":"2022-ongoing","status":"POLITICAL CRISIS","outcome":"CIVIL-MILITARY TENSION",
+   "lat":33.6,"lng":73.1,"color":"#eab308",
+   "who":"Military (ISI/COAS) engineered Imran Khan\'s removal via no-confidence vote. Khan arrested 2023.",
+   "driver":"Khan-military falling out. Anti-corruption rhetoric targeting army. Military preference for Shehbaz Sharif.",
+   "aftermath":"Khan convicted, in prison. Sharif PM. 2024 elections disputed — PTI supporters barred.",
+   "significance":"Nuclear-armed state with destabilized civil-military relationship. Army remains true power."},
+  {"country":"Venezuela","iso":"VE","date":"2024-ongoing","status":"POST-ELECTION CRISIS","outcome":"CONTESTED",
+   "lat":10,"lng":-66,"color":"#eab308",
+   "who":"Maduro declared winner Jul 2024. Opposition candidate Edmundo Gonzalez claimed victory.",
+   "driver":"Maduro vs opposition. CNE refused to release tally sheets. Widespread fraud alleged.",
+   "aftermath":"Massive protests. Hundreds arrested. Gonzalez in exile (Spain). US rejected Maduro win.",
+   "significance":"Maduro solidifying power with military loyalty payments. PDVSA oil as loyalty mechanism."}
+];
+
+const COUP_RISK_COUNTRIES = [
+  {"country":"Ethiopia","iso":"ET","risk":"HIGH","factors":["Tigray war aftermath","Amhara conflict ongoing","Oromo insurgency","Federal military loyalty uncertain"],"lat":9,"lng":40},
+  {"country":"Mali","iso":"ML","risk":"ELEVATED","factors":["JNIM territorial control","Wagner/Africa Corps instability","Junta legitimacy declining"],"lat":17,"lng":-4},
+  {"country":"Senegal","iso":"SN","risk":"ELEVATED","factors":["Post-election transition, new president Faye","Military loyalty being tested","Sahel contagion pressure"],"lat":14,"lng":-14},
+  {"country":"DRC","iso":"CD","risk":"HIGH","factors":["M23/Rwanda war","Tshisekedi vs military","Kabila loyalists","Resource wealth driver"],"lat":-4,"lng":22},
+  {"country":"Haiti","iso":"HT","risk":"CRITICAL","factors":["Gang control of 90% of Port-au-Prince","No functioning government","CARICOM transition council failing","Kenya MSS mission struggling"],"lat":18.5,"lng":-72},
+  {"country":"Lebanon","iso":"LB","risk":"ELEVATED","factors":["2-year presidential vacancy ended 2024","Hezbollah degraded — power vacuum","Economic collapse","Syrian refugee burden"],"lat":33.9,"lng":35.5}
+];
+
+var _coupHotspots=[];
+
+function openCoupWatch(){
+  var ov=document.getElementById('coupwatch-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _renderCoupList();
+  _renderCoupRisk();
+  _fetchCoupGdelt();
+  // Add globe hotspots
+  _coupHotspots=[];
+  RECENT_COUPS.forEach(function(c){
+    _coupHotspots.push({lat:c.lat,lng:c.lng,label:c.country+' coup '+c.date,color:c.color,_coup:true,size:6});
+  });
+  COUP_RISK_COUNTRIES.forEach(function(c){
+    var col=c.risk==='CRITICAL'?'#dc2626':c.risk==='HIGH'?'#f97316':'#eab308';
+    _coupHotspots.push({lat:c.lat,lng:c.lng,label:c.country+' RISK:'+c.risk,color:col,_coup:true,size:5});
+  });
+  if(typeof liveHotspots!=='undefined'){
+    _coupHotspots.forEach(function(h){liveHotspots.push(h);});
+  }
+}
+
+function closeCoupWatch(){
+  var ov=document.getElementById('coupwatch-overlay');
+  if(ov)ov.style.display='none';
+  if(typeof liveHotspots!=='undefined'){
+    liveHotspots=liveHotspots.filter(function(h){return !h._coup;});
+  }
+  _coupHotspots=[];
+}
+
+function _renderCoupList(){
+  var el=document.getElementById('coup-list');
+  if(!el)return;
+  var outcomeClass={
+    'SUCCEEDED':'coup-succeeded',
+    'FAILED':'coup-failed',
+    'ONGOING CONFLICT':'coup-conflict',
+    'COLLAPSED INTO CIVIL WAR':'coup-conflict',
+    'TRANSITION':'coup-transition',
+    'CONTESTED':'coup-contested',
+    'CIVIL-MILITARY TENSION':'coup-crisis'
+  };
+  el.innerHTML=RECENT_COUPS.map(function(c){
+    var cls=outcomeClass[c.outcome]||'coup-crisis';
+    return '<div class="coup-card" style="border-left-color:'+c.color+';">'
+      +'<div class="coup-card-header">'
+      +'<div><div class="coup-country">'+c.country+'</div>'
+      +'<div class="coup-date">'+c.date+' &nbsp;&bull;&nbsp; '+c.status+'</div></div>'
+      +'<div class="coup-badge '+cls+'">'+c.outcome+'</div>'
+      +'</div>'
+      +'<div class="coup-section">Actors</div>'
+      +'<div class="coup-who">'+c.who+'</div>'
+      +'<div class="coup-section">Drivers</div>'
+      +'<div class="coup-driver">'+c.driver+'</div>'
+      +'<div class="coup-section">Aftermath</div>'
+      +'<div class="coup-aftermath">'+c.aftermath+'</div>'
+      +'<div class="coup-section">Strategic Significance</div>'
+      +'<div class="coup-significance">'+c.significance+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function _renderCoupRisk(){
+  var el=document.getElementById('coup-risk-list');
+  if(!el)return;
+  el.innerHTML=COUP_RISK_COUNTRIES.map(function(c){
+    var cls='coup-risk-'+c.risk.toLowerCase();
+    return '<div class="coup-risk-card">'
+      +'<div class="coup-risk-header">'
+      +'<div class="coup-risk-country">'+c.country+'</div>'
+      +'<div class="coup-risk-badge '+cls+'">'+c.risk+'</div>'
+      +'</div>'
+      +'<div class="coup-risk-factors">'+c.factors.map(function(f){return '<span class="coup-factor-chip">'+f+'</span>';}).join('')+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+async function _fetchCoupGdelt(){
+  var el=document.getElementById('coup-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live coup intelligence feed...</div>';
+  try{
+    var q=encodeURIComponent('coup attempt government overthrow military junta instability');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="coup-gdelt-item"><div class="coup-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="coup-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== GPC SCORECARD =====
+
+const GPC_DIMENSIONS = [
+  {"dimension":"Military Power","icon":"[MIL]","scores":{"USA":95,"China":72,"Russia":68,"EU":45},
+   "leader":"USA","notes":{"USA":"World\'s most capable military. Unmatched power projection. 11 carrier groups.","China":"A2/AD dominance in Pacific. Hypersonic lead. Largest navy by hulls.","Russia":"Nuclear parity. Ukraine war exposed conventional limits.","EU":"NATO-dependent. Germany rearmament underway."}},
+  {"dimension":"Economic Power","icon":"[ECO]","scores":{"USA":88,"China":82,"Russia":28,"EU":85},
+   "leader":"USA (marginally)","notes":{"USA":"$28T GDP. Dollar reserve currency. Financial system dominance.","China":"$18T GDP (official). Manufacturing dominance. Fastest growing middle power base.","Russia":"$2.2T GDP. War economy. Sanctions degrading.","EU":"$19T combined. But fragmented."}},
+  {"dimension":"Technology Leadership","icon":"[TECH]","scores":{"USA":90,"China":75,"Russia":45,"EU":65},
+   "leader":"USA","notes":{"USA":"AI frontier, semiconductor design, space, biotech leadership.","China":"Closing gap. Quantum, hypersonic, 5G manufacturing leadership.","Russia":"Legacy cyber capability. Technology imports cut by sanctions.","EU":"ASML EUV monopoly. Pharmaceutical. Automotive."}},
+  {"dimension":"Intelligence Capability","icon":"[INTEL]","scores":{"USA":95,"China":80,"Russia":78,"EU":40},
+   "leader":"USA","notes":{"USA":"Five Eyes, NSA SIGINT dominance, CIA global HUMINT.","China":"MSS largest intelligence org by personnel. Economic espionage unmatched.","Russia":"SVR/FSB/GRU sophisticated human tradecraft. Active measures.","EU":"No unified EU intelligence. National services cooperative."}},
+  {"dimension":"Nuclear Arsenal","icon":"[NUC]","scores":{"USA":92,"China":45,"Russia":95,"EU":30},
+   "leader":"Russia (quantity) / USA (capability)","notes":{"USA":"5,550 warheads. Triad. Allies under nuclear umbrella.","China":"~500, rapidly expanding to 1,000+.","Russia":"5,889 warheads. Largest arsenal. Tactical advantage.","EU":"France 290, UK 225. NATO sharing."}},
+  {"dimension":"Soft Power / Diplomacy","icon":"[SOFT]","scores":{"USA":80,"China":55,"Russia":35,"EU":75},
+   "leader":"USA","notes":{"USA":"Alliances (NATO, QUAD, AUKUS). Dollar. Hollywood. Universities.","China":"BRI leverage. UN voting blocs. Economic dependency.","Russia":"Anti-Western narrative appeal. RT/Sputnik. Orthodox Church.","EU":"Normative power. Trade agreements. Development aid."}},
+  {"dimension":"Cyber Warfare","icon":"[CYBER]","scores":{"USA":93,"China":88,"Russia":85,"EU":50},
+   "leader":"USA (CYBERCOM/NSA)","notes":{"USA":"CYBERCOM + NSA. Stuxnet. Volt/Salt Typhoon detection.","China":"APT41, Volt Typhoon, Salt Typhoon — MSS/PLA.","Russia":"Sandworm, APT28 — GRU. Ukraine grid attacks. Election interference.","EU":"ENISA coordination. National CERTs. Limited offensive."}},
+  {"dimension":"Energy Security","icon":"[ENRG]","scores":{"USA":90,"China":40,"Russia":75,"EU":45},
+   "leader":"USA","notes":{"USA":"World\'s largest oil/gas producer since 2018. LNG exporter.","China":"90% oil import dependent. Largest energy consumer.","Russia":"Oil/gas weaponization tool. Revenues fund war despite sanctions.","EU":"Post-Nord Stream energy vulnerability. LNG import pivot underway."}}
+];
+
+var _gpcColors={"USA":"#3b82f6","China":"#ef4444","Russia":"#f59e0b","EU":"#22c55e"};
+var _gpcCountries=["USA","China","Russia","EU"];
+
+function openGPC(){
+  var ov=document.getElementById('gpc-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _renderGPCComposite();
+  _renderGPCDimensions();
+  _fetchGPCGdelt();
+}
+
+function closeGPC(){
+  var ov=document.getElementById('gpc-overlay');
+  if(ov)ov.style.display='none';
+}
+
+function _renderGPCComposite(){
+  var el=document.getElementById('gpc-composite-box');
+  if(!el)return;
+  // Compute composite averages
+  var totals={"USA":0,"China":0,"Russia":0,"EU":0};
+  GPC_DIMENSIONS.forEach(function(d){
+    _gpcCountries.forEach(function(c){totals[c]+=d.scores[c];});
+  });
+  var n=GPC_DIMENSIONS.length;
+  var ranked=_gpcCountries.map(function(c){return {c:c,avg:Math.round(totals[c]/n)};})
+    .sort(function(a,b){return b.avg-a.avg;});
+  var medals=['#FFD700','#C0C0C0','#CD7F32','#64748b'];
+  var html='<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:6px;padding:14px;margin-bottom:16px;">'
+    +'<div style="font-size:8px;letter-spacing:.25em;color:#06b6d4;font-weight:700;margin-bottom:12px;">COMPOSITE POWER RANKING (AVERAGE ACROSS ALL DIMENSIONS)</div>'
+    +'<table class="gpc-composite-table"><thead><tr>'
+    +'<th>RANK</th><th>POWER</th><th>COMPOSITE SCORE</th><th>RELATIVE STRENGTH</th>'
+    +'</tr></thead><tbody>';
+  ranked.forEach(function(row,i){
+    var pct=row.avg;
+    html+='<tr>'
+      +'<td class="gpc-rank-cell" style="color:'+medals[i]+';">'+(i+1)+'</td>'
+      +'<td style="color:'+_gpcColors[row.c]+';font-weight:700;letter-spacing:.5px;">'+row.c+'</td>'
+      +'<td style="font-weight:700;color:#e2e8f0;">'+pct+' <span style="font-size:8px;color:#64748b;">/ 100</span></td>'
+      +'<td><div style="background:rgba(30,41,59,.8);border-radius:3px;height:7px;width:100%;max-width:200px;">'
+      +'<div style="background:'+_gpcColors[row.c]+';height:100%;border-radius:3px;width:'+pct+'%;"></div></div></td>'
+      +'</tr>';
+  });
+  html+='</tbody></table></div>';
+  el.innerHTML=html;
+}
+
+function _renderGPCDimensions(){
+  var el=document.getElementById('gpc-dim-list');
+  if(!el)return;
+  el.innerHTML=GPC_DIMENSIONS.map(function(d){
+    var barRows=_gpcCountries.map(function(c){
+      var s=d.scores[c];
+      return '<div class="gpc-bar-row">'
+        +'<div class="gpc-bar-label" style="color:'+_gpcColors[c]+';">'+c+'</div>'
+        +'<div class="gpc-bar-track"><div class="gpc-bar-fill" style="width:'+s+'%;background:'+_gpcColors[c]+';"></div></div>'
+        +'<div class="gpc-bar-score" style="color:'+_gpcColors[c]+';">'+s+'</div>'
+        +'</div>'
+        +'<div class="gpc-note">'+d.notes[c]+'</div>';
+    }).join('');
+    return '<div class="gpc-dim-card">'
+      +'<div class="gpc-dim-header">'
+      +'<div class="gpc-dim-title">'+d.icon+' '+d.dimension+'</div>'
+      +'<div class="gpc-dim-leader">LEADER: '+d.leader+'</div>'
+      +'</div>'
+      +barRows
+      +'</div>';
+  }).join('');
+}
+
+async function _fetchGPCGdelt(){
+  var el=document.getElementById('gpc-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live great power competition feed...</div>';
+  try{
+    var q=encodeURIComponent('US China Russia great power competition geopolitics');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="gpc-gdelt-item"><div class="gpc-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#67e8f9;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="gpc-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== INTEL FAILURES DATABASE =====
+
+const INTEL_FAILURES = [
+  {"name":"Pearl Harbor","date":"Dec 7, 1941","agency":"US Military Intelligence / ONI","country":"USA","failure":"STRATEGIC WARNING","severity":"CATASTROPHIC","color":"#ef4444",
+   "what":"Japan attacked Pearl Harbor. US had broken Japanese codes (MAGIC) but failed to synthesize warning signals into actionable warning.",
+   "rootCause":["Intelligence-to-command disconnect","Watch officer failures","Assumption Japan would not attack US territory directly","Radar operators dismissed B-17 interpretation","Organizational silos between Army/Navy intel"],
+   "result":"2,403 killed. Pacific Fleet crippled. Drew US into WWII.",
+   "reform":"Investigations led to creation of CIA (1947) and modern IC coordination."},
+  {"name":"9/11 Attacks","date":"Sep 11, 2001","agency":"CIA / FBI / NSA","country":"USA","failure":"TACTICAL WARNING MISSED","severity":"CATASTROPHIC","color":"#ef4444",
+   "what":"Al-Qaeda hijacked 4 aircraft, killed 2,977 people. CIA had tactical indicators but failed to share with FBI. NSA had intercepts not translated in time. FBI field offices couldn\'t get HQ attention on Moussaoui.",
+   "rootCause":["Wall between CIA and FBI (FISA law interpretation)","Institutional failures at CIA CTC","Two hijackers (Hazmi/Mihdhar) in US — CIA failed to watch-list","Aug 6 PDB Bin Laden determined to strike in US not acted upon","Imagination failure — inside US aircraft attack not conceived"],
+   "result":"2,977 killed. $3T+ wars in Afghanistan/Iraq. PATRIOT Act. IC restructuring.",
+   "reform":"9/11 Commission. IRTPA 2004 creating DNI. NCTC. Information sharing reforms."},
+  {"name":"Iraq WMD Failure","date":"2002-2003","agency":"CIA / DIA / British JIC","country":"USA/UK","failure":"ANALYTICAL FAILURE","severity":"CATASTROPHIC","color":"#ef4444",
+   "what":"Intelligence community assessed Iraq had active WMD programs. Assessment was wrong. No WMD found after invasion. Curveball (fabricated source), Aluminum tubes, Mobile labs — all false.",
+   "rootCause":["Politicization of intelligence (Cheney/Feith pressure)","HUMINT gap — no penetration of Iraqi programs","Curveball — single unreliable source used by DIA/BND","Groupthink — no devil\'s advocate","Mirror-imaging — assumed Saddam rational deterrer"],
+   "result":"Iraq War. 4,500+ US KIA. 600,000+ Iraqi dead. $2T cost. ISIS emergence. Catastrophic IC credibility loss.",
+   "reform":"WMD Commission. Alternative analysis units. Source validation reforms."},
+  {"name":"Yom Kippur War (October War)","date":"Oct 6, 1973","agency":"Aman (Israeli MI) / CIA","country":"Israel/USA","failure":"CONCEPTUAL FAILURE","severity":"CRITICAL","color":"#f97316",
+   "what":"Egypt and Syria launched simultaneous surprise attack on Israel. Aman had extensive indicators but dismissed them based on the Concept — that Egypt would not attack without air superiority.",
+   "rootCause":["HaKonzeptsia — fixed belief Egypt wouldn\'t attack without air parity","Indicators dismissed to fit preconception","Single point of failure — all analysis filtered through one conceptual framework","Source (King Hussein warning, Queen of Spades indicator) not elevated"],
+   "result":"2,656 Israeli KIA. Near-nuclear crisis. Oil embargo. Changed Middle East.",
+   "reform":"Israeli intelligence reorganization. Concept of devil\'s advocate institutionalized (Ipcha Mistabra)."},
+  {"name":"Soviet Collapse (CIA missed)","date":"1989-1991","agency":"CIA","country":"USA","failure":"STRATEGIC SURPRISE","severity":"HIGH","color":"#f97316",
+   "what":"CIA significantly overestimated Soviet economic strength and political stability. Did not predict or warn of Soviet collapse with sufficient precision.",
+   "rootCause":["Soviet economic statistics accepted at face value","Focus on military capabilities vs political/economic fundamentals","HUMINT insufficient in Soviet political circles","Bureaucratic incentive to maintain large threat (budget justification)"],
+   "result":"Strategic surprise. No transition plan. Contributed to chaos of Soviet dissolution.",
+   "reform":"Economic intelligence prioritized. Expanded political intelligence assessment."},
+  {"name":"India Nuclear Tests (Operation Shakti)","date":"May 1998","agency":"CIA / DIA","country":"USA","failure":"COLLECTION FAILURE","severity":"HIGH","color":"#f97316",
+   "what":"India conducted 5 nuclear tests. CIA had satellites but did not detect preparations. India deceived US overhead imagery through careful test site management.",
+   "rootCause":["India used satellite pass schedules (leaked in open sources) to hide activity","Analysts didn\'t recognize deception indicators","Over-reliance on IMINT without HUMINT confirmation","Warning dismissed after BJP election — politics colored analysis"],
+   "result":"Clinton administration blindsided. Sanctions imposed. India-US relations damaged.",
+   "reform":"MASINT capability expansion. Deception analysis doctrine."},
+  {"name":"Tet Offensive","date":"Jan 30, 1968","agency":"US Military Intelligence / CIA","country":"USA","failure":"POLITICAL-MILITARY DISCONNECT","severity":"CRITICAL","color":"#f97316",
+   "what":"Viet Cong launched simultaneous attacks on 100+ cities including US Embassy Saigon. US had tactical indicators but strategic optimism (light at end of tunnel narrative) suppressed warning.",
+   "rootCause":["Politicization — MACV body count metrics created false optimism","Tactical indicators dismissed as diversionary","HUMINT penetration failures in Viet Cong networks","Intelligence-consumer conflict — LBJ didn\'t want bad news"],
+   "result":"Military tactical victory but political catastrophe. Eroded public support for Vietnam War.",
+   "reform":"Lessons: intelligence must be able to speak truth to power. Analysis independent of policy."}
+];
+
+var _INTEL_BIASES=[
+  {"name":"Groupthink","desc":"When all analysts converge on same conclusion without challenge. Dissent suppressed. Iraq WMD, 9/11."},
+  {"name":"Mirror-imaging","desc":"Assuming adversaries think/act like we do. Assuming Saddam was rational deterrer (Iraq WMD). Assuming Japan wouldn\'t attack US soil (Pearl Harbor)."},
+  {"name":"Politicization","desc":"When intelligence shaped by desired policy outcome. Cheney pressure on CIA. LBJ suppressing Vietnam pessimism. Tet Offensive."},
+  {"name":"Layering / Stovepiping","desc":"Intelligence siloed between agencies. CIA-FBI wall pre-9/11. Army-Navy disconnect at Pearl Harbor. 9/11."},
+  {"name":"Anchoring","desc":"Over-weighting initial assessments. New data filtered through existing belief. HaKonzeptsia in Yom Kippur War."},
+  {"name":"Collection Bias","desc":"Over-reliance on single-source collection (SIGINT vs HUMINT). India nuclear test — satellite-only. Iraq — single HUMINT source (Curveball)."}
+];
+
+function openIntelFail(){
+  var ov=document.getElementById('intelfail-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _renderIntelFailStats();
+  _renderIntelFailBiases();
+  _renderIntelFailList();
+  _fetchIntelFailGdelt();
+}
+
+function closeIntelFail(){
+  var ov=document.getElementById('intelfail-overlay');
+  if(ov)ov.style.display='none';
+}
+
+function _renderIntelFailStats(){
+  var el=document.getElementById('ifail-stats-area');
+  if(!el)return;
+  var n=INTEL_FAILURES.length;
+  var cats=INTEL_FAILURES.reduce(function(acc,f){acc[f.failure]=(acc[f.failure]||0)+1;return acc;},{});
+  var catStr=Object.keys(cats).map(function(k){return k+' ('+cats[k]+')';}).join(' &bull; ');
+  el.innerHTML='<div class="ifail-stats-box">'
+    +'<div class="ifail-stat"><div class="ifail-stat-num">'+n+'</div><div class="ifail-stat-label">DOCUMENTED CASES</div></div>'
+    +'<div class="ifail-stat"><div class="ifail-stat-num">3</div><div class="ifail-stat-label">CATASTROPHIC</div></div>'
+    +'<div class="ifail-stat"><div class="ifail-stat-num">2</div><div class="ifail-stat-label">CRITICAL</div></div>'
+    +'<div class="ifail-stat"><div class="ifail-stat-num">2</div><div class="ifail-stat-label">HIGH SEVERITY</div></div>'
+    +'<div style="flex:1;min-width:200px;"><div style="font-size:8px;color:#64748b;letter-spacing:.15em;margin-bottom:6px;">FAILURE TYPES</div>'
+    +'<div style="font-size:8px;color:#94a3b8;line-height:1.8;">'+catStr+'</div></div>'
+    +'</div>';
+}
+
+function _renderIntelFailBiases(){
+  var el=document.getElementById('ifail-bias-area');
+  if(!el)return;
+  var rows=_INTEL_BIASES.map(function(b){
+    return '<div class="ifail-bias-row">'
+      +'<div class="ifail-bias-name">'+b.name+'</div>'
+      +'<div class="ifail-bias-desc">'+b.desc+'</div>'
+      +'</div>';
+  }).join('');
+  el.innerHTML='<div class="ifail-bias-box">'
+    +'<div class="ifail-bias-title">RECURRING COGNITIVE FAILURES ACROSS INTELLIGENCE HISTORY</div>'
+    +rows
+    +'</div>';
+}
+
+function _renderIntelFailList(){
+  var el=document.getElementById('ifail-list');
+  if(!el)return;
+  el.innerHTML=INTEL_FAILURES.map(function(f){
+    var sevClass='ifail-sev-'+f.severity.toLowerCase();
+    return '<div class="ifail-card" style="border-left-color:'+f.color+';">'
+      +'<div class="ifail-card-header">'
+      +'<div><div class="ifail-name">'+f.name+'</div>'
+      +'<div class="ifail-meta">'+f.date+' &nbsp;&bull;&nbsp; '+f.agency+' &nbsp;&bull;&nbsp; '+f.failure+'</div></div>'
+      +'<div class="ifail-sev-badge '+sevClass+'">'+f.severity+'</div>'
+      +'</div>'
+      +'<div class="ifail-section">What Happened</div>'
+      +'<div class="ifail-what">'+f.what+'</div>'
+      +'<div class="ifail-section">Root Causes</div>'
+      +'<div class="ifail-causes">'+f.rootCause.map(function(rc){return '<span class="ifail-cause-chip">'+rc+'</span>';}).join('')+'</div>'
+      +'<div class="ifail-section">Result</div>'
+      +'<div class="ifail-result">'+f.result+'</div>'
+      +'<div class="ifail-section">Reforms / Lessons</div>'
+      +'<div class="ifail-reform">'+f.reform+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+async function _fetchIntelFailGdelt(){
+  var el=document.getElementById('ifail-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live intelligence feed...</div>';
+  try{
+    var q=encodeURIComponent('intelligence failure warning missed surprise attack');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=7d&sort=DateDesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="ifail-gdelt-item"><div class="ifail-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="ifail-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 31 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -22458,6 +22951,9 @@ function filterSIGINT(query){
 <button id="laws-btn" onclick="openLAWS()">AUTO WEAPONS</button>
 <button id="bioweapons-btn" onclick="openBioweapons()">BIO INTEL</button>
 <button id="closecalls-btn" onclick="openCloseCall()">CLOSE CALLS</button>
+<button id="coupwatch-btn" onclick="openCoupWatch()">COUP WATCH</button>
+<button id="gpc-btn" onclick="openGPC()">POWER SCORE</button>
+<button id="intelfail-btn" onclick="openIntelFail()">INTEL FAILURES</button>
 
 <!-- LAWS OVERLAY -->
 <div id="laws-overlay">
@@ -22505,6 +23001,52 @@ function filterSIGINT(query){
   <div id="closecalls-risk-box" style="margin-bottom:16px;"></div>
   <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE NUCLEAR RISK INTELLIGENCE FEED</div>
   <div id="closecalls-gdelt-feed"></div>
+</div>
+<!-- COUP WATCH OVERLAY -->
+<div id="coupwatch-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#ef4444;">GLOBAL COUP &amp; GOVERNMENT INSTABILITY WATCH</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">RECENT COUPS &bull; FAILED ATTEMPTS &bull; HIGH-RISK STATES</div>
+    </div>
+    <button onclick="closeCoupWatch()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="coup-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">COUP RISK WATCH — HIGH PROBABILITY STATES</div>
+  <div id="coup-risk-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE COUP &amp; INSTABILITY INTELLIGENCE FEED</div>
+  <div id="coup-gdelt-feed"></div>
+</div>
+
+<!-- GREAT POWER COMPETITION SCORECARD OVERLAY -->
+<div id="gpc-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#06b6d4;">GREAT POWER COMPETITION SCORECARD</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">USA &bull; CHINA &bull; RUSSIA &bull; EU &mdash; MULTI-DIMENSIONAL POWER ASSESSMENT</div>
+    </div>
+    <button onclick="closeGPC()" style="background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.3);color:#67e8f9;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="gpc-composite-box" style="margin-bottom:20px;"></div>
+  <div id="gpc-dim-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#06b6d4;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE GREAT POWER COMPETITION INTELLIGENCE FEED</div>
+  <div id="gpc-gdelt-feed"></div>
+</div>
+
+<!-- INTEL FAILURES DATABASE OVERLAY -->
+<div id="intelfail-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#a855f7;">FAMOUS INTELLIGENCE FAILURES DATABASE</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">STRATEGIC SURPRISES &bull; ANALYTICAL FAILURES &bull; WARNING MISSED &mdash; DECLASSIFIED &amp; DOCUMENTED</div>
+    </div>
+    <button onclick="closeIntelFail()" style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);color:#d8b4fe;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="ifail-stats-area" style="margin-bottom:20px;"></div>
+  <div id="ifail-bias-area" style="margin-bottom:20px;"></div>
+  <div id="ifail-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#a855f7;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE INTELLIGENCE FAILURE &amp; SURPRISE ATTACK FEED</div>
+  <div id="ifail-gdelt-feed"></div>
 </div>
 </body>
 </html>
