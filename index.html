@@ -2831,6 +2831,84 @@ button{border-radius:2px!important}
 .cm-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .cm-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .cm-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === COLUMN 9 new buttons (top:295px, 335px, 375px) === */
+#protests-btn{position:fixed;top:295px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#protests-btn:hover{border-color:#f97316;color:#fdba74;}
+#stratinv-btn{position:fixed;top:335px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#stratinv-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#intlaw-btn{position:fixed;top:375px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#intlaw-btn:hover{border-color:#8b5cf6;color:#d8b4fe;}
+
+/* Protest Watch overlay */
+#protests-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.pw-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.pw-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.pw-country{font-size:15px;font-weight:700;letter-spacing:1px;color:#f1f5f9;}
+.pw-name{font-size:10px;color:#94a3b8;margin-bottom:4px;font-style:italic;}
+.pw-since{font-size:8px;color:#64748b;margin-bottom:6px;}
+.pw-scale-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.pw-scale-revolution{background:rgba(20,83,45,.6);border:1px solid #22c55e;color:#86efac;}
+.pw-scale-mass{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.pw-scale-elevated{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.pw-scale-gangtakeover{background:rgba(127,29,29,.6);border:1px solid #ef4444;color:#fca5a5;}
+.pw-scale-suppressed{background:rgba(88,28,135,.4);border:1px solid #8b5cf6;color:#d8b4fe;}
+.pw-scale-periodic{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.pw-status{font-size:8px;color:#60a5fa;font-weight:700;margin-bottom:6px;}
+.pw-driver{font-size:9px;color:#fbbf24;line-height:1.5;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;margin-bottom:7px;font-style:italic;}
+.pw-detail{font-size:9px;color:#94a3b8;line-height:1.6;margin-bottom:6px;}
+.pw-geo{font-size:9px;color:#93c5fd;line-height:1.5;border-left:3px solid rgba(59,130,246,.35);padding-left:8px;margin-bottom:6px;}
+.pw-outcome{font-size:9px;color:#86efac;line-height:1.5;margin-top:4px;font-weight:700;}
+.pw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.pw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.pw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Strategic Investment overlay */
+#stratinv-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.si-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.si-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.si-name{font-size:14px;font-weight:700;letter-spacing:1px;color:#f1f5f9;}
+.si-country{font-size:9px;color:#64748b;letter-spacing:1px;margin-bottom:4px;}
+.si-risk-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.si-risk-critical{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.si-risk-high{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.si-amount{font-size:9px;color:#fbbf24;font-weight:700;margin-bottom:4px;}
+.si-sector{font-size:8px;color:#60a5fa;margin-bottom:4px;}
+.si-status{font-size:8px;color:#94a3b8;margin-bottom:6px;}
+.si-detail{font-size:9px;color:#cbd5e1;line-height:1.6;margin-bottom:6px;}
+.si-strategic{font-size:9px;color:#f87171;line-height:1.5;border-left:3px solid rgba(239,68,68,.4);padding-left:8px;margin-top:4px;font-style:italic;}
+.si-year{font-size:7px;padding:1px 6px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.25);color:#60a5fa;border-radius:3px;}
+.si-bri-panel{background:rgba(15,23,42,0.5);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:14px;margin-bottom:14px;}
+.si-counter-panel{background:rgba(20,83,45,0.15);border:1px solid rgba(34,197,94,.2);border-radius:6px;padding:14px;margin-bottom:14px;}
+.si-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.si-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.si-gdelt-meta{font-size:8px;color:#475569;}
+
+/* International Law overlay */
+#intlaw-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.il-veto-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:14px;}
+.il-veto-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#64748b;letter-spacing:1px;border-bottom:1px solid #1e293b;}
+.il-veto-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;line-height:1.5;}
+.il-veto-vetoed{color:#fca5a5;}
+.il-violation-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.il-violation-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.il-violation-name{font-size:13px;font-weight:700;letter-spacing:.5px;color:#f1f5f9;}
+.il-law{font-size:8px;color:#60a5fa;margin-bottom:4px;font-style:italic;}
+.il-status-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.il-stat-ongoing{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.il-stat-icj{background:rgba(88,28,135,.4);border:1px solid #8b5cf6;color:#d8b4fe;}
+.il-stat-blocked{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.il-stat-unresolved{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.il-violator{font-size:9px;color:#f87171;font-weight:700;margin-bottom:4px;}
+.il-detail{font-size:9px;color:#94a3b8;line-height:1.6;margin-bottom:6px;}
+.il-accountability{font-size:9px;color:#86efac;line-height:1.5;border-left:3px solid rgba(34,197,94,.35);padding-left:8px;}
+.il-icj-card{background:rgba(88,28,135,0.1);border:1px solid rgba(139,92,246,.25);border-radius:4px;padding:10px 14px;margin-bottom:8px;}
+.il-icj-case{font-size:10px;font-weight:700;color:#c4b5fd;margin-bottom:3px;}
+.il-icj-meta{font-size:8px;color:#94a3b8;margin-bottom:2px;}
+.il-icj-ruling{font-size:8px;color:#a78bfa;line-height:1.5;font-style:italic;}
+.il-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.il-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.il-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -23817,6 +23895,357 @@ async function fetchConfMinGDELT(){
 
 // ===== END PHASE 37 =====
 
+// ===== PHASE 38: Protest Analytics, Strategic Investment, International Law =====
+
+const ACTIVE_PROTESTS = [
+  {"country":"Serbia","iso":"RS","lat":44.8,"lng":20.5,"color":"#f97316","scale":"MASS","status":"ACTIVE",
+   "name":"Anti-Vucic / Anti-Corruption Uprising","since":"Nov 2024","driver":"Novi Sad train station roof collapse (15 killed) — blamed on government corruption",
+   "detail":"Largest protests in Serbia in 25 years. Students leading Serbia against violence movement. University blockades. Vucic government response: counter-protests, media intimidation, police monitoring.",
+   "geopolitical":"Protests challenge Vucic\'s balancing act between EU and Russia. Opposition linked to EU integration. Russian state media portraying as foreign destabilization.",
+   "outcome":"Ongoing — no resolution. Vucic government under significant pressure."},
+  {"country":"Pakistan","iso":"PK","lat":33.7,"lng":73.1,"color":"#ef4444","scale":"MASS","status":"ACTIVE",
+   "name":"PTI / Imran Khan Release Protests","since":"2023-ongoing","driver":"Imran Khan imprisonment. Disputed 2024 election results. Military crackdown.",
+   "detail":"PTI supporters conducting periodic mass rallies. August 2023 crackdown killed 8+. Internet shutdowns routine. Khan in prison — supporters demand release.",
+   "geopolitical":"Civil-military tension in nuclear state. ISI vs PTI power struggle. US watching closely.",
+   "outcome":"Khan imprisoned. PTI outlawed as terrorist organization. Protests continue under repression."},
+  {"country":"Venezuela","iso":"VE","lat":10.5,"lng":-66.9,"color":"#ef4444","scale":"ELEVATED","status":"ONGOING",
+   "name":"Post-Election Protests","since":"Jul 2024","driver":"Maduro declared winner despite opposition winning per tally sheets",
+   "detail":"Nationwide protests July-August 2024. 27 killed by security forces. 2,400+ arrested. Maduro crackdown using colectivos (armed gangs). International condemnation.",
+   "geopolitical":"Regional split — US/EU/most LatAm reject Maduro win. Cuba/Russia/China support. Gonzalez in exile.",
+   "outcome":"Protests suppressed by force. Maduro consolidated. Gonzalez recognized by US as president-elect."},
+  {"country":"Georgia","iso":"GE","lat":41.7,"lng":44.8,"color":"#f97316","scale":"MASS","status":"ACTIVE",
+   "name":"Pro-EU / Anti-Georgian Dream","since":"Nov 2024","driver":"Georgian Dream suspended EU accession negotiations through 2028",
+   "detail":"Massive protests outside parliament Georgian Dream HQ. Tear gas, water cannon. EU and NATO flags. Students and civil society. Suspected Russian-influenced party in power.",
+   "geopolitical":"Direct East-West battle for Georgian alignment. Russia beneficiary if Georgian Dream wins. EU enlargement affected.",
+   "outcome":"Ongoing. President Zourabichvili supports protesters. Georgian Dream entrenched."},
+  {"country":"Bangladesh","iso":"BD","lat":23.7,"lng":90.4,"color":"#22c55e","scale":"REVOLUTION","status":"RESOLVED — NEW GOVERNMENT",
+   "name":"Student Anti-Quota Revolution","since":"Jul 2024","driver":"Student protests against civil service quotas evolved into anti-Hasina uprising",
+   "detail":"300+ students killed in July crackdown. General strike. Sheikh Hasina fled to India August 5 2024. Muhammad Yunus named interim leader. Hasina\'s 15-year rule ended.",
+   "geopolitical":"India lost key ally. China and Pakistan welcomed change. Hasina in exile in India. Yunus pro-Western.",
+   "outcome":"SUCCEEDED — regime change. Hasina in exile. New interim government under Yunus."},
+  {"country":"Iran","iso":"IR","lat":35.7,"lng":51.4,"color":"#8b5cf6","scale":"SUPPRESSED","status":"SUBDUED — MONITORING",
+   "name":"Woman Life Freedom Movement","since":"Sep 2022","driver":"Mahsa Amini killed in morality police custody",
+   "detail":"Largest protests since 1979 revolution. 500+ killed, 19,000+ arrested. Executions of protesters. Movement globally spread. Iranian diaspora mobilized worldwide.",
+   "geopolitical":"Severe legitimacy crisis for Islamic Republic. IRGC brutally suppressed. US/EU sanctions on morality police.",
+   "outcome":"Suppressed by force. But Women Life Freedom changed Iranian society — morality police enforcement reduced."},
+  {"country":"Haiti","iso":"HT","lat":18.5,"lng":-72.3,"color":"#ef4444","scale":"GANG TAKEOVER","status":"CIVIL COLLAPSE",
+   "name":"Gang Insurrection / State Collapse","since":"Mar 2024","driver":"G9 + Viv Ansanm gang coalition seized 90% of Port-au-Prince",
+   "detail":"Not traditional protests — armed gang insurrection. Ariel Henry government collapsed. Henry resigned. Council presidium installed. Kenya multinational MSS deployed but struggling.",
+   "geopolitical":"State failure in CARICOM nation 90 miles from USA. China/Russia blocking stronger UN response.",
+   "outcome":"Ongoing state collapse. MSS deployed but outgunned. No elections possible."},
+  {"country":"France","iso":"FR","lat":48.9,"lng":2.3,"color":"#eab308","scale":"PERIODIC","status":"LATENT — MONITORING",
+   "name":"Cost of Living / Far-Right Surge","since":"2023-ongoing","driver":"Inflation, immigration, political polarization. Yellow Vest legacy.",
+   "detail":"France in political crisis with hung parliament since Jul 2024 snap elections. Barnier government collapsed Dec 2024. Macron weakened. RN surging. Periodic strikes and protests.",
+   "geopolitical":"French political instability affects EU leadership, Ukraine support, NATO cohesion.",
+   "outcome":"Ongoing political fragmentation. Macron term ends 2027. Country ungovernable in current parliament."}
+];
+
+const CHINA_STRATEGIC_INVESTMENTS = [
+  {"name":"Hambantota Port","country":"Sri Lanka","iso":"LK","lat":6.1,"lng":81.1,"color":"#ef4444","risk":"CRITICAL",
+   "amount":"$1.1B loan → 70-year lease","sector":"Port / Maritime","status":"Chinese-operated (99-year lease)",
+   "detail":"Sri Lanka couldn\'t repay Chinese loan for Hambantota Port. China received 70-99 year lease on port in 2017. Located near Indian Ocean shipping lanes. India views as string of pearls encirclement.",
+   "strategic":"China now has port access in South Asia. Naval facility use possible under lease terms.","year":2017},
+  {"name":"Gwadar Port","country":"Pakistan","iso":"PK","lat":25.1,"lng":62.3,"color":"#ef4444","risk":"HIGH",
+   "amount":"$62B (CPEC total)","sector":"Port / Infrastructure / Energy","status":"CPEC development ongoing",
+   "detail":"China Pakistan Economic Corridor (CPEC) flagship. Gwadar on Arabian Sea — potential Chinese naval base giving access to Persian Gulf/Indian Ocean bypass. PLA Navy reportedly requesting facilities.",
+   "strategic":"Breaks India\'s strategic encirclement. Direct access to Arabian Sea for China bypassing Malacca Strait.","year":2015},
+  {"name":"Piraeus Port (Greece)","country":"Greece","iso":"GR","lat":37.9,"lng":23.6,"color":"#f97316","risk":"HIGH",
+   "amount":"€600M (COSCO purchase)","sector":"Port / Maritime Gateway","status":"Chinese-owned (COSCO 67%)",
+   "detail":"COSCO (Chinese state shipping) owns 67% of Europe\'s largest port and gateway. EU intelligence concerned about data access, cargo inspection circumvention, Chinese logistics dominance in Europe.",
+   "strategic":"Anchor for BRI land routes into EU. China controls main EU Mediterranean gateway.","year":2016},
+  {"name":"African Port Network","country":"Multiple Africa","iso":"","lat":-5,"lng":25,"color":"#f97316","risk":"HIGH",
+   "amount":"$40B+ African port investments","sector":"Ports / Infrastructure","status":"Operational — multiple",
+   "detail":"China-financed/built ports: Bagamoyo (Tanzania), Mombasa (Kenya), Lamu (Kenya), Kribi (Cameroon), Nacala (Mozambique), Djibouti (military base). Cover for Chinese naval access.",
+   "strategic":"China has access to 40+ African ports. Djibouti: first overseas PLA base since 1949.","year":2017},
+  {"name":"Djibouti Military Base","country":"Djibouti","iso":"DJ","lat":11.5,"lng":43.1,"color":"#ef4444","risk":"CRITICAL",
+   "amount":"$200M+ (est)","sector":"Military Base","status":"ACTIVE PLA NAVY BASE",
+   "detail":"China\'s first overseas military base. Adjacent to US Camp Lemonnier (AFRICOM). PLA Navy logistics/support hub. Potential anti-access weapons emplacement. Laser incidents targeting US pilots at nearby airfield.",
+   "strategic":"First concrete Chinese overseas military presence. Template for global base network.","year":2017},
+  {"name":"Pacific Island Telecom/Infrastructure","country":"Pacific Islands","iso":"","lat":-10,"lng":165,"color":"#f97316","risk":"HIGH",
+   "amount":"$2B+ Pacific investments","sector":"Telecom / Infrastructure","status":"Ongoing competition with US/Australia",
+   "detail":"China offered Kiribati, Solomon Islands, Tonga, Vanuatu infrastructure deals. Solomon Islands signed CCP security agreement 2022. Huawei building Pacific cable networks with US/Australia exclusion.",
+   "strategic":"Pacific Islands US/Australia strategic denial. Chinese cable networks enable SIGINT. Forward basing potential.","year":2022},
+  {"name":"European 5G Network Infiltration","country":"EU (Multiple)","iso":"","lat":52,"lng":13,"color":"#f97316","risk":"HIGH",
+   "amount":"$200B global 5G market (Huawei 31% share)","sector":"Telecommunications","status":"Partial — EU mandating removal",
+   "detail":"Huawei 5G equipment in 170+ countries. Security concern: Chinese National Intelligence Law requires companies to support state intelligence. EU mandating removal — but 90% EU operators have Huawei gear in core.",
+   "strategic":"5G infrastructure = intelligence access at national scale. Huawei removal costs $5B+ in EU alone.","year":2019}
+];
+
+const BRI_STATISTICS = {
+  "total_investment": "$1 trillion+ committed",
+  "countries": "152 countries signed MoUs",
+  "key_corridors": ["CPEC (Pakistan)","BCIM (Bangladesh-China-India-Myanmar)","CMREC (China-Mongolia-Russia)","New Eurasian Land Bridge","Maritime Silk Road"],
+  "concern": "Debt trap diplomacy + dual-use infrastructure + intelligence collection",
+  "counter_initiatives": ["G7 Partnership for Global Infrastructure (PGI) — $600B","EU Global Gateway — €300B","US DFC — $60B cap","Blue Dot Network (standards)"]
+};
+
+const UNSC_VETOES_RECENT = [
+  {"date":"Feb 2024","vetoing":"Russia + China","subject":"Gaza ceasefire resolution","result":"VETOED","count":"13-2","significance":"Blocked immediate ceasefire. US abstained on later resolution."},
+  {"date":"Apr 2024","vetoing":"USA","subject":"Full Palestinian UN membership","result":"VETOED","count":"12-1-2","significance":"US blocked Palestinian state UN membership application."},
+  {"date":"Sep 2022","vetoing":"Russia","subject":"Condemning Ukraine annexation referenda","result":"VETOED","count":"10-1-4","significance":"Russia vetoed condemnation of its own illegal annexations."},
+  {"date":"Feb 2022","vetoing":"Russia","subject":"Ukraine invasion — demand withdrawal","result":"VETOED (→ UNGA Emergency Special Session)","count":"11-1-3","significance":"Veto forced use of UNGA ESS — unprecedented."},
+  {"date":"Feb 2017","vetoing":"Russia + China","subject":"Syria chemical weapons accountability","result":"VETOED","count":"9-2-4","significance":"Protected Syria from accountability for Ghouta attack."},
+  {"date":"2013-2023","vetoing":"Russia (17 times)","subject":"Syria (various — ceasefire, humanitarian, accountability)","result":"VETOED","count":"Multiple","significance":"Russia vetoed all Syria accountability measures 2012-2023."}
+];
+
+const INTL_LAW_VIOLATIONS = [
+  {"violation":"Russian Invasion of Ukraine","law":"UN Charter Art.2(4) — Prohibition on use of force","violator":"Russia","iso":"RU","color":"#ef4444","status":"ONGOING",
+   "detail":"Clear violation of international prohibition on aggressive war. ICJ ordered Russia to cease military operations (March 2022 provisional measures). Russia ignored.",
+   "accountability":"ICC arrest warrant for Putin (child deportations). UNGA voted 141-5 condemning invasion. International Reparations Mechanism established.","lat":49,"lng":32},
+  {"violation":"Illegal Annexation of Ukrainian Territory","law":"UN Charter + Helsinki Final Act","violator":"Russia","iso":"RU","color":"#ef4444","status":"ONGOING",
+   "detail":"Russia declared annexation of Zaporizhzhia, Kherson, Donetsk, Luhansk regions October 2022. UNGA voted 143-5 to condemn. No country recognizes annexation.",
+   "accountability":"Non-recognition policy by 143 nations. PACE suspended. Sanctions imposed.","lat":48,"lng":37},
+  {"violation":"Gaza Civilian Targeting (IHL)","law":"Geneva Conventions — distinction, proportionality, precaution","violator":"Israel (alleged)","iso":"IL","color":"#f97316","status":"ICJ PROCEEDINGS",
+   "detail":"South Africa filed ICJ case alleging genocide. ICJ ordered provisional measures (Jan 2024). UN Special Rapporteurs found reasonable grounds for genocide. Israel denies. 35,000+ civilians killed.",
+   "accountability":"ICJ proceedings ongoing. ICC prosecutor sought arrest warrants for Netanyahu, Gallant. ICC issued warrants for Hamas leaders.","lat":31,"lng":34},
+  {"violation":"South China Sea Island-Building","law":"UNCLOS — EEZ, continental shelf","violator":"China","iso":"CN","color":"#f97316","status":"UNRESOLVED",
+   "detail":"China built 7 artificial islands in disputed South China Sea. Militarized with runways and SAMs. 2016 Hague tribunal ruled China\'s 9-dash line has no legal basis. China rejected ruling.",
+   "accountability":"Hague ruling ignored by China. US conducts FONOPS. No enforcement mechanism.","lat":14,"lng":113},
+  {"violation":"Chemical Weapons Use (Syria)","law":"CWC, UNSC Resolution 2118","violator":"Syria (Assad)","iso":"SY","color":"#ef4444","status":"ACCOUNTABILITY BLOCKED",
+   "detail":"OPCW-JIM attributed multiple chemical attacks to Syrian Air Force. Russia vetoed all UNSC accountability resolutions. Assad regime CWC member while using CW.",
+   "accountability":"OPCW suspended Syria\'s voting rights 2021. Individual sanctions. Russia blocked all UNSC action.","lat":35,"lng":38},
+  {"violation":"Forced Labor / Xinjiang","law":"ILO Conventions, UDHR","violator":"China","iso":"CN","color":"#f97316","status":"ONGOING — DENIED",
+   "detail":"1M+ Uyghurs in vocational training centers. Forced labor supply chain links to global consumer goods. UN OHCHR found serious violations potentially constituting crimes against humanity (Aug 2022).",
+   "accountability":"US Uyghur Forced Labor Prevention Act (import ban). EU/UK/US sanctions on officials. China denies.","lat":43,"lng":87},
+  {"violation":"DPRK WMD Violations","law":"Multiple UNSC resolutions (2094, 2270, 2321, 2356, 2371, 2375, 2397)","violator":"North Korea","iso":"KP","color":"#8b5cf6","status":"ONGOING",
+   "detail":"DPRK violated every UNSC resolution on nuclear/missile program. Continued testing ICBMs, conducted nuclear tests, sold weapons to Russia (violating UNSC arms embargo).",
+   "accountability":"Sanctions collapsed — China/Russia blocking new sanctions since 2022. PoE reports discontinued 2024 (Russia blocked renewal).","lat":40,"lng":127}
+];
+
+const ICJ_ACTIVE_CASES = [
+  {"case":"South Africa vs Israel (Genocide Convention)","filed":"Dec 2023","status":"PROCEEDINGS ONGOING","plaintiff":"South Africa","defendant":"Israel","ruling":"Jan 2024 provisional measures: Israel must prevent genocidal acts, allow humanitarian aid"},
+  {"case":"Ukraine vs Russia (Genocide Convention)","filed":"Feb 2022","status":"JURISDICTION ESTABLISHED","plaintiff":"Ukraine","defendant":"Russia","ruling":"Nov 2022: ICJ has jurisdiction. Trial ongoing."},
+  {"case":"Nicaragua vs Germany","filed":"Mar 2024","status":"JURISDICTION PHASE","plaintiff":"Nicaragua","defendant":"Germany","ruling":"Germany selling arms to Israel during Gaza conflict — ICJ declined emergency measures"},
+  {"case":"Ukraine vs Russia (Terrorism Convention)","filed":"2022","status":"PRELIMINARY OBJECTIONS","plaintiff":"Ukraine","defendant":"Russia","ruling":"Russia\'s preliminary objections under consideration"}
+];
+
+function openProtests(){
+  document.getElementById('protests-overlay').style.display='flex';
+  _renderProtestCards();
+  _fetchProtestsGDELT();
+  // Add protest hotspots to globe
+  ACTIVE_PROTESTS.forEach(function(p){
+    hotspots.push({lat:p.lat,lng:p.lng,label:p.country+': '+p.name,color:p.color,radius:5,_protest:true});
+  });
+}
+function closeProtests(){
+  document.getElementById('protests-overlay').style.display='none';
+  hotspots=hotspots.filter(function(h){return !h._protest;});
+}
+function _getScaleCls(scale){
+  var s=scale.toLowerCase().replace(/\s/g,'').replace('/','');
+  if(s==='revolution') return 'pw-scale-revolution';
+  if(s==='mass') return 'pw-scale-mass';
+  if(s==='elevated') return 'pw-scale-elevated';
+  if(s==='gangtakeover') return 'pw-scale-gangtakeover';
+  if(s==='suppressed') return 'pw-scale-suppressed';
+  if(s==='periodic') return 'pw-scale-periodic';
+  return 'pw-scale-periodic';
+}
+function _renderProtestCards(){
+  var el=document.getElementById('protests-cards');
+  if(!el) return;
+  el.innerHTML=ACTIVE_PROTESTS.map(function(p){
+    return '<div class="pw-card">'
+      +'<div class="pw-card-header">'
+      +'<div><div class="pw-country">'+p.country+'</div>'
+      +'<div class="pw-name">'+p.name+'</div>'
+      +'<div class="pw-since">Since: '+p.since+'</div></div>'
+      +'<span class="pw-scale-badge '+_getScaleCls(p.scale)+'">'+p.scale+'</span>'
+      +'</div>'
+      +'<div class="pw-status">STATUS: '+p.status+'</div>'
+      +'<div class="pw-driver">DRIVER: '+p.driver+'</div>'
+      +'<div class="pw-detail">'+p.detail+'</div>'
+      +'<div class="pw-geo">GEOPOLITICAL: '+p.geopolitical+'</div>'
+      +'<div class="pw-outcome">OUTCOME: '+p.outcome+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function _fetchProtestsGDELT(){
+  var el=document.getElementById('protests-gdelt-feed');
+  if(!el) return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed...</div>';
+  try{
+    var q=encodeURIComponent('protest demonstrations uprising civil unrest government');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=20&format=json&timespan=48H&sort=DateDesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d&&d.articles)||[];
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="pw-gdelt-item"><div class="pw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="pw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+function openStratInv(){
+  document.getElementById('stratinv-overlay').style.display='flex';
+  _renderStratInvCards();
+  _renderBRIStats();
+  _fetchStratInvGDELT();
+  // Add BRI hotspots to globe
+  CHINA_STRATEGIC_INVESTMENTS.forEach(function(inv){
+    if(inv.lat&&inv.lng){
+      hotspots.push({lat:inv.lat,lng:inv.lng,label:inv.name+' ('+inv.country+')',color:inv.color,radius:5,_bri:true});
+    }
+  });
+}
+function closeStratInv(){
+  document.getElementById('stratinv-overlay').style.display='none';
+  hotspots=hotspots.filter(function(h){return !h._bri;});
+}
+function _getRiskCls(risk){
+  if(risk==='CRITICAL') return 'si-risk-critical';
+  return 'si-risk-high';
+}
+function _renderStratInvCards(){
+  var el=document.getElementById('stratinv-cards');
+  if(!el) return;
+  el.innerHTML=CHINA_STRATEGIC_INVESTMENTS.map(function(inv){
+    return '<div class="si-card">'
+      +'<div class="si-card-header">'
+      +'<div><div class="si-name">'+inv.name+'</div>'
+      +'<div class="si-country">'+inv.country+'</div></div>'
+      +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">'
+      +'<span class="si-risk-badge '+_getRiskCls(inv.risk)+'">'+inv.risk+'</span>'
+      +'<span class="si-year">'+inv.year+'</span>'
+      +'</div></div>'
+      +'<div class="si-amount">'+inv.amount+'</div>'
+      +'<div class="si-sector">SECTOR: '+inv.sector+'</div>'
+      +'<div class="si-status">STATUS: '+inv.status+'</div>'
+      +'<div class="si-detail">'+inv.detail+'</div>'
+      +'<div class="si-strategic">STRATEGIC SIGNIFICANCE: '+inv.strategic+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderBRIStats(){
+  var el=document.getElementById('stratinv-stats');
+  if(!el) return;
+  var b=BRI_STATISTICS;
+  el.innerHTML='<div class="si-bri-panel">'
+    +'<div style="font-size:11px;font-weight:700;color:#fca5a5;letter-spacing:1px;margin-bottom:10px;">BELT AND ROAD INITIATIVE OVERVIEW</div>'
+    +'<div style="font-size:9px;color:#94a3b8;margin-bottom:4px;">TOTAL COMMITTED: <span style="color:#fbbf24;font-weight:700;">'+b.total_investment+'</span></div>'
+    +'<div style="font-size:9px;color:#94a3b8;margin-bottom:4px;">REACH: <span style="color:#fbbf24;font-weight:700;">'+b.countries+'</span></div>'
+    +'<div style="font-size:9px;color:#94a3b8;margin-bottom:6px;">CONCERN: <span style="color:#f87171;">'+b.concern+'</span></div>'
+    +'<div style="font-size:8px;color:#64748b;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">Key Corridors:</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">'
+    +b.key_corridors.map(function(c){return '<span style="font-size:8px;padding:2px 7px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#fca5a5;border-radius:3px;">'+c+'</span>';}).join('')
+    +'</div></div>'
+    +'<div class="si-counter-panel">'
+    +'<div style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:1px;margin-bottom:10px;">COUNTER-BRI INITIATIVES</div>'
+    +'<div style="display:flex;flex-direction:column;gap:5px;">'
+    +b.counter_initiatives.map(function(c){return '<div style="font-size:9px;color:#cbd5e1;padding:5px 10px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.15);border-radius:3px;">✓ '+c+'</div>';}).join('')
+    +'</div></div>';
+}
+async function _fetchStratInvGDELT(){
+  var el=document.getElementById('stratinv-gdelt-feed');
+  if(!el) return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed...</div>';
+  try{
+    var q=encodeURIComponent('China BRI investment port infrastructure Belt Road strategic');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=20&format=json&timespan=48H&sort=DateDesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d&&d.articles)||[];
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="si-gdelt-item"><div class="si-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="si-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+function openIntLaw(){
+  document.getElementById('intlaw-overlay').style.display='flex';
+  _renderVetoTable();
+  _renderViolations();
+  _renderICJCases();
+  _fetchIntLawGDELT();
+  // Add violation hotspots to globe
+  INTL_LAW_VIOLATIONS.forEach(function(v){
+    hotspots.push({lat:v.lat,lng:v.lng,label:v.violation+' ('+v.violator+')',color:v.color,radius:5,_intlaw:true});
+  });
+}
+function closeIntLaw(){
+  document.getElementById('intlaw-overlay').style.display='none';
+  hotspots=hotspots.filter(function(h){return !h._intlaw;});
+}
+function _renderVetoTable(){
+  var el=document.getElementById('intlaw-veto-table');
+  if(!el) return;
+  var rows=UNSC_VETOES_RECENT.map(function(v){
+    return '<tr>'
+      +'<td style="color:#64748b;">'+v.date+'</td>'
+      +'<td style="color:#f87171;font-weight:700;">'+v.vetoing+'</td>'
+      +'<td style="color:#cbd5e1;">'+v.subject+'</td>'
+      +'<td><span class="il-veto-vetoed">'+v.result+'</span></td>'
+      +'<td style="color:#94a3b8;">'+v.count+'</td>'
+      +'<td style="color:#94a3b8;font-size:8px;">'+v.significance+'</td>'
+      +'</tr>';
+  }).join('');
+  el.innerHTML='<table class="il-veto-table">'
+    +'<thead><tr><th>DATE</th><th>VETOING</th><th>SUBJECT</th><th>RESULT</th><th>VOTE</th><th>SIGNIFICANCE</th></tr></thead>'
+    +'<tbody>'+rows+'</tbody>'
+    +'</table>';
+}
+function _getILStatusCls(status){
+  if(status==='ONGOING') return 'il-stat-ongoing';
+  if(status.indexOf('ICJ')!==-1) return 'il-stat-icj';
+  if(status.indexOf('BLOCKED')!==-1) return 'il-stat-blocked';
+  return 'il-stat-unresolved';
+}
+function _renderViolations(){
+  var el=document.getElementById('intlaw-violations');
+  if(!el) return;
+  el.innerHTML=INTL_LAW_VIOLATIONS.map(function(v){
+    return '<div class="il-violation-card">'
+      +'<div class="il-violation-header">'
+      +'<div><div class="il-violation-name">'+v.violation+'</div>'
+      +'<div class="il-law">'+v.law+'</div></div>'
+      +'<span class="il-status-badge '+_getILStatusCls(v.status)+'">'+v.status+'</span>'
+      +'</div>'
+      +'<div class="il-violator">VIOLATOR: '+v.violator+'</div>'
+      +'<div class="il-detail">'+v.detail+'</div>'
+      +'<div class="il-accountability">ACCOUNTABILITY: '+v.accountability+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderICJCases(){
+  var el=document.getElementById('intlaw-icj-cases');
+  if(!el) return;
+  el.innerHTML=ICJ_ACTIVE_CASES.map(function(c){
+    return '<div class="il-icj-card">'
+      +'<div class="il-icj-case">'+c.case+'</div>'
+      +'<div class="il-icj-meta">Filed: '+c.filed+' &bull; <span style="color:#c4b5fd;">'+c.status+'</span></div>'
+      +'<div class="il-icj-meta">Plaintiff: '+c.plaintiff+' &bull; Defendant: '+c.defendant+'</div>'
+      +'<div class="il-icj-ruling">'+c.ruling+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function _fetchIntLawGDELT(){
+  var el=document.getElementById('intlaw-gdelt-feed');
+  if(!el) return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed...</div>';
+  try{
+    var q=encodeURIComponent('international law violation ICJ UNSC veto war crimes accountability');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=20&format=json&timespan=48H&sort=DateDesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d&&d.articles)||[];
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="il-gdelt-item"><div class="il-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="il-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 38 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -26173,6 +26602,92 @@ function filterSIGINT(query){
       </div>
       <div style="font-size:9px;letter-spacing:2px;color:#fdba74;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — CONFLICT MINERALS</div>
       <div id="confmin-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COLUMN 9 NEW BUTTONS (295px, 335px, 375px) -->
+<button id="protests-btn" onclick="openProtests()">PROTEST WATCH</button>
+<button id="stratinv-btn" onclick="openStratInv()">STRAT INVEST</button>
+<button id="intlaw-btn" onclick="openIntLaw()">INTL LAW</button>
+
+<!-- PROTEST WATCH OVERLAY -->
+<div id="protests-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#f97316;font-size:11px;letter-spacing:3px;">CIVIL UNREST INTELLIGENCE — GLOBAL PROTEST ANALYTICS</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">GLOBAL PROTEST &amp; CIVIL UNREST TRACKER</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">ACLED &bull; Crisis Group &bull; HRW &bull; Open Source Intelligence</div>
+    </div>
+    <button onclick="closeProtests()" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#fdba74;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(124,45,18,0.2);border:1px solid rgba(249,115,22,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#fdba74;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    8 ACTIVE PROTEST SITUATIONS &bull; 3 MASS PROTEST MOVEMENTS &bull; 1 SUCCESSFUL REVOLUTION &bull; ONGOING MONITORING
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">ACTIVE PROTEST PROFILES</div>
+      <div id="protests-cards"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">GDELT LIVE FEED — CIVIL UNREST</div>
+      <div id="protests-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STRATEGIC INVESTMENT OVERLAY -->
+<div id="stratinv-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">STRATEGIC INTELLIGENCE — FOREIGN INVESTMENT AS GEOPOLITICAL TOOL</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">STRATEGIC FOREIGN INVESTMENT INTELLIGENCE</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">BRI Monitor &bull; AidData &bull; CSIS &bull; US DFC &bull; Open Source Intelligence</div>
+    </div>
+    <button onclick="closeStratInv()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(127,29,29,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#fca5a5;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    $1 TRILLION+ BRI COMMITTED &bull; 152 COUNTRIES &bull; DEBT TRAP DIPLOMACY &bull; DUAL-USE INFRASTRUCTURE &bull; INTELLIGENCE COLLECTION
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">CHINA STRATEGIC INVESTMENT PROFILES</div>
+      <div id="stratinv-cards"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">BRI STATISTICS &amp; COUNTER-INITIATIVES</div>
+      <div id="stratinv-stats"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — CHINA BRI INVESTMENT</div>
+      <div id="stratinv-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- INTERNATIONAL LAW OVERLAY -->
+<div id="intlaw-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#8b5cf6;font-size:11px;letter-spacing:3px;">LEGAL INTELLIGENCE — INTERNATIONAL LAW VIOLATIONS &amp; ACCOUNTABILITY</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">INTL LAW VIOLATIONS &amp; UNSC VETO TRACKER</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">ICJ &bull; ICC &bull; UNSC Records &bull; OPCW &bull; UN OHCHR &bull; Open Source Intelligence</div>
+    </div>
+    <button onclick="closeIntLaw()" style="background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:#d8b4fe;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(88,28,135,0.2);border:1px solid rgba(139,92,246,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#d8b4fe;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    7 ACTIVE IHL/ICJ VIOLATIONS TRACKED &bull; UNSC VETO HISTORY &bull; 4 ICJ ACTIVE CASES &bull; ICC WARRANTS ISSUED
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">UNSC VETO HISTORY — RECENT</div>
+      <div id="intlaw-veto-table"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-top:16px;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">INTERNATIONAL LAW VIOLATIONS</div>
+      <div id="intlaw-violations"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">ICJ ACTIVE CASES</div>
+      <div id="intlaw-icj-cases"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — INTERNATIONAL LAW</div>
+      <div id="intlaw-gdelt-feed"></div>
     </div>
   </div>
 </div>
