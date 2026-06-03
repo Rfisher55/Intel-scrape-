@@ -1612,6 +1612,39 @@ button{border-radius:2px!important}
 .ar-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .ar-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
 .ar-news-meta{color:var(--dim);font-size:8px;}
+#finint-btn{position:fixed;top:55px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(34,197,94,.35);border-radius:2px;color:#4ade80;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#finint-btn:hover{background:rgba(34,197,94,.1);border-color:#16a34a;}
+#finint-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#finint-overlay.open{display:block;}
+.fi-hdr{background:var(--panel);border-bottom:2px solid rgba(34,197,94,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.fi-hdr h2{color:#4ade80;font-size:12px;letter-spacing:.2em;margin:0;}
+.fi-body{padding:16px 24px;max-width:1200px;}
+.fi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+.fi-card{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.fi-card-hdr{font-size:8px;letter-spacing:.16em;color:var(--dim);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.fi-jurisdiction{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:9px;}
+.fi-jur-name{color:var(--text);}
+.fi-jur-risk{font-size:7px;padding:1px 5px;letter-spacing:.08em;}
+.fi-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.fi-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.fi-news-meta{color:var(--dim);font-size:8px;}
+#ewmon-btn{position:fixed;top:95px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(250,204,21,.35);border-radius:2px;color:#facc15;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#ewmon-btn:hover{background:rgba(250,204,21,.1);border-color:#ca8a04;}
+#ewmon-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#ewmon-overlay.open{display:block;}
+.ew-hdr{background:var(--panel);border-bottom:2px solid rgba(250,204,21,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.ew-hdr h2{color:#facc15;font-size:12px;letter-spacing:.2em;margin:0;}
+.ew-body{padding:16px 24px;max-width:1100px;}
+.ew-incident{background:var(--panel2);border:1px solid var(--border);border-left:3px solid rgba(250,204,21,.6);padding:10px 12px;margin-bottom:8px;}
+.ew-inc-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.ew-inc-name{font-size:10px;font-weight:700;color:#facc15;}
+.ew-inc-type{font-size:7px;padding:2px 5px;letter-spacing:.1em;}
+.ew-inc-detail{font-size:8px;color:var(--dim);line-height:1.5;}
+.ew-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ew-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.ew-news-meta{color:var(--dim);font-size:8px;}
+#intelbriefexport-btn{position:fixed;top:135px;right:570px;z-index:200;background:rgba(10,110,245,.15);border:1px solid rgba(10,110,245,.6);border-radius:2px;color:#60a5fa;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#intelbriefexport-btn:hover{background:rgba(10,110,245,.25);border-color:#3b82f6;}
 </style>
 </head>
 <body>
@@ -16805,6 +16838,115 @@ async function _fetchArcticNews(){
     el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
   }
 }
+function openFININT(){
+  document.getElementById('finint-overlay').classList.add('open');
+  _fetchFININTNews();
+}
+function closeFININT(){
+  document.getElementById('finint-overlay').classList.remove('open');
+}
+async function _fetchFININTNews(){
+  const el=document.getElementById('finint-news');
+  if(!el)return;
+  try{
+    const q='"money laundering" OR "illicit finance" OR "sanctions evasion" OR "dark money" OR "OFAC" OR "financial crime" OR "crypto sanctions" OR "hawala"';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current FININT available.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="fi-news-item"><div class="fi-news-title">'+title+'</div><div class="fi-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+function openEWMonitor(){
+  document.getElementById('ewmon-overlay').classList.add('open');
+  _fetchEWNews();
+}
+function closeEWMonitor(){
+  document.getElementById('ewmon-overlay').classList.remove('open');
+}
+async function _fetchEWNews(){
+  const el=document.getElementById('ew-news');
+  if(!el)return;
+  try{
+    const q='"GPS spoofing" OR "GPS jamming" OR "electronic warfare" OR "signal jamming" OR "EW system" OR "GNSS spoofing" OR "radar jamming"';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current EW intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="ew-news-item"><div class="ew-news-title">'+title+'</div><div class="ew-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+async function exportIntelBrief(){
+  const btn=document.getElementById('intelbriefexport-btn');
+  if(btn)btn.textContent='GENERATING...';
+  const defconLevel=typeof _calcDEFCON==='function'?_calcDEFCON():3;
+  const defconDescs={1:'NUCLEAR WAR IMMINENT',2:'ARMED FORCES READY',3:'ELEVATED READINESS',4:'INCREASED MONITORING',5:'LOWEST READINESS'};
+  const defconDesc=defconDescs[defconLevel]||'ELEVATED READINESS';
+  const defconColors={1:'#ef4444',2:'#f97316',3:'#f59e0b',4:'#22d3ee',5:'#22c55e'};
+  const defconColor=defconColors[defconLevel]||'#f59e0b';
+  const allHots=(typeof liveHotspots!=='undefined'?liveHotspots:[]).filter(function(h){return!h.iss;});
+  const critHots=allHots.filter(function(h){return h.severity==='critical';});
+  const highHots=allHots.filter(function(h){return h.severity==='high';});
+  const topCountries=typeof COUNTRIES!=='undefined'?Object.values(COUNTRIES).filter(function(c){return c.intel_priority==='critical';}).slice(0,6):[];
+  let headlines=[];
+  try{
+    const r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query=war+attack+military+conflict+nuclear+crisis&mode=artlist&maxrecords=10&format=json',{signal:AbortSignal.timeout(8000)});
+    const d=await r.json();
+    headlines=(d.articles||[]).slice(0,8);
+  }catch(e){}
+  const now=new Date();
+  const dateStr=now.toISOString().replace('T',' ').substring(0,19)+' UTC';
+  const hotsHtml=critHots.slice(0,5).map(function(h){
+    return '<tr><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#ef4444;">CRITICAL</td><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#edf0f8;">'+(h.label||'Unknown')+'</td><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#8896b3;">'+(h.lat?h.lat.toFixed(1):'')+', '+(h.lng?h.lng.toFixed(1):'')+'</td></tr>';
+  }).join('');
+  const countriesHtml=topCountries.map(function(c){
+    return '<tr><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#edf0f8;font-weight:700;">'+(c.name||'')+'</td><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#f87171;">'+(c.alertLevel||'UNKNOWN')+'</td><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#8896b3;">'+(c.primary_concern||'').substring(0,60)+'</td></tr>';
+  }).join('');
+  const headlinesHtml=headlines.map(function(a,i){
+    return '<div style="padding:6px 0;border-bottom:1px solid #182030;font-size:11px;"><span style="color:#0a6ef5;margin-right:8px;">'+(i+1)+'.</span><span style="color:#edf0f8;">'+(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,140)+'</span><span style="color:#4a5470;font-size:10px;margin-left:8px;">&mdash; '+(a.domain||'')+'</span></div>';
+  }).join('');
+  const briefHTML='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>INTELLIGENCE BRIEF — '+dateStr+'</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#05080f;color:#edf0f8;font-family:\'IBM Plex Mono\',\'Courier New\',monospace;padding:40px;max-width:1000px;margin:0 auto;}h1{font-size:20px;letter-spacing:.3em;margin-bottom:4px;}h2{font-size:12px;letter-spacing:.2em;color:#8896b3;border-bottom:1px solid #182030;padding-bottom:8px;margin:20px 0 10px;}.header{border:2px solid #ef4444;padding:12px 20px;margin-bottom:24px;text-align:center;}.class-banner{background:#ef4444;color:#fff;font-size:10px;letter-spacing:.3em;padding:4px;text-align:center;margin-bottom:16px;}.meta{font-size:9px;color:#4a5470;margin-bottom:4px;}.defcon-box{border:2px solid '+defconColor+';padding:12px;display:inline-block;margin:12px 0;}.defcon-num{font-size:32px;font-weight:900;color:'+defconColor+';}.defcon-desc{font-size:10px;color:#8896b3;letter-spacing:.15em;}table{width:100%;border-collapse:collapse;font-size:11px;}th{text-align:left;padding:6px 8px;background:#090c18;color:#4a5470;font-size:9px;letter-spacing:.12em;border-bottom:2px solid #182030;}.footer{margin-top:30px;padding-top:16px;border-top:2px solid #182030;font-size:9px;color:#4a5470;text-align:center;}.stat{display:inline-block;margin-right:24px;}.stat-num{font-size:24px;font-weight:900;}.stat-label{font-size:8px;color:#4a5470;letter-spacing:.15em;}</style></head><body>'+
+    '<div class="class-banner">TOP SECRET // NOFORN // ORCON // NOT FOR DISTRIBUTION</div>'+
+    '<div class="header"><h1>&#x1F4CB; AUTOMATED INTELLIGENCE BRIEF</h1><div style="color:#4a5470;font-size:10px;letter-spacing:.2em;margin-top:4px;">OSINT COLLECTION SYSTEM &middot; ALL SOURCES &middot; GDELT / OPEN-SOURCE</div></div>'+
+    '<div class="meta">PREPARED: '+dateStr+'</div>'+
+    '<div class="meta">CLASSIFICATION: TS/SCI // BASED ON OPEN-SOURCE COLLECTION</div>'+
+    '<div class="meta">DISTRIBUTION: AUTHORIZED PERSONNEL ONLY</div>'+
+    '<h2>1. STRATEGIC POSTURE ASSESSMENT</h2>'+
+    '<div class="defcon-box"><div style="font-size:9px;letter-spacing:.2em;color:#4a5470;margin-bottom:4px;">GLOBAL DEFCON</div><div class="defcon-num">'+defconLevel+'</div><div class="defcon-desc">'+defconDesc+'</div></div>'+
+    '<div style="margin:12px 0;"><span class="stat"><div class="stat-num" style="color:#ef4444;">'+allHots.length+'</div><div class="stat-label">ACTIVE HOTSPOTS</div></span><span class="stat"><div class="stat-num" style="color:#f97316;">'+critHots.length+'</div><div class="stat-label">CRITICAL EVENTS</div></span><span class="stat"><div class="stat-num" style="color:#f59e0b;">'+highHots.length+'</div><div class="stat-label">HIGH SEVERITY</div></span></div>'+
+    '<h2>2. CRITICAL EVENTS (ACTIVE HOTSPOTS)</h2>'+
+    (hotsHtml?'<table><thead><tr><th>SEVERITY</th><th>DESCRIPTION</th><th>COORDINATES</th></tr></thead><tbody>'+hotsHtml+'</tbody></table>':'<div style="color:#4a5470;font-size:11px;">No critical hotspots active.</div>')+
+    '<h2>3. TIER 1 COUNTRY ASSESSMENTS</h2>'+
+    (countriesHtml?'<table><thead><tr><th>COUNTRY</th><th>ALERT LEVEL</th><th>PRIMARY CONCERN</th></tr></thead><tbody>'+countriesHtml+'</tbody></table>':'<div style="color:#4a5470;font-size:11px;">No tier 1 assessments available.</div>')+
+    '<h2>4. CURRENT INTELLIGENCE HEADLINES</h2>'+
+    (headlinesHtml||'<div style="color:#4a5470;font-size:11px;">No headlines available.</div>')+
+    '<h2>5. COLLECTION NOTES</h2>'+
+    '<div style="font-size:11px;color:#8896b3;line-height:1.8;">Primary collection sources: GDELT Global Knowledge Graph (real-time), OpenSky Network (ADS-B), USGS Earthquake Hazards, OpenMeteo (weather), Frankfurter API (FX). All intelligence is OSINT-derived. No classified or proprietary sources. Reliability: MODERATE. Timeliness: HIGH (live feeds). Completeness: PARTIAL (open-source gaps apply).</div>'+
+    '<div class="footer">— END OF BRIEF —<br>AUTOMATED OSINT INTELLIGENCE SYSTEM &middot; GDELT-POWERED &middot; '+dateStr+'<br>THIS DOCUMENT CONTAINS NO CLASSIFIED INFORMATION &middot; ALL SOURCES OPEN</div>'+
+    '</body></html>';
+  const blob=new Blob([briefHTML],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  window.open(url,'_blank');
+  if(btn)btn.textContent='\u{1F4CB} EXPORT BRIEF';
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -17873,5 +18015,94 @@ function filterSIGINT(query){
     </div>
   </div>
 </div>
+<button id="finint-btn" onclick="openFININT()">&#x1F4B0; FININT</button>
+<div id="finint-overlay">
+  <div class="fi-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">FINANCIAL INTELLIGENCE // ILLICIT FINANCE // SANCTIONS EVASION // DARK MONEY TRACKING</div>
+      <h2>&#x1F4B0; FINANCIAL INTELLIGENCE (FININT)</h2>
+    </div>
+    <button onclick="closeFININT()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="fi-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">ILLICIT FINANCE TRACKING &middot; OFAC SDN MONITORING &middot; CRYPTO SANCTIONS EVASION &middot; GDELT COLLECTION</div>
+    <div class="fi-grid">
+      <div class="fi-card">
+        <div class="fi-card-hdr" style="color:#ef4444;">HIGH-RISK FINANCIAL JURISDICTIONS</div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">Russia / CIS shadow banking</span><span class="fi-jur-risk" style="background:#ef4444;color:#fff;">CRITICAL</span></div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">UAE (Dubai) &mdash; sanctions gateway</span><span class="fi-jur-risk" style="background:#ef4444;color:#fff;">CRITICAL</span></div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">DPRK crypto laundering</span><span class="fi-jur-risk" style="background:#ef4444;color:#fff;">CRITICAL</span></div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">Iran hawala networks</span><span class="fi-jur-risk" style="background:#f97316;color:#fff;">HIGH</span></div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">Turkey &mdash; Russian oligarch assets</span><span class="fi-jur-risk" style="background:#f97316;color:#fff;">HIGH</span></div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">China &mdash; shadow banking/SWIFT alt</span><span class="fi-jur-risk" style="background:#f59e0b;color:#000;">ELEVATED</span></div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">Panama/BVI shell companies</span><span class="fi-jur-risk" style="background:#f59e0b;color:#000;">ELEVATED</span></div>
+        <div class="fi-jurisdiction"><span class="fi-jur-name">Venezuela PDVSA oil-for-gold</span><span class="fi-jur-risk" style="background:#f59e0b;color:#000;">ELEVATED</span></div>
+      </div>
+      <div class="fi-card">
+        <div class="fi-card-hdr" style="color:#f59e0b;">KNOWN ILLICIT FINANCE NETWORKS</div>
+        <div style="font-size:8px;color:var(--dim);line-height:1.8;">
+          <div><span style="color:#ef4444;font-weight:700;">Lazarus Group (DPRK):</span> $3B+ crypto stolen 2017-2024. Mixers: Tornado Cash, ChipMixer. Conversion via OTC desks in East Asia. Funds WMD programs directly.</div>
+          <div><span style="color:#ef4444;font-weight:700;">Russian oligarch networks:</span> Post-2022 sanctions &mdash; yacht/real estate transfers to UAE, Turkey, Georgia. SWIFT workaround via SPFS (Russian SWIFT alternative). Cryptocurrency arbitrage.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">Iranian sanctions evasion:</span> Oil-to-gold-to-cash through Iraq/Syria/Turkey. Front companies in Malaysia/UAE. Hawala networks bypassing banking system.</div>
+          <div><span style="color:#a78bfa;font-weight:700;">MIPS (Mirror trading):</span> Deutsche Bank scandal &mdash; $10B+ Russian dark money laundered through mirror trades 2011-2015. Pattern likely continues through other institutions.</div>
+        </div>
+      </div>
+      <div class="fi-card">
+        <div class="fi-card-hdr" style="color:#22d3ee;">CRYPTO INTELLIGENCE INDICATORS</div>
+        <div style="font-size:8px;color:var(--dim);line-height:1.8;">
+          <div><span style="color:#22d3ee;">DPRK wallets:</span> OFAC-designated addresses include 0x098B716... (Lazarus). Chainalysis tracks flows through mixing services.</div>
+          <div><span style="color:#f59e0b;">Tornado Cash:</span> OFAC-sanctioned mixer (Aug 2022). Used by Lazarus, Russian oligarchs. Smart contract still operating.</div>
+          <div><span style="color:#ef4444;">Exchange risk:</span> Binance fined $4.3B (2023 DOJ). OKX, Huobi used for sanctions evasion. Unhosted wallet proliferation in Iran/Russia.</div>
+          <div><span style="color:#a78bfa;">CBDC threat:</span> China e-CNY, Russia digital ruble &mdash; potential SWIFT bypass mechanisms. Significant FININT collection gaps.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fi-card" style="margin-bottom:0;">
+      <div class="fi-card-hdr" style="color:#4ade80;">LIVE FINANCIAL INTELLIGENCE FEED (GDELT)</div>
+      <div id="finint-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="ewmon-btn" onclick="openEWMonitor()">&#x26A1; ELEC WARFARE</button>
+<div id="ewmon-overlay">
+  <div class="ew-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ELECTRONIC WARFARE INTELLIGENCE // GPS SPOOFING // SIGNAL JAMMING // EW INCIDENTS</div>
+      <h2>&#x26A1; ELECTRONIC WARFARE INTELLIGENCE MONITOR</h2>
+    </div>
+    <button onclick="closeEWMonitor()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="ew-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">KNOWN EW INCIDENTS &middot; GPS SPOOFING ZONES &middot; JAMMING ACTIVITY &middot; GDELT EW COLLECTION</div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:8px;">DOCUMENTED EW INCIDENTS &amp; ACTIVE SPOOFING ZONES</div>
+      <div class="ew-incident">
+        <div class="ew-inc-hdr"><span class="ew-inc-name">Baltic Sea GPS Spoofing (Russia)</span><span class="ew-inc-type" style="background:#ef4444;color:#fff;">GPS SPOOFING</span></div>
+        <div class="ew-inc-detail">Location: Baltic Sea, Gulf of Finland, Helsinki/Tallinn region. Active since 2018, intensified 2022+. Aircraft GPS receivers show false positions over Russia (Kaliningrad, Pskov). Affects civil aviation, maritime navigation. Source: Russian Krasukha-4, Murmansk-BN EW systems.</div>
+      </div>
+      <div class="ew-incident">
+        <div class="ew-inc-hdr"><span class="ew-inc-name">Eastern Mediterranean Spoofing (Russia/Israel)</span><span class="ew-inc-type" style="background:#ef4444;color:#fff;">GPS SPOOFING</span></div>
+        <div class="ew-inc-detail">Location: Israel/Lebanon/Cyprus/Syria corridor. GPS shown as Beirut airport or Ben Gurion for aircraft near Tel Aviv. Israeli EW measures counter Hezbollah drones. Russian EW in Syria also contributing. Over 1,000 civil aviation incidents logged.</div>
+      </div>
+      <div class="ew-incident">
+        <div class="ew-inc-hdr"><span class="ew-inc-name">Ukraine Theater EW (Both sides)</span><span class="ew-inc-type" style="background:#f97316;color:#fff;">JAMMING/SPOOFING</span></div>
+        <div class="ew-inc-detail">Russian: Krasukha-4 jamming AWACS/JSTARS. Tirada-2S satellite jamming. GPS spoofing degrading JDAM/HIMARS accuracy. Ukrainian: DF drone hunting, US JASSM-ER GPS-hardened. Both sides using commercial drone jamming extensively.</div>
+      </div>
+      <div class="ew-incident">
+        <div class="ew-inc-hdr"><span class="ew-inc-name">Persian Gulf / Iran Jamming</span><span class="ew-inc-type" style="background:#f59e0b;color:#000;">GPS JAMMING</span></div>
+        <div class="ew-inc-detail">Iran spoofs maritime GPS to claim vessels in Iranian waters. Captured US RQ-170 Sentinel (2011) via GPS spoofing. IRGC operates extensive EW capability. Red Sea Houthi drone ops supported by Iranian EW.</div>
+      </div>
+      <div class="ew-incident">
+        <div class="ew-inc-hdr"><span class="ew-inc-name">China EW (Taiwan Strait / SCS)</span><span class="ew-inc-type" style="background:#f59e0b;color:#000;">JAMMING</span></div>
+        <div class="ew-inc-detail">PLA EW Regiment (55th) operates BeiDou-integrated EW. Regular jamming exercises simulating GPS denial in Taiwan Strait. J-16D dedicated EW aircraft (Wild Weasel equiv). Satellite jamming capability vs US ISR assets.</div>
+      </div>
+    </div>
+    <div style="background:var(--panel2);border:1px solid var(--border);padding:10px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE EW INTELLIGENCE FEED (GDELT)</div>
+      <div id="ew-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="intelbriefexport-btn" onclick="exportIntelBrief()">&#x1F4CB; EXPORT BRIEF</button>
 </body>
 </html>
