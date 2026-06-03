@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; background: #020c1a; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  .diagram { background: #020c1a; padding: 40px; border-radius: 8px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark', themeVariables: { background: '#020c1a', primaryColor: '#1e3a5f', primaryTextColor: '#93c5fd', lineColor: '#4a7c9e', fontSize: '14px' }});</script>
+</head>
+<body>
+<div class="diagram">
+<pre class="mermaid">
+flowchart TD
+    subgraph SOURCES["PUBLIC DATA SOURCES — Open APIs, No Auth Required"]
+        G["GDELT Project\nReal-time global event stream\n300+ languages · 3M+ events/day"]
+        R["ReliefWeb / UN OCHA\nHumanitarian situation reports"]
+        U["USGS Earthquake API\nLive seismic activity"]
+        F["NASA FIRMS\nSatellite wildfire + hotspot data"]
+        A["AIS Vessel Tracker\nMaritime traffic positions"]
+        WB["World Bank Open Data\nEconomic indicators"]
+    end
+
+    subgraph INGEST["INGESTION LAYER"]
+        FF["Async Fetch + AbortSignal.timeout\nPer-module with retry logic"]
+        ULF["Universal Live Feed Injector\nAuto-injects GDELT articles into\nall 143 intelligence overlays"]
+        GQ["GDELT Query Builder\nOverlay topic → semantic query\n60+ geopolitical domain mappings"]
+    end
+
+    subgraph PROCESS["PROCESSING + RELEVANCE RANKING"]
+        NLP["Topic Extraction\nID-based + heading-text fallback"]
+        FALLBACK["Multi-tier Fallback\n24H → 72H → 168H timespan\nBroader query on empty result"]
+        DEDUP["Source Deduplication\nTimestamp sorting · domain attribution"]
+    end
+
+    subgraph DISPLAY["INTELLIGENCE DISPLAY LAYER"]
+        GLOBE["Canvas 2D Globe\nCountry threat-level coloring\nLive hotspot pins · real-time animation"]
+        COL["17 Intelligence Columns\n143 Modular Overlays\nnuclear · cyber · maritime · terror\nsanctions · conflict · space · SIGINT"]
+        MOBILE["Responsive Mobile UI\niPhone-optimized INTEL MENU\n55+ categories · touch-first design"]
+        TICKER["Live News Ticker\nScrolling GDELT headlines\nauto-refreshed every 5 min"]
+        STATUS["Live Feed Status Bar\nGDELT · ReliefWeb · USGS ·\nFIRMS · AIS — health indicators"]
+    end
+
+    SOURCES --> INGEST
+    G --> GQ
+    R --> FF
+    U --> FF
+    F --> FF
+    A --> FF
+    WB --> FF
+    GQ --> FF
+    FF --> ULF
+    FF --> FALLBACK
+    ULF --> PROCESS
+    NLP --> GQ
+    FALLBACK --> DEDUP
+    DEDUP --> GLOBE
+    DEDUP --> COL
+    DEDUP --> TICKER
+    PROCESS --> DISPLAY
+</pre>
+</div>
+</body>
+</html>

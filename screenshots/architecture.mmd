@@ -1,0 +1,45 @@
+flowchart TD
+    subgraph SOURCES["PUBLIC DATA SOURCES (Open APIs — no auth required)"]
+        G[GDELT Project\nReal-time global event stream\n300+ languages, 3M+ events/day]
+        R[ReliefWeb / UN OCHA\nHumanitarian situation reports]
+        U[USGS Earthquake API\nSeismic activity feed]
+        F[NASA FIRMS\nSatellite wildfire / hotspot data]
+        A[AIS Marine Traffic\nVessel position data]
+        WB[World Bank Open Data\nEconomic indicators]
+    end
+
+    subgraph INGEST["INGESTION LAYER"]
+        FF[Fetch + AbortSignal.timeout\nPer-module async fetch with retry]
+        ULF[Universal Live Feed Injector\nAuto-injects live articles into\nall 143 intelligence overlays]
+        GQ[GDELT Query Builder\nDynamic topic → query mapping\n60+ geopolitical domains]
+    end
+
+    subgraph PROCESS["PROCESSING + RANKING"]
+        NLP[Topic Extraction\nOverlay-ID → GDELT semantic query]
+        FALLBACK[Multi-tier Fallback\n24H → 72H → 168H timespan\nBroader query on empty result]
+        DEDUP[Source Deduplication\nTimestamp sorting\nDomain attribution]
+    end
+
+    subgraph DISPLAY["INTELLIGENCE DISPLAY"]
+        GLOBE[Canvas 2D Globe\nCountry threat-level coloring\nLive hotspot pins\nReal-time animation]
+        COL[17 Intelligence Columns\n143 modular overlays\nCovering nuclear · cyber · maritime\nterror · sanctions · conflict · space]
+        MOBILE[Responsive Mobile UI\niPhone-optimized INTEL MENU\n55+ categories, touch-first]
+        TICKER[Live News Ticker\nScrolling GDELT headlines\nauto-refreshed every 5 min]
+        STATUS[Live Feed Status Bar\nGDELT · ReliefWeb · USGS ·\nFIRMS · AIS health indicators]
+    end
+
+    SOURCES --> INGEST
+    FF --> ULF
+    GQ --> FF
+    INGEST --> PROCESS
+    NLP --> GQ
+    FALLBACK --> FF
+    PROCESS --> DISPLAY
+    DEDUP --> GLOBE
+    DEDUP --> COL
+    DEDUP --> TICKER
+
+    style SOURCES fill:#0a1628,stroke:#1e40af,color:#93c5fd
+    style INGEST fill:#0a2010,stroke:#166534,color:#86efac
+    style PROCESS fill:#1a0a28,stroke:#6b21a8,color:#c4b5fd
+    style DISPLAY fill:#1a0a0a,stroke:#991b1b,color:#fca5a5

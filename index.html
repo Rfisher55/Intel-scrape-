@@ -5171,6 +5171,108 @@ button{border-radius:2px!important}
 .p60kor-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .p60kor-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .p60kor-live-meta{font-size:8px;color:#475569;}
+/* ===== UNIVERSAL LIVE FEED STYLES ===== */
+.ulf-live-panel {
+  background: rgba(2,20,10,0.85);
+  border: 1px solid #14532d;
+  border-left: 3px solid #22c55e;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin: 0 0 16px 0;
+  font-family: 'Courier New', monospace;
+}
+.ulf-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.ulf-live-dot {
+  width: 7px;
+  height: 7px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: ulf-pulse 1.5s infinite;
+  flex-shrink: 0;
+}
+@keyframes ulf-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+.ulf-live-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #22c55e;
+}
+.ulf-count {
+  font-size: 8px;
+  color: #4ade80;
+  letter-spacing: 1px;
+}
+.ulf-sep { color: #1e3a5f; font-size: 9px; }
+.ulf-time {
+  font-size: 7px;
+  color: #334155;
+  letter-spacing: 0.5px;
+}
+.ulf-refresh-btn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid #14532d;
+  color: #4ade80;
+  font-family: 'Courier New', monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+.ulf-refresh-btn:hover { border-color: #22c55e; }
+.ulf-feed-items {
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #14532d transparent;
+}
+.ulf-item {
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(20,83,45,0.3);
+}
+.ulf-item:last-child { border-bottom: none; }
+.ulf-headline {
+  display: block;
+  color: #d1fae5;
+  font-size: 9px;
+  line-height: 1.4;
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+.ulf-headline:hover { color: #ffffff; }
+.ulf-meta {
+  color: #374151;
+  font-size: 7px;
+  letter-spacing: 0.3px;
+}
+.ulf-loading {
+  color: #1e3a5f;
+  font-size: 9px;
+  padding: 8px 0;
+  font-style: italic;
+}
+button[id$="-btn"].feed-active {
+  border-color: #14532d !important;
+}
+button[id$="-btn"].feed-active::after {
+  content: ' \2022';
+  color: #22c55e;
+  font-size: 8px;
+}
+@media (max-width: 1024px) {
+  .ulf-live-panel { margin: 0 0 12px 0; }
+  .ulf-feed-items { max-height: 240px; }
+}
+/* ===== END UNIVERSAL LIVE FEED STYLES ===== */
 </style>
 </head>
 <body>
@@ -34843,6 +34945,234 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 // ===== END PHASE 60 =====
+
+// ===== UNIVERSAL LIVE INTELLIGENCE FEED SYSTEM =====
+var _ULF_TOPICS = {
+  'wartracker':'war conflict battle military combat casualties',
+  'airstrike':'airstrike bombing air attack aviation military strike',
+  'nuclearposture':'nuclear weapons warhead arsenal deterrence',
+  'nukeproliferation':'nuclear proliferation weapons program enrichment',
+  'armscontrol':'arms control treaty START INF nuclear disarmament',
+  'bioterror':'biosecurity pathogen outbreak biological weapons laboratory',
+  'cbrn':'chemical biological radiological nuclear weapons CBRN',
+  'terrorism':'terrorism attack extremism militant jihadist',
+  'terrorfinance':'terror financing hawala cryptocurrency sanctions',
+  'cyberintel':'cyberattack hacking malware ransomware espionage',
+  'darkweb':'dark web ransomware cybercrime underground markets',
+  'disinfo':'disinformation propaganda misinformation influence operations',
+  'sigint':'signals intelligence surveillance electronic espionage SIGINT',
+  'surveillance':'government surveillance spyware Pegasus monitoring',
+  'deceptionops':'deception military information operations psychological warfare',
+  'aiwarfare':'artificial intelligence military autonomous weapons drone AI warfare',
+  'hybridwarfare':'hybrid warfare grey zone covert operations proxy conflict',
+  'militiaops':'militia armed group paramilitary insurgent rebel',
+  'flashpoints':'crisis flashpoint conflict escalation military tension',
+  'borderdisputes':'border dispute territorial conflict sovereignty',
+  'ethnicconflict':'ethnic conflict sectarian violence minority genocide',
+  'proxywars':'proxy war militia state-sponsored armed conflict',
+  'grayzone':'gray zone hybrid warfare covert operation below threshold',
+  'stratalliances':'military alliance NATO AUKUS QUAD security cooperation',
+  'forceposture':'military deployment posture readiness forward basing',
+  'maritimeintel':'maritime naval shipping piracy sea lane security',
+  'portsecurity':'port security maritime threat shipping container',
+  'fragmentstates':'failed state fragile governance instability index',
+  'mediaintel':'state media propaganda press freedom censorship journalist',
+  'resilience':'national resilience security governance stability',
+  'popintel':'population demographic youth unemployment instability',
+  'exportctrl':'export controls sanctions technology denial weapons',
+  'regimewatch':'authoritarian regime political repression human rights',
+  'quantumrace':'quantum computing technology military quantum supremacy',
+  'stratreserves':'strategic oil reserve food security stockpile',
+  'diplo':'diplomacy foreign policy relations sanctions negotiation',
+  'space':'space warfare satellite ASAT orbital military space force',
+  'iss':'space station satellite orbit launch',
+  'econint':'economic intelligence GDP sanctions trade deficit currency',
+  'coupwatch':'coup military takeover junta overthrow political crisis',
+  'sanctionstracker':'sanctions violation evasion OFAC SDN enforcement',
+  'energysecurity':'energy security oil gas pipeline LNG chokepoint',
+  'narco':'cartel fentanyl drug trafficking narco organized crime',
+  'refugee':'refugee displacement humanitarian crisis IDP asylum',
+  'climate':'climate security drought flood food security conflict water',
+  'wmd':'weapons mass destruction chemical biological nuclear radiological',
+  'rareearth':'rare earth minerals critical materials supply chain',
+  'missile':'missile test ballistic cruise hypersonic launch threat',
+  'nuclear':'nuclear weapons test explosion reactor accident',
+  'infra':'infrastructure attack pipeline power grid sabotage cyber',
+  'waterwars':'water dispute dam river conflict drought scarcity',
+  'hostage':'hostage prisoner release detainee exchange kidnapping',
+  'election':'election interference disinformation foreign influence deepfake',
+  'finwar':'sanctions financial warfare dollar SWIFT dedollarization',
+  'arctic':'Arctic military Russia NATO icebreaker Svalbard',
+  'nuclearaccident':'nuclear accident radiation Fukushima IAEA incident',
+  'tranrep':'transnational repression assassination dissident exile killing',
+  'milspend':'defense budget military spending arms procurement NATO',
+  'supplychain':'supply chain shortage semiconductor chips critical minerals',
+  'doctrine':'military doctrine warfare strategy operations warfighting',
+  'migration':'migration refugee border crossing smuggling asylum',
+  'infowar':'disinformation information warfare propaganda deepfake narrative',
+  'crisis':'crisis conflict war humanitarian emergency disaster',
+  'intel':'intelligence agency CIA spy operation covert NSA Mossad',
+  'lawfare':'international court ICC ICJ war crimes arrest warrant',
+  'scs':'South China Sea Philippines China maritime island dispute Spratly',
+  'taiwan':'Taiwan China PLA military strait invasion blockade defense',
+  'korea':'North Korea DPRK nuclear missile Kim Jong-un Korean peninsula',
+  'bio':'biosecurity pathogen outbreak biological weapons BSL lab',
+  'crime':'organized crime cartel mafia syndicate trafficking criminal',
+  'drone':'drone warfare UAV unmanned aerial loitering munition strike',
+  'pandemic':'outbreak pandemic disease surveillance WHO health emergency',
+  'cable':'undersea cable cut sabotage submarine infrastructure fiber',
+  'space54':'satellite space warfare ASAT orbital military space force',
+  'coup':'coup military takeover junta overthrow political crisis',
+  'sanctions':'sanctions violation evasion OFAC SDN financial enforcement',
+  'energy':'energy security oil gas pipeline LNG supply chain chokepoint',
+  'refugees':'refugee displacement humanitarian crisis IDP',
+  'climatesec':'climate change drought flood food security conflict water',
+  'biowatch':'biosecurity pathogen outbreak biological weapons laboratory',
+  'crimes':'organized crime cartel mafia trafficking criminal network',
+  'drones':'drone warfare UAV unmanned aerial loitering munition',
+  'pandemic54':'pandemic outbreak disease surveillance Mpox H5N1 WHO',
+  'cables':'undersea cable cut sabotage submarine infrastructure',
+  'hostages':'hostage prisoner release detainee exchange kidnapping',
+  'elections':'election interference disinformation foreign influence',
+  'finwarfare':'sanctions financial warfare SWIFT dedollarization',
+  'arcticwatch':'Arctic military Russia NATO icebreaker sovereignty',
+  'infraattack':'infrastructure attack pipeline power grid sabotage',
+  'nukeaccident':'nuclear accident radiation Fukushima IAEA contamination'
+};
+
+function _ulfGetTopic(overlay) {
+  var id = overlay.id || '';
+  var prefix = id.replace('-overlay','').replace('overlay','');
+  var clean = prefix.replace(/^p\d+-?/,'').replace(/^p\d\d-?/,'');
+  if (_ULF_TOPICS[clean]) return _ULF_TOPICS[clean];
+  if (_ULF_TOPICS[prefix]) return _ULF_TOPICS[prefix];
+  var h = overlay.querySelector('h1,h2,.title,[class*="title"]');
+  if (h) {
+    var txt = h.textContent.trim().toLowerCase().replace(/[^a-z\s]/g,'').trim();
+    return txt.split(' ').slice(0,4).join(' ');
+  }
+  return 'intelligence security conflict military';
+}
+
+function _ulfInjectFeed(overlay) {
+  var existingFeed = overlay.querySelector('.ulf-live-panel');
+  if (existingFeed) {
+    _ulfRefreshFeed(overlay);
+    return;
+  }
+  var feedId = 'ulf-' + (overlay.id||'unknown') + '-feed';
+  var countId = 'ulf-' + (overlay.id||'unknown') + '-count';
+  var timeId = 'ulf-' + (overlay.id||'unknown') + '-time';
+  var panel = document.createElement('div');
+  panel.className = 'ulf-live-panel';
+  panel.innerHTML =
+    '<div class="ulf-panel-header">'+
+      '<div class="ulf-live-dot"></div>'+
+      '<span class="ulf-live-label">LIVE INTELLIGENCE FEED</span>'+
+      '<span id="'+countId+'" class="ulf-count">--</span>'+
+      '<span class="ulf-sep">|</span>'+
+      '<span id="'+timeId+'" class="ulf-time">--</span>'+
+      '<button class="ulf-refresh-btn" onclick="_ulfRefreshFeed(this.closest(\'[id$=\\\"-overlay\\\"],[id*=\\\"overlay\\\"]\'))">REFRESH</button>'+
+    '</div>'+
+    '<div id="'+feedId+'" class="ulf-feed-items"><div class="ulf-loading">Fetching live intelligence...</div></div>';
+  var firstSection = overlay.querySelector('[class*="body"],[class*="content"],[class*="grid"]') ||
+                     (overlay.firstElementChild && overlay.firstElementChild.nextElementSibling);
+  if (firstSection) {
+    overlay.insertBefore(panel, firstSection);
+  } else {
+    overlay.appendChild(panel);
+  }
+  _ulfRefreshFeed(overlay);
+}
+
+async function _ulfRefreshFeed(overlay) {
+  if (!overlay) return;
+  var feedId = 'ulf-' + (overlay.id||'unknown') + '-feed';
+  var countId = 'ulf-' + (overlay.id||'unknown') + '-count';
+  var timeId = 'ulf-' + (overlay.id||'unknown') + '-time';
+  var feedEl = document.getElementById(feedId);
+  var countEl = document.getElementById(countId);
+  var timeEl = document.getElementById(timeId);
+  if (!feedEl) return;
+  feedEl.innerHTML = '<div class="ulf-loading">Fetching live intelligence...</div>';
+  var topic = _ulfGetTopic(overlay);
+  var q = encodeURIComponent(topic);
+  var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=25&timespan=24H&format=json';
+  try {
+    var r = await fetch(url, {signal:AbortSignal.timeout(12000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if (!arts.length) {
+      url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=25&timespan=72H&format=json';
+      r = await fetch(url, {signal:AbortSignal.timeout(12000)});
+      d = await r.json();
+      arts = (d&&d.articles)||[];
+    }
+    if (countEl) countEl.textContent = arts.length + ' ARTICLES';
+    if (timeEl) timeEl.textContent = new Date().toISOString().replace('T',' ').slice(0,16)+' UTC';
+    if (!arts.length) {
+      feedEl.innerHTML = '<div style="color:#334155;font-size:9px;padding:8px;">No recent articles found. Intelligence context shown below.</div>';
+      return;
+    }
+    feedEl.innerHTML = arts.map(function(a){
+      var dt = (a.seendate||'').slice(0,10);
+      return '<div class="ulf-item">'+
+        '<a href="'+a.url+'" target="_blank" class="ulf-headline">'+a.title+'</a>'+
+        '<div class="ulf-meta">'+a.domain+' &nbsp;|&nbsp; '+dt+'</div>'+
+      '</div>';
+    }).join('');
+  } catch(e) {
+    if (feedEl) feedEl.innerHTML = '<div style="color:#1e3a5f;font-size:9px;padding:8px;">Live feed temporarily offline. Analytical context available below.</div>';
+    if (countEl) countEl.textContent = 'OFFLINE';
+  }
+}
+
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('button[id$="-btn"],[id$="-btn"]');
+  if (!btn) return;
+  var rawId = btn.id;
+  if (!rawId || rawId === 'mobile-intel-toggle') return;
+  var overlayId = rawId.replace(/-btn$/, '-overlay');
+  setTimeout(function(){
+    var ov = document.getElementById(overlayId);
+    if (ov && (ov.style.display === 'flex' || ov.style.display === 'block')) {
+      _ulfInjectFeed(ov);
+    }
+  }, 150);
+}, true);
+// ===== END UNIVERSAL LIVE FEED =====
+
+// ===== LIVE DATA SOURCES =====
+async function _fetchOchaFTS(targetId) {
+  var el = document.getElementById(targetId);
+  if (!el) return;
+  el.innerHTML = '<div class="ulf-loading">Fetching UN OCHA funding data...</div>';
+  try {
+    var r = await fetch('https://api.hpc.tools/v2/public/fts/flow?limit=10&sortOrder=desc&sortField=date', {signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var flows = (d&&d.data&&d.data.flows)||[];
+    if (!flows.length) { el.innerHTML = '<div class="ulf-loading">No data available.</div>'; return; }
+    el.innerHTML = '<div style="font-size:7px;color:#475569;margin-bottom:4px;letter-spacing:1px;">LIVE UN OCHA HUMANITARIAN FUNDING FLOWS</div>' +
+      flows.slice(0,8).map(function(f){
+        var amt = f.amountUSD ? ('$'+(f.amountUSD/1000000).toFixed(1)+'M') : 'N/A';
+        var dest = (f.destinationObjects&&f.destinationObjects[0]&&f.destinationObjects[0].name)||'Unknown';
+        return '<div class="ulf-item"><span style="color:#93c5fd;font-size:8px;">'+amt+'</span> <span style="color:#e2e8f0;font-size:8px;">'+dest+'</span></div>';
+      }).join('');
+  } catch(e) { el.innerHTML = '<div class="ulf-loading">OCHA feed offline.</div>'; }
+}
+
+async function _fetchWorldBankIndicator(countryCode, indicator, targetId) {
+  var el = document.getElementById(targetId);
+  if (!el) return;
+  try {
+    var r = await fetch('https://api.worldbank.org/v2/country/'+countryCode+'/indicator/'+indicator+'?format=json&mrv=1', {signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var val = d&&d[1]&&d[1][0]&&d[1][0].value;
+    var yr = d&&d[1]&&d[1][0]&&d[1][0].date;
+    if (val && el) el.innerHTML = '<span style="color:#22c55e;font-size:9px;font-weight:700;">'+(Math.round(val*10)/10)+'</span><span style="color:#475569;font-size:7px;"> ('+yr+' World Bank)</span>';
+  } catch(e) {}
+}
+// ===== END LIVE DATA SOURCES =====
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
