@@ -2222,6 +2222,102 @@ button{border-radius:2px!important}
 .mar-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .mar-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .mar-gdelt-meta{font-size:8px;color:#475569;}
+/* === COLUMN 7 buttons (right:915px) === */
+#laws-btn{position:fixed;top:55px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#laws-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#bioweapons-btn{position:fixed;top:95px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#bioweapons-btn:hover{border-color:#22c55e;color:#86efac;}
+#closecalls-btn{position:fixed;top:135px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#closecalls-btn:hover{border-color:#ef4444;color:#fca5a5;}
+/* LAWS overlay */
+#laws-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.laws-country-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:16px;margin-bottom:14px;}
+.laws-country-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.laws-country-name{font-size:15px;font-weight:700;letter-spacing:2px;}
+.laws-threat-badge{font-size:8px;padding:3px 10px;border-radius:3px;letter-spacing:1px;font-weight:700;}
+.laws-threat-leading{background:rgba(30,58,95,.5);border:1px solid #3b82f6;color:#93c5fd;}
+.laws-threat-nearpeer{background:rgba(127,29,29,.4);border:1px solid #ef4444;color:#fca5a5;}
+.laws-threat-developing{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.laws-threat-advanced{background:rgba(76,29,149,.4);border:1px solid #8b5cf6;color:#c4b5fd;}
+.laws-sys-card{background:rgba(5,10,25,0.6);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:10px;margin-bottom:8px;}
+.laws-sys-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px;flex-wrap:wrap;}
+.laws-sys-name{font-size:10px;font-weight:700;color:#e2e8f0;letter-spacing:.5px;}
+.laws-sys-type{font-size:8px;color:#64748b;margin-top:2px;}
+.laws-status-badge{font-size:7px;padding:2px 7px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.laws-status-operational{background:rgba(20,83,45,.4);border:1px solid #22c55e;color:#86efac;}
+.laws-status-active{background:rgba(20,83,45,.3);border:1px solid #4ade80;color:#86efac;}
+.laws-status-testing{background:rgba(120,53,15,.25);border:1px solid #f97316;color:#fdba74;}
+.laws-status-development{background:rgba(30,58,95,.4);border:1px solid #3b82f6;color:#93c5fd;}
+.laws-status-demonstrated{background:rgba(76,29,149,.3);border:1px solid #a78bfa;color:#c4b5fd;}
+.laws-status-deployed{background:rgba(20,83,45,.4);border:1px solid #22c55e;color:#86efac;}
+.laws-status-combattested{background:rgba(127,29,29,.35);border:1px solid #dc2626;color:#fca5a5;}
+.laws-status-combatproven{background:rgba(127,29,29,.35);border:1px solid #dc2626;color:#fca5a5;}
+.laws-status-nearsvc{background:rgba(120,53,15,.3);border:1px solid #f97316;color:#fdba74;}
+.laws-status-commercialmil{background:rgba(30,41,59,.5);border:1px solid #64748b;color:#94a3b8;}
+.laws-status-activerd{background:rgba(30,58,95,.35);border:1px solid #60a5fa;color:#93c5fd;}
+.laws-sys-detail{font-size:9px;color:#94a3b8;line-height:1.6;}
+.laws-concern-card{background:rgba(127,29,29,0.15);border:1px solid rgba(239,68,68,.25);border-radius:4px;padding:10px;margin-bottom:8px;}
+.laws-concern-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;}
+.laws-concern-name{font-size:10px;font-weight:700;color:#fca5a5;letter-spacing:.5px;}
+.laws-concern-sev{font-size:7px;padding:2px 7px;border-radius:2px;letter-spacing:1px;font-weight:700;}
+.laws-concern-critical{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.laws-concern-high{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.laws-concern-elevated{background:rgba(120,53,15,.2);border:1px solid #eab308;color:#fde047;}
+.laws-concern-detail{font-size:9px;color:#94a3b8;line-height:1.6;}
+.laws-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.laws-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.laws-gdelt-meta{font-size:8px;color:#475569;}
+/* Bioweapons overlay */
+#bioweapons-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.bio-state-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:16px;margin-bottom:14px;}
+.bio-state-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.bio-country{font-size:14px;font-weight:700;letter-spacing:2px;}
+.bio-threat-badge{font-size:8px;padding:3px 10px;border-radius:3px;letter-spacing:1px;font-weight:700;}
+.bio-threat-critical{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.bio-threat-high{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.bio-threat-elevated{background:rgba(120,53,15,.2);border:1px solid #eab308;color:#fde047;}
+.bio-threat-monitor{background:rgba(30,58,95,.3);border:1px solid #3b82f6;color:#93c5fd;}
+.bio-status-line{font-size:9px;color:#fde047;margin-bottom:8px;font-weight:700;letter-spacing:.5px;}
+.bio-section-label{font-size:8px;letter-spacing:.2em;color:#475569;margin-bottom:4px;margin-top:10px;font-weight:700;text-transform:uppercase;}
+.bio-history{font-size:9px;color:#94a3b8;line-height:1.6;border-left:3px solid rgba(100,116,139,.35);padding-left:8px;}
+.bio-agents-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.bio-agent-chip{font-size:8px;padding:2px 7px;background:rgba(127,29,29,.25);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:3px;}
+.bio-facilities-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.bio-facility-chip{font-size:8px;padding:2px 7px;background:rgba(15,23,42,.6);border:1px solid rgba(100,116,139,.3);color:#94a3b8;border-radius:3px;}
+.bio-concerns{font-size:9px;color:#fde047;line-height:1.6;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;margin-top:6px;}
+.bio-bsl4-card{background:rgba(15,23,42,0.6);border:1px solid rgba(34,197,94,.2);border-radius:4px;padding:10px;margin-bottom:8px;}
+.bio-bsl4-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.bio-bsl4-name{font-size:10px;font-weight:700;color:#86efac;letter-spacing:.5px;}
+.bio-bsl4-country{font-size:8px;color:#475569;}
+.bio-bsl4-agents{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.bio-bsl4-chip{font-size:8px;padding:2px 7px;background:rgba(20,83,45,.2);border:1px solid rgba(34,197,94,.25);color:#86efac;border-radius:3px;}
+.bio-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.bio-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.bio-gdelt-meta{font-size:8px;color:#475569;}
+/* Cold War Close Calls overlay */
+#closecalls-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.cc-card{background:rgba(15,23,42,0.7);border-left:4px solid #ef4444;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 6px 6px 0;padding:14px;margin-bottom:12px;}
+.cc-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.cc-name{font-size:12px;font-weight:700;color:#e2e8f0;letter-spacing:.8px;}
+.cc-meta{font-size:8px;color:#64748b;margin-top:3px;letter-spacing:.5px;}
+.cc-sev-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.cc-sev-existential{background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;animation:ccpulse 2s infinite;}
+.cc-sev-critical{background:rgba(127,29,29,.4);border:1px solid #ef4444;color:#fca5a5;}
+.cc-sev-high{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.cc-sev-elevated{background:rgba(120,53,15,.2);border:1px solid #eab308;color:#fde047;}
+@keyframes ccpulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+.cc-section-label{font-size:8px;letter-spacing:.2em;color:#475569;margin-bottom:4px;margin-top:10px;font-weight:700;text-transform:uppercase;}
+.cc-what{font-size:9px;color:#e2e8f0;line-height:1.7;border-left:3px solid rgba(239,68,68,.4);padding-left:8px;}
+.cc-why{font-size:9px;color:#fde047;line-height:1.6;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;}
+.cc-lesson{font-size:9px;color:#86efac;line-height:1.6;border-left:3px solid rgba(34,197,94,.4);padding-left:8px;font-style:italic;}
+.cc-risk-box{background:rgba(127,29,29,0.15);border:1px solid rgba(239,68,68,.3);border-radius:6px;padding:14px;margin-bottom:16px;}
+.cc-risk-title{font-size:8px;letter-spacing:.25em;color:#ef4444;font-weight:700;margin-bottom:10px;}
+.cc-risk-row{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);gap:12px;}
+.cc-risk-label{font-size:9px;font-weight:700;color:#fca5a5;min-width:160px;flex-shrink:0;}
+.cc-risk-desc{font-size:9px;color:#94a3b8;line-height:1.5;flex:1;}
+.cc-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cc-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.cc-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -20199,6 +20295,375 @@ async function _fetchMaritimeGDELT(){
 }
 // ===== END PHASE 29 =====
 
+// ===== PHASE 30: LAWS, BIOWEAPONS, CLOSE CALLS =====
+
+const LAWS_PROGRAMS = [
+  {"country":"United States","color":"#3b82f6","threat":"LEADING","systems":[
+    {"name":"Collaborative Combat Aircraft (CCA)","type":"Loyal Wingman UCAV","status":"DEVELOPMENT","detail":"AI-piloted F-16-class wingmen for manned fighters. Boeing MQ-28, Anduril Fury. 1,000+ planned."},
+    {"name":"Replicator Initiative","type":"Attritable Drone Swarms","status":"ACTIVE","detail":"DOD initiative to field 1,000+ autonomous systems by 2025. Counter-PLA Taiwan scenario driven."},
+    {"name":"DARPA ACE (Air Combat Evolution)","type":"AI Dogfighter","status":"DEMONSTRATED","detail":"AI defeated F-16 human pilot 5-0 in controlled dogfight (2023). VISTA X-62A testbed."},
+    {"name":"Ghost Shark (Navy)","type":"Extra-Large Autonomous UUV","status":"DEVELOPMENT","detail":"Long-range submarine-hunting autonomous underwater vehicle. Pacific focus."},
+    {"name":"Counter-UAS L-MADIS","type":"Defensive LAWS","status":"OPERATIONAL","detail":"Marine air defense system. Automated detection/defeat of drone swarms without human-in-loop authorization."}
+  ]},
+  {"country":"China","color":"#ef4444","threat":"NEAR-PEER","systems":[
+    {"name":"CH-7 Rainbow","type":"High-altitude UCAV","status":"OPERATIONAL","detail":"Stealthy UCAV resembling B-2. Satellite/data-link autonomous operation. Export to middle powers."},
+    {"name":"BLOWFISH A3","type":"Autonomous Attack Helicopter","status":"DEMONSTRATED","detail":"Autonomous helicopter UAV with targeting AI. No human trigger required per CASC specs."},
+    {"name":"PLA Drone Swarms","type":"Mass Attrition Swarms","status":"ACTIVE R&D","detail":"PLA demonstrated 1,000-drone coordinated swarms. Fujian exercises show saturation attack doctrine."},
+    {"name":"HSU-001 UUV","type":"Submarine-hunting UUV","status":"DEPLOYED","detail":"PLAN autonomous underwater vehicle for ISR and mine-laying. Pacific submarine hunt role."},
+    {"name":"Ziyan Blowfish","type":"Autonomous rotary-wing","status":"COMMERCIAL/MIL","detail":"Commercially available loitering autonomous attack drone. Exported to multiple nations."}
+  ]},
+  {"country":"Russia","color":"#dc2626","threat":"DEVELOPING","systems":[
+    {"name":"Uran-9","type":"Autonomous Ground Combat Vehicle","status":"COMBAT-TESTED","detail":"Remote/autonomous UGV. Tested in Syria 2018 — significant failures documented. Still in service."},
+    {"name":"S-70 Okhotnik (Hunter-B)","type":"Heavy Stealth UCAV","status":"TESTING","detail":"30-ton flying wing UCAV. Su-57 loyal wingman role. First flight 2019, entering service delayed."},
+    {"name":"Poseidon (Status-6)","type":"Nuclear-armed Autonomous UUV","status":"NEAR-OPERATIONAL","detail":"Intercontinental nuclear-armed torpedo. 100MT warhead. Tsunami weapon against coastal cities. Autonomous AI navigation."},
+    {"name":"KUB-BLA Loitering Munition","type":"Autonomous Kamikaze Drone","status":"COMBAT-PROVEN","detail":"Used in Ukraine 2022. Commercial AI-assisted target recognition. One-way attack drone."}
+  ]},
+  {"country":"Israel","color":"#8b5cf6","threat":"ADVANCED","systems":[
+    {"name":"Harpy / Harop","type":"Anti-Radiation Loitering Munition","status":"OPERATIONAL","detail":"Fully autonomous radar-hunting loitering munition. Harop has man-in-loop option. Exported globally."},
+    {"name":"Elbit Hermes 900","type":"Autonomous ISR/Strike","status":"OPERATIONAL","detail":"Long-endurance autonomous MALE UAV. AI target detection. Used in Gaza and exported."},
+    {"name":"Iron Sting","type":"Autonomous Mortar Round","status":"OPERATIONAL","detail":"World\'s first fully autonomous precision mortar round. AI target acquisition without GPS."}
+  ]}
+];
+
+const LAWS_CONCERNS = [
+  {"concern":"Accountability Gap","detail":"Who is responsible when an autonomous weapon kills civilians? No legal framework exists for machine war crimes.","severity":"CRITICAL"},
+  {"concern":"Escalation Speed","detail":"Autonomous systems can engage in milliseconds — faster than human de-escalation. Automated retaliation could cause unintended war.","severity":"CRITICAL"},
+  {"concern":"Spoofing/Hacking","detail":"AI target recognition vulnerable to adversarial inputs. GPS spoofing. Deepfake targeting data. Hacked autonomous weapons could be turned against owner.","severity":"HIGH"},
+  {"concern":"Proliferation","detail":"LAWS cheaper than manned systems. State + non-state actors (terrorist use of autonomous drones already occurring in Iraq/Syria).","severity":"HIGH"},
+  {"concern":"CCW Negotiations Stalled","detail":"UN Convention on Conventional Weapons (CCW) negotiations on LAWS ban stalled since 2014. US, Russia, China blocking binding treaty.","severity":"ELEVATED"}
+];
+
+const BIO_STATE_PROGRAMS = [
+  {"country":"Russia (Biopreparat Legacy)","iso":"RU","color":"#ef4444","threat":"CRITICAL",
+   "status":"UNDECLARED — Believed Maintained",
+   "history":"Soviet Biopreparat employed 60,000 scientists developing weaponized anthrax, plague, smallpox, VHF, Marburg, Ebola. Officially disbanded 1992. Ken Alibek (defector) revealed full scope.",
+   "knownAgents":["Anthrax (Svet Peterburg strain — antibiotic resistant)","Plague (weaponized Yersinia pestis)","Smallpox (classified stocks beyond WHO-authorized)","Marburg / Ebola variants","Novichok nerve agents (crossover CBRN)"],
+   "facilities":["Sergiev Posad (SRCAMB)","Obolensk (SRCAM)","Koltsovo (Vector — smallpox and VHF)"],
+   "concerns":"Russia never fully disclosed Biopreparat program scope. Vector facility maintains smallpox (authorized by WHO). FSB oversight of legacy program suspected. Novichok use (Salisbury) shows chemical/bio norm violation tolerance."},
+  {"country":"China","iso":"CN","color":"#f97316","threat":"HIGH",
+   "status":"Officially DECLARED NONE — Intelligence Assessments Disputed",
+   "history":"Limited historical offensive program. PRC signed BWC 1984. Post-COVID: massive BSL-4 expansion. Wuhan Institute of Virology gain-of-function research controversy.",
+   "knownAgents":["Unknown — intelligence assessments disagree","Gain-of-function research concerns at WIV","Suspected dual-use pathogen research"],
+   "facilities":["Wuhan Institute of Virology (BSL-4)","Chinese CDC (Beijing)","PLA Institute of Microbiology","Multiple PLA-linked BSL-3 facilities"],
+   "concerns":"US intelligence divided on COVID-19 lab leak vs natural origin. PLA funding of dual-use research. Massive BSL-4 expansion (40+ facilities planned). Dual-use capability is the threat."},
+  {"country":"North Korea","iso":"KP","color":"#8b5cf6","threat":"HIGH",
+   "status":"UNDECLARED — Intelligence Assessed as ACTIVE",
+   "history":"DPRK believed to have developed BW capability since 1960s. Never joined BWC. 13 known BW agents per ROK DoD.",
+   "knownAgents":["Anthrax (aerial delivery tests documented)","Plague","Botulinum toxin","Hemorrhagic fevers","Smallpox (suspected)"],
+   "facilities":["Korea BW Research Institute Chongchongang","Multiple dual-use pharmaceutical plants"],
+   "concerns":"Kim Jong-un ordered anthrax warhead development for ICBMs per ROK intelligence 2017. DPRK not BWC signatory. Demonstrated willingness to use WMD (VX assassination of Kim Jong-nam 2017)."},
+  {"country":"Iran","iso":"IR","color":"#f97316","threat":"ELEVATED",
+   "status":"Likely LATENT CAPABILITY",
+   "history":"Iran used chemical weapons (Iraqi-supplied) in Iran-Iraq war. Signed BWC 1973. Suspected offensive BW research 1980s-1990s.",
+   "knownAgents":["Unknown current capability","Suspected mycotoxin and ricin research","Dual-use pharmaceutical/fermentation infrastructure"],
+   "facilities":["Multiple dual-use biodefense facilities","Imam Khomeini International Hospital","IRGC-linked research institutes"],
+   "concerns":"IRGC interest in BW capability documented. Dual-use infrastructure exists. Ricin-based assassination plot against US targets 2022 (FBI disrupted)."},
+  {"country":"USA","iso":"US","color":"#3b82f6","threat":"MONITOR",
+   "status":"OFFENSIVE PROGRAM OFFICIALLY DISMANTLED 1969-1970",
+   "history":"Nixon unilaterally dismantled US offensive BW program 1969-1970. All stockpiles destroyed. Now purely defensive (USAMRIID, BARDA, Project BioShield).",
+   "knownAgents":["NONE (offensive)","Defensive research on threat agents"],
+   "facilities":["USAMRIID Fort Detrick","CDC Atlanta (CDC Select Agent Program)","BARDA HHS","NIH/NIAID Bethesda"],
+   "concerns":"Contractor lab accidents (Tulane 2015, Aberdeen 2015). Anthrax mailing 2001 (AMERITHRAX — Ivins/USAMRIID). Dual-use research of concern (DURC) policy gaps."}
+];
+
+const BSL4_FACILITIES = [
+  {"name":"CDC Atlanta","country":"USA","lat":33.8,"lng":-84.3,"agents":["Ebola","Marburg","Smallpox"]},
+  {"name":"USAMRIID Fort Detrick","country":"USA","lat":39.4,"lng":-77.4,"agents":["Anthrax","Ebola","Plague"]},
+  {"name":"Porton Down (DSTL)","country":"UK","lat":51.1,"lng":-1.7,"agents":["Multiple select agents","Novichok (historical)"]},
+  {"name":"Vector Institute (Koltsovo)","country":"Russia","lat":54.9,"lng":83.2,"agents":["Smallpox (authorized)","Ebola","Marburg"]},
+  {"name":"Wuhan Institute of Virology","country":"China","lat":30.5,"lng":114.3,"agents":["SARS-like coronaviruses","Bat viruses","Unknown"]},
+  {"name":"Institut Merieux (P4 Lyon)","country":"France","lat":45.7,"lng":4.8,"agents":["VHF agents","Experimental"]},
+  {"name":"Heinrich Pette Institut","country":"Germany","lat":53.6,"lng":10.0,"agents":["VHF pathogens"]},
+  {"name":"KEMRI Nairobi BSL-3","country":"Kenya","lat":-1.3,"lng":36.8,"agents":["Regional pathogens"]}
+];
+
+const NUCLEAR_CLOSE_CALLS = [
+  {"name":"Vasili Arkhipov Saves the World","date":"Oct 27, 1962","location":"Caribbean Sea","lat":22,"lng":-77,
+   "severity":"EXISTENTIAL","color":"#ef4444",
+   "what":"Soviet submarine B-59 (depth-charged by US Navy, lost contact with Moscow for days) prepared to launch nuclear torpedo. Soviet protocol required unanimous agreement of 3 officers. Arkhipov (flotilla commander, on board) was the one officer who refused to authorize. Averted nuclear torpedo launch that would have triggered nuclear war.",
+   "why_missed":"Internal Soviet Navy disagreement. US Navy didn\'t know B-59 had nuclear-armed torpedo.",
+   "lesson":"One man\'s judgment prevented nuclear war during Cuban Missile Crisis."},
+  {"name":"Able Archer 83","date":"Nov 2-11, 1983","location":"NATO/Europe","lat":52,"lng":13,
+   "severity":"CRITICAL","color":"#ef4444",
+   "what":"NATO war game simulating nuclear release procedures. KGB and GRU believed it was cover for actual first strike. Soviet forces in East Germany and Poland placed on highest nuclear alert. Soviet Politburo nearly pre-emptively launched. Oleg Gordievsky (KGB defector) alerted UK/CIA to Soviet belief exercise was real.",
+   "why_missed":"Gordievsky\'s intelligence allowed US/UK to understand Soviet misperception and defuse.",
+   "lesson":"Most dangerous nuclear near-miss of Cold War per some analysts. Secrecy of exercise nearly caused the war it simulated."},
+  {"name":"Stanislav Petrov Incident","date":"Sep 26, 1983","location":"Moscow, Russia","lat":55.7,"lng":37.6,
+   "severity":"EXISTENTIAL","color":"#ef4444",
+   "what":"Soviet Oko satellite early warning system showed 5 US ICBMs inbound. Protocol required Petrov to report to command. He judged it a false alarm (only 5 missiles — illogical first strike) and reported malfunction. He was correct — sun angle caused satellite sensor anomaly. Had he reported, Soviet leadership would likely have launched.",
+   "why_missed":"Petrov\'s individual judgment and violation of protocol. System failure was real.",
+   "lesson":"Human judgment overrode automated war-alert system. Single human prevented nuclear launch."},
+  {"name":"1983 Soviet Nuclear False Alarm (full year)","date":"1983","location":"Global","lat":0,"lng":0,
+   "severity":"HIGH","color":"#f97316",
+   "what":"Year 1983 saw Soviet leadership (Andropov) genuinely believing US was preparing first strike: Reagan\'s Evil Empire speech, SDI announcement, KAL-007 shootdown, Able Archer. Intelligence historians call 1983 the most dangerous year since 1962.",
+   "why_missed":"No single event triggered launch. Accumulated misperceptions managed through 1984.",
+   "lesson":"Systemic misperception at highest levels of nuclear state is itself a nuclear risk."},
+  {"name":"Titan II Silo Explosion (Damascus, Arkansas)","date":"Sep 19, 1980","location":"Damascus, AR, USA","lat":35.4,"lng":-92.4,
+   "severity":"HIGH","color":"#f97316",
+   "what":"Mechanic dropped socket into Titan II ICBM silo. Fuel explosion blew 740-ton blast door 200m. Nuclear warhead (9-megaton W-53) ejected. Safety mechanisms held — warhead did not detonate. One airman killed.",
+   "why_missed":"W-53 safety interlocks functioned correctly. Pure luck on warhead placement after ejection.",
+   "lesson":"Nuclear weapons accidents at home bases are not rare. PAL/safety systems are the thin line."},
+  {"name":"Norwegian Rocket Incident","date":"Jan 25, 1995","location":"Norway/Russia","lat":69,"lng":20,
+   "severity":"CRITICAL","color":"#ef4444",
+   "what":"Norway launched research rocket studying Northern Lights. Soviet radar interpreted as US submarine-launched Trident missile. Nuclear briefcase (Cheget) activated. Yeltsin had 10 minutes to decide. Rocket trajectory showed it wasn\'t heading for Russia — Yeltsin stood down. First known activation of Russian nuclear briefcase.",
+   "why_missed":"Russia had been notified of rocket launch in advance — notification failed to reach duty officers.",
+   "lesson":"Post-Cold War nuclear risks persisted. Communication failures persist despite hotlines."},
+  {"name":"1995 Kargil Nuclear Signaling","date":"1999","location":"Kashmir","lat":35,"lng":77,
+   "severity":"ELEVATED","color":"#eab308",
+   "what":"India-Pakistan Kargil War. Pakistani military moved nuclear warheads toward forward positions. US satellite intelligence detected movements. Clinton administration sent stern back-channel message to Pakistan. Pakistan stood down but came close to fielding nuclear weapons.",
+   "why_missed":"US diplomatic intervention. Pakistani civilian leadership unaware of full military nuclear posture.",
+   "lesson":"Regional nuclear states present acute risk. Civil-military coordination failures in nuclear states are real."},
+  {"name":"B-52 Broken Arrow — Goldsboro","date":"Jan 24, 1961","location":"Goldsboro, NC, USA","lat":35.4,"lng":-77.9,
+   "severity":"EXISTENTIAL","color":"#ef4444",
+   "what":"B-52 broke up in flight releasing two 3.8-megaton nuclear bombs. One bomb\'s parachute deployed — it landed intact with 5 of 6 arming switches engaged. ONE switch prevented detonation. The other bomb impacted at high speed and disintegrated in a field. A crater is still radioactive today.",
+   "why_missed":"Single safety switch — which was later found to be a design vulnerability — held. Pure mechanical luck.",
+   "lesson":"A single low-voltage switch was all that stood between Goldsboro NC and nuclear detonation 260x Hiroshima."}
+];
+
+const CLOSE_CALLS_CURRENT_RISKS = [
+  {"label":"Russia-Ukraine Nuclear Signaling","desc":"Putin repeated nuclear threats 2022-2024. Tactical nuclear weapon deployment to Belarus. NATO Article 5 ambiguity scenarios actively wargamed."},
+  {"label":"DPRK Doctrine Change","desc":"Kim Jong-un codified nuclear first-use in law 2022. ICBMs capable of reaching CONUS. Demonstrated willingness to test despite international pressure."},
+  {"label":"China Arsenal Expansion","desc":"PRC expanding from ~400 to ~1,500 warheads by 2035 (DoD estimate). New silo fields in Gansu/Xinjiang. First-strike capability concerns growing."},
+  {"label":"Pakistan-India Border Tensions","desc":"Both states nuclear-armed. Kashmir LOC incidents recurring. Pakistani first-use doctrine vs Indian No-First-Use policy creates escalation asymmetry."},
+  {"label":"Automated Warning System Risks","desc":"AI-integrated early warning systems. Hypersonic glide vehicles compress decision time to minutes. Autonomous launch-on-warning pressure increasing globally."}
+];
+
+function _lawsStatusClass(s){
+  var m=s.toUpperCase().replace(/[\s\/\-]/g,'');
+  var map={
+    'OPERATIONAL':'operational','ACTIVE':'active','ACTIVESERVICE':'active',
+    'TESTING':'testing','DEVELOPMENT':'development','DEMONSTRATED':'demonstrated',
+    'DEPLOYED':'deployed','COMBATTESTED':'combattested','COMBATPROVEN':'combatproven',
+    'NEAROPERATIONAL':'nearsvc','COMMERCIALMIL':'commercialmil','ACTIVERD':'activerd'
+  };
+  for(var k in map){if(m.indexOf(k)>=0)return map[k];}
+  return 'development';
+}
+
+function _lawsThreatClass(t){
+  var m=t.toUpperCase().replace(/[-\s]/g,'');
+  if(m==='LEADING')return 'leading';
+  if(m.indexOf('NEAR')>=0)return 'nearpeer';
+  if(m==='DEVELOPING')return 'developing';
+  if(m==='ADVANCED')return 'advanced';
+  return 'developing';
+}
+
+function openLAWS(){
+  document.getElementById('laws-overlay').style.display='flex';
+  var pl=document.getElementById('laws-programs-list');
+  if(!pl.innerHTML){
+    pl.innerHTML=LAWS_PROGRAMS.map(function(c){
+      var sysCards=c.systems.map(function(s){
+        var sc=_lawsStatusClass(s.status);
+        return '<div class="laws-sys-card">'
+          +'<div class="laws-sys-header">'
+          +'<div><div class="laws-sys-name">'+s.name+'</div><div class="laws-sys-type">'+s.type+'</div></div>'
+          +'<span class="laws-status-badge laws-status-'+sc+'">'+s.status+'</span>'
+          +'</div>'
+          +'<div class="laws-sys-detail">'+s.detail+'</div>'
+          +'</div>';
+      }).join('');
+      var tc=_lawsThreatClass(c.threat);
+      return '<div class="laws-country-card" style="border-color:'+c.color+'55;">'
+        +'<div class="laws-country-header">'
+        +'<div class="laws-country-name" style="color:'+c.color+'">'+c.country+'</div>'
+        +'<span class="laws-threat-badge laws-threat-'+tc+'">'+c.threat+'</span>'
+        +'</div>'
+        +sysCards
+        +'</div>';
+    }).join('');
+    var cl=document.getElementById('laws-concerns-list');
+    cl.innerHTML=LAWS_CONCERNS.map(function(c){
+      var sc=c.severity.toLowerCase();
+      return '<div class="laws-concern-card">'
+        +'<div class="laws-concern-header">'
+        +'<div class="laws-concern-name">'+c.concern+'</div>'
+        +'<span class="laws-concern-sev laws-concern-'+sc+'">'+c.severity+'</span>'
+        +'</div>'
+        +'<div class="laws-concern-detail">'+c.detail+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  fetchLAWSGdelt();
+}
+
+function closeLAWS(){
+  document.getElementById('laws-overlay').style.display='none';
+}
+
+async function fetchLAWSGdelt(){
+  var el=document.getElementById('laws-gdelt-feed');
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading feed...</div>';
+  try{
+    var q=encodeURIComponent('autonomous weapons drone AI military lethal');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d&sort=datedesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="laws-gdelt-item"><div class="laws-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="laws-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+function _bioThreatClass(t){
+  var m=t.toUpperCase();
+  if(m==='CRITICAL')return 'critical';
+  if(m==='HIGH')return 'high';
+  if(m==='ELEVATED')return 'elevated';
+  return 'monitor';
+}
+
+function openBioweapons(){
+  document.getElementById('bioweapons-overlay').style.display='flex';
+  var pl=document.getElementById('bio-programs-list');
+  if(!pl.innerHTML){
+    pl.innerHTML=BIO_STATE_PROGRAMS.map(function(p){
+      var tc=_bioThreatClass(p.threat);
+      var agents=p.knownAgents.map(function(a){return '<span class="bio-agent-chip">'+a+'</span>';}).join('');
+      var facs=p.facilities.map(function(f){return '<span class="bio-facility-chip">'+f+'</span>';}).join('');
+      return '<div class="bio-state-card" style="border-color:'+p.color+'44;">'
+        +'<div class="bio-state-header">'
+        +'<div class="bio-country" style="color:'+p.color+'">'+p.country+'</div>'
+        +'<span class="bio-threat-badge bio-threat-'+tc+'">'+p.threat+'</span>'
+        +'</div>'
+        +'<div class="bio-status-line">'+p.status+'</div>'
+        +'<div class="bio-section-label">PROGRAM HISTORY</div>'
+        +'<div class="bio-history">'+p.history+'</div>'
+        +'<div class="bio-section-label">KNOWN / SUSPECTED AGENTS</div>'
+        +'<div class="bio-agents-list">'+agents+'</div>'
+        +'<div class="bio-section-label">KEY FACILITIES</div>'
+        +'<div class="bio-facilities-list">'+facs+'</div>'
+        +'<div class="bio-section-label">KEY CONCERNS</div>'
+        +'<div class="bio-concerns">'+p.concerns+'</div>'
+        +'</div>';
+    }).join('');
+    var bl=document.getElementById('bio-bsl4-list');
+    bl.innerHTML=BSL4_FACILITIES.map(function(f){
+      var chips=f.agents.map(function(a){return '<span class="bio-bsl4-chip">'+a+'</span>';}).join('');
+      return '<div class="bio-bsl4-card">'
+        +'<div class="bio-bsl4-header">'
+        +'<div class="bio-bsl4-name">'+f.name+'</div>'
+        +'<span class="bio-bsl4-country">'+f.country+' \xb7 '+f.lat.toFixed(1)+'\xb0, '+f.lng.toFixed(1)+'\xb0</span>'
+        +'</div>'
+        +'<div class="bio-bsl4-agents">'+chips+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  // Add BSL-4 hotspots to globe
+  if(window._bioGlobeHotspots){
+    BSL4_FACILITIES.forEach(function(f){
+      window._bioGlobeHotspots.push({lat:f.lat,lng:f.lng,label:f.name,color:'#22c55e',radius:5,_bio:true});
+    });
+  } else {
+    window._bioGlobeHotspots=BSL4_FACILITIES.map(function(f){
+      return {lat:f.lat,lng:f.lng,label:f.name,color:'#22c55e',radius:5,_bio:true};
+    });
+    if(typeof hotspots!=='undefined'){
+      window._bioGlobeHotspots.forEach(function(h){hotspots.push(h);});
+    }
+  }
+  fetchBioGdelt();
+}
+
+function closeBioweapons(){
+  document.getElementById('bioweapons-overlay').style.display='none';
+  // Remove BSL-4 hotspots from globe
+  if(typeof hotspots!=='undefined'){
+    for(var i=hotspots.length-1;i>=0;i--){
+      if(hotspots[i]._bio)hotspots.splice(i,1);
+    }
+  }
+  window._bioGlobeHotspots=null;
+}
+
+async function fetchBioGdelt(){
+  var el=document.getElementById('bio-gdelt-feed');
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading feed...</div>';
+  try{
+    var q=encodeURIComponent('bioweapons biological weapons pathogen laboratory');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d&sort=datedesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="bio-gdelt-item"><div class="bio-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#86efac;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="bio-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+function _ccSevClass(s){
+  var m=s.toUpperCase();
+  if(m==='EXISTENTIAL')return 'existential';
+  if(m==='CRITICAL')return 'critical';
+  if(m==='HIGH')return 'high';
+  return 'elevated';
+}
+
+function openCloseCall(){
+  document.getElementById('closecalls-overlay').style.display='flex';
+  var cl=document.getElementById('closecalls-list');
+  if(!cl.innerHTML){
+    var sorted=NUCLEAR_CLOSE_CALLS.slice().sort(function(a,b){return a.date<b.date?-1:1;});
+    cl.innerHTML=sorted.map(function(c){
+      var sc=_ccSevClass(c.severity);
+      return '<div class="cc-card" style="border-left-color:'+c.color+';">'
+        +'<div class="cc-card-header">'
+        +'<div><div class="cc-name">'+c.name+'</div><div class="cc-meta">'+c.date+' &nbsp;|&nbsp; '+c.location+'</div></div>'
+        +'<span class="cc-sev-badge cc-sev-'+sc+'">'+c.severity+'</span>'
+        +'</div>'
+        +'<div class="cc-section-label">WHAT HAPPENED</div>'
+        +'<div class="cc-what">'+c.what+'</div>'
+        +'<div class="cc-section-label">WHY DISASTER WAS AVERTED</div>'
+        +'<div class="cc-why">'+c.why_missed+'</div>'
+        +'<div class="cc-section-label">LESSON LEARNED</div>'
+        +'<div class="cc-lesson">'+c.lesson+'</div>'
+        +'</div>';
+    }).join('');
+    var rb=document.getElementById('closecalls-risk-box');
+    rb.innerHTML='<div class="cc-risk-box">'
+      +'<div class="cc-risk-title">CURRENT NEAR-MISS RISK INDICATORS — 2024-2026</div>'
+      +CLOSE_CALLS_CURRENT_RISKS.map(function(r){
+        return '<div class="cc-risk-row">'
+          +'<div class="cc-risk-label">'+r.label+'</div>'
+          +'<div class="cc-risk-desc">'+r.desc+'</div>'
+          +'</div>';
+      }).join('')
+      +'</div>';
+  }
+  fetchCloseCallsGdelt();
+}
+
+function closeCloseCalls(){
+  document.getElementById('closecalls-overlay').style.display='none';
+}
+
+async function fetchCloseCallsGdelt(){
+  var el=document.getElementById('closecalls-gdelt-feed');
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading feed...</div>';
+  try{
+    var q=encodeURIComponent('nuclear close call risk escalation accident');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d&sort=datedesc';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="cc-gdelt-item"><div class="cc-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cc-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+// ===== END PHASE 30 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -21987,6 +22452,59 @@ function filterSIGINT(query){
   <div id="mar-disputes-list" style="margin-bottom:20px;"></div>
   <div style="font-size:9px;letter-spacing:2px;color:#06b6d4;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE MARITIME INTELLIGENCE FEED</div>
   <div id="mar-gdelt-feed"></div>
+</div>
+
+<!-- COLUMN 7 BUTTONS -->
+<button id="laws-btn" onclick="openLAWS()">AUTO WEAPONS</button>
+<button id="bioweapons-btn" onclick="openBioweapons()">BIO INTEL</button>
+<button id="closecalls-btn" onclick="openCloseCall()">CLOSE CALLS</button>
+
+<!-- LAWS OVERLAY -->
+<div id="laws-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#3b82f6;">LETHAL AUTONOMOUS WEAPONS SYSTEMS</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">STATE LAWS PROGRAMS &amp; ETHICAL RISK ASSESSMENT</div>
+    </div>
+    <button onclick="closeLAWS()" style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#60a5fa;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="laws-programs-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">ETHICAL &amp; LEGAL CONCERNS</div>
+  <div id="laws-concerns-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE AUTONOMOUS WEAPONS INTELLIGENCE FEED</div>
+  <div id="laws-gdelt-feed"></div>
+</div>
+
+<!-- BIOWEAPONS OVERLAY -->
+<div id="bioweapons-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#22c55e;">STATE BIOWEAPONS INTELLIGENCE</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">BWC COMPLIANCE &amp; GLOBAL BSL-4 FACILITY ASSESSMENT</div>
+    </div>
+    <button onclick="closeBioweapons()" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#22c55e;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="bio-programs-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#22c55e;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">BSL-4 GLOBAL FACILITY MAP</div>
+  <div id="bio-bsl4-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#22c55e;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE BIOWEAPONS INTELLIGENCE FEED</div>
+  <div id="bio-gdelt-feed"></div>
+</div>
+
+<!-- COLD WAR CLOSE CALLS OVERLAY -->
+<div id="closecalls-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#ef4444;">NUCLEAR CLOSE CALLS ARCHIVE</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">INCIDENTS THAT NEARLY ENDED CIVILIZATION — DECLASSIFIED &amp; DOCUMENTED</div>
+    </div>
+    <button onclick="closeCloseCalls()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="closecalls-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">CURRENT NEAR-MISS RISK INDICATORS</div>
+  <div id="closecalls-risk-box" style="margin-bottom:16px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE NUCLEAR RISK INTELLIGENCE FEED</div>
+  <div id="closecalls-gdelt-feed"></div>
 </div>
 </body>
 </html>
