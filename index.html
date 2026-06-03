@@ -3762,6 +3762,112 @@ button{border-radius:2px!important}
 .sr-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .sr-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .sr-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 47 buttons */
+#disinfo-btn{position:fixed;top:295px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#disinfo-btn:hover{border-color:#f43f5e;color:#fda4af;}
+#forceposture-btn{position:fixed;top:335px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#forceposture-btn:hover{border-color:#6366f1;color:#a5b4fc;}
+#surveillance-btn{position:fixed;top:375px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#surveillance-btn:hover{border-color:#e879f9;color:#f0abfc;}
+
+/* Disinfo Atlas overlay */
+#disinfo-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.da-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.da-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f43f5e;}
+.da-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.da-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.da-close:hover{color:#f43f5e;border-color:#f43f5e;}
+.da-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.da-actors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.da-actor-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.da-actor-header{margin-bottom:8px;}
+.da-actor-name{font-size:13px;font-weight:700;}
+.da-actor-stats{font-size:8px;color:#64748b;margin-top:2px;}
+.da-plats{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;}
+.da-plat-chip{font-size:7px;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.25);padding:2px 5px;border-radius:2px;color:#fda4af;}
+.da-narrs{margin:0 0 6px 0;padding-left:14px;}
+.da-narr-item{font-size:8px;color:#94a3b8;line-height:1.5;}
+.da-section-mini{font-size:7px;font-weight:700;color:#475569;letter-spacing:.15em;margin:6px 0 4px;}
+.da-ops{display:flex;flex-direction:column;gap:6px;margin-bottom:6px;}
+.da-op-card{background:rgba(2,4,14,0.5);border:1px solid #1e293b;border-radius:3px;padding:8px;}
+.da-op-header{display:flex;align-items:center;margin-bottom:3px;}
+.da-op-name{font-size:9px;font-weight:700;color:#e2e8f0;}
+.da-op-detail{font-size:7px;color:#64748b;line-height:1.4;}
+.da-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:6px;}
+.da-methods-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.da-methods-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.da-methods-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.da-method-name{color:#e2e8f0;font-weight:700;}
+.da-gdelt-feed{max-width:900px;}
+.da-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.da-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.da-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Force Posture overlay */
+#forceposture-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.fpo-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.fpo-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#6366f1;}
+.fpo-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.fpo-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.fpo-close:hover{color:#6366f1;border-color:#6366f1;}
+.fpo-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.fpo-actors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.fpo-actor-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.fpo-actor-header{margin-bottom:8px;}
+.fpo-country{font-size:14px;font-weight:900;}
+.fpo-stats{font-size:8px;color:#64748b;margin-top:2px;}
+.fpo-cmds{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.fpo-cmd-chip{font-size:7px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);padding:2px 5px;border-radius:2px;color:#a5b4fc;}
+.fpo-section-mini{font-size:7px;font-weight:700;color:#475569;letter-spacing:.15em;margin:6px 0 4px;}
+.fpo-bases{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;}
+.fpo-base-item{background:rgba(2,4,14,0.5);border:1px solid #1e293b;border-radius:3px;padding:6px;}
+.fpo-base-name{font-size:9px;font-weight:700;color:#e2e8f0;}
+.fpo-base-detail{font-size:7px;color:#64748b;margin-top:2px;}
+.fpo-base-detail b{color:#94a3b8;}
+.fpo-readiness{font-size:8px;color:#94a3b8;line-height:1.4;margin-bottom:3px;}
+.fpo-readiness b{color:#e2e8f0;}
+.fpo-nuclear{font-size:8px;color:#fca5a5;line-height:1.4;border-left:2px solid rgba(239,68,68,.3);padding-left:8px;}
+.fpo-nuclear b{color:#f1f5f9;}
+.fpo-readiness-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.fpo-readiness-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.fpo-readiness-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.fpo-indicator-name{color:#e2e8f0;font-weight:700;}
+.fpo-gdelt-feed{max-width:900px;}
+.fpo-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.fpo-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.fpo-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Surveillance overlay */
+#surveillance-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.sv-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.sv-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#e879f9;}
+.sv-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.sv-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.sv-close:hover{color:#e879f9;border-color:#e879f9;}
+.sv-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.sv-programs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:14px;margin-bottom:10px;}
+.sv-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.sv-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.sv-country{font-size:14px;font-weight:900;}
+.sv-program{font-size:8px;color:#64748b;margin-top:2px;}
+.sv-metrics{text-align:right;}
+.sv-cov-badge{font-size:8px;font-weight:700;}
+.sv-liberty{font-size:8px;color:#64748b;margin-top:2px;}
+.sv-caps{margin:0 0 6px 0;padding-left:14px;}
+.sv-cap-item{font-size:8px;color:#94a3b8;line-height:1.5;}
+.sv-section-mini{font-size:7px;font-weight:700;color:#475569;letter-spacing:.15em;margin:6px 0 3px;}
+.sv-exports{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;}
+.sv-export-chip{font-size:7px;background:rgba(232,121,249,.1);border:1px solid rgba(232,121,249,.25);padding:2px 5px;border-radius:2px;color:#f0abfc;}
+.sv-notes{font-size:8px;color:#64748b;font-style:italic;line-height:1.4;border-top:1px solid #1e293b;padding-top:6px;margin-top:6px;}
+.sv-pegasus-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.sv-pegasus-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.sv-pegasus-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.sv-target-name{color:#e2e8f0;font-weight:700;}
+.sv-gdelt-feed{max-width:900px;}
+.sv-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.sv-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.sv-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -28237,6 +28343,394 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 46 =====
 
+// ===== PHASE 47: DISINFO ATLAS / FORCE POSTURE / SURVEILLANCE =====
+
+var DISINFO_ACTORS = [
+  {actor:'Russia — IRA / GRU Unit 54777',lat:55.75,lng:37.62,color:'#ef4444',
+   annual_budget_est:'$300M+',personnel_est:'5,000+',
+   platforms:['Facebook','Twitter/X','YouTube','Instagram','Telegram','RT/Sputnik'],
+   primary_narratives:['NATO expansion provoked Ukraine war','Western bioweapons in Ukraine','US election fraud','Anti-vaccine narratives','BLM amplification to divide USA','European energy policy failure'],
+   key_ops:[
+     {op:'Internet Research Agency (IRA) 2016',impact:'CRITICAL',detail:'3,841 Twitter accounts, 470 Facebook pages, 80,000 posts. Reached 126M Americans. GRU separately hacked DNC/Podesta. Special Counsel Mueller indicted 13 IRA individuals.'},
+     {op:'Secondary Infektion (2019-2022)',impact:'HIGH',detail:'300+ fake news sites, 2,500+ articles in 30 languages. Pro-Russia narratives on EU/NATO. Detected by EU DisinfoLab and Stanford Internet Observatory.'},
+     {op:'Ukraine War IO (2022-present)',impact:'CRITICAL',detail:'Biolab false flag, Bucha denial, civilian casualty denial. Coordinated amplification via Telegram channels with 5M+ subscribers combined. Integrated with RT/Sputnik state media.'}
+   ],
+   assessment:'Most sophisticated state-level disinformation program globally. Integrates SIGINT, HUMINT, overt media (RT/Sputnik), covert IRA social media, GRU hack-and-leak, and reflexive control theory. Ukraine war IO ongoing at scale.'},
+  {actor:'China — 50-Cent Army / United Front',lat:39.91,lng:116.39,color:'#dc2626',
+   annual_budget_est:'$500M+',personnel_est:'300,000+ (estimated)',
+   platforms:['WeChat','Weibo','Twitter/X','Facebook','TikTok (ByteDance)','YouTube'],
+   primary_narratives:['Taiwan is China','Xinjiang is counter-terrorism','COVID lab leak discrediting','China model superiority','BRI benefits propaganda','Hong Kong rioters narrative'],
+   key_ops:[
+     {op:'Spamouflage Dragon (2017-present)',impact:'HIGH',detail:'Largest-known state-linked inauthentic network. 4,789 Twitter accounts removed 2023. Targets Uyghur diaspora, Taiwan independence advocates, Western China critics.'},
+     {op:'TikTok Algorithm Concern',impact:'HIGH',detail:'ByteDance internal access to US user data confirmed 2022. Chinese engineers accessed US data in Beijing. FTC investigation. Divestiture demand ongoing.'},
+     {op:'COVID Origin Suppression',impact:'HIGH',detail:'Early Wuhan reporting suppressed on Chinese social media. WHO access delayed. Lab leak hypothesis systematically discredited via state media and academic networks abroad.'}
+   ],
+   assessment:'Scale exceeds Russia by personnel but quality/sophistication lower. United Front Work Department focuses on diaspora. ByteDance/TikTok creates potential direct access to 170M US users\' attention.'},
+  {actor:'Iran — IRGC IO Directorate',lat:35.69,lng:51.39,color:'#f97316',
+   annual_budget_est:'$50M+',personnel_est:'1,000+',
+   platforms:['Facebook','Twitter/X','Instagram','Telegram','PressTV (state media)'],
+   primary_narratives:['Israel genocide in Gaza','US imperialism','Resistance Axis legitimacy','Saudi Arabia corruption','Bahrain Shia oppression'],
+   key_ops:[
+     {op:'Liberty Front Press (2019)',impact:'MODERATE',detail:'Facebook/Twitter removed 783 accounts linked to IRGC. Operations targeted US, UK, Middle East. Combined 254,000 followers. Meta linked to Iranian state.'},
+     {op:'Gaza IO (2023-2024)',impact:'HIGH',detail:'Coordinated amplification of Hamas/civilian casualty content. IRGC-linked accounts pushed ceasefire hashtags globally. Reached 500M+ impressions on X during October 2023.'},
+     {op:'Election Interference (US 2024)',impact:'HIGH',detail:'ODNI attributed Iranian influence operations targeting US 2024 election. Spear-phishing of Trump campaign, material passed to media. Attempted to inflame political divisions.'}
+   ],
+   assessment:'Less sophisticated than Russia/China but increasing capability. Focus on regional narratives and Gaza/Palestine issues with global resonance. US election targeting confirms strategic ambitions.'},
+  {actor:'USA — GEC / CYBERCOM IO',lat:38.90,lng:-77.03,color:'#3b82f6',
+   annual_budget_est:'$2B+ (GEC, CYBERCOM, CIA IO)',personnel_est:'Classified',
+   platforms:['Twitter/X (overt counter-disinfo)','Declassified intelligence releases','VOA/RFE/RL (overt state media)','CYBERCOM covert operations'],
+   primary_narratives:['Russian aggression','China human rights violations','Iranian nuclear threat','North Korea sanctions violations','Democratic values promotion'],
+   key_ops:[
+     {op:'Ukraine Prebuttal (2022)',impact:'HIGH',detail:'Biden admin released classified intel on Russian invasion planning 3 weeks before Feb 24. Disrupted Russian false flag narrative. Intelligence as information weapon — novel and effective.'},
+     {op:'CYBERCOM IO (Taliban, ISIS)',impact:'MODERATE',detail:'Declassified: CYBERCOM conducted offensive IO against ISIS 2016-2018. Took down online recruitment infrastructure. Disrupted financial networks.'},
+     {op:'GEC Counter-Disinfo',impact:'MODERATE',detail:'Global Engagement Center tracks and counters foreign disinformation. Prebunking, mythbusting campaigns. $61M FY2024 budget — vastly outspent by adversaries.'}
+   ],
+   assessment:'US overt capabilities (VOA/RFE, GEC) underfunded vs adversaries. Covert operations classified. Prebuttal intelligence release demonstrated novel effective tool. CYBERCOM offensive IO limited by legal/political constraints.'}
+];
+
+var DISINFO_DETECTION_METHODS = [
+  {method:'Network Analysis',desc:'Graph analysis of follower/following patterns identifies coordinated inauthentic behavior. Accounts with similar creation dates, posting patterns, mutual follows.'},
+  {method:'Behavioral Fingerprinting',desc:'Bots post at inhuman speeds or at specific times suggesting shift work. Language patterns, emoji use, posting frequency analysis.'},
+  {method:'Content Attribution',desc:'Reverse image search, duplicate text detection, translation artifacts (text translated from Russian/Chinese), source tracing.'},
+  {method:'Infrastructure Analysis',desc:'IP geolocation clusters, hosting provider patterns, domain registration data, shared infrastructure across fake accounts.'},
+  {method:'Prebunking',desc:'Proactively exposing manipulation techniques before specific narratives deployed reduces susceptibility. "Inoculation theory" — Cambridge/Jigsaw research.'},
+  {method:'Platform Enforcement',desc:'Meta/Twitter/Google remove coordinated inauthentic behavior networks. 2023: 5,000+ state-linked accounts removed across platforms.'}
+];
+
+function _renderDisinfo(){
+  var grid = document.getElementById('da-actors-grid');
+  if(!grid) return;
+  grid.innerHTML = DISINFO_ACTORS.map(function(a){
+    var plats = a.platforms.map(function(p){return '<span class="da-plat-chip">'+p+'</span>';}).join('');
+    var narrs = a.primary_narratives.map(function(n){return '<li class="da-narr-item">'+n+'</li>';}).join('');
+    var ops = a.key_ops.map(function(o){
+      var oc = o.impact==='CRITICAL'?'#ef4444':o.impact==='HIGH'?'#f97316':'#eab308';
+      return '<div class="da-op-card">'+
+        '<div class="da-op-header">'+
+          '<span class="da-op-name">'+o.op+'</span>'+
+          '<span style="color:'+oc+';font-size:7px;font-weight:700;margin-left:6px;">'+o.impact+'</span>'+
+        '</div>'+
+        '<div class="da-op-detail">'+o.detail+'</div>'+
+      '</div>';
+    }).join('');
+    return '<div class="da-actor-card" style="border-top-color:'+a.color+';">'+
+      '<div class="da-actor-header">'+
+        '<div class="da-actor-name" style="color:'+a.color+';">'+a.actor+'</div>'+
+        '<div class="da-actor-stats">Budget est: '+a.annual_budget_est+' &nbsp;|&nbsp; Personnel: '+a.personnel_est+'</div>'+
+      '</div>'+
+      '<div class="da-plats">'+plats+'</div>'+
+      '<ul class="da-narrs">'+narrs+'</ul>'+
+      '<div class="da-section-mini">KEY OPERATIONS</div>'+
+      '<div class="da-ops">'+ops+'</div>'+
+      '<div class="da-assessment">'+a.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('da-methods-tbody');
+  if(tbody){
+    tbody.innerHTML = DISINFO_DETECTION_METHODS.map(function(m){
+      return '<tr><td class="da-method-name">'+m.method+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+m.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchDaGdelt(){
+  var feed = document.getElementById('da-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('disinformation influence operations propaganda social media state-sponsored election interference');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="da-gdelt-item">'+
+        '<div class="da-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="da-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openDisinfo(){
+  var ov=document.getElementById('disinfo-overlay');
+  if(ov){ov.style.display='flex';_renderDisinfo();_fetchDaGdelt();}
+  var pins = DISINFO_ACTORS.map(function(a){
+    return {lat:a.lat,lng:a.lng,type:'hybrid',severity:8,label:a.actor+' DISINFO OPS',_disinfo:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._disinfo;}), ...pins];
+}
+function _closeDisinfo(){
+  var ov=document.getElementById('disinfo-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._disinfo;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('disinfo-btn');
+  if(b) b.addEventListener('click',_openDisinfo);
+  var c=document.getElementById('disinfo-close');
+  if(c) c.addEventListener('click',_closeDisinfo);
+});
+
+var FORCE_POSTURE_ACTORS = [
+  {country:'USA',lat:38.90,lng:-77.03,color:'#3b82f6',
+   total_active:1300000,
+   forward_deployed:200000,
+   major_commands:['INDOPACOM (Hawaii — Indo-Pacific)','EUCOM (Stuttgart — Europe)','CENTCOM (Tampa — Middle East)','NORTHCOM (Colorado Springs — N. America)','AFRICOM (Stuttgart — Africa)','SOUTHCOM (Doral — Latin America)'],
+   key_bases:[
+     {name:'Camp Humphreys, ROK',lat:36.96,lng:127.03,troops:28500,mission:'Korea deterrence — largest US overseas base'},
+     {name:'Kadena AB, Okinawa',lat:26.35,lng:127.76,troops:18000,mission:'Pacific air power — F-22, tankers, ISR hub'},
+     {name:'Ramstein AB, Germany',lat:49.44,lng:7.60,troops:40000,mission:'European hub — nuclear weapons storage, EUCOM HQ'},
+     {name:'Al Udeid AB, Qatar',lat:25.11,lng:51.32,troops:11000,mission:'CENTCOM air ops center — B-52, tankers, ISR'},
+     {name:'Diego Garcia, BIOT',lat:-7.31,lng:72.41,troops:4000,mission:'Indian Ocean hub — B-2 forward staging, Navy support'},
+     {name:'Camp Lemonnier, Djibouti',lat:11.55,lng:43.15,troops:4000,mission:'Africa CT hub — JSOC, drone ops, AFRICOM forward'}
+   ],
+   readiness:'HIGH — post-Ukraine reinforcement. eFP doubled in Europe. INDOPACOM expansion ongoing.',
+   nuclear_posture:'1,700 deployed strategic + 100 B-61 tactical forward (Europe). Nuclear triad fully operational.'},
+  {country:'China',lat:39.91,lng:116.39,color:'#ef4444',
+   total_active:2000000,
+   forward_deployed:5000,
+   major_commands:['Eastern Theater (Taiwan/Japan)','Southern Theater (SCS/India)','Western Theater (India/Central Asia)','Northern Theater (Korea/Russia border)','Central Theater (Strategic reserve)','Rocket Force (PLARF — missiles)'],
+   key_bases:[
+     {name:'PLA Support Base Djibouti',lat:11.55,lng:43.14,troops:400,mission:'First overseas base. Logistics, counterpiracy. Naval access.'},
+     {name:'Sanya Naval Base, Hainan',lat:18.25,lng:109.47,troops:10000,mission:'SSBN homeport. South China Sea power projection hub.'},
+     {name:'Spratly Islands (7 features)',lat:10.00,lng:114.50,troops:3000,mission:'Militarized SCS features. Airfields, missiles, radars.'},
+     {name:'Gwadar, Pakistan',lat:25.12,lng:62.32,troops:200,mission:'CPEC logistics. Suspected future naval access.'},
+     {name:'Ream, Cambodia',lat:10.55,lng:103.66,troops:300,mission:'Suspected PLA Navy access — under construction 2024.'},
+     {name:'Equatorial Guinea (proposed)',lat:3.75,lng:8.78,troops:0,mission:'Proposed Atlantic base — US opposed. Negotiations ongoing.'}
+   ],
+   readiness:'ELEVATED — Taiwan contingency exercises increasing. 2024 record sorties near Taiwan.',
+   nuclear_posture:'500 warheads (est). Expanding to 1,000+ by 2030. No first use declared (questioned). Silo expansion accelerating.'},
+  {country:'Russia',lat:55.75,lng:37.62,color:'#dc2626',
+   total_active:900000,
+   forward_deployed:600000,
+   major_commands:['Western Military District (Ukraine front)','Southern Military District (Black Sea/Caucasus)','Eastern Military District (Pacific/China border)','Central Military District (Central Asia)','Northern Fleet (Arctic)','Arctic Joint Strategic Command'],
+   key_bases:[
+     {name:'Khmeimim AB, Syria',lat:35.40,lng:35.95,troops:4000,mission:'Syrian intervention hub. S-400, Su-35, Tu-22 deployed.'},
+     {name:'Tartus Naval Base, Syria',lat:34.89,lng:35.87,troops:1500,mission:'Only Mediterranean naval base. Logistics/repair.'},
+     {name:'Sevastopol, Crimea',lat:44.60,lng:33.52,troops:15000,mission:'Black Sea Fleet HQ. Under Ukrainian missile attack.'},
+     {name:'Gadzhiyevo, Kola',lat:69.25,lng:33.36,troops:8000,mission:'Northern Fleet SSBN base. Strategic nuclear second strike.'},
+     {name:'Kant AB, Kyrgyzstan',lat:42.85,lng:74.84,troops:500,mission:'CSTO air base. Central Asian power projection.'},
+     {name:'Ukraine Front',lat:48.00,lng:34.00,troops:470000,mission:'Active combat operations. 470,000+ deployed.'}
+   ],
+   readiness:'DEGRADED — Ukraine casualties ~300,000. Equipment losses severe. Mobilization ongoing. Nuclear forces on elevated alert.',
+   nuclear_posture:'5,580 total (largest). 1,674 deployed strategic. Tactical nukes: ~2,000. Ukraine escalation threat. First-use threshold lowered 2024.'}
+];
+
+var READINESS_INDICATORS = [
+  {indicator:'Intelligence Preparation',stage:1,desc:'ISR surge, target sets updated, electronic intelligence collection increased'},
+  {indicator:'Logistics Pre-positioning',stage:2,desc:'Ammunition, fuel, spare parts moved to forward positions. Medical surge'},
+  {indicator:'Unit Mobilization',stage:3,desc:'Reserve call-ups, unit rotations to theater, leave cancelled'},
+  {indicator:'Air Power Surge',stage:4,desc:'Combat aircraft deployed forward, tanker pre-positioning, AWACS surge'},
+  {indicator:'Naval Deployment',stage:5,desc:'Carrier battle group movement, amphibious shipping concentration, submarine dispersal'},
+  {indicator:'Command Authority Changes',stage:6,desc:'Senior commanders forward deployed, communication security increase, nuclear force alert'}
+];
+
+function _renderForcePosture(){
+  var grid = document.getElementById('fpo-actors-grid');
+  if(!grid) return;
+  grid.innerHTML = FORCE_POSTURE_ACTORS.map(function(a){
+    var cmds = a.major_commands.map(function(c){return '<span class="fpo-cmd-chip">'+c+'</span>';}).join('');
+    var bases = a.key_bases.map(function(b){
+      return '<div class="fpo-base-item">'+
+        '<div class="fpo-base-name">'+b.name+'</div>'+
+        '<div class="fpo-base-detail"><b>'+b.troops.toLocaleString()+'</b> personnel &nbsp;|&nbsp; '+b.mission+'</div>'+
+      '</div>';
+    }).join('');
+    return '<div class="fpo-actor-card" style="border-top-color:'+a.color+';">'+
+      '<div class="fpo-actor-header">'+
+        '<div class="fpo-country" style="color:'+a.color+';">'+a.country+'</div>'+
+        '<div class="fpo-stats">Active: '+a.total_active.toLocaleString()+' &nbsp;|&nbsp; Forward: '+a.forward_deployed.toLocaleString()+'</div>'+
+      '</div>'+
+      '<div class="fpo-cmds">'+cmds+'</div>'+
+      '<div class="fpo-section-mini">KEY FORWARD BASES</div>'+
+      '<div class="fpo-bases">'+bases+'</div>'+
+      '<div class="fpo-readiness"><b>Readiness:</b> '+a.readiness+'</div>'+
+      '<div class="fpo-nuclear"><b>Nuclear:</b> '+a.nuclear_posture+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('fpo-readiness-tbody');
+  if(tbody){
+    tbody.innerHTML = READINESS_INDICATORS.map(function(r){
+      return '<tr><td style="color:#64748b;font-size:8px;text-align:center;">'+r.stage+'</td>'+
+        '<td class="fpo-indicator-name">'+r.indicator+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+r.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchFpoGdelt(){
+  var feed = document.getElementById('fpo-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('military posture deployment troops forward base readiness NATO China Russia');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="fpo-gdelt-item">'+
+        '<div class="fpo-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="fpo-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openForcePosture(){
+  var ov=document.getElementById('forceposture-overlay');
+  if(ov){ov.style.display='flex';_renderForcePosture();_fetchFpoGdelt();}
+  var allPins = [];
+  FORCE_POSTURE_ACTORS.forEach(function(a){
+    a.key_bases.forEach(function(b){
+      if(b.troops>0) allPins.push({lat:b.lat,lng:b.lng,type:'military_ops',severity:b.troops>10000?9:b.troops>2000?7:5,label:b.name,_forceposture:true});
+    });
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._forceposture;}), ...allPins];
+}
+function _closeForcePosture(){
+  var ov=document.getElementById('forceposture-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._forceposture;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('forceposture-btn');
+  if(b) b.addEventListener('click',_openForcePosture);
+  var c=document.getElementById('forceposture-close');
+  if(c) c.addEventListener('click',_closeForcePosture);
+});
+
+var SURVEILLANCE_PROGRAMS = [
+  {country:'China',lat:39.91,lng:116.39,color:'#ef4444',
+   program:'Sharp Eyes / SkyNet / Social Credit System',
+   cameras_millions:700,
+   coverage:'COMPREHENSIVE',
+   capabilities:['700M+ CCTV cameras (2024)','Facial recognition at all train stations, airports','Social credit scoring 1.4B citizens','WeChat/Weibo real-time monitoring','AI behavioral prediction','Xinjiang integrated surveillance grid (XUAR)'],
+   export_tech:['Hikvision cameras — 180+ countries','Huawei Safe City solutions — 100+ cities','ZTE smart city platforms','Dahua Technology surveillance systems'],
+   civil_liberty_score:2,
+   notes:'Xinjiang is most intensive surveillance zone globally: 1 camera per 6 residents, mandatory phone checks at checkpoints, pre-crime predictive policing via IJOP app. Technology exported globally by Chinese firms.'},
+  {country:'Russia',lat:55.75,lng:37.62,color:'#dc2626',
+   program:'SORM / Face Pay / SafeCity Moscow',
+   cameras_millions:220,
+   coverage:'HIGH',
+   capabilities:['220,000+ cameras in Moscow alone','SORM mandatory ISP tap (FSB access)','Facial recognition at 100,000 Moscow cameras','Social media monitoring (OSINT+)','Mobile IMSI catchers pervasive','Opposition tracking via FaceID databases'],
+   export_tech:['NtechLab facial recognition — exported to authoritarian states','Russian surveillance tech in CIS states'],
+   civil_liberty_score:3,
+   notes:'Moscow facial recognition ID\'d 1,000+ anti-war protesters Feb 2022 within 24 hours. System used to track Navalny supporters. SORM-3 requires all Russian ISPs to provide FSB backdoor access.'},
+  {country:'USA',lat:38.90,lng:-77.03,color:'#3b82f6',
+   program:'NSA PRISM / CCTV (fragmented) / Stingray',
+   cameras_millions:70,
+   coverage:'MODERATE (public) / HIGH (communications)',
+   capabilities:['NSA upstream communications collection','FBI/DEA IMSI catcher (Stingray) networks','License plate readers (ALPRs) — 5,000+ agencies','Fusion centers (79 nationwide)','Social media monitoring programs','Clearview AI facial recognition (law enforcement)'],
+   export_tech:['Palantir data fusion — 45+ countries','Axiom/MSAB mobile forensics','Clearview AI (limited)'],
+   civil_liberty_score:6,
+   notes:'Fragmented by federalism and private sector legal constraints. NSA capabilities comprehensive for foreign targets. Domestic surveillance constrained by 4th Amendment — but erosion documented post-9/11. Section 702 reauthorized 2024.'},
+  {country:'UK',lat:51.50,lng:-0.12,color:'#22c55e',
+   program:'CCTV (world\'s highest density) / GCHQ / National Facial Recognition',
+   cameras_millions:7,
+   coverage:'HIGH',
+   capabilities:['1 camera per 13 people — highest density globally','Automatic Number Plate Recognition (ANPR) — 50M reads/day','Live facial recognition trials Metropolitan Police','GCHQ Karma Police web tracking','Investigatory Powers Act bulk surveillance'],
+   export_tech:['Arden surveillance systems (limited)'],
+   civil_liberty_score:5,
+   notes:'World\'s highest CCTV density per capita. Metropolitan Police LFR deployments challenged by civil liberties groups. Investigatory Powers Act (2016) provides broad bulk surveillance authority. GDPR creates tension with surveillance ambitions.'},
+  {country:'Israel',lat:31.77,lng:35.21,color:'#eab308',
+   program:'Unit 8200 surveillance / Pegasus NSO Group / West Bank surveillance',
+   cameras_millions:1,
+   coverage:'TARGETED (extremely high-precision)',
+   capabilities:['Unit 8200 SIGINT collection (classified)','NSO Pegasus: 0-click phone compromise','West Bank biometric surveillance grid','Shin Bet location tracking network','Mass Palestinian phone database'],
+   export_tech:['Pegasus spyware — 45+ country clients (Citizen Lab)','Candiru (Windows 0-days)','Intellexa/Predator (related ecosystem)'],
+   civil_liberty_score:5,
+   notes:'NSO Pegasus compromised phones of 50,000 targets including heads of state, journalists, activists. Citizen Lab documented use in 45+ countries. West Bank biometric grid covers all checkpoints. Unit 8200 alumni created surveillance tech export industry.'}
+];
+
+var PEGASUS_NOTABLE_CASES = [
+  {target:'Jeff Bezos (Amazon CEO)',country:'Saudi Arabia',year:2018,detail:'WhatsApp message from Saudi Crown Prince account delivered Pegasus payload. Exfiltrated 1.7GB data over 5 months before discovery.'},
+  {target:'Emmanuel Macron (France)',country:'Morocco (suspected)',year:2021,detail:'French President\'s personal number on NSO target list. France investigated; no confirmation of successful compromise.'},
+  {target:'Jamal Khashoggi (journalist)',country:'Saudi Arabia',year:2018,detail:'Associates\' phones compromised before assassination. Pegasus used to monitor his communications and location. Saudi denials discredited by Citizen Lab forensics.'},
+  {target:'Rahul Gandhi (India opposition)',country:'India',year:2021,detail:'Multiple Indian opposition politicians and journalists on list. Indian government denied using Pegasus; refused parliamentary inquiry.'},
+  {target:'Multiple Heads of State',country:'Various',year:2021,detail:'Forbidden Stories consortium: 50,000 numbers leaked from NSO target database. 14 heads of state identified. Pakistan, Mexico, Azerbaijan primary users.'}
+];
+
+function _renderSurveillance(){
+  var grid = document.getElementById('sv-programs-grid');
+  if(!grid) return;
+  grid.innerHTML = SURVEILLANCE_PROGRAMS.map(function(p){
+    var caps = p.capabilities.map(function(c){return '<li class="sv-cap-item">'+c+'</li>';}).join('');
+    var exportChips = p.export_tech.map(function(e){return '<span class="sv-export-chip">'+e+'</span>';}).join('');
+    var scoreColor = p.civil_liberty_score<=3?'#ef4444':p.civil_liberty_score<=5?'#f97316':'#22c55e';
+    return '<div class="sv-card" style="border-top-color:'+p.color+';">'+
+      '<div class="sv-card-header">'+
+        '<div>'+
+          '<div class="sv-country" style="color:'+p.color+';">'+p.country+'</div>'+
+          '<div class="sv-program">'+p.program+'</div>'+
+        '</div>'+
+        '<div class="sv-metrics">'+
+          '<div class="sv-cov-badge" style="color:'+p.color+';">'+p.coverage+'</div>'+
+          '<div class="sv-liberty">Liberty: <span style="color:'+scoreColor+';font-weight:700;">'+p.civil_liberty_score+'/10</span></div>'+
+        '</div>'+
+      '</div>'+
+      '<ul class="sv-caps">'+caps+'</ul>'+
+      '<div class="sv-section-mini">EXPORTED TECHNOLOGY</div>'+
+      '<div class="sv-exports">'+exportChips+'</div>'+
+      '<div class="sv-notes">'+p.notes+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('sv-pegasus-tbody');
+  if(tbody){
+    tbody.innerHTML = PEGASUS_NOTABLE_CASES.map(function(c){
+      return '<tr><td class="sv-target-name">'+c.target+'</td>'+
+        '<td style="color:#94a3b8;font-size:7px;">'+c.country+' ('+c.year+')</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+c.detail+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchSvGdelt(){
+  var feed = document.getElementById('sv-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('surveillance facial recognition Pegasus spyware privacy civil liberties China monitoring');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="sv-gdelt-item">'+
+        '<div class="sv-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="sv-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openSurveillance(){
+  var ov=document.getElementById('surveillance-overlay');
+  if(ov){ov.style.display='flex';_renderSurveillance();_fetchSvGdelt();}
+  var pins = SURVEILLANCE_PROGRAMS.map(function(p){
+    return {lat:p.lat,lng:p.lng,type:'cyber',severity:p.civil_liberty_score<=3?9:7,label:p.country+' SURVEILLANCE',_surveillance:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._surveillance;}), ...pins];
+}
+function _closeSurveillance(){
+  var ov=document.getElementById('surveillance-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._surveillance;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('surveillance-btn');
+  if(b) b.addEventListener('click',_openSurveillance);
+  var c=document.getElementById('surveillance-close');
+  if(c) c.addEventListener('click',_closeSurveillance);
+});
+
+// ===== END PHASE 47 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -30869,6 +31363,71 @@ function filterSIGINT(query){
   <div class="mm-grid" id="mm-programs-grid"></div>
   <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 47 buttons -->
+<button id="disinfo-btn">DISINFO ATLAS</button>
+<button id="forceposture-btn">FORCE POSTURE</button>
+<button id="surveillance-btn">SURVEILLANCE</button>
+
+<!-- Disinformation Atlas Intelligence Overlay -->
+<div id="disinfo-overlay">
+  <div class="da-header">
+    <div>
+      <div class="da-title">GLOBAL DISINFORMATION OPERATIONS ATLAS</div>
+      <div class="da-subtitle">SOURCE: STANFORD IO / EU DISINFO LAB / CITIZEN LAB / META/TWITTER TRANSPARENCY / UNCLASSIFIED</div>
+    </div>
+    <div class="da-close" id="disinfo-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="da-section-title">STATE DISINFORMATION ACTORS — OPERATIONS &amp; CAPABILITIES</div>
+  <div class="da-actors-grid" id="da-actors-grid"></div>
+  <div class="da-section-title">DETECTION &amp; COUNTER-DISINFO METHODS</div>
+  <table class="da-methods-table">
+    <thead><tr><th>METHOD</th><th>DESCRIPTION</th></tr></thead>
+    <tbody id="da-methods-tbody"></tbody>
+  </table>
+  <div class="da-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="da-gdelt-feed" id="da-gdelt-feed"></div>
+</div>
+
+<!-- Global Military Force Posture Intelligence Overlay -->
+<div id="forceposture-overlay">
+  <div class="fpo-header">
+    <div>
+      <div class="fpo-title">GLOBAL MILITARY FORCE POSTURE INTELLIGENCE</div>
+      <div class="fpo-subtitle">SOURCE: IISS MILITARY BALANCE / SIPRI / DoD GLOBAL BASING / OPEN SOURCE / UNCLASSIFIED</div>
+    </div>
+    <div class="fpo-close" id="forceposture-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="fpo-section-title">FORCE POSTURE — USA / CHINA / RUSSIA</div>
+  <div class="fpo-actors-grid" id="fpo-actors-grid"></div>
+  <div class="fpo-section-title">MILITARY READINESS ESCALATION LADDER</div>
+  <table class="fpo-readiness-table">
+    <thead><tr><th>STAGE</th><th>INDICATOR</th><th>DESCRIPTION</th></tr></thead>
+    <tbody id="fpo-readiness-tbody"></tbody>
+  </table>
+  <div class="fpo-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="fpo-gdelt-feed" id="fpo-gdelt-feed"></div>
+</div>
+
+<!-- Global Surveillance State Intelligence Overlay -->
+<div id="surveillance-overlay">
+  <div class="sv-header">
+    <div>
+      <div class="sv-title">GLOBAL SURVEILLANCE STATE INTELLIGENCE</div>
+      <div class="sv-subtitle">SOURCE: CITIZEN LAB / FREEDOM HOUSE / COMPARITECH / NSO PEGASUS PROJECT / UNCLASSIFIED</div>
+    </div>
+    <div class="sv-close" id="surveillance-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="sv-section-title">NATIONAL SURVEILLANCE PROGRAMS</div>
+  <div class="sv-programs-grid" id="sv-programs-grid"></div>
+  <div class="sv-section-title">PEGASUS SPYWARE — NOTABLE TARGETS</div>
+  <table class="sv-pegasus-table">
+    <thead><tr><th>TARGET</th><th>OPERATOR / YEAR</th><th>DETAILS</th></tr></thead>
+    <tbody id="sv-pegasus-tbody"></tbody>
+  </table>
+  <div class="sv-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="sv-gdelt-feed" id="sv-gdelt-feed"></div>
 </div>
 
 <!-- Phase 46 buttons -->
