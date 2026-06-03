@@ -2685,6 +2685,93 @@ button{border-radius:2px!important}
 .kl-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .kl-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .kl-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === COLUMN 9 buttons (right:1145px) === */
+#emergtech-btn{position:fixed;top:55px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#emergtech-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#piracy-btn{position:fixed;top:95px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#piracy-btn:hover{border-color:#f97316;color:#fdba74;}
+#armsemb-btn{position:fixed;top:135px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#armsemb-btn:hover{border-color:#a855f7;color:#d8b4fe;}
+
+/* Emerging Tech overlay */
+#emergtech-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.et-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.et-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.et-tech-name{font-size:15px;font-weight:700;letter-spacing:1px;}
+.et-threat-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.et-crit{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.et-high{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.et-elev{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.et-timeline{font-size:8px;padding:2px 7px;border-radius:3px;background:rgba(10,110,245,.15);border:1px solid rgba(10,110,245,.3);color:#60a5fa;display:inline-block;margin-bottom:7px;}
+.et-desc{font-size:9px;color:#cbd5e1;line-height:1.6;border-left:3px solid rgba(239,68,68,.35);padding-left:8px;margin-bottom:8px;}
+.et-section-label{font-size:7px;letter-spacing:2px;color:#64748b;font-weight:700;margin-bottom:4px;text-transform:uppercase;}
+.et-vector-list{margin:0 0 8px 0;padding-left:14px;}
+.et-vector-item{font-size:8px;color:#f87171;line-height:1.6;margin-bottom:2px;}
+.et-incident-chip{font-size:8px;padding:3px 8px;background:rgba(127,29,29,.2);border:1px solid rgba(239,68,68,.2);color:#fca5a5;border-radius:3px;margin-bottom:4px;display:block;line-height:1.5;}
+.et-defense{font-size:9px;color:#86efac;line-height:1.5;border-left:3px solid rgba(34,197,94,.35);padding-left:8px;margin-top:6px;}
+.et-actor{font-size:8px;color:#94a3b8;margin-top:4px;font-style:italic;}
+.et-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.et-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.et-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Piracy overlay */
+#piracy-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.py-zone-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.py-zone-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;flex-wrap:wrap;gap:8px;}
+.py-zone-name{font-size:13px;font-weight:700;letter-spacing:1px;}
+.py-sev-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.py-sev-critical{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.py-sev-high{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.py-sev-elev{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.py-status-line{font-size:8px;color:#60a5fa;margin-bottom:5px;font-weight:700;}
+.py-range{font-size:8px;color:#94a3b8;margin-bottom:5px;}
+.py-incidents{font-size:10px;font-weight:700;color:#f1f5f9;margin-bottom:4px;}
+.py-trend{font-size:8px;margin-bottom:6px;font-style:italic;}
+.py-trend-dec{color:#86efac;}
+.py-trend-inc{color:#f87171;}
+.py-trend-low{color:#94a3b8;}
+.py-trend-esc{color:#ef4444;}
+.py-tactics-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
+.py-tactic-chip{font-size:7px;padding:2px 6px;background:rgba(124,45,18,.2);border:1px solid rgba(249,115,22,.25);color:#fdba74;border-radius:3px;}
+.py-note{font-size:8px;color:#94a3b8;line-height:1.5;font-style:italic;}
+.py-incident-row{background:rgba(15,23,42,0.6);border-left:3px solid;padding:8px 12px;margin-bottom:6px;border-radius:0 4px 4px 0;}
+.py-inc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;flex-wrap:wrap;gap:4px;}
+.py-inc-vessel{font-size:10px;font-weight:700;color:#f1f5f9;}
+.py-inc-date{font-size:8px;color:#64748b;}
+.py-inc-zone{font-size:7px;padding:1px 5px;background:rgba(10,110,245,.15);border:1px solid rgba(10,110,245,.25);color:#60a5fa;border-radius:2px;}
+.py-inc-detail{font-size:9px;color:#cbd5e1;line-height:1.5;}
+.py-op-card{background:rgba(15,23,42,0.6);border:1px solid rgba(10,110,245,.2);border-radius:4px;padding:10px 14px;margin-bottom:8px;}
+.py-op-name{font-size:10px;font-weight:700;color:#93c5fd;letter-spacing:.5px;margin-bottom:3px;}
+.py-op-led{font-size:8px;color:#60a5fa;margin-bottom:2px;}
+.py-op-focus{font-size:8px;color:#94a3b8;line-height:1.4;}
+.py-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.py-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.py-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Arms Embargo overlay */
+#armsemb-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ae-target-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.ae-target-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.ae-target-name{font-size:14px;font-weight:700;letter-spacing:1.5px;}
+.ae-status-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;}
+.ae-stat-active{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.ae-stat-partial{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.ae-meta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+.ae-meta-item{font-size:8px;color:#64748b;}
+.ae-meta-val{color:#94a3b8;}
+.ae-violation-card{background:rgba(127,29,29,0.12);border:1px solid rgba(239,68,68,.2);border-radius:4px;padding:9px 12px;margin-bottom:6px;}
+.ae-violator-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:4px;}
+.ae-violator-name{font-size:10px;font-weight:700;color:#f87171;letter-spacing:.5px;}
+.ae-confirmed-chip{font-size:7px;padding:1px 5px;border-radius:2px;font-weight:700;}
+.ae-conf-yes{background:rgba(127,29,29,.4);border:1px solid rgba(239,68,68,.4);color:#fca5a5;}
+.ae-conf-sus{background:rgba(113,63,18,.3);border:1px solid rgba(234,179,8,.3);color:#fde047;}
+.ae-conf-hc{background:rgba(79,27,12,.4);border:1px solid rgba(249,115,22,.4);color:#fdba74;}
+.ae-violation-detail{font-size:9px;color:#cbd5e1;line-height:1.5;}
+.ae-impact{font-size:9px;color:#f87171;line-height:1.5;border-left:3px solid rgba(239,68,68,.4);padding-left:8px;margin-top:7px;font-style:italic;}
+.ae-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ae-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ae-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -8994,6 +9081,7 @@ function draw(){
   if(_trafficActive)drawTrafficRoutes();
   if(_cableActive)drawCableNetwork();
   if(_shadowActive)drawShadowRoutes();
+  if(_armsEmbActive)drawArmsEmbRoutes();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -22871,6 +22959,414 @@ async function _fetchKleptocGDELT(){
 
 // ===== END PHASE 35 =====
 
+// ===== PHASE 36: EMERGING TECH, PIRACY, ARMS EMBARGO =====
+
+const EMERGING_TECH_THREATS = [
+  {"tech":"AI Deepfakes & Synthetic Media","threat":"CRITICAL","color":"#ef4444","timeline":"NOW — ACTIVE",
+   "description":"AI-generated hyper-realistic audio/video of world leaders, military figures, civilians. Indistinguishable from real footage. Used for disinformation, fraud, coercion.",
+   "threatVectors":[
+     "Synthetic head-of-state video ordering military stand-down / false surrender",
+     "Deepfake of nuclear launch authority compromising C2 integrity",
+     "CEO/CFO voice clone used in $25M+ BEC fraud (Hong Kong 2024)",
+     "Synthetic CSAM for blackmail of intelligence targets",
+     "Fake atrocity footage to trigger international intervention"
+   ],
+   "knownIncidents":["Hong Kong Arup CFO deepfake video call — $25M transferred Feb 2024","Romania election TikTok AI manipulation","Pentagon false explosion image (verified real, spread as deepfake scare)","Slovakia elections — fake Michal Simecka voice recording"],
+   "defense":"C2PA content provenance standard. Digital watermarking. AI detection tools (limited efficacy). Media literacy.",
+   "actor":"All state and non-state actors"},
+  {"tech":"AI-Enabled Autonomous Cyber Attacks","threat":"CRITICAL","color":"#ef4444","timeline":"2024-2026",
+   "description":"LLMs/AI systems discovering vulnerabilities, writing malware, adapting to defenses in real-time without human operator. Removes cost-bottleneck of skilled human hackers.",
+   "threatVectors":[
+     "AI-generated spearphishing campaigns personalized from OSINT at scale",
+     "Automated zero-day discovery in critical infrastructure code",
+     "AI worm propagation adapting to each network it enters",
+     "LLM-assisted HUMINT targeting — AI identifies and approaches humans for recruitment"
+   ],
+   "knownIncidents":["OpenAI confirmed state actors using GPT for cyber planning 2024","NSA AI Cybersecurity Collaboration Center stood up","DARPA AIxCC Cyber Challenge 2024 — AI found CVE vulnerabilities"],
+   "defense":"AI-powered defenses. Network segmentation. Zero-trust architecture. Human-in-loop for critical systems.",
+   "actor":"All sophisticated state actors. Criminal groups rapidly adopting."},
+  {"tech":"Synthetic Biology & Gene Editing","threat":"HIGH","color":"#f97316","timeline":"2025-2030",
+   "description":"CRISPR and advanced gene editing enabling custom pathogen design. Reduced cost and democratization of biofoundry technology. Dual-use research of concern.",
+   "threatVectors":[
+     "Custom pathogen designed for specific ethnic group (ethnobomb) — HLA targeting",
+     "Enhanced transmissibility or lethality in existing pathogens",
+     "Microbiome disruption weapons",
+     "Gene drive technology (ecosystem disruption as weapon)",
+     "Benchtop DNA synthesis enabling synthesis of dangerous pathogens"
+   ],
+   "knownIncidents":["Mousepox IL-4 experiment (2001) — accidentally created lethal strain","US government purchased 1.5M monkeypox vaccines 2023 (preparedness signal)","China published gene editing of human embryos (He Jiankui 2018)"],
+   "defense":"Biosurveillance (BARDA). Metagenomics environmental monitoring. Export controls on benchtop synthesizers. WHO pandemic treaty.",
+   "actor":"State bioweapon programs. Advanced academic labs. Increasingly accessible to non-state actors."},
+  {"tech":"Quantum Computing — Cryptopocalypse","threat":"HIGH","color":"#f97316","timeline":"2030-2035 (CRQC estimate)",
+   "description":"Cryptographically Relevant Quantum Computer (CRQC) will break RSA/ECC encryption. All currently encrypted data vulnerable. Harvest Now Decrypt Later attacks ongoing.",
+   "threatVectors":[
+     "All current public key encryption broken (RSA-2048, ECDSA, DH)",
+     "Financial system vulnerability (SWIFT, banking, crypto wallets)",
+     "Nuclear C2 encryption potentially compromised",
+     "Years of intercepted encrypted traffic suddenly readable",
+     "Digital signatures (software updates, identity) broken"
+   ],
+   "knownIncidents":["China collecting encrypted US gov traffic for future decryption (CISA assessment 2024)","NSA mandating PQC migration for national security systems by 2030","NIST finalized PQC standards Aug 2024 (ML-KEM, ML-DSA, SLH-DSA)"],
+   "defense":"Post-Quantum Cryptography (PQC) migration. NIST standardized algorithms. Quantum key distribution (QKD). Urgent migration timeline.",
+   "actor":"China, Russia believed to be leading quantum computing for intelligence applications."},
+  {"tech":"Hypersonic + Directed Energy Weapons","threat":"HIGH","color":"#f97316","timeline":"NOW — DEPLOYED",
+   "description":"Hypersonic glide vehicles (Mach 5-27) and directed energy weapons (lasers, HPM) changing speed of warfare and rendering current defenses obsolete.",
+   "threatVectors":[
+     "DF-17/DF-ZF (China) — carrier killer, penetrates Aegis",
+     "Kinzhal (Russia) — used in Ukraine on hardened targets",
+     "High Power Microwave (HPM) — disables electronics in target zone",
+     "Laser systems — intercept drones at $10/shot vs $50K missiles",
+     "US hypersonic gap — currently 3-5 years behind China/Russia"
+   ],
+   "knownIncidents":["Russia used Kinzhal in Ukraine — first combat use of hypersonic","China DF-17 operational since 2019","US ARRW program canceled — replaced by LRHW","UK DragonFire laser demonstrator 2024"],
+   "defense":"Boost-phase intercept (extremely difficult). Space-based sensors for early detection. Golden Horde autonomous intercept swarms.",
+   "actor":"Russia (deployed), China (deployed), USA (developing), North Korea (testing)."},
+  {"tech":"Brain-Computer Interface Weaponization","threat":"ELEVATED","color":"#eab308","timeline":"2025-2035",
+   "description":"Military BCI technology enabling thought-controlled weapons, neural data collection from soldiers, and potential for cognitive manipulation.",
+   "threatVectors":[
+     "Soldier BCI data hacked — tactical decisions, fear/stress states readable",
+     "Adversary electromagnetic interference with civilian BCI (Neuralink users)",
+     "BCI-enabled drone swarm control (US DARPA N3 program)",
+     "Forced BCI implant as coercive tool in authoritarian states",
+     "Neural weapon: disrupt enemy BCI-dependent systems"
+   ],
+   "knownIncidents":["DARPA N3 program — non-invasive BCI for soldier UAV control","Neuralink human trial (Noland Arbaugh) Jan 2024","China BCI research for PLA applications (PLA university papers)","Synchron BCI device FDA breakthrough designation"],
+   "defense":"BCI security standards (emerging). Encryption of neural data streams. Regulatory frameworks.",
+   "actor":"USA (DARPA), China (PLA research), Israel (Rafael), private sector (Neuralink, Synchron)."}
+];
+
+const PIRACY_ZONES = [
+  {"zone":"Gulf of Guinea (West Africa)","lat":3,"lng":5,"color":"#ef4444","status":"ACTIVE","severity":"HIGH",
+   "country_range":"Nigeria, Benin, Togo, Ghana, Cameroon, Equatorial Guinea",
+   "incidents_2024":42,"trend":"DECLINING (from peak 2020-2021)","trendClass":"py-trend-dec",
+   "tactics":["Kidnap for ransom (KFR)","Crew abduction","VBSS (visit board search seize)","Mother ship + skiff operations","Armed boarding (AK-47, RPG)"],
+   "groups":["Niger Delta Avengers","Delta pirates","Militant factions"],
+   "note":"World most dangerous water for KFR. Avg ransom $500K-$1M. IMB reports all incidents."},
+  {"zone":"Strait of Malacca / Singapore Strait","lat":1.5,"lng":104,"color":"#f97316","status":"ACTIVE","severity":"ELEVATED",
+   "country_range":"Indonesia, Malaysia, Singapore",
+   "incidents_2024":68,"trend":"INCREASING (petty piracy)","trendClass":"py-trend-inc",
+   "tactics":["Low-level theft","Tug/barge targeting","Anchor watch incidents","Night boarding while anchored"],
+   "groups":["Indonesian criminal networks","Philippine southern pirates"],
+   "note":"High volume low-severity piracy. Singapore Strait most congested waterway — 1,000+ ships/day."},
+  {"zone":"Red Sea / Gulf of Aden (Houthi)","lat":14,"lng":45,"color":"#ef4444","status":"ACTIVE — STATE ACTOR","severity":"CRITICAL",
+   "country_range":"Yemen, Djibouti, Eritrea approaches",
+   "incidents_2024":130,"trend":"ESCALATING (Houthi attacks)","trendClass":"py-trend-esc",
+   "tactics":["Anti-ship ballistic missiles","Anti-ship cruise missiles","UAV attacks","Helicopter boarding","Naval mines"],
+   "groups":["Houthi Forces (Ansar Allah)"],
+   "note":"NOT traditional piracy — state-sponsored Houthi military campaign against international shipping. 130+ attacks Oct 2023-2024."},
+  {"zone":"Somalia / Indian Ocean","lat":10,"lng":52,"color":"#f97316","status":"REDUCED BUT RISK REMAINS","severity":"ELEVATED",
+   "country_range":"Somalia, Kenya EEZ, Seychelles approaches",
+   "incidents_2024":8,"trend":"LOW — Houthi attacks distracting/overshadowing","trendClass":"py-trend-low",
+   "tactics":["Long-range mother ship operations","Skiff attacks","Hostage taking for ransom","Bulk carrier targeting"],
+   "groups":["Somali piracy networks (Puntland, Xaardheere)"],
+   "note":"Somali piracy virtually eliminated 2013-2023 by naval patrols. Risk of resurgence if EU/NATO naval attention diverts to Red Sea."},
+  {"zone":"Sulu / Celebes Sea (SE Asia)","lat":6,"lng":121,"color":"#f97316","status":"ACTIVE","severity":"HIGH",
+   "country_range":"Philippines, Malaysia (Sabah), Indonesia",
+   "incidents_2024":15,"trend":"REDUCED","trendClass":"py-trend-dec",
+   "tactics":["KFR (Abu Sayyaf)","Fishing vessel targeting","Fast boat attacks"],
+   "groups":["Abu Sayyaf Group (IS-affiliated)","Lawless groups"],
+   "note":"Abu Sayyaf historically kidnapped sailors for ransom ($3-5M). Philippines military operations reducing but not eliminating."}
+];
+
+const PIRACY_RECENT_INCIDENTS = [
+  {"date":"Nov 2023","vessel":"Galaxy Leader (car carrier)","flag":"Bahamas / Israeli-linked","zone":"Red Sea","incident":"Houthi forces seized vessel via helicopter boarding. 25-crew held as of 2025. Vessel displayed on Houthi media.","severity":"CRITICAL"},
+  {"date":"Feb 2024","vessel":"True Confidence (bulk carrier)","flag":"Barbados","zone":"Red Sea","incident":"Houthi anti-ship missile struck vessel — 3 crew killed. First confirmed crew deaths from Houthi attacks.","severity":"CRITICAL"},
+  {"date":"Dec 2023","vessel":"MV Ruen (bulk carrier)","flag":"Malta","zone":"Indian Ocean","incident":"Somali pirates seized vessel. 18-crew hostage. Eventually rescued by Indian Navy in March 2024.","severity":"HIGH"},
+  {"date":"Mar 2024","vessel":"MV Ruen rescue","flag":"Indian Navy","zone":"Indian Ocean","incident":"INS Kolkata and INS Subhadra conducted boarding — rescued all 17 hostages, arrested 35 pirates. Largest recent counter-piracy op.","severity":"INFO"},
+  {"date":"2024 ongoing","vessel":"Multiple","flag":"Various","zone":"Gulf of Guinea","incident":"42 incidents reported 2024 in Gulf of Guinea. 3 crew KFR cases. Nigerian military patrols improving response times.","severity":"HIGH"}
+];
+
+const COUNTER_PIRACY = [
+  {"operation":"Operation Prosperity Guardian (CTF-153)","led":"USA","members":"UK, France, Canada, Netherlands, Bahrain, Norway","focus":"Houthi anti-ship attacks, Red Sea escort"},
+  {"operation":"EU Operation ASPIDES","led":"EU","members":"25 EU nations","focus":"Defensive escort operations Red Sea/Indian Ocean (no offensive strikes vs Houthis)"},
+  {"operation":"EU Operation ATALANTA","led":"EU","members":"20+ EU nations","focus":"Somalia/Gulf of Aden counter-piracy. Active since 2008."},
+  {"operation":"Combined Maritime Forces (CMF)","led":"USA (5th Fleet)","members":"44 nations","focus":"Counter-piracy, counter-terrorism, humanitarian"},
+  {"operation":"India Deep Blue (independent)","led":"India","members":"India (INS Kolkata etc)","focus":"Protecting Indian shipping. MV Ruen rescue."}
+];
+
+const ARMS_EMBARGOES = [
+  {"target":"North Korea","imposed_by":"UN Security Council","since":2006,"status":"BEING VIOLATED","color":"#ef4444",
+   "violations":[
+     {"violator":"Russia","detail":"Russia receiving DPRK artillery shells (122mm, 152mm) and ballistic missiles (KN-23) for Ukraine war. 10,000+ containers of ammunition transferred 2023-2024.","confirmed":true},
+     {"violator":"China","detail":"China continues providing dual-use goods, energy, food to DPRK. Indirect oil supply via ship-to-ship transfer. PoE experts blocked by China from reporting.","confirmed":true},
+     {"violator":"Iran","detail":"Technology transfer for missile/nuclear programs suspected. Bilateral visits. Shared adversary of US.","confirmed":"SUSPECTED"}
+   ],
+   "impact":"DPRK earning artillery revenue from Russia while gaining missile/satellite/submarine technology in return."},
+  {"target":"Iran","imposed_by":"UN SC (partially lifted 2020) + US/EU unilateral","since":"2006 (UN) / 1979 (US)","status":"BEING VIOLATED","color":"#ef4444",
+   "violations":[
+     {"violator":"China","detail":"China purchasing Iranian oil ($50B+/year) at discounted prices via Malaysian/UAE intermediaries despite sanctions. Chinese tankers dominate Iran export fleet.","confirmed":true},
+     {"violator":"Russia","detail":"Receiving Iranian Shahed-136 drones (2,000+ transferred 2022). MoU for licensed Shahed production in Russia signed. Russian tech for Iranian missile program.","confirmed":true},
+     {"violator":"UAE (private sector)","detail":"Dubai as hub for Iranian sanctions evasion. Re-export of controlled goods. Iranian front companies.","confirmed":true}
+   ],
+   "impact":"Iran exporting drones to Russia, funding IRGC proxy network despite sanctions."},
+  {"target":"Russia (Ukraine war)","imposed_by":"US/EU/UK/G7 (unilateral, not UN)","since":"2022","status":"PARTIALLY VIOLATED","color":"#ef4444",
+   "violations":[
+     {"violator":"North Korea","detail":"DPRK providing 122mm/152mm artillery shells, Hwasong-11 ballistic missiles, 12,000 troops. Russia paying in satellite/submarine tech.","confirmed":true},
+     {"violator":"China","detail":"China providing dual-use goods (semiconductors, machine tools, electronics) via third countries. Chinese components found in Russian weapons in Ukraine.","confirmed":true},
+     {"violator":"Iran","detail":"Shahed drones + production line transfer. Iran-Russia defense cooperation deepening.","confirmed":true},
+     {"violator":"Belarus","detail":"Re-export hub for controlled Western goods to Russia. Minsk hosts Russian circumvention networks.","confirmed":true}
+   ],
+   "impact":"Russia successfully obtaining components to sustain war production despite Western export controls."},
+  {"target":"Libya","imposed_by":"UN Security Council","since":2011,"status":"SYSTEMATICALLY VIOLATED","color":"#f97316",
+   "violations":[
+     {"violator":"UAE","detail":"UAE supporting Haftar/LNA with armed vehicles, air defense, armored vehicles, drone operators (2019-2021). Documented by UN PoE.","confirmed":true},
+     {"violator":"Russia (Wagner)","detail":"Wagner Group deployed to Libya supporting Haftar. Russian aircraft, Pantsir systems, mines. UN documented.","confirmed":true},
+     {"violator":"Turkey","detail":"Turkey supplying GNA/GNU with drones (TB2), armored vehicles, Syrian proxy fighters. Invited by recognized government.","confirmed":true}
+   ],
+   "impact":"Libya civil war sustained by competing external actors violating embargo."},
+  {"target":"Yemen","imposed_by":"UN Security Council (Houthi-specific)","since":2015,"status":"BEING VIOLATED","color":"#f97316",
+   "violations":[
+     {"violator":"Iran","detail":"IRGC-QF providing ballistic missiles, anti-ship missiles, UAVs, naval mines to Houthis. Ship interdictions by US Navy confirmed Iranian weapons.","confirmed":true},
+     {"violator":"China","detail":"Dual-use components in Houthi missiles traced to China (UN PoE 2024). Not confirmed direct transfer.","confirmed":"SUSPECTED"}
+   ],
+   "impact":"Houthi Red Sea attacks enabled by Iranian weapons in violation of UN arms embargo."},
+  {"target":"Sudan","imposed_by":"UN Security Council (Darfur-specific)","since":2005,"status":"SYSTEMATICALLY VIOLATED","color":"#f97316",
+   "violations":[
+     {"violator":"UAE","detail":"UAE providing weapons to RSF (Rapid Support Forces) via Chad. G7 investigations confirmed. UAE denies.","confirmed":"HIGH CONFIDENCE"},
+     {"violator":"Russia (Wagner)","detail":"Wagner Group in Sudan supporting gold mining interests. Possible weapons supply to RSF.","confirmed":"PROBABLE"}
+   ],
+   "impact":"RSF able to sustain war against SAF despite UN embargo."}
+];
+
+const ARMS_SMUGGLING_ROUTES = [
+  {"name":"Iran → Houthi (Yemen)","color":"rgba(168,85,247,0.5)","waypoints":[{"lat":26,"lng":58},{"lat":22,"lng":58},{"lat":15,"lng":45}]},
+  {"name":"Iran → Hamas (Gaza tunnel/sea)","color":"rgba(168,85,247,0.5)","waypoints":[{"lat":29,"lng":50},{"lat":23,"lng":39},{"lat":31,"lng":34}]},
+  {"name":"DPRK → Russia (shells)","color":"rgba(239,68,68,0.5)","waypoints":[{"lat":42,"lng":130},{"lat":43,"lng":132},{"lat":48,"lng":140},{"lat":55,"lng":131}]},
+  {"name":"UAE → Sudan RSF (via Chad)","color":"rgba(234,179,8,0.5)","waypoints":[{"lat":25,"lng":55},{"lat":17,"lng":38},{"lat":15,"lng":22},{"lat":15,"lng":30}]},
+  {"name":"China → Russia (dual-use)","color":"rgba(239,68,68,0.4)","waypoints":[{"lat":35,"lng":110},{"lat":43,"lng":87},{"lat":55,"lng":65},{"lat":55,"lng":37}]}
+];
+
+// ---- Emerging Tech ----
+function openEmergTech(){
+  document.getElementById('emergtech-overlay').style.display='flex';
+  _renderEmergTech();
+  fetchEmergTechGDELT();
+}
+function closeEmergTech(){
+  document.getElementById('emergtech-overlay').style.display='none';
+}
+function _renderEmergTech(){
+  var el=document.getElementById('emergtech-cards');
+  if(!el)return;
+  el.innerHTML=EMERGING_TECH_THREATS.map(function(t){
+    var badgeClass=t.threat==='CRITICAL'?'et-crit':t.threat==='HIGH'?'et-high':'et-elev';
+    var vectors=t.threatVectors.map(function(v){return '<li class="et-vector-item">'+v+'</li>';}).join('');
+    var incidents=t.knownIncidents.map(function(i){return '<span class="et-incident-chip">'+i+'</span>';}).join('');
+    return '<div class="et-card" style="border-left:3px solid '+t.color+';">'
+      +'<div class="et-card-header">'
+      +'<div class="et-tech-name" style="color:'+t.color+';">'+t.tech+'</div>'
+      +'<span class="et-threat-badge '+badgeClass+'">'+t.threat+'</span>'
+      +'</div>'
+      +'<div class="et-timeline">'+t.timeline+'</div>'
+      +'<div class="et-desc">'+t.description+'</div>'
+      +'<div class="et-section-label">Threat Vectors</div>'
+      +'<ul class="et-vector-list">'+vectors+'</ul>'
+      +'<div class="et-section-label">Known Incidents</div>'
+      +incidents
+      +'<div class="et-defense"><strong>DEFENSE:</strong> '+t.defense+'</div>'
+      +'<div class="et-actor"><strong>ACTORS:</strong> '+t.actor+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchEmergTechGDELT(){
+  var el=document.getElementById('emergtech-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live intelligence feed...</div>';
+  try{
+    var q=encodeURIComponent('AI deepfake autonomous weapons synthetic biology quantum technology threat');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=72h&sort=DateDesc';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="et-gdelt-item"><div class="et-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="et-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ---- Piracy ----
+function openPiracyWatch(){
+  document.getElementById('piracy-overlay').style.display='flex';
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._piracy;}),
+    ...PIRACY_ZONES.map(function(z){
+      return {lat:z.lat,lng:z.lng,type:'naval',
+        severity:z.severity==='CRITICAL'?'critical':z.severity==='HIGH'?'high':'medium',
+        label:z.zone,_piracy:true};
+    })
+  ];
+  _renderPiracyCards();
+  fetchPiracyGDELT();
+}
+function closePiracyWatch(){
+  document.getElementById('piracy-overlay').style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._piracy;});
+}
+function _renderPiracyCards(){
+  var zonesEl=document.getElementById('piracy-zones-list');
+  var incEl=document.getElementById('piracy-incidents-list');
+  var opsEl=document.getElementById('piracy-ops-list');
+  if(zonesEl){
+    zonesEl.innerHTML=PIRACY_ZONES.map(function(z){
+      var badgeClass=z.severity==='CRITICAL'?'py-sev-critical':z.severity==='HIGH'?'py-sev-high':'py-sev-elev';
+      var tactics=z.tactics.map(function(t){return '<span class="py-tactic-chip">'+t+'</span>';}).join('');
+      return '<div class="py-zone-card" style="border-left:3px solid '+z.color+';">'
+        +'<div class="py-zone-header">'
+        +'<div class="py-zone-name">'+z.zone+'</div>'
+        +'<span class="py-sev-badge '+badgeClass+'">'+z.severity+'</span>'
+        +'</div>'
+        +'<div class="py-status-line">'+z.status+'</div>'
+        +'<div class="py-range">'+z.country_range+'</div>'
+        +'<div class="py-incidents">'+z.incidents_2024+' incidents (2024)</div>'
+        +'<div class="py-trend '+z.trendClass+'">Trend: '+z.trend+'</div>'
+        +'<div class="py-tactics-row">'+tactics+'</div>'
+        +'<div class="py-note">'+z.note+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  if(incEl){
+    var sevColors={'CRITICAL':'#ef4444','HIGH':'#f97316','INFO':'#60a5fa'};
+    incEl.innerHTML=PIRACY_RECENT_INCIDENTS.map(function(i){
+      var bc=sevColors[i.severity]||'#64748b';
+      return '<div class="py-incident-row" style="border-left-color:'+bc+';">'
+        +'<div class="py-inc-header">'
+        +'<span class="py-inc-vessel">'+i.vessel+'</span>'
+        +'<span class="py-inc-date">'+i.date+'</span>'
+        +'<span class="py-inc-zone">'+i.zone+'</span>'
+        +'</div>'
+        +'<div class="py-inc-detail">'+i.incident+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  if(opsEl){
+    opsEl.innerHTML=COUNTER_PIRACY.map(function(op){
+      return '<div class="py-op-card">'
+        +'<div class="py-op-name">'+op.operation+'</div>'
+        +'<div class="py-op-led">Led by: '+op.led+' | Members: '+op.members+'</div>'
+        +'<div class="py-op-focus">'+op.focus+'</div>'
+        +'</div>';
+    }).join('');
+  }
+}
+async function fetchPiracyGDELT(){
+  var el=document.getElementById('piracy-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live maritime intelligence feed...</div>';
+  try{
+    var q=encodeURIComponent('piracy ship attack maritime Houthi Somali Gulf Guinea');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=72h&sort=DateDesc';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="py-gdelt-item"><div class="py-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="py-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ---- Arms Embargo ----
+let _armsEmbActive=false;
+
+function drawArmsEmbRoutes(){
+  var t=(Date.now()%3000)/3000;
+  for(var i=0;i<ARMS_SMUGGLING_ROUTES.length;i++){
+    var route=ARMS_SMUGGLING_ROUTES[i];
+    ctx.save();
+    ctx.strokeStyle=route.color;
+    ctx.lineWidth=1.5;
+    ctx.setLineDash([4,6]);
+    ctx.lineDashOffset=-t*30;
+    ctx.beginPath();
+    var started=false;
+    for(var j=0;j<route.waypoints.length;j++){
+      var wp=route.waypoints[j];
+      var p=project(wp.lat,wp.lng);
+      if(!p.visible){started=false;continue;}
+      if(!started){ctx.moveTo(p.px,p.py);started=true;}
+      else ctx.lineTo(p.px,p.py);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function openArmsEmb(){
+  _armsEmbActive=true;
+  document.getElementById('armsemb-overlay').style.display='flex';
+  var hotspotCoords=[
+    {lat:39,lng:127,label:'DPRK — Embargo Target',_armsemb:true},
+    {lat:32,lng:53,label:'Iran — Embargo Target',_armsemb:true},
+    {lat:55,lng:37,label:'Russia — Sanctions Target',_armsemb:true},
+    {lat:27,lng:18,label:'Libya — Embargo Target',_armsemb:true},
+    {lat:15,lng:45,label:'Yemen — Houthi Embargo',_armsemb:true},
+    {lat:15,lng:30,label:'Sudan — Darfur Embargo',_armsemb:true}
+  ];
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._armsemb;}),
+    ...hotspotCoords.map(function(c){
+      return {lat:c.lat,lng:c.lng,type:'instability',severity:'high',label:c.label,_armsemb:true};
+    })
+  ];
+  _renderArmsEmbCards();
+  fetchArmsEmbGDELT();
+}
+function closeArmsEmb(){
+  _armsEmbActive=false;
+  liveHotspots=liveHotspots.filter(function(h){return !h._armsemb;});
+  document.getElementById('armsemb-overlay').style.display='none';
+}
+function _renderArmsEmbCards(){
+  var el=document.getElementById('armsemb-cards');
+  if(!el)return;
+  el.innerHTML=ARMS_EMBARGOES.map(function(emb){
+    var badgeClass=emb.status.indexOf('SYSTEMATICALLY')>=0||emb.status.indexOf('BEING')>=0?'ae-stat-active':'ae-stat-partial';
+    var violations=emb.violations.map(function(v){
+      var confClass=v.confirmed===true?'ae-conf-yes':v.confirmed==='SUSPECTED'?'ae-conf-sus':'ae-conf-hc';
+      var confLabel=v.confirmed===true?'CONFIRMED':v.confirmed==='SUSPECTED'?'SUSPECTED':v.confirmed;
+      return '<div class="ae-violation-card">'
+        +'<div class="ae-violator-header">'
+        +'<span class="ae-violator-name">'+v.violator+'</span>'
+        +'<span class="ae-confirmed-chip '+confClass+'">'+confLabel+'</span>'
+        +'</div>'
+        +'<div class="ae-violation-detail">'+v.detail+'</div>'
+        +'</div>';
+    }).join('');
+    return '<div class="ae-target-card" style="border-left:3px solid '+emb.color+';">'
+      +'<div class="ae-target-header">'
+      +'<div class="ae-target-name">'+emb.target+'</div>'
+      +'<span class="ae-status-badge '+badgeClass+'">'+emb.status+'</span>'
+      +'</div>'
+      +'<div class="ae-meta-row">'
+      +'<div class="ae-meta-item">IMPOSED BY: <span class="ae-meta-val">'+emb.imposed_by+'</span></div>'
+      +'<div class="ae-meta-item">SINCE: <span class="ae-meta-val">'+emb.since+'</span></div>'
+      +'</div>'
+      +violations
+      +'<div class="ae-impact">IMPACT: '+emb.impact+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchArmsEmbGDELT(){
+  var el=document.getElementById('armsemb-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live intelligence feed...</div>';
+  try{
+    var q=encodeURIComponent('arms embargo violation weapons smuggling UN sanctions violations');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=72h&sort=DateDesc';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="ae-gdelt-item"><div class="ae-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="ae-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 36 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -25053,6 +25549,94 @@ function filterSIGINT(query){
       <div id="kleptoc-mechs-list" style="margin-bottom:16px;"></div>
       <div style="font-size:9px;letter-spacing:2px;color:#eab308;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — CORRUPTION</div>
       <div id="kleptoc-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COLUMN 9 BUTTONS -->
+<button id="emergtech-btn" onclick="openEmergTech()">EMERG TECH</button>
+<button id="piracy-btn" onclick="openPiracyWatch()">PIRACY WATCH</button>
+<button id="armsemb-btn" onclick="openArmsEmb()">ARMS EMBARGO</button>
+
+<!-- EMERGING TECH OVERLAY -->
+<div id="emergtech-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">CLASSIFIED — TECHNOLOGY THREAT ASSESSMENT</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">EMERGING TECHNOLOGY THREAT HORIZON — Intelligence Assessment</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">DARPA &bull; NSA &bull; NIST &bull; Open Source Intelligence</div>
+    </div>
+    <button onclick="closeEmergTech()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(127,29,29,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#fca5a5;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    6 CRITICAL/HIGH EMERGING TECHNOLOGY THREAT VECTORS &bull; DUAL-USE RESEARCH &bull; ESCALATING RISK HORIZON
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">TECHNOLOGY THREAT PROFILES</div>
+      <div id="emergtech-cards"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">GDELT LIVE FEED — EMERGING TECH THREATS</div>
+      <div id="emergtech-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PIRACY WATCH OVERLAY -->
+<div id="piracy-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#f97316;font-size:11px;letter-spacing:3px;">MARITIME SECURITY — PIRACY &amp; ILLICIT ACTIVITY</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">MARITIME PIRACY &amp; ILLICIT ACTIVITY TRACKER</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">IMB &bull; US 5th Fleet &bull; EU ASPIDES &bull; UN Panel of Experts</div>
+    </div>
+    <button onclick="closePiracyWatch()" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#fdba74;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(124,45,18,0.2);border:1px solid rgba(249,115,22,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#fdba74;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    130+ HOUTHI ATTACKS 2023-2024 &bull; RED SEA SHIPPING DISRUPTED &bull; GULF OF GUINEA KFR ONGOING &bull; 5 HIGH-RISK MARITIME ZONES
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">HIGH-RISK MARITIME ZONES</div>
+      <div id="piracy-zones-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">RECENT SIGNIFICANT INCIDENTS</div>
+      <div id="piracy-incidents-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#60a5fa;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:14px;">COUNTER-PIRACY OPERATIONS</div>
+      <div id="piracy-ops-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — MARITIME SECURITY</div>
+      <div id="piracy-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ARMS EMBARGO OVERLAY -->
+<div id="armsemb-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#a855f7;font-size:11px;letter-spacing:3px;">UN SANCTIONS &amp; ARMS EMBARGO INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">ARMS EMBARGO &amp; ILLICIT ARMS FLOW INTELLIGENCE</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">UN Panel of Experts &bull; SIPRI &bull; CSIS &bull; Open Source Reporting</div>
+    </div>
+    <button onclick="closeArmsEmb()" style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);color:#d8b4fe;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(76,29,149,0.2);border:1px solid rgba(168,85,247,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#d8b4fe;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    6 ACTIVE ARMS EMBARGOES UNDER SYSTEMATIC VIOLATION &bull; 5 ILLICIT SMUGGLING ROUTES MAPPED ON GLOBE &bull; STATE-LEVEL EMBARGO BUSTING
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#a855f7;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">ACTIVE EMBARGO VIOLATIONS BY TARGET</div>
+      <div id="armsemb-cards"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#a855f7;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">NOTE — SMUGGLING ROUTES VISIBLE ON GLOBE</div>
+      <div style="background:rgba(76,29,149,0.15);border:1px solid rgba(168,85,247,0.2);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:9px;color:#c084fc;line-height:1.7;">
+        5 confirmed illicit arms transfer routes are rendered as animated dashed lines on the globe while this panel is open. Routes represent: Iran to Houthi (Yemen), Iran to Hamas (Gaza), DPRK to Russia (artillery shells), UAE to Sudan RSF via Chad, and China to Russia (dual-use goods). All routes sourced from UN Panel of Experts reports and confirmed open source intelligence.
+      </div>
+      <div style="font-size:9px;letter-spacing:2px;color:#a855f7;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:14px;">GDELT LIVE FEED — ARMS EMBARGO</div>
+      <div id="armsemb-gdelt-feed"></div>
     </div>
   </div>
 </div>
