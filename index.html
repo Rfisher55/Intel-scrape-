@@ -3029,6 +3029,119 @@ button{border-radius:2px!important}
 .oc-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .oc-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .oc-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === COLUMN 10 new buttons === */
+#energysec-btn{position:fixed;top:175px;right:1260px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#energysec-btn:hover{border-color:#f97316;color:#fdba74;}
+#migration-btn{position:fixed;top:215px;right:1260px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#migration-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#arctic-btn{position:fixed;top:255px;right:1260px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#arctic-btn:hover{border-color:#22d3ee;color:#67e8f9;}
+
+/* Energy Security overlay */
+#energysec-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.es-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.es-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f97316;}
+.es-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.es-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.es-close:hover{color:#f97316;border-color:#f97316;}
+.es-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.es-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px;margin-bottom:10px;}
+.es-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:2px;}
+.es-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.es-name{font-size:13px;font-weight:700;letter-spacing:.05em;color:#f1f5f9;}
+.es-type{font-size:8px;color:#64748b;margin-top:2px;}
+.es-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.es-risk-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:1px;}
+.es-risk-CRITICAL{background:rgba(127,29,29,.6);border:1px solid #ef4444;color:#fca5a5;}
+.es-risk-HIGH{background:rgba(124,45,18,.5);border:1px solid #f97316;color:#fdba74;}
+.es-risk-ELEVATED{background:rgba(113,63,18,.4);border:1px solid #eab308;color:#fde047;}
+.es-risk-DESTROYED{background:rgba(30,41,59,.6);border:1px solid #64748b;color:#94a3b8;}
+.es-flow{font-size:9px;color:#a3e635;margin-bottom:5px;font-weight:700;}
+.es-controller{font-size:8px;color:#94a3b8;margin-bottom:4px;}
+.es-threat{font-size:8px;color:#fca5a5;line-height:1.5;border-left:2px solid rgba(239,68,68,.3);padding-left:8px;margin-top:5px;}
+.es-dep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:12px;margin-bottom:10px;}
+.es-dep-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:13px;border-left-width:3px;}
+.es-dep-country{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:4px;}
+.es-dep-status{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;display:inline-block;margin-bottom:6px;}
+.es-dep-row{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:3px;}
+.es-dep-row b{color:#e2e8f0;}
+.es-dep-vuln{font-size:8px;color:#fbbf24;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;margin-top:5px;line-height:1.5;}
+.es-prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin-bottom:10px;}
+.es-prod-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px 13px;display:flex;gap:10px;align-items:flex-start;}
+.es-prod-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.es-prod-country{font-size:11px;font-weight:700;color:#f1f5f9;}
+.es-prod-type{font-size:7px;letter-spacing:.1em;color:#64748b;margin-bottom:3px;}
+.es-prod-detail{font-size:8px;color:#94a3b8;line-height:1.5;}
+.es-gdelt-feed{max-width:900px;}
+.es-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.es-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.es-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Migration overlay */
+#migration-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.mg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.mg-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#3b82f6;}
+.mg-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.mg-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.mg-close:hover{color:#3b82f6;border-color:#3b82f6;}
+.mg-stats-banner{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-bottom:18px;}
+.mg-stat{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:4px;padding:8px 12px;}
+.mg-stat-val{font-size:11px;font-weight:700;color:#60a5fa;margin-bottom:2px;}
+.mg-stat-label{font-size:7px;color:#64748b;letter-spacing:.05em;}
+.mg-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:16px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.mg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:14px;margin-bottom:10px;}
+.mg-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-left-width:3px;}
+.mg-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.mg-name{font-size:12px;font-weight:700;color:#f1f5f9;letter-spacing:.03em;}
+.mg-status-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.mg-stat-row{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:3px;}
+.mg-stat-row b{color:#e2e8f0;}
+.mg-death-row{font-size:8px;color:#fca5a5;font-weight:700;margin-bottom:4px;}
+.mg-facilitators{font-size:8px;color:#fbbf24;line-height:1.5;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;margin-top:6px;}
+.mg-origins{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
+.mg-origin-chip{font-size:7px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd;padding:2px 6px;border-radius:2px;}
+.mg-gdelt-feed{max-width:900px;}
+.mg-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.mg-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.mg-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Arctic overlay */
+#arctic-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ac-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.ac-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#22d3ee;}
+.ac-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.ac-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.ac-close:hover{color:#22d3ee;border-color:#22d3ee;}
+.ac-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:16px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px;margin-bottom:10px;}
+.ac-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:2px;}
+.ac-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.ac-country{font-size:14px;font-weight:700;color:#f1f5f9;}
+.ac-posture-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;}
+.ac-claim{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:6px;}
+.ac-mil-list{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
+.ac-mil-chip{font-size:7px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;padding:2px 7px;border-radius:2px;}
+.ac-resources{font-size:8px;color:#a3e635;margin-bottom:4px;font-weight:700;}
+.ac-posture{font-size:8px;color:#fbbf24;line-height:1.5;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;margin-top:4px;}
+.ac-incidents-list{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
+.ac-incident{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px 14px;border-left-width:3px;}
+.ac-inc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;gap:10px;}
+.ac-inc-date{font-size:8px;color:#64748b;white-space:nowrap;}
+.ac-inc-event{font-size:10px;font-weight:700;color:#f1f5f9;flex:1;}
+.ac-inc-sev{font-size:7px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;}
+.ac-inc-sev-HIGH{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.ac-inc-sev-ELEVATED{background:rgba(113,63,18,.4);border:1px solid #eab308;color:#fde047;}
+.ac-inc-sev-INFO{background:rgba(30,58,95,.5);border:1px solid #3b82f6;color:#93c5fd;}
+.ac-inc-detail{font-size:8px;color:#94a3b8;line-height:1.6;}
+.ac-resources-panel{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:10px;}
+.ac-res-card{background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.2);border-radius:4px;padding:10px 14px;}
+.ac-res-label{font-size:8px;color:#64748b;letter-spacing:.1em;margin-bottom:4px;}
+.ac-res-val{font-size:9px;font-weight:700;color:#67e8f9;line-height:1.5;}
+.ac-gdelt-feed{max-width:900px;}
+.ac-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ac-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ac-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -9340,6 +9453,8 @@ function draw(){
   if(_shadowActive)drawShadowRoutes();
   if(_armsEmbActive)drawArmsEmbRoutes();
   if(_confMinActive)drawConfMinRoutes();
+  if(_energyPipeActive)drawEnergyPipelines();
+  if(_migrationActive)drawMigrationRoutes();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -24761,6 +24876,497 @@ function _closeOrgCrimeOverlay(){
 
 // ===== END PHASE 39 =====
 
+// ===== PHASE 40: ENERGY SECURITY, MIGRATION, ARCTIC =====
+
+const ENERGY_CHOKEPOINTS = [
+  {"name":"Strait of Hormuz","type":"MARITIME","lat":26.5,"lng":56.3,"color":"#ef4444","risk":"CRITICAL",
+   "flow":"21M bbl/day oil (20% global), $1.6T/year","controller":"Iran ability to close","threat":"Iranian closure — ongoing tanker seizures"},
+  {"name":"Strait of Malacca","type":"MARITIME","lat":1.5,"lng":103.8,"color":"#ef4444","risk":"CRITICAL",
+   "flow":"16M bbl/day oil + 30% LNG trade","controller":"Indonesia/Malaysia/Singapore","threat":"Piracy + China could blockade own imports"},
+  {"name":"Suez Canal / SUMED Pipeline","type":"MARITIME","lat":30.5,"lng":32.3,"color":"#f97316","risk":"HIGH",
+   "flow":"9% global oil + 8% LNG","controller":"Egypt","threat":"Houthi attacks diverted 50%+ traffic 2024"},
+  {"name":"Bab-el-Mandeb","type":"MARITIME","lat":12.5,"lng":43.5,"color":"#ef4444","risk":"CRITICAL",
+   "flow":"6M bbl/day oil + 9% global trade","controller":"Yemen/Djibouti (contested)","threat":"Houthi anti-ship missiles — 130+ attacks"},
+  {"name":"Turkish Straits (Bosphorus/Dardanelles)","type":"MARITIME","lat":41,"lng":29,"color":"#f97316","risk":"HIGH",
+   "flow":"2-3M bbl/day (Russian oil exports)","controller":"Turkey (Montreux Convention)","threat":"Turkey can restrict warship transits (Ukraine war)"},
+  {"name":"Ukrainian Pipeline Network","type":"PIPELINE","lat":50,"lng":30,"color":"#ef4444","risk":"CRITICAL",
+   "flow":"40BCM/year gas (historically to Europe)","controller":"Ukraine (Naftogaz)","threat":"Russia sabotage. Transit agreement expired Jan 2025."},
+  {"name":"Nord Stream (destroyed)","type":"PIPELINE","lat":55,"lng":15,"color":"#64748b","risk":"DESTROYED",
+   "flow":"0 (formerly 55BCM/year)","controller":"N/A — sabotaged","threat":"Destroyed Sep 2022 — geopolitical sabotage"},
+  {"name":"Druzhba Pipeline","type":"PIPELINE","lat":50,"lng":25,"color":"#f97316","risk":"HIGH",
+   "flow":"700,000 bbl/day oil to Central/Eastern Europe","controller":"Russia/Transneft","threat":"Hungary/Slovakia dependence on Russian oil"},
+  {"name":"South Caucasus Pipeline (BTC)","type":"PIPELINE","lat":41,"lng":46,"color":"#22c55e","risk":"ELEVATED",
+   "flow":"1.2M bbl/day (Azerbaijani/Kazakh oil to Med)","controller":"BP/SOCAR","threat":"Sabotage by Russia/Iran. Armenia conflict proximity."}
+];
+
+const ENERGY_DEPENDENCIES = [
+  {"country":"Germany","iso":"DE","status":"POST-SHOCK TRANSITION","color":"#eab308",
+   "former":"55% Russian gas dependent pre-2022","current":"0% Russian pipeline gas. LNG from USA/Norway/Qatar/Algeria.",
+   "cost":"$400B+ transition cost. Industrial competitiveness impact ongoing. Deindustrialization risk.",
+   "vulnerability":"Electricity prices 3x US levels. Manufacturing exodus."},
+  {"country":"Hungary","iso":"HU","status":"STILL DEPENDENT","color":"#ef4444",
+   "former":"85% Russian gas + oil via Druzhba","current":"Still 85% Russian via Druzhba (exemption from EU oil ban). Orban blocking EU energy unity.",
+   "cost":"Hungary benefits from Russian energy discounts — economic incentive to maintain Russia relations.",
+   "vulnerability":"Most exposed EU state to Russian energy weapon. Deliberate policy choice."},
+  {"country":"China","iso":"CN","status":"DIVERSIFYING BUT EXPOSED","color":"#f97316",
+   "former":"Middle East oil dependent (70% via Malacca)","current":"Russian pipeline oil growing (Power of Siberia). BRI energy projects.",
+   "cost":"Malacca dilemma — 80% oil via Malacca Strait, which US Navy could blockade.",
+   "vulnerability":"Taiwan conflict scenario: US Malacca blockade = China energy crisis within 90 days."},
+  {"country":"Japan","iso":"JP","status":"HIGHLY EXPOSED","color":"#f97316",
+   "former":"Middle East + LNG import dependent","current":"95% energy import dependent. Sakhalin-2 LNG complex dilemma.",
+   "cost":"Sanctions on Russia cost Japan Sakhalin-2 energy. Now buying Russian LNG despite pressure.",
+   "vulnerability":"Zero domestic energy production. Any Middle East disruption = crisis."},
+  {"country":"Europe (EU)","iso":"EU","status":"TRANSITION ONGOING","color":"#eab308",
+   "former":"40% Russian gas, 27% Russian oil, 46% Russian coal","current":"0% Russian coal. ~8% Russian gas (down from 40%). LNG imports tripled.",
+   "cost":"€400B+ additional energy costs 2022-2024. Recession narrowly avoided.",
+   "vulnerability":"Remaining Russian gas transits (Hungary, Slovakia, Austria). LNG terminal bottlenecks."}
+];
+
+const ENERGY_PRODUCTION_MAP = [
+  {"country":"USA","iso":"US","lat":38,"lng":-97,"type":"OIL+GAS+LNG","detail":"World\'s largest oil/gas producer. 13M bbl/day. LNG exporter to EU/Asia.","color":"#3b82f6"},
+  {"country":"Saudi Arabia","iso":"SA","lat":24,"lng":46,"type":"OIL","detail":"9-10M bbl/day. OPEC+ leader. Strategic reserve. Aramco IPO.","color":"#eab308"},
+  {"country":"Russia","iso":"RU","lat":62,"lng":100,"type":"OIL+GAS","detail":"10-11M bbl/day oil. Largest gas reserves. Redirected to China/India.","color":"#ef4444"},
+  {"country":"Qatar","iso":"QA","lat":25.3,"lng":51.2,"type":"LNG","detail":"World\'s largest LNG exporter. 77M tons/year. No liquidity crunch.","color":"#22c55e"},
+  {"country":"Australia","iso":"AU","lat":-25,"lng":133,"type":"LNG+COAL","detail":"2nd largest LNG exporter. Critical for Japan/Korea/China.","color":"#22c55e"},
+  {"country":"Iran","iso":"IR","lat":32,"lng":53,"type":"OIL+GAS","detail":"4th largest reserves. Sanctioned but selling via shadow fleet. 1.5M bbl/day exports.","color":"#8b5cf6"},
+  {"country":"Norway","iso":"NO","lat":65,"lng":14,"type":"OIL+GAS+HYDRO","detail":"Largest Western European gas supplier post-Nord Stream. Critical for EU.","color":"#22c55e"}
+];
+
+let _energyPipeActive=false;
+let _energyHotspots=[];
+
+function drawEnergyPipelines(){
+  ENERGY_CHOKEPOINTS.forEach(function(cp){
+    var p=project(cp.lat,cp.lng);
+    if(!p.visible)return;
+    var r=7;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx.fillStyle=cp.color;
+    ctx.globalAlpha=0.75;
+    ctx.fill();
+    ctx.globalAlpha=1;
+    ctx.strokeStyle=cp.color;
+    ctx.lineWidth=1.5;
+    ctx.stroke();
+    if(cp.risk==='CRITICAL'){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,r+4+Math.sin(Date.now()/400)*3,0,Math.PI*2);
+      ctx.strokeStyle=cp.color;
+      ctx.globalAlpha=0.35;
+      ctx.lineWidth=1;
+      ctx.stroke();
+      ctx.globalAlpha=1;
+    }
+  });
+}
+
+function _renderEnergySec(){
+  var cg=document.getElementById('es-chokepoint-grid');
+  if(cg){
+    cg.innerHTML=ENERGY_CHOKEPOINTS.map(function(c){
+      var riskCls='es-risk-'+c.risk;
+      return '<div class="es-card" style="border-top-color:'+c.color+';">'
+        +'<div class="es-card-header">'
+          +'<div><div class="es-name">'+c.name+'</div><div class="es-type">'+c.type+'</div></div>'
+          +'<div class="es-badges"><span class="es-risk-badge '+riskCls+'">'+c.risk+'</span></div>'
+        +'</div>'
+        +'<div class="es-flow">&#9654; '+c.flow+'</div>'
+        +'<div class="es-controller">CONTROLLER: '+c.controller+'</div>'
+        +'<div class="es-threat">&#9888; '+c.threat+'</div>'
+      +'</div>';
+    }).join('');
+  }
+  var dg=document.getElementById('es-dep-grid');
+  if(dg){
+    dg.innerHTML=ENERGY_DEPENDENCIES.map(function(d){
+      return '<div class="es-dep-card" style="border-left-color:'+d.color+';">'
+        +'<div class="es-dep-country">'+d.country+' <span style="font-size:9px;color:#64748b;">('+d.iso+')</span></div>'
+        +'<span class="es-dep-status" style="background:rgba(0,0,0,.4);border:1px solid '+d.color+';color:'+d.color+';">'+d.status+'</span>'
+        +'<div class="es-dep-row"><b>FORMER:</b> '+d.former+'</div>'
+        +'<div class="es-dep-row"><b>CURRENT:</b> '+d.current+'</div>'
+        +'<div class="es-dep-row"><b>COST:</b> '+d.cost+'</div>'
+        +'<div class="es-dep-vuln">&#9651; VULNERABILITY: '+d.vulnerability+'</div>'
+      +'</div>';
+    }).join('');
+  }
+  var pg=document.getElementById('es-prod-grid');
+  if(pg){
+    pg.innerHTML=ENERGY_PRODUCTION_MAP.map(function(p){
+      return '<div class="es-prod-card">'
+        +'<div class="es-prod-dot" style="background:'+p.color+';"></div>'
+        +'<div><div class="es-prod-country">'+p.country+'</div>'
+          +'<div class="es-prod-type">'+p.type+'</div>'
+          +'<div class="es-prod-detail">'+p.detail+'</div>'
+        +'</div>'
+      +'</div>';
+    }).join('');
+  }
+}
+
+function _fetchEnergyGdelt(){
+  var el=document.getElementById('es-gdelt-feed');
+  if(!el)return;
+  var q=encodeURIComponent('energy security pipeline gas oil LNG chokepoint disruption');
+  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+    el.innerHTML=d.articles.slice(0,10).map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="es-gdelt-item"><div class="es-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="es-gdelt-meta">'+ts+(a.sourcecountry?' &nbsp;&#183;&nbsp; '+a.sourcecountry:'')+(a.language?' &nbsp;&#183;&nbsp; '+a.language:'')+'</div>'
+      +'</div>';
+    }).join('');
+  }).catch(function(){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';});
+}
+
+function _openEnergySec(){
+  var ov=document.getElementById('energysec-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _renderEnergySec();
+  _fetchEnergyGdelt();
+  _energyPipeActive=true;
+  _energyHotspots=[];
+  ENERGY_CHOKEPOINTS.forEach(function(c,i){
+    var hp={id:'_energy_'+i,lat:c.lat,lng:c.lng,color:c.color,size:7,label:c.name+' — '+c.risk,_energy:true};
+    _energyHotspots.push(hp);
+    liveHotspots.push(hp);
+  });
+}
+
+function _closeEnergySec(){
+  var ov=document.getElementById('energysec-overlay');
+  if(ov)ov.style.display='none';
+  _energyPipeActive=false;
+  _energyHotspots.forEach(function(h){
+    liveHotspots=liveHotspots.filter(function(x){return x.id!==h.id;});
+  });
+  _energyHotspots=[];
+}
+
+(function(){
+  var btn=document.getElementById('energysec-btn');
+  var cls=document.getElementById('energysec-close');
+  if(btn)btn.addEventListener('click',_openEnergySec);
+  if(cls)cls.addEventListener('click',_closeEnergySec);
+})();
+
+// === MIGRATION CORRIDORS ===
+
+const MIGRATION_CORRIDORS = [
+  {"name":"Central Mediterranean (Libya→Italy/Malta)","color":"rgba(239,68,68,0.5)",
+   "waypoints":[{"lat":32,"lng":13},{"lat":34,"lng":12},{"lat":37,"lng":13},{"lat":38.1,"lng":15.6}],
+   "volume_2024":"60,000+ arrivals Italy 2024","origin_countries":["Sub-Saharan Africa","North Africa","Bangladesh","Pakistan"],
+   "deaths_2024":"2,500+ drowned (IOM estimate)","driver":"Libya instability, West Africa poverty/conflict, climate displacement",
+   "facilitators":"Libyan militias charge $1,000-3,000/person. Wagner Group enabling route through Sahel.",
+   "status":"ACTIVE — ELEVATED","color_marker":"#ef4444","lat":35,"lng":12},
+  {"name":"Western Mediterranean (Morocco→Spain)","color":"rgba(239,68,68,0.5)",
+   "waypoints":[{"lat":35,"lng":-5},{"lat":36,"lng":-5},{"lat":36.5,"lng":-3.5}],
+   "volume_2024":"40,000+ arrivals Spain 2024","origin_countries":["Morocco","Algeria","Sub-Saharan Africa (Senegal, Guinea)"],
+   "deaths_2024":"500+","driver":"Morocco-Spain political friction. Spanish labor market pull.",
+   "facilitators":"Moroccan criminal networks. Spanish Coast Guard / Frontex response.",
+   "status":"ACTIVE","color_marker":"#f97316","lat":35.5,"lng":-4.5},
+  {"name":"Eastern Mediterranean / Aegean (Turkey→Greece)","color":"rgba(168,85,247,0.5)",
+   "waypoints":[{"lat":37.5,"lng":27},{"lat":37.8,"lng":26.5},{"lat":37.9,"lng":26},{"lat":38.5,"lng":26.3}],
+   "volume_2024":"35,000+ arrivals Greece 2024","origin_countries":["Syria","Afghanistan","Iraq","Pakistan","Bangladesh"],
+   "deaths_2024":"300+","driver":"Turkey as transit hub. Push-pull Greece/EU.",
+   "facilitators":"Turkish smuggling networks. Erdogan uses migration as EU leverage — opened/closed gate multiple times.",
+   "status":"ACTIVE — TURKEY LEVERAGE","color_marker":"#8b5cf6","lat":37.5,"lng":26.5},
+  {"name":"US-Mexico Border (Southwest Border)","color":"rgba(59,130,246,0.5)",
+   "waypoints":[{"lat":17,"lng":-90},{"lat":22,"lng":-100},{"lat":28,"lng":-110},{"lat":32,"lng":-117}],
+   "volume_2024":"2.4M+ encounters FY2024 (CBP)","origin_countries":["Mexico","Guatemala","Honduras","El Salvador","Venezuela","Cuba","Haiti","Ecuador","China"],
+   "deaths_2024":"900+ in US border region","driver":"Violence/poverty in Central America. Venezuela collapse. Cuba/Nicaragua push factors.",
+   "facilitators":"Sinaloa Cartel, CJNG. Coyote fees $8,000-15,000/person.",
+   "status":"HIGH VOLUME — TRUMP ENFORCEMENT 2025","color_marker":"#3b82f6","lat":26,"lng":-105},
+  {"name":"Darén Gap (Colombia→Panama)","color":"rgba(239,68,68,0.5)",
+   "waypoints":[{"lat":4,"lng":-76},{"lat":7.5,"lng":-77.5},{"lat":8.5,"lng":-80}],
+   "volume_2024":"500,000+ crossings 2024 (record)","origin_countries":["Venezuela","Haiti","Ecuador","China (significant)","Senegal"],
+   "deaths_2024":"1,000+","driver":"Venezuela collapse driving hemispheric migration. China nationals growing (reaching US via S. America).",
+   "facilitators":"FARC dissidents, Colombian criminal networks. No infrastructure — jungle crossing.",
+   "status":"RECORD — UNPRECEDENTED VOLUME","color_marker":"#ef4444","lat":7,"lng":-77},
+  {"name":"Belarus-Poland (Hybrid Warfare Route)","color":"rgba(239,68,68,0.6)",
+   "waypoints":[{"lat":52,"lng":28},{"lat":52.5,"lng":24},{"lat":52.8,"lng":23}],
+   "volume_2024":"30,000+ crossings 2024","origin_countries":["Iraq","Syria","Afghanistan","Yemen","Cuba"],
+   "deaths_2024":"50+","driver":"Lukashenko deliberately weaponizing migrants. Flights from Iraq/Middle East to Minsk, then bused to Polish border.",
+   "facilitators":"Belarusian KGB arranges flights and logistics. State-sponsored hybrid attack.",
+   "status":"ACTIVE HYBRID WARFARE","color_marker":"#ef4444","lat":52.5,"lng":24}
+];
+
+const MIGRATION_STATS = {
+  "total_migrants":"281 million international migrants globally (3.6% world population)",
+  "forcibly_displaced":"117 million forcibly displaced (refugees + IDPs + asylum seekers)",
+  "remittances":"$860 billion in remittances to developing countries (2023) — 3x foreign aid",
+  "deaths_2024":"8,500+ deaths on migration routes 2024 (IOM Missing Migrants)"
+};
+
+let _migrationActive=false;
+let _migrationHotspots=[];
+
+function drawMigrationRoutes(){
+  var t=Date.now();
+  MIGRATION_CORRIDORS.forEach(function(cor){
+    var wps=cor.waypoints;
+    if(wps.length<2)return;
+    ctx.save();
+    ctx.setLineDash([6,4]);
+    ctx.lineDashOffset=-((t/80)%10);
+    ctx.strokeStyle=cor.color||'rgba(239,68,68,0.5)';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    var started=false;
+    wps.forEach(function(wp){
+      var p=project(wp.lat,wp.lng);
+      if(!p.visible){started=false;return;}
+      if(!started){ctx.moveTo(p.x,p.y);started=true;}
+      else{ctx.lineTo(p.x,p.y);}
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+    var last=wps[wps.length-1];
+    var lp=project(last.lat,last.lng);
+    if(lp.visible){
+      ctx.beginPath();
+      ctx.arc(lp.x,lp.y,4,0,Math.PI*2);
+      ctx.fillStyle=cor.color_marker||'#ef4444';
+      ctx.globalAlpha=0.85;
+      ctx.fill();
+      ctx.globalAlpha=1;
+    }
+  });
+}
+
+function _renderMigration(){
+  var sb=document.getElementById('mg-stats-banner');
+  if(sb){
+    var statItems=[
+      {label:'TOTAL MIGRANTS',val:MIGRATION_STATS.total_migrants},
+      {label:'FORCIBLY DISPLACED',val:MIGRATION_STATS.forcibly_displaced},
+      {label:'REMITTANCES',val:MIGRATION_STATS.remittances},
+      {label:'DEATHS 2024',val:MIGRATION_STATS.deaths_2024}
+    ];
+    sb.innerHTML=statItems.map(function(s){
+      return '<div class="mg-stat"><div class="mg-stat-val">'+s.val+'</div><div class="mg-stat-label">'+s.label+'</div></div>';
+    }).join('');
+  }
+  var cg=document.getElementById('mg-corridor-grid');
+  if(cg){
+    cg.innerHTML=MIGRATION_CORRIDORS.map(function(c){
+      var origChips=c.origin_countries.map(function(o){return '<span class="mg-origin-chip">'+o+'</span>';}).join('');
+      return '<div class="mg-card" style="border-left-color:'+(c.color_marker||'#ef4444')+';">'
+        +'<div class="mg-card-header">'
+          +'<div class="mg-name">'+c.name+'</div>'
+          +'<span class="mg-status-badge" style="background:rgba(0,0,0,.4);border:1px solid '+(c.color_marker||'#ef4444')+';color:'+(c.color_marker||'#ef4444')+';">'+c.status+'</span>'
+        +'</div>'
+        +'<div class="mg-stat-row"><b>VOLUME 2024:</b> '+c.volume_2024+'</div>'
+        +'<div class="mg-death-row">&#9888; DEATHS 2024: '+c.deaths_2024+'</div>'
+        +'<div class="mg-origins">'+origChips+'</div>'
+        +'<div class="mg-stat-row"><b>DRIVER:</b> '+c.driver+'</div>'
+        +'<div class="mg-facilitators">&#9656; FACILITATORS: '+c.facilitators+'</div>'
+      +'</div>';
+    }).join('');
+  }
+}
+
+function _fetchMigrationGdelt(){
+  var el=document.getElementById('mg-gdelt-feed');
+  if(!el)return;
+  var q=encodeURIComponent('migration border crisis refugee crossing asylum');
+  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+    el.innerHTML=d.articles.slice(0,10).map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="mg-gdelt-item"><div class="mg-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="mg-gdelt-meta">'+ts+(a.sourcecountry?' &nbsp;&#183;&nbsp; '+a.sourcecountry:'')+(a.language?' &nbsp;&#183;&nbsp; '+a.language:'')+'</div>'
+      +'</div>';
+    }).join('');
+  }).catch(function(){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';});
+}
+
+function _openMigration(){
+  var ov=document.getElementById('migration-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _renderMigration();
+  _fetchMigrationGdelt();
+  _migrationActive=true;
+  _migrationHotspots=[];
+  MIGRATION_CORRIDORS.forEach(function(c,i){
+    var hp={id:'_migration_'+i,lat:c.lat,lng:c.lng,color:c.color_marker||'#3b82f6',size:6,label:c.name,_migration:true};
+    _migrationHotspots.push(hp);
+    liveHotspots.push(hp);
+  });
+}
+
+function _closeMigration(){
+  var ov=document.getElementById('migration-overlay');
+  if(ov)ov.style.display='none';
+  _migrationActive=false;
+  _migrationHotspots.forEach(function(h){
+    liveHotspots=liveHotspots.filter(function(x){return x.id!==h.id;});
+  });
+  _migrationHotspots=[];
+}
+
+(function(){
+  var btn=document.getElementById('migration-btn');
+  var cls=document.getElementById('migration-close');
+  if(btn)btn.addEventListener('click',_openMigration);
+  if(cls)cls.addEventListener('click',_closeMigration);
+})();
+
+// === ARCTIC GEOPOLITICS ===
+
+const ARCTIC_CLAIMS = [
+  {"country":"Russia","iso":"RU","color":"#ef4444","claim":"Largest Arctic territory. Claimed 1.2M sq km extended continental shelf (UN submission).",
+   "military":["Northern Fleet HQ (Severomorsk)","14 new/rebuilt Arctic military bases","Arctic-specific S-400/Pantsir deployments","Beluga-class nuclear submarines","Northern Sea Route coast guard enforcement","Arctic-capable air defense corridor"],
+   "resources":"Oil/gas (25% world\'s undiscovered reserves in Arctic). Northern Sea Route commercial exploitation.",
+   "posture":"ASSERTIVE — militarizing Arctic faster than any state. Reopening Soviet bases.",
+   "lat":75,"lng":100},
+  {"country":"USA","iso":"US","color":"#3b82f6","claim":"Alaska coastline. Limited Arctic military infrastructure historically.",
+   "military":["2nd Fleet reactivated 2018 (Atlantic/Arctic)","JBER (Joint Base Elmendorf-Richardson) F-35 basing","Thule AFB (Pituffik) Greenland — DEW Early Warning","Coast Guard Arctic patrol ships (2 icebreakers vs Russia\'s 40+)","Project Iceman — Arctic warfare training expansion"],
+   "resources":"Alaska oil/gas. Critical minerals. Greenland rare earths (Danish territory).",
+   "posture":"CATCHING UP — NATO Arctic coordination improving. Icebreaker gap critical.",
+   "lat":70,"lng":-160},
+  {"country":"Canada","iso":"CA","color":"#22c55e","claim":"NWP (Northwest Passage) sovereignty claim (US disputes as international strait).",
+   "military":["NORAD joint with US","Canadian Rangers (Indigenous reconnaissance)","Operation Nanook annual exercises","Arctic/Offshore Patrol Ships (6 ordered)","Limited permanent infrastructure"],
+   "resources":"Oil sands. Diamond mines. NWP commercial route as ice melts.",
+   "posture":"SOVEREIGNTY ASSERTION without matching military investment. NWP dispute with US ongoing.",
+   "lat":72,"lng":-100},
+  {"country":"Norway","iso":"NO","color":"#22c55e","claim":"Svalbard (Spitsbergen) under 1920 treaty — demilitarized but Norwegian sovereignty.",
+   "military":["Joint Strike Fighter (F-35) Arctic operations","HNoMS submarines Arctic patrols","Intelligence gathering on Northern Fleet","Andoya Space Center — satellite monitoring"],
+   "resources":"Svalbard coal (Norwegian + Russian mining). Arctic fisheries. Offshore oil.",
+   "posture":"NATO anchor in High North. Intelligence value for monitoring Russian Northern Fleet.",
+   "lat":78,"lng":16},
+  {"country":"China","iso":"CN","color":"#f97316","claim":"Self-declared \'Near-Arctic State\'. Polar Silk Road BRI extension.",
+   "military":["Snow Dragon 1 and 2 icebreakers","Huanghe station (Svalbard) — dual-use research/SIGINT concern","Arctic satellite ground station proposals","No sovereign territory — uses \'science\' for presence"],
+   "resources":"Arctic shipping routes (cut transit time 30%). Mineral resources via investment.",
+   "posture":"NON-ARCTIC STATE seeking strategic access through science/investment. Norway restricted Chinese Arctic research activities 2024.",
+   "lat":75,"lng":12}
+];
+
+const ARCTIC_INCIDENTS = [
+  {"date":"2022-ongoing","event":"Russia Arctic military surge","detail":"Russia deployed S-300V4 and S-400 SAM systems across Arctic bases. Reactivated 13 Cold War bases. Northern Fleet exercises increased 40%.","severity":"HIGH"},
+  {"date":"Aug 2024","event":"Russia-China joint Arctic patrol","detail":"First-ever Russia-China naval patrol in Bering Sea (US EEZ proximity). 11 ships including destroyers. Preceded by US/Canada P-8 surveillance.","severity":"HIGH"},
+  {"date":"2023","event":"China Svalbard SIGINT concern","detail":"Norway expelled Chinese researcher and restricted access to Ny-Ålesund research station over SIGINT collection concerns. Huanghe station activities restricted.","severity":"ELEVATED"},
+  {"date":"2024","event":"Greenland strategic focus","detail":"Trump administration renewed interest in Greenland purchase/control. Greenland rare earth minerals, US DEW Line, Arctic position. Denmark and Greenland refused.","severity":"ELEVATED"},
+  {"date":"2024","event":"NATO Arctic exercises surge","detail":"Steadfast Defender 2024 included Arctic component. Norway hosting 20,000+ NATO troops. Finland/Sweden NATO membership transforms Arctic balance.","severity":"INFO"}
+];
+
+const ARCTIC_RESOURCES = {
+  "oil_gas": "90 billion barrels oil, 1,670 tcf natural gas (USGS estimate — undiscovered)",
+  "minerals": "Rare earth elements, gold, diamonds, cobalt, zinc",
+  "fisheries": "$3B+ annual value, expanding as ice melts",
+  "shipping": "NSR 40% shorter than Suez for Asia-Europe. Currently 30M tons/year (Russia controls access)",
+  "ice_loss": "Arctic summer sea ice down 75% since 1980. Ice-free Arctic summers by 2040 (IPCC)"
+};
+
+let _arcticHotspots=[];
+
+function _renderArctic(){
+  var cg=document.getElementById('ac-claims-grid');
+  if(cg){
+    cg.innerHTML=ARCTIC_CLAIMS.map(function(c){
+      var milChips=c.military.map(function(m){return '<span class="ac-mil-chip">'+m+'</span>';}).join('');
+      return '<div class="ac-card" style="border-top-color:'+c.color+';">'
+        +'<div class="ac-card-header">'
+          +'<div class="ac-country" style="color:'+c.color+';">'+c.country+' ('+c.iso+')</div>'
+        +'</div>'
+        +'<div class="ac-claim">'+c.claim+'</div>'
+        +'<div class="ac-mil-list">'+milChips+'</div>'
+        +'<div class="ac-resources">&#9650; RESOURCES: '+c.resources+'</div>'
+        +'<div class="ac-posture">'+c.posture+'</div>'
+      +'</div>';
+    }).join('');
+  }
+  var il=document.getElementById('ac-incidents-list');
+  if(il){
+    il.innerHTML=ARCTIC_INCIDENTS.map(function(inc){
+      var sevCls='ac-inc-sev-'+inc.severity;
+      return '<div class="ac-incident" style="border-left-color:'+(inc.severity==='HIGH'?'#ef4444':inc.severity==='ELEVATED'?'#eab308':'#3b82f6')+';">'
+        +'<div class="ac-inc-header">'
+          +'<span class="ac-inc-date">'+inc.date+'</span>'
+          +'<span class="ac-inc-event">'+inc.event+'</span>'
+          +'<span class="ac-inc-sev '+sevCls+'">'+inc.severity+'</span>'
+        +'</div>'
+        +'<div class="ac-inc-detail">'+inc.detail+'</div>'
+      +'</div>';
+    }).join('');
+  }
+  var rp=document.getElementById('ac-resources-panel');
+  if(rp){
+    var resItems=[
+      {label:'OIL & GAS',val:ARCTIC_RESOURCES.oil_gas},
+      {label:'MINERALS',val:ARCTIC_RESOURCES.minerals},
+      {label:'FISHERIES',val:ARCTIC_RESOURCES.fisheries},
+      {label:'SHIPPING ROUTES',val:ARCTIC_RESOURCES.shipping},
+      {label:'ICE LOSS',val:ARCTIC_RESOURCES.ice_loss}
+    ];
+    rp.innerHTML=resItems.map(function(r){
+      return '<div class="ac-res-card"><div class="ac-res-label">'+r.label+'</div><div class="ac-res-val">'+r.val+'</div></div>';
+    }).join('');
+  }
+}
+
+function _fetchArcticGdelt(){
+  var el=document.getElementById('ac-gdelt-feed');
+  if(!el)return;
+  var q=encodeURIComponent('Arctic Russia China NATO sovereignty military icebreaker Northern Sea Route');
+  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+    el.innerHTML=d.articles.slice(0,10).map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="ac-gdelt-item"><div class="ac-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#67e8f9;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="ac-gdelt-meta">'+ts+(a.sourcecountry?' &nbsp;&#183;&nbsp; '+a.sourcecountry:'')+(a.language?' &nbsp;&#183;&nbsp; '+a.language:'')+'</div>'
+      +'</div>';
+    }).join('');
+  }).catch(function(){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';});
+}
+
+function _openArctic(){
+  var ov=document.getElementById('arctic-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  _renderArctic();
+  _fetchArcticGdelt();
+  _arcticHotspots=[];
+  ARCTIC_CLAIMS.forEach(function(c,i){
+    var hp={id:'_arctic_'+i,lat:c.lat,lng:c.lng,color:c.color,size:7,label:c.country+' Arctic — '+c.posture.substring(0,30),_arctic:true};
+    _arcticHotspots.push(hp);
+    liveHotspots.push(hp);
+  });
+  ARCTIC_INCIDENTS.forEach(function(inc,i){
+    if(inc.severity==='HIGH'||inc.severity==='ELEVATED'){
+      var clat=inc.severity==='HIGH'?75:72;
+      var clng=inc.severity==='HIGH'?60:30;
+      var hp={id:'_arcticInc_'+i,lat:clat,lng:clng,color:inc.severity==='HIGH'?'#ef4444':'#eab308',size:5,label:inc.event,_arctic:true};
+      _arcticHotspots.push(hp);
+      liveHotspots.push(hp);
+    }
+  });
+}
+
+function _closeArctic(){
+  var ov=document.getElementById('arctic-overlay');
+  if(ov)ov.style.display='none';
+  _arcticHotspots.forEach(function(h){
+    liveHotspots=liveHotspots.filter(function(x){return x.id!==h.id;});
+  });
+  _arcticHotspots=[];
+}
+
+(function(){
+  var btn=document.getElementById('arctic-btn');
+  var cls=document.getElementById('arctic-close');
+  if(btn)btn.addEventListener('click',_openArctic);
+  if(cls)cls.addEventListener('click',_closeArctic);
+})();
+
+// ===== END PHASE 40 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -27239,6 +27845,11 @@ function filterSIGINT(query){
 <button id="debtcrisis-btn">DEBT CRISIS</button>
 <button id="orgcrime-btn">ORG CRIME</button>
 
+<!-- ===== PHASE 40 BUTTONS ===== -->
+<button id="energysec-btn">ENERGY SEC</button>
+<button id="migration-btn">MIGRATION</button>
+<button id="arctic-btn">ARCTIC INTEL</button>
+
 <!-- ===== PHASE 39: DARK WEB OVERLAY ===== -->
 <div id="darkweb-overlay">
   <div class="dw-header">
@@ -27289,6 +27900,60 @@ function filterSIGINT(query){
   <div class="oc-grid" id="oc-group-grid"></div>
   <div class="dw-section-title" style="margin-top:8px;">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="oc-gdelt-feed" id="oc-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- ===== PHASE 40: ENERGY SECURITY OVERLAY ===== -->
+<div id="energysec-overlay">
+  <div class="es-header">
+    <div>
+      <div class="es-title">ENERGY SECURITY &amp; CHOKEPOINT INTELLIGENCE</div>
+      <div class="es-subtitle">SOURCE: IEA / EIA / USGS / OSINT &nbsp;&#47;&#47;&nbsp; GLOBAL ENERGY INFRASTRUCTURE &amp; SUPPLY CHAIN RISK &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="es-close" id="energysec-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="es-section-title">CRITICAL MARITIME &amp; PIPELINE CHOKEPOINTS</div>
+  <div class="es-grid" id="es-chokepoint-grid"></div>
+  <div class="es-section-title">NATIONAL ENERGY DEPENDENCY PROFILES</div>
+  <div class="es-dep-grid" id="es-dep-grid"></div>
+  <div class="es-section-title">GLOBAL ENERGY PRODUCTION MAP</div>
+  <div class="es-prod-grid" id="es-prod-grid"></div>
+  <div class="es-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="es-gdelt-feed" id="es-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- ===== PHASE 40: MIGRATION OVERLAY ===== -->
+<div id="migration-overlay">
+  <div class="mg-header">
+    <div>
+      <div class="mg-title">GLOBAL MIGRATION &amp; BORDER CRISIS INTELLIGENCE</div>
+      <div class="mg-subtitle">SOURCE: IOM / UNHCR / FRONTEX / CBP / OSINT &nbsp;&#47;&#47;&nbsp; ACTIVE MIGRATION CORRIDOR MONITORING &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="mg-close" id="migration-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="mg-stats-banner" id="mg-stats-banner"></div>
+  <div class="mg-section-title">ACTIVE MIGRATION CORRIDORS</div>
+  <div class="mg-grid" id="mg-corridor-grid"></div>
+  <div class="mg-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="mg-gdelt-feed" id="mg-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- ===== PHASE 40: ARCTIC OVERLAY ===== -->
+<div id="arctic-overlay">
+  <div class="ac-header">
+    <div>
+      <div class="ac-title">ARCTIC GEOPOLITICS &amp; SOVEREIGNTY INTELLIGENCE</div>
+      <div class="ac-subtitle">SOURCE: USNI / IISS / SIPRI / ARCTIC COUNCIL / OSINT &nbsp;&#47;&#47;&nbsp; HIGH NORTH STRATEGIC COMPETITION &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="ac-close" id="arctic-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="ac-section-title">ARCTIC POWER PRESENCE &amp; TERRITORIAL CLAIMS</div>
+  <div class="ac-grid" id="ac-claims-grid"></div>
+  <div class="ac-section-title">RECENT INCIDENTS &amp; EVENTS</div>
+  <div class="ac-incidents-list" id="ac-incidents-list"></div>
+  <div class="ac-section-title">STRATEGIC RESOURCE ESTIMATES</div>
+  <div class="ac-resources-panel" id="ac-resources-panel"></div>
+  <div class="ac-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="ac-gdelt-feed" id="ac-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 </body>
