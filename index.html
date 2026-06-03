@@ -2401,6 +2401,66 @@ button{border-radius:2px!important}
 .ifail-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .ifail-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .ifail-gdelt-meta{font-size:8px;color:#475569;}
+/* === PHASE 32: Hybrid War, Mil Exercises, Chokepoints === */
+#hybrid-btn{position:fixed;top:295px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#hybrid-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#milexer-btn{position:fixed;top:335px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#milexer-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#chokepoints-btn{position:fixed;top:375px;right:915px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#chokepoints-btn:hover{border-color:#f97316;color:#fdba74;}
+/* Hybrid overlay */
+#hybrid-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.hwar-actor-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:16px;margin-bottom:14px;}
+.hwar-actor-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.hwar-actor-name{font-size:15px;font-weight:700;letter-spacing:2px;}
+.hwar-threat-badge{font-size:8px;padding:3px 10px;border-radius:3px;letter-spacing:1px;font-weight:700;}
+.hwar-threat-active{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.hwar-threat-strategic{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.hwar-pillar-card{background:rgba(5,10,25,0.6);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:10px;margin-bottom:8px;}
+.hwar-pillar-name{font-size:10px;font-weight:700;color:#e2e8f0;letter-spacing:.5px;margin-bottom:4px;}
+.hwar-pillar-desc{font-size:9px;color:#94a3b8;line-height:1.6;margin-bottom:6px;}
+.hwar-examples{display:flex;flex-wrap:wrap;gap:4px;}
+.hwar-example-chip{font-size:8px;padding:2px 7px;background:rgba(30,41,59,.6);border:1px solid rgba(100,116,139,.3);color:#94a3b8;border-radius:3px;}
+.hwar-assessment{font-size:9px;color:#fde047;line-height:1.6;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;margin-top:10px;}
+.hwar-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.hwar-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.hwar-gdelt-meta{font-size:8px;color:#475569;}
+/* Mil Exercises overlay */
+#milexer-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.mex-card{background:rgba(15,23,42,0.7);border-left:4px solid #3b82f6;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 6px 6px 0;padding:14px;margin-bottom:12px;}
+.mex-card-red{border-left-color:#ef4444;}
+.mex-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.mex-name{font-size:13px;font-weight:700;color:#e2e8f0;letter-spacing:.8px;}
+.mex-nations{font-size:8px;color:#64748b;margin-top:3px;letter-spacing:.3px;}
+.mex-status-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.mex-status-annual{background:rgba(20,83,45,.4);border:1px solid #22c55e;color:#86efac;}
+.mex-status-biennial{background:rgba(30,58,95,.4);border:1px solid #3b82f6;color:#93c5fd;}
+.mex-status-escalating{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.mex-section{font-size:8px;letter-spacing:.2em;color:#475569;margin-bottom:4px;margin-top:8px;font-weight:700;text-transform:uppercase;}
+.mex-detail{font-size:9px;color:#94a3b8;line-height:1.6;border-left:3px solid rgba(100,116,139,.3);padding-left:8px;}
+.mex-participants{font-size:9px;color:#fde047;font-weight:700;}
+.mex-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.mex-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.mex-gdelt-meta{font-size:8px;color:#475569;}
+/* Chokepoints overlay */
+#chokepoints-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.choke-alert-banner{background:rgba(127,29,29,0.25);border:2px solid rgba(239,68,68,.5);border-radius:6px;padding:12px 16px;margin-bottom:20px;font-size:10px;color:#fca5a5;letter-spacing:.8px;font-weight:700;}
+.choke-type-label{font-size:8px;letter-spacing:.3em;color:#475569;font-weight:700;text-transform:uppercase;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid #1e293b;}
+.choke-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.choke-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.choke-name{font-size:13px;font-weight:700;color:#e2e8f0;letter-spacing:.8px;}
+.choke-risk-badge{font-size:7px;padding:2px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.choke-risk-existential{background:rgba(127,29,29,.7);border:1px solid #7f1d1d;color:#fca5a5;animation:nukepulse 2s infinite;}
+.choke-risk-critical{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.choke-risk-high{background:rgba(124,45,18,.3);border:1px solid #f97316;color:#fdba74;}
+.choke-row{display:flex;gap:6px;margin-bottom:5px;align-items:flex-start;}
+.choke-row-label{font-size:8px;color:#64748b;letter-spacing:.15em;min-width:110px;flex-shrink:0;font-weight:700;text-transform:uppercase;padding-top:1px;}
+.choke-row-val{font-size:9px;color:#e2e8f0;line-height:1.5;flex:1;}
+.choke-threat-val{color:#fca5a5;}
+.choke-incident-val{color:#fde047;}
+.choke-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.choke-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.choke-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -21157,6 +21217,309 @@ async function _fetchIntelFailGdelt(){
 
 // ===== END PHASE 31 =====
 
+// ===== PHASE 32: Hybrid Warfare Playbook, Military Exercises, Strategic Chokepoints =====
+
+const HYBRID_DOCTRINES = [
+  {"actor":"Russia","doctrine":"Gerasimov Doctrine / New Generation Warfare","color":"#ef4444","threat":"ACTIVE",
+   "pillars":[
+     {"name":"Political Subversion","desc":"Exploit domestic divisions. Fund extremist parties (Le Pen, AfD, MAGA-adjacent). Amplify polarization via RT/Sputnik/social media bots.","examples":["French RN funding (Russian bank loans)","European far-right conferences in Moscow","US election interference 2016/2020"]},
+     {"name":"Information Warfare","desc":"Doppelganger campaign. Fake news site clones. Hack-and-leak (DNC 2016). Narrative pollution. Strategic ambiguity.","examples":["Doppelganger (1,700 fake domains)","GRU Guccifer 2.0 DNC leak","Secondary Infektion 2,500 accounts"]},
+     {"name":"Economic Coercion","desc":"Energy as weapon. Gas cutoffs to Ukraine/Europe 2006/2009/2022. Selective economic pressure on neighbors.","examples":["Nord Stream sabotage","Gas pricing manipulation","Trade bans on Baltic states"]},
+     {"name":"Proxy Warfare","desc":"Deniable proxy forces. Wagner Group. Little green men. Donbas separatists 2014. Houthi support.","examples":["Little Green Men Crimea 2014","Donbas DNR/LNR","Wagner Group Africa/Syria/Libya"]},
+     {"name":"Cyber Operations","desc":"GRU Sandworm. Ukraine power grid attacks 2015/2016. NotPetya ($10B damage). Cozy Bear (SVR) in SolarWinds.","examples":["NotPetya 2017","Ukraine grid attacks","SolarWinds (APT29)","Estonia 2007"]},
+     {"name":"Legal Warfare (Lawfare)","desc":"Exploit international legal mechanisms. Claim discrimination against Russian speakers. Historical revisionism as legal basis.","examples":["Crimea annexation legal justification","Donbas \'referendum\'","RT lawsuits against regulators"]}
+   ],
+   "assessment":"Russia hybrid model is mature and battle-tested. Ukraine war degraded conventional and economic tools. Cyber and info ops remain primary instruments."},
+  {"actor":"China","doctrine":"Three Warfares + Unrestricted Warfare","color":"#f97316","threat":"STRATEGIC",
+   "pillars":[
+     {"name":"Public Opinion Warfare","desc":"Shape international and domestic narrative. United Front Work Dept (UFWD). Confucius Institutes. Social media manipulation. CGTN/Xinhua.","examples":["Spamouflage Dragon disinfo","UFWD diaspora operations","Confucius Institute closures in West"]},
+     {"name":"Legal Warfare (Falǎ zh\xe0n)","desc":"Use international law as weapon. South China Sea UNCLOS arguments. IP theft framed as legitimate.","examples":["UNCLOS rejection after Hague ruling","BRI contract terms as legal leverage","Patent disputes as economic weapon"]},
+     {"name":"Psychological Warfare","desc":"Coerce decision-makers. Gray zone operations. Demonstrate resolve without kinetic action. Taiwan pressure campaigns.","examples":["PLA exercises around Taiwan (Apr/Oct 2024)","PLAN carrier transits","Economic coercion of Australia 2020"]},
+     {"name":"Economic Warfare","desc":"Belt and Road debt leverage. Supply chain control. Rare earth export controls. Market access conditionality.","examples":["Huawei 5G dependencies","Rare earth Ga/Ge export ban 2023","Australia trade war 2020","Lithuania coercion 2021"]},
+     {"name":"Cyber Espionage","desc":"MSS APT40/APT41. Volt Typhoon pre-positioning in US infrastructure. Salt Typhoon telecom penetration. IP theft at massive scale.","examples":["Salt Typhoon (telecom breach 2024)","Volt Typhoon (power grid pre-positioning)","OPM hack (22M cleared Americans)"]},
+     {"name":"Military Intimidation","desc":"Gray zone operations. South China Sea island-building. Taiwan ADIZ violations. PLAN exercises. Non-kinetic coercion below war threshold.","examples":["South China Sea militarization","PLA exercises Oct 2024 around Taiwan","Philippine water cannon attacks 2024"]}
+   ],
+   "assessment":"China hybrid model is sophisticated and long-term oriented. Civilian-military integration (MCF) makes attribution difficult. Economic tools increasingly weaponized."},
+  {"actor":"Iran","doctrine":"Axis of Resistance / Forward Defense","color":"#8b5cf6","threat":"ACTIVE",
+   "pillars":[
+     {"name":"Proxy Network","desc":"IRGC-QF managed proxy ecosystem: Hezbollah, Hamas/PIJ, Houthis, Iraqi Shia militias, Afghan Fatemiyoun. Plausible deniability for regional power projection.","examples":["Hezbollah Lebanon (160K rockets)","Houthi Red Sea attacks","Kataib Hezbollah Iraq attacks on US bases"]},
+     {"name":"Cyber Operations","desc":"IRGC cyber units. Shamoon malware (Saudi Aramco 2012). Albania government cyberattack 2022. Water infrastructure attacks.","examples":["Albania government wiper 2022","Shamoon Saudi Aramco 2012","US water utility attacks 2023"]},
+     {"name":"Assassination Operations","desc":"MOIS/IRGC targeted killing plots against US/Israeli officials. Coordinated with Hezbollah global network.","examples":["Plot to kill Pompeo/Bolton","Plot to kill Trump (IRGC 2024)","Assassination of Soleimani response ops"]},
+     {"name":"Nuclear Leverage","desc":"Use nuclear advancement as political leverage. Enrich to 60%+ to create urgency without crossing red line. JCPOA as negotiating chip.","examples":["60% enrichment (2023-present)","Near-breakout capability maintained","IAEA access restrictions"]}
+   ],
+   "assessment":"Iran hybrid model optimized for asymmetric pressure on US/Israel without conventional military confrontation. Severely degraded after Oct 2024 Hezbollah and Hamas blows."}
+];
+
+const MILITARY_EXERCISES = [
+  {"name":"Defender Europe 2025","nations":["USA","NATO (all 32 members)"],"type":"Large-Scale Combat Operations","area":"Poland, Germany, Baltic states, Romania","lat":52,"lng":20,
+   "participants":"50,000+ troops","focus":"Article 5 collective defense, Russian invasion scenario","status":"ANNUAL","color":"#3b82f6",
+   "detail":"Largest NATO exercise in Europe. Tests rapid reinforcement of Eastern Flank. Rotational preposition of US equipment (APS-3). Duration: 6 weeks."},
+  {"name":"Foal Eagle / Freedom Shield","nations":["USA","South Korea"],"type":"Command Post + Field Training","area":"Korean Peninsula","lat":37,"lng":127,
+   "participants":"200,000+ (combined arms)","focus":"OPLAN 5015 (DPRK war plan)","status":"ANNUAL","color":"#3b82f6",
+   "detail":"US-ROK annual combined arms exercise. Suspended 2018-2019 during Trump-Kim diplomacy. Resumed with air/naval components. Triggers DPRK missile tests."},
+  {"name":"RIMPAC 2024","nations":["USA","Australia","Japan","South Korea","Canada","29 nations total"],"type":"Naval / Amphibious","area":"Hawaii / Pacific","lat":21,"lng":-157,
+   "participants":"25,000 troops, 40 ships, 14 submarines, 170 aircraft","focus":"Sea control, amphibious assault, ASW, interoperability","status":"BIENNIAL","color":"#3b82f6",
+   "detail":"World\'s largest international maritime exercise. China not invited since 2018. India participates as observer."},
+  {"name":"Talisman Sabre 2025","nations":["USA","Australia","UK","Japan","South Korea","Canada"],"type":"Joint Warfighting","area":"Northern Australia, Pacific","lat":-22,"lng":134,
+   "participants":"30,000+ troops","focus":"Joint amphibious operations, Taiwan contingency prep","status":"BIENNIAL","color":"#3b82f6",
+   "detail":"Indo-Pacific focused exercise. Increasing scale each iteration. Taiwan contingency scenarios reportedly included."},
+  {"name":"Vostok (East) 2024","nations":["Russia","China","DPRK","Belarus","Iran (observers)"],"type":"Strategic Maneuver","area":"Russian Far East, Pacific","lat":55,"lng":135,
+   "participants":"100,000+ (Russia claim)","focus":"Multi-axis large-scale operations, Russia-China military integration","status":"ANNUAL","color":"#ef4444",
+   "detail":"Russia\'s largest annual strategic exercise. China PLA participation escalating each year. DPRK first participation 2024. Demonstrates SCO military alignment."},
+  {"name":"PLA Western Theater Live-Fire","nations":["China"],"type":"Amphibious / Missile","area":"Taiwan Strait, Fujian","lat":25,"lng":120,
+   "participants":"Classified","focus":"Taiwan blockade/invasion rehearsal","status":"ESCALATING","color":"#ef4444",
+   "detail":"PLA exercises immediately around Taiwan surging in frequency and scale (2022 Pelosi visit, 2024 April and October). Rehearsing blockade, decapitation, amphibious options."},
+  {"name":"Zapad (West) 2025","nations":["Russia","Belarus"],"type":"Strategic Defense/Offense","area":"Western Russia, Belarus","lat":54,"lng":28,
+   "participants":"Estimated 50,000-200,000","focus":"NATO invasion scenario from west, nuclear signaling","status":"BIENNIAL","color":"#ef4444",
+   "detail":"Russia-Belarus strategic exercise. 2017 edition had 100,000+ troops near Poland. Assessed to rehearse offensive against Baltic states / Poland. Nuclear escalation components included."},
+  {"name":"Steadfast Defender 2024","nations":["NATO (all 32)"],"type":"Collective Defense / Article 5","area":"Europe-wide (Norway to Turkey)","lat":55,"lng":15,
+   "participants":"90,000+ troops — largest NATO exercise since Cold War","focus":"Full-spectrum Article 5 collective defense, Russian aggression response","status":"ANNUAL (scaled up)","color":"#3b82f6",
+   "detail":"Deliberately scaled up to 90,000 in direct response to Ukraine war and Russia threats. Demonstrated NATO resolve and reinforcement speed."}
+];
+
+const STRATEGIC_CHOKEPOINTS = [
+  {"name":"Strait of Hormuz","type":"MARITIME","lat":26.5,"lng":56.5,"color":"#ef4444","risk":"CRITICAL",
+   "throughput":"21M bbl/day oil (20% global), $1.6B/day LNG","controlledBy":"Iran (ability to close)","threat":"Iran closure threat — tanker seizures ongoing","alternatives":"None viable — Saudi pipelines limited capacity",
+   "militaryPresence":"US 5th Fleet, IMSC multinational escort","recentIncident":"Iran seized MSC Aries Apr 2024 — 25-man crew held"},
+  {"name":"Strait of Malacca","type":"MARITIME","lat":2,"lng":101,"color":"#ef4444","risk":"CRITICAL",
+   "throughput":"90,000 ships/year. 40% of global trade. 80% of China\'s oil imports","controlledBy":"Malaysia/Singapore/Indonesia (sovereign)","threat":"China could blockade China\'s own imports — strategic vulnerability. Piracy.","alternatives":"Lombok Strait (longer), Sunda Strait (shallower)","militaryPresence":"RAN, USN, Singapore RSN","recentIncident":"Piracy incidents ongoing in Malacca approaches"},
+  {"name":"Suez Canal","type":"MARITIME","lat":30.5,"lng":32.3,"color":"#f97316","risk":"HIGH",
+   "throughput":"12-15% global trade. 30% container ship traffic. Alternative: +12 days Cape route","controlledBy":"Egypt (SCA)","threat":"Houthi attacks diverted 50%+ of traffic to Cape route 2024. Egypt revenue collapsed.","alternatives":"Cape of Good Hope (but +$1M/voyage cost)","militaryPresence":"US/UK airstrikes on Houthis","recentIncident":"Traffic down 50% since Jan 2024 — Houthi diversion ongoing"},
+  {"name":"Bab-el-Mandeb Strait","type":"MARITIME","lat":12.5,"lng":43.5,"color":"#ef4444","risk":"CRITICAL",
+   "throughput":"6M bbl/day + 9% global trade","controlledBy":"None — Djibouti/Yemen/Eritrea shoreline","threat":"Houthi anti-ship missiles make passage dangerous. 130+ attacks on shipping 2023-2024.","alternatives":"Suez closure forces all to Cape","militaryPresence":"Combined Maritime Forces (CMF-154 Operation Prosperity Guardian)","recentIncident":"130+ Houthi attacks — multiple vessels hit/sunk/seized"},
+  {"name":"Taiwan Strait","type":"MARITIME/STRATEGIC","lat":24,"lng":120.5,"color":"#ef4444","risk":"CRITICAL",
+   "throughput":"50% of global container ships transit. TSMC produces 90% world advanced chips","controlledBy":"None — international waters","threat":"PRC blockade = global semiconductor crisis. Kinetic conflict = worst case.","alternatives":"Japan/Philippine sea route (longer)","militaryPresence":"US 7th Fleet, Japan MSDF, Taiwan ROC Navy","recentIncident":"PLA exercises Oct 2024 around Taiwan — median line crossings routine"},
+  {"name":"TSMC Taiwan Fabs","type":"TECHNOLOGICAL","lat":24.7,"lng":121,"color":"#ef4444","risk":"EXISTENTIAL",
+   "throughput":"90%+ of world\'s most advanced chips (3nm, 5nm). $500B in dependent products","controlledBy":"Taiwan (TSMC), with Dutch ASML equipment","threat":"PRC invasion/seizure. TSMC has scorched earth protocols (CEO Jensen Huang confirmed).","alternatives":"Intel Ohio fabs (2026+, 2nm). Samsung (Korea). But years of production gap.","militaryPresence":"Taiwan military defense, US arms sales, US deterrence commitments","recentIncident":"TSMC AZ fab construction underway — US CHIPS Act driven"},
+  {"name":"ASML Headquarters (Veldhoven)","type":"TECHNOLOGICAL","lat":51.4,"lng":5.5,"color":"#ef4444","risk":"EXISTENTIAL",
+   "throughput":"Only company making EUV lithography machines. Without EUV: no chips below 7nm. 100+ machines/year","controlledBy":"Netherlands (ASML private company)","threat":"Takeover, sabotage, or supply chain attack could halt global chip production","alternatives":"NO ALTERNATIVE. China cannot replicate within 10 years.","militaryPresence":"Dutch MIVD protection. NATO ally.","recentIncident":"ASML barred from shipping to China by Dutch government Oct 2023"},
+  {"name":"Panama Canal","type":"MARITIME","lat":9,"lng":-79.7,"color":"#f97316","risk":"HIGH",
+   "throughput":"6% global trade. 40 ships/day. Critical US Navy Atlantic-Pacific transit.","controlledBy":"Panama (ACP). Chinese Hutchison Ports operates Balboa/Cristobal ports.","threat":"Climate-driven drought reducing canal level (2023-2024 crisis). Chinese port operator = intelligence concern.","alternatives":"Cape Horn (2-3 weeks longer). US strategic preposition would be difficult.","militaryPresence":"US Southern Command. Historical — US handed canal to Panama 1999.","recentIncident":"Drought 2023-2024 cut daily transits from 36 to 22. Trump canal rhetoric 2025."},
+  {"name":"Global Positioning System (GPS)","type":"SPACE/DIGITAL","lat":0,"lng":0,"color":"#f97316","risk":"CRITICAL",
+   "throughput":"Underpins $1.4T/day in global financial transactions. All precision weapons. All navigation. Power grid synchronization.","controlledBy":"US Space Force (31 operational satellites)","threat":"ASAT attack. GPS jamming (Russia doing this in Baltic/Ukraine). GPS spoofing (Iran tricked drones).","alternatives":"GLONASS (Russia), BDS (China), Galileo (EU) — but US mil equip GPS-only","militaryPresence":"US Space Force 2nd Space Operations Squadron (Schriever AFB)","recentIncident":"GPS jamming expanded 2024 — Baltic, Ukraine, Middle East all affected by Russian jamming"},
+  {"name":"Internet Exchange Points (IXPs)","type":"DIGITAL","lat":52.3,"lng":4.9,"color":"#eab308","risk":"HIGH",
+   "throughput":"AMS-IX (Amsterdam): 10+ Tbps. DE-CIX (Frankfurt): 15+ Tbps. Together handle 30%+ European internet","controlledBy":"Cooperative/private (AMS-IX, DE-CIX, LINX London)","threat":"Physical attack. Cyberattack. Legal compulsion by host government. NSA/GCHQ tap.","alternatives":"Traffic reroutes via US/UK but with latency and bottlenecks","militaryPresence":"None direct — AIVD/BfV intelligence oversight","recentIncident":"NSA MUSCULAR program tapped Google/Yahoo IXP data links (Snowden 2013)"}
+];
+
+// Hybrid Warfare overlay functions
+function openHybridWar(){
+  var ov=document.getElementById('hybrid-overlay');
+  ov.style.display='flex';
+  renderHybridActors();
+  fetchHybridGDELT();
+}
+function closeHybridWar(){
+  document.getElementById('hybrid-overlay').style.display='none';
+}
+function renderHybridActors(){
+  var el=document.getElementById('hybrid-actor-list');
+  if(!el)return;
+  var html='';
+  HYBRID_DOCTRINES.forEach(function(actor){
+    var badgeClass=actor.threat==='ACTIVE'?'hwar-threat-active':'hwar-threat-strategic';
+    html+='<div class="hwar-actor-card" style="border-color:'+actor.color+'44;">';
+    html+='<div class="hwar-actor-header">';
+    html+='<div><div class="hwar-actor-name" style="color:'+actor.color+';">'+actor.actor+'</div>';
+    html+='<div style="font-size:9px;color:#64748b;margin-top:2px;letter-spacing:.5px;">'+actor.doctrine+'</div></div>';
+    html+='<span class="hwar-threat-badge '+badgeClass+'">'+actor.threat+'</span>';
+    html+='</div>';
+    actor.pillars.forEach(function(p){
+      html+='<div class="hwar-pillar-card">';
+      html+='<div class="hwar-pillar-name" style="color:'+actor.color+';">'+p.name+'</div>';
+      html+='<div class="hwar-pillar-desc">'+p.desc+'</div>';
+      html+='<div class="hwar-examples">';
+      p.examples.forEach(function(ex){
+        html+='<span class="hwar-example-chip">'+ex+'</span>';
+      });
+      html+='</div></div>';
+    });
+    html+='<div style="font-size:8px;letter-spacing:.2em;color:#475569;margin-top:12px;margin-bottom:4px;font-weight:700;">ASSESSMENT</div>';
+    html+='<div class="hwar-assessment">'+actor.assessment+'</div>';
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+async function fetchHybridGDELT(){
+  var el=document.getElementById('hybrid-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed…</div>';
+  try{
+    var q=encodeURIComponent('hybrid warfare gray zone operations information warfare subversion');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="hwar-gdelt-item"><div class="hwar-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="hwar-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// Military Exercises overlay functions
+var _milexerHotspots=[];
+function openMilExer(){
+  var ov=document.getElementById('milexer-overlay');
+  ov.style.display='flex';
+  renderMilExercises();
+  addMilExerGlobeHotspots();
+  fetchMilExerGDELT();
+}
+function closeMilExer(){
+  document.getElementById('milexer-overlay').style.display='none';
+  removeMilExerGlobeHotspots();
+}
+function renderMilExercises(){
+  var el=document.getElementById('milexer-exercise-list');
+  if(!el)return;
+  var natoExercises=MILITARY_EXERCISES.filter(function(e){return e.color==='#3b82f6';});
+  var rivalExercises=MILITARY_EXERCISES.filter(function(e){return e.color==='#ef4444';});
+  var html='<div style="font-size:8px;letter-spacing:.3em;color:#3b82f6;font-weight:700;margin-bottom:10px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid #1e293b;">NATO / WESTERN ALLIANCE EXERCISES</div>';
+  natoExercises.forEach(function(ex){html+=buildMilExCard(ex);});
+  html+='<div style="font-size:8px;letter-spacing:.3em;color:#ef4444;font-weight:700;margin:16px 0 10px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid #1e293b;">RUSSIA / CHINA / ADVERSARY EXERCISES</div>';
+  rivalExercises.forEach(function(ex){html+=buildMilExCard(ex);});
+  el.innerHTML=html;
+}
+function buildMilExCard(ex){
+  var isRed=ex.color==='#ef4444';
+  var statusKey=ex.status.toLowerCase().replace(/\s+/g,'').replace(/[()]/g,'').replace(/\//g,'');
+  var statusClass='mex-status-annual';
+  if(statusKey.indexOf('biennial')>-1)statusClass='mex-status-biennial';
+  else if(statusKey.indexOf('escalating')>-1)statusClass='mex-status-escalating';
+  var h='<div class="mex-card'+(isRed?' mex-card-red':'')+'"><div class="mex-header">';
+  h+='<div><div class="mex-name" style="color:'+(isRed?'#fca5a5':'#93c5fd')+';">'+ex.name+'</div>';
+  h+='<div class="mex-nations">'+ex.nations.join(' \xb7 ')+'</div></div>';
+  h+='<span class="mex-status-badge '+statusClass+'">'+ex.status+'</span>';
+  h+='</div>';
+  h+='<div class="mex-section">AREA OF OPERATIONS</div><div class="mex-detail">'+ex.area+'</div>';
+  h+='<div class="mex-section">PARTICIPANTS</div><div class="mex-participants">'+ex.participants+'</div>';
+  h+='<div class="mex-section">FOCUS</div><div class="mex-detail">'+ex.focus+'</div>';
+  h+='<div class="mex-section">DETAIL</div><div class="mex-detail">'+ex.detail+'</div>';
+  h+='</div>';
+  return h;
+}
+function addMilExerGlobeHotspots(){
+  _milexerHotspots=[];
+  MILITARY_EXERCISES.forEach(function(ex){
+    if(typeof ex.lat==='number'&&typeof ex.lng==='number'){
+      var pt={lat:ex.lat,lng:ex.lng,label:ex.name,color:ex.color,intensity:0.85,_exercise:true};
+      _milexerHotspots.push(pt);
+      if(typeof hotspots!=='undefined')hotspots.push(pt);
+    }
+  });
+}
+function removeMilExerGlobeHotspots(){
+  if(typeof hotspots!=='undefined'){
+    hotspots=hotspots.filter(function(h){return !h._exercise;});
+  }
+  _milexerHotspots=[];
+}
+async function fetchMilExerGDELT(){
+  var el=document.getElementById('milexer-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed…</div>';
+  try{
+    var q=encodeURIComponent('military exercise NATO Russia China troops drills');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="mex-gdelt-item"><div class="mex-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="mex-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// Chokepoints overlay functions
+var _chokepointHotspots=[];
+function openChokepoints(){
+  var ov=document.getElementById('chokepoints-overlay');
+  ov.style.display='flex';
+  renderChokepoints();
+  addChokepointGlobeHotspots();
+  fetchChokepointsGDELT();
+}
+function closeChokepoints(){
+  document.getElementById('chokepoints-overlay').style.display='none';
+  removeChokepointGlobeHotspots();
+}
+function renderChokepoints(){
+  var el=document.getElementById('chokepoints-list');
+  if(!el)return;
+  var types=['MARITIME','MARITIME/STRATEGIC','TECHNOLOGICAL','SPACE/DIGITAL','DIGITAL'];
+  var typeLabels={'MARITIME':'MARITIME CHOKEPOINTS','MARITIME/STRATEGIC':'MARITIME / STRATEGIC','TECHNOLOGICAL':'TECHNOLOGICAL CHOKEPOINTS','SPACE/DIGITAL':'SPACE & DIGITAL INFRASTRUCTURE','DIGITAL':'DIGITAL INFRASTRUCTURE'};
+  var grouped={};
+  STRATEGIC_CHOKEPOINTS.forEach(function(c){
+    if(!grouped[c.type])grouped[c.type]=[];
+    grouped[c.type].push(c);
+  });
+  var html='';
+  types.forEach(function(t){
+    if(!grouped[t])return;
+    html+='<div class="choke-type-label">'+(typeLabels[t]||t)+'</div>';
+    grouped[t].forEach(function(cp){
+      html+=buildChokepointCard(cp);
+    });
+  });
+  el.innerHTML=html;
+}
+function buildChokepointCard(cp){
+  var riskClass='choke-risk-high';
+  if(cp.risk==='EXISTENTIAL')riskClass='choke-risk-existential';
+  else if(cp.risk==='CRITICAL')riskClass='choke-risk-critical';
+  var h='<div class="choke-card" style="border-color:'+cp.color+'44;">';
+  h+='<div class="choke-header">';
+  h+='<div class="choke-name" style="color:'+cp.color+';">'+cp.name+'</div>';
+  h+='<span class="choke-risk-badge '+riskClass+'">'+cp.risk+'</span>';
+  h+='</div>';
+  h+='<div class="choke-row"><span class="choke-row-label">THROUGHPUT</span><span class="choke-row-val">'+cp.throughput+'</span></div>';
+  h+='<div class="choke-row"><span class="choke-row-label">CONTROLLED BY</span><span class="choke-row-val">'+cp.controlledBy+'</span></div>';
+  h+='<div class="choke-row"><span class="choke-row-label">THREAT</span><span class="choke-row-val choke-threat-val">'+cp.threat+'</span></div>';
+  h+='<div class="choke-row"><span class="choke-row-label">ALTERNATIVES</span><span class="choke-row-val">'+cp.alternatives+'</span></div>';
+  h+='<div class="choke-row"><span class="choke-row-label">MIL PRESENCE</span><span class="choke-row-val">'+cp.militaryPresence+'</span></div>';
+  h+='<div class="choke-row"><span class="choke-row-label">RECENT INCIDENT</span><span class="choke-row-val choke-incident-val">'+cp.recentIncident+'</span></div>';
+  h+='</div>';
+  return h;
+}
+function addChokepointGlobeHotspots(){
+  _chokepointHotspots=[];
+  STRATEGIC_CHOKEPOINTS.forEach(function(cp){
+    if(typeof cp.lat==='number'&&typeof cp.lng==='number'&&cp.lat!==0&&cp.type.indexOf('DIGITAL')<0){
+      var pt={lat:cp.lat,lng:cp.lng,label:cp.name,color:cp.color,intensity:0.9,_chokepoint:true};
+      _chokepointHotspots.push(pt);
+      if(typeof hotspots!=='undefined')hotspots.push(pt);
+    }
+  });
+}
+function removeChokepointGlobeHotspots(){
+  if(typeof hotspots!=='undefined'){
+    hotspots=hotspots.filter(function(h){return !h._chokepoint;});
+  }
+  _chokepointHotspots=[];
+}
+async function fetchChokepointsGDELT(){
+  var el=document.getElementById('chokepoints-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed…</div>';
+  try{
+    var q=encodeURIComponent('shipping chokepoint Hormuz Malacca Suez Strait disruption');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=15&sort=datedesc&format=json';
+    var r=await fetch(url);var d=await r.json();
+    var arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="choke-gdelt-item"><div class="choke-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="choke-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 32 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -22954,6 +23317,9 @@ function filterSIGINT(query){
 <button id="coupwatch-btn" onclick="openCoupWatch()">COUP WATCH</button>
 <button id="gpc-btn" onclick="openGPC()">POWER SCORE</button>
 <button id="intelfail-btn" onclick="openIntelFail()">INTEL FAILURES</button>
+<button id="hybrid-btn" onclick="openHybridWar()">HYBRID WAR</button>
+<button id="milexer-btn" onclick="openMilExer()">MIL EXERCISES</button>
+<button id="chokepoints-btn" onclick="openChokepoints()">CHOKEPOINTS</button>
 
 <!-- LAWS OVERLAY -->
 <div id="laws-overlay">
@@ -23047,6 +23413,49 @@ function filterSIGINT(query){
   <div id="ifail-list" style="margin-bottom:20px;"></div>
   <div style="font-size:9px;letter-spacing:2px;color:#a855f7;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE INTELLIGENCE FAILURE &amp; SURPRISE ATTACK FEED</div>
   <div id="ifail-gdelt-feed"></div>
+</div>
+
+<!-- HYBRID WARFARE PLAYBOOK OVERLAY -->
+<div id="hybrid-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#ef4444;">HYBRID WARFARE PLAYBOOK</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">GERASIMOV DOCTRINE &bull; THREE WARFARES &bull; AXIS OF RESISTANCE &mdash; STATE HYBRID THREAT ANALYSIS</div>
+    </div>
+    <button onclick="closeHybridWar()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="hybrid-actor-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE HYBRID WARFARE INTELLIGENCE FEED</div>
+  <div id="hybrid-gdelt-feed"></div>
+</div>
+
+<!-- MILITARY EXERCISE INTELLIGENCE OVERLAY -->
+<div id="milexer-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#3b82f6;">MILITARY EXERCISE INTELLIGENCE</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">NATO &bull; RUSSIA &bull; CHINA &bull; ALLIED EXERCISES &mdash; GLOBAL ORDER OF BATTLE</div>
+    </div>
+    <button onclick="closeMilExer()" style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="milexer-exercise-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE MILITARY EXERCISE INTELLIGENCE FEED</div>
+  <div id="milexer-gdelt-feed"></div>
+</div>
+
+<!-- GLOBAL STRATEGIC CHOKEPOINTS OVERLAY -->
+<div id="chokepoints-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;color:#f97316;">GLOBAL STRATEGIC CHOKEPOINTS</div>
+      <div style="font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;">MARITIME &bull; TECHNOLOGICAL &bull; SPACE-DIGITAL &mdash; CRITICAL GLOBAL INFRASTRUCTURE VULNERABILITY ANALYSIS</div>
+    </div>
+    <button onclick="closeChokepoints()" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#fdba74;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div class="choke-alert-banner">&#9888; CRITICAL: If Hormuz + Malacca both closed &mdash; 40% of global trade halted within 72 hours</div>
+  <div id="chokepoints-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE CHOKEPOINT &amp; SHIPPING DISRUPTION INTELLIGENCE FEED</div>
+  <div id="chokepoints-gdelt-feed"></div>
 </div>
 </body>
 </html>
