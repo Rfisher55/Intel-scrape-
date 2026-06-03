@@ -28834,6 +28834,404 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 47 =====
 
+// ===== PHASE 48: REGIME WATCH, TERROR FINANCE, BORDER DISPUTES =====
+
+var AUTHORITARIAN_REGIMES = [
+  {country:'Russia',leader:'Vladimir Putin',lat:55.75,lng:37.62,color:'#ef4444',
+   regime_type:'Personalist Kleptocracy',years_in_power:25,
+   stability_score:6,succession_risk:'CRITICAL',
+   power_base:['FSB/Security services','Siloviki networks','State media control','Resource rent distribution','Oligarch dependency'],
+   vulnerabilities:['Ukraine war attrition','Economic sanctions pressure','Prigozhin mutiny precedent','Elite defection risk','No designated successor'],
+   succession_scenarios:['Palace coup by siloviki faction','Managed transition (Medvedev 2008 model)','Revolutionary collapse (1991 model)','Death in office — power vacuum'],
+   assessment:'Longest-serving major power leader. Post-Prigozhin mutiny (June 2023) demonstrated regime fragility. Ukraine war creating economic and military strain. No constitutional succession mechanism. FSB vs military rivalry intensifying.'},
+  {country:'China',leader:'Xi Jinping',lat:39.91,lng:116.39,color:'#dc2626',
+   regime_type:'One-Party Personalist',years_in_power:12,
+   stability_score:8,succession_risk:'MODERATE',
+   power_base:['PLA consolidated control','Anti-corruption campaign (rivals purged)','Propaganda apparatus','SOE economic control','CCP 1.0B member institutional base'],
+   vulnerabilities:['Economic slowdown / property crisis','Youth unemployment 20%+','Taiwan risk of catastrophic failure','Elite resentment of term limit removal','Tibetan/Uyghur unrest'],
+   succession_scenarios:['Controlled CCP succession (2027-2032)','Health crisis emergency succession','Economic crisis destabilization','Taiwan war outcome determining factor'],
+   assessment:'Strongest personalist consolidation since Mao. Term limits removed 2018. No obvious successor. Economic headwinds (Evergrande, youth unemployment) creating first serious governance challenges.'},
+  {country:'North Korea',leader:'Kim Jong-un',lat:39.02,lng:125.75,color:'#8b5cf6',
+   regime_type:'Totalitarian Hereditary',years_in_power:13,
+   stability_score:7,succession_risk:'HIGH',
+   power_base:['Songbun class system','Nuclear deterrent','State terror apparatus','Juche ideology','Haengigun (guards corps)'],
+   vulnerabilities:['Health concerns (obesity/cardiac)','No designated successor (daughter Kim Ju-ae unclear)','COVID economic collapse aftermath','China dependency'],
+   succession_scenarios:['Kim Ju-ae (daughter) succession if prepared','Military junta if Kim dies without transition','Collapse — China stabilization intervention','Collapse — Korean unification scenario'],
+   assessment:'Healthiest regime institutionally despite totalitarianism. Nuclear weapons provide ultimate deterrent. Succession uncertainty increases as Kim\'s health unclear. Kim Ju-ae being groomed but timeline unknown.'},
+  {country:'Iran',leader:'Khamenei (Supreme Leader)',lat:35.69,lng:51.39,color:'#f97316',
+   regime_type:'Theocratic Authoritarianism',years_in_power:35,
+   stability_score:5,succession_risk:'CRITICAL',
+   power_base:['IRGC military-economic complex','Velayat-e Faqih theological authority','Basij paramilitary','Bonyad charity foundations','Proxy network legitimacy'],
+   vulnerabilities:['Khamenei age/health (85)','Woman Life Freedom movement 2022 precedent','Severe economic sanctions','IRGC-clerical rivalry','Post-Raisi presidential uncertainty'],
+   succession_scenarios:['Mojtaba Khamenei (son) — controversial','IRGC direct takeover','Assembly of Experts managed transition','Revolution (2009/2022 precedent — suppressed)'],
+   assessment:'Most critical succession in authoritarian world. Khamenei (85) with no clear successor. IRGC has grown into semi-independent military-economic power that may not subordinate to next Supreme Leader.'},
+  {country:'Saudi Arabia',leader:'Mohammed bin Salman (MBS)',lat:24.69,lng:46.72,color:'#eab308',
+   regime_type:'Absolute Monarchy / Modernizing Autocracy',years_in_power:7,
+   stability_score:7,succession_risk:'MODERATE',
+   power_base:['Aramco resource wealth','Military consolidation (post-2017 purge)','US security guarantee','Vision 2030 economic modernization','Religious establishment subordination'],
+   vulnerabilities:['Khashoggi legacy / international legitimacy','Yemen war costs','Oil price dependency','Youth unemployment','Regional Houthi threat'],
+   succession_scenarios:['MBS coronation as King (after father Salman)','Intra-family rivalry if MBS stumbles','Economic crisis undermining Vision 2030 legitimacy'],
+   assessment:'Rapid consolidation since 2017 Ritz-Carlton purge. Khashoggi murder created lasting reputational damage but no strategic consequences. US-Saudi normalization with Israel a primary foreign policy goal.'},
+  {country:'Venezuela',leader:'Nicolás Maduro',lat:10.48,lng:-66.90,color:'#22c55e',
+   regime_type:'Competitive Authoritarianism',years_in_power:11,
+   stability_score:4,succession_risk:'HIGH',
+   power_base:['Military loyalty (economic benefits)','SEBIN intelligence service','Colectivo paramilitaries','Cuba advisory support','FARC/criminal network co-option'],
+   vulnerabilities:['7M+ diaspora (economic collapse legacy)','2024 election fraud widely documented','US/EU sanctions','Opposition still active (Edmundo González)','Oil infrastructure decay'],
+   succession_scenarios:['Negotiated transition (similar to Zimbabwe 2017)','Military coup (economic deterioration trigger)','Opposition breakthrough (2024 election disputed but precedent set)','Continued authoritarian consolidation'],
+   assessment:'Survived multiple opposition attempts and sanctions. 2024 election results fabricated per virtually all international observers. Military still loyal due to corruption network benefits.'}
+];
+
+var REGIME_STABILITY_INDICATORS = [
+  {indicator:'Elite Cohesion',weight:'HIGH',desc:'Division within ruling coalition (military, oligarchs, party) is primary collapse driver'},
+  {indicator:'Coercive Capacity',weight:'HIGH',desc:'Ability to deploy security forces against population. Degradation through defections is warning sign.'},
+  {indicator:'Economic Performance',weight:'HIGH',desc:'Severe recession erodes popular tolerance and elite benefit distribution. Threshold: -15% GDP'},
+  {indicator:'Legitimacy Narrative',weight:'MODERATE',desc:'Nationalist, religious, or performance-based legitimacy. Erosion accelerates other vulnerabilities.'},
+  {indicator:'Succession Mechanism',weight:'HIGH',desc:'Regimes without clear succession mechanisms are 3x more likely to experience violent transition.'},
+  {indicator:'External Support',weight:'MODERATE',desc:'Russian/Chinese/Iranian support for client regimes provides economic lifeline and coup protection.'}
+];
+
+function _renderRegimeWatch(){
+  var grid = document.getElementById('rw-regimes-grid');
+  if(!grid) return;
+  grid.innerHTML = AUTHORITARIAN_REGIMES.map(function(r){
+    var pb = r.power_base.map(function(p){return '<span class="rw-pb-chip">'+p+'</span>';}).join('');
+    var vulns = r.vulnerabilities.map(function(v){return '<li class="rw-vuln-item">'+v+'</li>';}).join('');
+    var scens = r.succession_scenarios.map(function(s){return '<li class="rw-scen-item">'+s+'</li>';}).join('');
+    var srColor = r.succession_risk==='CRITICAL'?'#ef4444':r.succession_risk==='HIGH'?'#f97316':r.succession_risk==='MODERATE'?'#eab308':'#22c55e';
+    var stColor = r.stability_score>=7?'#22c55e':r.stability_score>=5?'#eab308':'#ef4444';
+    return '<div class="rw-regime-card" style="border-top-color:'+r.color+';">'+
+      '<div class="rw-regime-header">'+
+        '<div>'+
+          '<div class="rw-country" style="color:'+r.color+';">'+r.country+'</div>'+
+          '<div class="rw-leader">'+r.leader+' &nbsp;|&nbsp; '+r.regime_type+' &nbsp;|&nbsp; '+r.years_in_power+' yrs</div>'+
+        '</div>'+
+        '<div class="rw-scores">'+
+          '<div class="rw-score-item">Stability: <span style="color:'+stColor+';font-weight:700;">'+r.stability_score+'/10</span></div>'+
+          '<span class="rw-risk-badge" style="background:'+srColor+'22;border:1px solid '+srColor+';color:'+srColor+';">'+r.succession_risk+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="rw-pb-list">'+pb+'</div>'+
+      '<div class="rw-cols">'+
+        '<div><div class="rw-col-label">VULNERABILITIES</div><ul class="rw-list">'+vulns+'</ul></div>'+
+        '<div><div class="rw-col-label">SUCCESSION SCENARIOS</div><ul class="rw-list">'+scens+'</ul></div>'+
+      '</div>'+
+      '<div class="rw-assessment">'+r.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('rw-indicators-tbody');
+  if(tbody){
+    tbody.innerHTML = REGIME_STABILITY_INDICATORS.map(function(i){
+      var wc = i.weight==='HIGH'?'#f97316':'#eab308';
+      return '<tr><td class="rw-ind-name">'+i.indicator+'</td>'+
+        '<td><span style="color:'+wc+';font-weight:700;font-size:8px;">'+i.weight+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+i.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchRwGdelt(){
+  var feed = document.getElementById('rw-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('authoritarian regime stability succession coup political crisis leadership');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="rw-gdelt-item">'+
+        '<div class="rw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="rw-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openRegimeWatch(){
+  var ov=document.getElementById('regimewatch-overlay');
+  if(ov){ov.style.display='flex';_renderRegimeWatch();_fetchRwGdelt();}
+  var pins = AUTHORITARIAN_REGIMES.map(function(r){
+    var sev = r.succession_risk==='CRITICAL'?9:r.succession_risk==='HIGH'?7:5;
+    return {lat:r.lat,lng:r.lng,type:'instability',severity:sev,label:r.country+' REGIME',_regimewatch:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._regimewatch;}), ...pins];
+}
+function _closeRegimeWatch(){
+  var ov=document.getElementById('regimewatch-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._regimewatch;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('regimewatch-btn');
+  if(b) b.addEventListener('click',_openRegimeWatch);
+  var c=document.getElementById('regimewatch-close');
+  if(c) c.addEventListener('click',_closeRegimeWatch);
+});
+
+var TERROR_FINANCE_NETWORKS = [
+  {group:'Hamas / PIJ',lat:31.35,lng:34.30,color:'#ef4444',
+   annual_funding_est:'$350M+',
+   primary_sources:['Iran ($150M+ annually via IRGC-QF)','Qatar charitable organizations','Crypto fundraising campaigns','Diaspora hawala networks','Gaza tunnel economy'],
+   financial_mechanisms:['IRGC Quds Force wire transfers via front companies','Cryptocurrency: Tron/BTC/XMR wallets publicized on Telegram','Hamas Investment Office (HIO) — $500M commercial portfolio','Turkey-based money services businesses (MSBs)'],
+   sanctions_status:'US/EU designated FTO. Qatar partially exempted as mediator. Hamas political bureau Doha-based.',
+   recent:'Post-Oct 7 2023: US Treasury froze $10M+ Hamas-linked assets. Crypto exchanges blocked 1,500+ Hamas-linked wallets. Israel targeted Hamas financial infrastructure Gaza.'},
+  {group:'Hezbollah',lat:33.89,lng:35.50,color:'#ef4444',
+   annual_funding_est:'$700M+',
+   primary_sources:['Iran ($700M+ annually — primary)','Lebanese construction industry skimming','West Africa diamond trade','Latin America tri-border area','Narco proceeds (cocaine)'],
+   financial_mechanisms:['IRGC direct funding (IRGC-QF priority program)','Al-Qard al-Hassan charitable micro-finance (designated)','Amal movement political funding overlap','Business front companies in West Africa/Latin America'],
+   sanctions_status:'US/EU/Arab League designated. UK 2019 full designation. Lebanon non-designation creates access.',
+   recent:'2024: US Treasury designated Hezbollah financial networks in Africa. Lebanon banking sector partially serves Hezbollah needs. September 2024 pager/radio attack disrupted military command.'},
+  {group:'ISIS / ISIL',lat:35.00,lng:38.00,color:'#dc2626',
+   annual_funding_est:'$100M (peak $2B)',
+   primary_sources:['Oil field taxes (Syria/Iraq remnants)','Ransom operations','Extortion (territorial)','Crypto (decreasing)','Sleeper cell donations'],
+   financial_mechanisms:['Physical cash movement via courier networks','Hawala (preference — no paper trail)','Crypto initially effective — now surveilled','Stolen antiquities trade (reduced)'],
+   sanctions_status:'UN 1267 Committee designated. US/EU designated. Territorial defeat 2019 collapsed primary revenue streams.',
+   recent:'ISIS-K (Khorasan) increasingly crypto-funded. Moscow Crocus City Hall attack (March 2024) funded via crypto/hawala Afghanistan-origin. $250K attack cost.'},
+  {group:'Al-Qaeda / AQ Affiliates',lat:15.55,lng:48.51,color:'#b91c1c',
+   annual_funding_est:'$30-50M',
+   primary_sources:['Gulf charitable donors (individual)','AQIM Sahel kidnapping ransoms','Al-Shabaab port taxation (Kismayo)','JNIM Sahel extortion','Gulf state-linked donors (individual not state)'],
+   financial_mechanisms:['Shell company investment portfolios','Informal value transfer (hawala)','Cryptocurrency (Bitcoin increasingly)','Cash courier networks'],
+   sanctions_status:'UN designated. US FTO. Affiliates vary — JNIM, AQIM, al-Shabaab individually designated.',
+   recent:'JNIM (Sahel AQ affiliate) now controls significant Malian territory post-Wagner departure. Revenue from gold mining and transit taxation. Al-Shabaab maintains $50M/year tax revenue from Somali population.'},
+  {group:'Houthis (Ansar Allah)',lat:15.35,lng:44.20,color:'#f97316',
+   annual_funding_est:'$1.5B+',
+   primary_sources:['Iran ($1B+ annually)','Fuel import taxation (Hodeidah port)','Qat trade taxation','Central Bank of Yemen printing','Diaspora remittances (captured)'],
+   financial_mechanisms:['IRGC direct transfer (weapons + cash)','Hodeidah port customs revenue','CBY-Sanaa printing press','Turkish intermediaries for some transactions'],
+   sanctions_status:'US re-designated FTO Jan 2024. Saudi blockade partially effective. UN arms embargo repeatedly violated.',
+   recent:'2024 Red Sea campaign: 100+ attacks on shipping. Estimated $500M+ attack cost funded by Iran. Shipping insurance premiums increased 300% — economic warfare succeeding.'}
+];
+
+var HAWALA_NETWORKS = [
+  {region:'South Asia (Pakistan/India/UAE)',volume_est:'$200B+/yr',color:'#ef4444',desc:'Largest hawala corridor globally. Pakistan-UAE-UK triangle critical. ISI-linked networks identified in Lashkar-e-Taiba funding flows.'},
+  {region:'Middle East (Lebanon/Dubai/Turkey)',volume_est:'$100B+/yr',color:'#f97316',desc:'Lebanon banking collapse drove hawala surge. Dubai gold souk central node. Hezbollah/Hamas both use Turkey MSBs as intermediaries.'},
+  {region:'East Africa (Somalia/Kenya)',volume_est:'$1.5B/yr',color:'#eab308',desc:'Somali diaspora remittances via Dahabshiil and Amal Express (formerly). Al-Shabaab taxation on informal money services documented by FATF.'},
+  {region:'West Africa (Nigeria/Senegal)',volume_est:'$50B/yr',color:'#eab308',desc:'SWIFT exclusion of smaller banks drives hawala. ECOWAS Mobile money (M-Pesa equivalents) creating new informal corridors.'}
+];
+
+var CRYPTO_TERROR_FINANCE = [
+  {actor:'Hamas',crypto_raised_est:'$41M (2021-2023)',method:'Public BTC/Tron/XMR addresses on Telegram',seizures:'US/Israeli froze $1.7M (2021); Israeli seized $7.7M (2023)'},
+  {actor:'Hezbollah',crypto_raised_est:'Unknown (estimated $10M+)',method:'Crypto exchanges in Lebanon/Turkey; laundering via DeFi',seizures:'US OFAC designated multiple wallets'},
+  {actor:'ISIS-K',crypto_raised_est:'$250K+ per major attack',method:'Telegram-based crowdfunding, Monero preference',seizures:'DOJ seized $500K+ post-Crocus City Hall'},
+  {actor:'North Korea',crypto_raised_est:'$3B+ (2017-2024)',method:'Lazarus Group exchange hacks, Ronin bridge exploit',seizures:'US recovered $30M Axie Infinity; multiple DOJ actions'}
+];
+
+function _renderTerrorFinance(){
+  var grid = document.getElementById('tf-networks-grid');
+  if(!grid) return;
+  grid.innerHTML = TERROR_FINANCE_NETWORKS.map(function(n){
+    var srcChips = n.primary_sources.map(function(s){return '<span class="tf-src-chip">'+s+'</span>';}).join('');
+    var mechItems = n.financial_mechanisms.map(function(m){return '<li class="tf-mech-item">'+m+'</li>';}).join('');
+    return '<div class="tf-network-card" style="border-top-color:'+n.color+';">'+
+      '<div class="tf-network-header">'+
+        '<div class="tf-group-name" style="color:'+n.color+';">'+n.group+'</div>'+
+        '<div class="tf-funding">Est. annual funding: <span style="color:#fbbf24;font-weight:700;">'+n.annual_funding_est+'</span></div>'+
+      '</div>'+
+      '<div class="tf-sources">'+srcChips+'</div>'+
+      '<ul class="tf-mechs">'+mechItems+'</ul>'+
+      '<div class="tf-sanctions">'+n.sanctions_status+'</div>'+
+      '<div class="tf-recent">'+n.recent+'</div>'+
+    '</div>';
+  }).join('');
+  var cGrid = document.getElementById('tf-crypto-grid');
+  if(cGrid){
+    cGrid.innerHTML = CRYPTO_TERROR_FINANCE.map(function(c){
+      return '<div class="tf-crypto-card">'+
+        '<div class="tf-crypto-actor">'+c.actor+'</div>'+
+        '<div class="tf-row"><b>Raised:</b> '+c.crypto_raised_est+'</div>'+
+        '<div class="tf-row"><b>Method:</b> '+c.method+'</div>'+
+        '<div class="tf-row"><b>Seizures:</b> <span style="color:#22c55e;">'+c.seizures+'</span></div>'+
+      '</div>';
+    }).join('');
+  }
+  var hGrid = document.getElementById('tf-hawala-grid');
+  if(hGrid){
+    hGrid.innerHTML = HAWALA_NETWORKS.map(function(h){
+      return '<div class="tf-hawala-card" style="border-left-color:'+h.color+';">'+
+        '<div class="tf-hawala-region">'+h.region+'</div>'+
+        '<div class="tf-row"><b>Annual volume:</b> <span style="color:#fbbf24;">'+h.volume_est+'</span></div>'+
+        '<div class="tf-hawala-desc">'+h.desc+'</div>'+
+      '</div>';
+    }).join('');
+  }
+}
+
+async function _fetchTfGdelt(){
+  var feed = document.getElementById('tf-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('terrorist financing hawala cryptocurrency sanctions Hamas Hezbollah ISIS funding');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="tf-gdelt-item">'+
+        '<div class="tf-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="tf-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openTerrorFinance(){
+  var ov=document.getElementById('terrorfinance-overlay');
+  if(ov){ov.style.display='flex';_renderTerrorFinance();_fetchTfGdelt();}
+  var pins = TERROR_FINANCE_NETWORKS.map(function(n){
+    return {lat:n.lat,lng:n.lng,type:'terrorism',severity:8,label:n.group+' FINANCE',_terrorfinance:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._terrorfinance;}), ...pins];
+}
+function _closeTerrorFinance(){
+  var ov=document.getElementById('terrorfinance-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._terrorfinance;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('terrorfinance-btn');
+  if(b) b.addEventListener('click',_openTerrorFinance);
+  var c=document.getElementById('terrorfinance-close');
+  if(c) c.addEventListener('click',_closeTerrorFinance);
+});
+
+var ACTIVE_BORDER_DISPUTES = [
+  {name:'India-China LAC',lat:34.00,lng:78.00,color:'#ef4444',
+   status:'ACTIVE STANDOFF',severity:'HIGH',
+   parties:['India','China'],
+   disputed_area_km2:38000,
+   current_situation:'Multiple friction points: Depsang Plains, Daulat Beg Oldie, Demchok. Post-Galwan 2020 disengagement partial. Both sides built infrastructure at 15,000+ ft altitude. Forward deployment 50,000+ troops each.',
+   recent_developments:'2024: Depsang/Demchok disengagement agreement Oct 2024. Patrolling rights restored. But LAC dispute fundamentally unresolved. India deployed Agni missiles, air defense forward.',
+   risk_factors:['Pakistan-China two-front threat to India','Nuclear-armed adversaries','High altitude logistics constraints','Domestic political pressure both sides'],
+   legal_status:'No binding treaty. McMahon Line (1914) vs China claims. Simla Agreement rejected by China.'},
+  {name:'Taiwan Strait',lat:24.00,lng:121.50,color:'#ef4444',
+   status:'EXISTENTIAL DISPUTE',severity:'EXISTENTIAL',
+   parties:['PRC','Taiwan (ROC)','USA'],
+   disputed_area_km2:36000,
+   current_situation:'PRC claims Taiwan as sovereign territory. Taiwan operates as de facto independent state. US maintains strategic ambiguity + arms sales + TRA. PLA monthly gray zone incursions. 2024: Record 153 aircraft in single incursion.',
+   recent_developments:'2024 Taiwan elections: Lai Ching-te (DPP, independence-leaning) won presidency. Beijing increased pressure. US continued arms sales ($500M+). Japan deepened security ties.',
+   risk_factors:['Nuclear escalation path','US treaty obligation ambiguity','Japan/Australia involvement','Global semiconductor dependency on TSMC'],
+   legal_status:'Sovereignty undefined by international treaty. US One China Policy vs Taiwan Relations Act tensions.'},
+  {name:'South China Sea (Nine-Dash Line)',lat:14.00,lng:115.00,color:'#dc2626',
+   status:'ACTIVE CONFLICT',severity:'HIGH',
+   parties:['China','Philippines','Vietnam','Malaysia','Brunei','Taiwan'],
+   disputed_area_km2:3500000,
+   current_situation:'China claims 90% SCS via Nine-Dash Line. UNCLOS tribunal 2016 ruled against China (ignored). China has militarized 7 artificial islands. Philippines: near-daily confrontations at Second Thomas Shoal. Vietnam: parallel tensions at DK1 platforms.',
+   recent_developments:'2024: Philippines water cannon attacks record high. US-Philippines MDT invoked scope clarified. Vietnam signed defense deals with Russia and USA in same year — hedging.',
+   risk_factors:['US-Philippines MDT could draw US into conflict','ASEAN disunity (Cambodia/Laos China-aligned)','Resource competition (oil/gas/fish)','Freedom of navigation principle'],
+   legal_status:'UNCLOS 2016 ruling: China\'s historic rights claims unlawful. China does not accept ruling.'},
+  {name:'Russia-Ukraine (Donbas/Crimea)',lat:48.00,lng:37.00,color:'#ef4444',
+   status:'ACTIVE WAR',severity:'CATASTROPHIC',
+   parties:['Russia','Ukraine','NATO (indirect)'],
+   disputed_area_km2:125000,
+   current_situation:'Russia controls ~18% Ukrainian territory: Crimea + parts of Donetsk, Luhansk, Zaporizhzhia, Kherson. Ukraine controls ~80km inside Kursk Oblast (Aug 2024 incursion). Front line relatively static 2023-2024 with grinding attrition.',
+   recent_developments:'2024: Ukraine Kursk incursion — first foreign troops on Russian soil since WWII. ATACMS authorization. North Korean troops deployed to Kursk. F-16s arrived Ukraine.',
+   risk_factors:['Nuclear escalation threats','NATO Article 5 proximity','Economic disruption global','Election interference in Western democracies'],
+   legal_status:'Russia annexation of 4 oblasts declared September 2022 — not recognized internationally. ICJ case pending.'},
+  {name:'Kosovo-Serbia',lat:42.67,lng:21.16,color:'#eab308',
+   status:'UNRESOLVED — LOW INTENSITY',severity:'MODERATE',
+   parties:['Kosovo','Serbia','EU','NATO (KFOR)'],
+   disputed_area_km2:10887,
+   current_situation:'Kosovo declared independence 2008 — recognized by 100+ states including US/EU, not recognized by Serbia, Russia, China. North Kosovo Serbian community tensions. 2023: armed clash Banjska killed Kosovo police. Serbia mobilized forces briefly.',
+   recent_developments:'2024: EU-brokered dialogue stalled. US push for normalization agreement. North Kosovo barricades periodically. Serbian elections — nationalist pressure against recognition.',
+   risk_factors:['Russia using Kosovo to oppose Western norms','Serbian minority rights flashpoint','EU accession leverage limited','Russian influence in Serbia'],
+   legal_status:'ICJ 2010: Kosovo independence declaration not illegal per se. But not admitted to UN due to Russia/China veto.'},
+  {name:'Armenia-Azerbaijan (Nagorno-Karabakh)',lat:39.82,lng:46.75,color:'#f97316',
+   status:'POST-CONFLICT TRANSITION',severity:'MODERATE',
+   parties:['Azerbaijan','Armenia','Russia (CSTO)'],
+   disputed_area_km2:4400,
+   current_situation:'Azerbaijan seized full control Nagorno-Karabakh Sept 2023 — 24-hour operation. 100,000+ ethnic Armenians fled to Armenia. No Armenians remain in region. Peace treaty negotiations ongoing for border demarcation.',
+   recent_developments:'2024: Armenia-Azerbaijan peace negotiations advancing. Armenia left CSTO (de facto). Armenia-EU association deepened. Iran watching with concern (Azeri-Iran ethnic dynamics).',
+   risk_factors:['Remaining Armenian territorial concerns','Turkish-Israeli-Azeri alignment vs Iran','Zangezur corridor demand from Azerbaijan','Russia influence loss in CSTO'],
+   legal_status:'Karabakh internationally recognized as Azerbaijan. Peace treaty not yet signed.'}
+];
+
+var BORDER_DISPUTE_MECHANISMS = [
+  {mechanism:'ICJ (International Court of Justice)',role:'Adjudication',limitations:'States must consent to jurisdiction. Russia/China often refuse. Judgments not self-enforcing.'},
+  {mechanism:'UNCLOS Tribunal (PCA)',role:'Maritime disputes',limitations:'China refused SCS arbitration. States increasingly opt out of compulsory arbitration.'},
+  {mechanism:'UN Security Council',role:'Peace enforcement',limitations:'Veto power paralyzes action when P5 involved. Russia/China block action on their disputes.'},
+  {mechanism:'Regional Organizations (ASEAN/AU/EU)',role:'Mediation',limitations:'Consensus requirement in ASEAN creates lowest common denominator. No enforcement power.'},
+  {mechanism:'Bilateral Negotiation',role:'Direct resolution',limitations:'Power asymmetry disadvantages smaller states. "Might makes right" dynamics prevalent.'}
+];
+
+function _renderBorderDisputes(){
+  var grid = document.getElementById('bd-disputes-grid');
+  if(!grid) return;
+  grid.innerHTML = ACTIVE_BORDER_DISPUTES.map(function(d){
+    var rf = d.risk_factors.map(function(r){return '<li class="bd-risk-item">'+r+'</li>';}).join('');
+    var svColor = d.severity==='EXISTENTIAL'?'#7f1d1d':d.severity==='CATASTROPHIC'?'#ef4444':d.severity==='HIGH'?'#f97316':d.severity==='MODERATE'?'#eab308':'#22c55e';
+    return '<div class="bd-dispute-card" style="border-top-color:'+d.color+';">'+
+      '<div class="bd-dispute-header">'+
+        '<div>'+
+          '<div class="bd-name">'+d.name+'</div>'+
+          '<div class="bd-parties">'+d.parties.join(' vs ')+'</div>'+
+        '</div>'+
+        '<div>'+
+          '<span class="bd-status-badge" style="color:'+d.color+';border-color:'+d.color+';">'+d.status+'</span>'+
+          '<span class="bd-sev-badge" style="background:'+svColor+'22;border:1px solid '+svColor+';color:'+svColor+';">'+d.severity+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="bd-situation">'+d.current_situation+'</div>'+
+      '<div class="bd-recent"><b>Recent:</b> '+d.recent_developments+'</div>'+
+      '<ul class="bd-risks">'+rf+'</ul>'+
+      '<div class="bd-legal"><b>Legal status:</b> '+d.legal_status+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('bd-mechanisms-tbody');
+  if(tbody){
+    tbody.innerHTML = BORDER_DISPUTE_MECHANISMS.map(function(m){
+      return '<tr><td class="bd-mech-name">'+m.mechanism+'</td>'+
+        '<td style="color:#94a3b8;font-size:7px;">'+m.role+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+m.limitations+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchBdGdelt(){
+  var feed = document.getElementById('bd-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('territorial dispute border conflict South China Sea Taiwan Kashmir Ukraine sovereignty');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="bd-gdelt-item">'+
+        '<div class="bd-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="bd-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openBorderDisputes(){
+  var ov=document.getElementById('borderdisputes-overlay');
+  if(ov){ov.style.display='flex';_renderBorderDisputes();_fetchBdGdelt();}
+  var pins = ACTIVE_BORDER_DISPUTES.map(function(d){
+    var sev = d.severity==='EXISTENTIAL'?10:d.severity==='CATASTROPHIC'?9:d.severity==='HIGH'?7:5;
+    return {lat:d.lat,lng:d.lng,type:'active_conflict',severity:sev,label:d.name,_borderdisputes:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._borderdisputes;}), ...pins];
+}
+function _closeBorderDisputes(){
+  var ov=document.getElementById('borderdisputes-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._borderdisputes;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('borderdisputes-btn');
+  if(b) b.addEventListener('click',_openBorderDisputes);
+  var c=document.getElementById('borderdisputes-close');
+  if(c) c.addEventListener('click',_closeBorderDisputes);
+});
+
+// ===== END PHASE 48 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
