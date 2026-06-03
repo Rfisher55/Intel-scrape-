@@ -4656,6 +4656,98 @@ button{border-radius:2px!important}
   }
 }
 /* ===== END MOBILE ===== */
+
+/* Phase 55 buttons — Column 15 (right:1835px) */
+#p55hostage-btn{position:fixed;top:175px;right:1835px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p55hostage-btn:hover{border-color:#f59e0b;color:#fcd34d;}
+#p55election-btn{position:fixed;top:215px;right:1835px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p55election-btn:hover{border-color:#8b5cf6;color:#c4b5fd;}
+#p55finwar-btn{position:fixed;top:255px;right:1835px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p55finwar-btn:hover{border-color:#22d3ee;color:#67e8f9;}
+
+/* Hostage / Detainee Tracker overlay */
+#p55hostage-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p55hos-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p55hos-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f59e0b;}
+.p55hos-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p55hos-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p55hos-close:hover{color:#f59e0b;border-color:#f59e0b;}
+.p55hos-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p55hos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p55hos-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p55hos-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p55hos-card-name{font-size:13px;font-weight:900;}
+.p55hos-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.p55hos-counters{display:flex;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.p55hos-counter{text-align:center;}
+.p55hos-counter-val{font-size:16px;font-weight:900;}
+.p55hos-counter-lbl{font-size:7px;color:#64748b;letter-spacing:.1em;}
+.p55hos-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p55hos-row b{color:#e2e8f0;}
+.p55hos-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.p55hos-xchg-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p55hos-xchg-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p55hos-xchg-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p55hos-xchg-date{color:#f59e0b;font-weight:700;white-space:nowrap;}
+.p55hos-xchg-sig{color:#fcd34d;font-size:7px;font-style:italic;}
+.p55hos-live-feed{max-width:900px;}
+.p55hos-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p55hos-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p55hos-live-meta{font-size:8px;color:#475569;}
+
+/* Election Security overlay */
+#p55election-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p55el-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p55el-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#8b5cf6;}
+.p55el-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p55el-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p55el-close:hover{color:#8b5cf6;border-color:#8b5cf6;}
+.p55el-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p55el-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p55el-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p55el-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p55el-card-name{font-size:13px;font-weight:900;}
+.p55el-sev-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.p55el-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p55el-row b{color:#e2e8f0;}
+.p55el-method-list{font-size:8px;color:#94a3b8;padding-left:12px;margin:4px 0;}
+.p55el-method-list li{margin-bottom:2px;}
+.p55el-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.p55el-disinfo-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p55el-disinfo-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p55el-disinfo-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p55el-disinfo-method{color:#e2e8f0;font-weight:700;}
+.p55el-disinfo-scale{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.3px;}
+.p55el-live-feed{max-width:900px;}
+.p55el-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p55el-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p55el-live-meta{font-size:8px;color:#475569;}
+
+/* Financial Warfare overlay */
+#p55finwar-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p55fw-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p55fw-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#22d3ee;}
+.p55fw-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p55fw-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p55fw-close:hover{color:#22d3ee;border-color:#22d3ee;}
+.p55fw-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p55fw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p55fw-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p55fw-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p55fw-card-name{font-size:13px;font-weight:900;}
+.p55fw-eff-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.p55fw-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p55fw-row b{color:#e2e8f0;}
+.p55fw-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.p55fw-dedollar-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p55fw-dedollar-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p55fw-dedollar-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p55fw-dd-metric{color:#e2e8f0;font-weight:700;}
+.p55fw-dd-trend{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.3px;}
+.p55fw-live-feed{max-width:900px;}
+.p55fw-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p55fw-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p55fw-live-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -32239,6 +32331,363 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 54 =====
 
+// ===== PHASE 55: HOSTAGE TRACKER, ELECTION SECURITY, FINANCIAL WARFARE =====
+
+var P55_HOSTAGE_CASES = [
+  {name:'Gaza Hostages (Oct 7 Hamas)',lat:31.35,lng:34.31,color:'#ef4444',
+   count:251,released:100,remaining:101,dead_in_captivity:34,
+   holding_party:'Hamas / Palestinian Islamic Jihad / Civilian captors',
+   status:'PARTIAL RELEASE — Qatar/Egypt mediation. Phase 1 deal Jan 2025: 33 hostages for 1,900 Palestinian prisoners.',
+   nationalities:['Israel','USA','Thailand','Russia','Argentina','Germany','France'],
+   assessment:'Largest mass hostage event since WWII. Mix of military+civilian+elderly+children. IDF military pressure vs diplomatic tracks in permanent tension. 34 confirmed dead in captivity. Remaining hostages increasingly at risk.',
+   last_exchange:'Jan 2025 — Phase 1 deal: 33 hostages for 1,900 prisoners'},
+  {name:'Americans Detained in Russia',lat:55.75,lng:37.62,color:'#ef4444',
+   count:8,released:3,remaining:5,dead_in_captivity:0,
+   holding_party:'Russian Federal Security Service (FSB) / Russian courts',
+   status:'ONGOING — Paul Whelan (Marine veteran, 2018-present), Marc Fogel (teacher), others. Evan Gershkovich released Aug 2024.',
+   nationalities:['USA (primarily)'],
+   assessment:'Russia uses Western detainees as bargaining chips for prisoner exchanges. Gershkovich release (Aug 2024 — largest post-Cold War swap: 24 prisoners, 7 countries) demonstrated mechanism. Russia demands known criminals (e.g., Bout, Krasikov) for Americans.',
+   last_exchange:'Aug 2024 — Gershkovich + Whelan + others for Krasikov (FSB assassin) + others'},
+  {name:'Western Detainees in Iran',lat:35.69,lng:51.39,color:'#f97316',
+   count:12,released:5,remaining:7,dead_in_captivity:0,
+   holding_party:'IRGC Intelligence / Iranian judiciary (Evin Prison)',
+   status:'CHRONIC — Iran routinely arrests dual nationals. 2023: $6B Qatar-held funds unfrozen for 5 Americans. Funds later re-frozen.',
+   nationalities:['USA','UK','France','Germany'],
+   assessment:'Iran hostage-for-concessions model proven. Evin Prison: 2022 fire killed prisoners, regime blamed on smoking. European citizens arrested to pressure EU nuclear negotiations. Pattern: arrest, solitary, force confession, use as bargaining chip.',
+   last_exchange:'Sept 2023 — 5 Americans for $6B unfrozen funds (funds later re-frozen by Biden)'},
+  {name:'Americans in Venezuela',lat:10.48,lng:-66.88,color:'#f97316',
+   count:6,released:4,remaining:2,dead_in_captivity:0,
+   holding_party:'SEBIN (Venezuelan intelligence) / DGCIM (military intelligence)',
+   status:'ONGOING — Venezuela arrests Americans for political leverage vs sanctions. 2022: 10 Americans released for Alex Saab.',
+   nationalities:['USA'],
+   assessment:'Maduro uses American detainees to extract sanctions relief and prisoner exchanges. CITGO 6 (oil executives) held 5+ years on fabricated charges. Alex Saab precedent: US extradited Maduro ally for American releases. Pattern continues.',
+   last_exchange:'Dec 2022 — 10 Americans for Alex Saab (Maduro money launderer extradited to US)'},
+  {name:'Ukrainians in Russian Captivity',lat:50.45,lng:30.52,color:'#f97316',
+   count:10000,released:3500,remaining:6500,dead_in_captivity:null,
+   holding_party:'Russian Ministry of Defense / FSB / filtration camps',
+   status:'MASS DETENTION — POWs + civilian detainees. Filtration camps in Russia. Ukrainian POW exchange ongoing but slow.',
+   nationalities:['Ukraine'],
+   assessment:'Largest POW situation in Europe since WWII. Russian filtration camps documented by OHCHR. Torture allegations credible (UN investigation). Ukraine prioritizing military POW exchange. Civilian deportation to Russia — children especially — documented as possible genocide indicator.',
+   last_exchange:'Ongoing bilateral exchanges — hundreds per month'},
+  {name:'Myanmar Political Prisoners',lat:19.74,lng:96.08,color:'#eab308',
+   count:26000,released:400,remaining:25000,dead_in_captivity:150,
+   holding_party:'Myanmar SAC junta (Tatmadaw)',
+   status:'MASS INCARCERATION — 26,000+ arrested since 2021 coup. Executions resumed (first in 30 years). Aung San Suu Kyi sentenced to 27 years.',
+   nationalities:['Myanmar civilians, activists, journalists'],
+   assessment:'Systematic political imprisonment. AAPP (Assistance Association for Political Prisoners) tracking. 150+ killed in detention. Executions of NLD leaders (2022) first in 30 years. International condemnation has had no effect on junta behavior.',
+   last_exchange:'Rare amnesties — 700 released Feb 2023 (token)'}
+];
+
+var P55_PRISONER_EXCHANGES = [
+  {date:'Aug 2024',parties:'USA/West vs Russia',details:'Evan Gershkovich + Paul Whelan + others (24 total, 7 countries) for Vadim Krasikov (FSB assassin in Germany) + Russian prisoners',significance:'Largest post-Cold War prisoner swap'},
+  {date:'Jan 2025',parties:'Israel vs Hamas',details:'Phase 1: 33 hostages for 1,900 Palestinian prisoners',significance:'First Gaza hostage release since Nov 2023'},
+  {date:'Dec 2022',parties:'USA vs Venezuela',details:'10 Americans for Alex Saab (Maduro sanctioned ally)',significance:'Validated Venezuela hostage-for-sanctions-relief model'},
+  {date:'Sept 2023',parties:'USA vs Iran',details:'5 Americans for $6B unfrozen Qatar-held funds',significance:'Funds later re-frozen; Iran model confirmed'},
+  {date:'Dec 2022',parties:'USA vs Russia',details:'Brittney Griner for Viktor Bout (arms dealer)',significance:'Left Paul Whelan behind — caused political controversy'}
+];
+
+var P55_ELECTION_THREATS = [
+  {country:'USA 2024',lat:38.89,lng:-77.03,color:'#ef4444',
+   election_date:'Nov 5 2024',type:'Presidential + Congressional',
+   threat_actors:['Russia (GRU/IRA)','China (PRC propaganda)','Iran (hack-and-leak)'],
+   methods:['Russian-linked social media amplification (RT/Sputnik banned but Telegram active)','Iran hacked Trump campaign (Roger Stone emails) — ODNI confirmed','China WeChat influence in Chinese-American communities','AI-generated disinformation (deepfakes, voice clones)','Voter registration database probing (DHS reported)'],
+   assessment:'ODNI Oct 2024: Russia favoring Trump, China preference unclear (concerned about both), Iran anti-Trump. Iran hack-and-leak of Trump campaign materials confirmed. Meta/X/Google took down 50,000+ coordinated inauthentic accounts.',
+   severity:'HIGH'},
+  {country:'EU Parliament 2024',lat:50.85,lng:4.35,color:'#f97316',
+   election_date:'June 2024',type:'European Parliament',
+   threat_actors:['Russia (Voice of Europe network)','China','Domestic far-right'],
+   methods:['Voice of Europe: 1,000 EUR payments to European politicians for pro-Russia content (Belgium/Czech/Germany)','RT German-language content before ban','Fake local news sites','Leaked EU documents via Russian channels'],
+   assessment:'Voice of Europe network dismantled pre-election (April 2024). Czech PM Babis links investigated. Right-wing surge occurred regardless — natural or amplified unclear. Russia won political outcome (more eurosceptic parliament) whether or not interference decisive.',
+   severity:'HIGH'},
+  {country:'Taiwan 2024',lat:25.03,lng:121.56,color:'#ef4444',
+   election_date:'Jan 13 2024',type:'Presidential',
+   threat_actors:['China (PRC)'],
+   methods:['AI deepfake videos of candidates','Disinformation via LINE messenger','Economic pressure (sanctions threats)','Cyberattacks on government sites election week','Pro-PRC influencer network (Taiwan AI Labs documented: 40,000 fake accounts)'],
+   assessment:'Lai Ching-te (DPP, pro-Taiwan sovereignty) won despite PRC pressure. Taiwan AI Labs identified 40,000+ fake accounts. PRC deepfakes of Ko Wen-je (TPP) candidate circulated widely. China failed objective — DPP retained presidency.',
+   severity:'HIGH'},
+  {country:'UK 2024',lat:51.50,lng:-0.12,color:'#eab308',
+   election_date:'July 4 2024',type:'General Election',
+   threat_actors:['Russia','China (lesser)'],
+   methods:['Nigel Farage bank account controversy (NatWest) — Farage alleged political targeting','Russian-linked social media content','MI5: Chinese agent Christine Lee prosecuted for political interference','NCSC warning: state-sponsored attempts to access UK political parties'],
+   assessment:'No decisive interference identified. Christine Lee (China) prosecuted for funding MPs without disclosure. GCHQ/NCSC issued warnings. Labour landslide outcome may reflect genuine political shift rather than interference.',
+   severity:'MODERATE'},
+  {country:'India 2024',lat:28.61,lng:77.21,color:'#eab308',
+   election_date:'Apr-Jun 2024',type:'General Election (Lok Sabha)',
+   threat_actors:['Pakistan (ISI)','China','Internal actors'],
+   methods:['Pakistani-linked social media content (BJP vs opposition manipulation)','Deepfake videos of Modi and opposition leaders','Coordinated inauthentic behavior on Indian platforms','Electoral rolls manipulation allegations'],
+   assessment:'Largest election in history (1 billion voters). BJP retained power but with reduced majority. Deepfakes widespread. Meta/Google removed coordinated networks. Pakistan ISI traditionally meddles in Indian elections — Kashmir narrative especially.',
+   severity:'MODERATE'},
+  {country:'France 2024 (Legislative)',lat:48.86,lng:2.35,color:'#f97316',
+   election_date:'June/July 2024',type:'Snap Legislative Elections',
+   threat_actors:['Russia'],
+   methods:['RN (National Rally) long-term Russian funding (9M EUR loan from Russian-linked bank)','Disinformation favoring RN and left-wing fragmentation of Macron coalition','Social media amplification via Telegram','CRU (Viginum — France digital interference tracker) identified Russian networks'],
+   assessment:'Macron called snap election after EU results. RN gained seats. Viginum (French foreign digital interference agency) identified Russian-linked operations. RN\'s Russian bank loan (2014) is structural not just messaging interference.',
+   severity:'HIGH'}
+];
+
+var P55_DISINFO_METHODS_2024 = [
+  {method:'AI Deepfake Video/Audio',scale:'WIDESPREAD',actors:['Russia','China','Iran'],desc:'Near-perfect voice clones, face swaps. Biden deepfake NH primary robocall. Taiwan election deepfakes.'},
+  {method:'Hack-and-Leak',scale:'ACTIVE',actors:['Russia (GRU)','Iran (IRGC)'],desc:'Stolen emails/documents released strategically near elections. Iran: Trump campaign. Russia: DNC 2016, Macron 2017.'},
+  {method:'Sockpuppet Networks',scale:'INDUSTRIAL',actors:['Russia (IRA)','China (Spamouflage)','Iran'],desc:'Thousands of fake accounts coordinating inauthentic behavior. Platform takedowns quarterly but networks rebuild.'},
+  {method:'State Media Amplification',scale:'HIGH',actors:['Russia (RT/Sputnik)','China (CGTN/Xinhua)'],desc:'RT banned in EU/UK but content redistributed via Telegram, YouTube, Twitter/X.'},
+  {method:'Politician Payments',scale:'CONFIRMED',actors:['Russia (Voice of Europe)'],desc:'Direct payments to European politicians for pro-Russia content. Voice of Europe network — Belgium, Czech, Germany confirmed.'},
+  {method:'Domestic Amplification',scale:'HIGH',actors:['All major actors'],desc:'Using domestic political divisions. Russia does not create division — amplifies existing. Cheapest, most effective method.'}
+];
+
+var P55_FINANCIAL_WEAPONS = [
+  {weapon:'SWIFT Exclusion',lat:50.85,lng:4.35,color:'#ef4444',
+   used_against:['Russia (Feb 2022 — 7 banks)','Iran (2012, 2019 reimposed)','North Korea'],
+   effectiveness:'HIGH for initial shock, MODERATE long-term (workarounds developed)',
+   mechanism:'Society for Worldwide Interbank Financial Telecommunication — 11,000+ institutions. Exclusion blocks international wire transfers.',
+   russia_case:'7 Russian banks excluded Feb 2022. Russia GDP: -2.1% (2022), rebounded. China/India/Turkey alternative payment routes developed. Russia-China: SPFS + CIPS alternative systems. Long-term: accelerating de-dollarization.',
+   assessment:'Most powerful financial weapon available short of warfare. But: effectiveness eroding as non-Western payment systems develop. Russia exclusion accelerated CIPS (China), SPFS (Russia), digital rupee (India) development. Boomerang effect on dollar dominance.'},
+  {weapon:'Central Bank Asset Freeze',lat:38.89,lng:-77.03,color:'#ef4444',
+   used_against:['Russia ($300B frozen Feb 2022)','Afghanistan ($9B frozen Aug 2021)','Iran ($100B+ frozen over years)','Venezuela ($150M+ frozen)'],
+   effectiveness:'HIGH (immobilizes reserves) but legally contested',
+   mechanism:'Central bank foreign exchange reserves held in correspondent accounts (NY Fed, ECB, Bank of England, Euroclear). Host country government can freeze on OFAC/EU designation.',
+   russia_case:'$300B Russian central bank assets frozen in Western institutions. Largest sovereign asset freeze in history. G7 discussing using interest income ($3B+/year) to fund Ukraine.',
+   assessment:'Unprecedented use vs G20 economy. Creates precedent that forces all nations to reconsider dollar reserve holdings. China accelerating gold purchases, yuan internationalization. Saudi Arabia considering yuan oil pricing. Long-term: undermines dollar reserve status.'},
+  {weapon:'De-dollarization Movement',lat:39.91,lng:116.39,color:'#dc2626',
+   used_against:['USA (as strategic objective of China/Russia/BRICS)'],
+   effectiveness:'PARTIAL — dollar still 58% of global reserves (down from 72% 2001)',
+   mechanism:'Reducing dependence on USD for trade invoicing, reserves, commodity pricing. BRICS+ expansion (Saudi, UAE, Iran, Egypt joined 2024) as alternative framework.',
+   russia_case:'Russia: 70% of China-Russia trade now in yuan/ruble. Saudi Arabia: selling oil to China in yuan. India: paying for Russian oil in rupees.',
+   assessment:'Dollar share declining but no credible replacement. Euro (20%), Yuan (2.5% Swift), gold. BRICS currency proposal (mBridge) early stage. Dollar weaponization vs Russia has accelerated the process that threatens dollar hegemony. Estimated 25-30 year transition if current trends continue.'},
+  {weapon:'Export Controls / Technology Denial',lat:38.89,lng:-77.03,color:'#3b82f6',
+   used_against:['China (semiconductors Oct 2022, Oct 2023)','Russia (dual-use, military tech)','Iran','North Korea'],
+   effectiveness:'SIGNIFICANT vs China semiconductors; MODERATE vs Russia (circumvention)',
+   mechanism:'US Export Administration Regulations (EAR). Entity List. Foreign Direct Product Rule (FDPR) — extraterritorial reach to non-US products using US technology.',
+   russia_case:'Russia battlefield shortages documented (Iranian drones replacing precision weapons). Chip shortages in consumer electronics, cars. But: Iran/China still supplying via circumvention.',
+   assessment:'Technology denial more durable than financial sanctions. FDPR extends US control to non-US products (ASML-TSMC-Huawei supply chain blocked). China domestic semiconductor push: $40B+ CXMT/YMTC state investment. Timeline to independence: 5-10 years for mature nodes, 15-20 for cutting edge.'},
+  {weapon:'Commodity Weaponization',lat:24.00,lng:45.00,color:'#f97316',
+   used_against:['Europe (Russia gas cutoff 2022)','China (rare earth export restrictions)','USA (OPEC+ production cuts)'],
+   effectiveness:'HIGH for energy (Europe crisis), MODERATE for others',
+   mechanism:'Dominant supplier using commodity dependence for political leverage. Russia gas (40% EU supply pre-2022). China rare earth (60% global production). OPEC oil pricing.',
+   russia_case:'Russia cut Nord Stream gas to Europe. EU paid $800B extra for energy 2022-23. Forced rapid diversification (US LNG, renewables acceleration, nuclear reconsideration).',
+   assessment:'Russia demonstrated limits: EU accelerated independence, lost $130B/year gas revenue permanently. China rare earth: US developing alternatives (Canada, Australia, Africa). Commodity weapon = short-term pain + long-term loss of market. OPEC: losing pricing power to US shale.'},
+  {weapon:'Cryptocurrency Sanctions Evasion',lat:40.34,lng:127.51,color:'#eab308',
+   used_against:['DPRK using to evade all sanctions','Russia using for circumvention','Iran using for oil payments'],
+   effectiveness:'DPRK HIGH, Russia MODERATE, Iran MODERATE',
+   mechanism:'Crypto enables peer-to-peer value transfer without correspondent banking. Mixer/tumbler services obscure trails. DPRK Lazarus Group: $3B stolen 2022-23.',
+   russia_case:'DPRK stole $700M+ in 2023 alone (Chainalysis). Converted to fiat via OTC brokers in China/UAE. Russia using crypto for oligarch wealth preservation and trade settlement.',
+   assessment:'Crypto not primary sanction evasion vector yet (volumes small vs SWIFT) but growing. OFAC sanctioned Tornado Cash mixer (first smart contract sanctioned). UN monitoring: DPRK crypto theft funding 40% of missile program.'}
+];
+
+var P55_DEDOLLARIZATION_METRICS = [
+  {metric:'USD Global Reserve Share',value:'58.4% (2024)',trend:'DOWN from 72% (2001)',note:'Slow but consistent decline. Russia sanctions accelerated.'},
+  {metric:'Yuan Global Reserve Share',value:'2.5% (Swift 2024)',trend:'UP from 1% (2015)',note:'Still tiny. Yuan not freely convertible — structural limit.'},
+  {metric:'Gold Central Bank Buying',value:'1,037 tonnes (2023, record)',trend:'RECORD BUYING',note:'China, India, Turkey, Poland, Singapore diversifying away from USD.'},
+  {metric:'Oil Sold in Non-USD',value:'20% (2024 estimate)',trend:'UP from 5% (2020)',note:'Russia-China yuan, Saudi-China yuan, India rupee. Petrodollar eroding.'},
+  {metric:'BRICS+ Members',value:'10 (2024 — Saudi, UAE, Iran, Egypt, Ethiopia joined)',trend:'EXPANDING',note:'GDP parity with G7. But: internal contradictions (India vs China).'},
+  {metric:'mBridge (BRICS payment)',value:'Pilot stage (BIS + China + UAE + HK + Thailand)',trend:'DEVELOPING',note:'If deployed: SWIFT alternative for BRICS+ states. 5+ years to scale.'}
+];
+
+function P55_renderHostageCases(){
+  var g=document.getElementById('p55hostage-cases-grid');
+  if(!g)return;
+  var html='';
+  P55_HOSTAGE_CASES.forEach(function(c){
+    var deadStr=(c.dead_in_captivity===null)?'N/A':c.dead_in_captivity;
+    var nats=c.nationalities.join(', ');
+    html+='<div class="p55hos-card" style="border-top-color:'+c.color+';">';
+    html+='<div class="p55hos-card-header">';
+    html+='<div class="p55hos-card-name" style="color:'+c.color+';">'+c.name+'</div>';
+    if(c.count>=10000){html+='<div class="p55hos-badge" style="background:rgba(239,68,68,0.15);color:#ef4444;">MASS DETENTION</div>';}
+    else if(c.count>=100){html+='<div class="p55hos-badge" style="background:rgba(249,115,22,0.15);color:#f97316;">LARGE SCALE</div>';}
+    else{html+='<div class="p55hos-badge" style="background:rgba(234,179,8,0.15);color:#eab308;">ACTIVE</div>';}
+    html+='</div>';
+    html+='<div class="p55hos-counters">';
+    html+='<div class="p55hos-counter"><div class="p55hos-counter-val" style="color:#94a3b8;">'+c.count.toLocaleString()+'</div><div class="p55hos-counter-lbl">TOTAL</div></div>';
+    html+='<div class="p55hos-counter"><div class="p55hos-counter-val" style="color:#22c55e;">'+c.released.toLocaleString()+'</div><div class="p55hos-counter-lbl">RELEASED</div></div>';
+    html+='<div class="p55hos-counter"><div class="p55hos-counter-val" style="color:#ef4444;">'+c.remaining.toLocaleString()+'</div><div class="p55hos-counter-lbl">REMAINING</div></div>';
+    html+='<div class="p55hos-counter"><div class="p55hos-counter-val" style="color:#475569;">'+deadStr+'</div><div class="p55hos-counter-lbl">DEAD IN CAPTIVITY</div></div>';
+    html+='</div>';
+    html+='<div class="p55hos-row"><b>HOLDING PARTY:</b> '+c.holding_party+'</div>';
+    html+='<div class="p55hos-row"><b>STATUS:</b> '+c.status+'</div>';
+    html+='<div class="p55hos-row"><b>NATIONALITIES:</b> '+nats+'</div>';
+    html+='<div class="p55hos-row"><b>LAST EXCHANGE:</b> '+c.last_exchange+'</div>';
+    html+='<div class="p55hos-assessment">'+c.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P55_renderExchanges(){
+  var tb=document.getElementById('p55hostage-xchg-tbody');
+  if(!tb)return;
+  var html='';
+  P55_PRISONER_EXCHANGES.forEach(function(x){
+    html+='<tr>';
+    html+='<td class="p55hos-xchg-date">'+x.date+'</td>';
+    html+='<td style="color:#e2e8f0;font-weight:700;">'+x.parties+'</td>';
+    html+='<td>'+x.details+'</td>';
+    html+='<td class="p55hos-xchg-sig">'+x.significance+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P55_openHostageModule(){
+  var ov=document.getElementById('p55hostage-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P55_renderHostageCases();
+  P55_renderExchanges();
+  _gdeltFetch('hostage prisoner release detainee exchange kidnapping political prisoner','p55-hostage-gdelt');
+  var pins=P55_HOSTAGE_CASES.map(function(c){
+    var sev=c.count>=10000?9:(c.count>=100?7:5);
+    return {lat:c.lat,lng:c.lng,color:c.color,label:c.name,type:'terrorism',severity:sev,TAG:'_p55hostage'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P55_closeHostageModule(){
+  var ov=document.getElementById('p55hostage-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p55hostage';});
+}
+
+function P55_renderElectionThreats(){
+  var g=document.getElementById('p55election-threats-grid');
+  if(!g)return;
+  var html='';
+  P55_ELECTION_THREATS.forEach(function(e){
+    var sevColor=e.severity==='HIGH'?'#ef4444':(e.severity==='MODERATE'?'#f97316':'#eab308');
+    var sevBg=e.severity==='HIGH'?'rgba(239,68,68,0.15)':(e.severity==='MODERATE'?'rgba(249,115,22,0.15)':'rgba(234,179,8,0.15)');
+    html+='<div class="p55el-card" style="border-top-color:'+e.color+';">';
+    html+='<div class="p55el-card-header">';
+    html+='<div class="p55el-card-name" style="color:'+e.color+';">'+e.country+'</div>';
+    html+='<div class="p55el-sev-badge" style="background:'+sevBg+';color:'+sevColor+';">'+e.severity+'</div>';
+    html+='</div>';
+    html+='<div class="p55el-row"><b>ELECTION DATE:</b> '+e.election_date+' &nbsp; <b>TYPE:</b> '+e.type+'</div>';
+    html+='<div class="p55el-row"><b>THREAT ACTORS:</b> '+e.threat_actors.join('; ')+'</div>';
+    html+='<div class="p55el-row"><b>INTERFERENCE METHODS:</b></div>';
+    html+='<ul class="p55el-method-list">';
+    e.methods.forEach(function(m){html+='<li>'+m+'</li>';});
+    html+='</ul>';
+    html+='<div class="p55el-assessment">'+e.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P55_renderDisinfoMethods(){
+  var tb=document.getElementById('p55election-disinfo-tbody');
+  if(!tb)return;
+  var html='';
+  P55_DISINFO_METHODS_2024.forEach(function(m){
+    var scaleColor=m.scale==='WIDESPREAD'?'#ef4444':(m.scale==='INDUSTRIAL'?'#f97316':(m.scale==='ACTIVE'?'#f59e0b':(m.scale==='CONFIRMED'?'#22c55e':'#94a3b8')));
+    var scaleBg=m.scale==='WIDESPREAD'?'rgba(239,68,68,0.15)':(m.scale==='INDUSTRIAL'?'rgba(249,115,22,0.15)':(m.scale==='ACTIVE'?'rgba(245,158,11,0.15)':(m.scale==='CONFIRMED'?'rgba(34,197,94,0.15)':'rgba(148,163,184,0.15)')));
+    html+='<tr>';
+    html+='<td class="p55el-disinfo-method">'+m.method+'</td>';
+    html+='<td><span class="p55el-disinfo-scale" style="background:'+scaleBg+';color:'+scaleColor+';">'+m.scale+'</span></td>';
+    html+='<td style="color:#94a3b8;">'+m.actors.join(', ')+'</td>';
+    html+='<td>'+m.desc+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P55_openElectionModule(){
+  var ov=document.getElementById('p55election-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P55_renderElectionThreats();
+  P55_renderDisinfoMethods();
+  _gdeltFetch('election interference disinformation foreign influence operation deepfake voter manipulation','p55-election-gdelt');
+  var pins=P55_ELECTION_THREATS.map(function(e){
+    var sev=e.severity==='HIGH'?8:6;
+    return {lat:e.lat,lng:e.lng,color:e.color,label:e.country,type:'hybrid',severity:sev,TAG:'_p55election'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P55_closeElectionModule(){
+  var ov=document.getElementById('p55election-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p55election';});
+}
+
+function P55_renderFinancialWeapons(){
+  var g=document.getElementById('p55finwar-weapons-grid');
+  if(!g)return;
+  var html='';
+  P55_FINANCIAL_WEAPONS.forEach(function(w){
+    html+='<div class="p55fw-card" style="border-top-color:'+w.color+';">';
+    html+='<div class="p55fw-card-header">';
+    html+='<div class="p55fw-card-name" style="color:'+w.color+';">'+w.weapon+'</div>';
+    var effColor=w.effectiveness.indexOf('HIGH')===0?'#ef4444':(w.effectiveness.indexOf('SIGNIFICANT')===0?'#f97316':(w.effectiveness.indexOf('PARTIAL')===0?'#eab308':'#94a3b8'));
+    var effBg=w.effectiveness.indexOf('HIGH')===0?'rgba(239,68,68,0.15)':(w.effectiveness.indexOf('SIGNIFICANT')===0?'rgba(249,115,22,0.15)':(w.effectiveness.indexOf('PARTIAL')===0?'rgba(234,179,8,0.15)':'rgba(148,163,184,0.15)'));
+    html+='<div class="p55fw-eff-badge" style="background:'+effBg+';color:'+effColor+';">'+w.effectiveness.split(' ')[0]+'</div>';
+    html+='</div>';
+    html+='<div class="p55fw-row"><b>USED AGAINST:</b> '+w.used_against.join(' / ')+'</div>';
+    html+='<div class="p55fw-row"><b>MECHANISM:</b> '+w.mechanism+'</div>';
+    html+='<div class="p55fw-row"><b>CASE STUDY:</b> '+w.russia_case+'</div>';
+    html+='<div class="p55fw-assessment">'+w.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P55_renderDedollarMetrics(){
+  var tb=document.getElementById('p55finwar-dedollar-tbody');
+  if(!tb)return;
+  var html='';
+  P55_DEDOLLARIZATION_METRICS.forEach(function(m){
+    var trendColor=m.trend.indexOf('DOWN')!==-1?'#ef4444':(m.trend.indexOf('UP')!==-1?'#22c55e':(m.trend.indexOf('RECORD')!==-1?'#f59e0b':(m.trend.indexOf('EXPANDING')!==-1?'#f97316':'#94a3b8')));
+    var trendBg=m.trend.indexOf('DOWN')!==-1?'rgba(239,68,68,0.15)':(m.trend.indexOf('UP')!==-1?'rgba(34,197,94,0.15)':(m.trend.indexOf('RECORD')!==-1?'rgba(245,158,11,0.15)':(m.trend.indexOf('EXPANDING')!==-1?'rgba(249,115,22,0.15)':'rgba(148,163,184,0.15)')));
+    html+='<tr>';
+    html+='<td class="p55fw-dd-metric">'+m.metric+'</td>';
+    html+='<td style="color:#e2e8f0;font-weight:700;">'+m.value+'</td>';
+    html+='<td><span class="p55fw-dd-trend" style="background:'+trendBg+';color:'+trendColor+';">'+m.trend+'</span></td>';
+    html+='<td>'+m.note+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P55_openFinwarModule(){
+  var ov=document.getElementById('p55finwar-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P55_renderFinancialWeapons();
+  P55_renderDedollarMetrics();
+  _gdeltFetch('dollar SWIFT sanctions financial warfare BRICS dedollarization central bank currency','p55-finwar-gdelt');
+  var pins=[
+    {lat:55.75,lng:37.62,color:'#ef4444',label:'Russia — Financial Warfare Target',type:'econint',severity:8,TAG:'_p55finwar'},
+    {lat:38.89,lng:-77.03,color:'#3b82f6',label:'USA — Financial Weapons Operator',type:'econint',severity:8,TAG:'_p55finwar'},
+    {lat:39.91,lng:116.39,color:'#f97316',label:'China — CIPS / De-dollarization',type:'econint',severity:8,TAG:'_p55finwar'},
+    {lat:35.69,lng:51.39,color:'#f97316',label:'Iran — Sanctioned Economy',type:'econint',severity:8,TAG:'_p55finwar'},
+    {lat:40.34,lng:127.51,color:'#eab308',label:'North Korea — Crypto Evasion',type:'econint',severity:8,TAG:'_p55finwar'}
+  ];
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P55_closeFinwarModule(){
+  var ov=document.getElementById('p55finwar-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p55finwar';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var hBtn=document.getElementById('p55hostage-btn');
+  if(hBtn)hBtn.addEventListener('click',P55_openHostageModule);
+  var hClose=document.getElementById('p55hostage-close');
+  if(hClose)hClose.addEventListener('click',P55_closeHostageModule);
+
+  var eBtn=document.getElementById('p55election-btn');
+  if(eBtn)eBtn.addEventListener('click',P55_openElectionModule);
+  var eClose=document.getElementById('p55election-close');
+  if(eClose)eClose.addEventListener('click',P55_closeElectionModule);
+
+  var fBtn=document.getElementById('p55finwar-btn');
+  if(fBtn)fBtn.addEventListener('click',P55_openFinwarModule);
+  var fClose=document.getElementById('p55finwar-close');
+  if(fClose)fClose.addEventListener('click',P55_closeFinwarModule);
+});
+
+// ===== END PHASE 55 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -34927,6 +35376,71 @@ function filterSIGINT(query){
     <div class="mobile-category-label">Technology &amp; Domains</div>
     <div class="mobile-btn-grid" id="mobile-cat-tech"></div>
   </div>
+</div>
+
+<!-- Phase 55 buttons -->
+<button id="p55hostage-btn">HOSTAGE TRACKER</button>
+<button id="p55election-btn">ELECTION SECURITY</button>
+<button id="p55finwar-btn">FINANCIAL WARFARE</button>
+
+<!-- Hostage / Detainee Tracker Overlay (Phase 55) -->
+<div id="p55hostage-overlay">
+ <div class="p55hos-header">
+  <div>
+   <div class="p55hos-title">HOSTAGE / DETAINEE TRACKER</div>
+   <div class="p55hos-subtitle">SOURCE: UN OHCHR / ICRC / STATE DEPT / AAPP / HOSTAGES AND MISSING FAMILIES FORUM / OSINT &nbsp;&#47;&#47;&nbsp; ACTIVE HOSTAGE SITUATIONS &amp; PRISONER EXCHANGES &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p55hos-close" id="p55hostage-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p55hos-section-title">ACTIVE HOSTAGE &amp; MASS DETENTION SITUATIONS</div>
+ <div class="p55hos-grid" id="p55hostage-cases-grid"></div>
+ <div class="p55hos-section-title">NOTABLE PRISONER EXCHANGES — RECENT HISTORY</div>
+ <table class="p55hos-xchg-table">
+  <thead><tr><th>DATE</th><th>PARTIES</th><th>DETAILS</th><th>SIGNIFICANCE</th></tr></thead>
+  <tbody id="p55hostage-xchg-tbody"></tbody>
+ </table>
+ <div class="p55hos-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p55hos-live-feed" id="p55-hostage-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Election Security Overlay (Phase 55) -->
+<div id="p55election-overlay">
+ <div class="p55el-header">
+  <div>
+   <div class="p55el-title">ELECTION SECURITY — FOREIGN INTERFERENCE &amp; DISINFORMATION</div>
+   <div class="p55el-subtitle">SOURCE: ODNI / CISA / DHS / EEAS / META THREAT INTEL / MICROSOFT MSTIC / MANDIANT / OSINT &nbsp;&#47;&#47;&nbsp; ELECTION INTERFERENCE ANALYSIS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p55el-close" id="p55election-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p55el-section-title">2024 ELECTION THREAT ASSESSMENTS — KEY ELECTIONS</div>
+ <div class="p55el-grid" id="p55election-threats-grid"></div>
+ <div class="p55el-section-title">DISINFORMATION METHODS CATALOGUE — 2024</div>
+ <table class="p55el-disinfo-table">
+  <thead><tr><th>METHOD</th><th>SCALE</th><th>ACTORS</th><th>DESCRIPTION</th></tr></thead>
+  <tbody id="p55election-disinfo-tbody"></tbody>
+ </table>
+ <div class="p55el-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p55el-live-feed" id="p55-election-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Financial Warfare Overlay (Phase 55) -->
+<div id="p55finwar-overlay">
+ <div class="p55fw-header">
+  <div>
+   <div class="p55fw-title">FINANCIAL WARFARE — SANCTIONS, DE-DOLLARIZATION &amp; ECONOMIC WEAPONS</div>
+   <div class="p55fw-subtitle">SOURCE: OFAC / US TREASURY / ECB / IMF / SWIFT / BIS / CHAINALYSIS / CSIS / OSINT &nbsp;&#47;&#47;&nbsp; FINANCIAL INSTRUMENT ANALYSIS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p55fw-close" id="p55finwar-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p55fw-section-title">FINANCIAL WEAPONS — DEPLOYED INSTRUMENTS</div>
+ <div class="p55fw-grid" id="p55finwar-weapons-grid"></div>
+ <div class="p55fw-section-title">DE-DOLLARIZATION METRICS — 2024</div>
+ <table class="p55fw-dedollar-table">
+  <thead><tr><th>METRIC</th><th>CURRENT VALUE</th><th>TREND</th><th>NOTES</th></tr></thead>
+  <tbody id="p55finwar-dedollar-tbody"></tbody>
+ </table>
+ <div class="p55fw-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p55fw-live-feed" id="p55-finwar-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 <!-- Phase 54 buttons -->
