@@ -3569,6 +3569,100 @@ button{border-radius:2px!important}
 .re2-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .re2-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .re2-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 45 Column 12 buttons */
+#grayzone-btn{position:fixed;top:55px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#grayzone-btn:hover{border-color:#a78bfa;color:#ddd6fe;}
+#quantumrace-btn{position:fixed;top:95px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#quantumrace-btn:hover{border-color:#38bdf8;color:#7dd3fc;}
+#portsecurity-btn{position:fixed;top:135px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#portsecurity-btn:hover{border-color:#0ea5e9;color:#7dd3fc;}
+
+/* Gray Zone overlay */
+#grayzone-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.gz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.gz-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#a78bfa;}
+.gz-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.gz-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.gz-close:hover{color:#a78bfa;border-color:#a78bfa;}
+.gz-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.gz-actors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:14px;margin-bottom:10px;}
+.gz-actor-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.gz-actor-header{margin-bottom:8px;}
+.gz-actor-name{font-size:14px;font-weight:900;}
+.gz-section-mini{font-size:7px;font-weight:700;color:#475569;letter-spacing:.15em;margin:6px 0 3px;}
+.gz-chips{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px;}
+.gz-tool-chip{font-size:7px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);padding:2px 6px;border-radius:2px;color:#ddd6fe;}
+.gz-theater-chip{font-size:7px;background:rgba(71,85,105,.3);border:1px solid #334155;padding:2px 6px;border-radius:2px;color:#94a3b8;}
+.gz-doctrine{font-size:8px;color:#64748b;font-style:italic;line-height:1.4;margin-top:6px;border-top:1px solid #1e293b;padding-top:6px;}
+.gz-recent{font-size:8px;color:#f97316;line-height:1.4;margin-top:4px;}
+.gz-tools-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.gz-tools-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.gz-tools-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.gz-tool-name{color:#e2e8f0;font-weight:700;}
+.gz-gdelt-feed{max-width:900px;}
+.gz-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.gz-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.gz-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Quantum Race overlay */
+#quantumrace-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.qr-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.qr-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#38bdf8;}
+.qr-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.qr-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.qr-close:hover{color:#38bdf8;border-color:#38bdf8;}
+.qr-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.qr-programs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:14px;margin-bottom:10px;}
+.qr-program-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.qr-program-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.qr-country{font-size:14px;font-weight:900;}
+.qr-budget{font-size:9px;color:#fbbf24;}
+.qr-milestones{margin:0 0 8px 0;padding-left:14px;}
+.qr-milestone-item{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:2px;}
+.qr-apps-label{font-size:7px;font-weight:700;color:#475569;letter-spacing:.1em;margin-bottom:3px;}
+.qr-apps{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.qr-app-chip{font-size:7px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);padding:2px 5px;border-radius:2px;color:#7dd3fc;}
+.qr-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;}
+.qr-threats-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.qr-threats-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.qr-threats-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.qr-threat-name{color:#e2e8f0;font-weight:700;}
+.qr-timeline-list{max-width:900px;margin-bottom:10px;}
+.qr-tl-item{display:flex;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.qr-tl-year{font-size:10px;font-weight:900;color:#38bdf8;min-width:36px;}
+.qr-tl-event{font-size:8px;color:#94a3b8;line-height:1.5;}
+.qr-gdelt-feed{max-width:900px;}
+.qr-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.qr-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.qr-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Port Security overlay */
+#portsecurity-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ps-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.ps-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#0ea5e9;}
+.ps-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.ps-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.ps-close:hover{color:#0ea5e9;border-color:#0ea5e9;}
+.ps-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.ps-ports-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:14px;margin-bottom:10px;}
+.ps-port-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.ps-port-header{margin-bottom:6px;}
+.ps-port-name{font-size:13px;font-weight:700;}
+.ps-port-country{font-size:8px;color:#64748b;margin-top:2px;}
+.ps-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:5px;}
+.ps-vuln-list{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;}
+.ps-vuln-chip{font-size:7px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);padding:2px 6px;border-radius:2px;color:#fca5a5;}
+.ps-mil-link{font-size:8px;color:#fbbf24;line-height:1.4;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;margin-top:4px;}
+.ps-mil-link b{color:#f1f5f9;}
+.ps-threats-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.ps-threats-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.ps-threats-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.ps-threat-name{color:#e2e8f0;font-weight:700;}
+.ps-gdelt-feed{max-width:900px;}
+.ps-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ps-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ps-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -27329,6 +27423,338 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 44 =====
 
+// ===== PHASE 45: GRAY ZONE / QUANTUM RACE / PORT SECURITY =====
+
+var GRAY_ZONE_ACTORS = [
+  {actor:'Russia',lat:55.75,lng:37.62,color:'#ef4444',
+   primary_tools:['Wagner/Africa Corps mercenaries','Little Green Men (covert military)','Disinformation (IRA/GRU)','Energy coercion','Cyber operations (APT28/29)','Lawfare and treaty manipulation'],
+   active_theaters:['Ukraine (pre-invasion gray zone 2014-2022)','Mali/CAR/Libya (Wagner)','Baltic states (subversion)','Moldova/Transnistria','Georgia (occupied zones)','Serbia influence ops'],
+   doctrine:'Gerasimov Doctrine: non-linear warfare combining political, economic, informational, technological, and military measures. Goal: achieve objectives without triggering Article 5 or conventional response.',
+   recent:'2024: Africa Corps rebranding post-Prigozhin. Moldova hybrid pressure campaign. Baltic undersea cable sabotage attributed.'},
+  {actor:'China',lat:39.91,lng:116.39,color:'#dc2626',
+   primary_tools:['Maritime militia (PAFMM)','Economic coercion / BRI leverage','United Front influence ops','Cyber espionage (APT40/41)','Island building as fait accompli','Lawfare (UNCLOS maximalist claims)'],
+   active_theaters:['South China Sea (militarized features)','Taiwan (blockade rehearsals)','India LAC (Galwan/Doklam)','Australia (interference ops dismantled)','Pacific island states','Philippine EEZ'],
+   doctrine:'Three Warfares + Unrestricted Warfare. Salami slicing: incremental gains below response threshold. "Winning without fighting" (Sun Tzu application to modern coercion).',
+   recent:'2024: Philippines water cannon incidents. Taiwan air/naval gray zone sorties record high. Maldives/Solomon Islands diplomatic flips.'},
+  {actor:'Iran',lat:35.69,lng:51.39,color:'#f97316',
+   primary_tools:['Proxy networks (Hezbollah, PMF, Houthis)','Maritime harassment (IRGCN)','Tanker seizures','Assassination plots (diaspora targets)','Cyber ops (APT33/34)','Drone/missile proxy strikes'],
+   active_theaters:['Red Sea (Houthi ops)','Iraq (PMF operations)','Lebanon (Hezbollah deterrence)','Syria (force presence)','Israel (shadow war)','Gulf shipping lanes'],
+   doctrine:'Forward defense through proxies. Resistance Axis as distributed gray zone force. Deniability through proxy chains. Plausible distance from kinetic strikes.',
+   recent:'2024: Houthi Red Sea campaign — 100+ attacks on shipping. Direct Iran-Israel exchange April 2024 (first in history). Tanker seizures ongoing.'},
+  {actor:'North Korea',lat:40.34,lng:127.51,color:'#8b5cf6',
+   primary_tools:['Cyber theft (Lazarus Group)','Crypto laundering','Assassination (VX nerve agent, Kim Jong-nam 2017)','Arms smuggling to Russia','GPS jamming','Balloon drops'],
+   active_theaters:['Cryptocurrency networks (global)','South Korea border zone','Japan EEZ (missile tests)','Russia arms transfers','Southeast Asia money laundering'],
+   doctrine:'Gray zone as revenue generation (cyber theft) and deterrence signaling. Coercion cycle: provocations to extract concessions without triggering war.',
+   recent:'2024: $1.5B Bybit crypto theft attributed Lazarus. Artillery fired into DMZ buffer zone (symbolic). Trash balloons over Seoul. Arms to Russia documented.'},
+  {actor:'USA',lat:38.90,lng:-77.03,color:'#3b82f6',
+   primary_tools:['Information operations (PSYOP)','SOF presence operations','Sanctions and economic pressure','Intelligence releases (prebuttal)','Cyber Command (Defend Forward)','Partner force building'],
+   active_theaters:['Indo-Pacific (FONOPS)','Eastern Europe (intelligence sharing)','Middle East (counter-Iran pressure)','Africa (SOF partnerships)','Cyberspace (global)'],
+   doctrine:'Integrated Deterrence + Defend Forward cyber doctrine. Competition Continuum (JRMO 3-0): Compete, Seize Initiative, Exploit Success. Gray zone as primary competition space.',
+   recent:'2024: Declassified Russian invasion plans preemptively released. Cyber Command operations against ransomware groups. FONOPS Taiwan Strait 2x/month.'}
+];
+
+var GRAY_ZONE_TOOLS = [
+  {tool:'Economic Coercion',users:['China','Russia'],severity:'HIGH',color:'#f97316',desc:'Trade embargoes, tourism bans, market access denial. China vs Australia (2020-2023), Russia gas cutoffs to Europe. Designed to impose costs below war threshold.'},
+  {tool:'Maritime Militia',users:['China','Iran'],severity:'HIGH',color:'#f97316',desc:'Civilian-flagged vessels acting as state instruments. PAFMM in SCS; IRGCN in Gulf. Provides deniability while achieving territorial control objectives.'},
+  {tool:'Mercenary Forces',users:['Russia','UAE','Turkey'],severity:'CRITICAL',color:'#ef4444',desc:'Wagner/Africa Corps, Fida (UAE), Syrian fighters (Turkey). Enable military objectives without state accountability. Africa theater primary.'},
+  {tool:'Information Operations',users:['Russia','China','Iran','USA'],severity:'HIGH',color:'#f97316',desc:'Social media manipulation, fake news amplification, domestic polarization targeting. IRA 2016 US election most documented. Ongoing in all major democracies.'},
+  {tool:'Infrastructure Sabotage',users:['Russia','China (suspected)'],severity:'CRITICAL',color:'#ef4444',desc:'Nord Stream (2022), Baltic cables (2024), GPS spoofing. Plausibly deniable attacks on critical infrastructure. Pre-positioning for escalation.'},
+  {tool:'Lawfare',users:['China','Russia'],severity:'MODERATE',color:'#eab308',desc:'Weaponizing international law. China UNCLOS maximalist claims, Russia "peacekeeping" justifications, historical claims to override modern boundaries.'}
+];
+
+function _renderGrayZone(){
+  var grid = document.getElementById('gz-actors-grid');
+  if(!grid) return;
+  grid.innerHTML = GRAY_ZONE_ACTORS.map(function(a){
+    var tools = a.primary_tools.map(function(t){return '<span class="gz-tool-chip">'+t+'</span>';}).join('');
+    var theaters = a.active_theaters.map(function(t){return '<span class="gz-theater-chip">'+t+'</span>';}).join('');
+    return '<div class="gz-actor-card" style="border-top-color:'+a.color+';">'+
+      '<div class="gz-actor-header">'+
+        '<div class="gz-actor-name" style="color:'+a.color+';">'+a.actor+'</div>'+
+      '</div>'+
+      '<div class="gz-section-mini">TOOLS</div><div class="gz-chips">'+tools+'</div>'+
+      '<div class="gz-section-mini">ACTIVE THEATERS</div><div class="gz-chips">'+theaters+'</div>'+
+      '<div class="gz-doctrine">'+a.doctrine+'</div>'+
+      '<div class="gz-recent">'+a.recent+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('gz-tools-tbody');
+  if(tbody){
+    tbody.innerHTML = GRAY_ZONE_TOOLS.map(function(t){
+      return '<tr><td class="gz-tool-name">'+t.tool+'</td>'+
+        '<td style="color:#94a3b8;font-size:7px;">'+t.users.join(', ')+'</td>'+
+        '<td><span style="color:'+t.color+';font-weight:700;font-size:8px;">'+t.severity+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+t.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchGzGdelt(){
+  var feed = document.getElementById('gz-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('gray zone hybrid warfare coercion below threshold provocation deniable operations');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="gz-gdelt-item">'+
+        '<div class="gz-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="gz-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openGrayZone(){
+  var ov=document.getElementById('grayzone-overlay');
+  if(ov){ov.style.display='flex';_renderGrayZone();_fetchGzGdelt();}
+  var pins = GRAY_ZONE_ACTORS.map(function(a){
+    return {lat:a.lat,lng:a.lng,type:'hybrid',severity:8,label:a.actor+' GRAY ZONE',_grayzone:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._grayzone;}), ...pins];
+}
+function _closeGrayZone(){
+  var ov=document.getElementById('grayzone-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._grayzone;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('grayzone-btn');
+  if(b) b.addEventListener('click',_openGrayZone);
+  var c=document.getElementById('grayzone-close');
+  if(c) c.addEventListener('click',_closeGrayZone);
+});
+
+var QUANTUM_PROGRAMS = [
+  {country:'USA',lat:38.90,lng:-77.03,color:'#3b82f6',budget:'$3.7B (2024 NQI)',
+   milestones:['Google Willow: 105-qubit processor (2024) — below threshold error correction','IBM 1000+ qubit processors operational','NSA CNSA 2.0: PQC migration mandated by 2030','NIST PQC standards finalized 2024 (CRYSTALS-Kyber, DILITHIUM)'],
+   military_apps:['Quantum key distribution for nuclear C2','Post-quantum cryptography transition (CNSA 2.0)','Quantum sensing for submarine detection','Quantum radar (stealth detection)','Quantum-enhanced SIGINT'],
+   vulnerability:'Q-Day risk: cryptographically relevant quantum computer could break RSA-2048. NSA estimates 10-15 years. Harvest now decrypt later — adversaries storing encrypted traffic today.',
+   assessment:'Most advanced private sector ecosystem (Google, IBM, IonQ). Government programs classified. PQC migration critical vulnerability window 2024-2030.'},
+  {country:'China',lat:39.91,lng:116.39,color:'#ef4444',budget:'$15B+ (est national investment)',
+   milestones:['Jiuzhang 3.0: photonic quantum computer (2023)','Zuchongzhi 2.1: 66-qubit superconducting','QUESS satellite: quantum key distribution LEO (2017, world first)','National Laboratory for Quantum Information Sciences (Hefei)'],
+   military_apps:['Quantum satellite communications (Beijing-Vienna 2021 QKD test)','Quantum radar (anti-stealth)','Quantum navigation (GPS-denied)','Quantum computing for optimization','Cryptanalysis research'],
+   vulnerability:'Ahead in quantum communications/QKD deployment. Behind US in superconducting qubit quality. Massive state investment compensating. Export controls limiting EDA tool access.',
+   assessment:'Most ambitious national quantum program. QUESS satellite demonstrated quantum-secured comms. Military application of quantum sensing could threaten US submarine dominance.'},
+  {country:'EU/UK',lat:51.50,lng:10.00,color:'#22c55e',budget:'€1B (EU Quantum Flagship)',
+   milestones:['EU Quantum Flagship: 10-year €1B program launched 2018','UK National Quantum Strategy: £2.5B (2023)','IQM/Pasqal leading European hardware','Oxford ion-trap record fidelity (99.9%)'],
+   military_apps:['NATO quantum working group','UK-US quantum information sharing','Quantum sensing for underground facility detection','Quantum comms for NATO C2'],
+   vulnerability:'Behind US/China in scale. Strong research base but fragmented national programs. ITAR restrictions on US quantum hardware components limit access.',
+   assessment:'Strong academic base, weaker commercialization. UK most advanced NATO quantum program. EU Flagship producing results but timeline behind Chinese ambitions.'},
+  {country:'Russia',lat:55.75,lng:37.62,color:'#dc2626',budget:'$750M (pre-sanctions est)',
+   milestones:['Rosatom quantum program — 100-qubit target','Russian Quantum Center (Moscow)','Sanctions severely impacting hardware access','Soviet cryptography tradition informing approach'],
+   military_apps:['Quantum cryptography for GRU/FSB comms','Quantum key distribution infrastructure','Anti-satellite quantum sensing research'],
+   vulnerability:'Sanctions cut access to Western cryogenic equipment, control electronics. Brain drain accelerating. Behind 5+ years due to component access and talent loss.',
+   assessment:'Significant decline post-2022. Sanctioned from key hardware imports. Talent emigration. Strategic dependency on Chinese quantum cooperation increasingly likely.'}
+];
+
+var QUANTUM_MILITARY_THREATS = [
+  {threat:'Q-Day Cryptopocalypse',timeline:'10-20 years',color:'#ef4444',severity:'EXISTENTIAL',desc:'Cryptographically relevant quantum computer breaks RSA/ECC. All current encrypted traffic vulnerable. Military, financial, diplomatic communications at risk. Harvest now decrypt later already underway.'},
+  {threat:'Quantum Sensing (Submarine Detection)',timeline:'5-15 years',color:'#f97316',severity:'CRITICAL',desc:'Quantum gravimeters and magnetometers could detect submarine wake signatures through ocean floor. UK/US SSBN deterrent depends on stealth — quantum sensing is strategic threat to sea-based deterrence.'},
+  {threat:'Quantum Radar (Stealth Defeat)',timeline:'10-20 years',color:'#f97316',severity:'HIGH',desc:'Quantum illumination radar could detect stealth aircraft by detecting correlated photon pairs. China claims research progress. If realized, $200B F-35 program strategically nullified.'},
+  {threat:'Quantum Navigation (GPS Independence)',timeline:'3-7 years',color:'#eab308',severity:'HIGH',desc:'Quantum inertial navigation maintains accuracy without GPS. Enables precision strike in GPS-denied/jammed environments. China already testing in military vehicles. Negates US GPS dominance advantage.'},
+  {threat:'Post-Quantum Cryptography Migration',timeline:'NOW — 2030',color:'#ef4444',severity:'CRITICAL',desc:'NIST finalized PQC standards 2024. US federal systems must migrate by 2030 (CNSA 2.0). Failure window: systems not yet migrated remain vulnerable to future Q-Day. Urgent remediation ongoing.'}
+];
+
+var QUANTUM_TIMELINE_EVENTS = [
+  {year:2017,event:'China launches QUESS quantum satellite — first quantum-encrypted intercontinental communication'},
+  {year:2019,event:'Google claims "quantum supremacy" (54-qubit Sycamore processor)'},
+  {year:2021,event:'China Zuchongzhi 2.1 surpasses Google in computational tasks'},
+  {year:2022,event:'NIST selects PQC finalist algorithms; US begins federal migration planning'},
+  {year:2023,event:'IBM 1000-qubit processor; China Jiuzhang 3.0 photonic quantum'},
+  {year:2024,event:'Google Willow 105-qubit: below threshold error correction milestone. NIST PQC standards finalized.'},
+  {year:2025,event:'Projected: First quantum-advantage demonstrations in optimization military applications'},
+  {year:2030,event:'Target: US federal PQC migration complete (CNSA 2.0). China quantum sensing operational tests.'}
+];
+
+function _renderQuantumRace(){
+  var grid = document.getElementById('qr-programs-grid');
+  if(!grid) return;
+  grid.innerHTML = QUANTUM_PROGRAMS.map(function(p){
+    var miles = p.milestones.map(function(m){return '<li class="qr-milestone-item">'+m+'</li>';}).join('');
+    var apps = p.military_apps.map(function(a){return '<span class="qr-app-chip">'+a+'</span>';}).join('');
+    return '<div class="qr-program-card" style="border-top-color:'+p.color+';">'+
+      '<div class="qr-program-header">'+
+        '<div class="qr-country" style="color:'+p.color+';">'+p.country+'</div>'+
+        '<div class="qr-budget">'+p.budget+'</div>'+
+      '</div>'+
+      '<ul class="qr-milestones">'+miles+'</ul>'+
+      '<div class="qr-apps-label">MILITARY APPLICATIONS</div>'+
+      '<div class="qr-apps">'+apps+'</div>'+
+      '<div class="qr-assessment">'+p.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('qr-threats-tbody');
+  if(tbody){
+    tbody.innerHTML = QUANTUM_MILITARY_THREATS.map(function(t){
+      return '<tr>'+
+        '<td class="qr-threat-name">'+t.threat+'</td>'+
+        '<td style="color:#64748b;font-size:7px;white-space:nowrap;">'+t.timeline+'</td>'+
+        '<td><span style="color:'+t.color+';font-weight:700;font-size:7px;">'+t.severity+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+t.desc+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+  var tl = document.getElementById('qr-timeline-list');
+  if(tl){
+    tl.innerHTML = QUANTUM_TIMELINE_EVENTS.map(function(t){
+      return '<div class="qr-tl-item">'+
+        '<div class="qr-tl-year">'+t.year+'</div>'+
+        '<div class="qr-tl-event">'+t.event+'</div>'+
+      '</div>';
+    }).join('');
+  }
+}
+
+async function _fetchQrGdelt(){
+  var feed = document.getElementById('qr-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('quantum computing military encryption cryptography quantum sensing China USA race');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="qr-gdelt-item">'+
+        '<div class="qr-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="qr-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openQuantumRace(){
+  var ov=document.getElementById('quantumrace-overlay');
+  if(ov){ov.style.display='flex';_renderQuantumRace();_fetchQrGdelt();}
+  var pins = QUANTUM_PROGRAMS.map(function(p){
+    return {lat:p.lat,lng:p.lng,type:'cyber',severity:8,label:p.country+' QUANTUM',_quantumrace:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._quantumrace;}), ...pins];
+}
+function _closeQuantumRace(){
+  var ov=document.getElementById('quantumrace-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._quantumrace;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('quantumrace-btn');
+  if(b) b.addEventListener('click',_openQuantumRace);
+  var c=document.getElementById('quantumrace-close');
+  if(c) c.addEventListener('click',_closeQuantumRace);
+});
+
+var CRITICAL_PORTS = [
+  {port:'Port of Shanghai',country:'China',lat:31.23,lng:121.47,teu_annual:49,color:'#ef4444',
+   strategic_notes:'World\'s busiest container port. 49M TEU/year. Chinese military can commandeer for logistics. COSCO (state-owned) controls terminals globally. Closure would disrupt 20% global container trade.',
+   vulnerabilities:['State-controlled — dual military/civilian use','Typhoon/flood risk (Yangtze delta)','Taiwan Strait escalation bottleneck'],
+   chinese_mil_link:'PLA Navy Eastern Theater Command adjacent. Military supply priority codified in law.'},
+  {port:'Singapore / PSA',country:'Singapore',lat:1.26,lng:103.82,teu_annual:37,color:'#22c55e',
+   strategic_notes:'World\'s 2nd busiest and most critical transshipment hub. 80% of world\'s oil passes through Malacca/Singapore. Chinese COSCO holds minority stake. Critical to US Seventh Fleet logistics.',
+   vulnerabilities:['Malacca chokepoint dependency','Chinese economic leverage via COSCO','Cyber attack surface (highly automated)'],
+   chinese_mil_link:'COSCO minority stake. Singapore balances US alliance with China trade dependency.'},
+  {port:'Rotterdam',country:'Netherlands',lat:51.92,lng:4.47,teu_annual:15,color:'#3b82f6',
+   strategic_notes:'Europe\'s largest port and primary NATO logistics hub. Pre-positioned military equipment. Rail connections to Eastern Europe critical for NATO reinforcement. COSCO holds 35% Euromax terminal stake (under review).',
+   vulnerabilities:['COSCO 35% Euromax stake','Dutch infrastructure cyber exposure','North Sea weather/flooding'],
+   chinese_mil_link:'COSCO Euromax terminal. Dutch government reviewing national security implications.'},
+  {port:'Gwadar',country:'Pakistan',lat:25.12,lng:62.32,teu_annual:0.1,color:'#dc2626',
+   strategic_notes:'China-operated CPEC terminal. BRI strategic endpoint giving China Indian Ocean access. PLA Navy access rumored. Iranian proximity enables Gulf access. US concerns about Chinese naval basing.',
+   vulnerabilities:['Balochi separatist attacks','Direct Chinese military potential','Indian Ocean strategic competition'],
+   chinese_mil_link:'CPEC — China Overseas Port Holdings operates. Strategic PLA Navy access likely per intelligence assessments.'},
+  {port:'Djibouti Doraleh',country:'Djibouti',lat:11.55,lng:43.14,teu_annual:1,color:'#f97316',
+   strategic_notes:'Adjacent to only Chinese overseas military base. US Camp Lemonnier nearby. French, Japanese, Italian bases. Most militarized port globally. China-Merchants holds container terminal. Djibouti government evicted DP World 2018.',
+   vulnerabilities:['Chinese military base adjacent','Djibouti government China debt leverage','Red Sea-Gulf of Aden chokepoint'],
+   chinese_mil_link:'PLA Support Base Djibouti operational since 2017. Doraleh terminal under China Merchants.'},
+  {port:'Haifa',country:'Israel',lat:32.82,lng:34.99,teu_annual:2,color:'#eab308',
+   strategic_notes:'Shanghai International Port Group (SIPG) operates new Haifa Bay terminal since 2021. US Sixth Fleet regularly docks at Haifa. Created intelligence concerns — Chinese operator monitoring US naval movements.',
+   vulnerabilities:['SIPG Chinese operator monitoring US Navy','Hezbollah missile range','Gaza escalation spillover'],
+   chinese_mil_link:'SIPG state-linked operator. US reduced Haifa port calls due to Chinese intelligence concerns.'}
+];
+
+var PORT_SECURITY_THREATS = [
+  {threat:'Chinese Port Acquisitions',severity:'CRITICAL',color:'#ef4444',ports_affected:95,desc:'COSCO, China Merchants, SIPG collectively hold stakes in 95+ ports globally. Provides dual-use commercial/military infrastructure, intelligence collection points, and potential chokehold on global logistics.'},
+  {threat:'Maritime Cyberattacks',severity:'HIGH',color:'#f97316',desc:'NotPetya 2017 hit Maersk — $300M loss, 45,000 PCs wiped. OT/IT convergence in automated ports creates attack surface. Port of Houston (2021), COSCO US (2018) both attacked. Full shutdown scenarios modeled at 10+ days.'},
+  {threat:'Cargo Screening Gaps',severity:'HIGH',color:'#f97316',desc:'Only 3-5% of global container cargo physically inspected. WMD components, weapons, CBRN materials routinely transit major ports. Customs partnerships (CSI) cover 85% volume but 15% opaque.'},
+  {threat:'Chokepoint Vulnerability',severity:'CRITICAL',color:'#ef4444',desc:'Malacca (40% world trade), Strait of Hormuz (20% oil), Suez (12% global), Bab el-Mandeb. Single chokepoint blockage costs $9.6B/day (Houthi Red Sea impact 2024 modeled). No adequate alternatives.'},
+  {threat:'Insider Threat / Smuggling',severity:'HIGH',color:'#f97316',desc:'Narco cartels, proliferators, and terrorist networks exploit corrupt port officials. FARC used banana containers. AQ Khan network used Malaysian maritime logistics. Inspection corruptibility systematic.'},
+  {threat:'Underwater Infrastructure Attack',severity:'HIGH',color:'#f97316',desc:'Port approaches have undersea cables, pipeline connections, navigation buoys. Baltic cable sabotage (2024) demonstrated state actor willingness. Port approach minefields historic — modernized concept.'}
+];
+
+function _renderPortSecurity(){
+  var grid = document.getElementById('ps-ports-grid');
+  if(!grid) return;
+  grid.innerHTML = CRITICAL_PORTS.map(function(p){
+    var vulnChips = p.vulnerabilities.map(function(v){return '<span class="ps-vuln-chip">'+v+'</span>';}).join('');
+    return '<div class="ps-port-card" style="border-top-color:'+p.color+';">'+
+      '<div class="ps-port-header">'+
+        '<div>'+
+          '<div class="ps-port-name" style="color:'+p.color+';">'+p.port+'</div>'+
+          '<div class="ps-port-country">'+p.country+(p.teu_annual>1?' &nbsp;|&nbsp; '+p.teu_annual+'M TEU/yr':'')+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="ps-row">'+p.strategic_notes+'</div>'+
+      '<div class="ps-vuln-list">'+vulnChips+'</div>'+
+      '<div class="ps-mil-link"><b>China military link:</b> '+p.chinese_mil_link+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('ps-threats-tbody');
+  if(tbody){
+    tbody.innerHTML = PORT_SECURITY_THREATS.map(function(t){
+      return '<tr><td class="ps-threat-name">'+t.threat+'</td>'+
+        '<td><span style="color:'+t.color+';font-weight:700;font-size:8px;">'+t.severity+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+t.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchPsGdelt(){
+  var feed = document.getElementById('ps-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('port security maritime shipping container chokepoint China COSCO infrastructure');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="ps-gdelt-item">'+
+        '<div class="ps-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="ps-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openPortSecurity(){
+  var ov=document.getElementById('portsecurity-overlay');
+  if(ov){ov.style.display='flex';_renderPortSecurity();_fetchPsGdelt();}
+  var pins = CRITICAL_PORTS.map(function(p){
+    return {lat:p.lat,lng:p.lng,type:'maritime',severity:7,label:p.port,_portsecurity:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._portsecurity;}), ...pins];
+}
+function _closePortSecurity(){
+  var ov=document.getElementById('portsecurity-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._portsecurity;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('portsecurity-btn');
+  if(b) b.addEventListener('click',_openPortSecurity);
+  var c=document.getElementById('portsecurity-close');
+  if(c) c.addEventListener('click',_closePortSecurity);
+});
+
+// ===== END PHASE 45 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -29961,6 +30387,73 @@ function filterSIGINT(query){
   <div class="mm-grid" id="mm-programs-grid"></div>
   <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 45 buttons -->
+<button id="grayzone-btn">GRAY ZONE</button>
+<button id="quantumrace-btn">QUANTUM RACE</button>
+<button id="portsecurity-btn">PORT SECURITY</button>
+
+<!-- Gray Zone Warfare Intelligence Overlay -->
+<div id="grayzone-overlay">
+  <div class="gz-header">
+    <div>
+      <div class="gz-title">GRAY ZONE WARFARE INTELLIGENCE</div>
+      <div class="gz-subtitle">SOURCE: RAND / CSIS / NDS COMPETITION CONTINUUM / OPEN SOURCE / UNCLASSIFIED</div>
+    </div>
+    <div class="gz-close" id="grayzone-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="gz-section-title">GRAY ZONE ACTORS &amp; DOCTRINES</div>
+  <div class="gz-actors-grid" id="gz-actors-grid"></div>
+  <div class="gz-section-title">GRAY ZONE TOOLS REFERENCE</div>
+  <table class="gz-tools-table">
+    <thead><tr><th>TOOL</th><th>USERS</th><th>SEVERITY</th><th>DESCRIPTION</th></tr></thead>
+    <tbody id="gz-tools-tbody"></tbody>
+  </table>
+  <div class="gz-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="gz-gdelt-feed" id="gz-gdelt-feed"></div>
+</div>
+
+<!-- Quantum Computing Military Race Intelligence Overlay -->
+<div id="quantumrace-overlay">
+  <div class="qr-header">
+    <div>
+      <div class="qr-title">QUANTUM COMPUTING MILITARY RACE INTELLIGENCE</div>
+      <div class="qr-subtitle">SOURCE: NSCAI / NIST PQC / DOE QUANTUM NETWORK / OPEN SOURCE / UNCLASSIFIED</div>
+    </div>
+    <div class="qr-close" id="quantumrace-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="qr-section-title">NATIONAL QUANTUM PROGRAMS</div>
+  <div class="qr-programs-grid" id="qr-programs-grid"></div>
+  <div class="qr-section-title">MILITARY THREAT ASSESSMENT</div>
+  <table class="qr-threats-table">
+    <thead><tr><th>THREAT</th><th>TIMELINE</th><th>SEVERITY</th><th>ASSESSMENT</th></tr></thead>
+    <tbody id="qr-threats-tbody"></tbody>
+  </table>
+  <div class="qr-section-title">QUANTUM ARMS RACE TIMELINE</div>
+  <div class="qr-timeline-list" id="qr-timeline-list"></div>
+  <div class="qr-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="qr-gdelt-feed" id="qr-gdelt-feed"></div>
+</div>
+
+<!-- Critical Port Infrastructure Security Intelligence Overlay -->
+<div id="portsecurity-overlay">
+  <div class="ps-header">
+    <div>
+      <div class="ps-title">CRITICAL PORT INFRASTRUCTURE SECURITY INTELLIGENCE</div>
+      <div class="ps-subtitle">SOURCE: CSIS CHINA POWER / UNCTAD / US DHS MARITIME SECURITY / UNCLASSIFIED</div>
+    </div>
+    <div class="ps-close" id="portsecurity-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="ps-section-title">CRITICAL PORTS — STRATEGIC VULNERABILITY ASSESSMENT</div>
+  <div class="ps-ports-grid" id="ps-ports-grid"></div>
+  <div class="ps-section-title">PORT SECURITY THREAT MATRIX</div>
+  <table class="ps-threats-table">
+    <thead><tr><th>THREAT</th><th>SEVERITY</th><th>ASSESSMENT</th></tr></thead>
+    <tbody id="ps-threats-tbody"></tbody>
+  </table>
+  <div class="ps-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="ps-gdelt-feed" id="ps-gdelt-feed"></div>
 </div>
 
 <!-- Phase 44 buttons -->
