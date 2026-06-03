@@ -3868,6 +3868,109 @@ button{border-radius:2px!important}
 .sv-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .sv-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .sv-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 48 Column 13 buttons */
+#regimewatch-btn{position:fixed;top:55px;right:1605px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#regimewatch-btn:hover{border-color:#c026d3;color:#e879f9;}
+#terrorfinance-btn{position:fixed;top:95px;right:1605px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#terrorfinance-btn:hover{border-color:#dc2626;color:#fca5a5;}
+#borderdisputes-btn{position:fixed;top:135px;right:1605px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#borderdisputes-btn:hover{border-color:#0891b2;color:#67e8f9;}
+
+/* Regime Watch overlay */
+#regimewatch-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.rw-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.rw-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#c026d3;}
+.rw-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.rw-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.rw-close:hover{color:#c026d3;border-color:#c026d3;}
+.rw-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.rw-regimes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.rw-regime-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.rw-regime-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.rw-country{font-size:14px;font-weight:900;}
+.rw-leader{font-size:8px;color:#64748b;margin-top:2px;}
+.rw-scores{text-align:right;}
+.rw-score-item{font-size:8px;color:#94a3b8;margin-bottom:2px;}
+.rw-risk-badge{font-size:7px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;}
+.rw-pb-list{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.rw-pb-chip{font-size:7px;background:rgba(192,38,211,.1);border:1px solid rgba(192,38,211,.25);padding:2px 5px;border-radius:2px;color:#e879f9;}
+.rw-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px;}
+.rw-col-label{font-size:7px;font-weight:700;color:#475569;letter-spacing:.1em;margin-bottom:3px;}
+.rw-list{margin:0;padding-left:12px;}
+.rw-vuln-item,.rw-scen-item{font-size:7px;color:#94a3b8;line-height:1.5;}
+.rw-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.rw-indicators-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.rw-indicators-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.rw-indicators-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.rw-ind-name{color:#e2e8f0;font-weight:700;}
+.rw-gdelt-feed{max-width:900px;}
+.rw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.rw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.rw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Terror Finance overlay */
+#terrorfinance-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.tf-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.tf-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#dc2626;}
+.tf-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.tf-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.tf-close:hover{color:#dc2626;border-color:#dc2626;}
+.tf-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.tf-networks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:14px;margin-bottom:10px;}
+.tf-network-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.tf-network-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:4px;}
+.tf-group-name{font-size:13px;font-weight:700;}
+.tf-funding{font-size:8px;color:#64748b;}
+.tf-sources{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;}
+.tf-src-chip{font-size:7px;background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.25);padding:2px 5px;border-radius:2px;color:#fca5a5;}
+.tf-mechs{margin:0 0 6px 0;padding-left:14px;}
+.tf-mech-item{font-size:8px;color:#94a3b8;line-height:1.5;}
+.tf-sanctions{font-size:7px;color:#475569;border-top:1px solid #1e293b;padding-top:4px;margin-top:4px;line-height:1.4;}
+.tf-recent{font-size:8px;color:#fbbf24;line-height:1.4;margin-top:4px;}
+.tf-row{font-size:8px;color:#94a3b8;margin-bottom:3px;line-height:1.5;}
+.tf-row b{color:#e2e8f0;}
+.tf-crypto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:10px;margin-bottom:10px;}
+.tf-crypto-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;}
+.tf-crypto-actor{font-size:11px;font-weight:700;color:#f1f5f9;margin-bottom:5px;}
+.tf-hawala-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:10px;margin-bottom:10px;}
+.tf-hawala-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;border-left-width:3px;}
+.tf-hawala-region{font-size:11px;font-weight:700;color:#f1f5f9;margin-bottom:4px;}
+.tf-hawala-desc{font-size:8px;color:#94a3b8;line-height:1.4;margin-top:4px;}
+.tf-gdelt-feed{max-width:900px;}
+.tf-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.tf-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.tf-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Border Disputes overlay */
+#borderdisputes-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.bd-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.bd-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#0891b2;}
+.bd-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.bd-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.bd-close:hover{color:#0891b2;border-color:#0891b2;}
+.bd-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.bd-disputes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.bd-dispute-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.bd-dispute-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.bd-name{font-size:13px;font-weight:700;color:#f1f5f9;}
+.bd-parties{font-size:8px;color:#64748b;margin-top:2px;}
+.bd-status-badge,.bd-sev-badge{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.4px;border-width:1px;border-style:solid;display:inline-block;margin-left:4px;}
+.bd-situation{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:5px;}
+.bd-recent{font-size:8px;color:#fbbf24;line-height:1.4;margin-bottom:5px;}
+.bd-recent b{color:#f1f5f9;}
+.bd-risks{margin:0 0 5px 0;padding-left:14px;}
+.bd-risk-item{font-size:7px;color:#64748b;line-height:1.5;}
+.bd-legal{font-size:8px;color:#475569;font-style:italic;border-top:1px solid #1e293b;padding-top:5px;margin-top:4px;line-height:1.4;}
+.bd-legal b{color:#94a3b8;font-style:normal;}
+.bd-mechanisms-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.bd-mechanisms-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.bd-mechanisms-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.bd-mech-name{color:#e2e8f0;font-weight:700;}
+.bd-gdelt-feed{max-width:900px;}
+.bd-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.bd-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.bd-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -31363,6 +31466,70 @@ function filterSIGINT(query){
   <div class="mm-grid" id="mm-programs-grid"></div>
   <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 48 buttons -->
+<button id="regimewatch-btn">REGIME WATCH</button>
+<button id="terrorfinance-btn">TERROR FINANCE</button>
+<button id="borderdisputes-btn">BORDER DISPUTES</button>
+
+<!-- Authoritarian Regime Watch Intelligence Overlay -->
+<div id="regimewatch-overlay">
+  <div class="rw-header">
+    <div>
+      <div class="rw-title">AUTHORITARIAN REGIME WATCH INTELLIGENCE</div>
+      <div class="rw-subtitle">SOURCE: FREEDOM HOUSE / V-DEM / ICG / PERSONALIST REGIME DATABASE / UNCLASSIFIED</div>
+    </div>
+    <div class="rw-close" id="regimewatch-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="rw-section-title">CRITICAL AUTHORITARIAN REGIMES — STABILITY &amp; SUCCESSION ASSESSMENT</div>
+  <div class="rw-regimes-grid" id="rw-regimes-grid"></div>
+  <div class="rw-section-title">REGIME STABILITY INDICATORS</div>
+  <table class="rw-indicators-table">
+    <thead><tr><th>INDICATOR</th><th>WEIGHT</th><th>DESCRIPTION</th></tr></thead>
+    <tbody id="rw-indicators-tbody"></tbody>
+  </table>
+  <div class="rw-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="rw-gdelt-feed" id="rw-gdelt-feed"></div>
+</div>
+
+<!-- Terrorist Financing Networks Intelligence Overlay -->
+<div id="terrorfinance-overlay">
+  <div class="tf-header">
+    <div>
+      <div class="tf-title">TERRORIST FINANCING NETWORKS INTELLIGENCE</div>
+      <div class="tf-subtitle">SOURCE: FATF / US TREASURY OFAC / UN 1267 COMMITTEE / OPEN SOURCE / UNCLASSIFIED</div>
+    </div>
+    <div class="tf-close" id="terrorfinance-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="tf-section-title">MAJOR TERRORIST FINANCING NETWORKS</div>
+  <div class="tf-networks-grid" id="tf-networks-grid"></div>
+  <div class="tf-section-title">CRYPTOCURRENCY TERROR FINANCE</div>
+  <div class="tf-crypto-grid" id="tf-crypto-grid"></div>
+  <div class="tf-section-title">HAWALA NETWORKS — MAJOR CORRIDORS</div>
+  <div class="tf-hawala-grid" id="tf-hawala-grid"></div>
+  <div class="tf-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="tf-gdelt-feed" id="tf-gdelt-feed"></div>
+</div>
+
+<!-- Active Border Disputes Intelligence Overlay -->
+<div id="borderdisputes-overlay">
+  <div class="bd-header">
+    <div>
+      <div class="bd-title">ACTIVE TERRITORIAL &amp; BORDER DISPUTES INTELLIGENCE</div>
+      <div class="bd-subtitle">SOURCE: ICG CONFLICT TRACKER / TERRITORIAL DISPUTES DATABASE / ICIJ / UNCLASSIFIED</div>
+    </div>
+    <div class="bd-close" id="borderdisputes-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="bd-section-title">ACTIVE DISPUTES — STATUS &amp; ESCALATION ASSESSMENT</div>
+  <div class="bd-disputes-grid" id="bd-disputes-grid"></div>
+  <div class="bd-section-title">DISPUTE RESOLUTION MECHANISMS</div>
+  <table class="bd-mechanisms-table">
+    <thead><tr><th>MECHANISM</th><th>ROLE</th><th>LIMITATIONS</th></tr></thead>
+    <tbody id="bd-mechanisms-tbody"></tbody>
+  </table>
+  <div class="bd-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="bd-gdelt-feed" id="bd-gdelt-feed"></div>
 </div>
 
 <!-- Phase 47 buttons -->
