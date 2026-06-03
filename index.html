@@ -3253,6 +3253,117 @@ button{border-radius:2px!important}
 .co-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .co-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .co-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === COLUMN 11 buttons (right:1375px) === */
+#failedstates-btn{position:fixed;top:55px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#failedstates-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#mediaintel-btn{position:fixed;top:95px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#mediaintel-btn:hover{border-color:#f97316;color:#fdba74;}
+#resilience-btn{position:fixed;top:135px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#resilience-btn:hover{border-color:#22c55e;color:#86efac;}
+
+/* Failed States overlay */
+#failedstates-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.fs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.fs-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#ef4444;}
+.fs-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.fs-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.fs-close:hover{color:#ef4444;border-color:#ef4444;}
+.fs-stats-banner{background:rgba(127,29,29,.15);border:1px solid rgba(239,68,68,.3);padding:8px 16px;font-size:9px;color:#fca5a5;letter-spacing:.15em;margin-bottom:16px;}
+.fs-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.fs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:14px;margin-bottom:10px;}
+.fs-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.fs-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.fs-country{font-size:14px;font-weight:900;letter-spacing:.05em;color:#f1f5f9;}
+.fs-rank{font-size:9px;color:#64748b;letter-spacing:.1em;}
+.fs-score{font-size:20px;font-weight:900;}
+.fs-tier-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.8px;white-space:nowrap;}
+.fs-tier-VERY{background:rgba(127,29,29,.6);border:1px solid #ef4444;color:#fca5a5;}
+.fs-tier-HIGH{background:rgba(124,45,18,.5);border:1px solid #f97316;color:#fdba74;}
+.fs-row{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:4px;}
+.fs-row b{color:#e2e8f0;}
+.fs-traj-badge{display:inline-block;font-size:7px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;margin-top:4px;}
+.fs-traj-WORSENING{background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.fs-traj-RAPID{background:rgba(127,29,29,.7);border:1px solid #dc2626;color:#fca5a5;}
+.fs-traj-STABLE{background:rgba(30,41,59,.5);border:1px solid #475569;color:#94a3b8;}
+.fs-traj-IMPROVING{background:rgba(20,83,45,.5);border:1px solid #22c55e;color:#86efac;}
+.fs-traj-TRANSITION{background:rgba(113,63,18,.5);border:1px solid #eab308;color:#fde047;}
+.fs-indicators{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.fs-ind-chip{font-size:7px;background:rgba(15,23,42,0.9);border:1px solid #1e293b;padding:2px 6px;border-radius:2px;color:#94a3b8;}
+.fs-ind-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.fs-ind-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.fs-ind-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.fs-ind-name{color:#e2e8f0;font-weight:700;}
+.fs-gdelt-feed{max-width:900px;}
+.fs-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.fs-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.fs-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Media Intel overlay */
+#mediaintel-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.mi-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.mi-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f97316;}
+.mi-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.mi-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.mi-close:hover{color:#f97316;border-color:#f97316;}
+.mi-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.mi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:14px;margin-bottom:10px;}
+.mi-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-left-width:4px;}
+.mi-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.mi-name{font-size:13px;font-weight:700;color:#f1f5f9;}
+.mi-country{font-size:8px;color:#64748b;letter-spacing:.1em;margin-top:1px;}
+.mi-budget{font-size:8px;color:#fbbf24;}
+.mi-row{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:4px;}
+.mi-row b{color:#e2e8f0;}
+.mi-tactics{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.mi-tactic-chip{font-size:7px;background:rgba(15,23,42,0.9);border:1px solid #334155;padding:2px 6px;border-radius:2px;color:#94a3b8;}
+.mi-intel-value{font-size:8px;color:#fbbf24;line-height:1.4;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;margin-top:6px;}
+.mi-status-badge{font-size:7px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;}
+.mi-pf-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.mi-pf-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.mi-pf-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.mi-pf-score{font-size:12px;font-weight:900;}
+.mi-pf-bar-wrap{width:60px;height:5px;background:#0f172a;border-radius:3px;display:inline-block;vertical-align:middle;margin-left:6px;}
+.mi-pf-bar{height:5px;border-radius:3px;}
+.mi-gdelt-feed{max-width:900px;}
+.mi-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.mi-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.mi-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Resilience overlay */
+#resilience-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.re-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.re-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#22c55e;}
+.re-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.re-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.re-close:hover{color:#22c55e;border-color:#22c55e;}
+.re-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.re-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:14px;margin-bottom:10px;}
+.re-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.re-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.re-country{font-size:14px;font-weight:900;color:#f1f5f9;}
+.re-score{font-size:22px;font-weight:900;}
+.re-score-bar-wrap{width:80px;height:6px;background:#0f172a;border-radius:3px;display:inline-block;vertical-align:middle;margin-left:6px;}
+.re-score-bar{height:6px;border-radius:3px;}
+.re-hybrid-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.6px;white-space:nowrap;}
+.re-hybrid-EXCELLENT{background:rgba(20,83,45,.6);border:1px solid #22c55e;color:#86efac;}
+.re-hybrid-STRONG{background:rgba(12,74,110,.5);border:1px solid #38bdf8;color:#7dd3fc;}
+.re-hybrid-MODERATE{background:rgba(113,63,18,.5);border:1px solid #eab308;color:#fde047;}
+.re-hybrid-POOR{background:rgba(127,29,29,.6);border:1px solid #ef4444;color:#fca5a5;}
+.re-row{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:4px;}
+.re-row b{color:#e2e8f0;}
+.re-chip-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.re-strength-chip{font-size:7px;background:rgba(20,83,45,.3);border:1px solid rgba(34,197,94,.3);padding:2px 6px;border-radius:2px;color:#86efac;}
+.re-vuln-chip{font-size:7px;background:rgba(127,29,29,.3);border:1px solid rgba(239,68,68,.3);padding:2px 6px;border-radius:2px;color:#fca5a5;}
+.re-note{font-size:7px;color:#64748b;font-style:italic;line-height:1.4;margin-top:6px;border-top:1px solid #1e293b;padding-top:6px;}
+.re-dim-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.re-dim-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.re-dim-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.re-dim-name{color:#e2e8f0;font-weight:700;}
+.re-gdelt-feed{max-width:900px;}
+.re-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.re-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.re-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -28536,6 +28647,72 @@ function filterSIGINT(query){
   <div class="mm-grid" id="mm-programs-grid"></div>
   <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 42 buttons -->
+<button id="failedstates-btn">FAILED STATES</button>
+<button id="mediaintel-btn">MEDIA INTEL</button>
+<button id="resilience-btn">RESILIENCE</button>
+
+<!-- Failed States & State Fragility Intelligence Overlay -->
+<div id="failedstates-overlay">
+  <div class="fs-header">
+    <div>
+      <div class="fs-title">FAILED STATES &amp; STATE FRAGILITY INTELLIGENCE</div>
+      <div class="fs-subtitle">SOURCE: FUND FOR PEACE FSI 2024 &nbsp;&#47;&#47;&nbsp; CONFLICT MONITOR &nbsp;&#47;&#47;&nbsp; UN OCHA &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="fs-close" id="failedstates-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="fs-stats-banner">60 STATES IN &#39;HIGH ALERT&#39; OR ABOVE (FSI 2024) &nbsp;&#47;&#47;&nbsp; 17 STATES IN &#39;VERY HIGH ALERT&#39; &nbsp;&#47;&#47;&nbsp; COMBINED DISPLACED POPULATION: 120M+</div>
+  <div class="fs-section-title">FRAGILE STATES INDEX — TOP CRITICAL CASES</div>
+  <div class="fs-grid" id="fs-cards-grid"></div>
+  <div class="fs-section-title">FSI INDICATOR REFERENCE</div>
+  <table class="fs-ind-table">
+    <thead><tr><th>INDICATOR</th><th>DESCRIPTION</th></tr></thead>
+    <tbody id="fs-ind-tbody"></tbody>
+  </table>
+  <div class="fs-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="fs-gdelt-feed" id="fs-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Global Media & Information Environment Intelligence Overlay -->
+<div id="mediaintel-overlay">
+  <div class="mi-header">
+    <div>
+      <div class="mi-title">GLOBAL MEDIA &amp; INFORMATION ENVIRONMENT INTELLIGENCE</div>
+      <div class="mi-subtitle">SOURCE: RSF PRESS FREEDOM INDEX 2024 &nbsp;&#47;&#47;&nbsp; EU DISINFO LAB &nbsp;&#47;&#47;&nbsp; DFRLab &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="mi-close" id="mediaintel-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="fs-section-title">STATE MEDIA NETWORKS — INFORMATION WARFARE CAPABILITIES</div>
+  <div class="mi-grid" id="mi-networks-grid"></div>
+  <div class="fs-section-title">PRESS FREEDOM INDEX — KEY CASES</div>
+  <table class="mi-pf-table">
+    <thead><tr><th>COUNTRY</th><th>RSF SCORE</th><th>RANK</th><th>ASSESSMENT</th></tr></thead>
+    <tbody id="mi-pf-tbody"></tbody>
+  </table>
+  <div class="fs-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="mi-gdelt-feed" id="mi-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Societal Resilience & Democratic Strength Index Overlay -->
+<div id="resilience-overlay">
+  <div class="re-header">
+    <div>
+      <div class="re-title">SOCIETAL RESILIENCE &amp; DEMOCRATIC STRENGTH INDEX</div>
+      <div class="re-subtitle">SOURCE: EIU DEMOCRACY INDEX / HYBRID WARFARE ASSESSMENTS / NATO STRATCOM / UNCLASSIFIED</div>
+    </div>
+    <div class="re-close" id="resilience-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="re-section-title">RESILIENCE SCORES — KEY STATES</div>
+  <div class="re-grid" id="re-scores-grid"></div>
+  <div class="re-section-title">RESILIENCE DIMENSIONS REFERENCE</div>
+  <table class="re-dim-table">
+    <thead><tr><th>DIMENSION</th><th>DESCRIPTION</th><th>BEST PERFORMERS</th><th>WORST PERFORMERS</th></tr></thead>
+    <tbody id="re-dim-tbody"></tbody>
+  </table>
+  <div class="re-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="re-gdelt-feed" id="re-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 <!-- Corruption Intelligence Overlay -->
