@@ -1565,6 +1565,53 @@ button{border-radius:2px!important}
 .me-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .me-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
 .me-news-meta{color:var(--dim);font-size:8px;}
+#bio-btn{position:fixed;top:295px;right:455px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(163,230,53,.35);border-radius:2px;color:#a3e635;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#bio-btn:hover{background:rgba(163,230,53,.1);border-color:#84cc16;}
+#bio-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#bio-overlay.open{display:block;}
+.bio-hdr{background:var(--panel);border-bottom:2px solid rgba(163,230,53,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.bio-hdr h2{color:#a3e635;font-size:12px;letter-spacing:.2em;margin:0;}
+.bio-body{padding:16px 24px;max-width:1100px;}
+.bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.bio-card{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.bio-card-hdr{font-size:8px;letter-spacing:.16em;color:var(--dim);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.bio-threat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:9px;}
+.bio-pathogen{color:var(--text);font-weight:700;}
+.bio-level{font-size:7px;padding:2px 5px;letter-spacing:.1em;}
+.bio-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.bio-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.bio-news-meta{color:var(--dim);font-size:8px;}
+#icc-tracker-btn{position:fixed;top:335px;right:455px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.45);border-radius:2px;color:#f87171;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#icc-tracker-btn:hover{background:rgba(239,68,68,.1);border-color:#dc2626;}
+#icc-tracker-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#icc-tracker-overlay.open{display:block;}
+.icc-hdr{background:var(--panel);border-bottom:2px solid rgba(239,68,68,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.icc-hdr h2{color:#f87171;font-size:12px;letter-spacing:.2em;margin:0;}
+.icc-body{padding:16px 24px;max-width:1100px;}
+.icc-warrant{background:var(--panel2);border:1px solid var(--border);border-left:3px solid #ef4444;padding:10px 12px;margin-bottom:8px;}
+.icc-warrant-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.icc-suspect{font-size:11px;font-weight:700;color:#f87171;}
+.icc-status-badge{font-size:7px;padding:2px 6px;letter-spacing:.1em;}
+.icc-detail{font-size:8px;color:var(--dim);line-height:1.6;}
+.icc-charges{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+.icc-charge{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);color:#f87171;font-size:7px;padding:1px 5px;}
+.icc-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.icc-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.icc-news-meta{color:var(--dim);font-size:8px;}
+#arctic-btn{position:fixed;top:375px;right:455px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(186,230,253,.35);border-radius:2px;color:#bae6fd;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#arctic-btn:hover{background:rgba(186,230,253,.1);border-color:#7dd3fc;}
+#arctic-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#arctic-overlay.open{display:block;}
+.ar-hdr{background:var(--panel);border-bottom:2px solid rgba(186,230,253,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.ar-hdr h2{color:#bae6fd;font-size:12px;letter-spacing:.2em;margin:0;}
+.ar-body{padding:16px 24px;max-width:1100px;}
+.ar-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.ar-card{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.ar-card-hdr{font-size:8px;letter-spacing:.16em;color:var(--dim);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.ar-base-row{display:grid;grid-template-columns:180px 60px 1fr;gap:8px;font-size:8px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ar-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ar-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.ar-news-meta{color:var(--dim);font-size:8px;}
 </style>
 </head>
 <body>
@@ -16625,6 +16672,139 @@ async function _fetchExerciseFeed(){
     el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
   }
 }
+function openBioIntel(){
+  document.getElementById('bio-overlay').classList.add('open');
+  _fetchBioNews();
+}
+function closeBioIntel(){
+  document.getElementById('bio-overlay').classList.remove('open');
+}
+async function _fetchBioNews(){
+  const el=document.getElementById('bio-news');
+  if(!el)return;
+  try{
+    const q='"disease outbreak" OR "epidemic" OR "pandemic" OR "biosafety" OR "biological threat" OR "H5N1" OR "Mpox" OR "Marburg" OR "bioweapon" OR "BSL-4"';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current biosurveillance intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="bio-news-item"><div class="bio-news-title">'+title+'</div><div class="bio-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+const ICC_WARRANTS=[
+  {suspect:'Vladimir Putin',country:'Russia',role:'President of Russia',issued:'2023-03-17',
+   charges:['Unlawful deportation of children (Ukraine)','Unlawful transfer of population'],
+   status:'OUTSTANDING',detail:'ICC Pre-Trial Chamber II. Arrest warrant issued March 2023. 124 ICC member states obligated to arrest if Putin enters territory. Russia not ICC member — warrant not recognized by Moscow.'},
+  {suspect:'Maria Lvova-Belova',country:'Russia',role:'Commissioner for Children\'s Rights',issued:'2023-03-17',
+   charges:['Unlawful deportation of children (Ukraine)','Unlawful transfer of population'],
+   status:'OUTSTANDING',detail:'Issued simultaneously with Putin warrant. Same case — coordinated deportation of Ukrainian children to Russia since Feb 2022.'},
+  {suspect:'Benjamin Netanyahu',country:'Israel',role:'Prime Minister',issued:'2024-11-21',
+   charges:['Using starvation as method of warfare (Gaza)','Willful killing / murder','Inhumane acts'],
+   status:'OUTSTANDING',detail:'ICC issued arrest warrants for Netanyahu and former Defense Minister Gallant. Warrants relate to Oct 2023 - 2024 Gaza conflict. US/Israel reject ICC jurisdiction.'},
+  {suspect:'Yoav Gallant',country:'Israel',role:'Former Defense Minister',issued:'2024-11-21',
+   charges:['Using starvation as method of warfare','Attacks on civilians','Inhumane acts'],
+   status:'OUTSTANDING',detail:'Warrant issued alongside Netanyahu. Gallant oversaw IDF operations in Gaza as Defense Minister.'},
+  {suspect:'Mohammed Deif',country:'Hamas/Gaza',role:'Hamas Military Commander',issued:'2024-05-20',
+   charges:['Murder','Hostage taking','Rape and sexual violence','Torture (Oct 7 attack)'],
+   status:'LIKELY DECEASED',detail:'ICC warrant issued May 2024. Deif reportedly killed in Israeli airstrike July 2024. Warrant issued before death confirmed.'},
+  {suspect:'Omar al-Bashir',country:'Sudan',role:'Former President',issued:'2009-03-04',
+   charges:['Genocide (Darfur)','Crimes against humanity','War crimes'],
+   status:'DETAINED (Sudan)',detail:'First sitting head of state indicted by ICC. Two warrants: 2009 (war crimes/crimes against humanity), 2010 (genocide). Overthrown in 2019 coup, currently held by Sudanese authorities.'},
+  {suspect:'Joseph Kony',country:'Uganda/LRA',role:'LRA Commander',issued:'2005-07-08',
+   charges:['Crimes against humanity','War crimes','Murder','Enslavement','Forced enlistment of children'],
+   status:'OUTSTANDING/FUGITIVE',detail:'LRA (Lord\'s Resistance Army) leader. Oldest outstanding ICC warrant. Kony believed to be hiding in CAR/South Sudan border region. LRA now diminished but not eliminated.'}
+];
+function openICCTracker(){
+  document.getElementById('icc-tracker-overlay').classList.add('open');
+  _renderICCWarrants();
+  _fetchICCNews();
+}
+function closeICCTracker(){
+  document.getElementById('icc-tracker-overlay').classList.remove('open');
+}
+function _renderICCWarrants(){
+  const el=document.getElementById('icc-warrant-list');
+  if(!el)return;
+  const statusColors={
+    'OUTSTANDING':'#ef4444',
+    'DETAINED (Sudan)':'#f59e0b',
+    'LIKELY DECEASED':'#8896b3',
+    'OUTSTANDING/FUGITIVE':'#f97316'
+  };
+  el.innerHTML=ICC_WARRANTS.map(function(w){
+    const sc=statusColors[w.status]||'#8896b3';
+    const chargesHtml=w.charges.map(function(c){return '<span class="icc-charge">'+c.replace(/</g,'&lt;')+'</span>';}).join('');
+    return '<div class="icc-warrant">'+
+      '<div class="icc-warrant-hdr">'+
+      '<div><div class="icc-suspect">'+w.suspect.replace(/</g,'&lt;')+'</div>'+
+      '<div style="font-size:8px;color:#60a5fa;margin-top:1px;">'+w.role.replace(/</g,'&lt;')+' &middot; '+w.country.replace(/</g,'&lt;')+'</div></div>'+
+      '<div style="text-align:right;">'+
+      '<span class="icc-status-badge" style="background:'+sc+';color:'+(w.status==='DETAINED (Sudan)'?'#000':'#fff')+';">'+w.status+'</span>'+
+      '<div style="font-size:7px;color:var(--dim);margin-top:3px;">ISSUED: '+w.issued+'</div>'+
+      '</div></div>'+
+      '<div class="icc-detail">'+w.detail.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'+
+      '<div class="icc-charges">'+chargesHtml+'</div>'+
+      '</div>';
+  }).join('');
+}
+async function _fetchICCNews(){
+  const el=document.getElementById('icc-news');
+  if(!el)return;
+  try{
+    const q='"ICC" OR "war crimes" OR "crimes against humanity" OR "International Criminal Court" OR "genocide" OR "atrocity" tribunal';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current ICC intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="icc-news-item"><div class="icc-news-title">'+title+'</div><div class="icc-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+function openArcticIntel(){
+  document.getElementById('arctic-overlay').classList.add('open');
+  _fetchArcticNews();
+}
+function closeArcticIntel(){
+  document.getElementById('arctic-overlay').classList.remove('open');
+}
+async function _fetchArcticNews(){
+  const el=document.getElementById('arctic-news');
+  if(!el)return;
+  try{
+    const q='Arctic military OR "Northern Sea Route" OR "Polar Silk Road" OR "GIUK gap" OR "Arctic sovereignty" OR "Arctic NATO" OR "Arctic Russia"';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current Arctic intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="ar-news-item"><div class="ar-news-title">'+title+'</div><div class="ar-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -17596,6 +17776,100 @@ function filterSIGINT(query){
     <div style="background:var(--panel2);border:1px solid var(--border);padding:10px;">
       <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE EXERCISE INTELLIGENCE (GDELT)</div>
       <div id="exercise-feed"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="bio-btn" onclick="openBioIntel()">&#x1F9EC; BIOSURVEILLANCE</button>
+<div id="bio-overlay">
+  <div class="bio-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">BIOSURVEILLANCE // PANDEMIC INTELLIGENCE // BIOLOGICAL THREAT ASSESSMENT // BSL-4 MONITORING</div>
+      <h2>&#x1F9EC; BIOSURVEILLANCE &amp; EPIDEMIC INTELLIGENCE</h2>
+    </div>
+    <button onclick="closeBioIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="bio-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">BIOLOGICAL THREAT MONITORING &middot; WHO OSINT COLLECTION &middot; GDELT BIOSAFETY INTELLIGENCE &middot; KNOWN BIOWEAPON PROGRAMS</div>
+    <div class="bio-grid">
+      <div class="bio-card">
+        <div class="bio-card-hdr" style="color:#a3e635;">HIGH-PRIORITY PATHOGEN WATCH</div>
+        <div class="bio-threat-row"><span class="bio-pathogen">H5N1 Avian Influenza</span><span style="color:#f59e0b;">ACTIVE SPREAD</span><span class="bio-level" style="background:#f59e0b;color:#000;">HIGH</span></div>
+        <div class="bio-threat-row"><span class="bio-pathogen">Mpox (Clade Ib)</span><span style="color:#ef4444;">DRC / East Africa</span><span class="bio-level" style="background:#ef4444;color:#fff;">CRITICAL</span></div>
+        <div class="bio-threat-row"><span class="bio-pathogen">Marburg Virus</span><span style="color:#ef4444;">East Africa outbreaks</span><span class="bio-level" style="background:#ef4444;color:#fff;">HIGH</span></div>
+        <div class="bio-threat-row"><span class="bio-pathogen">Ebola (Sudan strain)</span><span style="color:#f59e0b;">Endemic risk zones</span><span class="bio-level" style="background:#f59e0b;color:#000;">ELEVATED</span></div>
+        <div class="bio-threat-row"><span class="bio-pathogen">Nipah Virus</span><span style="color:#f59e0b;">Bangladesh / India</span><span class="bio-level" style="background:#f59e0b;color:#000;">ELEVATED</span></div>
+        <div class="bio-threat-row"><span class="bio-pathogen">MERS-CoV</span><span style="color:#22d3ee;">Arabian Peninsula</span><span class="bio-level" style="background:#22d3ee;color:#000;">MONITOR</span></div>
+        <div class="bio-threat-row"><span class="bio-pathogen">Crimean-Congo HF</span><span style="color:#22d3ee;">Central Asia / MENA</span><span class="bio-level" style="background:#22d3ee;color:#000;">MONITOR</span></div>
+      </div>
+      <div class="bio-card">
+        <div class="bio-card-hdr" style="color:#ef4444;">KNOWN BIOWEAPON PROGRAM ASSESSMENT</div>
+        <div style="font-size:9px;line-height:1.8;color:var(--dim);">
+          <div><span style="color:#ef4444;font-weight:700;">Russia (Biopreparat legacy):</span> Post-Soviet weapons program. Smallpox, Plague, Anthrax, Botulinum weaponized. Vozrozhdeniya Island (Aral Sea) decontamination ongoing. Status: DECLARED DESTROYED / UNVERIFIED.</div>
+          <div><span style="color:#ef4444;font-weight:700;">China (Unit 61786 / AMMS):</span> Ambiguous dual-use BSL-4 research. Wuhan Institute of Virology gain-of-function controversy. Unknown offensive capability.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">North Korea:</span> Assessed to possess anthrax, plague, smallpox, botulinum toxin. Delivery via ICBMs, artillery, CBRN teams assessed.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">Syria:</span> CWC party, used sarin/chlorine in civil war. Small residual BW capability assessed by US IC.</div>
+        </div>
+      </div>
+    </div>
+    <div class="bio-card" style="margin-bottom:0;">
+      <div class="bio-card-hdr" style="color:#a3e635;">LIVE BIOSURVEILLANCE INTELLIGENCE (GDELT)</div>
+      <div id="bio-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="icc-tracker-btn" onclick="openICCTracker()">&#x2696; WAR CRIMES</button>
+<div id="icc-tracker-overlay">
+  <div class="icc-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">INTERNATIONAL CRIMINAL COURT // WAR CRIMES INTELLIGENCE // ATROCITY DOCUMENTATION</div>
+      <h2>&#x2696; ICC / WAR CRIMES INTELLIGENCE TRACKER</h2>
+    </div>
+    <button onclick="closeICCTracker()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="icc-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">SOURCE: ICC PUBLIC REGISTRY &middot; UN COI REPORTS &middot; GDELT COLLECTION &middot; PUBLIC OSINT DOCUMENTATION</div>
+    <div id="icc-warrant-list"></div>
+    <div style="background:var(--panel2);border:1px solid var(--border);padding:10px;margin-top:12px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE WAR CRIMES INTELLIGENCE (GDELT)</div>
+      <div id="icc-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="arctic-btn" onclick="openArcticIntel()">&#x2744; ARCTIC INTEL</button>
+<div id="arctic-overlay">
+  <div class="ar-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ARCTIC DOMAIN AWARENESS // POLAR MILITARIZATION // NORTHERN SEA ROUTE // GIUK GAP</div>
+      <h2>&#x2744; ARCTIC &amp; POLAR INTELLIGENCE</h2>
+    </div>
+    <button onclick="closeArcticIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="ar-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">RUSSIA NORTHERN FLEET &middot; CHINA POLAR SILK ROAD &middot; NATO ARCTIC POSTURE &middot; CRITICAL SEA LANES &middot; GDELT COLLECTION</div>
+    <div class="ar-grid">
+      <div class="ar-card">
+        <div class="ar-card-hdr" style="color:#ef4444;">RUSSIA ARCTIC MILITARY INFRASTRUCTURE</div>
+        <div style="display:grid;grid-template-columns:180px 60px 1fr;gap:6px;font-size:7px;color:var(--dim);margin-bottom:4px;padding-bottom:2px;border-bottom:1px solid var(--border);"><span>INSTALLATION</span><span>TYPE</span><span>CAPABILITY</span></div>
+        <div class="ar-base-row"><span style="color:#ef4444;">Severomorsk (Murmansk)</span><span style="color:var(--dim);">NAVAL</span><span style="color:var(--text);">Northern Fleet HQ, SSBNs, SSGNs, surface combatants</span></div>
+        <div class="ar-base-row"><span style="color:#ef4444;">Nagurskoye (Franz Josef Land)</span><span style="color:var(--dim);">AIR</span><span style="color:var(--text);">Northernmost military airbase (80.8N), MiG-31, Su-34</span></div>
+        <div class="ar-base-row"><span style="color:#ef4444;">Tiksi (Laptev Sea)</span><span style="color:var(--dim);">MIXED</span><span style="color:var(--text);">Radar/SAM complex, S-300 air defense, coastal missile</span></div>
+        <div class="ar-base-row"><span style="color:#ef4444;">Kotelny Island</span><span style="color:var(--dim);">RADAR</span><span style="color:var(--text);">Early warning radar, Pantsir-S1 SHORAD, garrison</span></div>
+        <div class="ar-base-row"><span style="color:#ef4444;">Olenya Air Base</span><span style="color:var(--dim);">AIR</span><span style="color:var(--text);">Tu-22M3 Backfire, Tu-95MS Bear, nuclear strike role</span></div>
+        <div class="ar-base-row"><span style="color:#ef4444;">Gadzhiyevo (Kola)</span><span style="color:var(--dim);">SSBN</span><span style="color:var(--text);">Borei-class SSBN homeport, Bulava SLBM force</span></div>
+      </div>
+      <div class="ar-card">
+        <div class="ar-card-hdr" style="color:#bae6fd;">STRATEGIC CONTEXT &amp; ACTORS</div>
+        <div style="font-size:8px;color:var(--dim);line-height:1.8;">
+          <div><span style="color:#ef4444;font-weight:700;">Russia:</span> Claims Northern Sea Route sovereignty. Icebreaker superiority (50+ vs US 2). Arctic resource base: 25% of proven hydrocarbon reserves. Arctic Brigade (14th Army Corps) deployed.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">China:</span> Self-declared &quot;Near-Arctic State.&quot; Polar Silk Road initiative. Snow Dragon 2 icebreaker. Svalbard research station (dual-use). Growing investments in Arctic infrastructure.</div>
+          <div><span style="color:#3b82f6;font-weight:700;">NATO:</span> Enhanced Forward Presence in Norway. US Arctic Strategy 2024. GIUK Gap ASW patrols. Iceland/Keflavik airbase reactivated. Increased Trident Juncture exercises.</div>
+          <div><span style="color:#22d3ee;font-weight:700;">Flashpoints:</span> Svalbard Treaty (Norway vs Russia), Hans Island (Canada/Denmark resolved 2022), Northwest Passage (US/Canada vs Russia sovereignty dispute).</div>
+        </div>
+      </div>
+    </div>
+    <div class="ar-card" style="margin-bottom:0;">
+      <div class="ar-card-hdr" style="color:#bae6fd;">LIVE ARCTIC INTELLIGENCE (GDELT)</div>
+      <div id="arctic-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
     </div>
   </div>
 </div>
