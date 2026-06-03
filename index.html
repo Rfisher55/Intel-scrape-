@@ -5002,6 +5002,87 @@ button{border-radius:2px!important}
 .p58iw-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .p58iw-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .p58iw-live-meta{font-size:8px;color:#475569;}
+
+/* Phase 59 buttons — Column 16 (right:1950px) */
+#p59crisis-btn{position:fixed;top:295px;right:1950px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p59crisis-btn:hover{border-color:#ef4444;color:#f87171;}
+#p59intel-btn{position:fixed;top:335px;right:1950px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p59intel-btn:hover{border-color:#475569;color:#94a3b8;}
+#p59lawfare-btn{position:fixed;top:375px;right:1950px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p59lawfare-btn:hover{border-color:#a855f7;color:#c084fc;}
+
+/* Active Crisis Feed overlay */
+#p59crisis-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p59cr-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p59cr-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#ef4444;}
+.p59cr-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p59cr-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p59cr-close:hover{color:#ef4444;border-color:#ef4444;}
+.p59cr-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p59cr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p59cr-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p59cr-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p59cr-region-name{font-size:13px;font-weight:900;}
+.p59cr-sev-badge{display:inline-block;font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.3px;}
+.p59cr-status-badge{display:inline-block;font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.3px;margin-left:4px;}
+.p59cr-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p59cr-row b{color:#e2e8f0;}
+.p59cr-list{font-size:8px;color:#94a3b8;padding-left:12px;margin:4px 0;}
+.p59cr-intel{font-size:8px;color:#cbd5e1;line-height:1.6;margin-top:8px;padding:8px;background:rgba(239,68,68,0.07);border-left:2px solid #ef4444;}
+.p59cr-live-feed{max-width:900px;}
+.p59cr-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p59cr-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p59cr-live-meta{font-size:8px;color:#475569;}
+
+/* Intelligence Community overlay */
+#p59intel-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p59ic-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p59ic-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#94a3b8;}
+.p59ic-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p59ic-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p59ic-close:hover{color:#94a3b8;border-color:#475569;}
+.p59ic-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p59ic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p59ic-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p59ic-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p59ic-agency-name{font-size:13px;font-weight:900;}
+.p59ic-country-badge{display:inline-block;font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.3px;background:rgba(255,255,255,0.07);color:#94a3b8;}
+.p59ic-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p59ic-row b{color:#e2e8f0;}
+.p59ic-list{font-size:8px;color:#94a3b8;padding-left:12px;margin:4px 0;}
+.p59ic-assessment{font-size:8px;color:#cbd5e1;line-height:1.6;margin-top:8px;padding:8px;background:rgba(71,85,105,0.15);border-left:2px solid #475569;}
+.p59ic-methods-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p59ic-methods-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p59ic-methods-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p59ic-live-feed{max-width:900px;}
+.p59ic-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p59ic-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p59ic-live-meta{font-size:8px;color:#475569;}
+
+/* Lawfare overlay */
+#p59lawfare-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p59lf-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p59lf-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#a855f7;}
+.p59lf-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p59lf-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p59lf-close:hover{color:#a855f7;border-color:#a855f7;}
+.p59lf-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p59lf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p59lf-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p59lf-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p59lf-case-name{font-size:13px;font-weight:900;}
+.p59lf-status-badge{display:inline-block;font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.3px;}
+.p59lf-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p59lf-row b{color:#e2e8f0;}
+.p59lf-list{font-size:8px;color:#94a3b8;padding-left:12px;margin:4px 0;}
+.p59lf-assessment{font-size:8px;color:#cbd5e1;line-height:1.6;margin-top:8px;padding:8px;background:rgba(168,85,247,0.07);border-left:2px solid #a855f7;}
+.p59lf-trends-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p59lf-trends-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p59lf-trends-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p59lf-live-feed{max-width:900px;}
+.p59lf-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p59lf-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p59lf-live-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -34010,6 +34091,347 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 58 =====
 
+// ===== PHASE 59: ACTIVE CRISIS FEED, INTEL COMMUNITY, LAWFARE =====
+
+var P59_CRISIS_REGIONS = [
+  {region:'UKRAINE — EASTERN FRONT',lat:48.50,lng:37.00,color:'#ef4444',
+   status:'ACTIVE WAR',severity:'CRITICAL',
+   situation:'Russian forces advancing in Zaporizhzhia and Donetsk oblasts (2024-25). Kharkiv under persistent missile/drone attack. Kursk Oblast: Ukrainian cross-border operation (Aug 2024) — first time Russian territory occupied since WWII. Avdiivka fell Feb 2024. Pokrovsk under pressure.',
+   key_metrics:['Russian losses (est): 315,000+ casualties (UA General Staff)','Ukrainian losses: classified','Frontline: ~1,000km','Daily artillery: Russia 10,000+ shells, Ukraine 2,000-6,000','Civilian displacement: 10M+ since 2022'],
+   intelligence_focus:'Russian industrial mobilization (Ural factories 3-shift). Drone production race (both sides 1,000+/day FPV). North Korean troops deployed Kursk (confirmed Dec 2024). Spring mud = operations pause expected.'},
+  {region:'MIDDLE EAST — POST-OCT 7',lat:31.35,lng:34.31,color:'#ef4444',
+   status:'MULTI-FRONT CONFLICT',severity:'CRITICAL',
+   situation:'Gaza: IDF ground operation ongoing. Hamas degraded but not destroyed. Phase 1 hostage deal (Jan 2025). Lebanon: Israeli strikes degraded Hezbollah (Nasrallah killed Sept 2024), ceasefire holding. Syria: HTS took Damascus Dec 2024 (Assad fled). Houthi Red Sea campaign ongoing. Iran direct exchange April 2024.',
+   key_metrics:['Gaza casualties: 40,000+ (Gaza health ministry)','Hostages remaining: ~101','Lebanon displaced: 1.2M','Syria: Assad regime collapsed Dec 2024','Houthi attacks on shipping: 100+'],
+   intelligence_focus:'HTS Syria transition — jihadist past vs pragmatic governance. Iran recalibrating after Hezbollah degradation. Houthi capability to regenerate after US/UK strikes.'},
+  {region:'SUDAN — CIVIL WAR',lat:15.55,lng:32.53,color:'#ef4444',
+   status:'ACTIVE WAR',severity:'CATASTROPHIC',
+   situation:'SAF vs RSF (Rapid Support Forces) civil war entering second year. Khartoum/Omdurman destroyed. RSF controls Darfur (mass atrocities confirmed). Famine (IPC Phase 5) in Zamzam camp — first African famine since Somalia 2011. 25M facing acute food insecurity.',
+   key_metrics:['Displaced: 12.3M (fastest growing crisis globally)','Famine: Zamzam camp (North Darfur)','Deaths: 20,000+ (conservative)','SAF controls: Khartoum (partially), Nile corridor','RSF controls: Darfur, Kordofan, parts of Khartoum'],
+   intelligence_focus:'UAE backing RSF (arms via Libya/CAR). Egypt/Russia backing SAF. International attention deficit despite catastrophic scale. No ceasefire in sight.'},
+  {region:'SAHEL — JIHADIST EXPANSION',lat:13.52,lng:-2.46,color:'#f97316',
+   status:'ACTIVE INSURGENCY',severity:'HIGH',
+   situation:'JNIM (GSIM) and ISWAP expanding in Mali, Burkina Faso, Niger despite AES junta alliance with Russia/Wagner. Timbuktu fell to Tuareg-JNIM alliance Sept 2023. Burkina Faso: half of territory outside government control. Wagner/Africa Corps 2,000+ in Mali alone.',
+   key_metrics:['Displaced: 3M+ across Sahel','JNIM territory: growing vs Wagner/junta','Civilian massacres: multiple (Burkina 2024)','ECOWAS: paralyzed post-junta coups','French forces: expelled from all three AES states'],
+   intelligence_focus:'Wagner/Africa Corps replacing French COIN but not defeating jihadists — protecting mining assets. Russia gaining influence but not solving security. JNIM-ISWAP competition for Sahel space.'},
+  {region:'MYANMAR — CIVIL WAR',lat:19.74,lng:96.08,color:'#f97316',
+   status:'ACTIVE WAR',severity:'HIGH',
+   situation:'SAC junta losing territory to Brotherhood Alliance (3BHA) and PDF. Operation 1027 (Oct 2023): captured Laukkai. Mandalay threatened (2025). SAC lost entire Shan State border with China. China brokering ceasefire (Jan 2024) to protect BRI investments.',
+   key_metrics:['Junta control: declining — below 50% of territory','PDF+EAO forces: coordinated nationwide','Displaced: 3.3M internally','Economy: kyat collapsed -50%','ASEAN: ineffective — "five-point consensus" ignored'],
+   intelligence_focus:'SAC losing militarily. China protecting economic interests by brokering pauses. Junta fracturing internally. If SAC collapses: question of what comes next (fragmented state risk).'},
+  {region:'HAITI — STATE COLLAPSE',lat:18.97,lng:-72.34,color:'#dc2626',
+   status:'STATE COLLAPSE',severity:'CRITICAL',
+   situation:'Gang coalition (Viv Ansanm: G9+GPEP) controls 85% of Port-au-Prince. Ariel Henry resigned (March 2024 under gang pressure). Kenya-led MSS (Multinational Security Support) deployed late 2024 (1,000 Kenyan police). PM Garry Conille appointed. Gangs armed with US-made weapons from diverted supplies.',
+   key_metrics:['Gangs control: 85% Port-au-Prince','Displaced: 700,000 (most in hemisphere)','Killings: 5,600+ (2024 first half)','MSS deployed: 1,000 Kenyan police (insufficient)','Government: transitional council, no elections planned'],
+   intelligence_focus:'Jimmy Cherizier (Barbecue) gang coalition unprecedented. MSS insufficient — needs 10,000+ for meaningful impact. Drug trafficking route through Haiti expanding to fill security vacuum.'}
+];
+
+var P59_INTEL_AGENCIES = [
+  {agency:'CIA (Central Intelligence Agency)',lat:38.95,lng:-77.15,color:'#3b82f6',
+   country:'USA',founded:1947,personnel:'~21,000 (estimated)',budget:'$15B (estimated, part of $90B NIP)',
+   mission:'Foreign intelligence collection, covert action, all-source analysis',
+   directorates:['DO (Directorate of Operations): HUMINT collection, covert action','DA (Directorate of Analysis): all-source analytical products','DS&T (Directorate of Science & Technology): technical collection','Digital Innovation: cyber and data analytics','Mission Centers: regional + functional (counterterrorism, WMD, etc.)'],
+   notable_ops:['Operation Cyclone (Afghan mujahideen, 1979-1989)','Operation Timber Sycamore (Syrian opposition, 2013-2017)','Enhanced Interrogation Program (2001-2007, Senate SSCI report condemned)','COVID origins analysis (assessed lab leak most likely, 2023)','Pre-warning Ukraine invasion intelligence (2022 — unprecedented public release)'],
+   current_director:'William Burns (2021-Jan 2025); John Ratcliffe (2025-)',
+   assessment:'Primary US foreign intelligence service. Reform post-9/11: DNI created above CIA, reducing CIA primacy. Prewar Ukraine intelligence release unprecedented (sharing with allies in real time). Tensions with Mossad over Gaza intelligence.'},
+  {agency:'NSA (National Security Agency)',lat:39.11,lng:-76.77,color:'#3b82f6',
+   country:'USA',founded:1952,personnel:'~30,000-40,000 (estimated)',budget:'$17B (estimated)',
+   mission:'SIGINT collection, cybersecurity (CYBERCOM dual-hatted director)',
+   directorates:['SIGINT Directorate: global signals collection','Cybersecurity Directorate: defensive cyber','Research: cryptanalysis, mathematics'],
+   notable_ops:['PRISM (mass internet data collection — Snowden revealed 2013)','XKeyscore (global internet search tool)','Bullrun (encryption standards undermining)','Stuxnet (joint with Israel UNIT 8200, Mossad)','Monitoring Russian communications Ukraine war'],
+   current_director:'Gen. Timothy Haugh (2024-)',
+   assessment:'Most technically capable intelligence agency globally. Snowden revelations damaged collection and trust. PRISM: court-approved but scope surprised public. NSA/CYBERCOM dual-hat creates tension between offense (CYBERCOM) and defense (NSA).'},
+  {agency:'DIA (Defense Intelligence Agency)',lat:38.87,lng:-77.00,color:'#3b82f6',
+   country:'USA',founded:1961,personnel:'~16,500',budget:'Part of MIP ($28B)',
+   mission:'Military intelligence: foreign military capabilities, order of battle, HUMINT (DCS)',
+   directorates:['Analysis: military threat assessments','HUMINT (DCS): defense clandestine service','TECHINT: weapons and equipment intelligence','MASINT: measurement and signature intelligence'],
+   notable_ops:['Ukraine war: DIA assessed Russian military performance (leaked 2023)','China military power report (annual unclassified)','Defector handling (joint with CIA)'],
+   current_director:'Lt. Gen. Jeffrey Kruse (2024-)',
+   assessment:'Defense community intelligence. Annual China Military Power report is key public intelligence product. DCS (clandestine service) overlap/competition with CIA DO creates coordination issues.'},
+  {agency:'MI6 / SIS (Secret Intelligence Service)',lat:51.49,lng:-0.12,color:'#22c55e',
+   country:'UK',founded:1909,personnel:'~3,500 (estimated)',budget:'~£3.6B (2023)',
+   mission:'Foreign HUMINT collection, covert action',
+   directorates:['Requirements: intelligence collection priorities','Production: analysis and dissemination','Special Operations: covert action capability'],
+   notable_ops:['Skripal operation (Russian double agent network, pre-poisoning)','Ukraine war: SIS ahead of CIA in warning of Russian intentions','Helping Ukraine target Russian military assets (confirmed post-2022)','Litvinenko investigation support'],
+   current_director:'Richard Moore (C, 2020-)',
+   assessment:'UK closest intelligence partner to CIA. Five Eyes architecture means sharing at near-real-time. Ukraine war: SIS role in targeting significant — UK has been less restrictive than US. SIS and GCHQ (SIGINT) coordination critical. Post-Brexit intelligence access: maintained despite political complexity.'},
+  {agency:'Mossad',lat:32.09,lng:34.85,color:'#eab308',
+   country:'Israel',founded:1949,personnel:'~7,000-8,000 (estimated)',budget:'Classified',
+   mission:'Foreign intelligence, covert action, counter-proliferation, operations against adversaries abroad',
+   directorates:['Caesarea: HUMINT and covert operations','Tzomet: agent recruitment','Keshet: technical collection','Neviot: physical surveillance/break-ins','Research: analysis'],
+   notable_ops:['Wrath of God: Munich 1972 Olympics killers tracked and killed','Entebbe rescue intelligence (1976)','Stuxnet (joint NSA/UNIT 8200)','IAEA source: Iran nuclear archive theft (Tehran 2018 — 55,000 files)','Pre-Oct 7: FAILED — Hamas attack surprise despite multiple warnings'],
+   current_director:'David Barnea (2021-)',
+   assessment:'Oct 7 represents Mossad/Shin Bet greatest intelligence failure since 1973 Yom Kippur War. Multiple warnings ignored at tactical and strategic level (HAMAS in plain sight — Hamas provided military parade video weeks before). Accountability investigations ongoing. Counter-Iran operations continue: Fakhrizadeh assassination (2020), Isfahan drone strike (April 2024).'},
+  {agency:'FSB (Federal Security Service)',lat:55.76,lng:37.62,color:'#ef4444',
+   country:'Russia',founded:1995,personnel:'~350,000 (incl. Border Service)',budget:'Classified (large fraction of classified defense budget)',
+   mission:'Domestic security, counter-intelligence, border security, covert action',
+   directorates:['Counter-Intelligence Service','Service for Protection of Constitutional Order','Border Service (FSB controls Russian borders)','Special Services (covert action)','FSB Alpha Group (counter-terrorism/direct action)'],
+   notable_ops:['Litvinenko assassination (London 2006)','Skripal poisoning (Salisbury 2018)','Navalny poisoning (2020) and likely prison death (2024)','Ukraine: prewar intelligence assessment was catastrophically wrong (predicted 3-day collapse)','Domestic repression: 500,000+ political cases since Ukraine invasion'],
+   current_director:'Alexander Bortnikov (2008-)',
+   assessment:'FSB Ukraine intelligence failure severe: assessed Ukraine army would fold in 72 hours. Putin relied on FSB political assessment over military intelligence. FSB accountability post-failure unknown. Domestic: FSB hunting draft evaders, anti-war activists, journalists (500,000+ criminal cases). Assassination program abroad continues.'}
+];
+
+var P59_INTEL_METHODS = [
+  {method:'HUMINT',desc:'Human intelligence — recruited agents, diplomats, defectors. CIA/MI6/Mossad primary. Most valuable but highest risk.'},
+  {method:'SIGINT',desc:'Signals intelligence — electronic intercepts, communications. NSA/GCHQ dominant. Bulk collection + targeted.'},
+  {method:'GEOINT',desc:'Geospatial intelligence — satellite imagery. NGA (US) + commercial (Planet, Maxar). Democratized by commercial.'},
+  {method:'OSINT',desc:'Open source intelligence — social media, news, public records. Growing in importance. Ukraine war: OSINT community (Bellingcat, etc.) matching classified.'},
+  {method:'MASINT',desc:'Measurement and signature intelligence — nuclear detection, seismic, chemical signatures. DIA/AFTAC primary.'},
+  {method:'CYBERINT',desc:'Cyber intelligence — network penetration, malware analysis, dark web. NSA/CYBERCOM + CIA/UNIT 8200 primary.'}
+];
+
+var P59_LAWFARE_CASES = [
+  {case:'ICC Ukraine Investigation',lat:52.07,lng:4.30,color:'#3b82f6',
+   court:'International Criminal Court',status:'ACTIVE',
+   parties:['Prosecutor vs Vladimir Putin','Prosecutor vs Maria Lvova-Belova'],
+   charges:'War crimes: unlawful deportation of Ukrainian children',
+   warrant_issued:'March 17 2023 — arrest warrants for Putin + Lvova-Belova (Children\'s Rights Commissioner)',
+   significance:'First ICC warrant for sitting head of major power (P5 member). Putin cannot travel to ICC member states (124 states) without arrest. South Africa (ICC member) hosting BRICS Aug 2023 — diplomatic crisis avoided by Putin not attending.',
+   current_status:'Investigation expanding to airstrikes on civilian infrastructure. Russia not ICC member — no enforcement mechanism. But: travel restriction on Putin and reputational damage.',
+   assessment:'Normative impact significant even without enforcement. 124 member states legally obligated to arrest. Putin sent delegations to ICC member states (South Africa) — arresting head of state risk of diplomatic crisis vs legal obligation. ICC also investigating Hamas Oct 7 and Israeli operations.'},
+  {case:'ICJ South Africa vs Israel (Genocide)',lat:52.09,lng:4.30,color:'#ef4444',
+   court:'International Court of Justice',status:'ACTIVE',
+   parties:['South Africa vs Israel'],
+   charges:'Genocide (Genocide Convention) — Israeli operations in Gaza',
+   warrant_issued:'Jan 26 2024: Provisional measures ordered (Israel must prevent genocidal acts, ensure humanitarian access). Not ordered to cease operations.',
+   significance:'South Africa case galvanized Global South. ICJ\'s provisional measures: legally binding on Israel (UN Charter). Israel dismissed ruling. Second hearing 2024: expanded provisional measures. Nicaragua joined. Multiple states intervening.',
+   current_status:'Merits stage ongoing. Provisional measures in place. Israel\'s compliance disputed by South Africa.',
+   assessment:'First time ICJ adjudicating ongoing conflict in real time. Creates international legal record regardless of outcome. Israel: "no genocide" — ICJ hasn\'t ruled on merits yet, only provisional measures. Case reframing international narrative from counter-terrorism to genocide.'},
+  {case:'ICC Gaza Investigation',lat:31.35,lng:34.31,color:'#f97316',
+   court:'International Criminal Court',status:'ACTIVE',
+   parties:['Prosecutor Karim Khan vs Benjamin Netanyahu','vs Yoav Gallant (former defense)','vs Hamas leadership'],
+   charges:'Netanyahu/Gallant: war crimes + crimes against humanity (starvation as method of war, attacks on civilians). Hamas: Oct 7 — murder, hostage-taking, sexual violence',
+   warrant_issued:'Nov 21 2024: Arrest warrants issued for Netanyahu and Gallant. Hamas warrants: Sinwar (killed Oct 2024), Deif (killed Aug 2024), Haniyeh (killed July 2024 — already dead).',
+   significance:'First ICC warrants for Western-allied democratic leaders. USA, Germany, Hungary objected. UK reversed position — obligated to arrest. France, Italy: would arrest if Netanyahu visited.',
+   current_status:'Netanyahu announced he would not travel to ICC member states. Diplomatic crisis ongoing.',
+   assessment:'Most politically significant ICC action in court history. Equivalence of Hamas + Israel warrants: both legally and diplomatically charged. USA withdrew from ICC Rome Statute under Trump (2019, again Jan 2025). Congress threatening sanctions against ICC. Demonstrates: international law is weaponized politically as much as applied neutrally.'},
+  {case:'UNCLOS South China Sea Arbitration',lat:12.88,lng:117.74,color:'#dc2626',
+   court:'Permanent Court of Arbitration (UNCLOS Annex VII)',status:'DECIDED — UNENFORCED',
+   parties:['Philippines vs China'],
+   charges:'China\'s nine-dash line and island-building violate UNCLOS',
+   warrant_issued:'July 12 2016: Philippines won decisively. China\'s nine-dash line invalid under UNCLOS. Mischief Reef + Spratly Islands: China not entitled to EEZ.',
+   significance:'International law unambiguously sided with Philippines. China declared ruling "null and void" and has ignored it completely. USA supports ruling but not party to UNCLOS.',
+   current_status:'China continues island construction, harassment. Philippines under Marcos Jr. reasserting claims (vs Duterte appeasement). US-Philippines patrols. China water cannons Philippine resupply missions.',
+   assessment:'Most significant example of selective enforcement of international law. Lawfare: Philippines used UNCLOS successfully but without enforcement mechanism the win is symbolic. China model: ignore international law rulings when inconvenient, participate when advantageous.'},
+  {case:'ICJ Nicaragua vs Germany',lat:52.52,lng:13.40,color:'#eab308',
+   court:'International Court of Justice',status:'ACTIVE (2024)',
+   parties:['Nicaragua vs Germany'],
+   charges:'Germany complicit in genocide by supplying arms to Israel',
+   warrant_issued:'Provisional measures rejected by ICJ (April 2024) — but case proceeding on merits',
+   significance:'Attempt to use ICJ to sanction arms suppliers. Legal theory: third-state responsibility for genocide. If successful: precedent for suing arms suppliers to any conflict.',
+   current_status:'Germany reduced arms exports to Israel after Oct 7 (from €326M 2023 to €14M). Case still proceeding.',
+   assessment:'Lawfare proliferation: 5+ ICJ cases related to Gaza opened simultaneously (Nicaragua vs Germany, Nicaragua vs Netherlands, etc.). Strategic use of international courts to create reputational and political cost for Israel supporters. Even if cases fail, they create diplomatic pressure.'},
+  {case:'ECHR Russia Cases',lat:67.16,lng:14.50,color:'#eab308',
+   court:'European Court of Human Rights',status:'HISTORIC TRANSITION',
+   parties:['Ukraine + 47 inter-state cases vs Russia'],
+   charges:'Crimea annexation, MH17, torture in detention, civilian targeting',
+   warrant_issued:'Russia expelled from Council of Europe March 2022. ECHR jurisdiction ended Sept 2022 for Russia.',
+   significance:'15,000+ pending cases against Russia. Russia evaded final reckoning by leaving CoE. Cases against Russia frozen but preserved — may be used in future reparations proceedings.',
+   current_status:'EU seizing Russian central bank interest ($3B+/year) for Ukraine reconstruction — separate from ECHR but related accountability architecture.',
+   assessment:'International legal accountability architecture building against Russia but without enforcement. Frozen assets ($300B), ICC warrant, ECHR cases, UN GA resolutions all creating a reckoning that may be realized post-conflict or with regime change. Legal warfare against Russia ongoing at 6+ simultaneous forums.'}
+];
+
+var P59_LAWFARE_TRENDS = [
+  {trend:'ICJ Proliferation',desc:'Gaza triggered 7+ simultaneous ICJ/ICC cases. Courts used as political/diplomatic weapons, not just legal.'},
+  {trend:'Universal Jurisdiction',desc:'Spain (Pinochet 1998), Belgium, Germany: prosecuting foreign officials. Netanyahu could face arrest in Germany, France, UK under ICC warrant.'},
+  {trend:'Corporate Liability',desc:'Companies sued for aiding human rights violations (Shell Nigeria, Total Myanmar). European courts expanding corporate accountability.'},
+  {trend:'Asset Seizure Architecture',desc:'$300B Russian central bank assets. EU using interest for Ukraine. Precedent: sovereign assets as reparations mechanism without war crimes conviction.'},
+  {trend:'SLAPP suits',desc:'Strategic Lawsuits Against Public Participation: authoritarian states suing journalists in foreign courts (UK libel tourism historically). Weaponized internationally.'}
+];
+
+// --- Phase 59 render functions ---
+
+function P59_renderCrisisRegions(){
+  var g=document.getElementById('p59crisis-regions-grid');
+  if(!g)return;
+  var html='';
+  P59_CRISIS_REGIONS.forEach(function(r){
+    var sevColor=r.severity==='CRITICAL'||r.severity==='CATASTROPHIC'?'#ef4444':(r.severity==='HIGH'?'#f97316':'#eab308');
+    var sevBg=r.severity==='CRITICAL'||r.severity==='CATASTROPHIC'?'rgba(239,68,68,0.15)':(r.severity==='HIGH'?'rgba(249,115,22,0.15)':'rgba(234,179,8,0.15)');
+    html+='<div class="p59cr-card" style="border-top-color:'+r.color+';">';
+    html+='<div class="p59cr-card-header">';
+    html+='<div class="p59cr-region-name" style="color:'+r.color+';">'+r.region+'</div>';
+    html+='<div>';
+    html+='<span class="p59cr-sev-badge" style="background:'+sevBg+';color:'+sevColor+';">'+r.severity+'</span>';
+    html+='<span class="p59cr-status-badge" style="background:rgba(255,255,255,0.05);color:#94a3b8;">'+r.status+'</span>';
+    html+='</div>';
+    html+='</div>';
+    html+='<div class="p59cr-row"><b>SITUATION:</b> '+r.situation+'</div>';
+    html+='<div class="p59cr-row"><b>KEY METRICS:</b></div>';
+    html+='<ul class="p59cr-list">';
+    r.key_metrics.forEach(function(m){html+='<li>'+m+'</li>';});
+    html+='</ul>';
+    html+='<div class="p59cr-intel"><b>INTEL FOCUS:</b> '+r.intelligence_focus+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P59_fetchCrisisLive(){
+  var feed=document.getElementById('p59-crisis-live');
+  if(!feed)return;
+  _gdeltFetch('crisis conflict war Sudan Myanmar Ukraine Gaza Haiti Sahel emergency humanitarian','p59-crisis-live');
+}
+
+function P59_openCrisisModule(){
+  var ov=document.getElementById('p59crisis-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P59_renderCrisisRegions();
+  P59_fetchCrisisLive();
+  var pins=P59_CRISIS_REGIONS.map(function(r){
+    var ptype=r.status==='ACTIVE WAR'||r.status==='MULTI-FRONT CONFLICT'?'active_conflict':(r.status==='ACTIVE INSURGENCY'?'militia':'instability');
+    var psev=r.severity==='CRITICAL'||r.severity==='CATASTROPHIC'?10:8;
+    return {lat:r.lat,lng:r.lng,color:r.color,label:r.region,type:ptype,severity:psev,TAG:'_p59crisis'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P59_closeCrisisModule(){
+  var ov=document.getElementById('p59crisis-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p59crisis';});
+}
+
+function P59_renderIntelAgencies(){
+  var g=document.getElementById('p59intel-agencies-grid');
+  if(!g)return;
+  var html='';
+  P59_INTEL_AGENCIES.forEach(function(a){
+    html+='<div class="p59ic-card" style="border-top-color:'+a.color+';">';
+    html+='<div class="p59ic-card-header">';
+    html+='<div class="p59ic-agency-name" style="color:'+a.color+';">'+a.agency+'</div>';
+    html+='<span class="p59ic-country-badge">'+a.country+'</span>';
+    html+='</div>';
+    html+='<div class="p59ic-row"><b>FOUNDED:</b> '+a.founded+' &nbsp; <b>PERSONNEL:</b> '+a.personnel+'</div>';
+    html+='<div class="p59ic-row"><b>BUDGET:</b> '+a.budget+'</div>';
+    html+='<div class="p59ic-row"><b>MISSION:</b> '+a.mission+'</div>';
+    html+='<div class="p59ic-row"><b>DIRECTORATES / STRUCTURE:</b></div>';
+    html+='<ul class="p59ic-list">';
+    a.directorates.forEach(function(d){html+='<li>'+d+'</li>';});
+    html+='</ul>';
+    html+='<div class="p59ic-row"><b>NOTABLE OPERATIONS:</b></div>';
+    html+='<ul class="p59ic-list">';
+    a.notable_ops.forEach(function(op){html+='<li>'+op+'</li>';});
+    html+='</ul>';
+    html+='<div class="p59ic-row"><b>CURRENT DIRECTOR:</b> '+a.current_director+'</div>';
+    html+='<div class="p59ic-assessment">'+a.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P59_renderIntelMethods(){
+  var tb=document.getElementById('p59intel-methods-tbody');
+  if(!tb)return;
+  var html='';
+  P59_INTEL_METHODS.forEach(function(m){
+    html+='<tr>';
+    html+='<td style="color:#e2e8f0;font-weight:700;white-space:nowrap;">'+m.method+'</td>';
+    html+='<td style="color:#94a3b8;">'+m.desc+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P59_openIntelModule(){
+  var ov=document.getElementById('p59intel-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P59_renderIntelAgencies();
+  P59_renderIntelMethods();
+  _gdeltFetch('CIA intelligence agency spy operation covert HUMINT NSA surveillance Mossad MI6','p59-intel-gdelt');
+  var pins=P59_INTEL_AGENCIES.map(function(a){
+    return {lat:a.lat,lng:a.lng,color:a.color,label:a.agency,type:'sigint',severity:7,TAG:'_p59intel'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P59_closeIntelModule(){
+  var ov=document.getElementById('p59intel-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p59intel';});
+}
+
+function P59_renderLawfareCases(){
+  var g=document.getElementById('p59lawfare-cases-grid');
+  if(!g)return;
+  var html='';
+  P59_LAWFARE_CASES.forEach(function(c){
+    var stColor=c.status==='ACTIVE'||c.status==='ACTIVE (2024)'?'#22c55e':(c.status==='HISTORIC TRANSITION'?'#a78bfa':'#f59e0b');
+    var stBg=c.status==='ACTIVE'||c.status==='ACTIVE (2024)'?'rgba(34,197,94,0.15)':(c.status==='HISTORIC TRANSITION'?'rgba(167,139,250,0.15)':'rgba(245,158,11,0.15)');
+    html+='<div class="p59lf-card" style="border-top-color:'+c.color+';">';
+    html+='<div class="p59lf-card-header">';
+    html+='<div class="p59lf-case-name" style="color:'+c.color+';">'+c.case+'</div>';
+    html+='<span class="p59lf-status-badge" style="background:'+stBg+';color:'+stColor+';">'+c.status+'</span>';
+    html+='</div>';
+    html+='<div class="p59lf-row"><b>COURT:</b> '+c.court+'</div>';
+    html+='<div class="p59lf-row"><b>PARTIES:</b></div>';
+    html+='<ul class="p59lf-list">';
+    c.parties.forEach(function(p){html+='<li>'+p+'</li>';});
+    html+='</ul>';
+    html+='<div class="p59lf-row"><b>CHARGES:</b> '+c.charges+'</div>';
+    html+='<div class="p59lf-row"><b>WARRANT / RULING:</b> '+c.warrant_issued+'</div>';
+    html+='<div class="p59lf-row"><b>SIGNIFICANCE:</b> '+c.significance+'</div>';
+    html+='<div class="p59lf-row"><b>CURRENT STATUS:</b> '+c.current_status+'</div>';
+    html+='<div class="p59lf-assessment">'+c.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P59_renderLawfareTrends(){
+  var tb=document.getElementById('p59lawfare-trends-tbody');
+  if(!tb)return;
+  var html='';
+  P59_LAWFARE_TRENDS.forEach(function(t){
+    html+='<tr>';
+    html+='<td style="color:#e2e8f0;font-weight:700;white-space:nowrap;">'+t.trend+'</td>';
+    html+='<td style="color:#94a3b8;">'+t.desc+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P59_openLawfareModule(){
+  var ov=document.getElementById('p59lawfare-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P59_renderLawfareCases();
+  P59_renderLawfareTrends();
+  _gdeltFetch('international court ICC ICJ war crimes arrest warrant lawfare legal accountability','p59-lawfare-gdelt');
+  var pins=P59_LAWFARE_CASES.map(function(c){
+    var psev=(c.status==='ACTIVE'||c.status==='ACTIVE (2024)')?8:6;
+    return {lat:c.lat,lng:c.lng,color:c.color,label:c.case,type:'diplo',severity:psev,TAG:'_p59lawfare'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P59_closeLawfareModule(){
+  var ov=document.getElementById('p59lawfare-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p59lawfare';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var crBtn=document.getElementById('p59crisis-btn');
+  if(crBtn)crBtn.addEventListener('click',P59_openCrisisModule);
+  var crClose=document.getElementById('p59crisis-close');
+  if(crClose)crClose.addEventListener('click',P59_closeCrisisModule);
+
+  var icBtn=document.getElementById('p59intel-btn');
+  if(icBtn)icBtn.addEventListener('click',P59_openIntelModule);
+  var icClose=document.getElementById('p59intel-close');
+  if(icClose)icClose.addEventListener('click',P59_closeIntelModule);
+
+  var lfBtn=document.getElementById('p59lawfare-btn');
+  if(lfBtn)lfBtn.addEventListener('click',P59_openLawfareModule);
+  var lfClose=document.getElementById('p59lawfare-close');
+  if(lfClose)lfClose.addEventListener('click',P59_closeLawfareModule);
+});
+
+// ===== END PHASE 59 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -36698,6 +37120,66 @@ function filterSIGINT(query){
     <div class="mobile-category-label">Technology &amp; Domains</div>
     <div class="mobile-btn-grid" id="mobile-cat-tech"></div>
   </div>
+</div>
+
+<!-- Phase 59 buttons -->
+<button id="p59crisis-btn">ACTIVE CRISIS FEED</button>
+<button id="p59intel-btn">INTEL COMMUNITY</button>
+<button id="p59lawfare-btn">LAWFARE</button>
+
+<!-- Active Crisis Feed Overlay (Phase 59) -->
+<div id="p59crisis-overlay">
+ <div class="p59cr-header">
+  <div>
+   <div class="p59cr-title">ACTIVE CRISIS FEED</div>
+   <div class="p59cr-subtitle">SOURCE: RELIEFWEB / GDELT / ACLED / UNHCR / OCHA / UN OIOS / ICRC / HRW / AI &nbsp;&#47;&#47;&nbsp; ACTIVE ARMED CONFLICTS &amp; HUMANITARIAN EMERGENCIES &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p59cr-close" id="p59crisis-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p59cr-section-title">ACTIVE CONFLICTS &amp; CRISES — CURRENT STATUS</div>
+ <div class="p59cr-grid" id="p59crisis-regions-grid"></div>
+ <div class="p59cr-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p59cr-live-feed" id="p59-crisis-live"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Intelligence Community Overlay (Phase 59) -->
+<div id="p59intel-overlay">
+ <div class="p59ic-header">
+  <div>
+   <div class="p59ic-title">INTELLIGENCE COMMUNITY</div>
+   <div class="p59ic-subtitle">SOURCE: ODNI / CIA FACTBOOK / SENATE SSCI / HOUSE HPSCI / SNOWDEN DOCS / BELLINGCAT / SSCI TORTURE REPORT / OPEN SOURCE &nbsp;&#47;&#47;&nbsp; GLOBAL INTELLIGENCE AGENCIES &amp; METHODS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p59ic-close" id="p59intel-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p59ic-section-title">MAJOR INTELLIGENCE AGENCIES</div>
+ <div class="p59ic-grid" id="p59intel-agencies-grid"></div>
+ <div class="p59ic-section-title">INTELLIGENCE COLLECTION METHODS (INTs)</div>
+ <table class="p59ic-methods-table">
+  <thead><tr><th>METHOD</th><th>DESCRIPTION</th></tr></thead>
+  <tbody id="p59intel-methods-tbody"></tbody>
+ </table>
+ <div class="p59ic-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p59ic-live-feed" id="p59-intel-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Lawfare Overlay (Phase 59) -->
+<div id="p59lawfare-overlay">
+ <div class="p59lf-header">
+  <div>
+   <div class="p59lf-title">LAWFARE</div>
+   <div class="p59lf-subtitle">SOURCE: ICC / ICJ / UNCLOS PCA / ECHR / EULEX / UN GA / INTERNATIONAL LAW COMMISSION &nbsp;&#47;&#47;&nbsp; INTERNATIONAL LEGAL ACCOUNTABILITY &amp; WEAPONIZED LITIGATION &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p59lf-close" id="p59lawfare-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p59lf-section-title">ACTIVE INTERNATIONAL LEGAL PROCEEDINGS</div>
+ <div class="p59lf-grid" id="p59lawfare-cases-grid"></div>
+ <div class="p59lf-section-title">LAWFARE TRENDS &amp; STRATEGIC LEGAL INSTRUMENTS</div>
+ <table class="p59lf-trends-table">
+  <thead><tr><th>TREND</th><th>DESCRIPTION</th></tr></thead>
+  <tbody id="p59lawfare-trends-tbody"></tbody>
+ </table>
+ <div class="p59lf-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p59lf-live-feed" id="p59-lawfare-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 <!-- Phase 58 buttons -->
