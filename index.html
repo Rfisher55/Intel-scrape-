@@ -3663,6 +3663,105 @@ button{border-radius:2px!important}
 .ps-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .ps-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .ps-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 46 buttons */
+#flashpoints-btn{position:fixed;top:175px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#flashpoints-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#sigint-btn{position:fixed;top:215px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#sigint-btn:hover{border-color:#10b981;color:#6ee7b7;}
+#stratreserves-btn{position:fixed;top:255px;right:1490px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#stratreserves-btn:hover{border-color:#f59e0b;color:#fde68a;}
+
+/* Flashpoints overlay */
+#flashpoints-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.fp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.fp-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#ef4444;}
+.fp-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.fp-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.fp-close:hover{color:#ef4444;border-color:#ef4444;}
+.fp-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.fp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.fp-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.fp-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.fp-name{font-size:14px;font-weight:900;color:#f1f5f9;}
+.fp-parties{font-size:8px;color:#64748b;margin-top:2px;}
+.fp-probs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.fp-prob-item{font-size:8px;}
+.fp-prob-label{color:#64748b;margin-right:2px;}
+.fp-prob-val{font-weight:700;font-size:10px;}
+.fp-severity-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;}
+.fp-status{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:6px;}
+.fp-section-mini{font-size:7px;font-weight:700;color:#475569;letter-spacing:.15em;margin:6px 0 4px;}
+.fp-ladder{display:flex;flex-direction:column;gap:3px;margin-bottom:6px;}
+.fp-ladder-step{font-size:8px;border-left-width:3px;border-left-style:solid;padding-left:8px;line-height:1.4;}
+.fp-triggers-list{margin:4px 0;padding-left:14px;}
+.fp-trigger-item{font-size:7px;color:#64748b;line-height:1.5;}
+.fp-intel{font-size:8px;color:#fbbf24;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;margin-top:6px;line-height:1.4;}
+.fp-gdelt-feed{max-width:900px;}
+.fp-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.fp-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.fp-gdelt-meta{font-size:8px;color:#475569;}
+
+/* SIGINT overlay */
+#sigint-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.si-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.si-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#10b981;}
+.si-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.si-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.si-close:hover{color:#10b981;border-color:#10b981;}
+.si-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.si-agencies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:14px;margin-bottom:10px;}
+.si-agency-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.si-agency-header{margin-bottom:8px;}
+.si-agency-name{font-size:13px;font-weight:700;}
+.si-agency-country{font-size:8px;color:#64748b;margin-top:2px;}
+.si-progs{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.si-prog-chip{font-size:7px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);padding:2px 5px;border-radius:2px;color:#6ee7b7;}
+.si-caps-list{margin:0 0 6px 0;padding-left:14px;}
+.si-cap-item{font-size:8px;color:#94a3b8;line-height:1.5;}
+.si-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;}
+.si-methods-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.si-methods-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.si-methods-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.si-method-name{color:#e2e8f0;font-weight:700;}
+.si-gdelt-feed{max-width:900px;}
+.si-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.si-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.si-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Strategic Reserves overlay */
+#stratreserves-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.sr-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.sr-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f59e0b;}
+.sr-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.sr-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.sr-close:hover{color:#f59e0b;border-color:#f59e0b;}
+.sr-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.sr-oil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:12px;margin-bottom:10px;}
+.sr-oil-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:12px;border-top-width:3px;}
+.sr-oil-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:4px;}
+.sr-country{font-size:13px;font-weight:700;}
+.sr-reserve-name{font-size:8px;color:#64748b;margin-top:2px;}
+.sr-status-badge{font-size:7px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;border-width:1px;border-style:solid;}
+.sr-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.sr-row b{color:#e2e8f0;}
+.sr-fill-bar-wrap{width:100%;height:5px;background:#0f172a;border-radius:3px;margin:4px 0;position:relative;}
+.sr-fill-bar{height:5px;border-radius:3px;max-width:100%;}
+.sr-fill-label{font-size:7px;color:#64748b;}
+.sr-notes{font-size:8px;color:#64748b;line-height:1.4;margin-top:4px;}
+.sr-food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:10px;margin-bottom:10px;}
+.sr-food-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;border-left-width:3px;}
+.sr-food-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.sr-commodity{font-size:12px;font-weight:700;color:#f1f5f9;}
+.sr-vuln{font-size:8px;color:#94a3b8;line-height:1.4;margin-top:4px;}
+.sr-cases-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:10px;margin-bottom:10px;}
+.sr-case-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;}
+.sr-case-title{font-size:10px;font-weight:700;margin-bottom:4px;}
+.sr-outcome{font-size:8px;color:#94a3b8;line-height:1.4;margin-top:4px;}
+.sr-gdelt-feed{max-width:900px;}
+.sr-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.sr-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.sr-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -27755,6 +27854,389 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 45 =====
 
+// ===== PHASE 46: FLASHPOINTS / SIGINT / STRAT RESERVES =====
+
+var CRISIS_FLASHPOINTS = [
+  {name:'Taiwan Strait',lat:24.00,lng:121.50,color:'#ef4444',
+   probability_12mo:'35%',probability_5yr:'55%',
+   severity:'EXISTENTIAL',
+   parties:['PRC','Taiwan (ROC)','USA','Japan'],
+   triggers:['Taiwan independence declaration','US FONOPS escalation','PLA miscalculation','Leadership succession crisis in Beijing'],
+   current_status:'PLA conducting monthly gray zone incursions. 2024: Record 153 aircraft crossing median line. Xi stated Taiwan unification "historic mission." US arms sales accelerating. Both sides building toward critical capability windows 2027-2030.',
+   escalation_ladder:['1: Gray zone (current)','2: Full blockade','3: Selective strikes (ADIZ enforcement)','4: Amphibious assault (beaches)','5: Total war — US intervention'],
+   us_commitment:'Taiwan Relations Act — "grave concern" + arms supply. No mutual defense treaty. Strategic ambiguity policy intact but eroding.',
+   intel_key:'PLA Eastern Theater Command readiness exercises are primary war indicator. PLAN carrier deployments and amphibious shipping concentration are operational warning.'},
+  {name:'Korean Peninsula',lat:37.56,lng:127.00,color:'#ef4444',
+   probability_12mo:'15%',probability_5yr:'30%',
+   severity:'CATASTROPHIC',
+   parties:['North Korea (DPRK)','South Korea (ROK)','USA','China','Japan'],
+   triggers:['Kim Jong-un death/succession crisis','DPRK economic collapse','Miscalculated artillery exchange','Nuclear test + US response'],
+   current_status:'Kim declared South Korea "principal enemy" Jan 2024. Constitutional removal of reunification goal. New tactical nuclear units declared. Artillery targeting Seoul 24-36 hours from now at current readiness. DPRK-Russia arms transfer accelerating.',
+   escalation_ladder:['1: Provocations/missile tests (chronic)','2: Limited artillery exchange','3: WMD demonstration strike','4: Full conventional invasion','5: Nuclear use (tactical)'],
+   us_commitment:'Mutual Defense Treaty 1953. 28,500 US troops ROK. THAAD, KAMD layered defense. Extended nuclear deterrence pledge reaffirmed 2023 Washington Declaration.',
+   intel_key:'KPA artillery relocation, tunnel activity at launch facilities, leadership visibility gaps are primary indicators. Chinese PLA border concentration is 72-hour warning.'},
+  {name:'Russia-NATO Eastern Flank',lat:54.68,lng:25.27,color:'#dc2626',
+   probability_12mo:'10%',probability_5yr:'25%',
+   severity:'CATASTROPHIC',
+   parties:['Russia','NATO (Poland/Baltics)','USA','Germany'],
+   triggers:['Ukraine war escalation spillover','Baltic state Russian-minority provocation','Suwalki Gap incident','NATO Article 5 invocation dispute'],
+   current_status:'Russia-NATO in de facto proxy war via Ukraine. Kaliningrad exercises simulate Baltic invasion routes. Wagner-successor Africa Corps expanding. Russian nuclear doctrine updated to lower first-use threshold. NATO reinforcing eastern flank (eFP battle groups to brigade level).',
+   escalation_ladder:['1: Proxy war (current)','2: Direct Russia-NATO incident','3: Limited Article 5 invocation','4: Conventional NATO-Russia war','5: Nuclear escalation'],
+   us_commitment:'NATO Article 5 is treaty obligation. 100,000 US troops Europe (post-Ukraine). B-61 tactical nukes forward deployed. SACEUR dual-hatted for nuclear release authority.',
+   intel_key:'Belarusian force concentration, Kaliningrad missile battery activation, Russian strategic nuclear force alert level changes are primary escalation indicators.'},
+  {name:'India-Pakistan',lat:31.52,lng:74.35,color:'#f97316',
+   probability_12mo:'8%',probability_5yr:'20%',
+   severity:'CATASTROPHIC',
+   parties:['India','Pakistan','China (indirect)'],
+   triggers:['Kashmir terrorist attack on India','Indian Cold Start strike across LoC','Pakistan nuclear first-use signal','Pakistani state collapse'],
+   current_status:'Post-Pulwama/Balakot 2019 dynamics persist. India building Cold Start conventional superiority. Pakistan responding with tactical nuclear doctrine (Nasr missile). China-Pakistan axis complicates India deterrence. Both states have ~170 warheads each.',
+   escalation_ladder:['1: Terrorism / LoC fire (chronic)','2: Indian limited strike package','3: Pakistani conventional response','4: Indian deeper strike','5: Pakistani nuclear first use (threshold ~3 days)'],
+   us_commitment:'No mutual defense treaty with either. US historically mediated but influence declining. India-US Quad relationship complicates neutrality.',
+   intel_key:'ISI-directed militant activation in Kashmir, Indian Army Corps mobilization, Pakistani NSC emergency sessions are key indicators.'},
+  {name:'Iran-Israel Shadow War',lat:31.77,lng:35.21,color:'#f97316',
+   probability_12mo:'20%',probability_5yr:'40%',
+   severity:'HIGH',
+   parties:['Iran','Israel','USA','Hezbollah','Houthis'],
+   triggers:['Israeli strike on Iranian nuclear facilities','Iranian proxy killing of senior Israeli/US officials','Hezbollah full-scale war triggered','Iranian nuclear breakout'],
+   current_status:'First direct Iran-Israel exchange April 2024: Iran fired 300+ drones/missiles, Israel intercepted with US/UK/Jordan support. Israeli counter-strike followed. Shadow war has become overt. Hezbollah N. front volatile. Iran enrichment at 60% (near weapons grade).',
+   escalation_ladder:['1: Proxy/shadow war (current)','2: Direct exchange (April 2024 precedent)','3: Israeli strike on Fordow/Natanz','4: Iran nuclear breakout threat','5: Regional war + US involvement'],
+   us_commitment:'No mutual defense treaty with Israel. Implicit commitment via arms sales, intelligence. Congress increasingly divided. Biden/post-Biden commitments under scrutiny.',
+   intel_key:'IRGC Quds Force operational tempo, Hezbollah missile prepositioning, Israeli Air Force sortie surge are primary indicators.'},
+  {name:'South China Sea / Philippines',lat:12.87,lng:118.00,color:'#eab308',
+   probability_12mo:'12%',probability_5yr:'25%',
+   severity:'HIGH',
+   parties:['China','Philippines','USA','Vietnam','Malaysia'],
+   triggers:['Filipino death in PRC water cannon/ramming incident','US treaty invocation for Philippine ship attack','Scarborough Shoal fortification attempt','Philippine base access expansion'],
+   current_status:'2024: Record water cannon attacks on Philippine resupply ships at Second Thomas Shoal. BRP Sierra Madre grounding deliberate. Marcos government invoking US MDT. EDCA expansions (9 bases including near Taiwan). Near-daily confrontations.',
+   escalation_ladder:['1: Water cannon/ramming (current)','2: Filipino deaths','3: US treaty invocation','4: US-PRC naval incident','5: Limited conflict'],
+   us_commitment:'US-Philippines Mutual Defense Treaty (1951). Biden explicitly stated Article 4 covers Philippine ships in SCS. US-Philippines enhanced exercises ongoing.',
+   intel_key:'PLAN carrier battle group deployment from Hainan, PLA Marine amphibious loading, Scarborough Shoal construction activity are key indicators.'}
+];
+
+var CONFLICT_PROBABILITY_KEY = [
+  {level:'EXISTENTIAL',color:'#7f1d1d',desc:'Potential nuclear exchange; civilization-scale consequences'},
+  {level:'CATASTROPHIC',color:'#ef4444',desc:'Regional war; potential nuclear use; hundreds of thousands casualties'},
+  {level:'HIGH',color:'#f97316',desc:'Significant conventional conflict; thousands of casualties; global economic impact'},
+  {level:'MODERATE',color:'#eab308',desc:'Limited conflict; dozens to hundreds of casualties; contained impact'}
+];
+
+var SIGINT_AGENCIES = [
+  {agency:'NSA (National Security Agency)',country:'USA',lat:39.10,lng:-76.77,color:'#3b82f6',
+   budget_est:'$10.8B (est FY2024)',employees:'~40,000',
+   programs:['PRISM (upstream internet collection)','XKeyscore (global internet metadata)','MUSCULAR (cloud provider taps)','STORMBREW (fiber backbone access)','MYSTIC (voice intercept)','UPSTREAM collection (cables)'],
+   capabilities:['Full-take fiber optic backbone access','Real-time internet metadata at scale','SIGINT satellite constellation (NRO partnership)','Cryptographic attack (quantum-resistant transition)','ELINT (electronic intelligence)'],
+   legal_framework:'Executive Order 12333 (foreign collection). FISA Section 702 (domestic/foreign communications). USA FREEDOM Act limits bulk domestic collection.',
+   assessment:'Most capable SIGINT agency globally by budget and technical reach. Snowden revelations (2013) created significant reform pressure. Post-Snowden capabilities rebuilt with legal reauthorizations.'},
+  {agency:'GCHQ (Government Communications HQ)',country:'UK',lat:51.90,lng:-2.08,color:'#22c55e',
+   budget_est:'£3.2B (est 2024)',employees:'~7,500',
+   programs:['TEMPORA (undersea cable access)','Karma Police (web browsing tracking)','MUSCULAR (joint NSA cloud access)','OPTIC NERVE (webcam captures)','FLYING PIG (SSL decryption)'],
+   capabilities:['Undersea cable taps (TEMPORA — 600Gbps+)','Deep packet inspection at cable landing stations','Joint NSA global collection architecture','GCHQ Bude Cornwall cable landing station hub'],
+   legal_framework:'Investigatory Powers Act 2016 (Snoopers\' Charter). Bulk interception warrant regime. Oversight by Investigatory Powers Tribunal.',
+   assessment:'UK\'s most important intelligence asset. Undersea cable access complementary to NSA satellite collection. TEMPORA accesses 200+ cables at landing stations.'},
+  {agency:'BND (Bundesnachrichtendienst)',country:'Germany',lat:52.52,lng:13.40,color:'#eab308',
+   budget_est:'€1.1B (2024)',employees:'~6,500',
+   programs:['Strategic SIGINT collection','Partner sharing (Five Eyes adjacent)','XKEYSCORE access (NSA partnership)','Foreign electronic surveillance'],
+   capabilities:['European internet exchange point access','Satellite SIGINT','SIGINT support to BND foreign intelligence'],
+   legal_framework:'BND Act 2021 reform after ECJ ruling. Foreign signals collection broader than domestic. Parliamentary oversight strengthened.',
+   assessment:'Primary European continental SIGINT partner. Internet exchange point access critical for European traffic. NSA partnership gives access to Five Eyes product.'},
+  {agency:'SIGINT Alliance (Five Eyes)',country:'USA/UK/CAN/AUS/NZ',lat:51.50,lng:-0.12,color:'#a78bfa',
+   budget_est:'$20B+ combined',employees:'~80,000+ combined',
+   programs:['UKUSA Agreement (1946)','ECHELON (global interception network)','Stone Ghost (classified network)','Stoneghost (sharing framework)','SIGINT Seniors Pacific/Europe'],
+   capabilities:['Global SIGINT collection division of labor','No-spy agreement between members','Real-time intelligence sharing','Satellite, cable, COMINT combined'],
+   legal_framework:'UKUSA Agreement (1946, declassified 2010). Bilateral executive agreements. No domestic spying on each other\'s citizens (honored imperfectly).',
+   assessment:'Most capable intelligence alliance in history. Division of labor: NSA leads, GCHQ cables, ASD (Australia) Pacific, CSE (Canada) Americas, GCSB (NZ) Pacific islands. China/Russia primary collective targets.'},
+  {agency:'GRU SIGINT / FSB SORM',country:'Russia',lat:55.75,lng:37.62,color:'#ef4444',
+   budget_est:'Classified (~$3B est)',employees:'~25,000',
+   programs:['SORM-3 (mandatory ISP access)','GRU Unit 74455 (Sandworm SIGINT/cyber)','FAPSI successor programs','Lexi (signals collection infrastructure)'],
+   capabilities:['Mandatory telecom tap access (SORM)','Submarine cable interception (spy ships)','ELINT ships and aircraft','Cyber-SIGINT hybrid (GRU Unit 74455)'],
+   legal_framework:'SORM (1998, expanded 2014): requires all Russian ISPs to install FSB intercept equipment. No judicial oversight. Direct FSB access.',
+   assessment:'SORM gives total domestic intercept capability. Foreign SIGINT degraded post-sanctions. Spy ship fleet (Yantar-class) for cable reconnaissance. GRU cyber-SIGINT hybrid most advanced offensive program.'},
+  {agency:'MSS / PLA SSF SIGINT',country:'China',lat:39.91,lng:116.39,color:'#dc2626',
+   budget_est:'Classified (~$6B est)',employees:'~100,000+',
+   programs:['Great Firewall (domestic monitoring)','Golden Shield Project','PLA SSF space-based SIGINT','Maritime SIGINT vessels','APT collection-to-SIGINT pipeline'],
+   capabilities:['Complete domestic communications monitoring','Satellite SIGINT constellation','Undersea cable research vessels','Cyber-enabled SIGINT globally','5G infrastructure intelligence access'],
+   legal_framework:'National Intelligence Law 2017: all Chinese entities must assist intelligence collection. No meaningful judicial oversight.',
+   assessment:'Largest SIGINT collection apparatus by personnel. National Intelligence Law compels all Chinese companies (Huawei, ZTE) to assist. 5G deployment creates global collection access. SSF network warfare force integrates SIGINT/cyber.'}
+];
+
+var SIGINT_COLLECTION_METHODS = [
+  {method:'COMINT (Communications Intelligence)',examples:['Phone intercepts','Email/messaging','Radio comms','Diplomatic cables'],source:'Human communications'},
+  {method:'ELINT (Electronic Intelligence)',examples:['Radar emissions','Weapon system signatures','Navigation signals','Electronic order of battle'],source:'Electronic emissions'},
+  {method:'MASINT (Measurement & Signature)',examples:['Nuclear signatures','Missile telemetry','Seismic monitoring','Infrared signatures'],source:'Physical phenomena'},
+  {method:'FISINT (Foreign Instrumentation Signals)',examples:['Missile telemetry','Space vehicle signals','Weapons system data links','Command/control signals'],source:'Foreign test signals'},
+  {method:'CYBER-SIGINT (Hybrid)',examples:['Implant-enabled collection','Malware SIGINT','Network exploitation','Exfiltration operations'],source:'Computer network operations'}
+];
+
+var STRATEGIC_OIL_RESERVES = [
+  {country:'USA',reserve_name:'Strategic Petroleum Reserve (SPR)',lat:29.95,lng:-90.07,color:'#3b82f6',
+   volume_mb:351,capacity_mb:714,days_cover:17,status:'DEPLETED (partial)',
+   location:'4 salt caverns: Bryan Mound TX, Big Hill TX, West Hackberry LA, Bayou Choctaw LA',
+   notes:'Biden admin released 180M barrels 2022 to fight inflation. Lowest since 1983. Refill ongoing but slow. Full refill at current pace: 2028. Strategic vulnerability window open.'},
+  {country:'China',reserve_name:'Strategic Petroleum Reserve (SPR)',lat:39.91,lng:116.39,color:'#ef4444',
+   volume_mb:950,capacity_mb:1000,days_cover:90,status:'STRATEGIC FULL',
+   location:'Multiple coastal and inland sites — exact locations classified. Zhoushan, Dushanzi, Lanzhou major nodes.',
+   notes:'China does not publish SPR data. Estimates from satellite imagery and tanker flows. 90-day cover estimated by IEA. Massive expansion 2014-2020. Largest reserve globally by estimated volume.'},
+  {country:'IEA Members',reserve_name:'IEA Collective Emergency Reserves',lat:48.86,lng:2.35,color:'#22c55e',
+   volume_mb:4200,capacity_mb:5000,days_cover:90,status:'ADEQUATE',
+   location:'Distributed across 31 IEA member countries. Germany, Japan, Korea major holders.',
+   notes:'IEA requires 90-day emergency reserve for all member states. Coordinated release mechanism activated 3 times: 1991 Gulf War, 2011 Libya, 2022 Ukraine. Combined release capacity 280M barrels in first month.'},
+  {country:'Saudi Arabia',reserve_name:'Aramco Strategic Stocks',lat:24.69,lng:46.72,color:'#eab308',
+   volume_mb:300,capacity_mb:350,days_cover:60,status:'MAINTAINED',
+   location:'Abqaiq processing facility, Ras Tanura terminal, Yanbu (Red Sea)',
+   notes:'Saudi Aramco maintains significant strategic stocks. Abqaiq single-point-of-failure: processes 7% global oil. 2019 Houthi attack on Abqaiq demonstrated existential vulnerability of global oil system.'}
+];
+
+var FOOD_STRATEGIC_RESERVES = [
+  {commodity:'Wheat',global_stock_mt:300,days_consumption:120,top_holders:['China (50% global wheat reserves)','USA','EU','India'],
+   color:'#eab308',risk:'HIGH',
+   vulnerability:'Russia/Ukraine supply 30% global exports. 2022 war immediately impacted 45 countries with >50% wheat import from conflict zone. China hoarding 50%+ global wheat stocks raises questions.'},
+  {commodity:'Rice',global_stock_mt:180,days_consumption:100,top_holders:['China (60% global rice reserves)','India (export controls 2023)','Thailand','Vietnam'],
+   color:'#f97316',risk:'HIGH',
+   vulnerability:'India rice export ban 2023 hit global prices 20%. China holds 60% global rice reserves. ASEAN rice producers increasingly use export restrictions as geopolitical tools.'},
+  {commodity:'Corn/Maize',global_stock_mt:310,days_consumption:90,top_holders:['USA','China','Brazil','Argentina'],
+   color:'#22c55e',risk:'MODERATE',
+   vulnerability:'US/Brazil/Argentina supply 70% global exports. Ukraine corn disruption 2022 absorbed by Brazil/Argentina expansion. Climate risk to US Corn Belt growing.'},
+  {commodity:'Fertilizer',global_stock_mt:null,days_consumption:null,top_holders:['Russia (potash/nitrogen)','China (phosphate)','Canada (potash)','Belarus (potash)'],
+   color:'#ef4444',risk:'CRITICAL',
+   vulnerability:'Russia/Belarus supply 40% global potash. Russia supplies 15% ammonia/urea. Sanctions on Russia/Belarus created 2022-2023 global fertilizer crisis. Food production 2023-2024 affected by 2022 fertilizer shortfall with 12-18 month lag.'}
+];
+
+var RESERVE_WEAPONIZATION_CASES = [
+  {case:'China Rare Earth Embargo (Japan, 2010)',color:'#ef4444',outcome:'Resolved diplomatically after 2 months. Accelerated Japan/West rare earth diversification. Established weaponization precedent.',weapons:'Export restriction'},
+  {case:'Russia Gas Cutoffs (Europe, 2006/2009/2022)',color:'#ef4444',outcome:'2022 cutoff: European energy crisis, €400B+ economic damage. Accelerated EU energy transition. Demonstrated pipeline dependency as vulnerability.',weapons:'Energy coercion'},
+  {case:'China Barley/Wine/Coal embargoes (Australia, 2020)',color:'#f97316',outcome:'Australia diversified markets. China failed to achieve political concessions. Long-term damage to China-Australia trade relationship but Australia economy resilient.',weapons:'Trade embargo'},
+  {case:'India Fertilizer Export Ban (2022)',color:'#eab308',outcome:'Contributed to global food price spike. India prioritized domestic food security. Demonstrated sovereign food security logic over global market role.',weapons:'Export restriction'},
+  {case:'US Oil SPR Release (2022)',color:'#3b82f6',outcome:'180M barrel release reduced oil prices ~$5-8/barrel temporarily. Depleted reserve to strategic vulnerability level. Geopolitical tool with economic cost.',weapons:'Strategic reserve release'},
+  {case:'OPEC+ Production Cuts (2022-2024)',color:'#f97316',outcome:'Saudi-led cuts defied US pressure. $80-90/barrel maintained. Demonstrated OPEC+ willingness to prioritize revenue over Western alliance relationships.',weapons:'Supply restriction'}
+];
+
+function _renderFlashpoints(){
+  var grid = document.getElementById('fp-grid');
+  if(!grid) return;
+  grid.innerHTML = CRISIS_FLASHPOINTS.map(function(f){
+    var triggers = f.triggers.map(function(t){return '<li class="fp-trigger-item">'+t+'</li>';}).join('');
+    var ladder = f.escalation_ladder.map(function(l,i){
+      var col = i===0?'#22c55e':i===1?'#eab308':i===2?'#f97316':i===3?'#ef4444':'#7f1d1d';
+      return '<div class="fp-ladder-step" style="border-left-color:'+col+';color:'+col+';">'+l+'</div>';
+    }).join('');
+    var svColor = f.severity==='EXISTENTIAL'?'#7f1d1d':f.severity==='CATASTROPHIC'?'#ef4444':f.severity==='HIGH'?'#f97316':'#eab308';
+    return '<div class="fp-card" style="border-top-color:'+f.color+';">'+
+      '<div class="fp-card-header">'+
+        '<div>'+
+          '<div class="fp-name">'+f.name+'</div>'+
+          '<div class="fp-parties">'+f.parties.join(' / ')+'</div>'+
+        '</div>'+
+        '<div class="fp-probs">'+
+          '<div class="fp-prob-item"><span class="fp-prob-label">12M:</span><span class="fp-prob-val" style="color:'+f.color+';">'+f.probability_12mo+'</span></div>'+
+          '<div class="fp-prob-item"><span class="fp-prob-label">5YR:</span><span class="fp-prob-val" style="color:'+f.color+';">'+f.probability_5yr+'</span></div>'+
+          '<span class="fp-severity-badge" style="background:'+svColor+'22;border:1px solid '+svColor+';color:'+svColor+';">'+f.severity+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="fp-status">'+f.current_status+'</div>'+
+      '<div class="fp-section-mini">ESCALATION LADDER</div>'+
+      '<div class="fp-ladder">'+ladder+'</div>'+
+      '<ul class="fp-triggers-list">'+triggers+'</ul>'+
+      '<div class="fp-intel">'+f.intel_key+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+async function _fetchFpGdelt(){
+  var feed = document.getElementById('fp-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('Taiwan Korea flashpoint crisis military escalation confrontation war risk');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="fp-gdelt-item">'+
+        '<div class="fp-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="fp-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openFlashpoints(){
+  var ov=document.getElementById('flashpoints-overlay');
+  if(ov){ov.style.display='flex';_renderFlashpoints();_fetchFpGdelt();}
+  var pins = CRISIS_FLASHPOINTS.map(function(f){
+    return {lat:f.lat,lng:f.lng,type:'active_conflict',severity:f.severity==='EXISTENTIAL'?10:f.severity==='CATASTROPHIC'?9:8,label:f.name+' FLASHPOINT',_flashpoints:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._flashpoints;}), ...pins];
+}
+function _closeFlashpoints(){
+  var ov=document.getElementById('flashpoints-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._flashpoints;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('flashpoints-btn');
+  if(b) b.addEventListener('click',_openFlashpoints);
+  var c=document.getElementById('flashpoints-close');
+  if(c) c.addEventListener('click',_closeFlashpoints);
+});
+
+function _renderSigint(){
+  var grid = document.getElementById('si-agencies-grid');
+  if(!grid) return;
+  grid.innerHTML = SIGINT_AGENCIES.map(function(a){
+    var progs = a.programs.map(function(p){return '<span class="si-prog-chip">'+p+'</span>';}).join('');
+    var caps = a.capabilities.map(function(c){return '<li class="si-cap-item">'+c+'</li>';}).join('');
+    return '<div class="si-agency-card" style="border-top-color:'+a.color+';">'+
+      '<div class="si-agency-header">'+
+        '<div>'+
+          '<div class="si-agency-name" style="color:'+a.color+';">'+a.agency+'</div>'+
+          '<div class="si-agency-country">'+a.country+' &nbsp;|&nbsp; Est: '+a.budget_est+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="si-progs">'+progs+'</div>'+
+      '<ul class="si-caps-list">'+caps+'</ul>'+
+      '<div class="si-assessment">'+a.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('si-methods-tbody');
+  if(tbody){
+    tbody.innerHTML = SIGINT_COLLECTION_METHODS.map(function(m){
+      var ex = m.examples.join(', ');
+      return '<tr><td class="si-method-name">'+m.method+'</td>'+
+        '<td style="color:#94a3b8;font-size:7px;">'+m.source+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+ex+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchSiGdelt(){
+  var feed = document.getElementById('si-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('signals intelligence NSA GCHQ surveillance espionage intercept Five Eyes');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="si-gdelt-item">'+
+        '<div class="si-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="si-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openSigint(){
+  var ov=document.getElementById('sigint-overlay');
+  if(ov){ov.style.display='flex';_renderSigint();_fetchSiGdelt();}
+  var pins = SIGINT_AGENCIES.filter(function(a){return a.employees;}).map(function(a){
+    return {lat:a.lat,lng:a.lng,type:'cyber',severity:8,label:a.agency+' SIGINT',_sigint:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._sigint;}), ...pins];
+}
+function _closeSigint(){
+  var ov=document.getElementById('sigint-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._sigint;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('sigint-btn');
+  if(b) b.addEventListener('click',_openSigint);
+  var c=document.getElementById('sigint-close');
+  if(c) c.addEventListener('click',_closeSigint);
+});
+
+function _renderStratReserves(){
+  var grid = document.getElementById('sr-oil-grid');
+  if(!grid) return;
+  grid.innerHTML = STRATEGIC_OIL_RESERVES.map(function(r){
+    var fillPct = Math.round((r.volume_mb/r.capacity_mb)*100);
+    var fillColor = fillPct>70?'#22c55e':fillPct>40?'#eab308':'#ef4444';
+    return '<div class="sr-oil-card" style="border-top-color:'+r.color+';">'+
+      '<div class="sr-oil-header">'+
+        '<div>'+
+          '<div class="sr-country" style="color:'+r.color+';">'+r.country+'</div>'+
+          '<div class="sr-reserve-name">'+r.reserve_name+'</div>'+
+        '</div>'+
+        '<span class="sr-status-badge" style="color:'+fillColor+';border-color:'+fillColor+';">'+r.status+'</span>'+
+      '</div>'+
+      '<div class="sr-row"><b>Volume:</b> '+r.volume_mb+'M barrels &nbsp;|&nbsp; <b>Capacity:</b> '+r.capacity_mb+'M bbl &nbsp;|&nbsp; <b>Days cover:</b> '+r.days_cover+'</div>'+
+      '<div class="sr-fill-bar-wrap"><div class="sr-fill-bar" style="width:'+fillPct+'%;background:'+fillColor+';"></div><span class="sr-fill-label">'+fillPct+'% full</span></div>'+
+      '<div class="sr-notes">'+r.notes+'</div>'+
+    '</div>';
+  }).join('');
+  var fGrid = document.getElementById('sr-food-grid');
+  if(fGrid){
+    fGrid.innerHTML = FOOD_STRATEGIC_RESERVES.map(function(f){
+      return '<div class="sr-food-card" style="border-left-color:'+f.color+';">'+
+        '<div class="sr-food-header">'+
+          '<div class="sr-commodity">'+f.commodity+'</div>'+
+          '<span style="color:'+f.color+';font-weight:700;font-size:8px;">'+f.risk+' RISK</span>'+
+        '</div>'+
+        (f.global_stock_mt?'<div class="sr-row"><b>Global stock:</b> '+f.global_stock_mt+'M MT &nbsp;|&nbsp; <b>Days consumption:</b> '+f.days_consumption+'</div>':'')+
+        '<div class="sr-row"><b>Major holders:</b> '+f.top_holders.join(' / ')+'</div>'+
+        '<div class="sr-vuln">'+f.vulnerability+'</div>'+
+      '</div>';
+    }).join('');
+  }
+  var cGrid = document.getElementById('sr-cases-grid');
+  if(cGrid){
+    cGrid.innerHTML = RESERVE_WEAPONIZATION_CASES.map(function(c){
+      return '<div class="sr-case-card">'+
+        '<div class="sr-case-title" style="color:'+c.color+';">'+c.case+'</div>'+
+        '<div class="sr-row"><b>Weapon:</b> <span style="color:#f97316;">'+c.weapons+'</span></div>'+
+        '<div class="sr-outcome">'+c.outcome+'</div>'+
+      '</div>';
+    }).join('');
+  }
+}
+
+async function _fetchSrGdelt(){
+  var feed = document.getElementById('sr-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('strategic petroleum reserve food security oil stockpile commodity supply chain weaponization');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="sr-gdelt-item">'+
+        '<div class="sr-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="sr-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openStratReserves(){
+  var ov=document.getElementById('stratreserves-overlay');
+  if(ov){ov.style.display='flex';_renderStratReserves();_fetchSrGdelt();}
+  var pins = STRATEGIC_OIL_RESERVES.map(function(r){
+    return {lat:r.lat,lng:r.lng,type:'econint',severity:7,label:r.country+' STRAT RESERVE',_stratreserves:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._stratreserves;}), ...pins];
+}
+function _closeStratReserves(){
+  var ov=document.getElementById('stratreserves-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._stratreserves;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('stratreserves-btn');
+  if(b) b.addEventListener('click',_openStratReserves);
+  var c=document.getElementById('stratreserves-close');
+  if(c) c.addEventListener('click',_closeStratReserves);
+});
+
+// ===== END PHASE 46 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -30387,6 +30869,65 @@ function filterSIGINT(query){
   <div class="mm-grid" id="mm-programs-grid"></div>
   <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 46 buttons -->
+<button id="flashpoints-btn">FLASHPOINTS</button>
+<button id="sigint-btn">SIGINT</button>
+<button id="stratreserves-btn">STRAT RESERVES</button>
+
+<!-- Flashpoints Crisis Intelligence Overlay -->
+<div id="flashpoints-overlay">
+  <div class="fp-header">
+    <div>
+      <div class="fp-title">GLOBAL MILITARY FLASHPOINTS &amp; CRISIS INTELLIGENCE</div>
+      <div class="fp-subtitle">SOURCE: ICG / RAND / CSIS PROBABILITY ANALYSIS / OPEN SOURCE / UNCLASSIFIED</div>
+    </div>
+    <div class="fp-close" id="flashpoints-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="fp-section-title">ACTIVE FLASHPOINTS — CRISIS PROBABILITY ASSESSMENT</div>
+  <div class="fp-grid" id="fp-grid"></div>
+  <div class="fp-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="fp-gdelt-feed" id="fp-gdelt-feed"></div>
+</div>
+
+<!-- SIGINT Programs Intelligence Overlay -->
+<div id="sigint-overlay">
+  <div class="si-header">
+    <div>
+      <div class="si-title">SIGNALS INTELLIGENCE (SIGINT) PROGRAMS INTELLIGENCE</div>
+      <div class="si-subtitle">SOURCE: SNOWDEN DISCLOSURES / OPEN SOURCE / CONGRESSIONAL RECORD / UNCLASSIFIED</div>
+    </div>
+    <div class="si-close" id="sigint-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="si-section-title">SIGINT AGENCIES — CAPABILITIES &amp; PROGRAMS</div>
+  <div class="si-agencies-grid" id="si-agencies-grid"></div>
+  <div class="si-section-title">COLLECTION DISCIPLINES REFERENCE</div>
+  <table class="si-methods-table">
+    <thead><tr><th>DISCIPLINE</th><th>SOURCE</th><th>EXAMPLES</th></tr></thead>
+    <tbody id="si-methods-tbody"></tbody>
+  </table>
+  <div class="si-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="si-gdelt-feed" id="si-gdelt-feed"></div>
+</div>
+
+<!-- Strategic Reserves Intelligence Overlay -->
+<div id="stratreserves-overlay">
+  <div class="sr-header">
+    <div>
+      <div class="sr-title">STRATEGIC RESERVES &amp; RESOURCE WEAPONIZATION INTELLIGENCE</div>
+      <div class="sr-subtitle">SOURCE: IEA / EIA SPR DATA / USDA / FAO FOOD RESERVES / UNCLASSIFIED</div>
+    </div>
+    <div class="sr-close" id="stratreserves-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="sr-section-title">STRATEGIC OIL RESERVES</div>
+  <div class="sr-oil-grid" id="sr-oil-grid"></div>
+  <div class="sr-section-title">FOOD STRATEGIC STOCKS</div>
+  <div class="sr-food-grid" id="sr-food-grid"></div>
+  <div class="sr-section-title">RESOURCE WEAPONIZATION CASE STUDIES</div>
+  <div class="sr-cases-grid" id="sr-cases-grid"></div>
+  <div class="sr-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="sr-gdelt-feed" id="sr-gdelt-feed"></div>
 </div>
 
 <!-- Phase 45 buttons -->
