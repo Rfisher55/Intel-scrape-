@@ -30773,6 +30773,438 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 51 =====
 
+// ===== PHASE 52: NARCO STATES, REFUGEE FLOWS, CLIMATE SECURITY =====
+
+// --- MODULE 1: NARCO STATES ---
+
+var P52_NARCO_NETWORKS = [
+  {name:'Sinaloa Cartel',lat:24.80,lng:-107.39,color:'#7c3aed',
+   base:'Sinaloa, Mexico',leadership:'Ismael "El Mayo" Zambada (arrested NYC July 2024); Chapitos (sons of El Chapo) now dominant',
+   revenue:'$80B+ estimated annual revenue',
+   operations:['Fentanyl precursor import from China (Fujian-province labs)','US distribution (all 50 states)','Methamphetamine production (Sinaloa highlands)','Money laundering via TBML and real estate'],
+   territory:'Baja California, Sinaloa, Sonora, Chihuahua, Durango + US distribution networks',
+   threat_to_us:'PRIMARY -- 90,000+ US fentanyl deaths/year attributed to Sinaloa+CJNG fentanyl. Designated FTO consideration (done March 2025 by Trump admin).',
+   status:'FRACTURED',
+   assessment:'Largest drug trafficking organization in history by revenue and geographic reach. Fentanyl supply chain from Chinese precursors via Mexico to US market drives unprecedented overdose deaths.'},
+  {name:'CJNG (Jalisco New Generation)',lat:20.67,lng:-103.35,color:'#ef4444',
+   base:'Jalisco, Mexico',leadership:'Nemesio "El Mencho" Oseguera Cervantes (at large, most wanted in Mexico)',
+   revenue:'$20-30B estimated',
+   operations:['Fentanyl+meth production','Military-grade weapons (RPGs, drones, armored vehicles)','Territorial expansion vs Sinaloa','Political corruption + death squad operations'],
+   territory:'Jalisco, Guanajuato, Colima, Michoacan + rapid expansion nationally',
+   threat_to_us:'HIGH -- second-largest fentanyl supplier. Drone deployment for cross-border surveillance and attacks.',
+   status:'EXPANDING',
+   assessment:'Most militarized cartel. Drone warfare (attack drones with IEDs deployed against rivals/police). Paramilitary structure with battle formations. El Mencho offers $10M reward for himself to mock authorities.'},
+  {name:'Clan del Golfo',lat:7.12,lng:-75.83,color:'#f97316',
+   base:'Uraba, Antioquia, Colombia',leadership:'Dario Antonio Usuga (Otoniel) captured 2021. Leadership fractured.',
+   revenue:'$5-10B estimated',
+   operations:['Cocaine production + export (65% of Colombian cocaine)','Extortion (ports, mining, agriculture)','Paramilitary security for coca farmers','Gulf of Uraba maritime cocaine export'],
+   territory:'Northwest Colombia, key cocaine export corridors',
+   threat_to_us:'MODERATE -- primary cocaine supplier. Fentanyl not yet primary product.',
+   status:'WEAKENED',
+   assessment:'Post-Otoniel capture, Clan del Golfo controls cocaine export routes but faces internal power struggle and competition from ELN and FARC dissidents (EMC, FARC-EP).'},
+  {name:'FARC Dissidents (EMC/FARC-EP)',lat:2.89,lng:-75.29,color:'#f97316',
+   base:'Southern Colombia, Venezuela border',leadership:'Ivan Mordisco (EMC); various factions post-2016 peace deal breakdown',
+   revenue:'$500M-2B (cocaine, extortion, mining)',
+   operations:['Coca cultivation protection','Cocaine laboratory operation','Venezuela as safe haven (Maduro toleration)','Extortion of mining, oil operations'],
+   territory:'Caqueta, Putumayo, Norte de Santander, border with Venezuela+Ecuador',
+   threat_to_us:'MODERATE -- Colombian cocaine supply chain.',
+   status:'GROWING',
+   assessment:'Maduro regime tolerates/supports FARC dissidents in Venezuela as proxy force and revenue source. Complicates Colombian peace process. US sanctions on Venezuela leadership includes FARC connections.'},
+  {name:'Taliban (Afghan Opium)',lat:31.52,lng:65.09,color:'#dc2626',
+   base:'Afghanistan',leadership:'Supreme Leader Haibatullah Akhundzada (Kandahar)',
+   revenue:'$650M+ opium taxation (pre-ban); declining post-2022 ban',
+   operations:['Opium cultivation (90% world supply pre-2022)','Heroin export via Iran-Turkey route to Europe','Meth production expanding to replace opium','Precursor chemical import from China/India'],
+   territory:'Afghanistan (national government)',
+   threat_to_us:'MODERATE -- primarily European heroin supply. US fentanyl primarily Mexico-sourced.',
+   status:'CHANGED',
+   assessment:'Taliban opium ban most effective crop eradication in history but driven by price economics not morality. Meth production expanding to replace revenue. Long-term: Myanmar+Southeast Asia filling opium gap.'},
+  {name:'Shan State (Myanmar Golden Triangle)',lat:21.50,lng:98.00,color:'#eab308',
+   base:'Shan State, Myanmar',leadership:'Multiple Ethnic Armed Organizations (UWSA, NDAA, Kokang, etc.)',
+   revenue:'$18-30B estimated (UNODC 2023 -- largest opium producer replacing Afghanistan)',
+   operations:['Opium/heroin production (filling Afghan gap)','Meth production (yaba tablets for SE Asia)','Scam center operations (billions in cyber fraud)','Border trade with China (illegal goods)'],
+   territory:'Shan State, Wa State (UWSA autonomous region)',
+   threat_to_us:'GROWING -- Myanmar now world\'s largest opium producer (2023). Scam centers defrauding Americans of billions.',
+   status:'EXPANDING',
+   assessment:'Post-2021 Myanmar coup and Afghan ban created Golden Triangle resurgence. UWSA (Wa State) largest non-state army in Southeast Asia (30,000 troops). Scam center operations (pig butchering, crypto fraud) targeting Western victims = billions in annual fraud.'}
+];
+
+var P52_NARCO_HOTSPOTS = [
+  {name:'Mexico Cartel War',lat:23.63,lng:-102.55,severity:'CRITICAL'},
+  {name:'Colombia Cocaine Corridor',lat:4.57,lng:-74.30,severity:'HIGH'},
+  {name:'Myanmar Golden Triangle',lat:21.50,lng:98.00,severity:'HIGH'},
+  {name:'Afghan Meth Shift',lat:33.93,lng:67.71,severity:'MODERATE'},
+  {name:'Venezuela Narco-State',lat:8.00,lng:-66.00,severity:'HIGH'},
+  {name:'West Africa Transit Hub',lat:9.54,lng:-13.68,severity:'HIGH'}
+];
+
+function _renderNarcoModule(){
+  var grid=document.getElementById('p52narco-networks-grid');
+  if(grid){
+    grid.innerHTML='';
+    P52_NARCO_NETWORKS.forEach(function(n){
+      var statusColors={FRACTURED:'#f97316',EXPANDING:'#ef4444',WEAKENED:'#22c55e',GROWING:'#eab308',CHANGED:'#3b82f6'};
+      var sc=statusColors[n.status]||'#94a3b8';
+      var ops=n.operations.map(function(o){return '<li>'+o+'</li>';}).join('');
+      grid.innerHTML+='<div class="p52narco-card" style="border-top-color:'+n.color+';">'
+        +'<div class="p52narco-card-header">'
+        +'<div class="p52narco-card-name" style="color:'+n.color+';">'+n.name+'</div>'
+        +'<span class="p52narco-status-badge" style="background:'+sc+'22;color:'+sc+';border:1px solid '+sc+'44;">'+n.status+'</span>'
+        +'</div>'
+        +'<div class="p52narco-row"><b>BASE:</b> '+n.base+'</div>'
+        +'<div class="p52narco-row"><b>LEADERSHIP:</b> '+n.leadership+'</div>'
+        +'<div class="p52narco-row"><b>REVENUE:</b> '+n.revenue+'</div>'
+        +'<div class="p52narco-row"><b>TERRITORY:</b> '+n.territory+'</div>'
+        +'<div class="p52narco-row"><b>OPERATIONS:</b></div>'
+        +'<ul class="p52narco-ops-list">'+ops+'</ul>'
+        +'<div class="p52narco-threat"><b>US THREAT:</b> '+n.threat_to_us+'</div>'
+        +'<div class="p52narco-assessment">ASSESSMENT: '+n.assessment+'</div>'
+        +'</div>';
+    });
+  }
+  var tbody=document.getElementById('p52narco-hotspots-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    P52_NARCO_HOTSPOTS.forEach(function(h){
+      var sevColors={CRITICAL:'#ef4444',HIGH:'#f97316',MODERATE:'#eab308'};
+      var sc=sevColors[h.severity]||'#94a3b8';
+      tbody.innerHTML+='<tr>'
+        +'<td class="p52narco-hotspot-name">'+h.name+'</td>'
+        +'<td><span class="p52narco-sev-badge" style="background:'+sc+'22;color:'+sc+';border:1px solid '+sc+'44;">'+h.severity+'</span></td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchNarcoGDELT(){
+  var feed=document.getElementById('p52narco-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=cartel+fentanyl+drug+trafficking+narco+organized+crime&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="p52narco-gdelt-item">'
+        +'<div class="p52narco-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="p52narco-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openNarcoModule(){
+  var ov=document.getElementById('p52narco-overlay');
+  if(ov){ov.style.display='flex';_renderNarcoModule();_fetchNarcoGDELT();}
+  var pins=P52_NARCO_HOTSPOTS.map(function(h){
+    var sev=h.severity==='CRITICAL'?9:h.severity==='HIGH'?7:6;
+    return {lat:h.lat,lng:h.lng,label:h.name+' -- '+h.severity,type:'terrorism',severity:sev,TAG:'_p52narco'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p52narco';}), ...pins];
+}
+
+function _closeNarcoModule(){
+  var ov=document.getElementById('p52narco-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p52narco';});
+}
+
+// --- MODULE 2: REFUGEE FLOWS ---
+
+var P52_DISPLACEMENT_CRISES = [
+  {crisis:'Sudan',lat:15.55,lng:32.53,color:'#ef4444',
+   idp:10200000,refugees:2100000,total:12300000,
+   driver:'SAF vs RSF civil war (April 2023-present). Darfur mass atrocities. Khartoum/Omdurman devastated.',
+   host_countries:['Chad','Egypt','South Sudan','Ethiopia','Uganda'],
+   funding_gap:'67%',
+   crisis_level:'CATASTROPHIC',
+   recent:'Famine (IPC Phase 5) declared in Zamzam camp (N. Darfur) July 2024. First African famine since Somalia 2011. 25M facing acute food insecurity.'},
+  {crisis:'Syria',lat:34.80,lng:38.99,color:'#ef4444',
+   idp:6800000,refugees:6600000,total:13400000,
+   driver:'Civil war 2011-present (frozen). Assad regime vs opposition remnants. HTS controls Idlib. US/SDF NE Syria.',
+   host_countries:['Turkey (3.6M)','Lebanon (800K)','Jordan (660K)','Germany (700K)','Egypt','Iraq'],
+   funding_gap:'55%',
+   crisis_level:'PROTRACTED',
+   recent:'Post-Assad collapse Dec 2024 -- HTS took Damascus. Return movements beginning but unstable. Massive reconstruction needed.'},
+  {crisis:'Ukraine',lat:49.38,lng:31.17,color:'#f97316',
+   idp:3700000,refugees:6200000,total:9900000,
+   driver:'Russian full-scale invasion Feb 2022. Ongoing conflict E. Ukraine.',
+   host_countries:['Germany (1.1M)','Poland (960K)','Czech Republic','UK','Italy'],
+   funding_gap:'45%',
+   crisis_level:'ACTIVE CONFLICT',
+   recent:'Continued Russian missile strikes on civilian infrastructure. Kharkiv, Zaporizhzhia, Kherson under fire. Energy grid attacks driving secondary displacement.'},
+  {crisis:'DRC',lat:-4.03,lng:21.76,color:'#f97316',
+   idp:6900000,refugees:1000000,total:7900000,
+   driver:'M23 (Rwanda-backed) offensive 2022-24. Multiple armed groups (200+) in eastern DRC. FDLR, ADF, Mai-Mai, CODECO.',
+   host_countries:['Uganda','Rwanda','Burundi','Tanzania','Zambia'],
+   funding_gap:'70%',
+   crisis_level:'ACUTE',
+   recent:'M23 seized Goma (capital North Kivu) January 2025. Largest displacement event in DRC history. Rwanda denying M23 support despite overwhelming evidence.'},
+  {crisis:'Gaza',lat:31.35,lng:34.31,color:'#ef4444',
+   idp:1900000,refugees:0,total:1900000,
+   driver:'Israeli military campaign following Oct 7 Hamas attack. 90% of Gaza population displaced internally.',
+   host_countries:['None -- sealed borders (Egypt Rafah crossing largely closed)'],
+   funding_gap:'40%',
+   crisis_level:'CATASTROPHIC',
+   recent:'Famine conditions declared N. Gaza (IPC Phase 5) March 2024. 2.1M people on 365 km2. UNRWA funding suspended by multiple Western donors.'},
+  {crisis:'Myanmar',lat:19.74,lng:96.08,color:'#f97316',
+   idp:3300000,refugees:1200000,total:4500000,
+   driver:'2021 coup + civil war. SAC junta vs PDF + ethnic armies. Chin, Karen, Kachin, Shan states all active.',
+   host_countries:['Bangladesh (Rohingya 960K)','Thailand','India','Malaysia'],
+   funding_gap:'75%',
+   crisis_level:'ACUTE',
+   recent:'SAC losing territory to Brotherhood Alliance offensive (Oct 2023). Mandalay threatened. ASEAN disengaging. PDFs controlling increasing areas.'}
+];
+
+var P52_DISPLACEMENT_TRENDS = [
+  {metric:'Total Forcibly Displaced',value:'120 million+',year:2024,note:'All-time record (UNHCR). Up from 108M in 2023.'},
+  {metric:'IDP (Internal)',value:'75.9 million',year:2024,note:'Largest component -- majority never cross borders'},
+  {metric:'Refugees',value:'37.9 million',year:2024,note:'Under UNHCR mandate'},
+  {metric:'Asylum Seekers',value:'6.9 million',year:2024,note:'Pending status determinations'},
+  {metric:'Funding Gap',value:'$1.5B (45%)',year:2024,note:'UNHCR received 55% of needed funding. Worst shortfall in decade.'},
+  {metric:'Fastest Growing',value:'Sudan',year:2024,note:'Fastest-growing crisis globally. 12.3M displaced in 18 months.'}
+];
+
+function _renderRefugeeModule(){
+  var grid=document.getElementById('p52ref-crises-grid');
+  if(grid){
+    grid.innerHTML='';
+    P52_DISPLACEMENT_CRISES.forEach(function(c){
+      var levelColors={CATASTROPHIC:'#ef4444',ACUTE:'#f97316','ACTIVE CONFLICT':'#f97316',PROTRACTED:'#eab308'};
+      var lc=levelColors[c.crisis_level]||'#94a3b8';
+      var gapNum=parseFloat(c.funding_gap)||0;
+      var hosts=c.host_countries.join(', ');
+      grid.innerHTML+='<div class="p52ref-card" style="border-top-color:'+c.color+';">'
+        +'<div class="p52ref-card-header">'
+        +'<div class="p52ref-card-name" style="color:'+c.color+';">'+c.crisis+'</div>'
+        +'<span class="p52ref-crisis-badge" style="background:'+lc+'22;color:'+lc+';border:1px solid '+lc+'44;">'+c.crisis_level+'</span>'
+        +'</div>'
+        +'<div class="p52ref-numbers">'
+        +'<div class="p52ref-num-box"><div class="p52ref-num-val">'+_p52fmtNum(c.idp)+'</div><div class="p52ref-num-lbl">IDPs</div></div>'
+        +(c.refugees?'<div class="p52ref-num-box"><div class="p52ref-num-val">'+_p52fmtNum(c.refugees)+'</div><div class="p52ref-num-lbl">REFUGEES</div></div>':'')
+        +'<div class="p52ref-num-box"><div class="p52ref-num-val">'+_p52fmtNum(c.total)+'</div><div class="p52ref-num-lbl">TOTAL</div></div>'
+        +'</div>'
+        +'<div class="p52ref-row"><b>DRIVER:</b> '+c.driver+'</div>'
+        +'<div class="p52ref-row"><b>HOST COUNTRIES:</b> '+hosts+'</div>'
+        +'<div class="p52ref-funding-bar-bg"><div class="p52ref-funding-bar-fill" style="width:'+gapNum+'%;"></div></div>'
+        +'<div class="p52ref-funding-label">FUNDING GAP: '+c.funding_gap+'</div>'
+        +'<div class="p52ref-recent">RECENT: '+c.recent+'</div>'
+        +'</div>';
+    });
+  }
+  var tbody=document.getElementById('p52ref-trends-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    P52_DISPLACEMENT_TRENDS.forEach(function(t){
+      tbody.innerHTML+='<tr>'
+        +'<td class="p52ref-metric-name">'+t.metric+'</td>'
+        +'<td class="p52ref-metric-val">'+t.value+'</td>'
+        +'<td style="color:#64748b;font-size:8px;">'+t.year+'</td>'
+        +'<td style="color:#94a3b8;font-size:8px;">'+t.note+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+function _p52fmtNum(n){
+  if(n>=1000000)return (n/1000000).toFixed(1)+'M';
+  if(n>=1000)return (n/1000).toFixed(0)+'K';
+  return String(n);
+}
+
+async function _fetchReliefWebLive(){
+  var feed=document.getElementById('p52-reliefweb-feed');
+  if(!feed)return;
+  feed.innerHTML='<div style="color:#475569;font-size:9px;">Loading ReliefWeb reports...</div>';
+  try{
+    var url='https://api.reliefweb.int/v1/reports?appname=intelplatform&limit=10&sort[]=date:desc&fields[include][]=title&fields[include][]=date&fields[include][]=source&fields[include][]=url_alias&filter[operator]=AND&filter[conditions][0][field]=primary_type&filter[conditions][0][value]=Situation+Report';
+    var r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    var d=await r.json();
+    var items=(d&&d.data)||[];
+    if(!items.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No reports available.</div>';return;}
+    feed.innerHTML=items.map(function(item){
+      var f=item.fields||{};
+      var src=(f.source&&f.source[0]&&f.source[0].name)||'ReliefWeb';
+      var dt=(f.date&&f.date.created)||'';
+      var alias=f.url_alias||'';
+      var link=alias?'https://reliefweb.int'+alias:'https://reliefweb.int';
+      return '<div style="border-bottom:1px solid #0f2040;padding:4px 0;">'
+        +'<div><a href="'+link+'" target="_blank" style="color:#e2e8f0;font-size:8px;text-decoration:none;">'+f.title+'</a></div>'
+        +'<div style="color:#475569;font-size:7px;">'+src+' // '+dt.slice(0,10)+'</div>'
+        +'</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">ReliefWeb feed unavailable.</div>';}
+}
+
+async function _fetchRefugeeGDELT(){
+  var feed=document.getElementById('p52ref-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=refugee+displacement+humanitarian+crisis+IDP+asylum+migration+forced&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="p52ref-gdelt-item">'
+        +'<div class="p52ref-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="p52ref-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openRefugeeModule(){
+  var ov=document.getElementById('p52refugee-overlay');
+  if(ov){ov.style.display='flex';_renderRefugeeModule();_fetchReliefWebLive();_fetchRefugeeGDELT();}
+  var pins=P52_DISPLACEMENT_CRISES.map(function(c){
+    var sev=c.crisis_level==='CATASTROPHIC'?10:c.crisis_level==='ACUTE'?9:c.crisis_level==='ACTIVE CONFLICT'?8:7;
+    return {lat:c.lat,lng:c.lng,label:c.crisis+' -- '+c.crisis_level,type:'humanitarian',severity:sev,TAG:'_p52refugee'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p52refugee';}), ...pins];
+}
+
+function _closeRefugeeModule(){
+  var ov=document.getElementById('p52refugee-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p52refugee';});
+}
+
+// --- MODULE 3: CLIMATE SECURITY ---
+
+var P52_CLIMATE_CONFLICT_NEXUS = [
+  {region:'Sahel',lat:14.69,lng:0.00,color:'#ef4444',severity:'CRITICAL',
+   climate_driver:'Rainfall -20% since 1970. Lake Chad: 90% reduction in surface area since 1960. Desertification advancing 48km/year southward.',
+   conflict_link:'Farmer-herder conflicts increased 400% since 2010 as arable land shrinks. Jihadist recruitment exploiting displacement. Boko Haram, JNIM, ISWAP all benefit from climate-driven state failure.',
+   population_risk:'300 million people. Agricultural systems collapsing. Youth bulge + climate = recruitment pool for armed groups.',
+   projection:'IPCC: 1.5-3C warming by 2050 in Sahel. Crop yields -40%. Migration: 200M+ internal climate migrants by 2050 (World Bank Africa scenario).'},
+  {region:'Middle East Water Stress',lat:30.00,lng:45.00,color:'#ef4444',severity:'CRITICAL',
+   climate_driver:'Euphrates/Tigris rivers: 60% flow reduction since 1970. Arabian Peninsula: 0 permanent rivers. Iraq: 50% arable land desertified. Syria drought 2006-2010 forced 1.5M farmers to cities (precursor to civil war).',
+   conflict_link:'2006-2010 Syria drought directly displaced 1.5M rural farmers to urban peripheries. Assad regime neglect + water crisis = Arab Spring tipping point. Direct causal link between climate and Syrian civil war (multiple studies).',
+   population_risk:'650M people in already water-scarce region. Food import dependency 50-80%. Climate + conflict = compounding fragility.',
+   projection:'40% increase in water demand + 20% decrease in supply by 2050. Uninhabitable wet-bulb temperatures in Gulf by 2070 without mitigation.'},
+  {region:'South Asia Glacier Retreat',lat:30.00,lng:75.00,color:'#f97316',severity:'HIGH',
+   climate_driver:'Himalayan glaciers supply 800M+ people via Indus, Ganges, Brahmaputra. Currently losing 8B tons ice/year. Glacier lake outburst floods (GLOFs) increasing: Pakistan (2022 floods, 1/3 country underwater).',
+   conflict_link:'Pakistan 2022 floods: 33M affected, $30B damage. Agriculture collapse driving economic crisis. India-Pakistan Indus Waters Treaty under stress. Bangladesh delta sinking.',
+   population_risk:'800M people dependent on glacial water. India-Pakistan-China all nuclear-armed, all sharing contested glacial rivers.',
+   projection:'Hindu Kush-Himalayan glaciers: 36-87% volume loss by 2100. Peak water 2050-2060 then decline. Agricultural systems unsustainable.'},
+  {region:'Small Island States',lat:-8.50,lng:179.21,color:'#f97316',severity:'HIGH',
+   climate_driver:'Sea level rise: +3.7mm/year (IPCC AR6). Tuvalu, Kiribati, Marshall Islands facing territorial loss. Maldives: 80% land below 1m elevation. Pacific atoll nations will be uninhabitable by 2100.',
+   conflict_link:'First climate refugees (Pacific Islanders relocating to NZ, Fiji). UNCLOS: what happens to EEZ when territory submerges? China-Pacific: building political influence as Western climate inaction creates grievances.',
+   population_risk:'Multi-country existential threat. Precedent for climate migration law. Pacific geopolitics (US vs China competition for influence over disappearing nations).',
+   projection:'1.5C: major atoll nations lose 50%+ livable land. 2C: effectively uninhabitable. 3C: gone entirely.'},
+  {region:'Arctic Security Competition',lat:78.00,lng:15.00,color:'#3b82f6',severity:'HIGH',
+   climate_driver:'Arctic warming 4x faster than global average. Ice-free Arctic summer possible by 2030s. Northern Sea Route open: 2 weeks (vs 4 weeks Suez). Resource access: 13% undiscovered oil, 30% undiscovered gas.',
+   conflict_link:'Russia expanding Arctic military bases (Arctic Brigade, Nagurskoye base). China claims "near-Arctic state." US Coast Guard inadequate Arctic icebreakers (2 vs Russia\'s 40+). Norway-Russia Svalbard tensions.',
+   population_risk:'Geopolitical competition more than population risk. But: Arctic indigenous communities facing permafrost collapse, infrastructure failure.',
+   projection:'Arctic great power competition intensifying. New shipping lanes = new strategic chokepoints. NATO\'s weakest flank.'},
+  {region:'Sub-Saharan Food Crisis',lat:-5.00,lng:25.00,color:'#ef4444',severity:'CRITICAL',
+   climate_driver:'El Nino (2023-24) caused worst drought in southern/eastern Africa in 40 years. Horn of Africa: 5 consecutive failed rainy seasons (2020-2022). DRC: rainfall variability destroying subsistence agriculture.',
+   conflict_link:'46M facing crisis-level food insecurity in southern Africa (2024, WFP). Food insecurity = conflict risk multiplier. Malawi, Zambia, Zimbabwe declared national emergencies.',
+   population_risk:'900M people in sub-Saharan Africa facing worsening food security. Youth population doubling by 2050. Climate + food + governance failure = fragility spiral.',
+   projection:'IPCC: 50% reduction in crop yields in many African regions by 2050. Without adaptation, 100M+ sub-Saharan Africans in extreme poverty by 2050 due to climate alone (World Bank).'}
+];
+
+var P52_CLIMATE_SECURITY_INDICATORS = [
+  {indicator:'Global Temperature Anomaly',value:'+1.48C (2023)',status:'RECORD',note:'Warmest year on record. 2024 tracking +1.5C. Paris Agreement threshold breached.'},
+  {indicator:'Arctic Sea Ice Minimum',value:'4.23M km2 (2023)',status:'LOW',note:'Second lowest on record. Trend: -13% per decade since 1979.'},
+  {indicator:'Climate Migration (Current)',value:'21.5M/year',status:'GROWING',note:'Average annual new climate displacement (weather events). Does not count slow-onset.'},
+  {indicator:'Extreme Weather Events',value:'+5x since 1970',status:'ACCELERATING',note:'Economic losses from weather disasters: $280B/year average (Munich Re 2023).'},
+  {indicator:'Food System Stress',value:'733M hungry (2023)',status:'HIGH',note:'WFP: hunger rising for 4th consecutive year. Climate + conflict + COVID recovery = structural food crisis.'}
+];
+
+function _renderClimateModule(){
+  var grid=document.getElementById('p52clim-nexus-grid');
+  if(grid){
+    grid.innerHTML='';
+    P52_CLIMATE_CONFLICT_NEXUS.forEach(function(r){
+      var sevColors={CRITICAL:'#ef4444',HIGH:'#f97316',MODERATE:'#eab308'};
+      var sc=sevColors[r.severity]||'#94a3b8';
+      grid.innerHTML+='<div class="p52clim-card" style="border-top-color:'+r.color+';">'
+        +'<div class="p52clim-card-header">'
+        +'<div class="p52clim-card-name" style="color:'+r.color+';">'+r.region+'</div>'
+        +'<span class="p52clim-sev-badge" style="background:'+sc+'22;color:'+sc+';border:1px solid '+sc+'44;">'+r.severity+'</span>'
+        +'</div>'
+        +'<div class="p52clim-row"><b>CLIMATE DRIVER:</b></div>'
+        +'<div class="p52clim-driver">'+r.climate_driver+'</div>'
+        +'<div class="p52clim-row"><b>CONFLICT LINK:</b></div>'
+        +'<div class="p52clim-conflict">'+r.conflict_link+'</div>'
+        +'<div class="p52clim-row"><b>POPULATION AT RISK:</b> <span style="color:#e2e8f0;">'+r.population_risk+'</span></div>'
+        +'<div class="p52clim-row"><b>PROJECTION:</b></div>'
+        +'<div class="p52clim-projection">'+r.projection+'</div>'
+        +'</div>';
+    });
+  }
+  var tbody=document.getElementById('p52clim-indicators-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    P52_CLIMATE_SECURITY_INDICATORS.forEach(function(ind){
+      var statusColors={RECORD:'#ef4444',LOW:'#3b82f6',GROWING:'#f97316',ACCELERATING:'#ef4444',HIGH:'#eab308'};
+      var sc=statusColors[ind.status]||'#94a3b8';
+      tbody.innerHTML+='<tr>'
+        +'<td class="p52clim-ind-name">'+ind.indicator+'</td>'
+        +'<td class="p52clim-ind-val">'+ind.value+'</td>'
+        +'<td><span class="p52clim-ind-status" style="background:'+sc+'22;color:'+sc+';border:1px solid '+sc+'44;">'+ind.status+'</span></td>'
+        +'<td style="color:#94a3b8;font-size:8px;">'+ind.note+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchClimateLiveFeed(){
+  var feed=document.getElementById('p52-climate-live-feed');
+  if(!feed)return;
+  feed.innerHTML='<div style="color:#475569;font-size:9px;">Loading climate intelligence...</div>';
+  try{
+    var q=encodeURIComponent('climate change drought flood wildfire food security water crisis displacement');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    var arts=(d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML=arts.map(function(a){
+      return '<div class="p52clim-live-item">'
+        +'<div class="p52clim-live-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="p52clim-live-meta">'+a.domain+' // '+a.seendate+'</div>'
+        +'</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">Climate feed unavailable.</div>';}
+}
+
+function _openClimateModule(){
+  var ov=document.getElementById('p52climate-overlay');
+  if(ov){ov.style.display='flex';_renderClimateModule();_fetchClimateLiveFeed();}
+  var pins=P52_CLIMATE_CONFLICT_NEXUS.map(function(r){
+    var t=r.region==='Arctic Security Competition'?'instability':'humanitarian';
+    var sev=r.severity==='CRITICAL'?9:r.severity==='HIGH'?7:6;
+    return {lat:r.lat,lng:r.lng,label:r.region+' -- '+r.severity,type:t,severity:sev,TAG:'_p52climate'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p52climate';}), ...pins];
+}
+
+function _closeClimateModule(){
+  var ov=document.getElementById('p52climate-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p52climate';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var nb=document.getElementById('p52narco-btn');
+  if(nb)nb.addEventListener('click',_openNarcoModule);
+  var nc=document.getElementById('p52narco-close');
+  if(nc)nc.addEventListener('click',_closeNarcoModule);
+  var rb=document.getElementById('p52refugee-btn');
+  if(rb)rb.addEventListener('click',_openRefugeeModule);
+  var rc=document.getElementById('p52refugee-close');
+  if(rc)rc.addEventListener('click',_closeRefugeeModule);
+  var cb=document.getElementById('p52climate-btn');
+  if(cb)cb.addEventListener('click',_openClimateModule);
+  var cc=document.getElementById('p52climate-close');
+  if(cc)cc.addEventListener('click',_closeClimateModule);
+});
+
+// ===== END PHASE 52 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
