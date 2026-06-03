@@ -3461,6 +3461,114 @@ button{border-radius:2px!important}
 .np-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .np-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .np-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 44 buttons */
+#deceptionops-btn{position:fixed;top:295px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#deceptionops-btn:hover{border-color:#ec4899;color:#f9a8d4;}
+#aiwarfare-btn{position:fixed;top:335px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#aiwarfare-btn:hover{border-color:#06b6d4;color:#67e8f9;}
+#rareearth-btn{position:fixed;top:375px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#rareearth-btn:hover{border-color:#84cc16;color:#bef264;}
+
+/* Deception Ops overlay */
+#deceptionops-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.do-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.do-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#ec4899;}
+.do-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.do-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.do-close:hover{color:#ec4899;border-color:#ec4899;}
+.do-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.do-doctrines-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:14px;margin-bottom:10px;}
+.do-doctrine-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.do-doctrine-header{margin-bottom:8px;}
+.do-actor{font-size:13px;font-weight:900;letter-spacing:.05em;}
+.do-doctrine-name{font-size:10px;color:#94a3b8;margin-top:2px;}
+.do-elements{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.do-elem-chip{font-size:7px;background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.3);padding:2px 6px;border-radius:2px;color:#f9a8d4;}
+.do-cases-list{margin:0 0 8px 0;padding-left:14px;}
+.do-case-item{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:3px;}
+.do-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;}
+.do-tech-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.do-tech-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.do-tech-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.do-tech-name{color:#e2e8f0;font-weight:700;}
+.do-gdelt-feed{max-width:900px;}
+.do-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.do-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.do-gdelt-meta{font-size:8px;color:#475569;}
+
+/* AI Warfare overlay */
+#aiwarfare-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.aw-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.aw-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#06b6d4;}
+.aw-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.aw-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.aw-close:hover{color:#06b6d4;border-color:#06b6d4;}
+.aw-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.aw-programs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:14px;margin-bottom:10px;}
+.aw-program-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.aw-program-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.aw-country{font-size:13px;font-weight:900;}
+.aw-program-name{font-size:9px;color:#94a3b8;margin-top:2px;}
+.aw-budget{font-size:9px;color:#fbbf24;white-space:nowrap;}
+.aw-systems{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.aw-sys-chip{font-size:7px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);padding:2px 6px;border-radius:2px;color:#67e8f9;}
+.aw-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.aw-row b{color:#e2e8f0;}
+.aw-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:6px;}
+.aw-debate-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.aw-debate-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.aw-debate-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.aw-issue-name{color:#e2e8f0;font-weight:700;}
+.aw-timeline-list{max-width:900px;margin-bottom:10px;}
+.aw-tl-item{display:flex;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.aw-tl-year{font-size:10px;font-weight:900;color:#06b6d4;min-width:36px;}
+.aw-tl-event{font-size:8px;color:#94a3b8;line-height:1.5;}
+.aw-gdelt-feed{max-width:900px;}
+.aw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.aw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.aw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Rare Earth overlay */
+#rareearth-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.re2-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.re2-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#84cc16;}
+.re2-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.re2-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.re2-close:hover{color:#84cc16;border-color:#84cc16;}
+.re2-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.re2-elements-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:10px;margin-bottom:10px;}
+.re2-elem-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:4px;padding:10px;border-left-width:3px;}
+.re2-elem-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.re2-elem-symbol{font-size:16px;font-weight:900;margin-right:6px;}
+.re2-elem-name{font-size:10px;color:#e2e8f0;}
+.re2-strategic-badge{font-size:7px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;}
+.re2-row{font-size:8px;color:#94a3b8;margin-bottom:4px;}
+.re2-row b{color:#e2e8f0;}
+.re2-bar-wrap{display:inline-block;width:60px;height:4px;background:#0f172a;border-radius:2px;vertical-align:middle;margin-left:4px;}
+.re2-bar{display:inline-block;height:4px;border-radius:2px;vertical-align:top;}
+.re2-use-list{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;}
+.re2-use-chip{font-size:7px;background:rgba(132,204,22,.1);border:1px solid rgba(132,204,22,.2);padding:2px 5px;border-radius:2px;color:#bef264;}
+.re2-producers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:10px;margin-bottom:10px;}
+.re2-prod-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;border-top-width:3px;}
+.re2-prod-country{font-size:12px;font-weight:700;margin-bottom:4px;}
+.re2-notes{font-size:8px;color:#64748b;line-height:1.4;margin-top:4px;}
+.re2-events-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:10px;margin-bottom:10px;}
+.re2-event-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;}
+.re2-event-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.re2-event-date{font-size:9px;color:#64748b;font-weight:700;}
+.re2-impact-badge{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.5px;border-width:1px;border-style:solid;}
+.re2-event-title{font-size:10px;font-weight:700;color:#e2e8f0;margin-bottom:4px;}
+.re2-event-detail{font-size:8px;color:#94a3b8;line-height:1.4;}
+.re2-implications-list{max-width:900px;margin-bottom:10px;}
+.re2-impl-item{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.re2-impl-header{display:flex;align-items:center;margin-bottom:3px;}
+.re2-impl-name{font-size:10px;font-weight:700;color:#e2e8f0;}
+.re2-impl-desc{font-size:8px;color:#94a3b8;line-height:1.4;}
+.re2-gdelt-feed{max-width:900px;}
+.re2-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.re2-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.re2-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -26866,6 +26974,361 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 43 =====
 
+// ===== PHASE 44: DECEPTION OPS / AI WARFARE / RARE EARTH =====
+
+var DECEPTION_DOCTRINES = [
+  {actor:'Russia',doctrine:'Maskirovka',lat:55.75,lng:37.62,color:'#ef4444',
+   elements:['Camouflage & Concealment','Disinformation (dezinformatsiya)','Reflexive Control','Electronic Deception','False Flag Operations'],
+   recent_cases:['2014 Crimea: "Little Green Men" — uniformed forces without insignia denied until after annexation','2022 Ukraine: "Military exercises" buildup denied as invasion prep until D-Day','MH17: Active disinformation campaign blaming Ukraine persists today','Gerasimov Doctrine: blurs line between war and peace phases'],
+   assessment:'Most sophisticated deception doctrine globally. Reflexive control theory aims to shape adversary decision-making by feeding targeted false information to force desired responses.'},
+  {actor:'China',doctrine:'Three Warfares + Active Deception',lat:39.91,lng:116.39,color:'#dc2626',
+   elements:['Public Opinion Warfare','Psychological Warfare','Legal Warfare (Lawfare)','Military Concealment (Weishi)','Strategic Ambiguity'],
+   recent_cases:['Taiwan Strait exercises framed as "routine" to normalize presence','South China Sea: islands built under "civilian" fishing vessel cover','PLA modernization deliberately obscured through budget underreporting','Belt & Road: commercial infrastructure with dual military use'],
+   assessment:'Three Warfares doctrine (2003 PLA political work regulations) integrates deception across legal, psychological, and informational domains simultaneously.'},
+  {actor:'Iran',doctrine:'Strategic Ambiguity & Proxy Concealment',lat:35.69,lng:51.39,color:'#f97316',
+   elements:['Nuclear Ambiguity','Proxy Distance (plausible deniability)','Underground Facility Concealment','Civilian Cover for Military Sites','Disinformation via State Media'],
+   recent_cases:['Fordow nuclear facility built in secret mountain tunnel revealed 2009','Natanz expansion under civilian R&D cover','Hezbollah weapons transfers denied via Iraqi PMF intermediaries','Drone exports to Russia denied until Ukrainian battlefield evidence'],
+   assessment:'Strategic ambiguity serves dual deterrence and sanctions-evasion functions. Underground hardening of nuclear sites maximizes deception value against strike planning.'},
+  {actor:'North Korea',doctrine:'Total Denial + Underground Concealment',lat:40.34,lng:127.51,color:'#8b5cf6',
+   elements:['Underground City (Pyongyang tunnel network)','Fake GPS signals','Submarine/underground launch facilities','Propaganda masking capability milestones','Shell company procurement'],
+   recent_cases:['50+ underground missile bases revealed by Beyond Parallel project (2018)','Hwasong-17 tests initially attributed to smaller Hwasong-15','SLBM program concealed in civilian shipyard','Crypto theft attributed to "Lazarus Group" with state deniability'],
+   assessment:'Geography and totalitarian control enable comprehensive denial. Underground infrastructure provides hardened concealment virtually immune to standard ISR.'},
+  {actor:'USA',doctrine:'Operational Security (OPSEC) + Active Deception',lat:38.90,lng:-77.03,color:'#3b82f6',
+   elements:['OPSEC (JP 3-13.3)','Military Deception (MILDEC)','Feint Operations','Cover Stories','Signals Deception (SIGINT cover)'],
+   recent_cases:['Desert Shield/Storm: massive left-hook concealment from Iraqi ISR','Operation Neptune Spear: ISR months under cover of Pakistani airspace','COVID vaccine development (Operation Warp Speed) compartmented','Ukraine: intelligence releases as "prebuttal" deception countermeasure'],
+   assessment:'MILDEC doctrine (JP 3-13.4) integrates deception at operational and strategic levels. "Prebuttal" releases of Russian invasion planning disrupted Moscow\'s information operations.'}
+];
+
+var C2D_TECHNIQUES = [
+  {tech:'Camouflage',category:'CONCEALMENT',desc:'Physical masking of military assets. Netting, paint, foliage. Modern thermal/multispectral signatures require advanced materials beyond visual spectrum.'},
+  {tech:'Decoys',category:'DECEPTION',desc:'Inflatable tanks, fake radar emitters, dummy airfields. Russia deployed 100+ tank decoys in Ukraine; effectiveness mixed against Sentinel/commercial SAR.'},
+  {tech:'Electronic Emissions Control',category:'DENIAL',desc:'EMCON — silence of radar/comms to prevent SIGINT location. Submarines maintain extended EMCON periods. Reduces tactical coordination capability.'},
+  {tech:'False Flag Operations',category:'DECEPTION',desc:'Military actions attributed to third party. Little Green Men (Crimea), Gulf of Tonkin questions, Gleiwitz incident. Creates political ambiguity for adversary response.'},
+  {tech:'Disinformation Feeds',category:'DECEPTION',desc:'Deliberate false intelligence fed to known or suspected adversary sources. Double-agent operations, fake documents, planted HUMINT.'},
+  {tech:'Reflexive Control',category:'PSYCHOLOGICAL',desc:'Russian concept: shape adversary perceptions so they voluntarily take actions favorable to you. Feed targeted information to make adversary choose your preferred option.'},
+  {tech:'Underground Facilities',category:'CONCEALMENT',desc:'Deeply buried facilities defeat overhead ISR and most conventional munitions. DPRK, Iran, China maintain extensive tunnel networks. Seismic monitoring partial countermeasure.'},
+  {tech:'Commercial Cover',category:'DENIAL',desc:'Military activities masked as commercial. Dual-use ports, civilian research institutes, "fishing" maritime militia. Creates legal and political complications for response.'}
+];
+
+function _renderDeceptionOps(){
+  var grid = document.getElementById('do-doctrines-grid');
+  if(!grid) return;
+  grid.innerHTML = DECEPTION_DOCTRINES.map(function(d){
+    var elems = d.elements.map(function(e){return '<span class="do-elem-chip">'+e+'</span>';}).join('');
+    var cases = d.recent_cases.map(function(c){return '<li class="do-case-item">'+c+'</li>';}).join('');
+    return '<div class="do-doctrine-card" style="border-top-color:'+d.color+';">'+
+      '<div class="do-doctrine-header">'+
+        '<div class="do-actor" style="color:'+d.color+';">'+d.actor+'</div>'+
+        '<div class="do-doctrine-name">'+d.doctrine+'</div>'+
+      '</div>'+
+      '<div class="do-elements">'+elems+'</div>'+
+      '<ul class="do-cases-list">'+cases+'</ul>'+
+      '<div class="do-assessment">'+d.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('do-tech-tbody');
+  if(tbody){
+    tbody.innerHTML = C2D_TECHNIQUES.map(function(t){
+      var cc = t.category==='DECEPTION'?'#f97316':t.category==='CONCEALMENT'?'#64748b':t.category==='DENIAL'?'#ef4444':'#8b5cf6';
+      return '<tr><td class="do-tech-name">'+t.tech+'</td>'+
+        '<td><span style="color:'+cc+';font-size:7px;font-weight:700;">'+t.category+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+t.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchDoGdelt(){
+  var feed = document.getElementById('do-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('military deception disinformation false flag maskirovka camouflage concealment operations');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="do-gdelt-item">'+
+        '<div class="do-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="do-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openDeceptionOps(){
+  var ov=document.getElementById('deceptionops-overlay');
+  if(ov){ov.style.display='flex';_renderDeceptionOps();_fetchDoGdelt();}
+  var pins = DECEPTION_DOCTRINES.map(function(d){
+    return {lat:d.lat,lng:d.lng,type:'hybrid',severity:8,label:d.actor+' DECEPTION',_deceptionops:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._deceptionops;}), ...pins];
+}
+function _closeDeceptionOps(){
+  var ov=document.getElementById('deceptionops-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._deceptionops;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('deceptionops-btn');
+  if(b) b.addEventListener('click',_openDeceptionOps);
+  var c=document.getElementById('deceptionops-close');
+  if(c) c.addEventListener('click',_closeDeceptionOps);
+});
+
+var AI_MILITARY_PROGRAMS = [
+  {country:'USA',program:'JAIC / CDAO + Replicator Initiative',lat:38.90,lng:-77.03,color:'#3b82f6',budget_est:'$3.7B FY2024',
+   systems:['Project Maven (battlefield AI targeting)','Replicator (1000+ autonomous drones by 2025)','IVAS HoloLens combat system','JADC2 AI-enabled command network','Palantir Maven Smart System (Ukraine)'],
+   doctrine:'Human-on-the-loop for lethal decisions (DoD Directive 3000.09). AI for ISR, logistics, cyber, not autonomous kill.',
+   assessment:'Replicator Initiative signals pivot to mass autonomous systems. Maven Smart System proven in Ukraine targeting support. JADC2 seeks machine-speed battlespace management.'},
+  {country:'China',program:'PLA Strategic Support Force AI Integration',lat:39.91,lng:116.39,color:'#ef4444',budget_est:'$2.5B+ (est)',
+   systems:['Sharp Sword stealth UCAV','CH-7 high-altitude UCAV','AI-enabled hypersonic guidance','Unmanned submarine (HSU-001)','AI ISR constellation (Yaogan series)'],
+   doctrine:'Intelligentized Warfare (智能化战争) doctrine. 2017 AI plan targets global leadership by 2030. No equivalent to US human-on-the-loop restriction.',
+   assessment:'CMC 2019 doctrine: AI core of "intelligentized warfare." No binding rules on autonomous lethal use. PLA exercises test AI command authority over human commanders.'},
+  {country:'Russia',program:'NTI AI + Uran/Marker Ground UGVs',lat:55.75,lng:37.62,color:'#dc2626',budget_est:'$1.2B (pre-sanctions est)',
+   systems:['Uran-9 armed ground robot (Ukraine tested, limited success)','Lancet loitering munition (AI-guided)','Poseidon autonomous nuclear torpedo','Okhotnik-B loyal wingman UCAV','Kalibr AI-trajectory adjustment'],
+   doctrine:'AI as force multiplier for degraded manpower. Poseidon represents most extreme autonomous nuclear system globally.',
+   assessment:'Ukraine exposed limitations of Russian ground UGVs. Lancet loitering munitions most successful AI-guided system. Poseidon represents strategic deterrence application of full autonomy.'},
+  {country:'Israel',program:'IAI/Elbit AI Targeting + Lavender System',lat:31.77,lng:35.21,color:'#eab308',budget_est:'Classified',
+   systems:['Lavender AI targeting system (Gaza 2023-24)','Gospel AI ISR correlation','Harop loitering munition','Iron Dome AI intercept','Hermes 900 autonomous ISR'],
+   doctrine:'AI-assisted human targeting decisions. Lavender controversy: 1.0 vs 20 human review threshold per target during Gaza ops.',
+   assessment:'Most operationally proven AI targeting system. Lavender/Gospel integration represents most advanced real-world AI kill-chain implementation. Raises IHL compliance questions globally.'},
+  {country:'UK/AUS/US',program:'AUKUS AI + Ghost Bat / CCA Programs',lat:51.50,lng:-0.12,color:'#22c55e',budget_est:'$3B+ combined',
+   systems:['Boeing MQ-28 Ghost Bat loyal wingman (Australia)','USAF CCA (Collaborative Combat Aircraft)','AUKUS Pillar II advanced AI capabilities','Tempest FCAS AI co-pilot','Autonomy Stack for maritime vessels'],
+   doctrine:'Loyal wingman concept: AI aircraft fly with human-piloted jets, autonomous under human command authority.',
+   assessment:'AUKUS Pillar II specifically funds AI warfare tech transfer. Ghost Bat program most advanced loyal wingman. CCA program plans 1000+ AI wingmen for USAF by 2030.'}
+];
+
+var AUTONOMOUS_WEAPONS_DEBATE = [
+  {issue:'Legal Review (CCW)',status:'DEADLOCKED',color:'#ef4444',desc:'Convention on Certain Conventional Weapons (CCW) talks deadlocked since 2014. Russia, US, Israel blocking binding instrument. 30+ states support ban on fully autonomous lethal systems.'},
+  {issue:'IHL Compliance',status:'CONTESTED',color:'#f97316',desc:'International Humanitarian Law requires distinction, proportionality, precaution. Can AI reliably distinguish combatant from civilian? Experts divided. No state has accepted autonomous weapons violate IHL per se.'},
+  {issue:'Meaningful Human Control',status:'UNDEFINED',color:'#eab308',desc:'No binding international definition of "meaningful human control" over autonomous weapons. US DoD Directive 3000.09 sets domestic standard but not international law.'},
+  {issue:'AI Race Stability',status:'DESTABILIZING',color:'#ef4444',desc:'Speed of AI decision-making may compress crisis timelines below human cognitive ability. Autonomous systems could trigger rapid escalation before human intervention possible.'},
+  {issue:'Proliferation Risk',status:'HIGH',color:'#f97316',desc:'Armed commercial drones (DJI + explosive payload) demonstrated by non-state actors. AI targeting accessible via open-source models. MTCR does not cover AI-guided loitering munitions under 300km.'}
+];
+
+var AI_ARMS_RACE_TIMELINE = [
+  {year:2017,event:'China announces AI Development Plan targeting global AI leadership by 2030'},
+  {year:2018,event:'US JAIC (Joint AI Center) established; Project Maven expanded after Google employee protest'},
+  {year:2019,event:'DoD AI Strategy released; NSCAI (Kissinger/Schmidt) formed'},
+  {year:2021,event:'NSCAI Final Report: US at risk of losing AI competition to China'},
+  {year:2022,event:'Ukraine: Palantir Maven Smart System deployed; Lancet loitering munitions operational; Starlink AI-assisted drone targeting'},
+  {year:2023,event:'Israel deploys Lavender/Gospel AI targeting in Gaza; OpenAI GPT-4 integrated into defense analysis tools'},
+  {year:2024,event:'Replicator Initiative delivers first 1000+ drones; China Ghost Bat equivalent testing; AUKUS Pillar II AI programs funded'},
+  {year:2025,event:'Projected: CCA (Collaborative Combat Aircraft) first operational tests; PLA exercises AI autonomous air combat'}
+];
+
+function _renderAiWarfare(){
+  var grid = document.getElementById('aw-programs-grid');
+  if(!grid) return;
+  grid.innerHTML = AI_MILITARY_PROGRAMS.map(function(p){
+    var sys = p.systems.map(function(s){return '<span class="aw-sys-chip">'+s+'</span>';}).join('');
+    return '<div class="aw-program-card" style="border-top-color:'+p.color+';">'+
+      '<div class="aw-program-header">'+
+        '<div>'+
+          '<div class="aw-country" style="color:'+p.color+';">'+p.country+'</div>'+
+          '<div class="aw-program-name">'+p.program+'</div>'+
+        '</div>'+
+        '<div class="aw-budget">'+p.budget_est+'</div>'+
+      '</div>'+
+      '<div class="aw-systems">'+sys+'</div>'+
+      '<div class="aw-row"><b>Doctrine:</b> '+p.doctrine+'</div>'+
+      '<div class="aw-assessment">'+p.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('aw-debate-tbody');
+  if(tbody){
+    tbody.innerHTML = AUTONOMOUS_WEAPONS_DEBATE.map(function(d){
+      return '<tr><td class="aw-issue-name">'+d.issue+'</td>'+
+        '<td><span style="color:'+d.color+';font-weight:700;font-size:8px;">'+d.status+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+d.desc+'</td></tr>';
+    }).join('');
+  }
+  var tl = document.getElementById('aw-timeline-list');
+  if(tl){
+    tl.innerHTML = AI_ARMS_RACE_TIMELINE.map(function(t){
+      return '<div class="aw-tl-item">'+
+        '<div class="aw-tl-year">'+t.year+'</div>'+
+        '<div class="aw-tl-event">'+t.event+'</div>'+
+      '</div>';
+    }).join('');
+  }
+}
+
+async function _fetchAwGdelt(){
+  var feed = document.getElementById('aw-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('artificial intelligence autonomous weapons military drone AI targeting defense');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="aw-gdelt-item">'+
+        '<div class="aw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="aw-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openAiWarfare(){
+  var ov=document.getElementById('aiwarfare-overlay');
+  if(ov){ov.style.display='flex';_renderAiWarfare();_fetchAwGdelt();}
+  var pins = AI_MILITARY_PROGRAMS.map(function(p){
+    return {lat:p.lat,lng:p.lng,type:'military_ops',severity:8,label:p.country+' AI WARFARE',_aiwarfare:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._aiwarfare;}), ...pins];
+}
+function _closeAiWarfare(){
+  var ov=document.getElementById('aiwarfare-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._aiwarfare;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('aiwarfare-btn');
+  if(b) b.addEventListener('click',_openAiWarfare);
+  var c=document.getElementById('aiwarfare-close');
+  if(c) c.addEventListener('click',_closeAiWarfare);
+});
+
+var RARE_EARTH_ELEMENTS = [
+  {element:'Neodymium (Nd)',symbol:'Nd',uses:['F-35 magnets','EV motors','Wind turbines','Precision-guided munition actuators'],china_share:85,color:'#ef4444',strategic_value:'CRITICAL'},
+  {element:'Dysprosium (Dy)',symbol:'Dy',uses:['High-temperature magnets','F-22 actuators','Nuclear reactor control rods','HDD voice coils'],china_share:99,color:'#ef4444',strategic_value:'CRITICAL'},
+  {element:'Terbium (Tb)',symbol:'Tb',uses:['Sonar transducers','Naval magnets','Fuel cells','Laser crystals'],china_share:99,color:'#ef4444',strategic_value:'CRITICAL'},
+  {element:'Lithium (Li)',symbol:'Li',uses:['EV batteries','Submarine batteries','Smart munition batteries','Grid storage'],china_share:58,color:'#f97316',strategic_value:'HIGH'},
+  {element:'Cobalt (Co)',symbol:'Co',uses:['Jet engine superalloys','EV cathodes','Satellite systems','Cutting tools'],china_share:72,color:'#f97316',strategic_value:'HIGH'},
+  {element:'Gallium (Ga)',symbol:'Ga',uses:['F-35 radar GaN chips','5G semiconductors','Night vision','Solar cells'],china_share:98,color:'#ef4444',strategic_value:'CRITICAL'},
+  {element:'Germanium (Ge)',symbol:'Ge',uses:['Infrared optics (military)','Fiber optic cable','Night vision','Solar panels'],china_share:95,color:'#ef4444',strategic_value:'CRITICAL'},
+  {element:'Tungsten (W)',symbol:'W',uses:['Armor-piercing rounds','Missile warheads','Cutting tools','Radiation shielding'],china_share:83,color:'#f97316',strategic_value:'HIGH'}
+];
+
+var RE_SUPPLY_CHAIN_EVENTS = [
+  {date:'July 2023',event:'China bans gallium and germanium exports',impact:'CRITICAL',color:'#ef4444',detail:'PRC Commerce Ministry restricts export of Ga and Ge — direct response to US chip export controls. First use of rare earth as direct geopolitical weapon. Both elements critical for US military electronics.'},
+  {date:'Oct 2023',event:'China expands graphite export controls',impact:'HIGH',color:'#f97316',detail:'Adds battery-grade graphite to export license requirement. Affects 60%+ of global EV battery supply chain. Signaling to US/Europe ahead of BIS escalation.'},
+  {date:'2020',event:'China suspends rare earth exports to Japan (precedent)',impact:'HIGH',color:'#f97316',detail:'Senkaku dispute triggered informal rare earth ban to Japan 2010. Resolved diplomatically but established weaponization precedent. WTO case pending for years.'},
+  {date:'2024',event:'China restricts antimony, superhard material exports',impact:'HIGH',color:'#f97316',detail:'Antimony critical for military night-vision, infrared, and ammunition. Further escalation of tech-resource warfare with US and allies.'},
+  {date:'2024',event:'Lynas/MP Materials USA domestic production push',impact:'MODERATE',color:'#eab308',detail:'US IRA + DoD contracts accelerating domestic rare earth processing. MP Materials Mountain Pass reactivated. Lynas Texas HREE facility funded. Still 5-10 years from supply independence.'}
+];
+
+var RE_PRODUCER_MAP = [
+  {country:'China',lat:35.86,lng:104.19,production_pct:60,processing_pct:87,color:'#ef4444',notes:'Dominates both mining AND processing. Bayan Obo (Inner Mongolia) largest REE deposit. Processing monopoly more strategically significant than mining share.'},
+  {country:'USA',lat:37.09,lng:-95.71,production_pct:14,processing_pct:3,color:'#3b82f6',notes:'Mountain Pass (California) largest non-Chinese mine. Processing capacity near zero — ships concentrate to China for processing. Critical vulnerability.'},
+  {country:'Australia',lat:-25.27,lng:133.77,production_pct:8,processing_pct:5,color:'#22c55e',notes:'Lynas Corp largest non-Chinese REE company. Processing facility in Malaysia (Gebeng). New HREE facility in Texas funded by DoD.'},
+  {country:'Myanmar',lat:19.74,lng:96.07,production_pct:9,processing_pct:0,color:'#eab308',notes:'HREE (heavy rare earth) dominant exporter to China. Kachin State mining under KIA/TNLA militia control. Conflict mineral dynamics. Junta revenue source.'},
+  {country:'Russia',lat:61.52,lng:105.31,production_pct:5,processing_pct:3,color:'#dc2626',notes:'Lovozero deposit significant. Sanctions complicate access. Loparite processing capacity. Pre-Ukraine, potential alternative to China; now strategically inaccessible to West.'},
+  {country:'DRC/Africa',lat:-4.03,lng:21.75,production_pct:4,processing_pct:0,color:'#a16207',notes:'Significant cobalt (70% global). Chinese companies control majority of DRC cobalt mining via subsidiaries. Cobalt supply chain deeply entangled with China regardless of origin.'}
+];
+
+var RE_STRATEGIC_IMPLICATIONS = [
+  {implication:'Military Electronics Chokepoint',severity:'CRITICAL',color:'#ef4444',desc:'98% of US gallium imports from China. Gallium essential for GaN chips in F-35 AESA radar, EW systems, GPS receivers. Export restriction immediately threatens production rates.'},
+  {implication:'EV / Battery Transition Vulnerability',severity:'HIGH',color:'#f97316',desc:'NATO military electrification (hybrid vehicles, base storage) dependent on lithium/cobalt/nickel supply chains 60-70% China-controlled. Military energy transition creating new dependencies.'},
+  {implication:'Magnet Dependency (NdFeB)',severity:'CRITICAL',color:'#ef4444',desc:'Neodymium-iron-boron permanent magnets in every precision-guided munition actuator, jet engine bleed valve, submarine motor. No viable non-China magnet supply chain at scale.'},
+  {implication:'Processing Monopoly > Mining Monopoly',severity:'CRITICAL',color:'#ef4444',desc:'China refines 87% of REEs regardless of mining origin. Even if Australia/US mine REEs, most current supply chains route through Chinese processors. True independence requires parallel processing investment.'},
+  {implication:'Weaponization Precedent Set',severity:'HIGH',color:'#f97316',desc:'2023 gallium/germanium restrictions demonstrated willingness to weaponize resource access. CSIS models show full REE export ban would halt US fighter jet production within 18 months.'}
+];
+
+function _renderRareEarth(){
+  var grid = document.getElementById('re2-elements-grid');
+  if(!grid) return;
+  grid.innerHTML = RARE_EARTH_ELEMENTS.map(function(e){
+    var useChips = e.uses.map(function(u){return '<span class="re2-use-chip">'+u+'</span>';}).join('');
+    var barW = Math.min(100, e.china_share);
+    return '<div class="re2-elem-card" style="border-left-color:'+e.color+';">'+
+      '<div class="re2-elem-header">'+
+        '<div>'+
+          '<span class="re2-elem-symbol" style="color:'+e.color+';">'+e.symbol+'</span>'+
+          '<span class="re2-elem-name">'+e.element+'</span>'+
+        '</div>'+
+        '<span class="re2-strategic-badge" style="background:'+e.color+'22;border:1px solid '+e.color+';color:'+e.color+';">'+e.strategic_value+'</span>'+
+      '</div>'+
+      '<div class="re2-row"><b>China Share:</b> '+e.china_share+'% &nbsp;<span class="re2-bar-wrap"><span class="re2-bar" style="width:'+barW+'%;background:'+e.color+';"></span></span></div>'+
+      '<div class="re2-use-list">'+useChips+'</div>'+
+    '</div>';
+  }).join('');
+  var pGrid = document.getElementById('re2-producers-grid');
+  if(pGrid){
+    pGrid.innerHTML = RE_PRODUCER_MAP.map(function(p){
+      return '<div class="re2-prod-card" style="border-top-color:'+p.color+';">'+
+        '<div class="re2-prod-country" style="color:'+p.color+';">'+p.country+'</div>'+
+        '<div class="re2-row"><b>Mining share:</b> '+p.production_pct+'% &nbsp;|&nbsp; <b>Processing share:</b> '+p.processing_pct+'%</div>'+
+        '<div class="re2-notes">'+p.notes+'</div>'+
+      '</div>';
+    }).join('');
+  }
+  var evGrid = document.getElementById('re2-events-grid');
+  if(evGrid){
+    evGrid.innerHTML = RE_SUPPLY_CHAIN_EVENTS.map(function(e){
+      return '<div class="re2-event-card">'+
+        '<div class="re2-event-header">'+
+          '<div class="re2-event-date">'+e.date+'</div>'+
+          '<span class="re2-impact-badge" style="color:'+e.color+';border-color:'+e.color+';">'+e.impact+'</span>'+
+        '</div>'+
+        '<div class="re2-event-title">'+e.event+'</div>'+
+        '<div class="re2-event-detail">'+e.detail+'</div>'+
+      '</div>';
+    }).join('');
+  }
+  var imp = document.getElementById('re2-implications-list');
+  if(imp){
+    imp.innerHTML = RE_STRATEGIC_IMPLICATIONS.map(function(i){
+      return '<div class="re2-impl-item">'+
+        '<div class="re2-impl-header">'+
+          '<span class="re2-impl-name">'+i.implication+'</span>'+
+          '<span style="color:'+i.color+';font-weight:700;font-size:8px;margin-left:8px;">'+i.severity+'</span>'+
+        '</div>'+
+        '<div class="re2-impl-desc">'+i.desc+'</div>'+
+      '</div>';
+    }).join('');
+  }
+}
+
+async function _fetchReGdelt(){
+  var feed = document.getElementById('re2-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('rare earth minerals China export controls gallium germanium critical minerals supply chain');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="re2-gdelt-item">'+
+        '<div class="re2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="re2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openRareEarth(){
+  var ov=document.getElementById('rareearth-overlay');
+  if(ov){ov.style.display='flex';_renderRareEarth();_fetchReGdelt();}
+  var pins = RE_PRODUCER_MAP.map(function(p){
+    return {lat:p.lat,lng:p.lng,type:'econint',severity:p.production_pct>50?9:7,label:p.country+' RARE EARTH',_rareearth:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._rareearth;}), ...pins];
+}
+function _closeRareEarth(){
+  var ov=document.getElementById('rareearth-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._rareearth;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('rareearth-btn');
+  if(b) b.addEventListener('click',_openRareEarth);
+  var c=document.getElementById('rareearth-close');
+  if(c) c.addEventListener('click',_closeRareEarth);
+});
+
+// ===== END PHASE 44 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -29498,6 +29961,74 @@ function filterSIGINT(query){
   <div class="mm-grid" id="mm-programs-grid"></div>
   <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 44 buttons -->
+<button id="deceptionops-btn">DECEPTION OPS</button>
+<button id="aiwarfare-btn">AI WARFARE</button>
+<button id="rareearth-btn">RARE EARTH</button>
+
+<!-- Strategic Deception Operations Intelligence Overlay -->
+<div id="deceptionops-overlay">
+  <div class="do-header">
+    <div>
+      <div class="do-title">STRATEGIC DECEPTION OPERATIONS INTELLIGENCE</div>
+      <div class="do-subtitle">SOURCE: JMDEM / OPEN SOURCE DOCTRINE ANALYSIS / HISTORICAL CASE STUDIES / UNCLASSIFIED</div>
+    </div>
+    <div class="do-close" id="deceptionops-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="do-section-title">STATE DECEPTION DOCTRINES</div>
+  <div class="do-doctrines-grid" id="do-doctrines-grid"></div>
+  <div class="do-section-title">C2D TECHNIQUE REFERENCE</div>
+  <table class="do-tech-table">
+    <thead><tr><th>TECHNIQUE</th><th>CATEGORY</th><th>DESCRIPTION</th></tr></thead>
+    <tbody id="do-tech-tbody"></tbody>
+  </table>
+  <div class="do-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="do-gdelt-feed" id="do-gdelt-feed"></div>
+</div>
+
+<!-- AI Warfare & Autonomous Weapons Intelligence Overlay -->
+<div id="aiwarfare-overlay">
+  <div class="aw-header">
+    <div>
+      <div class="aw-title">AI WARFARE &amp; AUTONOMOUS WEAPONS INTELLIGENCE</div>
+      <div class="aw-subtitle">SOURCE: NSCAI FINAL REPORT / SIPRI / ICRC AUTONOMOUS WEAPONS / OPEN SOURCE / UNCLASSIFIED</div>
+    </div>
+    <div class="aw-close" id="aiwarfare-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="aw-section-title">AI MILITARY PROGRAMS — KEY ACTORS</div>
+  <div class="aw-programs-grid" id="aw-programs-grid"></div>
+  <div class="aw-section-title">AUTONOMOUS WEAPONS DEBATE — KEY ISSUES</div>
+  <table class="aw-debate-table">
+    <thead><tr><th>ISSUE</th><th>STATUS</th><th>ASSESSMENT</th></tr></thead>
+    <tbody id="aw-debate-tbody"></tbody>
+  </table>
+  <div class="aw-section-title">AI ARMS RACE TIMELINE</div>
+  <div class="aw-timeline-list" id="aw-timeline-list"></div>
+  <div class="aw-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="aw-gdelt-feed" id="aw-gdelt-feed"></div>
+</div>
+
+<!-- Rare Earth Strategic Intelligence Overlay -->
+<div id="rareearth-overlay">
+  <div class="re2-header">
+    <div>
+      <div class="re2-title">RARE EARTH &amp; CRITICAL MINERALS STRATEGIC INTELLIGENCE</div>
+      <div class="re2-subtitle">SOURCE: USGS MINERAL RESOURCES / CSIS CRITICAL MINERALS / DOD SUPPLY CHAIN REPORTS / UNCLASSIFIED</div>
+    </div>
+    <div class="re2-close" id="rareearth-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="re2-section-title">CRITICAL ELEMENTS — MILITARY DEPENDENCY ANALYSIS</div>
+  <div class="re2-elements-grid" id="re2-elements-grid"></div>
+  <div class="re2-section-title">GLOBAL PRODUCER MAP</div>
+  <div class="re2-producers-grid" id="re2-producers-grid"></div>
+  <div class="re2-section-title">SUPPLY CHAIN DISRUPTION EVENTS</div>
+  <div class="re2-events-grid" id="re2-events-grid"></div>
+  <div class="re2-section-title">STRATEGIC IMPLICATIONS</div>
+  <div class="re2-implications-list" id="re2-implications-list"></div>
+  <div class="re2-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="re2-gdelt-feed" id="re2-gdelt-feed"></div>
 </div>
 
 <!-- Phase 43 buttons -->
