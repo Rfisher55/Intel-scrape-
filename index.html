@@ -1809,6 +1809,74 @@ button{border-radius:2px!important}
 .cs-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .cs-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
 .cs-news-meta{color:var(--dim);font-size:8px;}
+/* === COLUMN 5 — right:685px === */
+#pandemic-btn{position:fixed;top:55px;right:685px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#pandemic-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#elecwatch-btn{position:fixed;top:95px;right:685px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#elecwatch-btn:hover{border-color:#facc15;color:#fde68a;}
+#narco-btn{position:fixed;top:135px;right:685px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#narco-btn:hover{border-color:#f97316;color:#fdba74;}
+/* Shared overlay styles for col5 panels */
+.col5-overlay{position:fixed;inset:0;z-index:2100;background:rgba(5,8,15,.97);display:none;overflow-y:auto;font-family:'Courier New',monospace;}
+.col5-overlay.open{display:block;}
+.col5-hdr{background:var(--panel);border-bottom:2px solid;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.col5-hdr h2{font-size:12px;letter-spacing:.2em;margin:0;}
+.col5-body{padding:16px 24px;max-width:1200px;}
+/* Pandemic panel */
+.pw-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:12px;margin-bottom:10px;}
+.pw-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.pw-disease{font-size:11px;font-weight:700;color:var(--text);}
+.pw-status-badge{font-size:7px;padding:2px 6px;letter-spacing:.12em;font-weight:700;border-radius:2px;}
+.pw-status-active{background:rgba(239,68,68,.2);border:1px solid #ef4444;color:#fca5a5;}
+.pw-status-watch{background:rgba(234,179,8,.15);border:1px solid #eab308;color:#fde047;}
+.pw-status-contained{background:rgba(107,114,128,.15);border:1px solid #6b7280;color:#d1d5db;}
+.pw-detail{font-size:8px;color:var(--dim);line-height:1.55;margin-bottom:6px;}
+.pw-affected{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px;}
+.pw-country-tag{font-size:7px;padding:1px 5px;background:rgba(30,58,95,.4);border:1px solid var(--border);border-radius:1px;color:#7dd3fc;}
+.pw-stats-row{display:flex;gap:12px;font-size:8px;margin-top:5px;}
+.pw-stat-item{color:var(--dim);}
+.pw-stat-item span{color:var(--text);font-weight:700;}
+.pw-bio-box{background:rgba(127,29,29,.1);border:1px solid rgba(239,68,68,.4);padding:12px;margin-top:14px;}
+.pw-bio-hdr{font-size:9px;letter-spacing:.18em;color:#fca5a5;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.pw-bio-note{font-size:8px;color:#fda4af;line-height:1.6;margin-bottom:8px;}
+.pw-bio-item{background:rgba(127,29,29,.15);border:1px solid rgba(239,68,68,.3);border-left:3px solid #ef4444;padding:8px 10px;margin-bottom:6px;}
+.pw-bio-name{font-size:10px;font-weight:700;color:#fca5a5;margin-bottom:3px;}
+.pw-bio-detail{font-size:8px;color:#fda4af;line-height:1.5;}
+/* Election watch */
+.ew-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:11px 13px;margin-bottom:8px;}
+.ew-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;}
+.ew-country-name{font-size:11px;font-weight:700;color:var(--text);}
+.ew-integrity-badge{font-size:7px;padding:2px 6px;letter-spacing:.1em;font-weight:700;border-radius:2px;}
+.ew-integrity-critical{background:rgba(127,29,29,.3);border:1px solid #dc2626;color:#fca5a5;}
+.ew-integrity-low{background:rgba(127,29,29,.2);border:1px solid #ef4444;color:#f87171;}
+.ew-integrity-elevated{background:rgba(120,53,15,.25);border:1px solid #f97316;color:#fdba74;}
+.ew-integrity-high{background:rgba(20,83,45,.25);border:1px solid #22c55e;color:#86efac;}
+.ew-date-row{font-size:8px;color:var(--dim);margin-bottom:4px;}
+.ew-result{font-size:8px;color:#93c5fd;margin-bottom:4px;}
+.ew-interference{font-size:8px;color:#fda4af;line-height:1.5;margin-bottom:4px;border-left:2px solid rgba(239,68,68,.3);padding-left:6px;}
+.ew-actor-card{background:rgba(8,16,34,.7);border:1px solid var(--border);border-left:3px solid;padding:10px 12px;margin-bottom:7px;}
+.ew-actor-name{font-size:10px;font-weight:700;margin-bottom:4px;}
+.ew-actor-methods{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px;}
+.ew-method-tag{font-size:7px;padding:1px 5px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#fca5a5;letter-spacing:.04em;}
+.ew-actor-targets{font-size:8px;color:var(--dim);line-height:1.5;}
+/* Counter-narco */
+.cn-route-card{background:var(--panel2);border:1px solid var(--border);padding:10px 12px;margin-bottom:7px;border-left:3px solid;}
+.cn-route-name{font-size:10px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.cn-route-meta{display:flex;gap:12px;font-size:8px;color:var(--dim);margin-bottom:3px;}
+.cn-route-actors{font-size:8px;color:#fda4af;line-height:1.4;}
+.cn-cartel-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid #ef4444;padding:11px 13px;margin-bottom:8px;}
+.cn-cartel-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.cn-cartel-name{font-size:11px;font-weight:700;color:var(--text);}
+.cn-threat-badge{font-size:7px;padding:2px 6px;letter-spacing:.1em;font-weight:700;border-radius:2px;}
+.cn-threat-critical{background:rgba(127,29,29,.3);border:1px solid #dc2626;color:#fca5a5;}
+.cn-threat-high{background:rgba(124,45,18,.25);border:1px solid #f97316;color:#fdba74;}
+.cn-threat-elevated{background:rgba(120,53,15,.2);border:1px solid #eab308;color:#fde047;}
+.cn-cartel-detail{font-size:8px;color:var(--dim);line-height:1.5;margin-bottom:5px;}
+.cn-ops-list{display:flex;flex-wrap:wrap;gap:3px;}
+.cn-op-tag{font-size:7px;padding:1px 5px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);color:#fdba74;letter-spacing:.04em;}
+.cn-gdelt-item{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.cn-gdelt-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.cn-gdelt-meta{color:var(--dim);font-size:8px;}
 </style>
 </head>
 <body>
@@ -8114,6 +8182,7 @@ function draw(){
   if(_infraSitesActive)drawInfraLayer();
   if(_armsTradeActive)drawArmsTradeNet();
   if(_threatVecActive)drawThreatVectors();
+  if(_narcoActive)drawNarcoRoutes();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -17745,6 +17814,371 @@ async function _fetchClimateNews() {
   }
 }
 
+// ══════════════════════════════════════════════════════════
+// PHASE 24 — COLUMN 5: PANDEMIC WATCH, ELECTION WATCH, COUNTER-NARCO
+// ══════════════════════════════════════════════════════════
+
+const OUTBREAK_DB = [
+  {disease:'H5N1 Avian Influenza',status:'ACTIVE - ELEVATED',severity:'HIGH',
+   affected:['USA','Canada','Australia','Mexico','UK','China'],
+   cases:'887+ human cases (2024-2025)',fatality:'~52% CFR historically',
+   detail:'Multi-state US cattle outbreak 2024. First sustained mammal-to-mammal transmission detected. WHO PHEIC assessment ongoing.',
+   bioThreat:true,lat:40,lng:-95,color:'#ef4444'},
+  {disease:'Mpox (Clade Ib)',status:'ACTIVE - WHO PHEIC',severity:'HIGH',
+   affected:['DRC','Burundi','Rwanda','Uganda','Kenya','Sweden','Thailand'],
+   cases:'100,000+ cases DRC 2024',fatality:'3-10% CFR (Clade Ib)',
+   detail:'Novel Clade Ib strain with sexual transmission route. WHO declared PHEIC August 2024. DRC epicenter, spreading via Great Lakes region.',
+   bioThreat:false,lat:-4,lng:23,color:'#f97316'},
+  {disease:'Oropouche Virus',status:'ACTIVE - EPIDEMIC',severity:'ELEVATED',
+   affected:['Brazil','Bolivia','Cuba','Colombia','Peru','Italy','Spain'],
+   cases:'10,000+ cases Brazil 2024',fatality:'<1% (neuroinvasive risk)',
+   detail:'First-ever vertical transmission documented. Travel-associated cases in Europe. Arbovirus spread by biting midges.',
+   bioThreat:false,lat:-10,lng:-55,color:'#eab308'},
+  {disease:'Marburg Virus',status:'CONTAINED - WATCH',severity:'CRITICAL',
+   affected:['Rwanda','Tanzania'],
+   cases:'66 cases Rwanda outbreak 2024',fatality:'~24% (Rwanda outbreak)',
+   detail:'Rwanda outbreak September 2024 - largest ever Marburg outbreak. Healthcare worker transmission primary vector. No approved vaccine.',
+   bioThreat:true,lat:-2,lng:30,color:'#dc2626'},
+  {disease:'MERS-CoV',status:'ENDEMIC - MONITOR',severity:'ELEVATED',
+   affected:['Saudi Arabia','UAE','Qatar','South Korea'],
+   cases:'Sporadic zoonotic cases 2025',fatality:'~35% CFR',
+   detail:'Dromedary camel reservoir. Sporadic human cases continue. Pandemic potential if human adaptation occurs.',
+   bioThreat:false,lat:24,lng:45,color:'#eab308'},
+  {disease:'XEC COVID Variant',status:'ACTIVE - SPREADING',severity:'MODERATE',
+   affected:['Global'],
+   cases:'Dominant strain 40+ countries',fatality:'<1% vaccinated population',
+   detail:'Recombinant KP.3.1.1 sub-variant. Increased immune evasion. Seasonal surge predicted Q1 2026.',
+   bioThreat:false,lat:50,lng:10,color:'#6b7280'},
+  {disease:'Dengue Fever',status:'HISTORIC SURGE',severity:'HIGH',
+   affected:['Brazil','Bangladesh','India','Argentina','Vietnam','Philippines'],
+   cases:'12M+ cases globally 2024',fatality:'~0.5% severe cases',
+   detail:'Record global cases 2024. Climate-driven Aedes aegypti range expansion. Americas hardest hit with 9M+ cases.',
+   bioThreat:false,lat:0,lng:-60,color:'#f97316'}
+];
+
+const ELECTION_EVENTS = [
+  {country:'Germany',iso:'DE',date:'Feb 2025',status:'COMPLETED',result:'CDU/CSU won - Merz Chancellor',
+   interference:'Russian social media disinformation campaign detected. Sahra Wagenknecht party (BSW) received pro-Kremlin amplification.',
+   integrity:'HIGH',lat:52,lng:13,color:'#22c55e'},
+  {country:'France',iso:'FR',date:'Ongoing (snap elections possible)',status:'WATCH',
+   result:'Hung parliament - Barnier government collapsed Dec 2024',
+   interference:'Russian RT amplification of far-right RN party content ongoing.',
+   integrity:'ELEVATED',lat:48,lng:2,color:'#eab308'},
+  {country:'Poland',iso:'PL',date:'Presidential May 2025',status:'UPCOMING',result:'TBD - Tusk coalition vs PiS',
+   interference:'Russian hybrid ops targeting Polish-Ukrainian border narrative.',
+   integrity:'ELEVATED',lat:52,lng:20,color:'#eab308'},
+  {country:'Philippines',iso:'PH',date:'Midterm May 2025',status:'UPCOMING',result:'TBD - Marcos vs Duterte faction',
+   interference:'China influence ops via WeChat/TikTok in diaspora communities detected.',
+   integrity:'ELEVATED',lat:14,lng:121,color:'#eab308'},
+  {country:'Australia',iso:'AU',date:'Federal 2025',status:'UPCOMING',result:'TBD - Labor vs Coalition',
+   interference:'Chinese interference via diaspora WeChat channels - ASIO warning issued.',
+   integrity:'ELEVATED',lat:-33,lng:151,color:'#eab308'},
+  {country:'Iran',iso:'IR',date:'Presidential Jun 2024',status:'COMPLETED',result:'Pezeshkian won (reformist)',
+   interference:'Internal IRGC interference in candidate vetting (Guardian Council disqualifications)',
+   integrity:'LOW',lat:35,lng:51,color:'#ef4444'},
+  {country:'Venezuela',iso:'VE',date:'Presidential Jul 2024',status:'DISPUTED',result:'Maduro declared winner - CONTESTED',
+   interference:'Government interference: opposition candidates barred, votes disputed, international rejection',
+   integrity:'CRITICAL',lat:10,lng:-67,color:'#dc2626'},
+  {country:'Romania',iso:'RO',date:'Presidential Dec 2024',status:'ANNULLED',result:'ANNULLED by Constitutional Court',
+   interference:'TikTok algorithm manipulation favoring pro-Russian candidate Calin Georgescu. Russian/state-sponsored campaign confirmed.',
+   integrity:'CRITICAL',lat:45,lng:25,color:'#dc2626'},
+  {country:'Georgia',iso:'GE',date:'Parliamentary Oct 2024',status:'DISPUTED',result:'Georgian Dream claimed win - PROTESTED',
+   interference:'Russian-aligned Georgian Dream party accused of fraud. Mass protests ongoing.',
+   integrity:'CRITICAL',lat:42,lng:44,color:'#dc2626'},
+  {country:'USA',iso:'US',date:'Presidential Nov 2024',status:'COMPLETED',result:'Trump won (Electoral 312-226)',
+   interference:'Iranian phishing ops against Trump campaign staff. Russian disinformation targeting. Chinese amplification of divisive content.',
+   integrity:'ELEVATED',lat:38,lng:-97,color:'#eab308'}
+];
+
+const INTERFERENCE_ACTORS = [
+  {actor:'Russia (GRU/FSB/RT)',methods:['Social media disinformation','Deepfake audio/video','Hack-and-leak ops','Bot network amplification'],targets:['NATO members','Post-Soviet states','EU elections'],color:'#ef4444'},
+  {actor:'China (MSS/United Front)',methods:['WeChat diaspora ops','TikTok algorithm manipulation','Elite capture/bribery','Economic coercion threats'],targets:['Taiwan','Australia','SE Asia','Pacific Islands'],color:'#f97316'},
+  {actor:'Iran (IRGC Cyber)',methods:['Spearphishing campaigns','Hack-and-leak','Influence narratives via proxies'],targets:['USA','Israel','Middle East neighbors'],color:'#8b5cf6'},
+  {actor:'Saudi Arabia (SSA)',methods:['Social media bot networks','Journalist targeting','Dissident suppression'],targets:['GCC neighbors','Western Muslim communities'],color:'#eab308'}
+];
+
+const NARCO_ROUTES = [
+  {name:'Cocaine: Andean to Europe',color:'rgba(239,68,68,0.6)',
+   waypoints:[{lat:-12,lng:-77},{lat:3,lng:-73},{lat:5,lng:-2},{lat:40,lng:-8},{lat:52,lng:4}],
+   volume:'800+ tons/year',actors:'Clan del Golfo, Sinaloa, European distributors',status:'ACTIVE'},
+  {name:'Cocaine: Mexico to USA',color:'rgba(239,68,68,0.7)',
+   waypoints:[{lat:20,lng:-100},{lat:24,lng:-104},{lat:32,lng:-110},{lat:37,lng:-100}],
+   volume:'2,000+ tons/year',actors:'Sinaloa Cartel, CJNG',status:'ACTIVE - HIGH VOLUME'},
+  {name:'Heroin/Fentanyl: Golden Triangle to Global',color:'rgba(168,85,247,0.6)',
+   waypoints:[{lat:21,lng:100},{lat:15,lng:103},{lat:13,lng:100},{lat:1,lng:104},{lat:22,lng:114}],
+   volume:'Fentanyl precursors via China',actors:'Shan State Army, Chinese labs, Sinaloa',status:'ACTIVE'},
+  {name:'Afghan Opiates: Balkan Route',color:'rgba(168,85,247,0.5)',
+   waypoints:[{lat:33,lng:65},{lat:35,lng:59},{lat:40,lng:53},{lat:41,lng:41},{lat:44,lng:26},{lat:52,lng:13}],
+   volume:'400+ tons heroin/year',actors:'Taliban (tax), Albanian organized crime',status:'ACTIVE'},
+  {name:'Captagon: Syria to Gulf',color:'rgba(251,146,60,0.6)',
+   waypoints:[{lat:34,lng:36},{lat:32,lng:36},{lat:29,lng:35},{lat:24,lng:46}],
+   volume:'$57B market estimate',actors:'4th Armored Division (Assad family)',status:'ACTIVE - STATE-SPONSORED'},
+  {name:'Methamphetamine: Golden Triangle to Pacific',color:'rgba(234,179,8,0.6)',
+   waypoints:[{lat:21,lng:100},{lat:16,lng:98},{lat:13,lng:100},{lat:4,lng:114},{lat:-6,lng:131},{lat:-34,lng:151}],
+   volume:'70%+ of global meth supply',actors:'UWSA, NDAA, Chinese triads',status:'ACTIVE - EXPANDING'}
+];
+
+const CARTEL_DB = [
+  {name:'Sinaloa Cartel',country:'Mexico',leadership:'Post-Guzman fragmented (Los Chapitos vs El Mayo faction)',
+   threat:'CRITICAL',revenue:'$30B+/year est.',operations:['Fentanyl USA distribution','Pacific shipping lanes','Money laundering via TBML'],
+   lat:24,lng:-107,color:'#ef4444'},
+  {name:'CJNG (Jalisco New Generation)',country:'Mexico',leadership:'Nemesio Oseguera Cervantes "El Mencho"',
+   threat:'CRITICAL',revenue:'$15B+/year est.',operations:['Military-grade weaponry (drones, RPGs)','European expansion','US fentanyl market penetration'],
+   lat:20,lng:-103,color:'#ef4444'},
+  {name:'Clan del Golfo',country:'Colombia',leadership:'Dairo Antonio Usuga "Otoniel" captured 2021',
+   threat:'HIGH',revenue:'$10B+/year',operations:['Colombia/Venezuela cocaine production','FARC successor networks','Caribbean shipping'],
+   lat:7,lng:-76,color:'#f97316'},
+  {name:"'Ndrangheta",country:'Italy/Global',leadership:"Decentralized ('ndrine families)",
+   threat:'HIGH',revenue:'€44B/year (Europol est.)',operations:['European cocaine distribution (80%)','Money laundering','Political corruption'],
+   lat:38,lng:16,color:'#f97316'},
+  {name:'United Wa State Army (UWSA)',country:'Myanmar',leadership:'Bao Youxiang',
+   threat:'HIGH',revenue:'$15B+ meth/year est.',operations:['Golden Triangle meth production','SAM-7 MANPADS stockpile','30,000+ fighters'],
+   lat:23,lng:99,color:'#f97316'},
+  {name:'Surenos / MS-13',country:'Central America/USA',leadership:'Mara Salvatrucha leadership (El Salvador crackdown)',
+   threat:'ELEVATED',revenue:'$3B+/year',operations:['Central America territory control','US gang networks','Human trafficking'],
+   lat:14,lng:-89,color:'#eab308'}
+];
+
+let _narcoActive = false;
+
+function drawNarcoRoutes(){
+  const t=(Date.now()%3000)/3000;
+  for(const route of NARCO_ROUTES){
+    ctx.save();
+    ctx.strokeStyle=route.color;
+    ctx.lineWidth=1.5;
+    ctx.setLineDash([4,6]);
+    ctx.lineDashOffset=-t*30;
+    ctx.beginPath();
+    let started=false;
+    for(const wp of route.waypoints){
+      const p=project(wp.lat,wp.lng);
+      if(!p.visible){started=false;continue;}
+      if(!started){ctx.moveTo(p.px,p.py);started=true;}
+      else ctx.lineTo(p.px,p.py);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function openPandemicWatch(){
+  const ov=document.getElementById('pandemic-overlay');
+  if(!ov)return;
+  ov.classList.add('open');
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._pandemic;}),
+    ...OUTBREAK_DB.map(function(o){return {lat:o.lat,lng:o.lng,type:'humanitarian',
+      severity:o.severity==='CRITICAL'?'critical':o.severity==='HIGH'?'high':'medium',
+      label:o.disease,_pandemic:true};})
+  ];
+  _renderPandemicCards();
+  fetchPandemicGDELT();
+}
+function closePandemicWatch(){
+  const ov=document.getElementById('pandemic-overlay');
+  if(ov)ov.classList.remove('open');
+  liveHotspots=liveHotspots.filter(function(h){return !h._pandemic;});
+}
+function _renderPandemicCards(){
+  const grid=document.getElementById('pandemic-grid');
+  const bioSec=document.getElementById('pw-bio-items');
+  if(!grid)return;
+  const sevBadge=function(s){
+    if(s==='CRITICAL')return 'pw-status-active';
+    if(s==='HIGH')return 'pw-status-active';
+    if(s==='ELEVATED')return 'pw-status-watch';
+    return 'pw-status-contained';
+  };
+  grid.innerHTML=OUTBREAK_DB.map(function(o){
+    const affectedTags=o.affected.map(function(a){return '<span class="pw-country-tag">'+a+'</span>';}).join('');
+    return '<div class="pw-card" style="border-left-color:'+o.color+';">'
+      +'<div class="pw-card-top">'
+      +'<div class="pw-disease">'+o.disease+'</div>'
+      +'<span class="pw-status-badge '+sevBadge(o.severity)+'">'+o.severity+'</span>'
+      +'</div>'
+      +'<div style="font-size:8px;letter-spacing:.12em;color:#94a3b8;margin-bottom:5px;">'+o.status+'</div>'
+      +'<div class="pw-detail">'+o.detail+'</div>'
+      +'<div class="pw-affected">'+affectedTags+'</div>'
+      +'<div class="pw-stats-row">'
+      +'<div class="pw-stat-item">CASES: <span>'+o.cases+'</span></div>'
+      +'<div class="pw-stat-item">CFR: <span>'+o.fatality+'</span></div>'
+      +(o.bioThreat?'<div class="pw-stat-item" style="color:#ef4444;font-weight:700;">[BIO-THREAT]</div>':'')
+      +'</div>'
+      +'</div>';
+  }).join('');
+  if(bioSec){
+    bioSec.innerHTML=OUTBREAK_DB.filter(function(o){return o.bioThreat;}).map(function(o){
+      return '<div class="pw-bio-item">'
+        +'<div class="pw-bio-name">&#x2623; '+o.disease+' [BIO-THREAT]</div>'
+        +'<div class="pw-bio-detail">'+o.detail+'<br>CFR: '+o.fatality+' | Status: '+o.status+'</div>'
+        +'</div>';
+    }).join('');
+  }
+}
+async function fetchPandemicGDELT(){
+  const el=document.getElementById('pandemic-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">Fetching live disease surveillance feed...</div>';
+  try{
+    const q=encodeURIComponent('disease outbreak pandemic epidemic');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
+}
+
+function openElecWatch(){
+  const ov=document.getElementById('elecwatch-overlay');
+  if(!ov)return;
+  ov.classList.add('open');
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._election;}),
+    ...ELECTION_EVENTS.filter(function(e){return e.integrity==='CRITICAL'||e.integrity==='LOW';}).map(function(e){
+      return {lat:e.lat,lng:e.lng,type:'instability',severity:'high',label:e.country+' Election Integrity',_election:true};
+    })
+  ];
+  _renderElecEvents();
+  _renderElecActors();
+  fetchElecGDELT();
+}
+function closeElecWatch(){
+  const ov=document.getElementById('elecwatch-overlay');
+  if(ov)ov.classList.remove('open');
+  liveHotspots=liveHotspots.filter(function(h){return !h._election;});
+}
+function _renderElecEvents(){
+  const grid=document.getElementById('elecwatch-events-grid');
+  if(!grid)return;
+  const intBadge=function(i){
+    if(i==='CRITICAL')return 'ew-integrity-critical';
+    if(i==='LOW')return 'ew-integrity-low';
+    if(i==='ELEVATED')return 'ew-integrity-elevated';
+    return 'ew-integrity-high';
+  };
+  const borderCol=function(i){
+    if(i==='CRITICAL')return '#dc2626';
+    if(i==='LOW')return '#ef4444';
+    if(i==='ELEVATED')return '#f97316';
+    return '#22c55e';
+  };
+  grid.innerHTML=ELECTION_EVENTS.map(function(ev){
+    return '<div class="ew-card" style="border-left-color:'+borderCol(ev.integrity)+';">'
+      +'<div class="ew-card-top">'
+      +'<div class="ew-country-name">'+ev.country+' ('+ev.iso+')</div>'
+      +'<span class="ew-integrity-badge '+intBadge(ev.integrity)+'">'+ev.integrity+'</span>'
+      +'</div>'
+      +'<div class="ew-date-row">'+ev.date+' &middot; <strong style="color:#e2e8f0;">'+ev.status+'</strong></div>'
+      +'<div class="ew-result">'+ev.result+'</div>'
+      +'<div class="ew-interference">&#x26A0; '+ev.interference+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderElecActors(){
+  const grid=document.getElementById('elecwatch-actors-grid');
+  if(!grid)return;
+  grid.innerHTML=INTERFERENCE_ACTORS.map(function(a){
+    const methods=a.methods.map(function(m){return '<span class="ew-method-tag">'+m+'</span>';}).join('');
+    return '<div class="ew-actor-card" style="border-left-color:'+a.color+';">'
+      +'<div class="ew-actor-name" style="color:'+a.color+';">'+a.actor+'</div>'
+      +'<div class="ew-actor-methods">'+methods+'</div>'
+      +'<div class="ew-actor-targets">TARGETS: '+a.targets.join(', ')+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchElecGDELT(){
+  const el=document.getElementById('elecwatch-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">Fetching live election intelligence feed...</div>';
+  try{
+    const q=encodeURIComponent('election interference disinformation foreign influence');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fde68a;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
+}
+
+function openNarcoWatch(){
+  const ov=document.getElementById('narco-overlay');
+  if(!ov)return;
+  ov.classList.add('open');
+  _narcoActive=true;
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._narco;}),
+    ...CARTEL_DB.map(function(c){return {lat:c.lat,lng:c.lng,type:'militia',
+      severity:c.threat==='CRITICAL'?'critical':'high',label:c.name,_narco:true};})
+  ];
+  _renderNarcoRoutes();
+  _renderNarcoCartels();
+  fetchNarcoGDELT();
+}
+function closeNarcoWatch(){
+  const ov=document.getElementById('narco-overlay');
+  if(ov)ov.classList.remove('open');
+  _narcoActive=false;
+  liveHotspots=liveHotspots.filter(function(h){return !h._narco;});
+}
+function _renderNarcoRoutes(){
+  const grid=document.getElementById('narco-routes-grid');
+  if(!grid)return;
+  grid.innerHTML=NARCO_ROUTES.map(function(r){
+    const borderCol=r.color.replace(/rgba?\(([^,]+,[^,]+,[^,]+),.+\)/,'rgba($1,1)');
+    return '<div class="cn-route-card" style="border-left-color:'+borderCol+';">'
+      +'<div class="cn-route-name">'+r.name+'</div>'
+      +'<div class="cn-route-meta"><span>VOL: '+r.volume+'</span><span style="color:#'+
+        (r.status.indexOf('HIGH')>=0?'fca5a5':r.status.indexOf('STATE')>=0?'fdba74':'86efac')+';">'+r.status+'</span></div>'
+      +'<div class="cn-route-actors">'+r.actors+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderNarcoCartels(){
+  const grid=document.getElementById('narco-cartel-grid');
+  if(!grid)return;
+  const threatBadge=function(t){
+    if(t==='CRITICAL')return 'cn-threat-critical';
+    if(t==='HIGH')return 'cn-threat-high';
+    return 'cn-threat-elevated';
+  };
+  grid.innerHTML=CARTEL_DB.map(function(c){
+    const opTags=c.operations.map(function(op){return '<span class="cn-op-tag">'+op+'</span>';}).join('');
+    return '<div class="cn-cartel-card">'
+      +'<div class="cn-cartel-top">'
+      +'<div class="cn-cartel-name">'+c.name+'</div>'
+      +'<span class="cn-threat-badge '+threatBadge(c.threat)+'">'+c.threat+'</span>'
+      +'</div>'
+      +'<div class="cn-cartel-detail"><strong style="color:#94a3b8;">'+c.country+'</strong> &middot; '+c.leadership+'</div>'
+      +'<div class="cn-cartel-detail">Revenue: <span style="color:#fca5a5;font-weight:700;">'+c.revenue+'</span></div>'
+      +'<div class="cn-ops-list">'+opTags+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchNarcoGDELT(){
+  const el=document.getElementById('narco-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">Fetching live counter-narcotics feed...</div>';
+  try{
+    const q=encodeURIComponent('drug trafficking cartel narcotics seizure');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -19088,6 +19522,89 @@ function filterSIGINT(query){
   <div class="rs-body">
     <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">CALCULATED FROM LIVE HOTSPOT DATA &middot; COUNTRY ALERT LEVELS &middot; CONFLICTS &middot; UPDATES ON OPEN</div>
     <div id="regstab-grid"><div style="color:var(--dim);font-size:9px;">Calculating regional stability indices...</div></div>
+  </div>
+</div>
+
+<!-- Column 5 Buttons -->
+<button id="pandemic-btn" onclick="openPandemicWatch()">PANDEMIC WATCH</button>
+<button id="elecwatch-btn" onclick="openElecWatch()">ELECTION WATCH</button>
+<button id="narco-btn" onclick="openNarcoWatch()">COUNTER-NARCO</button>
+
+<!-- Pandemic Watch Overlay -->
+<div id="pandemic-overlay" class="col5-overlay">
+  <div class="col5-hdr" style="border-bottom-color:#ef4444;">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">DISEASE OUTBREAK INTELLIGENCE // WHO / CDC / ECDC // GDELT LIVE FEED</div>
+      <h2 style="color:#fca5a5;">&#x1F9A0; PANDEMIC &amp; OUTBREAK WATCH</h2>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button onclick="fetchPandemicGDELT()" style="background:none;border:1px solid rgba(239,68,68,.4);color:#fca5a5;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
+      <button onclick="closePandemicWatch()" style="background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="col5-body">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;" id="pandemic-grid">
+      <div style="color:var(--dim);font-size:9px;grid-column:1/-1;text-align:center;padding:20px;">Loading outbreak data...</div>
+    </div>
+    <div class="pw-bio-box" id="pw-bio-section">
+      <div class="pw-bio-hdr">&#x2623; BIOWEAPON THREAT WATCH</div>
+      <div class="pw-bio-note">Items marked [BIO-THREAT] have dual-use weaponization concern per DHS BARDA assessments. The following pathogens require enhanced biosurveillance due to potential weaponization pathways.</div>
+      <div id="pw-bio-items"></div>
+    </div>
+    <div style="margin-top:14px;">
+      <div style="font-size:8px;letter-spacing:.2em;color:#ef4444;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(239,68,68,.2);">GDELT LIVE DISEASE SURVEILLANCE FEED</div>
+      <div id="pandemic-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Election Watch Overlay -->
+<div id="elecwatch-overlay" class="col5-overlay">
+  <div class="col5-hdr" style="border-bottom-color:#facc15;">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ELECTION INTEGRITY &amp; INTERFERENCE // GDELT // OPEN SOURCE</div>
+      <h2 style="color:#fde68a;">&#x1F5F3; ELECTION INTEGRITY &amp; INTERFERENCE WATCH</h2>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button onclick="fetchElecGDELT()" style="background:none;border:1px solid rgba(250,204,21,.4);color:#fde68a;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
+      <button onclick="closeElecWatch()" style="background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="col5-body">
+    <div style="font-size:9px;letter-spacing:.15em;color:#fde68a;margin-bottom:10px;font-weight:700;">GLOBAL ELECTION EVENTS TRACKER</div>
+    <div id="elecwatch-events-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;">
+      <div style="color:var(--dim);font-size:9px;grid-column:1/-1;">Loading...</div>
+    </div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#fda4af;margin-bottom:8px;font-weight:700;border-top:1px solid rgba(250,204,21,.2);padding-top:12px;">FOREIGN INTERFERENCE ACTORS</div>
+    <div id="elecwatch-actors-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="margin-top:14px;">
+      <div style="font-size:8px;letter-spacing:.2em;color:#facc15;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(250,204,21,.2);">GDELT LIVE ELECTION INTERFERENCE FEED</div>
+      <div id="elecwatch-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Counter-Narco Overlay -->
+<div id="narco-overlay" class="col5-overlay">
+  <div class="col5-hdr" style="border-bottom-color:#f97316;">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">COUNTER-NARCOTICS INTELLIGENCE // DEA / UNODC // GDELT LIVE FEED</div>
+      <h2 style="color:#fdba74;">&#x26A0; COUNTER-NARCOTICS &amp; TRAFFICKING INTELLIGENCE</h2>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button onclick="fetchNarcoGDELT()" style="background:none;border:1px solid rgba(249,115,22,.4);color:#fdba74;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
+      <button onclick="closeNarcoWatch()" style="background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="col5-body">
+    <div style="font-size:9px;letter-spacing:.15em;color:#fdba74;margin-bottom:10px;font-weight:700;">ACTIVE TRAFFICKING ROUTES (GLOBE VISUALIZATION ACTIVE)</div>
+    <div id="narco-routes-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#fca5a5;margin-bottom:8px;font-weight:700;border-top:1px solid rgba(249,115,22,.2);padding-top:12px;">CARTEL &amp; ORGANIZED CRIME DATABASE</div>
+    <div id="narco-cartel-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="margin-top:14px;">
+      <div style="font-size:8px;letter-spacing:.2em;color:#f97316;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(249,115,22,.2);">GDELT LIVE COUNTER-NARCOTICS FEED</div>
+      <div id="narco-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+    </div>
   </div>
 </div>
 </body>
