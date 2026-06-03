@@ -4150,6 +4150,97 @@ button{border-radius:2px!important}
 .ww-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .ww-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .ww-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 51 buttons — Column 14 (right:1720px) */
+#p51coupwatch-btn{position:fixed;top:55px;right:1720px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p51coupwatch-btn:hover{border-color:#dc2626;color:#fca5a5;}
+#sanctionstracker-btn{position:fixed;top:95px;right:1720px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#sanctionstracker-btn:hover{border-color:#f59e0b;color:#fde68a;}
+#energysecurity-btn{position:fixed;top:135px;right:1720px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#energysecurity-btn:hover{border-color:#f97316;color:#fdba74;}
+
+/* Coup Watch overlay */
+#p51coupwatch-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.cw-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.cw-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#dc2626;}
+.cw-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.cw-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.cw-close:hover{color:#dc2626;border-color:#dc2626;}
+.cw-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.cw-countries-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.cw-country-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.cw-country-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.cw-country-name{font-size:14px;font-weight:900;}
+.cw-risk-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.cw-drivers{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.cw-driver-chip{font-size:7px;background:rgba(220,38,38,.12);border:1px solid rgba(220,38,38,.3);padding:2px 5px;border-radius:2px;color:#fca5a5;}
+.cw-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.cw-row b{color:#e2e8f0;}
+.cw-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.cw-indicators-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.cw-indicators-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.cw-indicators-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.cw-indicator-name{color:#e2e8f0;font-weight:700;}
+.cw-gdelt-feed{max-width:900px;}
+.cw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.cw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Sanctions Tracker overlay */
+#sanctionstracker-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.st-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.st-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f59e0b;}
+.st-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.st-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.st-close:hover{color:#f59e0b;border-color:#f59e0b;}
+.st-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.st-regimes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(540px,1fr));gap:14px;margin-bottom:10px;}
+.st-regime-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.st-regime-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.st-target-name{font-size:14px;font-weight:900;}
+.st-effect-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.st-measures{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.st-measure-chip{font-size:7px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);padding:2px 5px;border-radius:2px;color:#fde68a;}
+.st-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.st-row b{color:#e2e8f0;}
+.st-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.st-evasion-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.st-evasion-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.st-evasion-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.st-method-name{color:#e2e8f0;font-weight:700;}
+.st-sev-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.st-gdelt-feed{max-width:900px;}
+.st-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.st-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.st-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Energy Security overlay */
+#energysecurity-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.es-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.es-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f97316;}
+.es-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.es-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.es-close:hover{color:#f97316;border-color:#f97316;}
+.es-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.es-chokepoints-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.es-chokepoint-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.es-chokepoint-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.es-chokepoint-name{font-size:14px;font-weight:900;}
+.es-sev-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.es-threats{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.es-threat-chip{font-size:7px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);padding:2px 5px;border-radius:2px;color:#fdba74;}
+.es-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.es-row b{color:#e2e8f0;}
+.es-scenario{font-size:8px;color:#fbbf24;line-height:1.4;margin-bottom:4px;}
+.es-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.es-hotspots-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.es-hotspots-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.es-hotspots-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.es-hotspot-name{color:#e2e8f0;font-weight:700;}
+.es-gdelt-feed{max-width:900px;}
+.es-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.es-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.es-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -30149,6 +30240,437 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 50 =====
 
+// ===== PHASE 51: LIVE FEED STATUS BAR + COUP WATCH + SANCTIONS TRACKER + ENERGY SECURITY =====
+
+async function _checkLiveFeeds(){
+  var now=new Date().toISOString().replace('T',' ').slice(0,19)+' UTC';
+  document.getElementById('lfs-lastupdate').textContent='LAST SYNC: '+now;
+  // GDELT check
+  try{
+    var r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query=conflict&mode=artlist&maxrecords=1&format=json',{signal:AbortSignal.timeout(8000)});
+    var d=await r.json();
+    var el=document.getElementById('lfs-gdelt');
+    if(d&&d.articles&&d.articles.length){el.textContent='GDELT LIVE';el.style.color='#22c55e';}
+    else{el.textContent='GDELT OK';el.style.color='#eab308';}
+  }catch(e){var el=document.getElementById('lfs-gdelt');el.textContent='GDELT OFFLINE';el.style.color='#ef4444';}
+  // ReliefWeb check
+  try{
+    var r2=await fetch('https://api.reliefweb.int/v1/reports?appname=intelplatform&limit=1&fields[include][]=title',{signal:AbortSignal.timeout(8000)});
+    var d2=await r2.json();
+    var el2=document.getElementById('lfs-reliefweb');
+    if(d2&&d2.data&&d2.data.length){el2.textContent='RELIEFWEB LIVE';el2.style.color='#22c55e';}
+    else{el2.textContent='RELIEFWEB OK';el2.style.color='#eab308';}
+  }catch(e){var el2=document.getElementById('lfs-reliefweb');el2.textContent='RELIEFWEB OFFLINE';el2.style.color='#ef4444';}
+  // USGS check
+  try{
+    var r3=await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson',{signal:AbortSignal.timeout(8000)});
+    var d3=await r3.json();
+    var el3=document.getElementById('lfs-usgs');
+    if(d3&&d3.features){el3.textContent='USGS SEISMIC LIVE ('+d3.features.length+')';el3.style.color='#22c55e';}
+    else{el3.textContent='USGS OK';el3.style.color='#eab308';}
+  }catch(e){var el3=document.getElementById('lfs-usgs');el3.textContent='USGS OFFLINE';el3.style.color='#ef4444';}
+  // NASA FIRMS check
+  try{
+    var r4=await fetch('https://firms.modaps.eosdis.nasa.gov/api/country/csv/fbf206e65f2b59e35a38ca8c6cf32428/VIIRS_SNPP_NRT/BLZ/1',{signal:AbortSignal.timeout(8000)});
+    var t4=await r4.text();
+    var el4=document.getElementById('lfs-firms');
+    if(t4&&t4.length>10){el4.textContent='NASA FIRMS LIVE';el4.style.color='#22c55e';}
+    else{el4.textContent='FIRMS OK';el4.style.color='#eab308';}
+  }catch(e){var el4=document.getElementById('lfs-firms');el4.textContent='FIRMS OFFLINE';el4.style.color='#ef4444';}
+  // Vessel track indicator
+  var el5=document.getElementById('lfs-vessel');
+  el5.textContent='AIS RELAY ACTIVE';el5.style.color='#22c55e';
+}
+_checkLiveFeeds();
+setInterval(_checkLiveFeeds,120000);
+
+// ===== COUP WATCH DATA =====
+var P51_COUP_RISK_COUNTRIES=[
+  {country:'Myanmar',lat:19.74,lng:96.08,risk:'ONGOING',color:'#ef4444',
+   last_coup:'Feb 2021 (Tatmadaw ousted Aung San Suu Kyi)',
+   coup_count_since_1950:3,
+   current_status:'Junta (SAC) controls major cities. Civil war vs PDF/ethnic armies. 50,000+ dead. International isolation.',
+   drivers:['Military institutional dominance','Ethnic federalism failure','Economic collapse (kyat -50%)','Rohingya genocide impunity'],
+   risk_factors:'Active civil war. Junta losing territory to PDF coalitions. Possible counter-coup by hardliners if SAC loses more ground.',
+   probability_12mo:'LOW NEW COUP — ongoing civil war is the risk'},
+  {country:'Sudan',lat:12.86,lng:30.22,risk:'ACTIVE_CONFLICT',color:'#ef4444',
+   last_coup:'Oct 2021 (SAF ousted civilian transitional government)',
+   coup_count_since_1950:6,
+   current_status:'SAF vs RSF civil war since April 2023. Khartoum destroyed. 25M+ displaced/affected. Famine conditions.',
+   drivers:['Military factionalism (SAF vs RSF)','Gold economy patronage','External patrons (UAE-RSF, Egypt/Russia-SAF)','Failed democratic transition'],
+   risk_factors:'RSF effectively controls Darfur. SAF may fragment further. Risk of permanent partition.',
+   probability_12mo:'WAR CONTINUATION — coup less likely than territorial fragmentation'},
+  {country:'Guinea (Conakry)',lat:9.53,lng:-13.68,risk:'JUNTA',color:'#f97316',
+   last_coup:'Sept 2021 (Col. Mamadi Doumbouya ousted Alpha Conde)',
+   coup_count_since_1950:5,
+   current_status:'CNRD military junta. Doumbouya (now General) as president. Transition timeline repeatedly pushed back. ECOWAS sanctions partially lifted.',
+   drivers:['Mining wealth (bauxite 25% global reserves) enabling junta self-financing','ECOWAS weakness post-Sahel coups','France influence collapse'],
+   risk_factors:'Counter-coup risk within CNRD. Russia expanding influence (mining deals, Wagner advisors).',
+   probability_12mo:'MODERATE — internal junta power struggle possible'},
+  {country:'Niger',lat:13.51,lng:2.12,risk:'JUNTA',color:'#f97316',
+   last_coup:'July 2023 (PSWC ousted President Bazoum)',
+   coup_count_since_1950:5,
+   current_status:'CNSP junta. Bazoum still detained. ECOWAS threatened intervention but backed down. AES bloc formed with Mali+Burkina. France expelled. US base withdrawn.',
+   drivers:['Anti-France sentiment','Security failures vs jihadists','Poverty+youth unemployment','Regional coup contagion'],
+   risk_factors:'Wagner/Africa Corps presence expanding. Uranium mines (Areva/Orano expelled). AES military alliance with Mali/Burkina provides regional legitimacy.',
+   probability_12mo:'STABLE JUNTA — consolidating power'},
+  {country:'Venezuela',lat:7.12,lng:-66.17,risk:'AUTOCRATIC_CONSOLIDATION',color:'#eab308',
+   last_coup:'Attempted April 2019 (Guaido/Lopez failed).',
+   coup_count_since_1950:4,
+   current_status:'Maduro retained power via 2024 disputed election (opposition claims fraud, international community largely agrees). Gonzalez Urrutia (opposition) in exile.',
+   drivers:['Economic collapse 80% contraction','Military patronage system (FANB)','Cuban intelligence presence','Drug trafficking revenue sustaining loyalty'],
+   risk_factors:'Military defection cascade possible if US sanctions tightened + oil price drop. DGCIM repression of dissent.',
+   probability_12mo:'LOW COUP — Maduro controls security apparatus. Possible if economy collapses further.'},
+  {country:'Mali',lat:17.57,lng:-3.99,risk:'JUNTA',color:'#f97316',
+   last_coup:'Aug 2020 (Col. Goita ousted Keita); May 2021 (Goita ousted transitional govt)',
+   coup_count_since_1950:5,
+   current_status:'CNSP junta under Goita. Wagner/Africa Corps 2,000+ personnel. French expelled. AES bloc. Timbuktu fell to Tuareg-jihadist alliance Sept 2023.',
+   drivers:['Jihadist expansion','French COIN failure','Anti-France mobilization','ECOWAS weakness'],
+   risk_factors:'Losing territory despite Wagner. Continued jihadist expansion. Risk: junta blamed, another coup from within army.',
+   probability_12mo:'MODERATE — junta losing militarily, possible internal fracture'}
+];
+
+var COUP_INDICATORS=[
+  {indicator:'Military Pay Arrears',weight:'HIGH',desc:'Unpaid soldiers most common trigger. Check: Sudan (SAF underfunded), Nigeria, Pakistan'},
+  {indicator:'Election Rejection',weight:'HIGH',desc:'Military refusing to accept election results. Myanmar (2021), Venezuela (2024), Niger (2023)'},
+  {indicator:'External Patron Support',weight:'MEDIUM',desc:'Wagner/Russia backing juntas enables survival. UAE backing RSF in Sudan.'},
+  {indicator:'Economic Collapse',weight:'HIGH',desc:'GDP contraction >20% correlates with coup risk. Venezuela, Sudan, Myanmar'},
+  {indicator:'Ethnic/Sectarian Military Divide',weight:'HIGH',desc:'Ethnic armies within military. Myanmar (Tatmadaw ethnic Burman vs minorities)'},
+  {indicator:'Regional Contagion',weight:'MEDIUM',desc:'Sahel coup belt: Mali 2020, Guinea 2021, Burkina 2022, Niger 2023 — pattern spreads'}
+];
+
+function _renderCoupWatch(){
+  var g=document.getElementById('cw-countries-grid');
+  if(!g)return;
+  g.innerHTML='';
+  P51_COUP_RISK_COUNTRIES.forEach(function(c){
+    var riskColor=c.color;
+    var drivers=c.drivers.map(function(d){return '<span class="cw-driver-chip">'+d+'</span>';}).join('');
+    g.innerHTML+='<div class="cw-country-card" style="border-top-color:'+riskColor+';">'
+      +'<div class="cw-country-header">'
+      +'<span class="cw-country-name" style="color:'+riskColor+';">'+c.country+'</span>'
+      +'<span class="cw-risk-badge" style="background:'+riskColor+'22;color:'+riskColor+';border:1px solid '+riskColor+'44;">'+c.risk.replace(/_/g,' ')+'</span>'
+      +'</div>'
+      +'<div class="cw-drivers">'+drivers+'</div>'
+      +'<div class="cw-row"><b>LAST COUP:</b> '+c.last_coup+'</div>'
+      +'<div class="cw-row"><b>COUPS SINCE 1950:</b> '+c.coup_count_since_1950+'</div>'
+      +'<div class="cw-row"><b>STATUS:</b> '+c.current_status+'</div>'
+      +'<div class="cw-row"><b>RISK FACTORS:</b> '+c.risk_factors+'</div>'
+      +'<div class="cw-assessment"><b>12-MO OUTLOOK:</b> '+c.probability_12mo+'</div>'
+      +'</div>';
+  });
+  var tbody=document.getElementById('cw-indicators-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    COUP_INDICATORS.forEach(function(ind){
+      var wColor=ind.weight==='HIGH'?'#ef4444':ind.weight==='MEDIUM'?'#f97316':'#eab308';
+      tbody.innerHTML+='<tr>'
+        +'<td class="cw-indicator-name">'+ind.indicator+'</td>'
+        +'<td><span style="font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;background:'+wColor+'22;color:'+wColor+';border:1px solid '+wColor+'44;">'+ind.weight+'</span></td>'
+        +'<td style="font-size:8px;color:#94a3b8;">'+ind.desc+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchCoupWatchGDELT(){
+  var feed=document.getElementById('cw-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=coup+military+takeover+junta+overthrow+political+crisis&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="cw-gdelt-item">'
+        +'<div class="cw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cw-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openCoupWatch(){
+  var ov=document.getElementById('p51coupwatch-overlay');
+  if(ov){ov.style.display='flex';_renderCoupWatch();_fetchCoupWatchGDELT();}
+  var pins=P51_COUP_RISK_COUNTRIES.map(function(c){
+    var t=c.risk==='JUNTA'?'instability':c.risk==='ACTIVE_CONFLICT'?'active_conflict':'hybrid';
+    var sev=c.risk==='ONGOING'||c.risk==='ACTIVE_CONFLICT'?9:c.risk==='JUNTA'?7:5;
+    return {lat:c.lat,lng:c.lng,label:c.country+' — '+c.risk.replace(/_/g,' '),type:t,severity:sev,TAG:'_p51coupwatch'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p51coupwatch';}), ...pins];
+}
+
+function _closeCoupWatch(){
+  var ov=document.getElementById('p51coupwatch-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p51coupwatch';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('p51coupwatch-btn');
+  if(b)b.addEventListener('click',_openCoupWatch);
+  var c=document.getElementById('p51coupwatch-close');
+  if(c)c.addEventListener('click',_closeCoupWatch);
+});
+
+// ===== SANCTIONS TRACKER DATA =====
+var SANCTIONS_REGIMES=[
+  {target:'Russia',lat:55.75,lng:37.62,color:'#ef4444',
+   sanctions_count:'16,000+ designations (largest in history, post-Feb 2022)',
+   imposing_parties:['EU','USA','UK','Canada','Australia','Japan','South Korea'],
+   key_measures:['Swift exclusion (7 banks)','Central bank reserves frozen ($300B)','Oil price cap ($60/bbl, Dec 2022)','Export controls semiconductors/dual-use','Luxury goods ban','Oligarch asset freezes','Nord Stream insurance ban'],
+   effectiveness:'PARTIAL — Russia GDP -2.1% (2022), rebounded 2023-24. Oil revenues redirected via India/China. Shadow fleet bypassing price cap. Sanctions driving de-dollarization.',
+   circumvention:['Shadow tanker fleet (600+ vessels)','UAE/Turkey/Kazakhstan transshipment','Parallel import networks via Central Asia','Chinese component supply'],
+   assessment:'Most comprehensive sanctions in history but limited by non-Western participation. Long-term technology denial more impactful than near-term finance.'},
+  {target:'Iran',lat:35.69,lng:51.39,color:'#ef4444',
+   sanctions_count:'Thousands of designations since 1979; JCPOA collapse 2018 reimposed all',
+   imposing_parties:['USA (primary)','EU (secondary compliance)','UK','Israel pressure'],
+   key_measures:['Oil export ban (waivers for China/India)','Banking exclusion','SWIFT exclusion','Revolutionary Guards designated FTO','Petroleum sector sanctions'],
+   effectiveness:'PARTIAL — economy contracted, currency collapsed (rial -80% since 2018), but enrichment program advanced from 3.67% to 60%. Oil still flowing to China.',
+   circumvention:['China importing 1.5-2M bbl/day via dark fleet','Ghost tanker fleet','Crypto transactions (IRGC)','Barter trade'],
+   assessment:'Sanctions failed primary objective (stopping nuclear program). Iran nuclear threshold now weeks away. China provides economic lifeline. Sanctions accelerated Iran-China-Russia alignment.'},
+  {target:'North Korea',lat:40.34,lng:127.51,color:'#ef4444',
+   sanctions_count:'UNSC resolutions 1718, 1874, 2087, 2094, 2270, 2321, 2371, 2375, 2397 (comprehensive)',
+   imposing_parties:['UN Security Council (all permanent members)','USA','EU'],
+   key_measures:['Coal/iron/seafood export ban','Oil import cap (500k barrels/yr)','Ship-to-ship transfer ban','Overseas worker remittances ban','Luxury goods ban'],
+   effectiveness:'LOW — China not enforcing. Russia vetoing new resolutions. DPRK adapted: ship-to-ship transfers, crypto theft ($3B in 2022-23), arms sales to Russia for sanctions relief.',
+   circumvention:['China border trade (unreported)','Ship-to-ship petroleum transfers','Crypto hacking ($3B+ stolen 2022-23, Lazarus Group)','Arms sales to Russia (artillery shells, missiles)'],
+   assessment:'UN sanctions regime effectively dead since 2022. Russia vetoed 2022 UNSC resolution. China abstaining from enforcement. DPRK-Russia arms trade providing hard currency and de-facto sanctions relief.'},
+  {target:'China (Targeted)',lat:39.91,lng:116.39,color:'#f97316',
+   sanctions_count:'Entity list: 900+ companies; OFAC SDN: dozens; ITAR/EAR export controls',
+   imposing_parties:['USA','UK (Xinjiang targeted)','EU (Xinjiang targeted)'],
+   key_measures:['Semiconductor export controls (Oct 2022, Oct 2023 expanded)','Huawei equipment ban','Military-civil fusion entity list','Xinjiang cotton/polysilicon import ban','Investment restrictions in AI/quantum/semiconductors'],
+   effectiveness:'SIGNIFICANT for semiconductors — TSMC/ASML compliance blocking advanced chips. Huawei forced to domesticate supply chain. SMIC limited to 7nm.',
+   circumvention:['Singapore/Malaysia transshipment of chips','YMTC domestic NAND development','Huawei Kirin 9000S (7nm domestic chip 2023)','Indirect acquisition via third countries'],
+   assessment:'Technology denial more effective than financial sanctions for China. Semiconductor controls creating genuine capability gaps. China accelerating domestic semiconductor investment ($40B+ state funds).'},
+  {target:'Venezuela',lat:7.12,lng:-66.17,color:'#f97316',
+   sanctions_count:'OFAC SDN: Maduro, senior officials, PDVSA, SEBIN, DGCIM',
+   imposing_parties:['USA','EU','Canada'],
+   key_measures:['PDVSA (oil company) sanctioned','Maduro/officials SDN designation','Sectoral oil sanctions (reimposed 2024 after election fraud)','Gold sector sanctions','Gulftainer/Citgo asset freeze'],
+   effectiveness:'PARTIAL — oil production collapsed 2.7M to 0.7M bbl/day (2015-2020). Partially recovered to 0.8M via Iran/Russia assistance. GDP contracted 80%. But Maduro retained power.',
+   circumvention:['Iranian tankers/crew/technical assistance','Chinese off-take agreements (non-declared)','Russian Rosneft intermediaries (before sanctioned)','Cryptocurrency (petro — largely failed)'],
+   assessment:'Economic devastation but political objective failed. 7M+ Venezuelans fled (largest migration crisis in hemisphere). Biden partial sanctions relief (2023 Barbados Agreement) reversed after election fraud.'},
+  {target:'Belarus',lat:53.71,lng:27.95,color:'#eab308',
+   sanctions_count:'Comprehensive following 2020 election fraud + Ryanair plane diversion 2021 + Russia invasion support',
+   imposing_parties:['EU','USA','UK','Canada'],
+   key_measures:['Potash (fertilizer) export sanctions','Financial sector restrictions','Lukashenko regime SDN designations','Air space restrictions','Swift exclusion (key banks)'],
+   effectiveness:'MODERATE — potash exports redirected via Russia. Economy hurt but Lukashenko surviving via Russian support ($15B+ bailout). Lukashenko health declining — succession question emerging.',
+   circumvention:['Russian financial support and transshipment','Chinese banking access','Potash via Russian ports'],
+   assessment:'Sanctions insufficient to change Lukashenko behavior while Russia provides support. Wagner deployment to Belarus (summer 2023) increases destabilization risk to Poland/Lithuania border.'}
+];
+
+var SANCTIONS_EVASION_METHODS=[
+  {method:'Shadow Fleet',users:['Russia','Iran','Venezuela','North Korea'],desc:'500-700 vessels operating outside Western insurance/flag registries. AIS spoofing. Ship-to-ship transfers in open ocean.',severity:'CRITICAL'},
+  {method:'Transshipment Hubs',users:['Russia','Iran','North Korea'],desc:'UAE, Turkey, Kazakhstan, Armenia routing goods avoiding direct sanctions. Dual-use technology most common.',severity:'HIGH'},
+  {method:'Crypto Theft/Laundering',users:['North Korea','Iran','Russia'],desc:'Lazarus Group (DPRK) stole $3B+ crypto 2022-23. Tornado Cash mixer used for laundering. Bridges exploited.',severity:'HIGH'},
+  {method:'Chinese Banking Access',users:['Russia','Iran','North Korea','Venezuela'],desc:'Chinese banks providing de-facto alternative to Swift. Renminbi trade increasing. China not enforcing unilateral US sanctions.',severity:'CRITICAL'},
+  {method:'Front Companies',users:['All targets'],desc:'Multiple jurisdictions used. UAE, Hong Kong, Singapore most common fronts. Procurement networks for dual-use goods.',severity:'HIGH'}
+];
+
+function _renderSanctionsTracker(){
+  var g=document.getElementById('st-regimes-grid');
+  if(!g)return;
+  g.innerHTML='';
+  SANCTIONS_REGIMES.forEach(function(s){
+    var measures=s.key_measures.map(function(m){return '<span class="st-measure-chip">'+m+'</span>';}).join('');
+    g.innerHTML+='<div class="st-regime-card" style="border-top-color:'+s.color+';">'
+      +'<div class="st-regime-header">'
+      +'<span class="st-target-name" style="color:'+s.color+';">'+s.target+'</span>'
+      +'<span class="st-effect-badge" style="background:'+s.color+'22;color:'+s.color+';border:1px solid '+s.color+'44;">'+s.sanctions_count+'</span>'
+      +'</div>'
+      +'<div class="st-measures">'+measures+'</div>'
+      +'<div class="st-row"><b>IMPOSING PARTIES:</b> '+s.imposing_parties.join(', ')+'</div>'
+      +'<div class="st-row"><b>EFFECTIVENESS:</b> '+s.effectiveness+'</div>'
+      +'<div class="st-row"><b>CIRCUMVENTION:</b> '+s.circumvention.join(' / ')+'</div>'
+      +'<div class="st-assessment"><b>ASSESSMENT:</b> '+s.assessment+'</div>'
+      +'</div>';
+  });
+  var tbody=document.getElementById('st-evasion-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    SANCTIONS_EVASION_METHODS.forEach(function(ev){
+      var sevColor=ev.severity==='CRITICAL'?'#ef4444':'#f97316';
+      tbody.innerHTML+='<tr>'
+        +'<td class="st-method-name">'+ev.method+'</td>'
+        +'<td><span class="st-sev-badge" style="background:'+sevColor+'22;color:'+sevColor+';border:1px solid '+sevColor+'44;">'+ev.severity+'</span></td>'
+        +'<td style="font-size:8px;color:#94a3b8;">'+ev.users.join(', ')+'</td>'
+        +'<td style="font-size:8px;color:#94a3b8;">'+ev.desc+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchSanctionsGDELT(){
+  var feed=document.getElementById('st-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=sanctions+violation+evasion+enforcement+OFAC+SDN+export+controls&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="st-gdelt-item">'
+        +'<div class="st-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="st-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openSanctionsTracker(){
+  var ov=document.getElementById('sanctionstracker-overlay');
+  if(ov){ov.style.display='flex';_renderSanctionsTracker();_fetchSanctionsGDELT();}
+  var pins=SANCTIONS_REGIMES.map(function(s){
+    var sev=s.color==='#ef4444'?8:6;
+    return {lat:s.lat,lng:s.lng,label:s.target+' — SANCTIONED',type:'econint',severity:sev,TAG:'_sanctionstracker'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_sanctionstracker';}), ...pins];
+}
+
+function _closeSanctionsTracker(){
+  var ov=document.getElementById('sanctionstracker-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_sanctionstracker';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('sanctionstracker-btn');
+  if(b)b.addEventListener('click',_openSanctionsTracker);
+  var c=document.getElementById('sanctionstracker-close');
+  if(c)c.addEventListener('click',_closeSanctionsTracker);
+});
+
+// ===== ENERGY SECURITY DATA =====
+var P51_ENERGY_CHOKEPOINTS=[
+  {name:'Strait of Hormuz',lat:26.56,lng:56.25,severity:'CRITICAL',color:'#ef4444',
+   throughput:'21M bbl/day (21% global oil)',
+   threats:['Iran closure threat (used 1988, threatened repeatedly)','Houthi Red Sea disruption extending to Gulf','IRGC tanker seizures (multiple 2019-2023)','Naval mining — Iran demonstrated capability'],
+   current_status:'ELEVATED TENSION — Houthi attacks on Red Sea forcing rerouting. Iran seized 2 tankers 2023. US 5th Fleet Bahrain maintains deterrence.',
+   alternatives:'None practical — Saudi/UAE eastern coast pipelines capacity limited (~6-7M bbl/day total)',
+   risk_scenario:'Iran closes Hormuz during US strike on nuclear facilities — oil price $200+/bbl'},
+  {name:'Strait of Malacca',lat:2.50,lng:101.50,severity:'HIGH',color:'#f97316',
+   throughput:'18M bbl/day + 50% global LNG trade',
+   threats:['Piracy (historically significant, now low)','China coercion via Indonesia/Malaysia pressure','Submarine threat (China PLAN)','Port state control by Malaysia/Singapore/Indonesia'],
+   current_status:'OPERATIONALLY STABLE — piracy suppressed. Long-term: China influence over littoral states increasing.',
+   alternatives:'Lombok/Sunda Straits (longer routes). Kra Canal (proposed Thailand — not built)',
+   risk_scenario:'China-Taiwan conflict — China pressures Malaysia/Singapore to restrict US naval passage'},
+  {name:'Turkish Straits (Bosphorus/Dardanelles)',lat:41.10,lng:29.05,severity:'HIGH',color:'#f97316',
+   throughput:'3M bbl/day (Russian Black Sea exports)',
+   threats:['Montreux Convention — Turkey restricted Russian warships Feb 2022','Ukraine-Russia Black Sea conflict spillover','Turkey using as leverage in NATO disputes','Mining of Black Sea (Ukrainian)'],
+   current_status:'RESTRICTED — Montreux prevents new Russian warships entering/leaving since Feb 2022. Russian Black Sea Fleet severely damaged by Ukraine (5 warships sunk/damaged).',
+   alternatives:'Russian pipeline routes (Druzhba, TurkStream)',
+   risk_scenario:'Turkey-Russia direct confrontation; Turkish closure of straits'},
+  {name:'Bab el-Mandeb',lat:12.58,lng:43.47,severity:'CRITICAL',color:'#ef4444',
+   throughput:'8-10M bbl/day + major LNG route',
+   threats:['Houthi/Ansar Allah drone/missile attacks on shipping since Oct 2023','Anti-ship ballistic missiles demonstrated','Iran-supplied capabilities','US/UK Operation Prosperity Guardian response'],
+   current_status:'ACTIVE THREAT — Houthis attacked 100+ vessels (2023-2024). Maersk, BP, CMA CGM diverted from Red Sea. 60%+ rerouting via Cape of Good Hope. +15 days transit, +$1M fuel per voyage.',
+   alternatives:'Cape of Good Hope (+7-10 days, $1M+ extra fuel per voyage)',
+   risk_scenario:'Houthis acquire anti-ship ballistic missile capability to sink large tankers — full closure'},
+  {name:'Suez Canal',lat:30.58,lng:32.34,severity:'HIGH',color:'#f97316',
+   throughput:'12% global trade, 8% global oil',
+   threats:['Houthi Red Sea attacks forcing diversion','Terrorist attack on canal infrastructure','Egyptian political instability (SISI successor question)','Ever Given style blockage'],
+   current_status:'REDUCED TRAFFIC — Houthi attacks diverted significant shipping to Cape route. Canal revenues down significantly 2024.',
+   alternatives:'Cape of Good Hope (+2 weeks) or Sumed Pipeline (crude only, 2.5M bbl/day)',
+   risk_scenario:'Direct attack on canal lock/infrastructure + Egyptian political crisis'},
+  {name:'Russian Pipeline Network',lat:52.09,lng:32.00,severity:'HIGH',color:'#f97316',
+   throughput:'Pre-war: 40% EU gas via Nord Stream + TurkStream + Yamal',
+   threats:['Nord Stream 1+2 destroyed (Sept 2022 — attribution disputed: US/UK, Ukraine, Russia false flag)','Druzhba pipeline: partial flow via Ukraine transit deal expiry Dec 2024','TurkStream: Turkey leverage','Gazprom financial pressure'],
+   current_status:'TRANSFORMED — Nord Stream gone. Ukraine transit deal expired Jan 2025. EU reduced Russian gas dependency from 40% to ~8%. TurkStream continues (Balkan/Hungarian supply).',
+   alternatives:'LNG imports (US, Qatar, Norway) replaced Russian pipeline gas for most EU states',
+   risk_scenario:'TurkStream sabotage — remaining EU Russian gas access eliminated'}
+];
+
+var ENERGY_SECURITY_HOTSPOTS=[
+  {name:'Global LNG Market',lat:25.00,lng:55.00,severity:'HIGH',color:'#f97316',
+   desc:'LNG spot prices volatile. Qatar, US, Australia dominant exporters. China long-term contracts displacing spot market. Germany + Europe LNG terminal buildout rapid but costly.'},
+  {name:'European Energy Independence',lat:50.00,lng:15.00,severity:'MODERATE',color:'#eab308',
+   desc:'EU reduced Russian gas 40% to 8% in 2 years. Largest energy transition in history. Costs: European industrial competitiveness declining vs US (IRA subsidies) and China.'},
+  {name:'Middle East Oil Kingpin',lat:24.00,lng:45.00,severity:'HIGH',color:'#f97316',
+   desc:'Saudi Arabia/OPEC+ production cuts supporting $80+ oil. MBS leveraging oil as geopolitical tool. Saudi-Russia OPEC+ coordination persisting despite Ukraine war.'},
+  {name:'China Energy Dependency',lat:35.00,lng:105.00,severity:'HIGH',color:'#ef4444',
+   desc:'China imports 75% of oil. Largest LNG importer. Strategic vulnerability: Strait of Malacca chokepoint. Xi\'s response: Iranian oil imports + Russia gas (Power of Siberia pipeline).'},
+  {name:'US Shale Dominance',lat:32.00,lng:-100.00,severity:'LOW',color:'#22c55e',
+   desc:'US now world\'s largest oil+gas producer (12M bbl/day, 2024). LNG exporter #1. Energy independence achieved. Geopolitical leverage vs Russia/Gulf significantly enhanced.'}
+];
+
+function _renderEnergySecurityModule(){
+  var g=document.getElementById('es-chokepoints-grid');
+  if(!g)return;
+  g.innerHTML='';
+  P51_ENERGY_CHOKEPOINTS.forEach(function(cp){
+    var threats=cp.threats.map(function(t){return '<span class="es-threat-chip">'+t+'</span>';}).join('');
+    g.innerHTML+='<div class="es-chokepoint-card" style="border-top-color:'+cp.color+';">'
+      +'<div class="es-chokepoint-header">'
+      +'<span class="es-chokepoint-name" style="color:'+cp.color+';">'+cp.name+'</span>'
+      +'<span class="es-sev-badge" style="background:'+cp.color+'22;color:'+cp.color+';border:1px solid '+cp.color+'44;">'+cp.severity+'</span>'
+      +'</div>'
+      +'<div class="es-threats">'+threats+'</div>'
+      +'<div class="es-row"><b>THROUGHPUT:</b> '+cp.throughput+'</div>'
+      +'<div class="es-row"><b>STATUS:</b> '+cp.current_status+'</div>'
+      +'<div class="es-row"><b>ALTERNATIVES:</b> '+cp.alternatives+'</div>'
+      +'<div class="es-scenario"><b>RISK SCENARIO:</b> '+cp.risk_scenario+'</div>'
+      +'</div>';
+  });
+  var tbody=document.getElementById('es-hotspots-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    ENERGY_SECURITY_HOTSPOTS.forEach(function(hs){
+      tbody.innerHTML+='<tr>'
+        +'<td class="es-hotspot-name" style="color:'+hs.color+';">'+hs.name+'</td>'
+        +'<td><span class="es-sev-badge" style="background:'+hs.color+'22;color:'+hs.color+';border:1px solid '+hs.color+'44;">'+hs.severity+'</span></td>'
+        +'<td style="font-size:8px;color:#94a3b8;">'+hs.desc+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchEnergySecurityGDELT(){
+  var feed=document.getElementById('es-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=energy+security+oil+gas+pipeline+LNG+sanctions+supply+chain+chokepoint&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="es-gdelt-item">'
+        +'<div class="es-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="es-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openEnergySecurityModule(){
+  var ov=document.getElementById('energysecurity-overlay');
+  if(ov){ov.style.display='flex';_renderEnergySecurityModule();_fetchEnergySecurityGDELT();}
+  var pins=P51_ENERGY_CHOKEPOINTS.map(function(cp){
+    var t=cp.severity==='CRITICAL'?'maritime':'infra';
+    var sev=cp.severity==='CRITICAL'?9:7;
+    return {lat:cp.lat,lng:cp.lng,label:cp.name+' — '+cp.severity,type:t,severity:sev,TAG:'_energysecurity'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_energysecurity';}), ...pins];
+}
+
+function _closeEnergySecurityModule(){
+  var ov=document.getElementById('energysecurity-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_energysecurity';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('energysecurity-btn');
+  if(b)b.addEventListener('click',_openEnergySecurityModule);
+  var c=document.getElementById('energysecurity-close');
+  if(c)c.addEventListener('click',_closeEnergySecurityModule);
+});
+
+// ===== END PHASE 51 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -32781,6 +33303,82 @@ function filterSIGINT(query){
  <div class="mm-grid" id="mm-programs-grid"></div>
  <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
  <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Live Feed Status Bar -->
+<div id="live-status-bar" style="position:fixed;bottom:0;left:0;right:0;height:22px;background:#050a14;border-top:1px solid #0f2040;display:flex;align-items:center;padding:0 12px;gap:16px;z-index:9999;font-family:'Courier New',monospace;overflow:hidden;">
+  <span style="color:#334155;font-size:8px;letter-spacing:0.1em;font-weight:700;white-space:nowrap;">LIVE FEEDS:</span>
+  <span id="lfs-gdelt" style="font-size:8px;color:#64748b;white-space:nowrap;">GDELT --</span>
+  <span id="lfs-reliefweb" style="font-size:8px;color:#64748b;white-space:nowrap;">RELIEFWEB --</span>
+  <span id="lfs-usgs" style="font-size:8px;color:#64748b;white-space:nowrap;">USGS SEISMIC --</span>
+  <span id="lfs-firms" style="font-size:8px;color:#64748b;white-space:nowrap;">NASA FIRMS --</span>
+  <span id="lfs-vessel" style="font-size:8px;color:#64748b;white-space:nowrap;">VESSEL TRACK --</span>
+  <span style="margin-left:auto;color:#1e3a5f;font-size:7px;white-space:nowrap;letter-spacing:0.08em;" id="lfs-lastupdate">LAST SYNC: --</span>
+</div>
+
+<!-- Phase 51 buttons -->
+<button id="p51coupwatch-btn">COUP WATCH</button>
+<button id="sanctionstracker-btn">SANCTIONS</button>
+<button id="energysecurity-btn">ENERGY SEC</button>
+
+<!-- Coup Watch Intelligence Overlay (Phase 51) -->
+<div id="p51coupwatch-overlay">
+ <div class="cw-header">
+  <div>
+   <div class="cw-title">COUP WATCH — POLITICAL INSTABILITY INTELLIGENCE</div>
+   <div class="cw-subtitle">SOURCE: ACLED / POLITICAL INSTABILITY TASK FORCE / CRISIS GROUP / OSINT &nbsp;&#47;&#47;&nbsp; COUP RISK ASSESSMENT &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="cw-close" id="p51coupwatch-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="cw-section-title">HIGH-RISK COUNTRIES — COUP &amp; INSTABILITY WATCH</div>
+ <div class="cw-countries-grid" id="cw-countries-grid"></div>
+ <div class="cw-section-title">COUP EARLY WARNING INDICATORS</div>
+ <table class="cw-indicators-table">
+  <thead><tr><th>INDICATOR</th><th>WEIGHT</th><th>ASSESSMENT</th></tr></thead>
+  <tbody id="cw-indicators-tbody"></tbody>
+ </table>
+ <div class="cw-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="cw-gdelt-feed" id="cw-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Sanctions Tracker Intelligence Overlay -->
+<div id="sanctionstracker-overlay">
+ <div class="st-header">
+  <div>
+   <div class="st-title">SANCTIONS TRACKER — ECONOMIC WARFARE INTELLIGENCE</div>
+   <div class="st-subtitle">SOURCE: OFAC / EU SANCTIONS MAP / UNSC RESOLUTIONS / FCDO / OSINT &nbsp;&#47;&#47;&nbsp; ECONOMIC COERCION ANALYSIS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="st-close" id="sanctionstracker-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="st-section-title">ACTIVE SANCTIONS REGIMES — TARGET ANALYSIS</div>
+ <div class="st-regimes-grid" id="st-regimes-grid"></div>
+ <div class="st-section-title">SANCTIONS EVASION METHODS</div>
+ <table class="st-evasion-table">
+  <thead><tr><th>METHOD</th><th>SEVERITY</th><th>ACTORS</th><th>DESCRIPTION</th></tr></thead>
+  <tbody id="st-evasion-tbody"></tbody>
+ </table>
+ <div class="st-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="st-gdelt-feed" id="st-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Energy Security Intelligence Overlay -->
+<div id="energysecurity-overlay">
+ <div class="es-header">
+  <div>
+   <div class="es-title">ENERGY SECURITY — CHOKEPOINTS &amp; SUPPLY CHAIN INTELLIGENCE</div>
+   <div class="es-subtitle">SOURCE: EIA / IEA / CSIS / CREA / LLOYD\'S LIST &nbsp;&#47;&#47;&nbsp; ENERGY GEOPOLITICS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="es-close" id="energysecurity-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="es-section-title">CRITICAL ENERGY CHOKEPOINTS — THREAT ASSESSMENT</div>
+ <div class="es-chokepoints-grid" id="es-chokepoints-grid"></div>
+ <div class="es-section-title">GLOBAL ENERGY SECURITY HOTSPOTS</div>
+ <table class="es-hotspots-table">
+  <thead><tr><th>HOTSPOT</th><th>SEVERITY</th><th>ASSESSMENT</th></tr></thead>
+  <tbody id="es-hotspots-tbody"></tbody>
+ </table>
+ <div class="es-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="es-gdelt-feed" id="es-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 <!-- Phase 50 buttons -->
