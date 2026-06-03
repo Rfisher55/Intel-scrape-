@@ -1691,6 +1691,54 @@ button{border-radius:2px!important}
 .ur-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .ur-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
 .ur-news-meta{color:var(--dim);font-size:8px;}
+#supplychain-btn{position:fixed;top:295px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(167,139,250,.35);border-radius:2px;color:#a78bfa;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#supplychain-btn:hover{background:rgba(167,139,250,.1);border-color:#7c3aed;}
+#supplychain-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#supplychain-overlay.open{display:block;}
+.sc-hdr{background:var(--panel);border-bottom:2px solid rgba(167,139,250,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.sc-hdr h2{color:#a78bfa;font-size:12px;letter-spacing:.2em;margin:0;}
+.sc-body{padding:16px 24px;max-width:1200px;}
+.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.sc-card{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.sc-card-hdr{font-size:8px;letter-spacing:.16em;color:var(--dim);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.sc-mineral{display:grid;grid-template-columns:110px 1fr 80px;gap:6px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:8px;align-items:center;}
+.sc-mineral-name{color:var(--text);font-weight:700;}
+.sc-mineral-detail{color:var(--dim);}
+.sc-risk{font-size:7px;padding:1px 5px;text-align:center;letter-spacing:.06em;}
+.sc-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.sc-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.sc-news-meta{color:var(--dim);font-size:8px;}
+#cyberbreach-btn{position:fixed;top:335px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(239,68,68,.4);border-radius:2px;color:#f87171;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#cyberbreach-btn:hover{background:rgba(239,68,68,.1);border-color:#dc2626;}
+#cyberbreach-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#cyberbreach-overlay.open{display:block;}
+.cb-hdr{background:var(--panel);border-bottom:2px solid rgba(239,68,68,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.cb-hdr h2{color:#f87171;font-size:12px;letter-spacing:.2em;margin:0;}
+.cb-body{padding:16px 24px;max-width:1100px;}
+.cb-breach{background:var(--panel2);border:1px solid var(--border);border-left:3px solid #ef4444;padding:10px 12px;margin-bottom:8px;}
+.cb-breach-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;}
+.cb-breach-name{font-size:10px;font-weight:700;color:#f87171;}
+.cb-breach-date{font-size:8px;color:var(--dim);}
+.cb-breach-detail{font-size:8px;color:var(--dim);line-height:1.5;}
+.cb-actor{font-size:7px;padding:1px 5px;letter-spacing:.08em;margin-top:4px;display:inline-block;}
+.cb-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.cb-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.cb-news-meta{color:var(--dim);font-size:8px;}
+#regstab-btn{position:fixed;top:375px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(56,189,248,.35);border-radius:2px;color:#38bdf8;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#regstab-btn:hover{background:rgba(56,189,248,.1);border-color:#0ea5e9;}
+#regstab-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#regstab-overlay.open{display:block;}
+.rs-hdr{background:var(--panel);border-bottom:2px solid rgba(56,189,248,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.rs-hdr h2{color:#38bdf8;font-size:12px;letter-spacing:.2em;margin:0;}
+.rs-body{padding:16px 24px;max-width:1000px;}
+.rs-region{background:var(--panel2);border:1px solid var(--border);padding:12px;margin-bottom:8px;}
+.rs-region-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.rs-region-name{font-size:10px;font-weight:700;color:var(--text);}
+.rs-region-score{font-size:14px;font-weight:900;}
+.rs-bar-wrap{margin-top:4px;}
+.rs-bar-bg{height:8px;background:var(--panel);border-radius:2px;overflow:hidden;}
+.rs-bar-fill{height:100%;border-radius:2px;transition:width 1s;}
+.rs-region-detail{font-size:8px;color:var(--dim);margin-top:5px;line-height:1.5;}
 </style>
 </head>
 <body>
@@ -17109,6 +17157,143 @@ async function _fetchUnrestNews(){
     el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
   }
 }
+function openSupplyChain(){
+  document.getElementById('supplychain-overlay').classList.add('open');
+  _fetchSupplyChainNews();
+}
+function closeSupplyChain(){
+  document.getElementById('supplychain-overlay').classList.remove('open');
+}
+async function _fetchSupplyChainNews(){
+  const el=document.getElementById('supplychain-news');
+  if(!el)return;
+  try{
+    const q='"rare earth" OR "semiconductor" OR "critical minerals" OR "supply chain" OR "chip export" OR "gallium" OR "TSMC" OR "ASML" AND (China OR restriction OR shortage OR security)';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current supply chain intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="sc-news-item"><div class="sc-news-title">'+title+'</div><div class="sc-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+const MAJOR_BREACHES=[
+  {name:'Change Healthcare (UnitedHealth)',date:'Feb 2024',records:'100M+ patients',actor:'BlackCat/ALPHV (Russia)',type:'RANSOMWARE',detail:'Largest US healthcare breach. Disrupted pharmacy operations nationwide for weeks. $22M ransom paid. ALPHV exit-scammed after payment.'},
+  {name:'AT&T Customer Data',date:'Apr 2024',records:'110M customers',actor:'ShinyHunters (criminal)',type:'DATA THEFT',detail:'Call/text records of virtually all AT&T customers 2022-2023. Downloaded from Snowflake cloud environment. 6-month delay in disclosure.'},
+  {name:'National Public Data',date:'Aug 2024',records:'2.9B records',actor:'USDoD (hacker)',type:'DATA THEFT',detail:'Social Security numbers, addresses, relatives for nearly all Americans. Data sold on dark web. Class action lawsuits filed. Company filed bankruptcy.'},
+  {name:'MOVEit Transfer (Cl0p)',date:'May 2023',records:'2,600+ orgs',actor:'Cl0p (Russia-linked)',type:'ZERO DAY',detail:'SQL injection zero-day in MOVEit file transfer. US agencies, banks, hospitals, universities compromised. $100M+ in extortion demands.'},
+  {name:'Microsoft Exchange (SVR)',date:'Jan 2024',records:'Senior exec emails',actor:'APT29/Midnight Blizzard (Russia)',type:'ESPIONAGE',detail:'SVR/APT29 accessed Microsoft senior leadership emails including cybersecurity team. Ongoing intrusion discovered months after initial access.'},
+  {name:'Ticketmaster / Snowflake',date:'Jun 2024',records:'560M customers',actor:'ShinyHunters',type:'DATA THEFT',detail:'Snowflake cloud customers targeted via credential stuffing. Ticketmaster, Santander, Advance Auto Parts among victims. Infostealer malware origin.'},
+  {name:'23andMe Genetic Data',date:'Oct 2023',records:'6.9M profiles',actor:'Unknown',type:'DATA THEFT',detail:'Genetic ancestry and health data. Credential stuffing via reused passwords. Jewish and Chinese-heritage profiles targeted. Company later went bankrupt.'}
+];
+const BREACH_ACTOR_COLORS={'BlackCat/ALPHV (Russia)':'#ef4444','ShinyHunters (criminal)':'#f59e0b','USDoD (hacker)':'#8896b3','Cl0p (Russia-linked)':'#ef4444','APT29/Midnight Blizzard (Russia)':'#ef4444','ShinyHunters':'#f59e0b','Unknown':'#4a5470'};
+function openCyberBreach(){
+  document.getElementById('cyberbreach-overlay').classList.add('open');
+  _renderBreaches();
+  _fetchCyberBreachNews();
+}
+function closeCyberBreach(){
+  document.getElementById('cyberbreach-overlay').classList.remove('open');
+}
+function _renderBreaches(){
+  const el=document.getElementById('breach-static-list');
+  if(!el)return;
+  const typeColors={RANSOMWARE:'#ef4444',ESPIONAGE:'#a78bfa','DATA THEFT':'#f59e0b','ZERO DAY':'#f97316'};
+  el.innerHTML=MAJOR_BREACHES.map(function(b){
+    const tc=typeColors[b.type]||'#8896b3';
+    const ac=BREACH_ACTOR_COLORS[b.actor]||'#8896b3';
+    return '<div class="cb-breach">'+
+      '<div class="cb-breach-hdr">'+
+      '<div><div class="cb-breach-name">'+b.name.replace(/</g,'&lt;')+'</div>'+
+      '<div style="font-size:8px;color:#60a5fa;margin-top:1px;">'+b.records+' &middot; '+b.date+'</div></div>'+
+      '<div style="text-align:right;"><span style="font-size:7px;padding:2px 5px;background:'+tc+';color:#fff;">'+b.type+'</span></div>'+
+      '</div>'+
+      '<div class="cb-breach-detail">'+b.detail.replace(/</g,'&lt;')+'</div>'+
+      '<div class="cb-actor" style="background:'+ac+';color:#fff;">'+b.actor.replace(/</g,'&lt;')+'</div>'+
+      '</div>';
+  }).join('');
+}
+async function _fetchCyberBreachNews(){
+  const el=document.getElementById('cyberbreach-news');
+  if(!el)return;
+  try{
+    const q='"data breach" OR "ransomware" OR "cyberattack" OR "hacked" OR "data stolen" OR "zero day" vulnerability exploit';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current cyber breach intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="cb-news-item"><div class="cb-news-title">'+title+'</div><div class="cb-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+const STABILITY_REGIONS=[
+  {name:'Middle East / MENA',isos:['SY','IQ','YE','LY','SD','LB','IL','PS','IR','AF'],hotspotFilter:function(h){return h.lat>12&&h.lat<42&&h.lng>24&&h.lng<65;}},
+  {name:'Sub-Saharan Africa',isos:['ET','SO','ML','NE','BF','TD','CF','CD','MZ','ZW'],hotspotFilter:function(h){return h.lat>-35&&h.lat<12&&h.lng>-20&&h.lng<55;}},
+  {name:'Eastern Europe',isos:['UA','RU','BY','MD','GE','AM','AZ','RS','XK','BA'],hotspotFilter:function(h){return h.lat>40&&h.lat<72&&h.lng>24&&h.lng<60;}},
+  {name:'Indo-Pacific',isos:['KP','MM','PH','TW','CN','VN','IN','PK'],hotspotFilter:function(h){return h.lat>-10&&h.lat<55&&h.lng>60&&h.lng<145;}},
+  {name:'Latin America',isos:['VE','CO','MX','HT','NI','GT','HN','EC','PE'],hotspotFilter:function(h){return h.lat>-55&&h.lat<35&&h.lng>-130&&h.lng<-40;}},
+  {name:'Central Asia',isos:['KZ','KG','TJ','UZ','TM','AF'],hotspotFilter:function(h){return h.lat>35&&h.lat<55&&h.lng>48&&h.lng<90;}},
+  {name:'Western Europe',isos:['FR','DE','GB','IT','ES','PL','NL','BE'],hotspotFilter:function(h){return h.lat>36&&h.lat<72&&h.lng>-12&&h.lng<24;}},
+  {name:'North America',isos:['US','CA','MX'],hotspotFilter:function(h){return h.lat>15&&h.lat<75&&h.lng>-170&&h.lng<-50;}}
+];
+const ALERT_SCORES={CRITICAL:4,HIGH:3,ELEVATED:2,MODERATE:1,LOW:0,MINIMAL:0};
+function openRegionalStab(){
+  document.getElementById('regstab-overlay').classList.add('open');
+  _renderRegionalStab();
+}
+function closeRegionalStab(){
+  document.getElementById('regstab-overlay').classList.remove('open');
+}
+function _renderRegionalStab(){
+  const grid=document.getElementById('regstab-grid');
+  if(!grid)return;
+  const allHots=(typeof liveHotspots!=='undefined'?liveHotspots:[]).filter(function(h){return!h.iss;});
+  const regions=STABILITY_REGIONS.map(function(reg){
+    const regionHots=allHots.filter(reg.hotspotFilter);
+    const critCount=regionHots.filter(function(h){return h.severity==='critical';}).length;
+    const highCount=regionHots.filter(function(h){return h.severity==='high';}).length;
+    let alertSum=0;let alertCount=0;
+    if(typeof COUNTRIES!=='undefined'){
+      reg.isos.forEach(function(iso){
+        const c=Object.values(COUNTRIES).find(function(x){return x.iso===iso;});
+        if(c&&c.alertLevel){alertSum+=(ALERT_SCORES[c.alertLevel]||0);alertCount++;}
+      });
+    }
+    const avgAlert=alertCount>0?alertSum/alertCount:0;
+    const rawScore=100-Math.min(90,(critCount*12)+(highCount*5)+(avgAlert*8));
+    const score=Math.max(10,Math.round(rawScore));
+    return {name:reg.name,score:score,critCount:critCount,highCount:highCount,avgAlert:avgAlert.toFixed(1)};
+  }).sort(function(a,b){return a.score-b.score;});
+  const scoreColor=function(s){if(s<30)return '#ef4444';if(s<50)return '#f97316';if(s<65)return '#f59e0b';if(s<80)return '#22d3ee';return '#22c55e';};
+  grid.innerHTML=regions.map(function(reg){
+    const c=scoreColor(reg.score);
+    const label=reg.score<30?'CRITICAL':reg.score<50?'UNSTABLE':reg.score<65?'ELEVATED':reg.score<80?'WATCH':'STABLE';
+    return '<div class="rs-region">'+
+      '<div class="rs-region-hdr">'+
+      '<span class="rs-region-name">'+reg.name+'</span>'+
+      '<div style="text-align:right;"><span class="rs-region-score" style="color:'+c+';">'+reg.score+'</span><span style="font-size:7px;color:var(--dim);">/100</span>&nbsp;<span style="font-size:7px;padding:2px 6px;background:'+c+';color:#000;">'+label+'</span></div>'+
+      '</div>'+
+      '<div class="rs-bar-bg"><div class="rs-bar-fill" style="width:'+reg.score+'%;background:'+c+';"></div></div>'+
+      '<div class="rs-region-detail">Critical events: <span style="color:#ef4444;">'+reg.critCount+'</span> &nbsp;|&nbsp; High events: <span style="color:#f97316;">'+reg.highCount+'</span> &nbsp;|&nbsp; Avg alert: <span style="color:'+c+';">'+reg.avgAlert+'</span></div>'+
+      '</div>';
+  }).join('');
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -18365,6 +18550,87 @@ function filterSIGINT(query){
       <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE PROTEST/UNREST INTELLIGENCE (GDELT) &mdash; EVENTS ADDING TO GLOBE</div>
       <div id="unrest-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
     </div>
+  </div>
+</div>
+<button id="supplychain-btn" onclick="openSupplyChain()">&#x26D3; SUPPLY CHAIN</button>
+<div id="supplychain-overlay">
+  <div class="sc-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">SUPPLY CHAIN INTELLIGENCE // CRITICAL MINERALS // SEMICONDUCTOR SECURITY // STRATEGIC MATERIALS</div>
+      <h2>&#x26D3; CRITICAL SUPPLY CHAIN &amp; MINERALS INTELLIGENCE</h2>
+    </div>
+    <button onclick="closeSupplyChain()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="sc-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">STRATEGIC MATERIAL DEPENDENCIES &middot; CHOKEPOINT CONTROL &middot; EXPORT RESTRICTION MONITORING &middot; GDELT COLLECTION</div>
+    <div class="sc-grid">
+      <div class="sc-card">
+        <div class="sc-card-hdr" style="color:#a78bfa;">CRITICAL MINERALS — CHINA CONTROL</div>
+        <div style="display:grid;grid-template-columns:110px 1fr 70px;gap:4px;font-size:7px;color:var(--dim);margin-bottom:4px;border-bottom:1px solid var(--border);padding-bottom:2px;"><span>MINERAL</span><span>KEY RISK</span><span>CONTROL</span></div>
+        <div class="sc-mineral"><span class="sc-mineral-name">Rare Earth Elements</span><span class="sc-mineral-detail">China 85% of global supply. Export quotas 2023. Critical for missiles, EVs, magnets.</span><span class="sc-risk" style="background:#ef4444;color:#fff;">CRITICAL</span></div>
+        <div class="sc-mineral"><span class="sc-mineral-name">Gallium</span><span class="sc-mineral-detail">China 80% production. Export controls Aug 2023. Semiconductors, 5G, military radar.</span><span class="sc-risk" style="background:#ef4444;color:#fff;">CRITICAL</span></div>
+        <div class="sc-mineral"><span class="sc-mineral-name">Germanium</span><span class="sc-mineral-detail">China 60% global. Export restrictions. Fiber optics, IR systems, satellite solar cells.</span><span class="sc-risk" style="background:#ef4444;color:#fff;">CRITICAL</span></div>
+        <div class="sc-mineral"><span class="sc-mineral-name">Cobalt</span><span class="sc-mineral-detail">70% DRC, 73% China processing. EV batteries, aerospace alloys, military applications.</span><span class="sc-risk" style="background:#f97316;color:#fff;">HIGH</span></div>
+        <div class="sc-mineral"><span class="sc-mineral-name">Lithium</span><span class="sc-mineral-detail">Chile/Argentina/Bolivia 60%, China 80% processing. EV revolution dependency.</span><span class="sc-risk" style="background:#f97316;color:#fff;">HIGH</span></div>
+        <div class="sc-mineral"><span class="sc-mineral-name">Graphite</span><span class="sc-mineral-detail">China 80% supply. Oct 2023 export controls. EV battery anodes, nuclear moderators.</span><span class="sc-risk" style="background:#f97316;color:#fff;">HIGH</span></div>
+        <div class="sc-mineral"><span class="sc-mineral-name">Nickel</span><span class="sc-mineral-detail">Russia 10%, Indonesia 30%. Sanctions impact. EV batteries, stainless steel, jet engines.</span><span class="sc-risk" style="background:#f59e0b;color:#000;">ELEVATED</span></div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-card-hdr" style="color:#ef4444;">SEMICONDUCTOR SUPPLY CHAIN</div>
+        <div style="font-size:8px;color:var(--dim);line-height:1.8;">
+          <div><span style="color:#ef4444;font-weight:700;">TSMC (Taiwan):</span> 90%+ of advanced nodes (&lt;5nm). Single point of failure for global AI/defense chips. China invasion scenario = $1T+ economic shock.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">ASML (Netherlands):</span> Only EUV lithography machine maker. Export controls to China. China cannot produce EUV domestically before 2030+.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">Samsung/SK Hynix:</span> DRAM/NAND majority. US CHIPS Act incentivizing US fabs. Korea caught between US and China pressure.</div>
+          <div><span style="color:#22d3ee;font-weight:700;">SMIC (China):</span> 7nm achieved via smuggled DUV double-patterning. Advanced packaging compensating for node lag. Huawei Kirin 9000s (2023) proof of capability.</div>
+          <div><span style="color:#22d3ee;font-weight:700;">US response:</span> CHIPS Act $52B, export controls Oct 2022/Oct 2023. Entity list: SMIC, Huawei, 140+ companies. Allies (Japan/Netherlands) aligned.</div>
+        </div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-card-hdr" style="color:#22d3ee;">STRATEGIC DEPENDENCIES MAP</div>
+        <div style="font-size:8px;color:var(--dim);line-height:1.8;">
+          <div><span style="color:#ef4444;font-weight:700;">USA dependencies:</span> REE (China), Cobalt (DRC/China), Gallium/Germanium (China), Solar panels (China 80%), API pharmaceuticals (India/China).</div>
+          <div><span style="color:#ef4444;font-weight:700;">Europe dependencies:</span> Natural gas (post-Russia pivot), REE (China), semiconductors (Taiwan/Korea), API drugs (India/China).</div>
+          <div><span style="color:#f59e0b;font-weight:700;">Active interventions:</span> EU Critical Raw Materials Act, US Inflation Reduction Act, Quad Critical Minerals partnership, Friend-shoring initiatives.</div>
+          <div><span style="color:#22d3ee;font-weight:700;">Intelligence gap:</span> Chinese strategic stockpiling of critical minerals. PLA semiconductor inventory unknown. Substitution timelines classified.</div>
+        </div>
+      </div>
+    </div>
+    <div class="sc-card" style="margin-bottom:0;">
+      <div class="sc-card-hdr" style="color:#a78bfa;">LIVE SUPPLY CHAIN INTELLIGENCE (GDELT)</div>
+      <div id="supplychain-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="cyberbreach-btn" onclick="openCyberBreach()">&#x1F512; BREACHES</button>
+<div id="cyberbreach-overlay">
+  <div class="cb-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CYBER BREACH INTELLIGENCE // RANSOMWARE TRACKING // DATA EXFILTRATION // INCIDENT DATABASE</div>
+      <h2>&#x1F512; CYBER BREACH &amp; RANSOMWARE INTELLIGENCE</h2>
+    </div>
+    <button onclick="closeCyberBreach()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="cb-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">MAJOR DATA BREACHES &amp; RANSOMWARE INCIDENTS &middot; THREAT ACTOR ATTRIBUTION &middot; GDELT COLLECTION</div>
+    <div id="breach-static-list"></div>
+    <div style="background:var(--panel2);border:1px solid var(--border);padding:10px;margin-top:10px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE CYBER BREACH INTELLIGENCE (GDELT)</div>
+      <div id="cyberbreach-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="regstab-btn" onclick="openRegionalStab()">&#x1F30D; REG STABILITY</button>
+<div id="regstab-overlay">
+  <div class="rs-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">REGIONAL STABILITY INDEX // COMPOSITE THREAT ASSESSMENT // LIVE CALCULATION</div>
+      <h2>&#x1F30D; GLOBAL REGIONAL STABILITY INDEX</h2>
+    </div>
+    <button onclick="closeRegionalStab()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="rs-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">CALCULATED FROM LIVE HOTSPOT DATA &middot; COUNTRY ALERT LEVELS &middot; CONFLICTS &middot; UPDATES ON OPEN</div>
+    <div id="regstab-grid"><div style="color:var(--dim);font-size:9px;">Calculating regional stability indices...</div></div>
   </div>
 </div>
 </body>
