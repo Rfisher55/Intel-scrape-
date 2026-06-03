@@ -2604,6 +2604,87 @@ button{border-radius:2px!important}
 .sof-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .sof-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .sof-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === FOOD SECURITY buttons (col8 295/335/375) === */
+#foodsec-btn{position:fixed;top:295px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#foodsec-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#dronewar-btn{position:fixed;top:335px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#dronewar-btn:hover{border-color:#f97316;color:#fdba74;}
+#kleptoc-btn{position:fixed;top:375px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#kleptoc-btn:hover{border-color:#eab308;color:#fde047;}
+
+/* Food Security overlay */
+#foodsec-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.fs-crisis-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.fs-crisis-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.fs-country-name{font-size:15px;font-weight:700;letter-spacing:1.5px;}
+.fs-severity-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.fs-sev-catastrophic{background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;animation:nukepulse 3s infinite;}
+.fs-sev-critical{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.fs-sev-high{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.fs-ipc-badge{font-size:8px;padding:2px 7px;background:rgba(127,29,29,.25);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:3px;display:inline-block;margin-bottom:6px;}
+.fs-pop{font-size:11px;color:#f1f5f9;font-weight:700;margin-bottom:4px;}
+.fs-driver{font-size:9px;color:#94a3b8;line-height:1.5;margin-bottom:6px;}
+.fs-detail{font-size:9px;color:#cbd5e1;line-height:1.6;border-left:3px solid rgba(239,68,68,.35);padding-left:8px;margin-bottom:6px;}
+.fs-weapon-flag{font-size:8px;padding:3px 8px;background:rgba(127,29,29,.3);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:3px;margin-bottom:4px;display:inline-block;}
+.fs-weapon-note{font-size:8px;color:#f87171;font-style:italic;margin-top:2px;}
+.fs-tactic-card{background:rgba(15,23,42,0.6);border:1px solid rgba(239,68,68,.2);border-radius:4px;padding:10px 14px;margin-bottom:8px;}
+.fs-tactic-name{font-size:10px;font-weight:700;color:#fca5a5;letter-spacing:1px;margin-bottom:4px;}
+.fs-tactic-effect{font-size:9px;color:#94a3b8;margin-top:4px;font-style:italic;}
+.fs-tactic-examples{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+.fs-ex-chip{font-size:7px;padding:2px 6px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:3px;}
+.fs-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.fs-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.fs-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Drone War overlay */
+#dronewar-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.dw-system-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.dw-system-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.dw-system-name{font-size:14px;font-weight:700;letter-spacing:1px;}
+.dw-origin-badge{font-size:7px;padding:2px 7px;border-radius:2px;letter-spacing:1px;font-weight:700;border:1px solid rgba(249,115,22,.35);background:rgba(124,45,18,.25);color:#fdba74;}
+.dw-type-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.dw-type-chip{font-size:8px;padding:2px 7px;background:rgba(15,23,42,.5);border:1px solid #1e293b;color:#94a3b8;border-radius:3px;}
+.dw-cost-chip{font-size:8px;padding:2px 7px;background:rgba(15,83,32,.2);border:1px solid rgba(34,197,94,.25);color:#86efac;border-radius:3px;}
+.dw-specs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px;}
+.dw-spec-box{background:rgba(4,9,20,.5);padding:6px 8px;border-radius:3px;border:1px solid #1e293b;}
+.dw-spec-label{font-size:7px;color:#475569;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px;}
+.dw-spec-val{font-size:9px;color:#e2e8f0;font-weight:700;}
+.dw-usage{font-size:9px;color:#94a3b8;line-height:1.5;margin-bottom:6px;}
+.dw-lesson{font-size:9px;color:#fde047;line-height:1.5;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;margin-bottom:6px;font-style:italic;}
+.dw-sig{font-size:9px;color:#60a5fa;line-height:1.5;border-left:3px solid rgba(59,130,246,.4);padding-left:8px;}
+.dw-cuas-row{display:grid;grid-template-columns:140px 160px 130px 100px 1fr;gap:6px;align-items:start;padding:6px 8px;background:rgba(4,9,20,.5);border-left:2px solid rgba(249,115,22,.3);border-radius:0 3px 3px 0;margin-bottom:4px;font-size:8px;}
+.dw-cuas-name{font-size:9px;font-weight:700;color:#e2e8f0;}
+.dw-cuas-country{color:#60a5fa;font-size:8px;}
+.dw-cuas-cost{color:#86efac;}
+.dw-cuas-eff{color:#fde047;}
+.dw-cuas-flaw{color:#f87171;}
+.dw-lesson-item{padding:5px 8px;border-left:2px solid rgba(234,179,8,.4);margin-bottom:6px;font-size:9px;color:#fde047;line-height:1.5;}
+.dw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.dw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.dw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Kleptocracy overlay */
+#kleptoc-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.kl-profile-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.kl-profile-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.kl-name{font-size:15px;font-weight:700;letter-spacing:1.5px;}
+.kl-country{font-size:8px;padding:2px 7px;border-radius:2px;letter-spacing:1px;font-weight:700;border:1px solid rgba(234,179,8,.35);background:rgba(113,63,18,.25);color:#fde047;}
+.kl-wealth{font-size:11px;color:#fde047;font-weight:700;margin-bottom:5px;}
+.kl-sanctioned{font-size:7px;padding:2px 7px;background:rgba(127,29,29,.4);border:1px solid rgba(239,68,68,.35);color:#fca5a5;border-radius:3px;display:inline-block;margin-bottom:5px;}
+.kl-clean{font-size:7px;padding:2px 7px;background:rgba(15,83,32,.25);border:1px solid rgba(34,197,94,.25);color:#86efac;border-radius:3px;display:inline-block;margin-bottom:5px;}
+.kl-assets-list{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px;}
+.kl-asset-chip{font-size:8px;padding:2px 6px;background:rgba(113,63,18,.2);border:1px solid rgba(234,179,8,.2);color:#fde047;border-radius:3px;}
+.kl-mechanism{font-size:9px;color:#94a3b8;line-height:1.5;border-left:3px solid rgba(234,179,8,.35);padding-left:8px;margin-bottom:5px;}
+.kl-note{font-size:9px;color:#cbd5e1;line-height:1.5;font-style:italic;}
+.kl-mech-card{background:rgba(15,23,42,0.6);border:1px solid rgba(234,179,8,.15);border-radius:4px;padding:10px 14px;margin-bottom:8px;}
+.kl-mech-name{font-size:10px;font-weight:700;color:#fde047;letter-spacing:1px;margin-bottom:4px;}
+.kl-mech-desc{font-size:9px;color:#94a3b8;line-height:1.5;margin-bottom:5px;}
+.kl-hotspots{display:flex;flex-wrap:wrap;gap:4px;}
+.kl-hotspot-chip{font-size:7px;padding:2px 6px;background:rgba(113,63,18,.2);border:1px solid rgba(234,179,8,.2);color:#fbbf24;border-radius:3px;}
+.kl-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.kl-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.kl-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -22437,6 +22518,359 @@ async function _fetchSOFGdelt(){
 
 // ===== END PHASE 34 =====
 
+// ===== PHASE 35: FOOD SECURITY, DRONE WAR, KLEPTOCRACY =====
+
+const FAMINE_CRISES = [
+  {"country":"Sudan","iso":"SD","ipc_phase":"IPC 4-5 (Emergency/Famine)","population_affected":24700000,"famine_confirmed":true,
+   "lat":15,"lng":30,"color":"#ef4444","severity":"CATASTROPHIC",
+   "driver":"SAF-RSF civil war. Agricultural collapse. Aid blockade by both sides. Khartoum siege.",
+   "detail":"UN confirmed famine conditions in North Darfur Zamzam camp (May 2024) — first famine declaration since Somalia 2011. 25M facing acute hunger. 3.5M children acutely malnourished.",
+   "weaponized":true,"weaponNote":"Both SAF and RSF deliberately blocking humanitarian aid convoys."},
+  {"country":"Gaza","iso":"PS","ipc_phase":"IPC 5 (Catastrophic Famine)","population_affected":2300000,"famine_confirmed":true,
+   "lat":31.4,"lng":34.4,"color":"#ef4444","severity":"CATASTROPHIC",
+   "driver":"Israeli blockade on food/fuel imports during war. Destruction of food production infrastructure.",
+   "detail":"IPC analysis March 2024: entire Gaza population in IPC3+. North Gaza declared IPC5 (Catastrophic). 2.3M people facing starvation. WHO reported malnutrition deaths.",
+   "weaponized":true,"weaponNote":"Aid entry points controlled and restricted. Flour convoys attacked."},
+  {"country":"Somalia/Horn of Africa","iso":"SO","ipc_phase":"IPC 4 (Emergency)","population_affected":7800000,"famine_confirmed":false,
+   "lat":6,"lng":46,"color":"#f97316","severity":"CRITICAL",
+   "driver":"Drought, al-Shabaab aid blockades, clan conflict, climate change.",
+   "detail":"7.8M facing acute food insecurity. Al-Shabaab blocking WFP from controlled areas. Worst drought in 40 years recently broken — recovery fragile.",
+   "weaponized":true,"weaponNote":"Al-Shabaab uses food aid as weapon — bans WFP from territory."},
+  {"country":"Yemen","iso":"YE","ipc_phase":"IPC 4 (Emergency)","population_affected":17600000,"famine_confirmed":false,
+   "lat":15.4,"lng":44.2,"color":"#f97316","severity":"CRITICAL",
+   "driver":"10 years of war. Houthi port control (Hodeidah). Saudi coalition blockade. Economic collapse.",
+   "detail":"17.6M severely food insecure. Houthis diverting aid to fighters. Saudi blockade on fuel causing food price spike. 2.2M children acutely malnourished.",
+   "weaponized":true,"weaponNote":"Both Houthis and Saudi coalition used food access as leverage."},
+  {"country":"Ethiopia","iso":"ET","ipc_phase":"IPC 3-4 (Crisis-Emergency)","population_affected":20000000,"famine_confirmed":false,
+   "lat":9,"lng":40,"color":"#f97316","severity":"HIGH",
+   "driver":"Tigray war aftermath. Amhara conflict. Recurring drought (El Nino). Displaced populations.",
+   "detail":"20M+ facing acute food insecurity. Tigray region recovery extremely slow. USAID suspension 2025 devastating aid pipeline.",
+   "weaponized":true,"weaponNote":"Ethiopian government restricted aid to Tigray during war 2020-2022."},
+  {"country":"Afghanistan","iso":"AF","ipc_phase":"IPC 3-4 (Crisis-Emergency)","population_affected":23700000,"famine_confirmed":false,
+   "lat":33,"lng":66,"color":"#f97316","severity":"HIGH",
+   "driver":"Taliban takeover economic collapse. Aid suspension by Western donors. Drought. Women excluded from employment.",
+   "detail":"23.7M facing acute food insecurity. WFP largest single country program. Taliban\'s ban on women aid workers complicating WFP distribution.",
+   "weaponized":false,"weaponNote":"Taliban restricts female aid workers — indirect food access barrier."},
+  {"country":"DRC","iso":"CD","ipc_phase":"IPC 3-4 (Crisis-Emergency)","population_affected":25400000,"famine_confirmed":false,
+   "lat":-4,"lng":23,"color":"#f97316","severity":"HIGH",
+   "driver":"M23/FDLR/ADF conflict. 7M displaced. Agricultural collapse in East DRC. Aid access impossible in conflict zones.",
+   "detail":"25.4M acutely food insecure — largest food crisis globally by population. Eastern DRC conflict destroying food systems. M23 advance Feb 2024 cut off Kivu breadbasket.",
+   "weaponized":true,"weaponNote":"Armed groups deliberately targeting food production infrastructure."},
+  {"country":"Haiti","iso":"HT","ipc_phase":"IPC 4-5 (Emergency/Catastrophic)","population_affected":5500000,"famine_confirmed":false,
+   "lat":18.5,"lng":-72.3,"color":"#ef4444","severity":"CRITICAL",
+   "driver":"Gang control of Port-au-Prince. Agricultural supply chains severed. Aid convoy ambushes.",
+   "detail":"5.5M facing acute hunger. Gangs controlling road access to south/west. WFP convoys ambushed. Port-au-Prince population relying on gang-taxed food supply.",
+   "weaponized":true,"weaponNote":"Gangs use food access as population control mechanism."}
+];
+
+const FOOD_WEAPON_TACTICS = [
+  {"tactic":"Siege Warfare","examples":["Ghouta siege Syria 2013","Tigray 2020-2022","Mariupol 2022","North Darfur 2024"],"effect":"Systematic starvation of besieged populations"},
+  {"tactic":"Aid Blockade","examples":["Hamas blocking UNRWA 2024","Al-Shabaab WFP ban","Houthi port control"],"effect":"Cutting off external food assistance to controlled populations"},
+  {"tactic":"Agricultural Destruction","examples":["Russia destroying Ukraine grain infrastructure","DRC M23 burning farmland","Sudan SAF destroying wells/irrigation"],"effect":"Long-term destruction of food production capacity"},
+  {"tactic":"Export Embargo","examples":["Russia Black Sea grain deal collapse","India rice export ban 2023","Indonesia palm oil ban 2022"],"effect":"Weaponizing food export to global market — inflationary pressure on vulnerable states"},
+  {"tactic":"Humanitarian Worker Targeting","examples":["WCK Gaza strike (7 killed)","Sudan aid worker killings","Yemen MSF targeting"],"effect":"Forcing suspension of humanitarian operations"}
+];
+
+const DRONE_SYSTEMS = [
+  {"name":"Shahed-136/Shahed-238","origin":"Iran (supplied to Russia)","type":"Loitering Munition / Kamikaze","cost":"$20,000-50,000","color":"#ef4444",
+   "specs":{"range":"2,500km","warhead":"50kg","speed":"185 km/h","guidance":"INS+GPS"},
+   "usage":"Russia fired 3,000+ at Ukraine 2022-2024. Targets: power grid, civilian infrastructure, air defenses. Ukraine intercepts 50-80% with C-UAS networks.",
+   "lesson":"Cheap (vs $2M Patriot interceptor). Swarm saturation overwhelms point defense. Attritable — designed to be lost.","significance":"Changed cost calculus of air attack. Enables sustained infrastructure campaign with cheap weapons."},
+  {"name":"FPV Drone (First-Person View)","origin":"Commercial adapted for war (Ukraine/Russia)","type":"Anti-personnel/Anti-armor Kamikaze","cost":"$200-500","color":"#f97316",
+   "specs":{"range":"5-10km","warhead":"RPG warhead/grenade/shaped charge","speed":"100-150 km/h","guidance":"FPV video link"},
+   "usage":"10,000+ FPV drones used per month by both sides in Ukraine. Anti-personnel, dugout clearance, vehicle kills, resupply interdiction.",
+   "lesson":"$400 drone can kill a $4M tank. Humans cannot move without drone observation. Eliminated the last 100 meters problem.",
+   "significance":"Most revolutionary infantry weapon since machine gun. Eliminates safe zones for troops."},
+  {"name":"Bayraktar TB2","origin":"Turkey (Baykar)","type":"MALE UCAV","cost":"$5M","color":"#eab308",
+   "specs":{"range":"150km","warhead":"MAM-L smart micro-munition (22kg)","speed":"220 km/h","guidance":"Laser designated"},
+   "usage":"Ukraine war 2022 (effective early — Russian AD degraded). Libya, Azerbaijan-Armenia, Ethiopia. 27 countries export.",
+   "lesson":"Cheap MALE UCAV enabled small states/non-state actors to conduct precision strikes. Vulnerable to modern MANPADS/SAM.",
+   "significance":"Democratized precision strike. Azerbaijan used to reclaim Nagorno-Karabakh 2020."},
+  {"name":"MQ-9 Reaper","origin":"USA (General Atomics)","type":"MALE UCAV (strike/ISR)","cost":"$30M","color":"#3b82f6",
+   "specs":{"range":"1,850km","warhead":"Hellfire R9X, GBU-38 JDAM, AIM-92","speed":"480 km/h","guidance":"Satellite data link"},
+   "usage":"14,000+ strikes since 2001. 500+ HVT strikes in Afghanistan/Pakistan/Yemen/Somalia. MQ-9 shot down by Houthis 4 times 2023-2024.",
+   "lesson":"Persistent ISR + precision strike. Changed CT operations paradigm. Houthi MANPADS/SAM defeating MQ-9.",
+   "significance":"Defined the drone warfare era. Now being replaced by smaller attritable systems."},
+  {"name":"Geran-2 / Shahed Swarm","origin":"Iran/Russia","type":"Swarm Saturation Attack","cost":"$20K-50K each","color":"#ef4444",
+   "specs":{"range":"2,500km","warhead":"50kg","speed":"185 km/h","guidance":"INS+GPS+terrain following"},
+   "usage":"Russia launched 2,000+ drones in single night attacks on Ukraine power grid. Swarm size overwhelms Patriot/NASAMS point defense.",
+   "lesson":"Saturation attack math: 50 drones at $50K = $2.5M vs 50 PAC-3 interceptors at $4M each = $200M defender cost disadvantage.",
+   "significance":"Inverted cost-exchange ratio in attacker\'s favor. Forces massive C-UAS investment by defender."},
+  {"name":"UUV / Maritime Drone","origin":"Ukraine (Magura V5 / Sea Baby)","type":"Surface/Underwater Maritime Drone","cost":"$250,000-1M","color":"#22c55e",
+   "specs":{"range":"1,000km+","warhead":"850kg explosive","speed":"80 km/h","guidance":"Satellite/optical FPV"},
+   "usage":"Ukraine Maritime drones sank 30+ Russian Black Sea Fleet vessels 2022-2024 including Moskva (cruiser) and landing ships. Cost-asymmetric vs warships.",
+   "lesson":"$250K sea drone sank $750M cruiser. Russia forced entire Black Sea Fleet from Sevastopol to Novorossiysk.",
+   "significance":"First war where surface drones achieved naval fleet area denial. Revolutionizes littoral warfare."}
+];
+
+const CUAS_SYSTEMS = [
+  {"name":"Iron Dome","country":"Israel","cost_per_intercept":"$50,000-$100,000","effectiveness":"90%+ vs rockets/mortars. Limited vs drones.","flaw":"Not designed for loitering munition saturation"},
+  {"name":"NASAMS","country":"USA/Norway","cost_per_intercept":"$380,000 (AIM-120)","effectiveness":"High vs aircraft/cruise missile. Expensive vs cheap drones.","flaw":"Cost exchange ratio unfavorable vs Shahed swarms"},
+  {"name":"Gepard (AA Gun)","country":"Germany (supplied Ukraine)","cost_per_intercept":"$100 (20mm round)","effectiveness":"Very effective vs slow/low drones. Range limited.","flaw":"Crew exposure. Limited range vs high-altitude threats"},
+  {"name":"Laser C-UAS","country":"USA/UK/Israel (in development)","cost_per_intercept":"$5-10 (electricity)","effectiveness":"High vs small drones. Weather dependent. Single target engagement.","flaw":"Cloud/dust degrades. Single-target engagement vs swarms"},
+  {"name":"Electronic Warfare/Jamming","country":"Multiple","cost_per_intercept":"Low","effectiveness":"Very effective vs GPS-guided drones. Less vs INS/optical.","flaw":"Indiscriminate — affects own comms. Russia adapting to EW"}
+];
+
+const DRONE_LESSONS_UKRAINE = [
+  "Persistent ISR: Every move on the battlefield is seen. No safe assembly area within 15km of front.",
+  "FPV saturation: Russia and Ukraine each lost 10,000+ armored vehicles to FPV drones by 2024.",
+  "C-UAS cost inversion: Defender must spend 10-100x cost of attacking drone to intercept.",
+  "Electronic warfare dominance: GPS jamming renders precision munitions ineffective without backup guidance.",
+  "Industrial attrition: 10,000 drones/month production needed to sustain drone warfare at scale.",
+  "Starlink as force multiplier: FPV drone operators using Starlink for video link — EW-resistant.",
+  "Night dominance: Thermal-equipped drones removed any night cover for troops or vehicles."
+];
+
+const KLEPTOCRAT_PROFILES = [
+  {"name":"Vladimir Putin","country":"Russia","color":"#ef4444","estimatedWealth":"$200B-$1T (various estimates)",
+   "assets":["Gelendzhik Palace ($1.35B)","Yacht Graceful ($82M)","Yacht Scheherazade ($700M — obscure ownership)","$700M in Swiss/Cayman accounts (Pandora Papers links)","Siloviki oligarch network wealth"],
+   "mechanism":"Kremlin insider network — oligarchs hold wealth on behalf. State enterprise control (Gazprom, Rosneft) as personal wealth extraction.",
+   "sanctioned":false,"note":"Putin controls Russia\'s oligarchy as enforcer-in-chief. Oligarchs hold his wealth as a distributed vault.","lat":55.7,"lng":37.6},
+  {"name":"Xi Jinping (family)","country":"China","color":"#f97316","estimatedWealth":"$376M (Bloomberg, family — conservative)",
+   "assets":["Sister Qi Qiaoqiao and husband Deng Jiagui: $376M in investments","Hong Kong real estate","Shell company network in Caribbean"],
+   "mechanism":"Family members hold assets — Princelings system. Bloomberg 2012 investigation — story censored in China.",
+   "sanctioned":false,"note":"Xi enforces anti-corruption while family benefits. Deng Jiagui (brother-in-law) central figure.","lat":39.9,"lng":116.4},
+  {"name":"Nursultan Nazarbayev (Kazakhstan)","country":"Kazakhstan","color":"#eab308","estimatedWealth":"$8B+ (estimated)",
+   "assets":["Swiss bank accounts","UK real estate","UAE investments","Global Art Fund Luxembourg"],
+   "mechanism":"SOE control, mineral wealth extraction, family member appointments to key state roles. UK property purchases via offshore.",
+   "sanctioned":false,"note":"Nazarbayev Family LLC holdings traced by OCCRP across 40 countries. Still influential post-2019 resignation.","lat":51.2,"lng":71.4},
+  {"name":"Nicolas Maduro","country":"Venezuela","color":"#f97316","estimatedWealth":"$2B-4B (estimated)",
+   "assets":["Miami real estate (via relatives)","Andorra banking","Portugal Golden Visa network","Crypto wallets"],
+   "mechanism":"PDVSA oil revenues. Drug trafficking proceeds (CJNG/Cartel de Los Soles). Gold smuggling. Corruption of military elite.",
+   "sanctioned":true,"sanctionDetail":"OFAC SDN since 2017. Treasury designated for drug trafficking.","lat":10.5,"lng":-66.9},
+  {"name":"Bashar al-Assad (exile)","country":"Syria/UAE","color":"#ef4444","estimatedWealth":"$1-2B (estimated)",
+   "assets":["UAE real estate (Dubai)","Russian bank accounts","Cousin Rami Makhlouf empire (partially frozen)","Syrian reconstruction contracts"],
+   "mechanism":"Rami Makhlouf (cousin, est. $5B) controlled 60% of Syrian economy — froze after falling out with Assad. Captagon drug trade.",
+   "sanctioned":true,"sanctionDetail":"EU/US/UK sanctioned. Assad fled to Russia Dec 2024 after HTS/rebel forces took Damascus.","lat":25.2,"lng":55.3},
+  {"name":"Robert Mugabe Estate","country":"Zimbabwe","color":"#eab308","estimatedWealth":"$1B+ (estate estimate)",
+   "assets":["Blue Roof mansion Harare ($9M)","Malaysian property","Singapore accounts","Farm estates seized from white farmers"],
+   "mechanism":"Gukurahundi massacre to consolidate power. Diamond mining (Marange fields) personal benefit. Forex controls to personal advantage.",
+   "sanctioned":false,"note":"Mugabe died 2019. Estate and ZANU-PF network continues wealth extraction under Mnangagwa.","lat":-17.8,"lng":31.0},
+  {"name":"Kim Jong-un (DPRK)","country":"North Korea","color":"#8b5cf6","estimatedWealth":"$3-5B (estimated)",
+   "assets":["Swiss bank accounts (childhood)","Mansion estates DPRK","Racing car collection","Luxury goods imports (yachts, alcohol, electronics)"],
+   "mechanism":"Office 39 (Royal court economy) extracts foreign currency. Cyber heists ($3B+). Drug exports. Arms sales. Kim personally controls via Koryobank.",
+   "sanctioned":true,"sanctionDetail":"All assets sanctioned. Cyber heists primary income source.","lat":39.0,"lng":125.8},
+  {"name":"Mohamed bin Salman (MBS)","country":"Saudi Arabia","color":"#eab308","estimatedWealth":"$2T+ (as Crown Prince/eventual King — state conflated with personal)",
+   "assets":["Chateau Louis XIV France ($301M)","Leonardo da Vinci Salvator Mundi ($450M)","Yacht Serene ($500M)","UK real estate","PIF (Public Investment Fund $700B sovereign wealth)"],
+   "mechanism":"Crown Prince controls Saudi state — PIF sovereign wealth as personal investment vehicle. Ritz Carlton purge 2017: $100B extorted from rival princes.",
+   "sanctioned":false,"note":"CIA assessment: MBS ordered Jamal Khashoggi assassination Oct 2018. US did not sanction MBS personally.","lat":24.7,"lng":46.7}
+];
+
+const STOLEN_ASSET_MECHANISMS = [
+  {"mechanism":"Shell Company Cascade","desc":"Multiple layers of anonymous companies in secrecy jurisdictions (BVI, Cayman, Panama, Delaware) obscure beneficial ownership","hotspots":["British Virgin Islands","Cayman Islands","Panama","Luxembourg","Delaware USA"]},
+  {"mechanism":"Golden Passport/Visa Programs","desc":"Purchase of EU/UK/Malta/Portugal/Cyprus citizenship via investment — provides legal residency, travel document, asset laundering legitimacy","hotspots":["Cyprus (program suspended)","Malta","Portugal","UAE","Saint Kitts"]},
+  {"mechanism":"Real Estate Laundering","desc":"All-cash property purchases in London, Dubai, Miami, New York, Monaco using shell companies with no beneficial ownership disclosure","hotspots":["London (Londongrad)","Dubai (laundromat)","Miami","Monaco","Singapore"]},
+  {"mechanism":"Art Market","desc":"Unregulated, anonymous, high-value — art is ideal for value transfer and laundering. No AML requirements until 2020 EU directive","hotspots":["Freeport Geneva","Hong Kong freeport","London art market","Sotheby\'s/Christie\'s anonymity"]},
+  {"mechanism":"Offshore Banking","desc":"Swiss banking secrecy (eroded but not eliminated), Liechtenstein, Channel Islands, Caribbean — hold funds offshore from sanctioning jurisdiction","hotspots":["Switzerland","Liechtenstein","Jersey/Guernsey","Andorra","Singapore"]}
+];
+
+function _sevSort(a,b){
+  var o={'CATASTROPHIC':0,'CRITICAL':1,'HIGH':2};
+  return (o[a.severity]||9)-(o[b.severity]||9);
+}
+
+function openFoodSec(){
+  document.getElementById('foodsec-overlay').style.display='flex';
+  _renderFoodSecCrises();
+  _renderFoodSecTactics();
+  _fetchFoodSecGDELT();
+  // Add globe hotspots
+  var extra=FAMINE_CRISES.map(function(c){
+    return {lat:c.lat,lng:c.lng,label:c.country,color:c.color,radius:5,_food:true};
+  });
+  if(window.extraHotspots){window.extraHotspots=window.extraHotspots.filter(function(h){return !h._food;}).concat(extra);}
+}
+function closeFoodSec(){
+  document.getElementById('foodsec-overlay').style.display='none';
+  if(window.extraHotspots){window.extraHotspots=window.extraHotspots.filter(function(h){return !h._food;});}
+}
+function _renderFoodSecCrises(){
+  var el=document.getElementById('foodsec-crises-list');
+  if(!el)return;
+  var sorted=FAMINE_CRISES.slice().sort(_sevSort);
+  el.innerHTML=sorted.map(function(c){
+    var sevClass=c.severity==='CATASTROPHIC'?'fs-sev-catastrophic':c.severity==='CRITICAL'?'fs-sev-critical':'fs-sev-high';
+    var pop=(c.population_affected/1000000).toFixed(1)+'M affected';
+    return '<div class="fs-crisis-card" style="border-left:3px solid '+c.color+';">'
+      +'<div class="fs-crisis-header"><span class="fs-country-name" style="color:'+c.color+';">'+c.country+'</span>'
+      +'<span class="fs-severity-badge '+sevClass+'">'+c.severity+'</span></div>'
+      +'<div class="fs-ipc-badge">'+c.ipc_phase+'</div>'
+      +(c.famine_confirmed?'<div class="fs-weapon-flag" style="background:rgba(127,29,29,.5);margin-left:4px;">FAMINE CONFIRMED</div>':'')
+      +'<div class="fs-pop">'+pop+'</div>'
+      +'<div class="fs-driver">'+c.driver+'</div>'
+      +'<div class="fs-detail">'+c.detail+'</div>'
+      +(c.weaponized?'<div class="fs-weapon-flag">&#9888; FOOD WEAPONIZED</div><div class="fs-weapon-note">'+c.weaponNote+'</div>':'')
+      +'</div>';
+  }).join('');
+}
+function _renderFoodSecTactics(){
+  var el=document.getElementById('foodsec-tactics-list');
+  if(!el)return;
+  el.innerHTML=FOOD_WEAPON_TACTICS.map(function(t){
+    return '<div class="fs-tactic-card">'
+      +'<div class="fs-tactic-name">'+t.tactic+'</div>'
+      +'<div class="fs-tactic-examples">'+t.examples.map(function(e){return '<span class="fs-ex-chip">'+e+'</span>';}).join('')+'</div>'
+      +'<div class="fs-tactic-effect">'+t.effect+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function _fetchFoodSecGDELT(){
+  var el=document.getElementById('foodsec-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading feed...</div>';
+  try{
+    var q=encodeURIComponent('food security famine hunger starvation aid crisis');
+    var r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d');
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="fs-gdelt-item"><div class="fs-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="fs-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+function openDroneWar(){
+  document.getElementById('dronewar-overlay').style.display='flex';
+  _renderDroneSystems();
+  _renderCUAS();
+  _renderDroneLessons();
+  _fetchDroneWarGDELT();
+}
+function closeDroneWar(){
+  document.getElementById('dronewar-overlay').style.display='none';
+}
+function _renderDroneSystems(){
+  var el=document.getElementById('dronewar-systems-list');
+  if(!el)return;
+  el.innerHTML=DRONE_SYSTEMS.map(function(d){
+    return '<div class="dw-system-card" style="border-left:3px solid '+d.color+';">'
+      +'<div class="dw-system-header"><span class="dw-system-name" style="color:'+d.color+';">'+d.name+'</span>'
+      +'<span class="dw-origin-badge">'+d.origin+'</span></div>'
+      +'<div class="dw-type-row">'
+      +'<span class="dw-type-chip">'+d.type+'</span>'
+      +'<span class="dw-cost-chip">'+d.cost+'</span>'
+      +'</div>'
+      +'<div class="dw-specs-grid">'
+      +'<div class="dw-spec-box"><div class="dw-spec-label">Range</div><div class="dw-spec-val">'+d.specs.range+'</div></div>'
+      +'<div class="dw-spec-box"><div class="dw-spec-label">Warhead</div><div class="dw-spec-val">'+d.specs.warhead+'</div></div>'
+      +'<div class="dw-spec-box"><div class="dw-spec-label">Speed</div><div class="dw-spec-val">'+d.specs.speed+'</div></div>'
+      +'<div class="dw-spec-box"><div class="dw-spec-label">Guidance</div><div class="dw-spec-val">'+d.specs.guidance+'</div></div>'
+      +'</div>'
+      +'<div class="dw-usage">'+d.usage+'</div>'
+      +'<div class="dw-lesson">KEY LESSON: '+d.lesson+'</div>'
+      +'<div class="dw-sig">SIGNIFICANCE: '+d.significance+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderCUAS(){
+  var el=document.getElementById('dronewar-cuas-list');
+  if(!el)return;
+  var hdr='<div class="dw-cuas-row" style="border-left:2px solid rgba(249,115,22,.5);border-bottom:1px solid #1e293b;margin-bottom:6px;">'
+    +'<span style="font-size:8px;color:#475569;letter-spacing:.1em;text-transform:uppercase;">System</span>'
+    +'<span style="font-size:8px;color:#475569;letter-spacing:.1em;text-transform:uppercase;">Country</span>'
+    +'<span style="font-size:8px;color:#475569;letter-spacing:.1em;text-transform:uppercase;">Cost/Kill</span>'
+    +'<span style="font-size:8px;color:#475569;letter-spacing:.1em;text-transform:uppercase;">Effectiveness</span>'
+    +'<span style="font-size:8px;color:#475569;letter-spacing:.1em;text-transform:uppercase;">Weakness</span>'
+    +'</div>';
+  el.innerHTML=hdr+CUAS_SYSTEMS.map(function(c){
+    return '<div class="dw-cuas-row">'
+      +'<span class="dw-cuas-name">'+c.name+'</span>'
+      +'<span class="dw-cuas-country">'+c.country+'</span>'
+      +'<span class="dw-cuas-cost">'+c.cost_per_intercept+'</span>'
+      +'<span class="dw-cuas-eff">'+c.effectiveness+'</span>'
+      +'<span class="dw-cuas-flaw">'+c.flaw+'</span>'
+      +'</div>';
+  }).join('');
+}
+function _renderDroneLessons(){
+  var el=document.getElementById('dronewar-lessons-list');
+  if(!el)return;
+  el.innerHTML=DRONE_LESSONS_UKRAINE.map(function(l){
+    return '<div class="dw-lesson-item">&#9658; '+l+'</div>';
+  }).join('');
+}
+async function _fetchDroneWarGDELT(){
+  var el=document.getElementById('dronewar-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading feed...</div>';
+  try{
+    var q=encodeURIComponent('drone warfare Ukraine Russia FPV Shahed autonomous UAV strike');
+    var r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d');
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="dw-gdelt-item"><div class="dw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="dw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+function openKleptoc(){
+  document.getElementById('kleptoc-overlay').style.display='flex';
+  _renderKleptocProfiles();
+  _renderKleptocMechs();
+  _fetchKleptocGDELT();
+  // Add globe hotspots
+  var extra=KLEPTOCRAT_PROFILES.map(function(k){
+    return {lat:k.lat,lng:k.lng,label:k.name,color:k.color,radius:5,_klepto:true};
+  });
+  if(window.extraHotspots){window.extraHotspots=window.extraHotspots.filter(function(h){return !h._klepto;}).concat(extra);}
+}
+function closeKleptoc(){
+  document.getElementById('kleptoc-overlay').style.display='none';
+  if(window.extraHotspots){window.extraHotspots=window.extraHotspots.filter(function(h){return !h._klepto;});}
+}
+function _renderKleptocProfiles(){
+  var el=document.getElementById('kleptoc-profiles-list');
+  if(!el)return;
+  el.innerHTML=KLEPTOCRAT_PROFILES.map(function(k){
+    return '<div class="kl-profile-card" style="border-left:3px solid '+k.color+';">'
+      +'<div class="kl-profile-header"><span class="kl-name" style="color:'+k.color+';">'+k.name+'</span>'
+      +'<span class="kl-country">'+k.country+'</span></div>'
+      +'<div class="kl-wealth">'+k.estimatedWealth+'</div>'
+      +(k.sanctioned?'<div class="kl-sanctioned">SANCTIONED: '+(k.sanctionDetail||'YES')+'</div>':'<div class="kl-clean">NOT SANCTIONED</div>')
+      +'<div class="kl-assets-list">'+k.assets.map(function(a){return '<span class="kl-asset-chip">'+a+'</span>';}).join('')+'</div>'
+      +'<div class="kl-mechanism">'+k.mechanism+'</div>'
+      +(k.note?'<div class="kl-note">'+k.note+'</div>':'')
+      +'</div>';
+  }).join('');
+}
+function _renderKleptocMechs(){
+  var el=document.getElementById('kleptoc-mechs-list');
+  if(!el)return;
+  el.innerHTML=STOLEN_ASSET_MECHANISMS.map(function(m){
+    return '<div class="kl-mech-card">'
+      +'<div class="kl-mech-name">'+m.mechanism+'</div>'
+      +'<div class="kl-mech-desc">'+m.desc+'</div>'
+      +'<div class="kl-hotspots">'+m.hotspots.map(function(h){return '<span class="kl-hotspot-chip">'+h+'</span>';}).join('')+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function _fetchKleptocGDELT(){
+  var el=document.getElementById('kleptoc-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading feed...</div>';
+  try{
+    var q=encodeURIComponent('corruption kleptocracy stolen assets sanctions oligarch');
+    var r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=7d');
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,8);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="kl-gdelt-item"><div class="kl-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fde047;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="kl-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 35 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -24534,6 +24968,91 @@ function filterSIGINT(query){
       <div id="sw-incidents-list" style="margin-bottom:16px;"></div>
       <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE SPACE WARFARE FEED</div>
       <div id="sw-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COLUMN 8 PHASE 35 BUTTONS -->
+<button id="foodsec-btn" onclick="openFoodSec()">FOOD SECURITY</button>
+<button id="dronewar-btn" onclick="openDroneWar()">DRONE WAR</button>
+<button id="kleptoc-btn" onclick="openKleptoc()">KLEPTOCRACY</button>
+
+<!-- FOOD SECURITY OVERLAY -->
+<div id="foodsec-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">FOOD SECURITY &amp; FAMINE INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">GLOBAL FAMINE &amp; FOOD WEAPONIZATION TRACKER</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">IPC Analysis &bull; UN OCHA Data &bull; Open Source Reporting</div>
+    </div>
+    <button onclick="closeFoodSec()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(127,29,29,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#fca5a5;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    282M PEOPLE FACING ACUTE FOOD INSECURITY (IPC3+) &bull; 705,000 IN FAMINE CONDITIONS &bull; 2 BILLION FOOD INSECURE GLOBALLY
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">ACTIVE FAMINE &amp; FOOD CRISIS ZONES</div>
+      <div id="foodsec-crises-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">FOOD AS A WEAPON — TACTICS</div>
+      <div id="foodsec-tactics-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE FEED — FOOD SECURITY</div>
+      <div id="foodsec-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DRONE WAR OVERLAY -->
+<div id="dronewar-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#f97316;font-size:11px;letter-spacing:3px;">DRONE WARFARE EVOLUTION INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">DRONE WAR — SYSTEMS, TACTICS &amp; LESSONS LEARNED</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">Ukraine Conflict Analysis &bull; Open Source Intelligence &bull; OSINT</div>
+    </div>
+    <button onclick="closeDroneWar()" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#fdba74;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">KEY DRONE SYSTEMS</div>
+      <div id="dronewar-systems-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">C-UAS COUNTERMEASURES COMPARISON</div>
+      <div id="dronewar-cuas-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">KEY LESSONS — UKRAINE DRONE WAR</div>
+      <div id="dronewar-lessons-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — DRONE WARFARE</div>
+      <div id="dronewar-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- KLEPTOCRACY OVERLAY -->
+<div id="kleptoc-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#eab308;font-size:11px;letter-spacing:3px;">KLEPTOCRACY &amp; STOLEN WEALTH INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">KLEPTOCRACY TRACKER — PROFILES &amp; MECHANISMS</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">OCCRP &bull; Bloomberg &bull; Pandora Papers &bull; Panama Papers &bull; Open Source</div>
+    </div>
+    <button onclick="closeKleptoc()" style="background:rgba(234,179,8,0.15);border:1px solid rgba(234,179,8,0.3);color:#fde047;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(113,63,18,0.2);border:1px solid rgba(234,179,8,0.3);border-radius:4px;padding:8px 14px;margin-bottom:14px;font-size:8px;color:#fbbf24;letter-spacing:.3px;line-height:1.6;">
+    &#9432; All wealth estimates sourced from open source journalism (OCCRP, Bloomberg, Pandora Papers, Panama Papers). Figures are estimates — actual wealth is by definition hidden. Not legal conclusions.
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#eab308;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">KLEPTOCRAT PROFILES</div>
+      <div id="kleptoc-profiles-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#eab308;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">STOLEN ASSET MECHANISMS</div>
+      <div id="kleptoc-mechs-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#eab308;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — CORRUPTION</div>
+      <div id="kleptoc-gdelt-feed"></div>
     </div>
   </div>
 </div>
