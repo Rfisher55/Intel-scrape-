@@ -4435,6 +4435,137 @@ button{border-radius:2px!important}
 .p53drone-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .p53drone-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .p53drone-gdelt-meta{font-size:8px;color:#475569;}
+/* ===== MOBILE RESPONSIVE LAYOUT ===== */
+#mobile-intel-toggle {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 16px;
+  z-index: 9998;
+  background: rgba(15,23,42,0.97);
+  border: 1px solid #334155;
+  color: #94a3b8;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 700;
+}
+#mobile-intel-toggle:hover, #mobile-intel-toggle.active {
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+#mobile-intel-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  background: rgba(2,4,14,0.99);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 16px 80px 16px;
+  font-family: 'Courier New', monospace;
+}
+
+.mobile-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1e293b;
+}
+.mobile-panel-title {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #e2e8f0;
+}
+.mobile-panel-subtitle {
+  font-size: 8px;
+  color: #475569;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.mobile-panel-close {
+  font-size: 10px;
+  color: #475569;
+  border: 1px solid #1e293b;
+  padding: 6px 12px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.mobile-category {
+  margin-bottom: 20px;
+}
+.mobile-category-label {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #475569;
+  margin-bottom: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid #0f2040;
+  text-transform: uppercase;
+}
+.mobile-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.mobile-intel-btn {
+  background: rgba(15,23,42,0.85);
+  border: 1px solid #1e293b;
+  color: #94a3b8;
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  min-height: 44px;
+  font-weight: 700;
+  transition: border-color 0.15s, color 0.15s;
+}
+.mobile-intel-btn:active {
+  background: rgba(30,41,59,0.9);
+}
+
+@media (max-width: 1024px) {
+  /* Hide all desktop column buttons */
+  button[id$="-btn"]:not(#mobile-intel-toggle) {
+    display: none !important;
+  }
+  /* Show mobile toggle */
+  #mobile-intel-toggle {
+    display: block !important;
+  }
+  /* Make overlays full-screen friendly */
+  [id$="-overlay"] {
+    padding: 16px !important;
+  }
+  /* Live status bar text smaller */
+  #live-status-bar {
+    font-size: 7px;
+  }
+  /* DEFCON indicator stays visible */
+  #defcon-display {
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-btn-grid {
+    grid-template-columns: 1fr;
+  }
+  [id$="-overlay"] {
+    padding: 12px !important;
+  }
+}
+/* ===== END MOBILE ===== */
 </style>
 </head>
 <body>
@@ -27798,25 +27929,7 @@ function _renderNukeProliferation(){
  }
 }
 
-async function _fetchNpGdelt(){
- var feed = document.getElementById('np-gdelt-feed');
- if(!feed) return;
- feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
- try{
- var q = encodeURIComponent('nuclear proliferation Iran North Korea centrifuge enrichment weapons IAEA');
- var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
- var r = await fetch(url, {signal:AbortSignal.timeout(10000)});
- var d = await r.json();
- var arts = (d&&d.articles)||[];
- if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
- feed.innerHTML = arts.map(function(a){
- return '<div class="np-gdelt-item">'+
- '<div class="np-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="np-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
- '</div>';
- }).join('');
- }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
-}
+function _fetchNpGdelt(){ _gdeltFetch('nuclear proliferation Iran North Korea centrifuge enrichment weapons IAEA', 'np-gdelt-feed'); }
 
 function _openNukeProliferation(){
  var ov=document.getElementById('nukeproliferation-overlay');
@@ -30146,25 +30259,7 @@ function _renderProxyWars(){
   }
 }
 
-async function _fetchPwGdelt(){
-  var feed = document.getElementById('pw-gdelt-feed');
-  if(!feed) return;
-  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
-  try{
-    var q = encodeURIComponent('proxy war militia armed group state-sponsored conflict');
-    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
-    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d = await r.json();
-    var arts = (d&&d.articles)||[];
-    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
-    feed.innerHTML = arts.map(function(a){
-      return '<div class="pw-gdelt-item">'+
-        '<div class="pw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
-        '<div class="pw-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
-      '</div>';
-    }).join('');
-  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
-}
+function _fetchPwGdelt(){ _gdeltFetch('proxy war militia armed group state-sponsored conflict', 'pw-gdelt-feed'); }
 
 function _openProxyWars(){
   var ov=document.getElementById('proxywars-overlay');
@@ -30277,25 +30372,7 @@ function _renderNuclearPosture(){
   }).join('');
 }
 
-async function _fetchNpGdelt(){
-  var feed = document.getElementById('np-gdelt-feed');
-  if(!feed) return;
-  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
-  try{
-    var q = encodeURIComponent('nuclear weapons warhead arsenal deterrence arms control START proliferation');
-    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
-    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d = await r.json();
-    var arts = (d&&d.articles)||[];
-    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
-    feed.innerHTML = arts.map(function(a){
-      return '<div class="np-gdelt-item">'+
-        '<div class="np-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
-        '<div class="np-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
-      '</div>';
-    }).join('');
-  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
-}
+function _fetchNpGdelt(){ _gdeltFetch('nuclear weapons warhead arsenal deterrence arms control START proliferation', 'np-gdelt-feed'); }
 
 function _openNuclearPosture(){
   var ov=document.getElementById('nuclearposture-overlay');
@@ -30390,25 +30467,7 @@ function _renderWaterWars(){
   }
 }
 
-async function _fetchWwGdelt(){
-  var feed = document.getElementById('ww-gdelt-feed');
-  if(!feed) return;
-  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
-  try{
-    var q = encodeURIComponent('water dispute dam river conflict Nile Mekong Indus water security drought');
-    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
-    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d = await r.json();
-    var arts = (d&&d.articles)||[];
-    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
-    feed.innerHTML = arts.map(function(a){
-      return '<div class="ww-gdelt-item">'+
-        '<div class="ww-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
-        '<div class="ww-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
-      '</div>';
-    }).join('');
-  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
-}
+function _fetchWwGdelt(){ _gdeltFetch('water dispute dam river conflict Nile Mekong Indus water security drought', 'ww-gdelt-feed'); }
 
 function _openWaterWars(){
   var ov=document.getElementById('waterwars-overlay');
@@ -30567,23 +30626,7 @@ function _renderCoupWatch(){
   }
 }
 
-async function _fetchCoupWatchGDELT(){
-  var feed=document.getElementById('cw-gdelt-feed');
-  if(!feed)return;
-  try{
-    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=coup+military+takeover+junta+overthrow+political+crisis&mode=artlist&maxrecords=10&format=json';
-    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d=await r.json();
-    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
-    feed.innerHTML='';
-    d.articles.slice(0,10).forEach(function(a){
-      feed.innerHTML+='<div class="cw-gdelt-item">'
-        +'<div class="cw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="cw-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
-        +'</div>';
-    });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
-}
+function _fetchCoupWatchGDELT(){ _gdeltFetch('coup military takeover junta overthrow political crisis', 'cw-gdelt-feed'); }
 
 function _openCoupWatch(){
   var ov=document.getElementById('p51coupwatch-overlay');
@@ -30696,23 +30739,7 @@ function _renderSanctionsTracker(){
   }
 }
 
-async function _fetchSanctionsGDELT(){
-  var feed=document.getElementById('st-gdelt-feed');
-  if(!feed)return;
-  try{
-    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=sanctions+violation+evasion+enforcement+OFAC+SDN+export+controls&mode=artlist&maxrecords=10&format=json';
-    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d=await r.json();
-    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
-    feed.innerHTML='';
-    d.articles.slice(0,10).forEach(function(a){
-      feed.innerHTML+='<div class="st-gdelt-item">'
-        +'<div class="st-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="st-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
-        +'</div>';
-    });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
-}
+function _fetchSanctionsGDELT(){ _gdeltFetch('sanctions violation evasion enforcement OFAC SDN export controls', 'st-gdelt-feed'); }
 
 function _openSanctionsTracker(){
   var ov=document.getElementById('sanctionstracker-overlay');
@@ -30967,23 +30994,7 @@ function _renderNarcoModule(){
   }
 }
 
-async function _fetchNarcoGDELT(){
-  var feed=document.getElementById('p52narco-gdelt-feed');
-  if(!feed)return;
-  try{
-    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=cartel+fentanyl+drug+trafficking+narco+organized+crime&mode=artlist&maxrecords=10&format=json';
-    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d=await r.json();
-    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
-    feed.innerHTML='';
-    d.articles.slice(0,10).forEach(function(a){
-      feed.innerHTML+='<div class="p52narco-gdelt-item">'
-        +'<div class="p52narco-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="p52narco-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
-        +'</div>';
-    });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
-}
+function _fetchNarcoGDELT(){ _gdeltFetch('cartel fentanyl drug trafficking narco organized crime', 'p52narco-gdelt-feed'); }
 
 function _openNarcoModule(){
   var ov=document.getElementById('p52narco-overlay');
@@ -31243,25 +31254,7 @@ function _renderClimateModule(){
   }
 }
 
-async function _fetchClimateLiveFeed(){
-  var feed=document.getElementById('p52-climate-live-feed');
-  if(!feed)return;
-  feed.innerHTML='<div style="color:#475569;font-size:9px;">Loading climate intelligence...</div>';
-  try{
-    var q=encodeURIComponent('climate change drought flood wildfire food security water crisis displacement');
-    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
-    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d=await r.json();
-    var arts=(d&&d.articles)||[];
-    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
-    feed.innerHTML=arts.map(function(a){
-      return '<div class="p52clim-live-item">'
-        +'<div class="p52clim-live-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="p52clim-live-meta">'+a.domain+' // '+a.seendate+'</div>'
-        +'</div>';
-    }).join('');
-  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">Climate feed unavailable.</div>';}
-}
+function _fetchClimateLiveFeed(){ _gdeltFetch('climate change drought flood wildfire food security water crisis displacement', 'p52-climate-live-feed'); }
 
 function _openClimateModule(){
   var ov=document.getElementById('p52climate-overlay');
@@ -31390,23 +31383,7 @@ function _renderBioModule(){
   }
 }
 
-async function _fetchBioGDELT(){
-  var feed=document.getElementById('p53bio-gdelt-feed');
-  if(!feed)return;
-  try{
-    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=biosecurity+pathogen+outbreak+bioterror+biological+weapons+laboratory+disease+surveillance&mode=artlist&maxrecords=10&format=json';
-    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d=await r.json();
-    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
-    feed.innerHTML='';
-    d.articles.slice(0,10).forEach(function(a){
-      feed.innerHTML+='<div class="p53bio-gdelt-item">'
-        +'<div class="p53bio-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="p53bio-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
-        +'</div>';
-    });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
-}
+function _fetchBioGDELT(){ _gdeltFetch('biosecurity pathogen outbreak bioterror biological weapons disease surveillance', 'p53bio-gdelt-feed'); }
 
 function _openBioModule(){
   var ov=document.getElementById('p53bio-overlay');
@@ -31516,23 +31493,7 @@ function _renderCrimeModule(){
   }
 }
 
-async function _fetchCrimeGDELT(){
-  var feed=document.getElementById('p53crime-gdelt-feed');
-  if(!feed)return;
-  try{
-    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=organized+crime+cartel+mafia+syndicate+trafficking+money+laundering+criminal+network&mode=artlist&maxrecords=10&format=json';
-    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d=await r.json();
-    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
-    feed.innerHTML='';
-    d.articles.slice(0,10).forEach(function(a){
-      feed.innerHTML+='<div class="p53crime-gdelt-item">'
-        +'<div class="p53crime-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="p53crime-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
-        +'</div>';
-    });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
-}
+function _fetchCrimeGDELT(){ _gdeltFetch('organized crime cartel mafia syndicate trafficking money laundering criminal network', 'p53crime-gdelt-feed'); }
 
 function _openCrimeModule(){
   var ov=document.getElementById('p53crime-overlay');
@@ -31636,23 +31597,7 @@ function _renderDroneModule(){
   }
 }
 
-async function _fetchDroneGDELT(){
-  var feed=document.getElementById('p53drone-gdelt-feed');
-  if(!feed)return;
-  try{
-    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=drone+warfare+UAV+unmanned+aerial+vehicle+strike+military+loitering+munition&mode=artlist&maxrecords=10&format=json';
-    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-    var d=await r.json();
-    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
-    feed.innerHTML='';
-    d.articles.slice(0,10).forEach(function(a){
-      feed.innerHTML+='<div class="p53drone-gdelt-item">'
-        +'<div class="p53drone-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="p53drone-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
-        +'</div>';
-    });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
-}
+function _fetchDroneGDELT(){ _gdeltFetch('drone warfare UAV unmanned aerial vehicle strike military loitering munition', 'p53drone-gdelt-feed'); }
 
 function _openDroneModule(){
   var ov=document.getElementById('p53drone-overlay');
@@ -31685,6 +31630,159 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 // ===== END PHASE 53 =====
+
+// ===== GDELT FETCH UTILITY =====
+async function _gdeltFetch(query, targetId, retries){
+  retries = retries||2;
+  var el = document.getElementById(targetId);
+  if(!el) return;
+  el.innerHTML = '<div style="color:#334155;font-size:9px;padding:4px 0;">Fetching live intelligence...</div>';
+  var q = encodeURIComponent(query);
+  var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=72H&format=json';
+  for(var attempt=0; attempt<=retries; attempt++){
+    try{
+      var r = await fetch(url, {signal:AbortSignal.timeout(12000)});
+      var d = await r.json();
+      var arts = (d&&d.articles)||[];
+      if(arts.length){
+        el.innerHTML = arts.map(function(a){
+          return '<div style="border-bottom:1px solid #0f2040;padding:4px 0;">'+
+            '<div><a href="'+a.url+'" target="_blank" style="color:#cbd5e1;font-size:8px;text-decoration:none;line-height:1.4;display:block;">'+a.title+'</a></div>'+
+            '<div style="color:#334155;font-size:7px;margin-top:1px;">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'+
+          '</div>';
+        }).join('');
+        return;
+      }
+      // Empty result -- try broader query on retry
+      if(attempt < retries){
+        q = encodeURIComponent(query.split(' ').slice(0,3).join(' '));
+        url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=168H&format=json';
+      }
+    }catch(e){
+      if(attempt < retries){
+        await new Promise(function(res){setTimeout(res, 1500*(attempt+1));});
+      }
+    }
+  }
+  el.innerHTML = '<div style="color:#1e3a5f;font-size:9px;padding:4px 0;">Live feed temporarily offline -- displaying curated intelligence above.</div>';
+}
+// ===== END GDELT UTILITY =====
+
+// ===== MOBILE NAV =====
+var _MOBILE_MODULES = [
+  // [category, label, openFn, color]
+  // CONFLICTS
+  ['conflicts','WAR TRACKER','_openWarTracker','#ef4444'],
+  ['conflicts','AIRSTRIKES','_openAirstrike','#ef4444'],
+  ['conflicts','MILITIA OPS','_openMilitiaOps','#f97316'],
+  ['conflicts','FLASHPOINTS','_openFlashpoints','#ef4444'],
+  ['conflicts','BORDER DISPUTES','_openBorderDisputes','#0891b2'],
+  ['conflicts','ETHNIC CONFLICT','_openEthnicConflict','#b45309'],
+  ['conflicts','PROXY WARS','_openProxyWars','#7c3aed'],
+  ['conflicts','HYBRID WARFARE','_openHybridWarfare','#f97316'],
+  // NUCLEAR
+  ['nuclear','NUCLEAR POSTURE','_openNuclearPosture','#dc2626'],
+  ['nuclear','NUKE PROLIF','_openNukeProlif','#dc2626'],
+  ['nuclear','ARMS CONTROL','_openArmsControl','#0f766e'],
+  ['nuclear','BIOTERROR','_openBioWatch','#84cc16'],
+  ['nuclear','CBRN THREATS','_openCBRN','#ef4444'],
+  ['nuclear','WMD TRACKER','_openWMD','#dc2626'],
+  // INTEL
+  ['intel','SIGINT','_openSigint','#10b981'],
+  ['intel','SURVEILLANCE','_openSurveillance','#e879f9'],
+  ['intel','CYBER INTEL','_openCyberIntel','#3b82f6'],
+  ['intel','DARK WEB','_openDarkWeb','#6366f1'],
+  ['intel','DISINFO ATLAS','_openDisinfo','#f43f5e'],
+  ['intel','MEDIA INTEL','_openMediaIntel','#f97316'],
+  ['intel','DECEPTION OPS','_openDeceptionOps','#ec4899'],
+  // GEO
+  ['geo','STRAT ALLIANCES','_openStratAlliances','#0369a1'],
+  ['geo','FORCE POSTURE','_openForcePosture','#6366f1'],
+  ['geo','COUP WATCH','_openCoupWatch','#dc2626'],
+  ['geo','REGIME WATCH','_openRegimeWatch','#c026d3'],
+  ['geo','FAILED STATES','_openFragileStates','#ef4444'],
+  ['geo','GRAY ZONE','_openGrayZone','#a78bfa'],
+  ['geo','DIPLO CABLES','_openDiplo','#64748b'],
+  // THREATS
+  ['threats','TERRORISM','_openTerrorism','#ef4444'],
+  ['threats','TERROR FINANCE','_openTerrorFinance','#dc2626'],
+  ['threats','NARCO STATES','_openNarcoModule','#7c3aed'],
+  ['threats','CRIME SYNDICATES','_openCrimeModule','#6366f1'],
+  ['threats','DRONE WARFARE','_openDroneModule','#38bdf8'],
+  ['threats','AI WARFARE','_openAiWarfare','#06b6d4'],
+  ['threats','SANCTIONS','_openSanctionsModule','#f59e0b'],
+  // ECON
+  ['econ','ENERGY SECURITY','_openEnergyModule','#f97316'],
+  ['econ','RARE EARTH','_openRareEarth','#84cc16'],
+  ['econ','STRAT RESERVES','_openStratReserves','#f59e0b'],
+  ['econ','EXPORT CTRL','_openExportCtrl','#64748b'],
+  ['econ','WATER WARS','_openWaterWars','#0ea5e9'],
+  ['econ','ECON INTEL','_openEconIntel','#22c55e'],
+  // HUMAN
+  ['human','REFUGEE FLOWS','_openRefugeeModule','#0ea5e9'],
+  ['human','CLIMATE SECURITY','_openClimateModule','#22c55e'],
+  ['human','HUMANITARIAN','_openHumanitarian','#22c55e'],
+  ['human','POP INTEL','_openPopIntel','#f97316'],
+  ['human','RESILIENCE','_openResilience','#22c55e'],
+  // TECH
+  ['tech','QUANTUM RACE','_openQuantumRace','#38bdf8'],
+  ['tech','SPACE INTEL','_openSpaceIntel','#6366f1'],
+  ['tech','PORT SECURITY','_openPortSecurity','#0ea5e9'],
+  ['tech','MARITIME INTEL','_openMaritime','#0ea5e9'],
+  ['tech','ISS TRACKING','_openISSTracking','#6366f1'],
+];
+
+var _mobileCatMap = {
+  conflicts:'mobile-cat-conflicts',
+  nuclear:'mobile-cat-nuclear',
+  intel:'mobile-cat-intel',
+  geo:'mobile-cat-geo',
+  threats:'mobile-cat-threats',
+  econ:'mobile-cat-econ',
+  human:'mobile-cat-human',
+  tech:'mobile-cat-tech'
+};
+
+function _initMobileNav(){
+  // Build mobile buttons
+  _MOBILE_MODULES.forEach(function(m){
+    var cat=m[0],label=m[1],fn=m[2],color=m[3];
+    var container=document.getElementById(_mobileCatMap[cat]);
+    if(!container) return;
+    var btn=document.createElement('button');
+    btn.className='mobile-intel-btn';
+    btn.textContent=label;
+    btn.style.borderTopColor=color;
+    btn.style.borderTopWidth='2px';
+    btn.addEventListener('click',function(){
+      _closeMobilePanel();
+      // Call the open function if it exists
+      if(typeof window[fn]==='function') window[fn]();
+    });
+    container.appendChild(btn);
+  });
+
+  var toggle=document.getElementById('mobile-intel-toggle');
+  var closeBtn=document.getElementById('mobile-panel-close-btn');
+  if(toggle) toggle.addEventListener('click',function(){
+    var panel=document.getElementById('mobile-intel-panel');
+    if(panel){
+      panel.style.display='block';
+      toggle.classList.add('active');
+    }
+  });
+  if(closeBtn) closeBtn.addEventListener('click',_closeMobilePanel);
+}
+
+function _closeMobilePanel(){
+  var panel=document.getElementById('mobile-intel-panel');
+  var toggle=document.getElementById('mobile-intel-toggle');
+  if(panel) panel.style.display='none';
+  if(toggle) toggle.classList.remove('active');
+}
+
+document.addEventListener('DOMContentLoaded',_initMobileNav);
+// ===== END MOBILE NAV =====
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
@@ -34329,6 +34427,51 @@ function filterSIGINT(query){
   <span id="lfs-firms" style="font-size:8px;color:#64748b;white-space:nowrap;">NASA FIRMS --</span>
   <span id="lfs-vessel" style="font-size:8px;color:#64748b;white-space:nowrap;">VESSEL TRACK --</span>
   <span style="margin-left:auto;color:#1e3a5f;font-size:7px;white-space:nowrap;letter-spacing:0.08em;" id="lfs-lastupdate">LAST SYNC: --</span>
+</div>
+
+<!-- Mobile Navigation -->
+<button id="mobile-intel-toggle">INTEL MENU</button>
+<div id="mobile-intel-panel">
+  <div class="mobile-panel-header">
+    <div>
+      <div class="mobile-panel-title">GLOBAL INTEL PLATFORM</div>
+      <div class="mobile-panel-subtitle">SELECT INTELLIGENCE MODULE</div>
+    </div>
+    <div class="mobile-panel-close" id="mobile-panel-close-btn">CLOSE X</div>
+  </div>
+
+  <div class="mobile-category">
+    <div class="mobile-category-label">Active Conflicts</div>
+    <div class="mobile-btn-grid" id="mobile-cat-conflicts"></div>
+  </div>
+  <div class="mobile-category">
+    <div class="mobile-category-label">Nuclear &amp; WMD</div>
+    <div class="mobile-btn-grid" id="mobile-cat-nuclear"></div>
+  </div>
+  <div class="mobile-category">
+    <div class="mobile-category-label">Intelligence &amp; Surveillance</div>
+    <div class="mobile-btn-grid" id="mobile-cat-intel"></div>
+  </div>
+  <div class="mobile-category">
+    <div class="mobile-category-label">Geopolitics &amp; Alliances</div>
+    <div class="mobile-btn-grid" id="mobile-cat-geo"></div>
+  </div>
+  <div class="mobile-category">
+    <div class="mobile-category-label">Threats &amp; Security</div>
+    <div class="mobile-btn-grid" id="mobile-cat-threats"></div>
+  </div>
+  <div class="mobile-category">
+    <div class="mobile-category-label">Economy &amp; Resources</div>
+    <div class="mobile-btn-grid" id="mobile-cat-econ"></div>
+  </div>
+  <div class="mobile-category">
+    <div class="mobile-category-label">Humanitarian &amp; Society</div>
+    <div class="mobile-btn-grid" id="mobile-cat-human"></div>
+  </div>
+  <div class="mobile-category">
+    <div class="mobile-category-label">Technology &amp; Domains</div>
+    <div class="mobile-btn-grid" id="mobile-cat-tech"></div>
+  </div>
 </div>
 
 <!-- Phase 53 buttons -->
