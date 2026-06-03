@@ -1645,6 +1645,52 @@ button{border-radius:2px!important}
 .ew-news-meta{color:var(--dim);font-size:8px;}
 #intelbriefexport-btn{position:fixed;top:135px;right:570px;z-index:200;background:rgba(10,110,245,.15);border:1px solid rgba(10,110,245,.6);border-radius:2px;color:#60a5fa;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
 #intelbriefexport-btn:hover{background:rgba(10,110,245,.25);border-color:#3b82f6;}
+#diplo-btn{position:fixed;top:175px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(96,165,250,.35);border-radius:2px;color:#60a5fa;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#diplo-btn:hover{background:rgba(96,165,250,.1);border-color:#2563eb;}
+#diplo-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#diplo-overlay.open{display:block;}
+.di-hdr{background:var(--panel);border-bottom:2px solid rgba(96,165,250,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.di-hdr h2{color:#60a5fa;font-size:12px;letter-spacing:.2em;margin:0;}
+.di-body{padding:16px 24px;max-width:1100px;}
+.di-process{background:var(--panel2);border:1px solid var(--border);border-left:3px solid rgba(96,165,250,.6);padding:10px 12px;margin-bottom:8px;}
+.di-process-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.di-process-name{font-size:10px;font-weight:700;color:#60a5fa;}
+.di-process-status{font-size:7px;padding:2px 5px;letter-spacing:.1em;}
+.di-process-detail{font-size:8px;color:var(--dim);line-height:1.5;}
+.di-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.di-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.di-news-meta{color:var(--dim);font-size:8px;}
+#energysec-btn{position:fixed;top:215px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(234,179,8,.35);border-radius:2px;color:#eab308;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#energysec-btn:hover{background:rgba(234,179,8,.1);border-color:#ca8a04;}
+#energysec-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#energysec-overlay.open{display:block;}
+.en-hdr{background:var(--panel);border-bottom:2px solid rgba(234,179,8,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.en-hdr h2{color:#eab308;font-size:12px;letter-spacing:.2em;margin:0;}
+.en-body{padding:16px 24px;max-width:1200px;}
+.en-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.en-card{background:var(--panel2);border:1px solid var(--border);padding:10px;}
+.en-card-hdr{font-size:8px;letter-spacing:.16em;color:var(--dim);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.en-incident{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:9px;align-items:center;}
+.en-inc-name{color:var(--text);}
+.en-inc-severity{font-size:7px;padding:1px 5px;letter-spacing:.08em;}
+.en-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.en-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.en-news-meta{color:var(--dim);font-size:8px;}
+#unrest-btn{position:fixed;top:255px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(245,158,11,.35);border-radius:2px;color:#fbbf24;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#unrest-btn:hover{background:rgba(245,158,11,.1);border-color:#d97706;}
+#unrest-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#unrest-overlay.open{display:block;}
+.ur-hdr{background:var(--panel);border-bottom:2px solid rgba(245,158,11,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.ur-hdr h2{color:#fbbf24;font-size:12px;letter-spacing:.2em;margin:0;}
+.ur-body{padding:16px 24px;max-width:1100px;}
+.ur-event{background:var(--panel2);border:1px solid var(--border);border-left:3px solid rgba(245,158,11,.6);padding:8px 12px;margin-bottom:6px;}
+.ur-event-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.ur-event-name{font-size:9px;font-weight:700;color:#fbbf24;}
+.ur-event-scale{font-size:7px;padding:1px 5px;letter-spacing:.08em;}
+.ur-event-detail{font-size:8px;color:var(--dim);line-height:1.4;}
+.ur-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ur-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.ur-news-meta{color:var(--dim);font-size:8px;}
 </style>
 </head>
 <body>
@@ -16947,6 +16993,122 @@ async function exportIntelBrief(){
   window.open(url,'_blank');
   if(btn)btn.textContent='\u{1F4CB} EXPORT BRIEF';
 }
+function openDiploIntel(){
+  document.getElementById('diplo-overlay').classList.add('open');
+  _fetchDiploNews();
+}
+function closeDiploIntel(){
+  document.getElementById('diplo-overlay').classList.remove('open');
+}
+async function _fetchDiploNews(){
+  const el=document.getElementById('diplo-news');
+  if(!el)return;
+  try{
+    const q='ceasefire OR "peace talks" OR "diplomatic" OR "peace negotiations" AND (war OR conflict OR Ukraine OR Gaza OR Sudan OR Iran)';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current diplomatic intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="di-news-item"><div class="di-news-title">'+title+'</div><div class="di-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+function openEnergySec(){
+  document.getElementById('energysec-overlay').classList.add('open');
+  _fetchEnergySecNews();
+}
+function closeEnergySec(){
+  document.getElementById('energysec-overlay').classList.remove('open');
+}
+async function _fetchEnergySecNews(){
+  const el=document.getElementById('energysec-news');
+  if(!el)return;
+  try{
+    const q='"pipeline attack" OR "power grid" OR "energy infrastructure" OR "oil facility attack" OR "LNG terminal" OR "energy security" OR "electricity grid"';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=12&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current energy security intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="en-news-item"><div class="en-news-title">'+title+'</div><div class="en-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
+const STATIC_UNREST_ZONES=[
+  {name:'Bangladesh (Anti-govt protests)',lat:23.7,lng:90.4,scale:'MASS',detail:'Student-led uprising toppled PM Hasina Aug 2024. Ongoing political transition instability.'},
+  {name:'Venezuela (Opposition protests)',lat:10.5,lng:-66.9,scale:'SUSTAINED',detail:'Post-Maduro election protests Jul-Aug 2024. Opposition claims fraud. Arrests of dissidents ongoing.'},
+  {name:'Kenya (Finance Bill protests)',lat:-1.3,lng:36.8,scale:'SIGNIFICANT',detail:'Gen-Z led protests against tax bill June 2024. Parliament stormed. Government retreated on bill.'},
+  {name:'Serbia (Elections)',lat:44.8,lng:20.5,scale:'MODERATE',detail:'Opposition protests over alleged election fraud Dec 2023-2024. EU monitoring ongoing.'},
+  {name:'France (Pension/cost of living)',lat:48.8,lng:2.3,scale:'RECURRING',detail:'Recurring pension reform and cost-of-living protests. Yellow vest movement legacy continuing.'},
+  {name:'Haiti (Gang control)',lat:18.5,lng:-72.3,scale:'CRITICAL',detail:'Gang coalition controls 80% of Port-au-Prince. State collapse. MSS Kenya-led security force deployed.'},
+  {name:'Myanmar (Civil war)',lat:16.9,lng:96.2,scale:'CRITICAL',detail:'Armed resistance movement controls growing territory. Junta losing major cities. Ethnic armed orgs coalescing.'},
+  {name:'Pakistan (PTI protests)',lat:33.7,lng:73.1,scale:'SIGNIFICANT',detail:'Imran Khan imprisonment sparks continued PTI protests. Military-civil tensions high.'}
+];
+function openUnrestMapper(){
+  document.getElementById('unrest-overlay').classList.add('open');
+  _renderStaticUnrest();
+  _fetchUnrestNews();
+}
+function closeUnrestMapper(){
+  document.getElementById('unrest-overlay').classList.remove('open');
+}
+function _renderStaticUnrest(){
+  const el=document.getElementById('unrest-static-list');
+  if(!el)return;
+  const scaleColors={CRITICAL:'#ef4444',MASS:'#f97316',SIGNIFICANT:'#f59e0b',SUSTAINED:'#f59e0b',RECURRING:'#22d3ee',MODERATE:'#22d3ee'};
+  el.innerHTML=STATIC_UNREST_ZONES.map(function(z){
+    const sc=scaleColors[z.scale]||'#8896b3';
+    return '<div class="ur-event">'+
+      '<div class="ur-event-hdr">'+
+      '<span class="ur-event-name">'+z.name.replace(/</g,'&lt;')+'</span>'+
+      '<span class="ur-event-scale" style="background:'+sc+';color:'+(z.scale==='MODERATE'||z.scale==='RECURRING'?'#000':'#fff')+';">'+z.scale+'</span>'+
+      '</div>'+
+      '<div class="ur-event-detail">'+z.detail.replace(/</g,'&lt;')+'</div>'+
+      '</div>';
+  }).join('');
+  liveHotspots=[...liveHotspots.filter(function(h){return!h._unrest;}),
+    ...STATIC_UNREST_ZONES.map(function(z){
+      return {lat:z.lat,lng:z.lng,type:'instability',severity:z.scale==='CRITICAL'||z.scale==='MASS'?'high':'medium',label:z.name,_unrest:true};
+    })
+  ];
+}
+async function _fetchUnrestNews(){
+  const el=document.getElementById('unrest-news');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;">Scanning unrest intelligence...</div>';
+  try{
+    const q='protest OR riot OR "civil unrest" OR uprising OR demonstration OR "mass protest" OR "political crisis" strike march';
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=20&format=json';
+    const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    const d=await r.json();
+    const arts=(d.articles||[]).slice(0,15);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current unrest intelligence.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+      const src=(a.domain||'').substring(0,30);
+      const sd=a.seendate||'';
+      const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
+      return '<div class="ur-news-item"><div class="ur-news-title">'+title+'</div><div class="ur-news-meta">'+src+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+  }
+}
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -18104,5 +18266,106 @@ function filterSIGINT(query){
   </div>
 </div>
 <button id="intelbriefexport-btn" onclick="exportIntelBrief()">&#x1F4CB; EXPORT BRIEF</button>
+<button id="diplo-btn" onclick="openDiploIntel()">&#x1F54A; DIPLOMACY</button>
+<div id="diplo-overlay">
+  <div class="di-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">DIPLOMATIC INTELLIGENCE // PEACE TALKS // CEASEFIRE NEGOTIATIONS // SUMMIT MONITORING</div>
+      <h2>&#x1F54A; DIPLOMATIC INTELLIGENCE MONITOR</h2>
+    </div>
+    <button onclick="closeDiploIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="di-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">ACTIVE NEGOTIATIONS &middot; CEASEFIRE TRACKING &middot; DIPLOMATIC CONTACTS &middot; GDELT LIVE COLLECTION</div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:8px;">ACTIVE DIPLOMATIC PROCESSES (2024-2025)</div>
+      <div class="di-process">
+        <div class="di-process-hdr"><span class="di-process-name">Ukraine-Russia Peace Track</span><span class="di-process-status" style="background:#ef4444;color:#fff;">STALLED</span></div>
+        <div class="di-process-detail">Mediation attempts via Turkey, Saudi Arabia, China. Istanbul talks collapsed April 2022. No direct negotiations. Western position: negotiations only possible after Ukrainian territorial restoration. Zelensky Peace Formula (10-point plan) unaccepted by Russia. Trump administration exploring mediation options (2025).</div>
+      </div>
+      <div class="di-process">
+        <div class="di-process-hdr"><span class="di-process-name">Gaza Ceasefire Negotiations</span><span class="di-process-status" style="background:#f59e0b;color:#000;">INTERMITTENT</span></div>
+        <div class="di-process-detail">Qatar/Egypt/US mediation. Phase 1 hostage deal (Jan 2025). Hamas/Israel indirect talks continue via Doha. Permanent ceasefire vs Hamas disarmament &mdash; core sticking points. ICJ genocide proceedings complicate Israeli position.</div>
+      </div>
+      <div class="di-process">
+        <div class="di-process-hdr"><span class="di-process-name">Sudan Civil War Mediation</span><span class="di-process-status" style="background:#ef4444;color:#fff;">COLLAPSED</span></div>
+        <div class="di-process-detail">Jeddah talks (May 2023) collapsed. AU/IGAD mediation ongoing. SAF vs RSF: neither party engaging meaningfully. Regional powers (UAE/Egypt/Saudi) backing different sides. Humanitarian corridors only partial agreement achieved.</div>
+      </div>
+      <div class="di-process">
+        <div class="di-process-hdr"><span class="di-process-name">Iran Nuclear Talks (JCPOA Revival)</span><span class="di-process-status" style="background:#ef4444;color:#fff;">SUSPENDED</span></div>
+        <div class="di-process-detail">Vienna talks collapsed 2022. Iran enriching to 60% U-235 (bomb-grade: 90%). EU/US/UK/F/D/CH continuing informal contacts. Trump 2025 re-engagement with maximum pressure + diplomacy dual track. IAEA access severely restricted.</div>
+      </div>
+      <div class="di-process">
+        <div class="di-process-hdr"><span class="di-process-name">North Korea Diplomatic Track</span><span class="di-process-status" style="background:#8896b3;color:#fff;">FROZEN</span></div>
+        <div class="di-process-detail">No US-DPRK talks since 2019 Stockholm. Kim-Putin summit June 2024 (Pyongyang). DPRK-Russia arms transfers complicating denuclearization. China maintains minimal engagement channel. Six-Party Talks effectively dead.</div>
+      </div>
+    </div>
+    <div class="di-process" style="background:var(--panel2);border:var(--border);border-left:none;padding:10px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE DIPLOMATIC INTELLIGENCE (GDELT)</div>
+      <div id="diplo-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="energysec-btn" onclick="openEnergySec()">&#x26FD; ENERGY SEC</button>
+<div id="energysec-overlay">
+  <div class="en-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ENERGY SECURITY INTELLIGENCE // INFRASTRUCTURE ATTACKS // PIPELINE MONITORING // GRID SECURITY</div>
+      <h2>&#x26FD; ENERGY SECURITY INTELLIGENCE</h2>
+    </div>
+    <button onclick="closeEnergySec()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="en-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">ENERGY INFRASTRUCTURE ATTACKS &middot; PIPELINE SECURITY &middot; POWER GRID THREATS &middot; OIL/GAS DISRUPTION &middot; GDELT COLLECTION</div>
+    <div class="en-grid">
+      <div class="en-card">
+        <div class="en-card-hdr" style="color:#ef4444;">MAJOR ENERGY INFRASTRUCTURE ATTACKS (2022-2025)</div>
+        <div class="en-incident"><span class="en-inc-name">Nord Stream 1/2 Pipeline (Baltic)</span><span class="en-inc-severity" style="background:#ef4444;color:#fff;">DESTROYED</span></div>
+        <div class="en-incident"><span class="en-inc-name">Zaporizhzhia NPP grid connections</span><span class="en-inc-severity" style="background:#ef4444;color:#fff;">ONGOING</span></div>
+        <div class="en-incident"><span class="en-inc-name">Ukraine power grid (Kh-101 cruise)</span><span class="en-inc-severity" style="background:#ef4444;color:#fff;">ONGOING</span></div>
+        <div class="en-incident"><span class="en-inc-name">Abqaiq-Khurais Saudi Aramco (2019)</span><span class="en-inc-severity" style="background:#f59e0b;color:#000;">REPAIRED</span></div>
+        <div class="en-incident"><span class="en-inc-name">Houthi Red Sea energy tankers</span><span class="en-inc-severity" style="background:#ef4444;color:#fff;">ACTIVE</span></div>
+        <div class="en-incident"><span class="en-inc-name">Iraq southern oil fields (militia)</span><span class="en-inc-severity" style="background:#f59e0b;color:#000;">PERIODIC</span></div>
+        <div class="en-incident"><span class="en-inc-name">Colombia FARC pipeline attacks</span><span class="en-inc-severity" style="background:#f59e0b;color:#000;">PERIODIC</span></div>
+        <div class="en-incident"><span class="en-inc-name">Myanmar pipelines (resistance ops)</span><span class="en-inc-severity" style="background:#f59e0b;color:#000;">PERIODIC</span></div>
+      </div>
+      <div class="en-card">
+        <div class="en-card-hdr" style="color:#eab308;">GLOBAL ENERGY SECURITY FLASH POINTS</div>
+        <div style="font-size:8px;color:var(--dim);line-height:1.8;">
+          <div><span style="color:#ef4444;font-weight:700;">Hormuz Strait:</span> 20% global oil transit. Iran closure threat. Houthi maritime disruption. Mined by IRGC in 1988, threat continues.</div>
+          <div><span style="color:#ef4444;font-weight:700;">Ukraine energy warfare:</span> Russia systematically targeting grid, substations, heating. 10M+ without power. Civilian energy as weapon.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">Europe LNG dependency:</span> Post-Nord Stream pivot to US LNG, Norwegian gas. Terminal capacity constraints. Energy prices as geopolitical lever.</div>
+          <div><span style="color:#f59e0b;font-weight:700;">Taiwan Strait:</span> Disruption cuts TSMC semiconductors + Asia-Pacific energy routes. LNG tankers reroute via Luzon Strait.</div>
+          <div><span style="color:#22d3ee;font-weight:700;">Undersea cables (energy data):</span> Damaged cables affect energy trading, grid management. Russia suspected in Baltic cable cuts (2024).</div>
+        </div>
+      </div>
+    </div>
+    <div class="en-card" style="margin-bottom:0;">
+      <div class="en-card-hdr" style="color:#eab308;">LIVE ENERGY SECURITY INTELLIGENCE (GDELT)</div>
+      <div id="energysec-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<button id="unrest-btn" onclick="openUnrestMapper()">&#x1F525; CIVIL UNREST</button>
+<div id="unrest-overlay">
+  <div class="ur-hdr">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CIVIL UNREST INTELLIGENCE // PROTEST MONITORING // REGIME STABILITY INDICATORS // GDELT COLLECTION</div>
+      <h2>&#x1F525; CIVIL UNREST &amp; PROTEST INTELLIGENCE MAPPER</h2>
+    </div>
+    <button onclick="closeUnrestMapper()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+  </div>
+  <div class="ur-body">
+    <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">LIVE GDELT PROTEST DETECTION &middot; EVENTS PLOTTED TO GLOBE &middot; REGIME STABILITY INDICATOR &middot; MASS MOBILIZATION TRACKING</div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:8px;">ACTIVE UNREST ZONES (OSINT ASSESSMENT)</div>
+      <div id="unrest-static-list"></div>
+    </div>
+    <div style="background:var(--panel2);border:1px solid var(--border);padding:10px;">
+      <div style="font-size:8px;letter-spacing:.15em;color:var(--dim);margin-bottom:6px;">LIVE PROTEST/UNREST INTELLIGENCE (GDELT) &mdash; EVENTS ADDING TO GLOBE</div>
+      <div id="unrest-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
