@@ -29326,6 +29326,395 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 48 =====
 
+// ===== PHASE 49: ETHNIC CONFLICT, ARMS CONTROL, STRATEGIC ALLIANCES =====
+
+var ETHNIC_CONFLICT_HOTSPOTS = [
+  {name:'Tigray/Ethiopia (Amhara-Oromo)',lat:12.63,lng:39.63,color:'#ef4444',
+   groups:['Tigray People\'s Liberation Front (TPLF)','Amhara Fano militia','Oromo Liberation Army (OLA)','Federal Government (ENDF)'],
+   status:'POST-CEASEFIRE — FRAGILE',severity:'HIGH',
+   casualties_est:'300,000-500,000 (2020-2022)',displaced:'2.5M+',
+   drivers:['Ethnic federalism creating competing territorial claims','TPLF marginalization post-2018 Abiy Ahmed rise','Amhara regional annexation of Tigray territories','Oromo nationalism vs Amhara competition for Addis Ababa influence'],
+   assessment:'Pretoria Agreement (Nov 2022) halted major fighting but underlying ethnic federalism tensions unresolved. Amhara-Federal conflict 2023 opened new front. Horn of Africa\'s most complex multi-actor ethnic conflict.'},
+  {name:'Myanmar Ethnic Armies',lat:20.96,lng:96.61,color:'#ef4444',
+   groups:['Tatmadaw (junta)','Arakan Army (AA)','TNLA (Ta\'ang)','KIA (Kachin)','KNLA (Karen)','PDF (People\'s Defense Force)'],
+   status:'ACTIVE WAR',severity:'CATASTROPHIC',
+   casualties_est:'50,000+ (since 2021 coup)',displaced:'2.6M+',
+   drivers:['Military coup Feb 2021 ended democratic transition','Ethnic minority armies long predating coup (70+ years some)','Resource competition (jade, teak, opium)','Bamar Buddhist majority vs Christian/Buddhist minorities'],
+   assessment:'Three Brotherhood Alliance (AA+TNLA+MNDAA) Operation 1027 (Oct 2023) captured 250+ military outposts — largest rebel advance in decades. Junta controls only major cities. De facto partition emerging.'},
+  {name:'Sahel — Ethnic Conflict Nexus',lat:14.50,lng:1.00,color:'#ef4444',
+   groups:['Tuareg (MNLA/CSP-PSD)','Fulani/Peul communities','Dogon self-defense groups','JNIM (AQ affiliate)','ISGS (ISIS Sahel)'],
+   status:'ACTIVE CONFLICT',severity:'CRITICAL',
+   casualties_est:'12,000+ (2023)',displaced:'4.9M+',
+   drivers:['Herder-farmer conflict over climate-stressed land','Jihadist groups exploiting ethnic grievances for recruitment','State collapse (Mali, Burkina Faso, Niger)','French withdrawal creating security vacuum'],
+   assessment:'JNIM exploits Fulani marginalization as recruitment narrative. Inter-ethnic violence between Dogon farmers and Fulani herders creates jihadist recruitment pools. AES junta states (Mali/Burkina/Niger) increasingly incapable of protection.'},
+  {name:'Israel-Palestine (Ethnic-Religious)',lat:31.50,lng:34.75,color:'#dc2626',
+   groups:['Israeli government/IDF','Hamas (Sunni Islamist)','Palestinian Authority (Fatah)','Hezbollah (Shia — linked)','Israeli settler movement'],
+   status:'ACTIVE WAR',severity:'CATASTROPHIC',
+   casualties_est:'46,000+ Palestinian (Gaza 2023-2024)',displaced:'1.9M+ (Gaza)',
+   drivers:['70+ year unresolved sovereignty dispute','Religious claims to Jerusalem','Settlement expansion undermining two-state solution','Blockade economics and Gaza isolation'],
+   assessment:'October 7, 2023 Hamas attack (1,200 Israeli killed) triggered largest Gaza offensive. ICJ provisional measures ordered. Two-state solution viability at historical low. Ethnic and religious dimensions inseparable.'},
+  {name:'Uyghur Xinjiang',lat:41.19,lng:85.15,color:'#8b5cf6',
+   groups:['Han Chinese (state)','Uyghur (Turkic Muslim)','Kazakh minority','Kyrgyz minority'],
+   status:'SUPPRESSED — OCCUPATION',severity:'HIGH',
+   casualties_est:'Cultural genocide (no conventional casualties reported)',displaced:'1M+ in detention (est)',
+   drivers:['Han migration to Xinjiang 1949-present','Post-2009 Urumqi riots — state response escalation','East Turkestan Islamic Movement (ETIM) threat used as justification','Oil/gas resources, strategic corridor (CPEC)'],
+   assessment:'US, EU, Canada declared genocide. China maintains counter-terrorism framing. 1M+ Uyghurs in "vocational training centers." Forced labor in supply chains documented. BRI/CPEC security rationale used.'},
+  {name:'Rohingya (Myanmar-Bangladesh)',lat:21.10,lng:92.27,color:'#f97316',
+   groups:['Rohingya (Muslim minority)','Tatmadaw (Buddhist nationalist)','Arakan Rohingya Salvation Army (ARSA)'],
+   status:'DISPLACED — ONGOING PERSECUTION',severity:'HIGH',
+   casualties_est:'10,000+ (2017 genocide operations)',displaced:'1M+ in Bangladesh camps',
+   drivers:['Statelessness since 1982 Citizenship Law exclusion','Buddhist nationalist ideology (969 movement)','Land appropriation in Rakhine State','ARSA attacks used to justify military operations'],
+   assessment:'ICJ genocide case (Gambia vs Myanmar) ongoing. 1M+ Rohingya in Cox\'s Bazar Bangladesh — world\'s largest refugee camp. ARSA-Arakan Army (AA) conflict within Rakhine adding new dynamics. Repatriation prospects near zero.'}
+];
+
+var ETHNIC_CONFLICT_DRIVERS = [
+  {driver:'Ethnic Federalism',risk:'HIGH',desc:'Ethnically defined regions create incentives for ethnic outbidding and territorial competition. Ethiopia, Iraq, Bosnia models show systemic fragility.'},
+  {driver:'Historical Grievance Exploitation',risk:'HIGH',desc:'Political entrepreneurs mobilize historical injustices for electoral or military gain. Hutu-Tutsi dynamic, TPLF-Amhara narratives, Serbian historical victimhood.'},
+  {driver:'Resource Competition (Land/Water)',risk:'CRITICAL',desc:'Climate change forcing herder-farmer conflict across Sahel, East Africa, South Asia. Land scarcity under climate stress is accelerating ethno-territorial disputes.'},
+  {driver:'Statelessness/Exclusion',risk:'HIGH',desc:'Ethnic groups excluded from citizenship (Rohingya, stateless populations) have no legal recourse — fueling armed response. 12M+ stateless people globally.'},
+  {driver:'Elite Power Struggles',risk:'HIGH',desc:'Inter-elite competition mobilizes ethnic constituencies as political weapons. Conflict often begins at top, not bottom. Rwanda genocide was elite-driven mobilization.'},
+  {driver:'Security Dilemma',risk:'CRITICAL',desc:'When central state weakens, ethnic groups arm for self-defense — triggering arms races among communities. Somalia, Libya, Syria exemplify this spiral.'}
+];
+
+function _renderEthnicConflict(){
+  var grid = document.getElementById('ec2-hotspots-grid');
+  if(!grid) return;
+  grid.innerHTML = ETHNIC_CONFLICT_HOTSPOTS.map(function(h){
+    var groups = h.groups.map(function(g){return '<span class="ec2-group-chip">'+g+'</span>';}).join('');
+    var svColor = h.severity==='CATASTROPHIC'?'#ef4444':h.severity==='CRITICAL'?'#dc2626':h.severity==='HIGH'?'#f97316':'#eab308';
+    return '<div class="ec2-hotspot-card" style="border-top-color:'+h.color+';">'+
+      '<div class="ec2-hotspot-header">'+
+        '<div>'+
+          '<div class="ec2-name">'+h.name+'</div>'+
+          '<div class="ec2-status" style="color:'+h.color+';">'+h.status+'</div>'+
+        '</div>'+
+        '<span class="ec2-sev-badge" style="background:'+svColor+'22;border:1px solid '+svColor+';color:'+svColor+';">'+h.severity+'</span>'+
+      '</div>'+
+      '<div class="ec2-groups">'+groups+'</div>'+
+      '<div class="ec2-row"><b>Casualties:</b> '+h.casualties_est+' &nbsp;|&nbsp; <b>Displaced:</b> '+h.displaced+'</div>'+
+      '<div class="ec2-assessment">'+h.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('ec2-drivers-tbody');
+  if(tbody){
+    tbody.innerHTML = ETHNIC_CONFLICT_DRIVERS.map(function(d){
+      var rc = d.risk==='CRITICAL'?'#ef4444':d.risk==='HIGH'?'#f97316':'#eab308';
+      return '<tr><td class="ec2-driver-name">'+d.driver+'</td>'+
+        '<td><span style="color:'+rc+';font-weight:700;font-size:8px;">'+d.risk+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+d.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchEc2Gdelt(){
+  var feed = document.getElementById('ec2-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('ethnic conflict sectarian violence minority rights genocide displacement');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="ec2-gdelt-item">'+
+        '<div class="ec2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="ec2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openEthnicConflict(){
+  var ov=document.getElementById('ethnicconflict-overlay');
+  if(ov){ov.style.display='flex';_renderEthnicConflict();_fetchEc2Gdelt();}
+  var pins = ETHNIC_CONFLICT_HOTSPOTS.map(function(h){
+    var sev = h.severity==='CATASTROPHIC'?9:h.severity==='CRITICAL'?8:7;
+    return {lat:h.lat,lng:h.lng,type:'active_conflict',severity:sev,label:h.name,_ethnicconflict:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._ethnicconflict;}), ...pins];
+}
+function _closeEthnicConflict(){
+  var ov=document.getElementById('ethnicconflict-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._ethnicconflict;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('ethnicconflict-btn');
+  if(b) b.addEventListener('click',_openEthnicConflict);
+  var c=document.getElementById('ethnicconflict-close');
+  if(c) c.addEventListener('click',_closeEthnicConflict);
+});
+
+var ARMS_CONTROL_TREATIES = [
+  {treaty:'New START',parties:['USA','Russia'],lat:55.75,lng:37.62,color:'#ef4444',
+   signed:2010,expires:'Feb 2026 (suspended)',
+   status:'SUSPENDED',
+   warheads_limited:1550,
+   coverage:'Strategic nuclear warheads deployed on ICBMs, SLBMs, heavy bombers',
+   recent:'Russia suspended participation Feb 2023. Inspections halted. US still observing limits. Feb 2026 expiry with no successor — first time since 1972 no US-Russia nuclear limits framework.',
+   risk:'CRITICAL — without replacement, both sides free to expand arsenals. China not party. Verification lost.',
+   assessment:'Most critical arms control failure since ABM Treaty withdrawal 2002. Nuclear inspection regime gone. No successor negotiations in progress.'},
+  {treaty:'INF Treaty (Intermediate Nuclear Forces)',parties:['USA','Russia'],lat:55.75,lng:37.62,color:'#ef4444',
+   signed:1987,expires:'DEFUNCT (2019)',
+   status:'COLLAPSED',
+   warheads_limited:null,
+   coverage:'Ground-launched ballistic/cruise missiles 500-5,500km range',
+   recent:'US withdrew Aug 2019 citing Russian SSC-8/9M729 violations. Russia also withdrew. Both sides now developing INF-range weapons. US deployed Typhon launcher Philippines 2024.',
+   risk:'HIGH — Europe faces renewed intermediate missile threat. China (never party) fielding 1,000+ INF-range missiles.',
+   assessment:'Collapse removed constraints on most destabilizing weapons class. Europe now facing Pershing-II era threat level. Asia-Pacific: China fielding DF-26 (intermediate range) with no constraints.'},
+  {treaty:'Open Skies Treaty',parties:['34 nations (reduced)'],lat:48.86,lng:2.35,color:'#f97316',
+   signed:1992,expires:'DEFUNCT (2020-2021)',
+   status:'COLLAPSED',
+   warheads_limited:null,
+   coverage:'Unarmed aerial surveillance of signatory territories — confidence building',
+   recent:'US withdrew May 2020 (Trump). Russia withdrew Jan 2021. Remaining parties (EU states) continue but without US/Russia participation the treaty is strategically meaningless.',
+   risk:'MODERATE — commercial satellite imagery partially compensates. Loss of institutionalized military-to-military transparency.',
+   assessment:'Confidence building measure lost. Russian violations pre-dated US withdrawal — overflight restrictions around Kaliningrad, Georgia.'},
+  {treaty:'NPT (Nuclear Non-Proliferation)',parties:['191 nations'],lat:43.65,lng:-79.38,color:'#f97316',
+   signed:1968,expires:'INDEFINITE (1995 extension)',
+   status:'STRESSED',
+   warheads_limited:null,
+   coverage:'Non-proliferation commitments + disarmament obligations (Art VI) + peaceful use',
+   recent:'DPRK withdrew 2003 (disputed). Israel/India/Pakistan never joined. Iran at 60% enrichment (near-weapons grade). P5 disarmament obligations (Art VI) ignored. 2022 RevCon failed to agree final document.',
+   risk:'HIGH — erosion accelerating. DPRK demonstrated withdrawal viable. Iran near-threshold. Saudi Arabia declared parallel program if Iran gets bomb.',
+   assessment:'Cornerstone of non-proliferation architecture under severe stress. P5 modernization contradicts Art VI. Treaty survives but normative power diminishing.'},
+  {treaty:'CWC (Chemical Weapons Convention)',parties:['193 nations'],lat:52.09,lng:4.30,color:'#eab308',
+   signed:1993,expires:'INDEFINITE',
+   status:'VIOLATED',
+   warheads_limited:null,
+   coverage:'Complete ban on production, stockpiling, use of chemical weapons',
+   recent:'Syria used sarin/chlorine 2013-2019 (OPCW confirmed). Russia used Novichok (Salisbury 2018, Navalny 2020). US suspended Syria CWC talks. OPCW investigating Russian violations.',
+   risk:'HIGH — Syria and Russia violations normalizing CW use. Accountability mechanisms inadequate.',
+   assessment:'Most serious erosion of WMD prohibition norms since Cold War. OPCW attribution mechanism created post-Syria but Russia/China blocking accountability. Use of CW becoming "normalized" in conflicts.'},
+  {treaty:'TPNW (Treaty on Prohibition of Nuclear Weapons)',parties:['93 signatories, 70 ratified'],lat:-35.28,lng:149.13,color:'#22c55e',
+   signed:2017,expires:'INDEFINITE',
+   status:'ACTIVE — LIMITED',
+   warheads_limited:null,
+   coverage:'Complete ban on nuclear weapons development, testing, possession, threat of use',
+   recent:'Entered force Jan 2021. No nuclear state party. No NATO state party. Advocates argue creates legal/normative stigma. Critics argue strategically irrelevant without nuclear states.',
+   risk:'LOW (strategic) — HIGH (normative) — Creates legal framework that may constrain nuclear state freedom of action over time.',
+   assessment:'Humanitarian disarmament approach. No strategic military effect currently. Long-term normative impact uncertain. Supported by Global South, resisted by all nuclear-armed states.'}
+];
+
+var ARMS_CONTROL_COMPLIANCE_FAILURES = [
+  {state:'Russia',violation:'INF Treaty — SSC-8/9M729 cruise missile',year:2014,status:'CONFIRMED',severity:'CRITICAL'},
+  {state:'Russia',violation:'Open Skies — overflight restrictions Kaliningrad/Georgia',year:2010,status:'CONFIRMED',severity:'HIGH'},
+  {state:'Russia',violation:'CWC — Novichok use (Salisbury UK, Navalny)',year:2018,status:'CONFIRMED',severity:'CRITICAL'},
+  {state:'Syria',violation:'CWC — Sarin/chlorine use multiple incidents',year:2013,status:'CONFIRMED OPCW',severity:'CRITICAL'},
+  {state:'North Korea',violation:'NPT — nuclear weapons program, withdrawal',year:2003,status:'CONFIRMED',severity:'CRITICAL'},
+  {state:'Iran',violation:'NPT — undeclared nuclear activities',year:2002,status:'IAEA CONFIRMED',severity:'HIGH'},
+  {state:'China',violation:'Alleged — hypersonic fractional orbital weapons test',year:2021,status:'DISPUTED',severity:'HIGH'},
+  {state:'USA',violation:'INF Treaty interpretation disputes (pre-withdrawal)',year:2014,status:'DISPUTED',severity:'MODERATE'}
+];
+
+function _renderArmsControl(){
+  var grid = document.getElementById('ac2-treaties-grid');
+  if(!grid) return;
+  grid.innerHTML = ARMS_CONTROL_TREATIES.map(function(t){
+    var stColor = t.status==='SUSPENDED'||t.status==='COLLAPSED'?'#ef4444':t.status==='VIOLATED'?'#f97316':t.status==='STRESSED'?'#eab308':'#22c55e';
+    return '<div class="ac2-treaty-card" style="border-top-color:'+t.color+';">'+
+      '<div class="ac2-treaty-header">'+
+        '<div>'+
+          '<div class="ac2-treaty-name">'+t.treaty+'</div>'+
+          '<div class="ac2-parties">'+t.parties.join(', ')+' &nbsp;|&nbsp; Signed: '+t.signed+'</div>'+
+        '</div>'+
+        '<span class="ac2-status-badge" style="background:'+stColor+'22;border:1px solid '+stColor+';color:'+stColor+';">'+t.status+'</span>'+
+      '</div>'+
+      '<div class="ac2-row"><b>Scope:</b> '+t.coverage+'</div>'+
+      '<div class="ac2-recent">'+t.recent+'</div>'+
+      '<div class="ac2-risk"><b>Risk:</b> '+t.risk+'</div>'+
+      '<div class="ac2-assessment">'+t.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('ac2-compliance-tbody');
+  if(tbody){
+    tbody.innerHTML = ARMS_CONTROL_COMPLIANCE_FAILURES.map(function(c){
+      var sc = c.severity==='CRITICAL'?'#ef4444':c.severity==='HIGH'?'#f97316':'#eab308';
+      var stc = c.status.indexOf('CONFIRMED')>-1?'#ef4444':'#eab308';
+      return '<tr><td style="color:#e2e8f0;font-weight:700;font-size:8px;">'+c.state+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+c.violation+'</td>'+
+        '<td style="color:#64748b;font-size:7px;">'+c.year+'</td>'+
+        '<td><span style="color:'+stc+';font-size:7px;font-weight:700;">'+c.status+'</span></td>'+
+        '<td><span style="color:'+sc+';font-size:7px;font-weight:700;">'+c.severity+'</span></td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchAc2Gdelt(){
+  var feed = document.getElementById('ac2-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('arms control treaty nuclear disarmament START INF nonproliferation compliance');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="ac2-gdelt-item">'+
+        '<div class="ac2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="ac2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openArmsControl(){
+  var ov=document.getElementById('armscontrol-overlay');
+  if(ov){ov.style.display='flex';_renderArmsControl();_fetchAc2Gdelt();}
+  var pins = [{lat:55.75,lng:37.62,type:'nuclear',severity:9,label:'New START SUSPENDED',_armscontrol:true},
+    {lat:35.69,lng:51.39,type:'nuclear',severity:8,label:'Iran NPT VIOLATION',_armscontrol:true},
+    {lat:40.34,lng:127.51,type:'nuclear',severity:10,label:'DPRK NPT WITHDRAWAL',_armscontrol:true},
+    {lat:33.51,lng:36.29,type:'wmd',severity:9,label:'Syria CWC VIOLATIONS',_armscontrol:true}];
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._armscontrol;}), ...pins];
+}
+function _closeArmsControl(){
+  var ov=document.getElementById('armscontrol-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._armscontrol;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('armscontrol-btn');
+  if(b) b.addEventListener('click',_openArmsControl);
+  var c=document.getElementById('armscontrol-close');
+  if(c) c.addEventListener('click',_closeArmsControl);
+});
+
+var STRATEGIC_ALLIANCES = [
+  {name:'NATO',lat:50.85,lng:4.35,color:'#3b82f6',
+   members:32,founded:1949,type:'COLLECTIVE DEFENSE',
+   budget_combined:'$1.3T+ (2024)',
+   key_members:['USA','UK','Germany','France','Poland','Turkey'],
+   strength:'Article 5 collective defense treaty. Nuclear sharing (B-61 forward deployed). 100,000 US troops Europe post-Ukraine. eFP battle groups expanded to brigade level.',
+   weakness:'Turkey-Greece tensions. Hungary blocking Ukraine aid. 2% GDP spending only 22/32 members meet.',
+   recent_events:['Sweden joined March 2024 (32nd member)','Finland joined April 2023','Ukraine membership aspirations blocked','Baltic defense plans (OP STEADFAST DEFENDER 2024 — 90,000 troops)'],
+   assessment:'Strongest military alliance in history. Ukraine war galvanized cohesion. Two new Nordic members close Baltic Sea to Russia. 2% GDP target driving largest European defense buildup since Cold War.'},
+  {name:'AUKUS',lat:-35.28,lng:149.13,color:'#22c55e',
+   members:3,founded:2021,type:'DEFENSE TECHNOLOGY PACT',
+   budget_combined:'Classified / $368B submarine program',
+   key_members:['USA','UK','Australia'],
+   strength:'Nuclear-powered submarine transfer to Australia (Pillar I). Advanced technology sharing: AI, quantum, cyber, hypersonics (Pillar II). Disrupted France-Australia submarine deal.',
+   weakness:'Timeline: first SSN not until 2030s. French diplomatic fallout. China hardened stance on Australia.',
+   recent_events:['SSN-AUKUS pathway announced (optimal path)','US submarines rotate through HMAS Stirling 2027','Pillar II: quantum, AI, cyber programs funded','Japan interest in Pillar II capabilities'],
+   assessment:'Transformative for Indo-Pacific balance. Nuclear-powered submarines extend Australian reach dramatically. China views as containment. Most significant Pacific alliance development since ANZUS 1951.'},
+  {name:'QUAD',lat:28.61,lng:77.21,color:'#f97316',
+   members:4,founded:2007,type:'STRATEGIC DIALOGUE / EMERGING ALLIANCE',
+   budget_combined:'N/A (not formal alliance)',
+   key_members:['USA','India','Japan','Australia'],
+   strength:'Indo-Pacific maritime coordination. Vaccine Diplomacy initiative. Information sharing. Semiconductor supply chain cooperation. Annual leaders\' summits.',
+   weakness:'No mutual defense treaty. India non-aligned tradition limits military integration. China-India border tensions constrain India commitment.',
+   recent_events:['Quad Leaders Summit (Sept 2024)','Quad cancer moonshot initiative','Maritime surveillance sharing expanded','India-US defense industrial partnership deepened'],
+   assessment:'Most significant diplomatic development in Indo-Pacific. Not yet a military alliance but laying groundwork. India is key: its participation brings 1.4B people and nuclear capability into loose Western-aligned coalition.'},
+  {name:'Five Eyes (FVEY)',lat:51.50,lng:-0.12,color:'#8b5cf6',
+   members:5,founded:1946,type:'INTELLIGENCE ALLIANCE',
+   budget_combined:'$20B+ combined SIGINT',
+   key_members:['USA','UK','Canada','Australia','New Zealand'],
+   strength:'Deepest intelligence sharing arrangement in history. SIGINT division of labor. Shared cryptographic standards. Real-time threat intelligence. Stone Ghost classified network.',
+   weakness:'NZ-US tensions on nuclear ships. UK post-Brexit intelligence access questions. Snowden revelations exposed scope.',
+   recent_events:['Five Eyes attributed Chinese APT40 2024','Joint advisory on Chinese infrastructure hacking','Five Eyes statement on Russian election interference','Huawei exclusion coordinated across all members'],
+   assessment:'Most effective intelligence alliance globally. Attribution of cyber attacks increasingly coordinated. China and Russia named jointly — significant diplomatic step. FVEY expanding to "Six Eyes" with Japan cooperation increasing.'},
+  {name:'SCO (Shanghai Cooperation Organisation)',lat:39.91,lng:116.39,color:'#ef4444',
+   members:10,founded:2001,type:'SECURITY / ECONOMIC BLOC',
+   budget_combined:'N/A',
+   key_members:['China','Russia','India','Pakistan','Iran (2023)','Central Asia states'],
+   strength:'60% world population, 40% global GDP. Counter-terrorism cooperation (RATS center). China-led alternative to Western institutions. Russia-China alignment platform.',
+   weakness:'India-Pakistan rivalry internal contradiction. India-China border tensions. No mutual defense treaty.',
+   recent_events:['Iran full member 2023','Belarus full member 2024','Saudi Arabia/UAE dialogue partners','Ukraine war dividing SCO members (India abstains)'],
+   assessment:'China\'s primary vehicle for Eurasian institutional influence. India membership creates awkward tensions. Iran inclusion signals SCO as "axis of autocracies" framing. No equivalent military capability to NATO.'},
+  {name:'CSTO (Collective Security Treaty Org)',lat:55.75,lng:37.62,color:'#dc2626',
+   members:6,founded:1992,type:'COLLECTIVE DEFENSE (RUSSIA-LED)',
+   budget_combined:'Classified',
+   key_members:['Russia','Belarus','Kazakhstan','Armenia','Kyrgyzstan','Tajikistan'],
+   strength:'Article 4 collective defense clause. Joint exercises. Russian military guarantee for members.',
+   weakness:'Armenia leaving (de facto, after CSTO failed to defend against Azerbaijan 2023). Kazakhstan distancing. Credibility destroyed by Ukraine war performance.',
+   recent_events:['Armenia froze participation 2024','Kazakhstan hosted CSTO but refused Ukraine troops','CSTO deployed Kazakhstan 2022 (Almaty riots)','Belarus: Wagner deployment authorized'],
+   assessment:'Effectively collapsing. Armenia — most capable non-Russian member — leaving after CSTO refused to invoke Article 4 during Azerbaijan 2023 offensive. Russia\'s military credibility damage from Ukraine undermining member confidence.'}
+];
+
+var ALLIANCE_TRENDS = [
+  {trend:'NATO Expansion',direction:'EXPANDING',color:'#22c55e',desc:'32 members (2024). Finland + Sweden added. Ukraine membership long-term aspiration. Georgia+Moldova in queue.'},
+  {trend:'AUKUS/QUAD Deepening',direction:'STRENGTHENING',color:'#22c55e',desc:'Nuclear submarine transfer unprecedented. Indo-Pacific coalition crystallizing around China threat perception.'},
+  {trend:'CSTO Collapsing',direction:'WEAKENING',color:'#ef4444',desc:'Armenia exit. Kazakhstan distancing. Ukraine war exposed Russian military limitations undermining alliance value.'},
+  {trend:'SCO Expanding',direction:'EXPANDING',color:'#f97316',desc:'Iran and Belarus joining signals anti-Western coalescence. But internal contradictions (India-China, India-Pakistan) limit coherence.'},
+  {trend:'Non-Alignment Resurgence',direction:'NOTABLE',color:'#eab308',desc:'Global South countries (India, Brazil, South Africa, Indonesia) resisting bloc alignment. BRICS expansion as alternative pole.'}
+];
+
+function _renderStratAlliances(){
+  var grid = document.getElementById('sa2-alliances-grid');
+  if(!grid) return;
+  grid.innerHTML = STRATEGIC_ALLIANCES.map(function(a){
+    var km = a.key_members.map(function(m){return '<span class="sa2-member-chip">'+m+'</span>';}).join('');
+    var events = a.recent_events.map(function(e){return '<li class="sa2-event-item">'+e+'</li>';}).join('');
+    return '<div class="sa2-alliance-card" style="border-top-color:'+a.color+';">'+
+      '<div class="sa2-alliance-header">'+
+        '<div>'+
+          '<div class="sa2-name" style="color:'+a.color+';">'+a.name+'</div>'+
+          '<div class="sa2-meta">'+a.members+' members &nbsp;|&nbsp; Founded: '+a.founded+' &nbsp;|&nbsp; '+a.type+'</div>'+
+        '</div>'+
+        '<div class="sa2-budget">'+a.budget_combined+'</div>'+
+      '</div>'+
+      '<div class="sa2-members">'+km+'</div>'+
+      '<div class="sa2-row"><b>Strength:</b> '+a.strength+'</div>'+
+      '<div class="sa2-row"><b>Weakness:</b> '+a.weakness+'</div>'+
+      '<ul class="sa2-events">'+events+'</ul>'+
+      '<div class="sa2-assessment">'+a.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('sa2-trends-tbody');
+  if(tbody){
+    tbody.innerHTML = ALLIANCE_TRENDS.map(function(t){
+      return '<tr><td class="sa2-trend-name">'+t.trend+'</td>'+
+        '<td><span style="color:'+t.color+';font-weight:700;font-size:8px;">'+t.direction+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+t.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchSa2Gdelt(){
+  var feed = document.getElementById('sa2-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('NATO AUKUS QUAD alliance security cooperation military partnership SCO CSTO');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="sa2-gdelt-item">'+
+        '<div class="sa2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="sa2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openStratAlliances(){
+  var ov=document.getElementById('stratalliances-overlay');
+  if(ov){ov.style.display='flex';_renderStratAlliances();_fetchSa2Gdelt();}
+  var pins = STRATEGIC_ALLIANCES.map(function(a){
+    return {lat:a.lat,lng:a.lng,type:'military_ops',severity:7,label:a.name+' HQ',_stratalliances:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._stratalliances;}), ...pins];
+}
+function _closeStratAlliances(){
+  var ov=document.getElementById('stratalliances-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._stratalliances;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('stratalliances-btn');
+  if(b) b.addEventListener('click',_openStratAlliances);
+  var c=document.getElementById('stratalliances-close');
+  if(c) c.addEventListener('click',_closeStratAlliances);
+});
+
+// ===== END PHASE 49 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
