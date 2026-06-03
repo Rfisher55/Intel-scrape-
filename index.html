@@ -3142,6 +3142,117 @@ button{border-radius:2px!important}
 .ac-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .ac-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .ac-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === COLUMN 10 Phase 41 buttons === */
+#healthsec-btn{position:fixed;top:295px;right:1260px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#healthsec-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#milmod-btn{position:fixed;top:335px;right:1260px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#milmod-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#corruption-btn{position:fixed;top:375px;right:1260px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#corruption-btn:hover{border-color:#eab308;color:#fde047;}
+
+/* Health Security overlay */
+#healthsec-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.hs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.hs-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#ef4444;}
+.hs-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.hs-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.hs-close:hover{color:#ef4444;border-color:#ef4444;}
+.hs-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.hs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:14px;margin-bottom:10px;}
+.hs-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.hs-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.hs-name{font-size:13px;font-weight:700;letter-spacing:.03em;color:#f1f5f9;}
+.hs-status-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.8px;white-space:nowrap;}
+.hs-status-WHO-PHEIC-ACTIVE{background:rgba(127,29,29,.6);border:1px solid #ef4444;color:#fca5a5;}
+.hs-status-WHO-PHEIC-ASSESS{background:rgba(124,45,18,.5);border:1px solid #f97316;color:#fdba74;}
+.hs-status-SLOW{background:rgba(127,29,29,.5);border:1px solid #dc2626;color:#fca5a5;}
+.hs-status-ACTIVE{background:rgba(55,65,81,.5);border:1px solid #6b7280;color:#d1d5db;}
+.hs-status-EPIDEMIC{background:rgba(113,63,18,.4);border:1px solid #eab308;color:#fde047;}
+.hs-threat-badge{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.5px;}
+.hs-threat-CRITICAL{background:rgba(127,29,29,.7);color:#fca5a5;}
+.hs-threat-HIGH{background:rgba(124,45,18,.6);color:#fdba74;}
+.hs-threat-ELEVATED{background:rgba(113,63,18,.5);color:#fde047;}
+.hs-threat-MODERATE{background:rgba(30,41,59,.6);color:#94a3b8;}
+.hs-row{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:4px;}
+.hs-row b{color:#e2e8f0;}
+.hs-countries{font-size:8px;color:#38bdf8;margin-bottom:5px;line-height:1.5;}
+.hs-risk-bar{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.hs-risk-label{font-size:7px;color:#64748b;letter-spacing:.1em;width:90px;flex-shrink:0;}
+.hs-risk-text{font-size:8px;color:#fbbf24;line-height:1.4;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;}
+.hs-prep-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.hs-prep-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.hs-prep-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.hs-prep-score{font-size:11px;font-weight:700;}
+.hs-prep-gaps{font-size:7px;color:#fca5a5;line-height:1.5;}
+.hs-prep-strengths{font-size:7px;color:#86efac;line-height:1.5;}
+.hs-amr-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.hs-amr-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.hs-amr-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.hs-amr-crit{color:#fca5a5;font-weight:700;}
+.hs-amr-high{color:#fdba74;font-weight:700;}
+.hs-gdelt-feed{max-width:900px;}
+.hs-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.hs-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.hs-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Military Modernization overlay */
+#milmod-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.mm-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.mm-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#3b82f6;}
+.mm-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.mm-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.mm-close:hover{color:#3b82f6;border-color:#3b82f6;}
+.mm-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.mm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:16px;margin-bottom:10px;}
+.mm-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:16px;border-top-width:3px;}
+.mm-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.mm-country{font-size:16px;font-weight:900;letter-spacing:.05em;color:#f1f5f9;}
+.mm-budget{font-size:8px;color:#64748b;margin-top:2px;}
+.mm-trend-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.mm-trend-ACCEL{background:rgba(127,29,29,.6);border:1px solid #ef4444;color:#fca5a5;}
+.mm-trend-WAR{background:rgba(124,45,18,.5);border:1px solid #f97316;color:#fdba74;}
+.mm-trend-MOD{background:rgba(30,58,138,.5);border:1px solid #3b82f6;color:#93c5fd;}
+.mm-trend-RAPID{background:rgba(20,83,45,.5);border:1px solid #22c55e;color:#86efac;}
+.mm-programs{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.mm-prog{background:rgba(15,23,42,0.5);border:1px solid #0f172a;border-left:3px solid;border-radius:3px;padding:7px 10px;}
+.mm-prog-header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px;}
+.mm-prog-name{font-size:9px;font-weight:700;color:#e2e8f0;letter-spacing:.03em;}
+.mm-prog-status{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;background:rgba(30,41,59,.7);color:#94a3b8;border:1px solid #334155;}
+.mm-prog-detail{font-size:8px;color:#64748b;line-height:1.4;}
+.mm-assessment{font-size:8px;color:#fbbf24;border-left:2px solid rgba(251,191,36,.3);padding-left:10px;line-height:1.6;margin-top:8px;}
+.mm-gdelt-feed{max-width:900px;}
+.mm-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.mm-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.mm-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Corruption overlay */
+#corruption-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.co-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.co-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#eab308;}
+.co-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.co-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.co-close:hover{color:#eab308;border-color:#eab308;}
+.co-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.co-cpi-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.co-cpi-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.co-cpi-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+.co-score{font-size:13px;font-weight:900;}
+.co-score-bar-wrap{width:80px;height:6px;background:#0f172a;border-radius:3px;display:inline-block;vertical-align:middle;margin-left:6px;}
+.co-score-bar{height:6px;border-radius:3px;}
+.co-tier{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.5px;}
+.co-note{font-size:7px;color:#64748b;line-height:1.4;}
+.co-nexus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:12px;margin-bottom:10px;}
+.co-nexus-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:5px;padding:13px;border-left-width:3px;}
+.co-nexus-title{font-size:10px;font-weight:700;color:#fde047;margin-bottom:8px;letter-spacing:.05em;}
+.co-nexus-sev{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.5px;float:right;margin-top:-2px;}
+.co-nexus-sev-CRITICAL{background:rgba(127,29,29,.6);border:1px solid #ef4444;color:#fca5a5;}
+.co-nexus-sev-HIGH{background:rgba(124,45,18,.5);border:1px solid #f97316;color:#fdba74;}
+.co-nexus-example{font-size:8px;color:#94a3b8;line-height:1.6;padding-left:10px;border-left:2px solid rgba(148,163,184,.15);}
+.co-gdelt-feed{max-width:900px;}
+.co-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.co-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.co-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -25367,6 +25478,432 @@ function _closeArctic(){
 
 // ===== END PHASE 40 =====
 
+// ===== PHASE 41: HEALTH SECURITY, MILITARY MODERNIZATION, CORRUPTION =====
+
+const HEALTH_EMERGENCIES = [
+  {"name":"H5N1 Avian Influenza (US Cattle Outbreak)","status":"WHO PHEIC UNDER ASSESSMENT","color":"#ef4444","threat":"HIGH",
+   "affected_countries":["USA","Canada","Australia","UK","Mexico","China","Japan"],
+   "cases_2024":"887 human cases globally. 46 US dairy worker infections.",
+   "cfr":"52% historical CFR (lower in current US cluster — ~1%)",
+   "pandemic_risk":"ELEVATED — first sustained cattle reservoir. Human-to-human not confirmed but monitored hourly.",
+   "response":"USDA raw milk testing. WHO global surveillance. Vaccine stockpile (Sanofi H5N8 candidate). No US vaccination campaign yet.",
+   "lat":40,"lng":-95},
+  {"name":"Mpox Clade Ib (Africa + Spread)","status":"WHO PHEIC ACTIVE","color":"#f97316","threat":"HIGH",
+   "affected_countries":["DRC","Burundi","Rwanda","Uganda","Kenya","Sweden","Thailand","India"],
+   "cases_2024":"100,000+ DRC. 500+ outside Africa.",
+   "cfr":"3-10% Clade Ib vs 0.1% Clade IIb","pandemic_risk":"MODERATE — contained by vaccination in high-income countries. DRC limited vaccine access.",
+   "response":"WHO PHEIC August 2024. GAVI COVAX vaccine allocation. MVA-BN vaccine rollout.",
+   "lat":-4,"lng":23},
+  {"name":"Antimicrobial Resistance (AMR) Crisis","status":"SLOW-MOTION PANDEMIC","color":"#ef4444","threat":"CRITICAL",
+   "affected_countries":["Global — all countries"],
+   "cases_2024":"1.27 million deaths directly attributable to AMR annually (Lancet). 5M deaths with AMR as contributing factor.",
+   "cfr":"Varies by pathogen — carbapenem-resistant organisms 40-70% mortality",
+   "pandemic_risk":"CRITICAL — WHO calls AMR one of the world\'s greatest threats",
+   "response":"Global Action Plan on AMR. Antibiotic stewardship programs. CARB-X antibiotic R&D fund. Inadequate progress.",
+   "lat":0,"lng":0},
+  {"name":"XEC COVID (SARS-CoV-2 KP.3.1.1)","status":"ACTIVE — SEASONAL SURGE","color":"#6b7280","threat":"MODERATE",
+   "affected_countries":["Global — 40+ countries dominant strain"],
+   "cases_2024":"Dominant strain worldwide Q4 2024. Increased immune evasion.",
+   "cfr":"<1% in vaccinated/previously infected. Higher in immunocompromised.",
+   "pandemic_risk":"LOW for healthy populations. HIGH for elderly/immunocompromised.",
+   "response":"Booster campaigns ongoing. JN.1/KP.2 updated vaccines available.",
+   "lat":40,"lng":10},
+  {"name":"Oropouche Virus (OROV)","status":"EPIDEMIC — AMERICAS","color":"#eab308","threat":"ELEVATED",
+   "affected_countries":["Brazil","Bolivia","Cuba","Colombia","Peru","Italy","Spain","Germany"],
+   "cases_2024":"10,000+ Brazil. First-ever vertical transmission documented. Travel cases Europe.",
+   "cfr":"<1% standard. Vertical transmission (fetal death/microcephaly risk).",
+   "pandemic_risk":"MODERATE — Culex and Culicoides mosquito/midge vectors. Climate-driven range expansion.",
+   "response":"Brazil MoH surveillance. No vaccine. Vector control. Travel alerts.",
+   "lat":-10,"lng":-55}
+];
+
+const PANDEMIC_PREPAREDNESS = [
+  {"country":"USA","score":83.5,"rank":1,"color":"#22c55e","strengths":["CDC global surveillance network","NIH research capacity","Strategic National Stockpile","BARDA rapid response"],"gaps":["Local public health infrastructure","Vaccine hesitancy","Fragmented healthcare system"]},
+  {"country":"UK","score":77.9,"rank":2,"color":"#22c55e","strengths":["NHS capacity","PHE/UKHSA surveillance","Oxford vaccine platform"],"gaps":["PPE stockpile gaps exposed COVID","Care home vulnerability"]},
+  {"country":"Australia","score":75.5,"rank":4,"color":"#22c55e","strengths":["Island geography (quarantine)","ARTG regulatory speed"],"gaps":["Geographic isolation = vaccine delivery delays","Indigenous community vulnerability"]},
+  {"country":"Finland","score":74.4,"rank":3,"color":"#eab308","strengths":["High trust in government","THL rapid response","Stockpile mandate by law"],"gaps":["Small research capacity","Nordic cooperation dependent"]},
+  {"country":"China","score":52.1,"rank":24,"color":"#eab308","strengths":["Mass mobilization","Rapid infrastructure (Wuhan hospitals)","Surveillance state tools"],"gaps":["WHO reporting transparency","Lab accident risk","Censorship of early warning signals"]},
+  {"country":"Russia","score":44.3,"rank":47,"color":"#f97316","strengths":["Gamaleya Sputnik V platform","Military medical corps"],"gaps":["Sputnik efficacy questions","Healthcare system underfunding","Sanctions on medical supplies"]},
+  {"country":"India","score":46.5,"rank":40,"color":"#f97316","strengths":["World\'s vaccine producer (Serum Institute)","SII manufacturing scale"],"gaps":["Healthcare infrastructure gap","Rural access","Cold chain limitations"]},
+  {"country":"DRC","score":16.2,"rank":195,"color":"#ef4444","strengths":["Ebola response experience"],"gaps":["Virtually no healthcare infrastructure","Active conflict zones","No stockpile"]}
+];
+
+const AMR_PATHOGENS = [
+  {"pathogen":"Carbapenem-resistant Acinetobacter (CRAB)","priority":"CRITICAL","mortality":"40-70%","spread":"Hospital-acquired. Military wounds in conflict zones."},
+  {"pathogen":"Carbapenem-resistant Klebsiella (CRKP)","priority":"CRITICAL","mortality":"40-60%","spread":"ICU patients. Immunocompromised. Neonates."},
+  {"pathogen":"MRSA (Methicillin-resistant Staph aureus)","priority":"HIGH","mortality":"15-50%","spread":"Community and healthcare. Flesh-eating strains."},
+  {"pathogen":"MDR-TB (Multi-drug resistant TB)","priority":"CRITICAL","mortality":"50%+ without treatment","spread":"Respiratory. Russia/Eastern Europe high burden."},
+  {"pathogen":"XDR-Typhoid (Salmonella Typhi)","priority":"HIGH","mortality":"5-30% untreated","spread":"Water contamination. Pakistan, SE Asia."}
+];
+
+const MILITARY_MODERNIZATION = [
+  {"country":"China","iso":"CN","budget_2024":"$225B (official) — est $300B+","color":"#ef4444","trend":"ACCELERATING",
+   "programs":[
+     {"name":"J-35 Stealth Fighter","status":"SERVICE ENTRY 2024","detail":"5th gen carrier-capable. Matches F-35 category. Two carriers (Shandong/Fujian) + future CVs."},
+     {"name":"Type 003 Fujian Carrier","status":"SEA TRIALS 2024","detail":"CATOBAR carrier (catapult launch) = peer capability to US carriers. 4th carrier planned."},
+     {"name":"DF-41 ICBM Expansion","status":"DEPLOYING","detail":"400+ new silos. On track for 1,000+ warheads by 2030. Silo field at Yumen/Hami/Ordos."},
+     {"name":"J-20 Chengdu Fleet Expansion","status":"300+ OPERATIONAL","detail":"World\'s largest 5th-gen fleet outside USA. AI-assisted targeting. Thrust vector control."},
+     {"name":"PLA SSN/SSBN Expansion","status":"RAPID BUILDUP","detail":"Type 093B SSN improving. Type 096 SSBN (12 JL-3 SLBMs, 10 warheads each) in development."},
+     {"name":"Satellite Constellation (BDS/ISR)","status":"OPERATIONAL","detail":"400+ satellites. Yaogan ISR constellation. BDS navigation. Target US CSGs 24/7."}
+   ],
+   "assessment":"China achieving near-peer status vs USA specifically in Western Pacific A2/AD environment. Global power projection still 10-15 years behind."},
+  {"country":"Russia","iso":"RU","budget_2024":"$109B (war economy — 8% GDP)","color":"#ef4444","trend":"WAR-DRIVEN SURGE",
+   "programs":[
+     {"name":"Su-57 Felon (5th Gen)","status":"LIMITED OPERATIONAL (10+ aircraft)","detail":"Slow production. Used in Ukraine stand-off strikes (not deployed to front)."},
+     {"name":"RS-28 Sarmat ICBM","status":"DECLARED OPERATIONAL (2023)","detail":"Replacement for SS-18 Satan. 10+ MIRV warheads. Boost-glide option."},
+     {"name":"Zircon Hypersonic ASM","status":"COMBAT USE (Ukraine 2024)","detail":"Mach 9 anti-ship. Used in Ukraine. Deployed on Gorshkov-class frigates."},
+     {"name":"Poseidon Nuclear UUV","status":"NEAR-OPERATIONAL","detail":"Nuclear-powered autonomous torpedo. 100MT warhead. Tsunami weapon."},
+     {"name":"Oreshnik IRBM","status":"COMBAT DEBUT Nov 2024","detail":"New IRBM tested against Ukraine (Dnipro Nov 2024). Hypersonic warhead. Putin revealed publicly."},
+     {"name":"T-14 Armata Tank","status":"PRODUCTION STALLED","detail":"Revolutionary tank but only 20 built. Ukraine war exposed production priority issues."}
+   ],
+   "assessment":"Ukraine war revealed conventional capability gaps. Legacy weapons being attrited faster than replaced. Nuclear/hypersonic investments prioritized."},
+  {"country":"USA","iso":"US","budget_2024":"$886B (FY2024 NDAA)","color":"#3b82f6","trend":"MODERNIZING TOWARD CHINA FOCUS",
+   "programs":[
+     {"name":"B-21 Raider Stealth Bomber","status":"PRODUCTION (IOC 2025)","detail":"Next-gen penetrating stealth bomber. Nuclear-capable. Low-observable to Chinese A2/AD."},
+     {"name":"Columbia-class SSBN","status":"PRODUCTION UNDERWAY","detail":"12 boats replacing Ohio-class. 16 Trident II D5LE missiles each. Nuclear deterrent backbone."},
+     {"name":"F-35 Fleet Expansion","status":"900+ DELIVERED (all variants)","detail":"2,400+ total planned. A/B/C variants. 5th gen networked warfare."},
+     {"name":"NGAD (6th Gen Fighter)","status":"DEVELOPMENT — RESTRUCTURING 2024","detail":"Next gen air dominance aircraft. SR-72 class speeds. AI-enabled."},
+     {"name":"Replicator Initiative","status":"ACTIVE","detail":"1,000+ attritable autonomous systems. Counter-PLA Taiwan scenario. Drones/UUVs/loitering munitions."},
+     {"name":"Hypersonic Program (LRHW/CPS)","status":"LRHW ARMY OPERATIONAL 2025","detail":"Dark Eagle LRHW operational. Navy CPS. Still behind China DF-17."}
+   ],
+   "assessment":"Still most capable military globally. Indo-Pacific pivot. Budget advantages enormous but systems take 15+ years. Hypersonic gap vs China/Russia a concern."},
+  {"country":"India","iso":"IN","budget_2024":"$74B (world\'s 4th largest)","color":"#22c55e","trend":"RAPID EXPANSION",
+   "programs":[
+     {"name":"INS Vikrant (Indigenous Carrier)","status":"OPERATIONAL 2022","detail":"First indigenous aircraft carrier. MiG-29K. IAC-2 planned."},
+     {"name":"AMCA (Advanced Medium Combat Aircraft)","status":"DEVELOPMENT","detail":"5th gen indigenous fighter. IOC expected 2035."},
+     {"name":"S-400 Triumf (Russia)","status":"OPERATIONAL (3 of 5 squadrons)","detail":"Bought despite CAATSA threat. Still being delivered."},
+     {"name":"Agni-V ICBM (MIRV)","status":"MIRV TEST 2024","detail":"First successful MIRV test March 2024. Range 5,500km+. Targets China."}
+   ],
+   "assessment":"Fastest growing major military. QUAD integration strengthening. Balancing Russia dependence with Western technology access."}
+];
+
+const CORRUPTION_INDEX = [
+  {"country":"Denmark","iso":"DK","cpi_score":90,"rank":1,"color":"#22c55e","tier":"CLEAN"},
+  {"country":"Finland","iso":"FI","cpi_score":87,"rank":2,"color":"#22c55e","tier":"CLEAN"},
+  {"country":"New Zealand","iso":"NZ","cpi_score":85,"rank":3,"color":"#22c55e","tier":"CLEAN"},
+  {"country":"Norway","iso":"NO","cpi_score":84,"rank":4,"color":"#22c55e","tier":"CLEAN"},
+  {"country":"Singapore","iso":"SG","cpi_score":83,"rank":5,"color":"#22c55e","tier":"CLEAN"},
+  {"country":"USA","iso":"US","cpi_score":69,"rank":24,"color":"#eab308","tier":"MODERATE","note":"Declining trend. Dark money in politics. Revolving door."},
+  {"country":"China","iso":"CN","cpi_score":42,"rank":76,"color":"#f97316","tier":"CORRUPT","note":"Xi anti-corruption campaign removes rivals. Systemic endemic."},
+  {"country":"Russia","iso":"RU","cpi_score":26,"rank":141,"color":"#ef4444","tier":"HIGHLY CORRUPT","note":"State capture. Siloviki kleptocracy. Sanctions evasion enabled by corruption."},
+  {"country":"Iran","iso":"IR","cpi_score":24,"rank":149,"color":"#ef4444","tier":"HIGHLY CORRUPT","note":"IRGC economic empire. Sanctions-driven informality."},
+  {"country":"Nigeria","iso":"NG","cpi_score":25,"rank":145,"color":"#ef4444","tier":"HIGHLY CORRUPT","note":"Oil revenue kleptocracy. NNPC mismanagement. AML failures."},
+  {"country":"Venezuela","iso":"VE","cpi_score":13,"rank":177,"color":"#ef4444","tier":"EXTREMELY CORRUPT","note":"Maduro regime looting. PDVSA hollowed. Cartel penetration."},
+  {"country":"Syria","iso":"SY","cpi_score":13,"rank":178,"color":"#ef4444","tier":"EXTREMELY CORRUPT","note":"Assad regime systematic looting. Captagon economy."},
+  {"country":"Somalia","iso":"SO","cpi_score":11,"rank":180,"color":"#ef4444","tier":"FAILED STATE CORRUPTION","note":"Government positions sold. Al-Shabaab taxation parallel economy."},
+  {"country":"South Sudan","iso":"SS","cpi_score":11,"rank":180,"color":"#ef4444","tier":"FAILED STATE CORRUPTION","note":"Oil revenues looted by elites. Famine while leaders rich."},
+  {"country":"Yemen","iso":"YE","cpi_score":15,"rank":176,"color":"#ef4444","tier":"EXTREMELY CORRUPT","note":"Multiple competing kleptocracies (Houthi, STC, GPC)."},
+  {"country":"Afghanistan","iso":"AF","cpi_score":20,"rank":162,"color":"#ef4444","tier":"HIGHLY CORRUPT","note":"Taliban opaque governance. Drug revenue. Aid theft."},
+  {"country":"North Korea","iso":"KP","cpi_score":17,"rank":172,"color":"#ef4444","tier":"TOTALITARIAN CORRUPTION","note":"Kim family and party elite capture entire economy. Office 39."},
+  {"country":"Ukraine","iso":"UA","cpi_score":36,"rank":104,"color":"#eab308","tier":"CORRUPTION REDUCING","note":"Wartime anti-corruption progress. NABU independent. Zelensky officials arrested."},
+  {"country":"Georgia","iso":"GE","cpi_score":53,"rank":43,"color":"#22c55e","tier":"MODERATE-CLEAN","note":"Reformed in 2000s. Georgian Dream backsliding concern."},
+  {"country":"Brazil","iso":"BR","cpi_score":36,"rank":104,"color":"#f97316","tier":"CORRUPT","note":"Lava Jato impact. Odebrecht scandal. Bolsonaro era reversal."}
+];
+
+const CORRUPTION_SECURITY_NEXUS = [
+  {"nexus":"Military Corruption — Battlefield Failure","examples":["Ukraine 2022: Russian units found officers had stolen fuel/food intended for soldiers","Iraq 2014: Ghost soldiers — payroll for non-existent troops","Afghanistan 2021: ANA ghost soldiers enabled Taliban takeover"],"severity":"CRITICAL"},
+  {"nexus":"Defense Procurement Corruption","examples":["Brazil Navy corruption (submarines)","South Korea defense procurement scandals","India Bofors scandal (still unresolved 40 years later)","Romania defense contracts corruption"],"severity":"HIGH"},
+  {"nexus":"Border Corruption — Trafficking","examples":["Mexican police protecting cartel crossings","Libyan coast guard facilitating migration for payment","Afghan border posts sold to Taliban"],"severity":"CRITICAL"},
+  {"nexus":"Bank Corruption — Sanctions Evasion","examples":["HSBC fined $1.9B — laundered cartel money","Europbank Riga — Russian oligarch evasion","Dubai banks facilitating Iranian sanctions evasion"],"severity":"HIGH"},
+  {"nexus":"Judicial Corruption — Impunity","examples":["Honduras: President Hernandez convicted in US (not Honduras)","Venezuela: No prosecution of Maduro despite US indictment","Russia: No prosecution possible under Putin"],"severity":"CRITICAL"}
+];
+
+// ---- Health Security functions ----
+var _corruptHotspots = [];
+
+function _getHsThreatClass(t){
+  if(t==='CRITICAL') return 'hs-threat-CRITICAL';
+  if(t==='HIGH') return 'hs-threat-HIGH';
+  if(t==='ELEVATED') return 'hs-threat-ELEVATED';
+  return 'hs-threat-MODERATE';
+}
+function _getHsStatusClass(s){
+  if(s.indexOf('PHEIC ACTIVE')>-1) return 'hs-status-WHO-PHEIC-ACTIVE';
+  if(s.indexOf('PHEIC UNDER')>-1) return 'hs-status-WHO-PHEIC-ASSESS';
+  if(s.indexOf('SLOW')>-1) return 'hs-status-SLOW';
+  if(s.indexOf('EPIDEMIC')>-1) return 'hs-status-EPIDEMIC';
+  return 'hs-status-ACTIVE';
+}
+
+function _renderHealthSec(){
+  var grid = document.getElementById('hs-emergencies-grid');
+  if(grid){
+    grid.innerHTML = HEALTH_EMERGENCIES.map(function(e){
+      return '<div class="hs-card" style="border-top-color:'+e.color+';border-color:'+e.color+'22;">'+
+        '<div class="hs-card-header">'+
+          '<div>'+
+            '<div class="hs-name">'+e.name+'</div>'+
+            '<div class="hs-countries">Affected: '+e.affected_countries.join(' | ')+'</div>'+
+          '</div>'+
+          '<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">'+
+            '<span class="hs-status-badge '+_getHsStatusClass(e.status)+'">'+e.status+'</span>'+
+            '<span class="hs-threat-badge '+_getHsThreatClass(e.threat)+'">THREAT: '+e.threat+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="hs-row"><b>CASES 2024:</b> '+e.cases_2024+'</div>'+
+        '<div class="hs-row"><b>CFR:</b> '+e.cfr+'</div>'+
+        '<div class="hs-row"><b>RESPONSE:</b> '+e.response+'</div>'+
+        '<div class="hs-risk-bar">'+
+          '<div class="hs-risk-label">PANDEMIC RISK:</div>'+
+          '<div class="hs-risk-text">'+e.pandemic_risk+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+  var tbody = document.getElementById('hs-prep-tbody');
+  if(tbody){
+    tbody.innerHTML = PANDEMIC_PREPAREDNESS.map(function(p){
+      return '<tr>'+
+        '<td style="font-weight:700;color:'+p.color+';font-size:11px;">'+p.country+'</td>'+
+        '<td><span class="hs-prep-score" style="color:'+p.color+';">'+p.score+'</span></td>'+
+        '<td style="color:#94a3b8;">#'+p.rank+'</td>'+
+        '<td class="hs-prep-strengths">'+p.strengths.join('<br>')+'</td>'+
+        '<td class="hs-prep-gaps">'+p.gaps.join('<br>')+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+  var amrTbody = document.getElementById('hs-amr-tbody');
+  if(amrTbody){
+    amrTbody.innerHTML = AMR_PATHOGENS.map(function(a){
+      var cls = a.priority==='CRITICAL' ? 'hs-amr-crit' : 'hs-amr-high';
+      return '<tr>'+
+        '<td style="color:#e2e8f0;font-weight:700;">'+a.pathogen+'</td>'+
+        '<td class="'+cls+'">'+a.priority+'</td>'+
+        '<td style="color:#fca5a5;font-weight:700;">'+a.mortality+'</td>'+
+        '<td style="color:#94a3b8;">'+a.spread+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+}
+
+async function _fetchHsGdelt(){
+  var feed = document.getElementById('hs-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('pandemic health emergency outbreak WHO disease surveillance');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url);
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="hs-gdelt-item">'+
+        '<div class="hs-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="hs-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';
+  }
+}
+
+function _openHealthSec(){
+  var ov=document.getElementById('healthsec-overlay');
+  if(ov){ov.style.display='flex';_renderHealthSec();_fetchHsGdelt();}
+}
+function _closeHealthSec(){
+  var ov=document.getElementById('healthsec-overlay');
+  if(ov) ov.style.display='none';
+}
+
+// ---- Military Modernization functions ----
+function _getMmTrendClass(t){
+  if(t.indexOf('ACCEL')>-1) return 'mm-trend-ACCEL';
+  if(t.indexOf('WAR')>-1) return 'mm-trend-WAR';
+  if(t.indexOf('RAPID')>-1) return 'mm-trend-RAPID';
+  return 'mm-trend-MOD';
+}
+function _getMmTrendShort(t){
+  if(t==='ACCELERATING') return 'ACCEL';
+  if(t==='WAR-DRIVEN SURGE') return 'WAR SURGE';
+  if(t==='MODERNIZING TOWARD CHINA FOCUS') return 'CHINA FOCUS';
+  if(t==='RAPID EXPANSION') return 'RAPID EXP';
+  return t;
+}
+
+function _renderMilMod(){
+  var grid = document.getElementById('mm-programs-grid');
+  if(!grid) return;
+  grid.innerHTML = MILITARY_MODERNIZATION.map(function(c){
+    var trendClass = _getMmTrendClass(c.trend);
+    var programs = c.programs.map(function(p){
+      return '<div class="mm-prog" style="border-left-color:'+c.color+';">'+
+        '<div class="mm-prog-header">'+
+          '<div class="mm-prog-name">'+p.name+'</div>'+
+          '<div class="mm-prog-status">'+p.status+'</div>'+
+        '</div>'+
+        '<div class="mm-prog-detail">'+p.detail+'</div>'+
+      '</div>';
+    }).join('');
+    return '<div class="mm-card" style="border-top-color:'+c.color+';border-color:'+c.color+'22;">'+
+      '<div class="mm-card-header">'+
+        '<div>'+
+          '<div class="mm-country">'+c.country+'</div>'+
+          '<div class="mm-budget">'+c.budget_2024+'</div>'+
+        '</div>'+
+        '<span class="mm-trend-badge '+trendClass+'">'+_getMmTrendShort(c.trend)+'</span>'+
+      '</div>'+
+      '<div class="mm-programs">'+programs+'</div>'+
+      '<div class="mm-assessment">'+c.assessment+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+async function _fetchMmGdelt(){
+  var feed = document.getElementById('mm-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('military modernization defense procurement weapons program NATO China Russia');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url);
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="mm-gdelt-item">'+
+        '<div class="mm-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="mm-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';
+  }
+}
+
+function _openMilMod(){
+  var ov=document.getElementById('milmod-overlay');
+  if(ov){ov.style.display='flex';_renderMilMod();_fetchMmGdelt();}
+}
+function _closeMilMod(){
+  var ov=document.getElementById('milmod-overlay');
+  if(ov) ov.style.display='none';
+}
+
+// ---- Corruption functions ----
+var _CORRUPT_COUNTRY_COORDS = {
+  "Somalia":{"lat":5.152,"lng":46.199},
+  "South Sudan":{"lat":6.877,"lng":31.307},
+  "Syria":{"lat":34.802,"lng":38.997},
+  "Venezuela":{"lat":6.424,"lng":-66.590},
+  "Yemen":{"lat":15.552,"lng":48.516},
+  "North Korea":{"lat":40.339,"lng":127.510},
+  "Afghanistan":{"lat":33.934,"lng":67.710},
+  "Iran":{"lat":32.427,"lng":53.688},
+  "Russia":{"lat":61.524,"lng":105.319},
+  "Nigeria":{"lat":9.082,"lng":8.675}
+};
+
+function _addCorruptHotspots(){
+  _corruptHotspots = [];
+  CORRUPTION_INDEX.forEach(function(c){
+    if(c.cpi_score < 30 && _CORRUPT_COUNTRY_COORDS[c.country]){
+      var coords = _CORRUPT_COUNTRY_COORDS[c.country];
+      var h = {
+        lat:coords.lat, lng:coords.lng,
+        label:c.country+' CPI:'+c.cpi_score,
+        color:'#eab308', r:5, _corrupt:true
+      };
+      _corruptHotspots.push(h);
+      if(typeof hotspots !== 'undefined') hotspots.push(h);
+    }
+  });
+}
+
+function _removeCorruptHotspots(){
+  if(typeof hotspots !== 'undefined'){
+    hotspots = hotspots.filter(function(h){ return !h._corrupt; });
+  }
+  _corruptHotspots = [];
+}
+
+function _renderCorruption(){
+  var tbody = document.getElementById('co-cpi-tbody');
+  if(tbody){
+    var sorted = CORRUPTION_INDEX.slice().sort(function(a,b){ return a.cpi_score - b.cpi_score; });
+    tbody.innerHTML = sorted.map(function(c){
+      var barW = Math.round(c.cpi_score * 0.8);
+      return '<tr>'+
+        '<td style="font-weight:700;color:'+c.color+';font-size:11px;">'+c.country+'</td>'+
+        '<td>'+
+          '<span class="co-score" style="color:'+c.color+';">'+c.cpi_score+'</span>'+
+          '<span class="co-score-bar-wrap"><span class="co-score-bar" style="width:'+barW+'px;background:'+c.color+';"></span></span>'+
+        '</td>'+
+        '<td style="color:#94a3b8;">#'+c.rank+'</td>'+
+        '<td><span class="co-tier" style="background:'+c.color+'22;border:1px solid '+c.color+'44;color:'+c.color+';">'+c.tier+'</span></td>'+
+        '<td class="co-note">'+(c.note||'')+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+  var nexusGrid = document.getElementById('co-nexus-grid');
+  if(nexusGrid){
+    nexusGrid.innerHTML = CORRUPTION_SECURITY_NEXUS.map(function(n){
+      var sevClass = n.severity==='CRITICAL' ? 'co-nexus-sev-CRITICAL' : 'co-nexus-sev-HIGH';
+      var borderColor = n.severity==='CRITICAL' ? '#ef4444' : '#f97316';
+      return '<div class="co-nexus-card" style="border-left-color:'+borderColor+';">'+
+        '<div class="co-nexus-title">'+
+          '<span class="co-nexus-sev '+sevClass+'">'+n.severity+'</span>'+
+          n.nexus+
+        '</div>'+
+        '<div class="co-nexus-example">'+n.examples.map(function(ex){ return '&#x25B8; '+ex; }).join('<br>')+'</div>'+
+      '</div>';
+    }).join('');
+  }
+}
+
+async function _fetchCorruptGdelt(){
+  var feed = document.getElementById('co-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('corruption bribery kleptocracy government fraud anti-corruption');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url);
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="co-gdelt-item">'+
+        '<div class="co-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="co-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';
+  }
+}
+
+function _openCorruption(){
+  var ov=document.getElementById('corruption-overlay');
+  if(ov){ov.style.display='flex';_renderCorruption();_fetchCorruptGdelt();_addCorruptHotspots();}
+}
+function _closeCorruption(){
+  var ov=document.getElementById('corruption-overlay');
+  if(ov) ov.style.display='none';
+  _removeCorruptHotspots();
+}
+
+// ---- Wire up Phase 41 button events ----
+(function(){
+  var btnHs=document.getElementById('healthsec-btn');
+  var clsHs=document.getElementById('healthsec-close');
+  if(btnHs) btnHs.addEventListener('click',_openHealthSec);
+  if(clsHs) clsHs.addEventListener('click',_closeHealthSec);
+
+  var btnMm=document.getElementById('milmod-btn');
+  var clsMm=document.getElementById('milmod-close');
+  if(btnMm) btnMm.addEventListener('click',_openMilMod);
+  if(clsMm) clsMm.addEventListener('click',_closeMilMod);
+
+  var btnCo=document.getElementById('corruption-btn');
+  var clsCo=document.getElementById('corruption-close');
+  if(btnCo) btnCo.addEventListener('click',_openCorruption);
+  if(clsCo) clsCo.addEventListener('click',_closeCorruption);
+})();
+
+// ===== END PHASE 41 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -27954,6 +28491,71 @@ function filterSIGINT(query){
   <div class="ac-resources-panel" id="ac-resources-panel"></div>
   <div class="ac-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="ac-gdelt-feed" id="ac-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- PHASE 41: Column 10 Phase 41 buttons -->
+<button id="healthsec-btn">HEALTH SEC</button>
+<button id="milmod-btn">MIL MODERN</button>
+<button id="corruption-btn">CORRUPTION</button>
+
+<!-- Health Security Overlay -->
+<div id="healthsec-overlay">
+  <div class="hs-header">
+    <div>
+      <div class="hs-title">GLOBAL HEALTH SECURITY INTELLIGENCE</div>
+      <div class="hs-subtitle">SOURCE: WHO / CDC / ECDC / LANCET / GAVI / OSINT &nbsp;&#47;&#47;&nbsp; PANDEMIC RISK ASSESSMENT &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="hs-close" id="healthsec-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="hs-section-title">ACTIVE HEALTH EMERGENCIES &amp; PANDEMIC THREATS</div>
+  <div class="hs-grid" id="hs-emergencies-grid"></div>
+  <div class="hs-section-title">PANDEMIC PREPAREDNESS INDEX — KEY NATIONS</div>
+  <table class="hs-prep-table" id="hs-prep-table">
+    <thead><tr><th>COUNTRY</th><th>GHS INDEX</th><th>RANK</th><th>STRENGTHS</th><th>GAPS</th></tr></thead>
+    <tbody id="hs-prep-tbody"></tbody>
+  </table>
+  <div class="hs-section-title">ANTIMICROBIAL RESISTANCE — CRITICAL PATHOGENS</div>
+  <table class="hs-amr-table" id="hs-amr-table">
+    <thead><tr><th>PATHOGEN</th><th>PRIORITY</th><th>MORTALITY</th><th>SPREAD / CONTEXT</th></tr></thead>
+    <tbody id="hs-amr-tbody"></tbody>
+  </table>
+  <div class="hs-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="hs-gdelt-feed" id="hs-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Military Modernization Overlay -->
+<div id="milmod-overlay">
+  <div class="mm-header">
+    <div>
+      <div class="mm-title">MILITARY MODERNIZATION RACE INTELLIGENCE</div>
+      <div class="mm-subtitle">SOURCE: IISS MILITARY BALANCE / SIPRI / DOD / JANES / OSINT &nbsp;&#47;&#47;&nbsp; GREAT POWER COMPETITION &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="mm-close" id="milmod-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="mm-section-title">MILITARY MODERNIZATION PROGRAMS — MAJOR POWERS</div>
+  <div class="mm-grid" id="mm-programs-grid"></div>
+  <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Corruption Intelligence Overlay -->
+<div id="corruption-overlay">
+  <div class="co-header">
+    <div>
+      <div class="co-title">GLOBAL CORRUPTION INTELLIGENCE</div>
+      <div class="co-subtitle">SOURCE: TRANSPARENCY INTERNATIONAL CPI / FATF / WORLD BANK / UNODC &nbsp;&#47;&#47;&nbsp; KLEPTOCRACY &amp; SECURITY NEXUS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+    </div>
+    <div class="co-close" id="corruption-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="co-section-title">CORRUPTION PERCEPTIONS INDEX — WORST TO BEST</div>
+  <table class="co-cpi-table">
+    <thead><tr><th>COUNTRY</th><th>CPI SCORE /100</th><th>RANK</th><th>TIER</th><th>INTELLIGENCE NOTE</th></tr></thead>
+    <tbody id="co-cpi-tbody"></tbody>
+  </table>
+  <div class="co-section-title">CORRUPTION-SECURITY NEXUS — OPERATIONAL IMPACT</div>
+  <div class="co-nexus-grid" id="co-nexus-grid"></div>
+  <div class="co-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="co-gdelt-feed" id="co-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 </body>
