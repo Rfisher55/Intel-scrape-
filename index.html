@@ -4918,6 +4918,90 @@ button{border-radius:2px!important}
 .p57sc-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .p57sc-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .p57sc-live-meta{font-size:8px;color:#475569;}
+
+/* Phase 58 buttons — Column 16 (right:1950px) */
+#p58doctrine-btn{position:fixed;top:175px;right:1950px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p58doctrine-btn:hover{border-color:#6366f1;color:#818cf8;}
+#p58migration-btn{position:fixed;top:215px;right:1950px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p58migration-btn:hover{border-color:#0ea5e9;color:#38bdf8;}
+#p58infowar-btn{position:fixed;top:255px;right:1950px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p58infowar-btn:hover{border-color:#f43f5e;color:#fb7185;}
+
+/* Military Doctrine overlay */
+#p58doctrine-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p58doc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p58doc-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#6366f1;}
+.p58doc-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p58doc-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p58doc-close:hover{color:#6366f1;border-color:#6366f1;}
+.p58doc-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p58doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p58doc-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p58doc-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p58doc-power-name{font-size:13px;font-weight:900;}
+.p58doc-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p58doc-row b{color:#e2e8f0;}
+.p58doc-list{font-size:8px;color:#94a3b8;padding-left:12px;margin:4px 0;}
+.p58doc-assessment{font-size:8px;color:#cbd5e1;line-height:1.6;margin-top:8px;padding:8px;background:rgba(99,102,241,0.07);border-left:2px solid #6366f1;}
+.p58doc-trends-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p58doc-trends-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p58doc-trends-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p58doc-maturity-badge{display:inline-block;font-size:7px;font-weight:700;padding:1px 5px;border-radius:2px;letter-spacing:.3px;}
+.p58doc-live-feed{max-width:900px;}
+.p58doc-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p58doc-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p58doc-live-meta{font-size:8px;color:#475569;}
+
+/* Migration Crisis overlay */
+#p58migration-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p58mig-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p58mig-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#0ea5e9;}
+.p58mig-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p58mig-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p58mig-close:hover{color:#0ea5e9;border-color:#0ea5e9;}
+.p58mig-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p58mig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p58mig-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p58mig-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p58mig-route-name{font-size:13px;font-weight:900;}
+.p58mig-crossings-badge{font-size:11px;font-weight:900;color:#0ea5e9;}
+.p58mig-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p58mig-row b{color:#e2e8f0;}
+.p58mig-list{font-size:8px;color:#94a3b8;padding-left:12px;margin:4px 0;}
+.p58mig-assessment{font-size:8px;color:#cbd5e1;line-height:1.6;margin-top:8px;padding:8px;background:rgba(14,165,233,0.07);border-left:2px solid #0ea5e9;}
+.p58mig-stats-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p58mig-stats-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p58mig-stats-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p58mig-live-feed{max-width:900px;}
+.p58mig-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p58mig-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p58mig-live-meta{font-size:8px;color:#475569;}
+
+/* Information Warfare overlay */
+#p58infowar-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.p58iw-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.p58iw-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f43f5e;}
+.p58iw-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.p58iw-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.p58iw-close:hover{color:#f43f5e;border-color:#f43f5e;}
+.p58iw-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.p58iw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
+.p58iw-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.p58iw-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.p58iw-actor-name{font-size:13px;font-weight:900;}
+.p58iw-budget-badge{font-size:10px;font-weight:700;color:#f43f5e;}
+.p58iw-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.p58iw-row b{color:#e2e8f0;}
+.p58iw-list{font-size:8px;color:#94a3b8;padding-left:12px;margin:4px 0;}
+.p58iw-assessment{font-size:8px;color:#cbd5e1;line-height:1.6;margin-top:8px;padding:8px;background:rgba(244,63,94,0.07);border-left:2px solid #f43f5e;}
+.p58iw-cog-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.p58iw-cog-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.p58iw-cog-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#94a3b8;}
+.p58iw-eff-badge{display:inline-block;font-size:7px;font-weight:700;padding:1px 5px;border-radius:2px;letter-spacing:.3px;}
+.p58iw-live-feed{max-width:900px;}
+.p58iw-live-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.p58iw-live-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.p58iw-live-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -33579,6 +33663,353 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 57 =====
 
+// ===== PHASE 58: MILITARY DOCTRINE, MIGRATION CRISIS, INFORMATION WARFARE =====
+
+var P58_MILITARY_DOCTRINES = [
+  {power:'USA -- Multi-Domain Operations (MDO)',lat:38.89,lng:-77.03,color:'#3b82f6',
+   concept:'Army TRADOC 2018. Fight across all domains simultaneously: land, sea, air, space, cyber, electromagnetic spectrum. Break through adversary A2/AD bubbles by creating windows of superiority across multiple domains faster than adversary can respond.',
+   key_elements:['Convergence: simultaneous application of multiple capabilities across domains','Deep Fires: long-range precision fires to strike deep targets (LRPF -- Typhon, Dark Eagle)','Contested Logistics: operate under fire, distributed sustainment','Information Advantage: JADC2 connecting all sensors/shooters in real time','Anti-Access / Area Denial DEFEAT: penetrate Chinese/Russian A2/AD bubbles'],
+   current_implementation:['Typhon mid-range missile launcher deployed Philippines 2024','JADC2 (Joint All-Domain Command and Control) in development','Pacific Deterrence Initiative: dispersed basing, prepositioning','HIMARS/ATACMS validated in Ukraine as MDO concept proof'],
+   assessment:'MDO is US answer to China A2/AD and Russia hybrid warfare. Requires networking that is not yet fully fielded. Ukraine war is live laboratory -- HIMARS precision fires + satellite imagery + AI targeting = MDO elements in practice. China watching carefully.'},
+  {power:'China -- System Destruction Warfare',lat:39.91,lng:116.39,color:'#ef4444',
+   concept:'PLA 2015 Military Strategic Guidelines. Win "informatized local wars." Target adversary command, control, communication, computers (C4) to paralyze decision-making. A2/AD: deny US power projection within First Island Chain. Integrated Joint Operations Command (IJOC).',
+   key_elements:['Anti-Access/Area Denial (A2/AD): DF-21D/DF-26 carrier killers (1,500km range)','Counter-space: blind US satellite constellation (ASAT, jamming, dazzle)','Cyber First Strike: disable US C4ISR pre-kinetic','Rocket Force: conventional precision strikes on US bases (Guam, Japan, Okinawa)','Carrier Strike Group denial: 3-4 simultaneous ASBMs overwhelm Aegis'],
+   current_implementation:['DF-21D and DF-26 operational -- carrier killer validated','Rocket Force expansion (300+ new silos)','Space capabilities: ASAT tested, co-orbital demonstrated','Taiwan scenario: 3-day blitz doctrine reportedly developed','Exercises 2022, 2023, 2024 encircling Taiwan'],
+   assessment:'China A2/AD bubble extends 1,500km from coast. US carrier strike groups cannot safely operate within this zone. Challenge: US must penetrate A2/AD to defend Taiwan. China doctrine: defeat US before it can reinforce. Taiwan operations: amphibious assault + blockade + missile barrage simultaneously.'},
+  {power:'Russia -- Gerasimov / New Generation Warfare',lat:55.75,lng:37.62,color:'#ef4444',
+   concept:'Gen. Valery Gerasimov 2013 article (mischaracterized as "doctrine" in West). Russian concept: integrated use of military + non-military means -- political, economic, informational, cyber, proxy forces -- to achieve strategic objectives while remaining below threshold of open war.',
+   key_elements:['Information warfare as first phase (narrative, psychology, divide societies)','Proxy/deniable forces (little green men -- Crimea 2014)','Cyber operations (NotPetya, Ukrainian grid attacks)','Hybrid warfare: combine conventional + unconventional below Article 5 threshold','Escalate-to-deescalate: tactical nuclear threat to deter conventional response'],
+   current_implementation:['Ukraine 2014: Crimea annexation using deniable forces -- proof of concept','Ukraine 2022: FAILED -- conventional invasion revealed doctrine limits','Electronic warfare: significant EW capability (jammers, MANPADS, C-UAS)','Information operations: continuous narrative war in Western media'],
+   assessment:'Ukraine war exposed limits. Russia expected Gerasimov-style quick collapse (information warfare + fast conventional strike). Instead: conventional war of attrition Russia is losing technologically. Escalate-to-deescalate deterrent (nuclear threats) has partially worked -- US/NATO limiting weapon types to Ukraine. But doctrine\'s non-kinetic phase failed catastrophically.'},
+  {power:'Iran -- Resistance Axis / Forward Defense',lat:35.69,lng:51.39,color:'#f97316',
+   concept:'Strategic depth via proxy network. Never fight on Iranian soil -- fight on adversary\'s periphery. Hezbollah in Lebanon, Hamas in Gaza, Houthis in Yemen, PMF in Iraq = multiple fronts Iran can activate. Missile deterrence via precision strikes.',
+   key_elements:['Axis of Resistance: Hezbollah + Hamas + Houthis + PMF = integrated proxy deterrent','Missile forces: 3,000+ ballistic/cruise missiles (largest in Middle East)','Drone program: largest military drone fleet in region (Shahed-series)','Anti-access: mine-laying capability in Hormuz','Space: satellite surveillance (IRGC Noor constellation)'],
+   current_implementation:['Oct 7 demonstrated: proxies acting with Iranian coordination','April 2024: First direct Iran-Israel exchange (300+ drones + missiles)','Houthi Red Sea campaign: proxy threatening global shipping','IRGC-QF: coordinates proxy activities across 5 countries'],
+   assessment:'Iran\'s proxy doctrine is most cost-effective in modern warfare. $1B annual investment in proxies creates multi-front deterrent threatening Israel, Saudi Arabia, US bases. October 7 and subsequent Axis of Resistance coordination showed Iran can activate all proxies simultaneously. Direct April 2024 attack: 99% intercepted by Israel+US+Jordan+UK -- demonstrated limits of saturation attack vs integrated air defense.'},
+  {power:'North Korea -- Asymmetric Deterrence',lat:40.34,lng:127.51,color:'#eab308',
+   concept:'Regime survival through nuclear deterrence + asymmetric threats + cyber revenue generation. Kim Jong-un 2022 doctrine: preemptive nuclear use authorized. Make cost of attack unacceptable.',
+   key_elements:['Nuclear escalation ladder: tactical (Hwasong-11Da) to ICBM (Hwasong-18)','Cyber: Lazarus Group generates $300-700M/year to fund weapons programs','Conventional: 1.2M active duty (world\'s 4th largest army) but aging equipment','EMP threat: nuclear detonation at altitude to disable electronics','Ballistic missile barrage: can overwhelm South Korean defenses by numbers'],
+   current_implementation:['Record missile launches 2022-2023','Russia-DPRK arms deal: artillery shells + ballistic missiles for Ukraine','Constitution amended 2022: nuclear preemptive use codified','Tactical nuclear weapon (Hwasong-11Da) tested 2022-23'],
+   assessment:'Kim Jong-un has legitimized nuclear weapons constitutionally. No diplomatic solution available without regime survival guarantee. Russia arms relationship provides hard currency and technology. DPRK supplying Russia artillery = sanctions relief. China economic lifeline continues. US-ROK-Japan trilateral deterrence (Camp David 2023) as response.'},
+  {power:'Non-State -- Adaptive Insurgency',lat:33.51,lng:36.29,color:'#94a3b8',
+   concept:'Lessons from Iraq, Afghanistan, Gaza: non-state actors adapting to defeat technologically superior adversaries. Tunnel warfare, drone integration, media operations, attrition strategy targeting adversary will rather than capability.',
+   key_elements:['Tunnel warfare: Hamas Gaza metro (500km tunnels), Hezbollah Lebanon tunnels','Commercial drone weaponization: FPV drones, Shahed variants, swarm tactics','Information operations: social media as primary front (film enemy losses, distribute globally)','Attrition of will: outlast adversary political support rather than defeat militarily','Human shield doctrine: embedding in civilian infrastructure to raise adversary cost'],
+   current_implementation:['Gaza: Hamas tunnel network survived early IDF operations','Ukraine PDF: FPV drone production 1,000+/day (learning from non-state models)','Houthi drone-missile combination disrupting global shipping at low cost','ISIS: adapted, went underground, reemerging in Sahel, Nigeria, Mozambique'],
+   assessment:'Non-state adaptation is fastest military innovation cycle. State actors (Israel, Russia, USA) now learning from non-state tactics (FPV drones, tunnel warfare). Hamas Oct 7 demonstrated: intelligence + surprise + low-tech can achieve strategic effect vs vastly superior force. Long-term insurgency doctrine: make occupation more costly than withdrawal.'}
+];
+
+var P58_DOCTRINE_TRENDS = [
+  {trend:'Drone Swarm Warfare',maturity:'EMERGING',leaders:['China (most investment)','USA','Ukraine (battle-tested)'],desc:'Autonomous/semi-autonomous drone swarms overwhelming point defenses. No effective counter at scale yet.'},
+  {trend:'AI-Enabled Decision Making',maturity:'DEVELOPING',leaders:['USA (JADC2)','China (AI fusion)','Israel (Gospel AI targeting)'],desc:'AI accelerating kill chain from days to seconds. Israel Lavender/Gospel AI in Gaza controversy.'},
+  {trend:'Space-Enabled Warfare',maturity:'OPERATIONAL',leaders:['USA','China','Russia'],desc:'Commercial satellites (Planet, Maxar, Starlink) democratizing ISR. Every state can now see battlefield.'},
+  {trend:'Electronic Warfare Dominance',maturity:'OPERATIONAL',leaders:['Russia (traditional)','USA','China'],desc:'GPS jamming degrading precision weapons. Ukraine: 40%+ guided munitions affected by Russian EW.'},
+  {trend:'Long-Range Precision Fires',maturity:'OPERATIONAL',leaders:['USA','China','Russia'],desc:'HIMARS, ATACMS, Storm Shadow validated. Standoff precision fires enabling deep strike without air superiority.'}
+];
+
+var P58_MIGRATION_ROUTES = [
+  {route:'Central Mediterranean (Libya-Italy)',lat:32.90,lng:13.18,color:'#ef4444',
+   annual_crossings:158000,deaths_2023:3041,
+   origin_countries:['Sub-Saharan Africa (Guinea, Ivory Coast, Senegal)','Bangladesh','Egypt','Tunisia'],
+   smuggling_networks:['Libya: Wagner-linked militias running camps','Tunisia: facilitation networks from sub-Saharan transit','Egypt: Sinai networks'],
+   political_weaponization:'Libya militias (Haftar LNA and Tripoli factions) both use migration as leverage for EU payments. Saif al-Islam Gaddafi promised migration management for political recognition.',
+   current_status:'2023: 158,000 crossings (second highest ever). Tunisia route surpassing Libya. Italian-Tunisia deal (Meloni-von der Leyen) 105M EUR for border management. Lampedusa overwhelmed Sept 2023.',
+   assessment:'Deadliest migration route globally. Libya has no functioning government -- militias profit from smuggling. EU outsourcing border control to authoritarian governments (Libya, Tunisia, Turkey) creates human rights complicity. Climate change + Sahel conflict driving structural push.'},
+  {route:'Eastern Mediterranean (Turkey-Greece)',lat:37.96,lng:26.35,color:'#f97316',
+   annual_crossings:56000,deaths_2023:1800,
+   origin_countries:['Syria','Afghanistan','Somalia','Pakistan'],
+   smuggling_networks:['Turkish organized crime networks','Kurdish smuggling organizations','Greek coast guard hotspot pushback allegations'],
+   political_weaponization:'Turkey weaponized migration March 2020: Erdogan declared Turkey no longer restraining migrants after Idlib. 10,000 migrants moved to Greek border. Used as leverage for EU concessions. Russia-Turkey-Syria actors coordinate displacement flows.',
+   current_status:'Post-2016 EU-Turkey deal reduced crossings. Syrian refugees in Turkey: 3.6M. 2023: increased crossings vs 2022.',
+   assessment:'EU-Turkey deal (6B+ EUR paid) has held fragility. Erdogan uses migration as geopolitical lever. Greece accused of illegal pushbacks (UNHCR documented). Cyprus route (Turkey-Cyprus) increasing. Structural: 3.6M Syrians in Turkey cannot return while Assad (then HTS) controls Syria.'},
+  {route:'Western Mediterranean (Morocco-Spain)',lat:35.79,lng:-5.80,color:'#f97316',
+   annual_crossings:57000,deaths_2023:2100,
+   origin_countries:['Morocco','Algeria','Sub-Saharan Africa transit','Senegal','Mali'],
+   smuggling_networks:['Moroccan networks','Algerian facilitation of sub-Saharan transit','Ceuta fence storming organized by Moroccan networks'],
+   political_weaponization:'Morocco weaponized migration May 2021 (Ceuta): opened border during Spain-Morocco diplomatic dispute over Western Sahara. 8,000 migrants entered Ceuta in 48 hours. Spain forced to reverse position on Sahara to restore control.',
+   current_status:'2023: increased crossings. Canary Islands (Atlantic route) surge.',
+   assessment:'Morocco demonstrated migration-as-coercion most clearly (May 2021). Western Sahara concession obtained via migration pressure. Spain now Morocco patron in EU. Algeria-Morocco rivalry creates secondary flows. Sahel instability driving West African migration northward.'},
+  {route:'US-Mexico Border (Southwest)',lat:31.77,lng:-106.47,color:'#dc2626',
+   annual_crossings:2475000,deaths_2023:900,
+   origin_countries:['Venezuela','Cuba','Haiti','Guatemala','Honduras','El Salvador','Mexico','China (increasing)'],
+   smuggling_networks:['Sinaloa Cartel (Sonora corridor)','CJNG (Jalisco)','Gulf Cartel (Texas border)','Chinese smuggling networks (via Ecuador)'],
+   political_weaponization:'Texas Governor Abbott: Operation Lone Star, busing migrants to DC/NYC. Republican governors using migration as political weapon vs Biden administration. Darien Gap: 520,000 crossings 2023 (record) shows hemispheric scope.',
+   current_status:'2.4M+ encounters FY2023 (record). Darien Gap (Panama jungle): 520,000 crossings 2023. Cartels earn $13B+/year from smuggling.',
+   assessment:'Record crossings 2021-2023. 2024: significant reduction after Biden executive actions + seasonal. Trump 2025 policies: mass deportation operations (record removals 2025). Cartel control of border = all border crossings go through criminal networks. China nationals increasing (via Ecuador route) -- intelligence concern.'},
+  {route:'Belarusian-EU Border (Hybrid)',lat:53.90,lng:27.56,color:'#eab308',
+   annual_crossings:25000,deaths_2023:400,
+   origin_countries:['Iraq','Syria','Afghanistan','Cuba (via Belarus flights)'],
+   smuggling_networks:['Lukashenko state-directed','Iraqi government facilitation (charter flights Minsk)','Private charter operations'],
+   political_weaponization:'Engineered by Lukashenko 2021 as retaliation for EU sanctions + Ryanair incident. Belarus state airlines chartered flights from Baghdad/Damascus to Minsk, migrants transported to Polish/Lithuanian/Latvian border. Hybrid warfare using migration as weapon.',
+   current_status:'Reduced but ongoing. Poland built border wall (186km, 2022). Lithuania wall. Latvia wall. Regular incidents continue.',
+   assessment:'First confirmed state-manufactured migration crisis as geopolitical weapon. Lukashenko advertised "tours to Europe" to Iraqi/Syrian migrants. EU called it "hybrid attack." Established precedent: migration is now recognized warfare tool. Russia implicated in coordination.'},
+  {route:'Rohingya / Bay of Bengal',lat:20.79,lng:92.37,color:'#f97316',
+   annual_crossings:5000,deaths_2023:500,
+   origin_countries:['Bangladesh (Cox\'s Bazar camps)','Myanmar Rakhine State'],
+   smuggling_networks:['Bangladeshi-Malay smuggling networks','Thai fishing boat exploitation','ARSA facilitation (Arakan Rohingya Salvation Army)'],
+   political_weaponization:'Bangladesh using Rohingya refugee presence (1.2M in Cox\'s Bazar camps) as leverage for international funding. Myanmar junta using Rakhine conflict to displace Rohingya into Bangladesh.',
+   current_status:'1.2M Rohingya in Bangladesh camps. Repatriation impossible while Myanmar conflict ongoing. Desperate crossings to Malaysia/Indonesia.',
+   assessment:'Most stateless population globally. Bangladesh camps: 33km2, 1.2M people = world\'s largest refugee camp complex. No durable solution while Myanmar civil war continues. Arakan Army control of Rakhine (2024) may change dynamics but repatriation pathway unclear.'}
+];
+
+var P58_MIGRATION_STATS = [
+  {metric:'Global Migrants (total)',value:'281 million',year:2024,note:'3.5% of world population. Includes economic migrants, refugees, all categories.'},
+  {metric:'Smuggling Revenue',value:'$10-13B/year (US-Mexico)',year:2024,note:'Cartels earn more from people than drugs in some corridors.'},
+  {metric:'Darien Gap Crossings',value:'520,000 (2023)',year:2023,note:'Record. Panama jungle crossing -- unprecedented nationalities (Chinese, Ecuadorians, Venezuelans).'},
+  {metric:'Migration Deaths (Mediterranean)',value:'2,500+/year',year:2023,note:'IOM estimates. Actual likely higher -- bodies not recovered.'},
+  {metric:'Remittances (global)',value:'$831B (2023)',year:2023,note:'3x global foreign aid. Largest flow of funds to developing countries.'},
+  {metric:'Climate Migration (projected)',value:'216M by 2050',year:2050,note:'World Bank internal climate migration scenario. Most in South Asia, Sub-Saharan Africa.'}
+];
+
+var P58_INFOWAR_OPERATIONS = [
+  {name:'Russia -- Firehose of Falsehood',lat:55.75,lng:37.62,color:'#ef4444',
+   type:'Strategic Narrative + Disinformation',
+   budget_est:'$300M+/year (RT + Sputnik + IRA + GRU)',
+   platforms:['RT (Russia Today) -- banned EU/UK, active elsewhere','Sputnik news agency','Telegram (primary after bans)','TikTok (Russian-aligned content)','Internet Research Agency (St. Petersburg troll farm)','GRU Unit 26165 (Fancy Bear) -- hack-and-leak'],
+   operations:['Ukraine war: narrative of "Nazification," denazification framing','2016 US election: IRA created 3,500+ ads on Facebook seen by 126M Americans','Macron leaks (2017 French election)','German election disinformation (2021)','Fico (Slovakia) election support (2023)','Europe COVID vaccine disinformation'],
+   assessment:'RAND 2016 "Firehose of Falsehood" doctrine: high volume, multichannel, no concern for internal consistency. Overwhelm information environment. Russian info ops not primarily about persuasion -- about confusion, eroding trust in institutions. NATO allies report declining confidence in governments correlating with Russian information ops.'},
+  {name:'China -- Sharp Power',lat:39.91,lng:116.39,color:'#dc2626',
+   type:'Influence Operations + Sharp Power',
+   budget_est:'$10B+/year (USCF, state media, United Front)',
+   platforms:['CGTN, Xinhua, China Daily','WeChat (monitoring Chinese diaspora + influencing)','TikTok (ByteDance -- CCP access debated)','United Front Work Department (UFWD) worldwide','Spamouflage network (largest ever identified -- Meta 2023)','LinkedIn for intelligence gathering'],
+   operations:['Spamouflage: largest coordinated inauthentic influence network (Meta removed 7,700+ accounts 2023)','Taiwan elections 2024: 40,000+ fake accounts (Taiwan AI Labs)','COVID origins narrative: pushed "US bioweapon" framing','Xinjiang denial: targeted NGO/journalist accounts'],
+   assessment:'Sharp power model: not soft power (attractive) but sharp (penetrating, manipulating). UFWD operates in every country with Chinese diaspora. TikTok debate: ByteDance employees accessed US data, CCP can compel data sharing. Meta/Google routinely taking down Chinese coordinated networks. Scale unprecedented: Spamouflage network larger than any previously identified state operation.'},
+  {name:'Iran -- Digital Army',lat:35.69,lng:51.39,color:'#f97316',
+   type:'Hack-and-Leak + Social Media Influence',
+   budget_est:'$50-100M estimated',
+   platforms:['IRGC-linked social media networks','Telegram','WhatsApp (Israel-targeted)','State media: PressTV, IRNA'],
+   operations:['2024 US election: hacked Trump campaign (ODNI confirmed), leaked to media','Sowing discord in Israel-Arab normalization (Gaza narrative)','Nuclear deal negotiations: information ops targeting European publics','Saudi Arabia disinformation campaigns'],
+   assessment:'Iran more targeted than Russia/China. Hack-and-leak model proven effective (Trump campaign 2024 echoing DNC 2016). IRGC cyber unit (APT42) specialized in credential harvesting of journalists, activists, officials. Iran benefits from Gaza conflict amplifying existing social divisions.'},
+  {name:'USA -- Strategic Communication',lat:38.89,lng:-77.03,color:'#3b82f6',
+   type:'Strategic Communication + Counter-Disinformation',
+   budget_est:'$1.5B+ (PsyOps, GEC, USAGM)',
+   platforms:['Voice of America, Radio Free Europe','Global Engagement Center (GEC -- State Dept)','USSOF PSYOP -- social media operations','US Indo-Pacific Command information operations'],
+   operations:['Pre-bunking Russia Ukraine invasion (Feb 2022 -- revealed Russian plans before they happened)','Counter-ISIS narrative campaign (2014-2018)','GEC exposing Russian disinformation networks','USAGM: 365M weekly audience in authoritarian states'],
+   assessment:'US shifted 2022: "pre-bunking" -- revealing Russian intentions BEFORE the invasion was unprecedented and effective. Declassified intelligence about Russian plans undermined Russian narrative that Ukraine was the aggressor. Lesson: speed of declassification vs speed of disinformation. GEC underfunded and slow vs Russian/Chinese operations.'},
+  {name:'Hamas / Non-State -- Social Media Warfare',lat:31.35,lng:34.31,color:'#eab308',
+   type:'Real-Time Combat Documentation + Narrative',
+   budget_est:'Minimal (commercial platforms)',
+   platforms:['Telegram (primary -- Hamas official channel 1M+ followers)','X/Twitter','TikTok','Al Jazeera (amplification)'],
+   operations:['Oct 7 real-time documentation -- GoPro bodycam footage released','Gaza civilian casualty documentation -- counter-IDF narrative','Hostage video releases for psychological impact','October 7 denial/minimization narrative'],
+   assessment:'Non-state actors have democratized information warfare. Telegram cannot be moderated effectively. Hamas Telegram: 1M+ subscribers receiving real-time battle updates. Oct 7 GoPro footage was deliberate strategic communication. Gaza civilian casualty narrative effectively shifted global public opinion vs Israel. Israel info ops: "complex campaign" vs immediate visceral imagery = Israel losing information war despite winning militarily.'},
+  {name:'AI-Generated Synthetic Media',lat:20.00,lng:0.00,color:'#a78bfa',
+   type:'Emerging Threat -- All Actors',
+   budget_est:'Near zero (commodity technology)',
+   platforms:['All social media platforms','Messaging apps','Email (targeted phishing)'],
+   operations:['Biden deepfake NH primary robocall (Jan 2024 -- 26,000 voters)','Taylor Swift AI pornographic deepfakes (Feb 2024 -- forced X policy change)','Slovakia election deepfake (Michal Simecka audio, day before election)','Taiwan election: deepfake of presidential candidate Ko Wen-je','Ukraine: deepfake Zelensky ordering surrender (Feb 2022 -- quickly debunked)'],
+   assessment:'Detection technology losing to generation technology. ElevenLabs voice cloning: any voice in 30 seconds from 3-minute sample. Midjourney/Sora: photorealistic imagery/video. Slovakia shows: even crude deepfake can influence election if released 48 hours before vote (no time to debunk). AI deepfakes will be used in every major election globally going forward.'}
+];
+
+var P58_COGNITIVE_WARFARE_DOMAINS = [
+  {domain:'Narrative Framing',effectiveness:'HIGH',desc:'Framing conflict before it happens. Russia "special military operation" vs invasion. China "core interests" vs aggression. Shapes how audience interprets events.'},
+  {domain:'Epistemic Attack',effectiveness:'HIGH',desc:'Not convincing to believe X, but convincing that nothing is knowable. Target: destroy trust in institutions, media, science. RAND "Firehose" model.'},
+  {domain:'Amplification of Division',effectiveness:'CRITICAL',desc:'Find genuine social divisions (race, class, immigration) and amplify. Russia: BLM and Blue Lives Matter simultaneously. Not creating division -- weaponizing existing.'},
+  {domain:'Deep Fake / Synthetic Media',effectiveness:'GROWING',desc:'2024: commodity technology. Voice cloning, video synthesis. No effective detection at scale.'},
+  {domain:'Algorithmic Manipulation',effectiveness:'HIGH',desc:'Understanding recommendation algorithms to maximize organic amplification of divisive content. Content designed for algorithmic spread, not persuasion.'}
+];
+
+// --- Phase 58 render functions ---
+
+function P58_renderDoctrineActors(){
+  var g=document.getElementById('p58doctrine-actors-grid');
+  if(!g)return;
+  var html='';
+  P58_MILITARY_DOCTRINES.forEach(function(d){
+    html+='<div class="p58doc-card" style="border-top-color:'+d.color+';">';
+    html+='<div class="p58doc-card-header">';
+    html+='<div class="p58doc-power-name" style="color:'+d.color+';">'+d.power+'</div>';
+    html+='</div>';
+    html+='<div class="p58doc-row"><b>CONCEPT:</b> '+d.concept+'</div>';
+    html+='<div class="p58doc-row"><b>KEY ELEMENTS:</b></div>';
+    html+='<ul class="p58doc-list">';
+    d.key_elements.forEach(function(e){html+='<li>'+e+'</li>';});
+    html+='</ul>';
+    html+='<div class="p58doc-row"><b>CURRENT IMPLEMENTATION:</b></div>';
+    html+='<ul class="p58doc-list">';
+    d.current_implementation.forEach(function(i){html+='<li>'+i+'</li>';});
+    html+='</ul>';
+    html+='<div class="p58doc-assessment">'+d.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P58_renderDoctrineTrends(){
+  var tb=document.getElementById('p58doctrine-trends-tbody');
+  if(!tb)return;
+  var html='';
+  P58_DOCTRINE_TRENDS.forEach(function(t){
+    var mColor=t.maturity==='OPERATIONAL'?'#22c55e':(t.maturity==='DEVELOPING'?'#f59e0b':'#a78bfa');
+    var mBg=t.maturity==='OPERATIONAL'?'rgba(34,197,94,0.15)':(t.maturity==='DEVELOPING'?'rgba(245,158,11,0.15)':'rgba(167,139,250,0.15)');
+    html+='<tr>';
+    html+='<td style="color:#e2e8f0;font-weight:700;">'+t.trend+'</td>';
+    html+='<td><span class="p58doc-maturity-badge" style="background:'+mBg+';color:'+mColor+';">'+t.maturity+'</span></td>';
+    html+='<td>'+t.leaders.join(', ')+'</td>';
+    html+='<td style="color:#94a3b8;">'+t.desc+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P58_openDoctrineModule(){
+  var ov=document.getElementById('p58doctrine-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P58_renderDoctrineActors();
+  P58_renderDoctrineTrends();
+  _gdeltFetch('military doctrine warfare strategy operations defense concept warfighting innovation','p58-doctrine-gdelt');
+  var pins=P58_MILITARY_DOCTRINES.map(function(d){
+    return {lat:d.lat,lng:d.lng,color:d.color,label:d.power,type:'military_ops',severity:7,TAG:'_p58doctrine'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P58_closeDoctrineModule(){
+  var ov=document.getElementById('p58doctrine-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p58doctrine';});
+}
+
+function P58_renderMigrationRoutes(){
+  var g=document.getElementById('p58migration-routes-grid');
+  if(!g)return;
+  var html='';
+  P58_MIGRATION_ROUTES.forEach(function(r){
+    html+='<div class="p58mig-card" style="border-top-color:'+r.color+';">';
+    html+='<div class="p58mig-card-header">';
+    html+='<div class="p58mig-route-name" style="color:'+r.color+';">'+r.route+'</div>';
+    html+='<div class="p58mig-crossings-badge">'+r.annual_crossings.toLocaleString()+' crossings/yr</div>';
+    html+='</div>';
+    html+='<div class="p58mig-row"><b>DEATHS 2023:</b> '+r.deaths_2023.toLocaleString()+'</div>';
+    html+='<div class="p58mig-row"><b>ORIGIN COUNTRIES:</b></div>';
+    html+='<ul class="p58mig-list">';
+    r.origin_countries.forEach(function(c){html+='<li>'+c+'</li>';});
+    html+='</ul>';
+    html+='<div class="p58mig-row"><b>SMUGGLING NETWORKS:</b></div>';
+    html+='<ul class="p58mig-list">';
+    r.smuggling_networks.forEach(function(n){html+='<li>'+n+'</li>';});
+    html+='</ul>';
+    html+='<div class="p58mig-row"><b>POLITICAL WEAPONIZATION:</b> '+r.political_weaponization+'</div>';
+    html+='<div class="p58mig-row"><b>CURRENT STATUS:</b> '+r.current_status+'</div>';
+    html+='<div class="p58mig-assessment">'+r.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P58_renderMigrationStats(){
+  var tb=document.getElementById('p58migration-stats-tbody');
+  if(!tb)return;
+  var html='';
+  P58_MIGRATION_STATS.forEach(function(s){
+    html+='<tr>';
+    html+='<td style="color:#e2e8f0;font-weight:700;">'+s.metric+'</td>';
+    html+='<td style="color:#0ea5e9;font-weight:700;">'+s.value+'</td>';
+    html+='<td>'+s.year+'</td>';
+    html+='<td style="color:#94a3b8;">'+s.note+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P58_openMigrationModule(){
+  var ov=document.getElementById('p58migration-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P58_renderMigrationRoutes();
+  P58_renderMigrationStats();
+  _gdeltFetch('migration refugee border crossing smuggling asylum immigration crisis Mediterranean','p58-migration-gdelt');
+  var pins=P58_MIGRATION_ROUTES.map(function(r){
+    var sev=(r.annual_crossings>=500000||r.deaths_2023>=2000)?8:6;
+    return {lat:r.lat,lng:r.lng,color:r.color,label:r.route,type:'humanitarian',severity:sev,TAG:'_p58migration'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P58_closeMigrationModule(){
+  var ov=document.getElementById('p58migration-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p58migration';});
+}
+
+function P58_renderInfowarActors(){
+  var g=document.getElementById('p58infowar-actors-grid');
+  if(!g)return;
+  var html='';
+  P58_INFOWAR_OPERATIONS.forEach(function(a){
+    html+='<div class="p58iw-card" style="border-top-color:'+a.color+';">';
+    html+='<div class="p58iw-card-header">';
+    html+='<div class="p58iw-actor-name" style="color:'+a.color+';">'+a.name+'</div>';
+    html+='<div class="p58iw-budget-badge">'+a.budget_est+'</div>';
+    html+='</div>';
+    html+='<div class="p58iw-row"><b>TYPE:</b> '+a.type+'</div>';
+    html+='<div class="p58iw-row"><b>PLATFORMS:</b></div>';
+    html+='<ul class="p58iw-list">';
+    a.platforms.forEach(function(p){html+='<li>'+p+'</li>';});
+    html+='</ul>';
+    html+='<div class="p58iw-row"><b>KNOWN OPERATIONS:</b></div>';
+    html+='<ul class="p58iw-list">';
+    a.operations.forEach(function(op){html+='<li>'+op+'</li>';});
+    html+='</ul>';
+    html+='<div class="p58iw-assessment">'+a.assessment+'</div>';
+    html+='</div>';
+  });
+  g.innerHTML=html;
+}
+
+function P58_renderCogWarfareDomains(){
+  var tb=document.getElementById('p58infowar-cog-tbody');
+  if(!tb)return;
+  var html='';
+  P58_COGNITIVE_WARFARE_DOMAINS.forEach(function(d){
+    var eColor=d.effectiveness==='CRITICAL'?'#ef4444':(d.effectiveness==='HIGH'?'#f97316':(d.effectiveness==='GROWING'?'#a78bfa':'#eab308'));
+    var eBg=d.effectiveness==='CRITICAL'?'rgba(239,68,68,0.15)':(d.effectiveness==='HIGH'?'rgba(249,115,22,0.15)':(d.effectiveness==='GROWING'?'rgba(167,139,250,0.15)':'rgba(234,179,8,0.15)'));
+    html+='<tr>';
+    html+='<td style="color:#e2e8f0;font-weight:700;">'+d.domain+'</td>';
+    html+='<td><span class="p58iw-eff-badge" style="background:'+eBg+';color:'+eColor+';">'+d.effectiveness+'</span></td>';
+    html+='<td style="color:#94a3b8;">'+d.desc+'</td>';
+    html+='</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+function P58_openInfowarModule(){
+  var ov=document.getElementById('p58infowar-overlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  P58_renderInfowarActors();
+  P58_renderCogWarfareDomains();
+  _gdeltFetch('disinformation information warfare propaganda cognitive influence operations deepfake narrative','p58-infowar-gdelt');
+  var pins=P58_INFOWAR_OPERATIONS.map(function(a){
+    return {lat:a.lat,lng:a.lng,color:a.color,label:a.name,type:'cyber',severity:8,TAG:'_p58infowar'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG;}), ...pins];
+}
+
+function P58_closeInfowarModule(){
+  var ov=document.getElementById('p58infowar-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return h.TAG!=='_p58infowar';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var docBtn=document.getElementById('p58doctrine-btn');
+  if(docBtn)docBtn.addEventListener('click',P58_openDoctrineModule);
+  var docClose=document.getElementById('p58doctrine-close');
+  if(docClose)docClose.addEventListener('click',P58_closeDoctrineModule);
+
+  var migBtn=document.getElementById('p58migration-btn');
+  if(migBtn)migBtn.addEventListener('click',P58_openMigrationModule);
+  var migClose=document.getElementById('p58migration-close');
+  if(migClose)migClose.addEventListener('click',P58_closeMigrationModule);
+
+  var iwBtn=document.getElementById('p58infowar-btn');
+  if(iwBtn)iwBtn.addEventListener('click',P58_openInfowarModule);
+  var iwClose=document.getElementById('p58infowar-close');
+  if(iwClose)iwClose.addEventListener('click',P58_closeInfowarModule);
+});
+
+// ===== END PHASE 58 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -36267,6 +36698,71 @@ function filterSIGINT(query){
     <div class="mobile-category-label">Technology &amp; Domains</div>
     <div class="mobile-btn-grid" id="mobile-cat-tech"></div>
   </div>
+</div>
+
+<!-- Phase 58 buttons -->
+<button id="p58doctrine-btn">MILITARY DOCTRINE</button>
+<button id="p58migration-btn">MIGRATION CRISIS</button>
+<button id="p58infowar-btn">INFORMATION WARFARE</button>
+
+<!-- Military Doctrine Overlay (Phase 58) -->
+<div id="p58doctrine-overlay">
+ <div class="p58doc-header">
+  <div>
+   <div class="p58doc-title">MILITARY DOCTRINE &amp; WARFIGHTING CONCEPTS</div>
+   <div class="p58doc-subtitle">SOURCE: TRADOC / PLA DOCTRINE / GERASIMOV / RAND / IISS / CNAS / CSIS / WAR ON THE ROCKS / OSINT &nbsp;&#47;&#47;&nbsp; GREAT POWER &amp; NON-STATE WARFIGHTING DOCTRINE ANALYSIS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p58doc-close" id="p58doctrine-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p58doc-section-title">MAJOR POWER WARFIGHTING DOCTRINES</div>
+ <div class="p58doc-grid" id="p58doctrine-actors-grid"></div>
+ <div class="p58doc-section-title">EMERGING WARFARE TRENDS — TECHNOLOGY &amp; INNOVATION</div>
+ <table class="p58doc-trends-table">
+  <thead><tr><th>TREND</th><th>MATURITY</th><th>LEADING ACTORS</th><th>ASSESSMENT</th></tr></thead>
+  <tbody id="p58doctrine-trends-tbody"></tbody>
+ </table>
+ <div class="p58doc-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p58doc-live-feed" id="p58-doctrine-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Migration Crisis Overlay (Phase 58) -->
+<div id="p58migration-overlay">
+ <div class="p58mig-header">
+  <div>
+   <div class="p58mig-title">MIGRATION CRISIS &amp; WEAPONIZED DISPLACEMENT</div>
+   <div class="p58mig-subtitle">SOURCE: IOM / UNHCR / FRONTEX / DHS / WORLDBANK / RAND / CSIS / MIGRATION POLICY INSTITUTE / OSINT &nbsp;&#47;&#47;&nbsp; GLOBAL MIGRATION FLOWS &amp; GEOPOLITICAL WEAPONIZATION &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p58mig-close" id="p58migration-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p58mig-section-title">MAJOR MIGRATION ROUTES — STATUS &amp; GEOPOLITICAL CONTEXT</div>
+ <div class="p58mig-grid" id="p58migration-routes-grid"></div>
+ <div class="p58mig-section-title">KEY MIGRATION STATISTICS 2023-2024</div>
+ <table class="p58mig-stats-table">
+  <thead><tr><th>METRIC</th><th>VALUE</th><th>YEAR</th><th>NOTE</th></tr></thead>
+  <tbody id="p58migration-stats-tbody"></tbody>
+ </table>
+ <div class="p58mig-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p58mig-live-feed" id="p58-migration-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Information Warfare Overlay (Phase 58) -->
+<div id="p58infowar-overlay">
+ <div class="p58iw-header">
+  <div>
+   <div class="p58iw-title">INFORMATION WARFARE &amp; COGNITIVE OPERATIONS</div>
+   <div class="p58iw-subtitle">SOURCE: ODNI / RAND / GEC / META THREAT INTELLIGENCE / STANFORD INTERNET OBSERVATORY / ATLANTIC COUNCIL DFRLab / OSINT &nbsp;&#47;&#47;&nbsp; STATE &amp; NON-STATE INFORMATION OPERATIONS ANALYSIS &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+  </div>
+  <div class="p58iw-close" id="p58infowar-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="p58iw-section-title">INFORMATION WARFARE ACTORS — OPERATIONS &amp; CAPABILITIES</div>
+ <div class="p58iw-grid" id="p58infowar-actors-grid"></div>
+ <div class="p58iw-section-title">COGNITIVE WARFARE DOMAINS — EFFECTIVENESS ASSESSMENT</div>
+ <table class="p58iw-cog-table">
+  <thead><tr><th>DOMAIN</th><th>EFFECTIVENESS</th><th>DESCRIPTION</th></tr></thead>
+  <tbody id="p58infowar-cog-tbody"></tbody>
+ </table>
+ <div class="p58iw-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="p58iw-live-feed" id="p58-infowar-gdelt"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 <!-- Phase 57 buttons -->
