@@ -31297,6 +31297,395 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 52 =====
 
+// ===== PHASE 53: BIOTERROR WATCH, CRIME SYNDICATES, DRONE WARFARE =====
+
+// --- MODULE 1: BIOTERROR WATCH ---
+
+var P53_BIO_THREATS = [
+  {name:'Smallpox (Variola)',threat_level:'CATASTROPHIC',color:'#ef4444',
+   status:'Officially eradicated 1980. Two WHO-authorized repositories: CDC Atlanta + VECTOR Novosibirsk. Russia accused of maintaining offensive program post-1992. Former VECTOR scientist Kanatjan Alibekov (Ken Alibek) defected 1992, confirmed Soviet Biopreparat produced tons of weaponized smallpox.',
+   casualties_potential:'300M+ (pre-vaccine era). Modern: 70-80% unvaccinated globally (routine vaccination stopped ~1980). No herd immunity.',
+   indicators:['Unauthorized smallpox outbreaks anywhere in world','Theft/loss from VECTOR or CDC storage','Soviet-era scientist knowledge transfer'],
+   assessment:'Highest consequence bioterror scenario. Global vaccination stopped 1980. A release would be unstoppable in modern air-travel world. Russia VECTOR facility security questioned post-Soviet collapse.'},
+  {name:'Anthrax (Bacillus anthracis)',threat_level:'HIGH',color:'#f97316',
+   status:'Demonstrated weaponization (US 2001 anthrax letters -- Ames strain, Army lab origin). Iraq produced 8,500L weaponized anthrax (UNSCOM confirmed). Former Soviet Sverdlovsk release 1979 (accidental, ~60 dead). Naturally occurring outbreaks in Siberia permafrost thaw.',
+   casualties_potential:'Spore inhalation: 80% lethality untreated. Weaponized aerosol over city: 10,000-100,000 casualties per attack.',
+   indicators:['Spore acquisition from labs or natural sources','Milling equipment purchase','Unexplained pneumonia clusters in same area'],
+   assessment:'Most accessible potential bioweapon. Spores stable for decades. 2001 letters demonstrated delivery method. Permafrost thaw releasing ancient anthrax strains in Siberia (Yamal Peninsula 2016 outbreak).'},
+  {name:'Synthetic Pathogens (Gain-of-Function)',threat_level:'CRITICAL',color:'#ef4444',
+   status:'2011: Dutch/US researchers enhanced H5N1 for airborne transmission (Fouchier/Kawaoka controversy). 2023: Boston University enhanced Omicron+original COVID. CRISPR enables gene editing accessibility. Chinese Wuhan Institute of Virology gain-of-function research ongoing. US NIH funded EcoHealth Alliance WIV research (2014-2019 confirmed, 2020 disputed).',
+   casualties_potential:'Engineered pandemic pathogen: potentially billions if R0 high + lethality maintained. COVID demonstrated global disruption from natural pathogen.',
+   indicators:['Unusual respiratory illness clusters','Pathogens with unnatural genetic markers','Research paper publication gaps suggesting classified work'],
+   assessment:'Fastest-growing biosecurity concern. Gene synthesis costs dropped 99% since 2000. Desktop synthesizers could produce dangerous pathogens. Lab-leak hypothesis for COVID unresolved -- demonstrates consequential debate. State and non-state actors have increasing capability.'},
+  {name:'Plague (Yersinia pestis)',threat_level:'MODERATE',color:'#eab308',
+   status:'Natural reservoirs in Central Asia, Africa, Americas. 3,000 cases/year globally (WHO). Madagascar outbreak 2017 (300 cases). Pneumonic plague: 100% fatal untreated, person-to-person transmission. Historical: Black Death 30-60% European mortality 1347-51. Soviet weaponized multi-drug-resistant strains.',
+   casualties_potential:'Pneumonic plague dispersed via aerosol: mass casualty potential. MDR strains complicate treatment.',
+   indicators:['Pneumonic plague cluster without known rodent exposure','Multi-drug resistant plague cases','Acquisition of bulk flea colonies or Y. pestis cultures'],
+   assessment:'Natural outbreaks continue. Soviet Biopreparat produced antibiotic-resistant strains. Central Asia (Kazakhstan, Mongolia, Kyrgyzstan) remain active natural foci.'},
+  {name:'Ebola/Marburg (VHFs)',threat_level:'HIGH',color:'#f97316',
+   status:'DRC Ebola ongoing (12 outbreaks since 1976, 2023 Equateur Province). 2021-22 outbreak: 2,300 cases, 1,500 deaths. Marburg confirmed Uganda/Guinea. No confirmed state weaponization but high lethality and fear factor make it attractive for terrorism.',
+   casualties_potential:'50-90% case fatality rate (Zaire strain). Small scale naturally. Weaponized aerosol: uncertain delivery but catastrophic psychological impact.',
+   indicators:['Hemorrhagic fever clusters outside known range','Patient zero with no known animal contact','Unusual geographic spread pattern'],
+   assessment:'Natural outbreaks are primary risk. West Africa 2014-16 (Ebola, 11,000 dead) demonstrated global response inadequacy. DRC political instability complicates containment. Russia VECTOR holds Ebola/Marburg samples.'},
+  {name:'Chemical-Bio Hybrid (Novichok/VX class)',threat_level:'HIGH',color:'#f97316',
+   status:'Not biological but dual-use biosecurity concern. Novichok (Russia, confirmed Salisbury 2018, Navalny 2020). VX: bin Laden network attempted, North Korea used against Kim Jong-nam (Kuala Lumpur 2017). Synthesis routes increasingly available via open-source chemistry.',
+   casualties_potential:'Gram quantities lethal. Novichok 10x more potent than VX. Accessible to state and sophisticated non-state actors.',
+   indicators:['Organophosphate poisoning clusters','Pinpoint pupils + excessive secretions + seizures','Acquisition of phosphorus trichloride or similar precursors'],
+   assessment:'OPCW confirmed Russian use of CW in UK (unprecedented). Demonstrates state willingness to use. DPRK used VX in assassination operation -- demonstrated non-state-equivalent capability.'}
+];
+
+var P53_BSL4_LABS = [
+  {lab:'Wuhan Institute of Virology (WIV)',lat:30.60,lng:114.32,country:'China',
+   status:'DISPUTED -- COVID lab-leak hypothesis unresolved. US intelligence community divided. FBI and DOE assess lab leak most likely. CIA inconclusive.',
+   concern:'Gain-of-function research on bat coronaviruses. EcoHealth Alliance collaboration (US-funded). Biosafety incident reports 2019.'},
+  {lab:'VECTOR (Novosibirsk)',lat:54.85,lng:83.10,country:'Russia',
+   status:'WHO-authorized smallpox repository. Former Soviet Biopreparat facility. Post-Soviet security gaps documented.',
+   concern:'Holds smallpox, Ebola, Marburg, hemorrhagic fevers. 2019: explosion and fire at lab. Security funding questions.'},
+  {lab:'USAMRIID (Fort Detrick)',lat:39.44,lng:-77.44,country:'USA',
+   status:'Primary US biodefense research. Shut down 2019 (safety violations). Anthrax letters (2001) originated from Ames strain held here.',
+   concern:'Ames anthrax strain used in 2001 attacks. 2019 shutdown for biosafety non-compliance.'},
+  {lab:'Institut Pasteur (Paris)',lat:48.84,lng:2.31,country:'France',
+   status:'OPERATIONAL -- WHO reference laboratory. Legitimate research.',
+   concern:'Security of dangerous pathogen collections in urban setting.'},
+  {lab:'National Microbiology Lab (Winnipeg)',lat:49.86,lng:-97.16,country:'Canada',
+   status:'CONTROVERSY -- 2019: Chinese-Canadian researchers (Qiu Xiangguo) escorted from lab. RCMP investigation. Alleged unauthorized transfer of Ebola/Henipavirus samples to Wuhan.',
+   concern:'Insider threat. Potential sample transfer to Chinese military lab.'},
+  {lab:'Lugar Center (Tbilisi)',lat:41.69,lng:44.80,country:'Georgia (US-funded)',
+   status:'US DoD-funded, managed by DTRA. Former Soviet facility. Russian disinformation claiming bioweapon production.',
+   concern:'Target of Russian information operations claiming US bioweapons program. Pentagon confirmed defensive research only.'}
+];
+
+function _renderBioModule(){
+  var grid=document.getElementById('p53bio-threats-grid');
+  if(grid){
+    grid.innerHTML='';
+    P53_BIO_THREATS.forEach(function(t){
+      var tlColors={CATASTROPHIC:'#ef4444',CRITICAL:'#ef4444',HIGH:'#f97316',MODERATE:'#eab308'};
+      var tc=tlColors[t.threat_level]||'#94a3b8';
+      var inds=t.indicators.map(function(i){return '<li>'+i+'</li>';}).join('');
+      grid.innerHTML+='<div class="p53bio-card" style="border-top-color:'+t.color+';">'
+        +'<div class="p53bio-card-header">'
+        +'<div class="p53bio-card-name" style="color:'+t.color+';">'+t.name+'</div>'
+        +'<span class="p53bio-threat-badge" style="background:'+tc+'22;color:'+tc+';border:1px solid '+tc+'44;">'+t.threat_level+'</span>'
+        +'</div>'
+        +'<div class="p53bio-row"><b>STATUS:</b> '+t.status+'</div>'
+        +'<div class="p53bio-row"><b>CASUALTY POTENTIAL:</b> '+t.casualties_potential+'</div>'
+        +'<div class="p53bio-row"><b>INDICATORS:</b></div>'
+        +'<ul class="p53bio-indicators-list">'+inds+'</ul>'
+        +'<div class="p53bio-assessment">ASSESSMENT: '+t.assessment+'</div>'
+        +'</div>';
+    });
+  }
+  var tbody=document.getElementById('p53bio-labs-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    P53_BSL4_LABS.forEach(function(l){
+      tbody.innerHTML+='<tr>'
+        +'<td class="p53bio-lab-name">'+l.lab+'</td>'
+        +'<td style="color:#94a3b8;">'+l.country+'</td>'
+        +'<td style="color:#94a3b8;font-size:7px;">'+l.status+'</td>'
+        +'<td class="p53bio-lab-concern">'+l.concern+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchBioGDELT(){
+  var feed=document.getElementById('p53bio-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=biosecurity+pathogen+outbreak+bioterror+biological+weapons+laboratory+disease+surveillance&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="p53bio-gdelt-item">'
+        +'<div class="p53bio-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="p53bio-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openBioModule(){
+  var ov=document.getElementById('p53bio-overlay');
+  if(ov){ov.style.display='flex';_renderBioModule();_fetchBioGDELT();}
+  var pins=P53_BSL4_LABS.map(function(l){
+    return {lat:l.lat,lng:l.lng,label:l.lab+' -- '+l.country,type:'cbrn',severity:8,TAG:'_p53bio'};
+  });
+  var critPins=[
+    {lat:55.75,lng:37.62,label:'VECTOR/Biopreparat Legacy Sites -- CATASTROPHIC',type:'cbrn',severity:9,TAG:'_p53bio'},
+    {lat:24.47,lng:54.37,label:'UAE Synthetic Bio Concern -- CRITICAL',type:'cbrn',severity:8,TAG:'_p53bio'}
+  ];
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p53bio';}), ...pins, ...critPins];
+}
+
+function _closeBioModule(){
+  var ov=document.getElementById('p53bio-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p53bio';});
+}
+
+// --- MODULE 2: CRIME SYNDICATES ---
+
+var P53_CRIME_SYNDICATES = [
+  {name:'\'Ndrangheta (Calabrian Mafia)',lat:38.11,lng:15.66,color:'#6366f1',
+   origin:'Calabria, Italy',
+   revenue:'$60-80B/year (Europol estimate) -- world\'s largest criminal organization by revenue',
+   operations:['European cocaine import/distribution (80% EU cocaine market)','Money laundering via construction, restaurants, businesses','Political corruption (Italian parliament infiltration documented)','Expansion: Australia, Canada, Germany, Colombia connections'],
+   structure:'Blood-family \'ndrina clans. No central leadership -- decentralized resilience. Omerta stronger than Sicilian Cosa Nostra.',
+   threat:'Controls EU cocaine market. Infiltrates legitimate economy at scale. German construction sector significantly compromised. Australian ports key entry point.',
+   assessment:'Most powerful criminal organization globally. Decentralized structure makes it extremely difficult to decapitate. Finances European right-wing populist politics (allegations). Annual revenue exceeds GDP of 100+ countries.'},
+  {name:'Sinaloa Cartel',lat:24.80,lng:-107.39,color:'#7c3aed',
+   origin:'Sinaloa, Mexico',
+   revenue:'$80B+ (DEA estimate)',
+   operations:['Fentanyl: Chinese precursors -> Mexican labs -> US distribution','Meth production','Cocaine (Colombian source, transit)','Money laundering via TBML, real estate, hawala'],
+   structure:'Federated model. Territory divided between Chapitos (sons of El Chapo) factions post-El Mayo arrest (2024). Internal war creating violence spike.',
+   threat:'PRIMARY US drug supply chain. 90,000 US fentanyl deaths/year. Corrupts Mexican state at federal/state/local levels.',
+   assessment:'Largest drug trafficking organization in history. El Mayo Zambada arrest NYC July 2024 (lured by rival Chapitos) fractured leadership. Violence spike expected as factions compete.'},
+  {name:'Russian Bratva (Organized Crime)',lat:55.75,lng:37.62,color:'#ef4444',
+   origin:'Russia/Former Soviet states',
+   revenue:'$50-100B (varied estimates)',
+   operations:['Energy sector extortion and fraud','Cyber crime (ransomware -- REvil, DarkSide state-adjacent)','Money laundering via London/Cyprus/Dubai real estate','Arms trafficking to conflict zones','Political contract killings (Litvinenko, others)'],
+   structure:'Loose federation of brigades (brigady). Thieves-in-law (vory v zakone) honorific system. State-criminal nexus: FSB uses organized crime, organized crime uses FSB.',
+   threat:'State-criminal nexus unique danger. Cyber criminals operating with Kremlin tolerance/direction. Money laundering in Western financial systems (UK "Londongrad" model).',
+   assessment:'Russian organized crime uniquely intertwined with state security apparatus. SVR/FSB uses criminal networks for deniable operations. UK National Crime Agency estimates GBP100B+ Russian dirty money in UK annually.'},
+  {name:'Chinese Triads',lat:22.39,lng:114.11,color:'#dc2626',
+   origin:'Hong Kong, Macau, Taiwan, mainland diaspora',
+   revenue:'$15-20B',
+   operations:['Human trafficking (SE Asian scam compound labor)','Illegal gambling/online gambling','Fentanyl precursor trade (Fujian-province chemical companies)','Money laundering via Macau casinos and crypto','Scam center operations (Myanmar, Cambodia, Philippines)'],
+   structure:'14K, Sun Yee On, Wo Shing Wo triads (HK-origin). Fujian networks in US/Europe. Bamboo Union (Taiwan). Decentralized post-1997 HK crackdown.',
+   threat:'Fentanyl precursor supply chain to Mexican cartels. Scam center operations (pig-butchering) defrauding Western victims billions/year.',
+   assessment:'Chinese chemical companies (state-adjacent, Fujian province) supply fentanyl precursors to Sinaloa/CJNG. US Treasury sanctioned specific companies. Beijing denies. Pig-butchering scam compounds in SE Asia generated $64B in fraud globally (2023 UN estimate).'},
+  {name:'Japanese Yakuza',lat:35.69,lng:139.69,color:'#f97316',
+   origin:'Japan',
+   revenue:'$6-10B (declining)',
+   operations:['Construction industry racketeering','Extortion (sokaiya corporate blackmail)','Methamphetamine (yaba from Myanmar)','Declining: post-2012 police crackdown + organized crime exclusion laws'],
+   structure:'Yamaguchi-gumi (Japan\'s largest), Sumiyoshi-kai, Inagawa-kai. Hierarchical with formal ceremony. Publicly identified members (meishi business cards historically).',
+   threat:'DECLINING -- Japanese legislation (2012) excludes Yakuza from banking, real estate. International activity increasing as domestic squeezed.',
+   assessment:'Most publicly visible criminal organization historically. Declining domestic power post-2012 laws. Pivot to international operations (Philippines, US West Coast) and cybercrime. Some humanitarian assistance roles (2011 Fukushima earthquake response).'},
+  {name:'Albanian Organized Crime',lat:41.33,lng:19.82,color:'#22c55e',
+   origin:'Albania, Kosovo, North Macedonia diaspora',
+   revenue:'$15B+ (Europol)',
+   operations:['European cocaine distribution (competing with \'Ndrangheta)','Cannabis cultivation (Albania export)','Firearms trafficking (Balkan route, post-Yugoslavia stocks)','Human trafficking (EU-bound)','Extortion in UK, Belgium, Netherlands'],
+   structure:'Clan-based (fis). No central organization. Extremely violent. Besa (honor code) + kanun (customary law) provides internal discipline.',
+   threat:'Fastest-growing criminal network in Europe. Challenging \'Ndrangheta cocaine dominance. UK: Albanian gangs took over significant portion of London drug market.',
+   assessment:'Speed of international expansion unprecedented for European organized crime. Diaspora networks in UK, Belgium, Germany, Netherlands. South American cocaine source country connections. UK law enforcement: Albanian OC major threat.'}
+];
+
+var P53_FINANCIAL_CRIME_FLOWS = [
+  {flow:'Global Money Laundering',scale:'$800B-$2T/year',pct_detected:'Less than 1%',method:'Real estate, trade-based, shell companies, crypto'},
+  {flow:'Ransomware Payments',scale:'$1.1B (2023, record)',pct_detected:'Partial via blockchain',method:'Crypto (Bitcoin, Monero). Russian groups dominant.'},
+  {flow:'Pig-Butchering Fraud',scale:'$64B (2023, UN)',pct_detected:'Very low',method:'Crypto wallets, fake romance/investment apps. Myanmar/Cambodia/Philippines compounds.'},
+  {flow:'Fentanyl Precursor Trade',scale:'$10-20B estimated',pct_detected:'Limited',method:'Chinese chemical co. -> Mexico -> US street sales. Crypto partially.'},
+  {flow:'Wildlife Trafficking',scale:'$20B/year',pct_detected:'2-3%',method:'SE Asia networks. Funds armed groups. Second largest illegal trade after drugs.'}
+];
+
+function _renderCrimeModule(){
+  var grid=document.getElementById('p53crime-syndicates-grid');
+  if(grid){
+    grid.innerHTML='';
+    P53_CRIME_SYNDICATES.forEach(function(s){
+      var ops=s.operations.map(function(o){return '<li>'+o+'</li>';}).join('');
+      grid.innerHTML+='<div class="p53crime-card" style="border-top-color:'+s.color+';">'
+        +'<div class="p53crime-card-header">'
+        +'<div class="p53crime-card-name" style="color:'+s.color+';">'+s.name+'</div>'
+        +'<span class="p53crime-origin-badge">'+s.origin+'</span>'
+        +'</div>'
+        +'<div class="p53crime-row"><b>REVENUE:</b> '+s.revenue+'</div>'
+        +'<div class="p53crime-row"><b>STRUCTURE:</b> '+s.structure+'</div>'
+        +'<div class="p53crime-row"><b>OPERATIONS:</b></div>'
+        +'<ul class="p53crime-ops-list">'+ops+'</ul>'
+        +'<div class="p53crime-threat"><b>THREAT:</b> '+s.threat+'</div>'
+        +'<div class="p53crime-assessment">ASSESSMENT: '+s.assessment+'</div>'
+        +'</div>';
+    });
+  }
+  var tbody=document.getElementById('p53crime-flows-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    P53_FINANCIAL_CRIME_FLOWS.forEach(function(f){
+      tbody.innerHTML+='<tr>'
+        +'<td class="p53crime-flow-name">'+f.flow+'</td>'
+        +'<td>'+f.scale+'</td>'
+        +'<td style="color:#f97316;">'+f.pct_detected+'</td>'
+        +'<td>'+f.method+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchCrimeGDELT(){
+  var feed=document.getElementById('p53crime-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=organized+crime+cartel+mafia+syndicate+trafficking+money+laundering+criminal+network&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="p53crime-gdelt-item">'
+        +'<div class="p53crime-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="p53crime-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openCrimeModule(){
+  var ov=document.getElementById('p53crime-overlay');
+  if(ov){ov.style.display='flex';_renderCrimeModule();_fetchCrimeGDELT();}
+  var pins=P53_CRIME_SYNDICATES.map(function(s){
+    return {lat:s.lat,lng:s.lng,label:s.name+' -- '+s.origin,type:'terrorism',severity:8,TAG:'_p53crime'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p53crime';}), ...pins];
+}
+
+function _closeCrimeModule(){
+  var ov=document.getElementById('p53crime-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p53crime';});
+}
+
+// --- MODULE 3: DRONE WARFARE ---
+
+var P53_DRONE_SYSTEMS = [
+  {system:'Shahed-136 / Geran-2',origin:'Iran (Russian designation)',lat:32.43,lng:53.69,color:'#ef4444',
+   type:'Loitering Munition (Kamikaze)',range_km:2500,cost_usd:20000,
+   operators:['Russia (Ukraine campaign -- 3,000+ used)','Houthis (Red Sea)','Hezbollah'],
+   combat_record:'Russia used vs Ukrainian power grid -- highly effective vs static infrastructure. Houthis modified for Red Sea tanker attacks. Cheap enough for saturation attacks.',
+   countermeasures:'Shoulder-fired MANPADs (effective at low altitude). Gepard AA (Ukraine). Electronic jamming. But: $20K drone vs $500K missile = economics favor attacker.',
+   assessment:'Game-changer for budget warfare. Iran proliferating at scale -- supplies Russia, Houthis, Hezbollah. Demonstrated: asymmetric nations can conduct strategic bombing with commercial-grade tech.'},
+  {system:'Bayraktar TB2',origin:'Turkey (Baykar)',lat:39.92,lng:32.86,color:'#f97316',
+   type:'MALE UCAV (Medium Altitude Long Endurance)',range_km:150,cost_usd:5000000,
+   operators:['Ukraine','Azerbaijan (NK War 2020)','Ethiopia','Morocco','Libya','Poland','Qatar','Somalia'],
+   combat_record:'Azerbaijan 2020: destroyed Armenian armor columns -- proved precision drone dominance over conventional forces. Ukraine: initial success 2022, degraded as Russia deployed EA and AD.',
+   countermeasures:'Electronic warfare (jammers). Modern SAMs (S-300/400). Not survivable in contested airspace vs peer adversary.',
+   assessment:'Democratized precision strike capability. 30+ export customers. Azerbaijan-Armenia 2020 war was first decisive drone-vs-armor conflict. Limitations: not survivable vs sophisticated IADS.'},
+  {system:'MQ-9 Reaper',origin:'USA (General Atomics)',lat:38.89,lng:-77.03,color:'#3b82f6',
+   type:'MALE UCAV / ISR',range_km:1850,cost_usd:32000000,
+   operators:['USA (primary)','UK','France','Italy','Netherlands','Belgium','Poland'],
+   combat_record:'14M+ flight hours. Killed Soleimani (Jan 2020 Baghdad), Zawahiri (Aug 2022 Kabul). Continuous ISR over conflict zones. Jordan: US Reaper shot down by friendly fire MQ-9 2024.',
+   countermeasures:'Modern SAMs. Russia deployed EA to jam in Syria. Houthis shot down at least 3 MQ-9s over Yemen (2023-24).',
+   assessment:'Gold standard for ISR+strike. But: expensive, slow, not survivable vs peer air defense. USAF developing replacement (MQ-Next). Houthi shootdowns demonstrated vulnerability.'},
+  {system:'Lancet-3',origin:'Russia (ZALA Aero / Kalashnikov)',lat:56.83,lng:60.60,color:'#ef4444',
+   type:'Loitering Munition',range_km:40,cost_usd:35000,
+   operators:['Russia (Ukraine)'],
+   combat_record:'Ukraine: destroyed 200+ armored vehicles, artillery, air defense systems. Precision guidance allows single-vehicle targeting. Tandem warhead penetrates armor.',
+   countermeasures:'Electronic jamming (Ukraine deployed L-band jammers), netting over artillery, thermal masking.',
+   assessment:'Most effective Russian precision drone. Specifically targets NATO-supplied artillery (M777, Caesar, PzH 2000). Forcing Ukraine to constantly relocate. Demonstrated: cheap precision loitering munitions nullify expensive artillery.'},
+  {system:'FPV Drone (First-Person View)',origin:'Commercial (global)',lat:49.00,lng:32.00,color:'#eab308',
+   type:'Micro Loitering Munition',range_km:5,cost_usd:400,
+   operators:['Ukraine (mass use)','Russia (mass use)','Hamas','Houthis (modified)'],
+   combat_record:'Ukraine/Russia: 10,000s deployed. $400 drone destroying $3M+ tanks. FPV with RPG warhead or anti-tank grenade. Both sides produce 1,000+/day. Changed small-unit tactics fundamentally.',
+   countermeasures:'Shotguns (effective close range). Electronic jamming. Metallic canopy over positions. Counter-FPV drone shotgun shells (development).',
+   assessment:'Most disruptive military technology since smart phone. $400 commercial drone defeating $3M+ armor. Infantry now permanently surveilled in 5km radius. Eliminates safe rear areas. Produced at industrial scale by both sides.'},
+  {system:'WZ-7 Soaring Dragon / CH-5 Rainbow',origin:'China (CASC)',lat:39.91,lng:116.39,color:'#dc2626',
+   type:'HALE ISR / MALE Strike',range_km:2000,cost_usd:4000000,
+   operators:['China (PLA)','Saudi Arabia (CH-5)','UAE','Pakistan','Iraq','Nigeria','Jordan'],
+   combat_record:'Saudi Arabia used CH-5 in Yemen. Limited public operational data on Chinese military use.',
+   countermeasures:'Similar to US MALE -- vulnerable to SAMs and peer IADS.',
+   assessment:'China the world\'s largest drone exporter. 70+ countries using Chinese military drones. Wing Loong II (25 customers), CH-5 (10+ customers). Undercuts US/Israel on price. No ITAR restrictions. Strategic: Chinese drone networks creating intelligence dependencies.'}
+];
+
+var P53_DRONE_INCIDENTS = [
+  {incident:'Russian Shahed campaign vs Ukraine power grid',year:2022,impact:'STRATEGIC',desc:'3,000+ Shaheds used vs electrical infrastructure. 80% of Ukraine power capacity damaged by winter 2022-23. Civilian suffering + industrial collapse.'},
+  {incident:'Houthi MQ-9 shootdown (Yemen)',year:2023,impact:'HIGH',desc:'Houthis shot down US MQ-9 Reaper ($32M) using surface-air missile. 3 total shootdowns 2023-24. Demonstrated MALE drone vulnerability.'},
+  {incident:'Azerbaijan TB2 vs Armenian armor (NK)',year:2020,impact:'DECISIVE',desc:'TB2 systematically destroyed Armenian tank columns. Decisive in 44-day war. Azerbaijan regained all territory. Proved: precision UCAV vs uncoordinated armor = armor loses.'},
+  {incident:'FPV drone mass production (Ukraine/Russia)',year:2023,impact:'TRANSFORMATIONAL',desc:'Both sides producing 1,000+ FPV drones/day. Completely changed tactical warfare. No safe positioning within 5km of front.'},
+  {incident:'Iranian drone program proliferation',year:2023,impact:'STRATEGIC',desc:'Iran supplied Shahed-136 to Russia, modified versions to Houthis + Hezbollah. Created strategic bombardment capability for proxy forces.'},
+  {incident:'China drone export network',year:2024,impact:'STRATEGIC',desc:'70+ countries using Chinese military drones. Wing Loong, CH-5, TB-001. No ITAR = unrestricted sales. Intelligence dependency risk for customers.'}
+];
+
+function _renderDroneModule(){
+  var grid=document.getElementById('p53drone-systems-grid');
+  if(grid){
+    grid.innerHTML='';
+    P53_DRONE_SYSTEMS.forEach(function(s){
+      var ops=s.operators.map(function(o){return '<li>'+o+'</li>';}).join('');
+      grid.innerHTML+='<div class="p53drone-card" style="border-top-color:'+s.color+';">'
+        +'<div class="p53drone-card-header">'
+        +'<div class="p53drone-card-name" style="color:'+s.color+';">'+s.system+'</div>'
+        +'<span class="p53drone-type-badge">'+s.type+'</span>'
+        +'</div>'
+        +'<div class="p53drone-row"><b>ORIGIN:</b> '+s.origin+'</div>'
+        +'<div class="p53drone-row"><b>RANGE:</b> '+s.range_km+'km &nbsp;|&nbsp; <b>UNIT COST:</b> $'+s.cost_usd.toLocaleString()+'</div>'
+        +'<div class="p53drone-row"><b>OPERATORS:</b></div>'
+        +'<ul class="p53drone-ops-list">'+ops+'</ul>'
+        +'<div class="p53drone-row"><b>COMBAT RECORD:</b> '+s.combat_record+'</div>'
+        +'<div class="p53drone-row"><b>COUNTERMEASURES:</b> '+s.countermeasures+'</div>'
+        +'<div class="p53drone-assessment">ASSESSMENT: '+s.assessment+'</div>'
+        +'</div>';
+    });
+  }
+  var tbody=document.getElementById('p53drone-incidents-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    P53_DRONE_INCIDENTS.forEach(function(i){
+      var impColors={STRATEGIC:'#38bdf8',HIGH:'#f97316',DECISIVE:'#ef4444',TRANSFORMATIONAL:'#84cc16'};
+      var ic=impColors[i.impact]||'#94a3b8';
+      tbody.innerHTML+='<tr>'
+        +'<td class="p53drone-incident-name">'+i.incident+'</td>'
+        +'<td style="color:#94a3b8;">'+i.year+'</td>'
+        +'<td><span class="p53drone-impact-badge" style="background:'+ic+'22;color:'+ic+';border:1px solid '+ic+'44;">'+i.impact+'</span></td>'
+        +'<td style="color:#94a3b8;font-size:7px;">'+i.desc+'</td>'
+        +'</tr>';
+    });
+  }
+}
+
+async function _fetchDroneGDELT(){
+  var feed=document.getElementById('p53drone-gdelt-feed');
+  if(!feed)return;
+  try{
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query=drone+warfare+UAV+unmanned+aerial+vehicle+strike+military+loitering+munition&mode=artlist&maxrecords=10&format=json';
+    var r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(!d||!d.articles||!d.articles.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No results.</div>';return;}
+    feed.innerHTML='';
+    d.articles.slice(0,10).forEach(function(a){
+      feed.innerHTML+='<div class="p53drone-gdelt-item">'
+        +'<div class="p53drone-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="p53drone-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'</div>';
+    });
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+}
+
+function _openDroneModule(){
+  var ov=document.getElementById('p53drone-overlay');
+  if(ov){ov.style.display='flex';_renderDroneModule();_fetchDroneGDELT();}
+  var sysPins=P53_DRONE_SYSTEMS.map(function(s){
+    return {lat:s.lat,lng:s.lng,label:s.system+' -- '+s.origin,type:'air_domain',severity:8,TAG:'_p53drone'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p53drone';}), ...sysPins];
+}
+
+function _closeDroneModule(){
+  var ov=document.getElementById('p53drone-overlay');
+  if(ov)ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_p53drone';});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var bb=document.getElementById('p53bio-btn');
+  if(bb)bb.addEventListener('click',_openBioModule);
+  var bc=document.getElementById('p53bio-close');
+  if(bc)bc.addEventListener('click',_closeBioModule);
+  var crb=document.getElementById('p53crime-btn');
+  if(crb)crb.addEventListener('click',_openCrimeModule);
+  var crc=document.getElementById('p53crime-close');
+  if(crc)crc.addEventListener('click',_closeCrimeModule);
+  var drb=document.getElementById('p53drone-btn');
+  if(drb)drb.addEventListener('click',_openDroneModule);
+  var drc=document.getElementById('p53drone-close');
+  if(drc)drc.addEventListener('click',_closeDroneModule);
+});
+
+// ===== END PHASE 53 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
