@@ -2054,6 +2054,91 @@ button{border-radius:2px!important}
 .co-gdelt-meta{font-size:8px;color:#475569;}
 /* Convergence overlay */
 #convergence-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,0.97);z-index:2200;display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+/* === Column 6 additional buttons (right:800px) === */
+#shadowfleet-btn{position:fixed;top:175px;right:800px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#shadowfleet-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#ff-btn{position:fixed;top:215px;right:800px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#ff-btn:hover{border-color:#f97316;color:#fdba74;}
+#econwar-btn{position:fixed;top:255px;right:800px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#econwar-btn:hover{border-color:#eab308;color:#fde68a;}
+/* Shadow Fleet overlay */
+#shadowfleet-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.sf-stat-box{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;flex:1;min-width:180px;}
+.sf-stat-country{font-size:10px;font-weight:700;letter-spacing:2px;margin-bottom:8px;}
+.sf-stat-row{display:flex;justify-content:space-between;font-size:9px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.sf-stat-label{color:#64748b;}
+.sf-stat-val{color:#e2e8f0;}
+.sf-incident-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-left:3px solid #ef4444;border-radius:4px;padding:12px;margin-bottom:8px;}
+.sf-inc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:6px;}
+.sf-inc-vessel{font-size:11px;font-weight:700;color:#fca5a5;letter-spacing:1px;}
+.sf-inc-date{font-size:9px;color:#475569;}
+.sf-inc-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.sf-inc-badge{font-size:8px;padding:2px 7px;border-radius:3px;letter-spacing:1px;font-weight:700;}
+.sf-sev-critical{background:rgba(127,29,29,0.3);border:1px solid #dc2626;color:#fca5a5;}
+.sf-sev-high{background:rgba(124,45,18,0.3);border:1px solid #f97316;color:#fdba74;}
+.sf-sev-elevated{background:rgba(120,53,15,0.2);border:1px solid #eab308;color:#fde047;}
+.sf-flag-badge{background:rgba(30,41,59,0.8);border:1px solid #334155;color:#94a3b8;}
+.sf-inc-desc{font-size:9px;color:#94a3b8;line-height:1.6;}
+.sf-evasion-item{background:rgba(15,23,42,0.6);border-left:3px solid rgba(168,85,247,0.5);border-radius:0 4px 4px 0;padding:10px 12px;margin-bottom:8px;}
+.sf-evasion-title{font-size:10px;font-weight:700;color:#c084fc;margin-bottom:4px;letter-spacing:1px;}
+.sf-evasion-desc{font-size:9px;color:#94a3b8;line-height:1.6;}
+.sf-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.sf-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.sf-gdelt-meta{font-size:8px;color:#475569;}
+/* Foreign Fighter overlay */
+#ff-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ff-conflict-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:10px;}
+.ff-conflict-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.ff-conflict-name{font-size:11px;font-weight:700;color:#e2e8f0;letter-spacing:1px;}
+.ff-badges{display:flex;gap:5px;flex-wrap:wrap;}
+.ff-badge{font-size:8px;padding:2px 8px;border-radius:3px;letter-spacing:1px;font-weight:700;}
+.ff-status-active{background:rgba(239,68,68,0.2);border:1px solid #ef4444;color:#fca5a5;}
+.ff-status-reduced{background:rgba(30,41,59,0.8);border:1px solid #334155;color:#94a3b8;}
+.ff-threat-critical{background:rgba(127,29,29,0.3);border:1px solid #dc2626;color:#fca5a5;}
+.ff-threat-high{background:rgba(124,45,18,0.3);border:1px solid #f97316;color:#fdba74;}
+.ff-threat-monitor{background:rgba(30,41,59,0.8);border:1px solid #475569;color:#64748b;}
+.ff-threat-elevated{background:rgba(120,53,15,0.2);border:1px solid #eab308;color:#fde047;}
+.ff-fighters-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.ff-fighter-total{font-size:18px;font-weight:700;color:#fbbf24;letter-spacing:1px;}
+.ff-fighter-label{font-size:7px;color:#64748b;letter-spacing:2px;margin-top:2px;}
+.ff-origin-list{display:flex;flex-direction:column;gap:3px;margin-bottom:8px;}
+.ff-origin-item{font-size:9px;color:#94a3b8;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.ff-detail{font-size:9px;color:#cbd5e1;line-height:1.6;border-left:3px solid rgba(59,130,246,0.4);padding-left:10px;}
+.ff-returnee-table{width:100%;border-collapse:collapse;font-size:9px;}
+.ff-returnee-table th{text-align:left;padding:5px 8px;background:rgba(9,12,24,0.9);color:#64748b;font-size:8px;letter-spacing:2px;border-bottom:2px solid #1e293b;}
+.ff-returnee-table td{padding:5px 8px;border-bottom:1px solid rgba(30,41,59,0.5);color:#94a3b8;vertical-align:top;}
+.ff-returnee-table tr:hover td{background:rgba(30,58,95,0.1);}
+.ff-rt-country{color:#e2e8f0;font-size:9px;}
+.ff-rt-count{color:#fbbf24;font-weight:700;font-size:10px;}
+.ff-rt-status-high{color:#fca5a5;font-size:8px;letter-spacing:1px;}
+.ff-rt-status-elevated{color:#fdba74;font-size:8px;letter-spacing:1px;}
+.ff-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.ff-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ff-gdelt-meta{font-size:8px;color:#475569;}
+/* Economic Warfare overlay */
+#econwar-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ew-tool-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:10px;}
+.ew-tool-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.ew-tool-name{font-size:11px;font-weight:700;color:#e2e8f0;letter-spacing:1px;}
+.ew-tool-user{font-size:8px;padding:2px 8px;background:rgba(30,41,59,0.8);border:1px solid #334155;color:#94a3b8;border-radius:3px;letter-spacing:1px;}
+.ew-eff-badge{font-size:8px;padding:2px 8px;border-radius:3px;letter-spacing:1px;font-weight:700;}
+.ew-eff-high{background:rgba(34,197,94,0.15);border:1px solid #22c55e;color:#86efac;}
+.ew-eff-moderate{background:rgba(234,179,8,0.15);border:1px solid #eab308;color:#fde047;}
+.ew-eff-partial{background:rgba(249,115,22,0.15);border:1px solid #f97316;color:#fdba74;}
+.ew-eff-emerging{background:rgba(168,85,247,0.15);border:1px solid #a855f7;color:#d8b4fe;}
+.ew-desc{font-size:9px;color:#94a3b8;line-height:1.6;margin-bottom:8px;}
+.ew-examples{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.ew-example-chip{font-size:8px;padding:2px 7px;background:rgba(30,41,59,0.6);border:1px solid #1e293b;color:#7dd3fc;border-radius:3px;}
+.ew-vuln{font-size:9px;color:#fde047;border-left:3px solid rgba(234,179,8,0.4);padding-left:8px;line-height:1.5;font-style:italic;}
+.ew-theater-row{display:flex;align-items:center;gap:10px;padding:8px 10px;background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;margin-bottom:6px;}
+.ew-theater-name{font-size:9px;color:#e2e8f0;min-width:180px;flex-shrink:0;}
+.ew-theater-bar-wrap{flex:1;height:6px;background:rgba(30,41,59,0.8);border-radius:3px;overflow:hidden;}
+.ew-theater-bar-fill{height:100%;border-radius:3px;transition:width .8s ease;}
+.ew-theater-pct{font-size:9px;color:#94a3b8;min-width:32px;text-align:right;}
+.ew-theater-note{font-size:8px;color:#475569;flex:2;min-width:0;}
+.ew-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.ew-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ew-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -8362,6 +8447,7 @@ function draw(){
   if(_narcoActive)drawNarcoRoutes();
   if(_trafficActive)drawTrafficRoutes();
   if(_cableActive)drawCableNetwork();
+  if(_shadowActive)drawShadowRoutes();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -19369,6 +19455,338 @@ function _runConvergenceAnalysis(){
     +'</div>';
 }
 
+// ── MODULE: SHADOW FLEET & SANCTIONS-EVASION SHIPPING ────────────────────────
+const SHADOW_FLEET_STATS = {
+  "russia":{"vessels":600,"oilExported":"3.5M bbl/day","revenue":"$200B+ since 2022","primaryBuyers":["China","India","Turkey","UAE"],"primaryFlags":["Gabon","Cameroon","Palau","Cook Islands","Sierra Leone"]},
+  "iran":{"vessels":200,"oilExported":"1.5M bbl/day","revenue":"$50B+/year","primaryBuyers":["China (via Malaysian/UAE intermediaries)"],"primaryFlags":["Panama","Marshall Islands","Mongolia"]},
+  "northKorea":{"vessels":50,"oilExported":"500,000+ tons/year (refined)","revenue":"WMD program funding","primaryBuyers":["China (indirect)"],"primaryFlags":["Unknown/frequent changes"]},
+  "venezuela":{"vessels":30,"oilExported":"700,000 bbl/day","revenue":"$15B+/year","primaryBuyers":["China","Cuba"],"primaryFlags":["Marshall Islands","Belize"]}
+};
+const SHADOW_FLEET_INCIDENTS = [
+  {"date":"Dec 2023","vessel":"Pablo (formerly Turba)","flag":"Gabon","incident":"Ran aground off Jutland, Denmark. Russian oil cargo. Owner: obscure Cook Islands LLC. 14M liters of fuel oil spill risk. No liability insurance.",
+   "lat":57.5,"lng":8.8,"severity":"HIGH","country":"Russia"},
+  {"date":"Jun 2024","vessel":"Hafnia Lotte collision","flag":"Unknown","incident":"Shadow fleet tanker collision in Danish straits. Highlighted lack of insurance, classification, or accountability.",
+   "lat":55.5,"lng":12.5,"severity":"HIGH","country":"Russia"},
+  {"date":"Sep 2024","vessel":"Multiple Baltic incidents","flag":"Various","incident":"NATO navies detected 20+ shadow fleet vessels AIS-spoofing in Baltic near undersea infrastructure. BALTOPS monitoring activated.",
+   "lat":57,"lng":20,"severity":"CRITICAL","country":"Russia"},
+  {"date":"2024 (ongoing)","vessel":"DPRK coal smuggling fleet","flag":"Various/changed","incident":"UN Panel of Experts documented 50+ DPRK vessels using ship-to-ship transfers to evade coal export ban. China complicit in receiving.",
+   "lat":37,"lng":125,"severity":"HIGH","country":"North Korea"},
+  {"date":"Jan 2024","vessel":"Andromeda Star","flag":"Cook Islands","incident":"UK OFSI sanctioned vessel carrying Russian Urals crude. Vessel renamed 4 times in 18 months. Owner traced through 7 shell companies to Russia.",
+   "lat":25,"lng":55,"severity":"ELEVATED","country":"Russia"}
+];
+const SHADOW_FLEET_ROUTES = [
+  {"name":"Russian Arctic Route (Yamal LNG)","color":"rgba(239,68,68,0.5)","waypoints":[{"lat":71,"lng":68},{"lat":75,"lng":90},{"lat":70,"lng":130},{"lat":35,"lng":127}]},
+  {"name":"Russia → India (Cape Route)","color":"rgba(239,68,68,0.5)","waypoints":[{"lat":60,"lng":28},{"lat":15,"lng":57},{"lat":7,"lng":76},{"lat":20,"lng":72}]},
+  {"name":"Iran → China (Malacca)","color":"rgba(168,85,247,0.5)","waypoints":[{"lat":27,"lng":57},{"lat":13,"lng":49},{"lat":4,"lng":72},{"lat":1,"lng":104},{"lat":22,"lng":113}]},
+  {"name":"Russia → China (Indian Ocean)","color":"rgba(239,68,68,0.5)","waypoints":[{"lat":60,"lng":28},{"lat":7,"lng":60},{"lat":1,"lng":104},{"lat":22,"lng":113}]},
+  {"name":"Venezuela → Cuba → China","color":"rgba(234,179,8,0.5)","waypoints":[{"lat":10,"lng":-65},{"lat":23,"lng":-82},{"lat":1,"lng":-20},{"lat":1,"lng":104},{"lat":22,"lng":113}]}
+];
+let _shadowActive=false;
+function drawShadowRoutes(){
+  const t=(Date.now()%3000)/3000;
+  for(const route of SHADOW_FLEET_ROUTES){
+    ctx.save();
+    ctx.strokeStyle=route.color;
+    ctx.lineWidth=2;
+    ctx.setLineDash([5,7]);
+    ctx.lineDashOffset=-t*35;
+    ctx.beginPath();
+    let started=false;
+    for(const wp of route.waypoints){
+      const p=project(wp.lat,wp.lng);
+      if(!p.visible){started=false;continue;}
+      if(!started){ctx.moveTo(p.px,p.py);started=true;}
+      else ctx.lineTo(p.px,p.py);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+function openShadowFleet(){
+  _shadowActive=true;
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._shadow;}),
+    ...SHADOW_FLEET_INCIDENTS.map(function(inc){
+      return {lat:inc.lat,lng:inc.lng,type:'naval',
+        severity:inc.severity==='CRITICAL'?'critical':inc.severity==='HIGH'?'high':'medium',
+        label:inc.vessel,_shadow:true};
+    })
+  ];
+  document.getElementById('shadowfleet-overlay').style.display='flex';
+  _renderShadowFleetOverlay();
+  _fetchShadowFleetGDELT();
+}
+function closeShadowFleet(){
+  _shadowActive=false;
+  liveHotspots=liveHotspots.filter(function(h){return !h._shadow;});
+  document.getElementById('shadowfleet-overlay').style.display='none';
+}
+function _renderShadowFleetOverlay(){
+  const countryKeys=['russia','iran','northKorea','venezuela'];
+  const countryLabels={russia:'RUSSIA',iran:'IRAN',northKorea:'NORTH KOREA',venezuela:'VENEZUELA'};
+  const countryColors={russia:'#ef4444',iran:'#a855f7',northKorea:'#f97316',venezuela:'#eab308'};
+  const statsEl=document.getElementById('sf-stats-grid');
+  if(statsEl){
+    statsEl.innerHTML=countryKeys.map(function(k){
+      const s=SHADOW_FLEET_STATS[k];
+      const buyers=s.primaryBuyers.join(', ');
+      const flags=s.primaryFlags.join(', ');
+      return '<div class="sf-stat-box" style="border-top:3px solid '+countryColors[k]+';">'
+        +'<div class="sf-stat-country" style="color:'+countryColors[k]+';">'+countryLabels[k]+'</div>'
+        +'<div class="sf-stat-row"><span class="sf-stat-label">VESSELS</span><span class="sf-stat-val">'+s.vessels+'</span></div>'
+        +'<div class="sf-stat-row"><span class="sf-stat-label">EXPORTS</span><span class="sf-stat-val">'+s.oilExported+'</span></div>'
+        +'<div class="sf-stat-row"><span class="sf-stat-label">REVENUE</span><span class="sf-stat-val">'+s.revenue+'</span></div>'
+        +'<div class="sf-stat-row" style="border:none;"><span class="sf-stat-label">BUYERS</span><span class="sf-stat-val" style="text-align:right;max-width:160px;word-break:break-word;">'+buyers+'</span></div>'
+        +'<div style="margin-top:6px;font-size:8px;color:#64748b;letter-spacing:1px;">FLAGS: '+flags+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  const incEl=document.getElementById('sf-incidents-list');
+  if(incEl){
+    incEl.innerHTML=SHADOW_FLEET_INCIDENTS.map(function(inc){
+      const sevClass=inc.severity==='CRITICAL'?'sf-sev-critical':inc.severity==='HIGH'?'sf-sev-high':'sf-sev-elevated';
+      return '<div class="sf-incident-card">'
+        +'<div class="sf-inc-header">'
+        +'<span class="sf-inc-vessel">'+inc.vessel+'</span>'
+        +'<span class="sf-inc-date">'+inc.date+'</span>'
+        +'</div>'
+        +'<div class="sf-inc-meta">'
+        +'<span class="sf-inc-badge '+sevClass+'">'+inc.severity+'</span>'
+        +'<span class="sf-inc-badge sf-flag-badge">FLAG: '+inc.flag+'</span>'
+        +'<span class="sf-inc-badge sf-flag-badge">'+inc.country.toUpperCase()+'</span>'
+        +'</div>'
+        +'<div class="sf-inc-desc">'+inc.incident+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  const evasionEl=document.getElementById('sf-evasion-list');
+  if(evasionEl){
+    const techniques=[
+      {title:'AIS SPOOFING / DARK SHIP OPERATIONS',desc:'Vessels disable or falsify AIS transponders to conceal routes, port calls, and ship-to-ship transfers. NATO maritime intelligence tracks dark periods exceeding 24h as primary indicator.'},
+      {title:'FLAG HOPPING',desc:'Vessels rapidly change flag-state registration when sanctioned, often through Pacific island or African states with minimal oversight. Panama, Marshall Islands, and Palau are primary conduits.'},
+      {title:'SHIP-TO-SHIP (STS) TRANSFERS',desc:'Oil transferred between vessels at sea, typically in Ceuta, Kalamata, or Malaysian/Omani waters, to obscure origin. Primary mechanism for laundering Russian and Iranian crude into the market.'},
+      {title:'SHELL OWNERSHIP CASCADES',desc:'Ownership layered through 5-10 shell companies across multiple jurisdictions (UAE, Marshall Islands, Singapore, UK, etc.), making beneficial ownership identification near-impossible without aggressive OFAC/OFSI investigation.'},
+      {title:'PRICE CAP CIRCUMVENTION',desc:'Western insurance, shipping, and services are declined for above-cap oil, but shadow fleet uses non-Western insurers (Russian state insurer Ingosstrakh, Chinese insurers). Intermediary traders in India/Turkey facilitate payment.'}
+    ];
+    evasionEl.innerHTML=techniques.map(function(t){
+      return '<div class="sf-evasion-item">'
+        +'<div class="sf-evasion-title">'+t.title+'</div>'
+        +'<div class="sf-evasion-desc">'+t.desc+'</div>'
+        +'</div>';
+    }).join('');
+  }
+}
+async function _fetchShadowFleetGDELT(){
+  const el=document.getElementById('sf-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live shadow fleet feed...</div>';
+  try{
+    const q=encodeURIComponent('shadow fleet sanctions evasion tanker oil Russia Iran');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="sf-gdelt-item"><div class="sf-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="sf-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ── MODULE: FOREIGN FIGHTER INTELLIGENCE NETWORK ─────────────────────────────
+const FF_CONFLICTS = [
+  {"conflict":"Ukraine War (Pro-Russia)","lat":49,"lng":32,"fighters":{"total":"~20,000+","top":["North Korea (12,000+ troops)","Syria (Wagner/NDF veterans 1,000+)","Chechnya (Kadyrovtsy 10,000+)","African Wagner veterans","Serbia (volunteer brigades)"]},"status":"ACTIVE","threat":"CRITICAL","color":"#ef4444",
+   "detail":"North Korea deployed 12,000 troops to Kursk front Nov 2024. Taking significant casualties. Gaining modern warfare experience including drone warfare, artillery, electronic warfare tactics."},
+  {"conflict":"Ukraine War (Pro-Ukraine)","lat":50,"lng":35,"fighters":{"total":"~20,000 (peak)","top":["USA (3,000+ est.)","UK (3,000+ est.)","Canada","Poland","Georgia (Georgian Legion)","Chechnya (Dzhokhar Dudayev Battalion)"]},"status":"REDUCED","threat":"MONITOR","color":"#3b82f6",
+   "detail":"International Legion of Ukraine drew volunteers from 52 countries. Now increasingly integrated into Ukrainian military structure. Numbers declining as war grinds on."},
+  {"conflict":"ISIS / Syria-Iraq","lat":35,"lng":40,"fighters":{"total":"~5,000 remaining","top":["Central Asian states (Uzbekistan, Tajikistan, Kyrgyzstan)","North Africa","Chechnya/Dagestan","Western Europe returnees"]},"status":"REDUCED","threat":"HIGH","color":"#f97316",
+   "detail":"At peak: 40,000 fighters from 110 countries. Now fragmented. IS-K drawing Central Asian fighters. Western returnees remain intelligence priority — 5,000 returnees to EU countries."},
+  {"conflict":"Yemen (Houthi / Iran Axis)","lat":15,"lng":44,"fighters":{"total":"~5,000 IRGC + Hezbollah advisors","top":["Iran IRGC-QF advisors","Hezbollah trainers/technical","Iraqi PMF (Kataib Hezbollah)"]},"status":"ACTIVE","threat":"HIGH","color":"#f97316",
+   "detail":"IRGC-QF provides doctrine, targeting, ballistic missile tech. Hezbollah trains Houthi naval/drone units. Iraqi PMF provides manpower pipeline."},
+  {"conflict":"Sahel / JNIM-ISIS","lat":15,"lng":0,"fighters":{"total":"~10,000+","top":["West African nationals","North African AQIM veterans","Sub-Saharan recruits","Tuareg tribal fighters"]},"status":"ACTIVE","threat":"HIGH","color":"#f97316",
+   "detail":"Primarily domestic recruitment. Cross-border flow through porous Sahel borders. Some IS-K/AQ trained fighters returning from Middle East."},
+  {"conflict":"Gaza (Hamas / PIJ)","lat":31.5,"lng":34.5,"fighters":{"total":"Domestic — no significant foreign fighters","top":["Palestinian nationals only","External political support from Qatar/Turkey"]},"status":"ACTIVE","threat":"ELEVATED","color":"#eab308",
+   "detail":"Hamas and PIJ recruit domestically. Iran provides weapons/funds via Hezbollah smuggling networks. No significant foreign fighter influx due to Gaza blockade."}
+];
+const FF_RETURNEE_THREAT = [
+  {"country":"Belgium","returnees":500,"status":"HIGH RISK","incidents":"Brussels Airport attack 2016 — returnee-linked"},
+  {"country":"France","returnees":1900,"status":"HIGH RISK","incidents":"Nov 2015 Paris attacks — returnee-linked"},
+  {"country":"Germany","returnees":1000,"status":"ELEVATED","incidents":"Multiple disrupted plots 2023-2024"},
+  {"country":"UK","returnees":900,"status":"ELEVATED","incidents":"MI5 tracking 900+ Syria returnees"},
+  {"country":"Russia","returnees":3000,"status":"HIGH — REDIRECTED","incidents":"Many join Wagner/Kadyrovtsy rather than domestic attack"},
+  {"country":"North Africa (Tunisia/Morocco/Libya)","returnees":6000,"status":"HIGH","incidents":"ISIS remnants active in Sahel and Sinai"},
+  {"country":"Central Asia","returnees":5000,"status":"HIGH","incidents":"IS-K recruitment pipeline from returnees"},
+  {"country":"Indonesia/Malaysia","returnees":600,"status":"ELEVATED","incidents":"Jemaah Islamiyah networks absorbing returnees"}
+];
+function openForeignFighters(){
+  document.getElementById('ff-overlay').style.display='flex';
+  _renderFFOverlay();
+  _fetchFFGDELT();
+}
+function closeForeignFighters(){
+  document.getElementById('ff-overlay').style.display='none';
+}
+function _renderFFOverlay(){
+  const cardsEl=document.getElementById('ff-conflict-cards');
+  if(cardsEl){
+    cardsEl.innerHTML=FF_CONFLICTS.map(function(c){
+      const statusClass=c.status==='ACTIVE'?'ff-status-active':'ff-status-reduced';
+      const threatClass=c.threat==='CRITICAL'?'ff-threat-critical':c.threat==='HIGH'?'ff-threat-high':c.threat==='ELEVATED'?'ff-threat-elevated':'ff-threat-monitor';
+      const topList=c.fighters.top.map(function(f){return '<div class="ff-origin-item">▶ '+f+'</div>';}).join('');
+      return '<div class="ff-conflict-card" style="border-left:3px solid '+c.color+';">'
+        +'<div class="ff-conflict-header">'
+        +'<span class="ff-conflict-name">'+c.conflict+'</span>'
+        +'<div class="ff-badges">'
+        +'<span class="ff-badge '+statusClass+'">'+c.status+'</span>'
+        +'<span class="ff-badge '+threatClass+'">'+c.threat+'</span>'
+        +'</div>'
+        +'</div>'
+        +'<div class="ff-fighters-row">'
+        +'<div><div class="ff-fighter-total">'+c.fighters.total+'</div><div class="ff-fighter-label">TOTAL FIGHTERS</div></div>'
+        +'</div>'
+        +'<div class="ff-origin-list">'+topList+'</div>'
+        +'<div class="ff-detail">'+c.detail+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  const tableEl=document.getElementById('ff-returnee-tbody');
+  if(tableEl){
+    tableEl.innerHTML=FF_RETURNEE_THREAT.map(function(r){
+      const stClass=r.status.indexOf('HIGH')!==-1?'ff-rt-status-high':'ff-rt-status-elevated';
+      return '<tr>'
+        +'<td class="ff-rt-country">'+r.country+'</td>'
+        +'<td class="ff-rt-count">'+r.returnees.toLocaleString()+'</td>'
+        +'<td class="'+stClass+'">'+r.status+'</td>'
+        +'<td style="font-size:8px;color:#64748b;">'+r.incidents+'</td>'
+        +'</tr>';
+    }).join('');
+  }
+}
+async function _fetchFFGDELT(){
+  const el=document.getElementById('ff-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live foreign fighter feed...</div>';
+  try{
+    const q=encodeURIComponent('foreign fighters ISIS Ukraine Syria mercenary');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="ff-gdelt-item"><div class="ff-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="ff-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ── MODULE: ECONOMIC WARFARE INTELLIGENCE ─────────────────────────────────────
+const ECON_WARFARE_TOOLS = [
+  {"tool":"Secondary Sanctions (US)","user":"USA","effectiveness":"HIGH","color":"#3b82f6",
+   "description":"Sanctions on third-country entities that do business with primary sanctioned entities. Forced global banks to choose: US dollar system or sanctioned countries.",
+   "examples":["CAATSA (Russia/Iran/DPRK)","Magnitsky Act","IEEPA Executive Orders","Chinese military company lists (CMIC)"],
+   "vulnerabilities":"Dollar weaponization accelerating de-dollarization. China/Russia building alternative systems."},
+  {"tool":"Export Controls (BIS Entity List)","user":"USA","effectiveness":"HIGH","color":"#3b82f6",
+   "description":"Commerce Department controls on technology exports. 600+ Chinese entities blocked from US technology.",
+   "examples":["Huawei (2019)","SMIC semiconductor controls","NVIDIA GPU export restrictions","TSMC China fab ban"],
+   "vulnerabilities":"Allies not always coordinated. Smuggling via Malaysia/Thailand intermediaries."},
+  {"tool":"SWIFT Exclusion","user":"USA/EU","effectiveness":"HIGH","color":"#22c55e",
+   "description":"Exclusion from SWIFT interbank messaging system makes international transactions nearly impossible.",
+   "examples":["Iran excluded 2012-2016, 2018","Russia banks excluded 2022","Belarus 2021"],
+   "vulnerabilities":"CIPS (China), SPFS (Russia) alternatives growing. Iran adapted over years."},
+  {"tool":"Asset Freeze / Seizure","user":"USA/EU/G7","effectiveness":"MODERATE","color":"#eab308",
+   "description":"Freezing foreign sovereign assets held in Western financial system. $300B+ Russian assets frozen 2022.",
+   "examples":["$300B Russian CB assets frozen","$7B Afghan CB assets frozen","Venezuelan gold at Bank of England"],
+   "vulnerabilities":"Legal challenges to seizure/confiscation. Sovereign immunity concerns. Only works for assets in Western system."},
+  {"tool":"Oil Price Cap","user":"G7/EU","effectiveness":"PARTIAL","color":"#eab308",
+   "description":"$60/bbl cap on Russian oil with Western shipping/insurance/services blocked for over-cap oil.",
+   "examples":["Russian Urals cap Dec 2022","LNG excluded from cap","Shadow fleet circumvention"],
+   "vulnerabilities":"Shadow fleet rendered cap partially ineffective. India/China buy at slight discount to cap."},
+  {"tool":"Debt Trap Diplomacy (China)","user":"China","effectiveness":"MODERATE","color":"#f97316",
+   "description":"Providing unsustainable loans via BRI, then gaining leverage when countries default. Debt-for-equity swaps.",
+   "examples":["Hambantota Port (Sri Lanka)","Zambia debt restructuring","Pakistan debt crisis","Ecuador oil-for-loans"],
+   "vulnerabilities":"Backlash growing. Many BRI projects renegotiated. G7 Partnership for Global Infrastructure counter-effort."},
+  {"tool":"Commodity Weaponization","user":"Russia/China","effectiveness":"HIGH","color":"#ef4444",
+   "description":"Using control of critical commodities as geopolitical leverage. Energy, rare earths, food.",
+   "examples":["Russia gas cutoff to Europe 2022","China rare earth export controls to Japan 2010","China Ga/Ge export restrictions 2023","Russia Black Sea grain deal collapse"],
+   "vulnerabilities":"Accelerates target country diversification efforts. Long-term undermines supplier credibility."},
+  {"tool":"Dollar Weaponization Response (De-dollarization)","user":"Russia/China/BRICS","effectiveness":"EMERGING","color":"#8b5cf6",
+   "description":"Efforts to reduce dependence on USD in global trade and reserves. BRICS currency discussions, bilateral currency swaps.",
+   "examples":["Russia-China trade in RMB (90%+ of bilateral trade)","BRICS payment system discussions","Saudi oil sales in non-USD","India-UAE rupee trade"],
+   "vulnerabilities":"No credible USD alternative yet. RMB capital controls limit internationalization. BRICS far from unified currency."}
+];
+const ECON_WARFARE_THEATERS = [
+  {"theater":"Russia (Ukraine War)","tools":["Sanctions","SWIFT exclusion","Asset freeze","Export controls","Oil cap"],"effectiveness":65,"note":"Russia GDP resilient due to wartime economy + energy revenues. Structural damage growing long-term."},
+  {"theater":"China (Tech War)","tools":["Export controls","Entity list","Investment screening (CFIUS)","5G exclusion"],"effectiveness":45,"note":"China adapting via domestic investment. DeepSeek showed chip controls less decisive than hoped."},
+  {"theater":"Iran","tools":["Comprehensive sanctions","SWIFT exclusion","Oil embargo","Secondary sanctions"],"effectiveness":55,"note":"Iran adapted over decades. Expanded proxy network despite sanctions. Nuclear program advanced."},
+  {"theater":"North Korea","tools":["UN sanctions","Asset freeze","Oil embargo"],"effectiveness":30,"note":"DPRK adapted via cyber heists, arms sales to Russia. China enforcement compliance low."},
+  {"theater":"Venezuela","tools":["CITGO seizure","Oil sanctions","Gold sanctions"],"effectiveness":40,"note":"Maduro retained power. Economic collapse but regime survived. Sanctions lifted/reimposed cyclically."}
+];
+function openEconWar(){
+  document.getElementById('econwar-overlay').style.display='flex';
+  _renderEconWarOverlay();
+  _fetchEconWarGDELT();
+}
+function closeEconWar(){
+  document.getElementById('econwar-overlay').style.display='none';
+}
+function _renderEconWarOverlay(){
+  const toolsEl=document.getElementById('ew-tools-list');
+  if(toolsEl){
+    toolsEl.innerHTML=ECON_WARFARE_TOOLS.map(function(t){
+      const effMap={'HIGH':'ew-eff-high','MODERATE':'ew-eff-moderate','PARTIAL':'ew-eff-partial','EMERGING':'ew-eff-emerging'};
+      const effClass=effMap[t.effectiveness]||'ew-eff-moderate';
+      const exChips=t.examples.map(function(e){return '<span class="ew-example-chip">'+e+'</span>';}).join('');
+      return '<div class="ew-tool-card" style="border-left:3px solid '+t.color+';">'
+        +'<div class="ew-tool-header">'
+        +'<span class="ew-tool-name">'+t.tool+'</span>'
+        +'<div style="display:flex;gap:5px;">'
+        +'<span class="ew-tool-user">'+t.user+'</span>'
+        +'<span class="ew-eff-badge '+effClass+'">'+t.effectiveness+'</span>'
+        +'</div>'
+        +'</div>'
+        +'<div class="ew-desc">'+t.description+'</div>'
+        +'<div class="ew-examples">'+exChips+'</div>'
+        +'<div class="ew-vuln">⚠ VULNERABILITY: '+t.vulnerabilities+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  const theatersEl=document.getElementById('ew-theaters-list');
+  if(theatersEl){
+    theatersEl.innerHTML=ECON_WARFARE_THEATERS.map(function(th){
+      const pct=th.effectiveness;
+      const barColor=pct>=60?'#22c55e':pct>=45?'#eab308':pct>=35?'#f97316':'#ef4444';
+      const toolTags=th.tools.map(function(t){return '<span style="font-size:7px;padding:1px 5px;background:rgba(30,41,59,0.6);border:1px solid #1e293b;color:#94a3b8;border-radius:2px;margin-right:3px;">'+t+'</span>';}).join('');
+      return '<div class="ew-theater-row">'
+        +'<div style="min-width:190px;flex-shrink:0;">'
+        +'<div class="ew-theater-name">'+th.theater+'</div>'
+        +'<div style="display:flex;flex-wrap:wrap;gap:2px;margin-top:4px;">'+toolTags+'</div>'
+        +'</div>'
+        +'<div class="ew-theater-bar-wrap"><div class="ew-theater-bar-fill" style="width:'+pct+'%;background:'+barColor+';"></div></div>'
+        +'<div class="ew-theater-pct" style="color:'+barColor+';">'+pct+'%</div>'
+        +'<div class="ew-theater-note">'+th.note+'</div>'
+        +'</div>';
+    }).join('');
+  }
+}
+async function _fetchEconWarGDELT(){
+  const el=document.getElementById('ew-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live economic warfare feed...</div>';
+  try{
+    const q=encodeURIComponent('sanctions economic warfare export controls de-dollarization');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="ew-gdelt-item"><div class="ew-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="ew-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -20953,6 +21371,9 @@ function filterSIGINT(query){
 <button id="techwar-btn" onclick="openTechWar()">TECH WAR</button>
 <button id="covertops-btn" onclick="openCovertOps()">COVERT OPS</button>
 <button id="convergence-btn" onclick="openConvergence()">CONVERGENCE</button>
+<button id="shadowfleet-btn" onclick="openShadowFleet()">SHADOW FLEET</button>
+<button id="ff-btn" onclick="openForeignFighters()">FOREIGN FIGHTERS</button>
+<button id="econwar-btn" onclick="openEconWar()">ECON WARFARE</button>
 
 <!-- Tech War Overlay -->
 <div id="techwar-overlay">
@@ -21005,6 +21426,67 @@ function filterSIGINT(query){
     <button onclick="closeConvergence()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
   </div>
   <div id="convergence-results"></div>
+</div>
+
+<!-- Shadow Fleet Overlay -->
+<div id="shadowfleet-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">MARITIME SANCTIONS EVASION</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">SHADOW FLEET TRACKER</div>
+      <div style="color:#64748b;font-size:11px;margin-top:2px;">880+ vessels · Russia · Iran · DPRK · Venezuela · Globe visualization active</div>
+    </div>
+    <button onclick="closeShadowFleet()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;">SANCTIONS-EVADING FLEET STATISTICS</div>
+  <div id="sf-stats-grid" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#fca5a5;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">KEY INCIDENTS &amp; ENFORCEMENT FAILURES</div>
+  <div id="sf-incidents-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#c084fc;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">EVASION TECHNIQUES</div>
+  <div id="sf-evasion-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE SHADOW FLEET FEED</div>
+  <div id="sf-gdelt-feed"></div>
+</div>
+
+<!-- Foreign Fighters Overlay -->
+<div id="ff-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#f97316;font-size:11px;letter-spacing:3px;">GLOBAL INSURGENCY TRACKING</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">FOREIGN FIGHTER INTELLIGENCE NETWORK</div>
+      <div style="color:#64748b;font-size:11px;margin-top:2px;">Active conflict zones · Returnee threat assessment · Recruitment pipelines</div>
+    </div>
+    <button onclick="closeForeignFighters()" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#f97316;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="font-size:9px;letter-spacing:2px;color:#fdba74;font-weight:700;margin-bottom:12px;">ACTIVE CONFLICT FIGHTER DEPLOYMENTS</div>
+  <div id="ff-conflict-cards" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#fca5a5;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">RETURNEE THREAT TRACKING — ISIS/JIHADI VETERANS</div>
+  <div style="overflow-x:auto;margin-bottom:20px;">
+    <table class="ff-returnee-table">
+      <thead><tr><th>COUNTRY</th><th>RETURNEES</th><th>STATUS</th><th>KNOWN INCIDENTS</th></tr></thead>
+      <tbody id="ff-returnee-tbody"></tbody>
+    </table>
+  </div>
+  <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE FOREIGN FIGHTER FEED</div>
+  <div id="ff-gdelt-feed"></div>
+</div>
+
+<!-- Economic Warfare Overlay -->
+<div id="econwar-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#eab308;font-size:11px;letter-spacing:3px;">GEOECONOMIC COERCION</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">ECONOMIC WARFARE INTELLIGENCE</div>
+      <div style="color:#64748b;font-size:11px;margin-top:2px;">Sanctions · Export controls · SWIFT · Commodity weaponization · De-dollarization</div>
+    </div>
+    <button onclick="closeEconWar()" style="background:rgba(234,179,8,0.15);border:1px solid rgba(234,179,8,0.3);color:#eab308;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="font-size:9px;letter-spacing:2px;color:#fde68a;font-weight:700;margin-bottom:12px;">ACTIVE ECONOMIC WARFARE TOOLS</div>
+  <div id="ew-tools-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#94a3b8;font-weight:700;margin-bottom:10px;border-top:1px solid #1e293b;padding-top:16px;">THEATER EFFECTIVENESS ASSESSMENT</div>
+  <div id="ew-theaters-list" style="margin-bottom:20px;"></div>
+  <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE ECONOMIC WARFARE FEED</div>
+  <div id="ew-gdelt-feed"></div>
 </div>
 
 <!-- Cable Watch Overlay -->
