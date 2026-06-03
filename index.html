@@ -32482,6 +32482,18 @@ var _MOBILE_MODULES = [
   ['tech','PORT SECURITY','_openPortSecurity','#0ea5e9'],
   ['tech','MARITIME INTEL','_openMaritime','#0ea5e9'],
   ['tech','ISS TRACKING','_openISSTracking','#6366f1'],
+  ['geo','TRADE WAR','P61_openTrade','#f59e0b'],
+  ['geo','MILITIA ECON','P61_openMilec','#92400e'],
+  ['geo','NUKE SECURITY','P61_openNukesec','#dc2626'],
+  ['geo','DE-DOLLAR','P61_openDedollar','#22c55e'],
+  ['geo','MERCENARIES','P61_openMerc','#7c3aed'],
+  ['geo','GEO RISK','P62_openGeoRisk','#0ea5e9'],
+  ['geo','GREAT POWER','P63_openGPC','#3b82f6'],
+  ['tech','TECH COLD WAR','P63_openTechCW','#06b6d4'],
+  ['threats','REGIME SURV','P63_openRegsurv','#c026d3'],
+  ['geo','ALLIANCES','P63_openAlliance','#0369a1'],
+  ['conflicts','BORDER INTEL','P63_openBorder','#b45309'],
+  ['econ','ECON COERCION','P63_openCoerce','#dc2626'],
 ];
 
 var _mobileCatMap = {
@@ -35739,6 +35751,544 @@ function _runCompare(){
  grid.innerHTML=_cmpColumn(ca)+_cmpColumn(cb);
 }
 
+
+// ===== PHASE 61-63: Intelligence Modules =====
+
+// --- MODULE 1: TRADE WAR TRACKER (p61trade) ---
+function P61_openTrade(){
+  var o=document.getElementById('p61trade-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('tariffs trade war China US WTO export controls supply chain','p61trade-gdelt',2);P61_renderTradeAnalysis();}
+}
+function P61_closeTrade(){var o=document.getElementById('p61trade-overlay');if(o)o.style.display='none';}
+function P61_renderTradeAnalysis(){
+  var el=document.getElementById('p61trade-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f59e0b;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fcd34d;margin-bottom:8px;">US-CHINA TARIFF ESCALATION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">2018 Section 301 tariffs:</b> 25% on $250B Chinese goods; China retaliated on $110B US goods<br>'+
+    '<b style="color:#e2e8f0;">2024 Biden tariff expansion:</b> EVs 100%; solar cells 50%; steel/aluminum 25%; medical PPE 50%<br>'+
+    '<b style="color:#e2e8f0;">2025 Trump escalation:</b> Universal baseline tariffs; China-specific 60%+ rates under review<br>'+
+    '<b style="color:#e2e8f0;">USMCA use:</b> China routing goods via Mexico; Rules of Origin enforcement tightened<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Bilateral trade in goods declined but total dependency remains through third parties</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f59e0b;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fcd34d;margin-bottom:8px;">EU TRADE DEFENSE ACTIONS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">EV anti-subsidy probe:</b> Provisional duties up to 48% on Chinese EVs (BYD, SAIC, Geely) July 2024<br>'+
+    '<b style="color:#e2e8f0;">Foreign Subsidies Regulation:</b> New powers to block subsidized foreign bids in EU procurement<br>'+
+    '<b style="color:#e2e8f0;">CBAM:</b> Carbon Border Adjustment Mechanism; 2026 full rollout; affects steel, aluminum, fertilizers<br>'+
+    '<b style="color:#e2e8f0;">TDI tools:</b> Anti-dumping and anti-subsidy investigations at record pace; steel sector leading<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> EU trade defense accelerating; balancing economic security vs China market access</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f59e0b;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fcd34d;margin-bottom:8px;">SUPPLY CHAIN DECOUPLING</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Friend-shoring:</b> US/EU diverting supply chains to allied nations; Vietnam, India, Mexico benefiting<br>'+
+    '<b style="color:#e2e8f0;">CHIPS Act:</b> $52B US semiconductor manufacturing incentives; TSMC/Samsung Arizona fabs<br>'+
+    '<b style="color:#e2e8f0;">IRA manufacturing:</b> $370B clean energy incentives reshaping battery/EV supply chains to US/allies<br>'+
+    '<b style="color:#e2e8f0;">Rare earths:</b> China controls 60% of mining, 85% processing; US/Australia/Canada racing alternatives<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Decoupling slow and costly; interdependence reduced but not eliminated; 10-year timeline</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f59e0b;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fcd34d;margin-bottom:8px;">WTO DISPUTE TRACKER</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Appellate Body crisis:</b> US blocking appointments since 2019; WTO appeals mechanism paralyzed<br>'+
+    '<b style="color:#e2e8f0;">Active disputes:</b> US-China solar panels, steel/aluminum; EU-China EV subsidies; India-US steel<br>'+
+    '<b style="color:#e2e8f0;">MPIA workaround:</b> Multi-Party Interim Arrangement; 26 members bypass blocked Appellate Body<br>'+
+    '<b style="color:#e2e8f0;">Reform efforts:</b> WTO MC13 (Feb 2024) partial e-commerce deal; fisheries subsidies still blocked<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Rules-based trade order under stress; bilateral/plurilateral deals filling gap</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 2: MILITIA ECONOMICS (p61milec) ---
+function P61_openMilec(){
+  var o=document.getElementById('p61milec-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('militia armed group financing weapons trafficking illegal economy conflict','p61milec-gdelt',2);P61_renderMilecAnalysis();}
+}
+function P61_closeMilec(){var o=document.getElementById('p61milec-overlay');if(o)o.style.display='none';}
+function P61_renderMilecAnalysis(){
+  var el=document.getElementById('p61milec-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #92400e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d97706;margin-bottom:8px;">PMC REVENUE STREAMS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Wagner/Africa Corps:</b> Gold, diamonds, timber concessions in CAR, Mali, Sudan; ~$2.5B annual est.<br>'+
+    '<b style="color:#e2e8f0;">Security contracts:</b> Host government payments in exchange for protection and regime security<br>'+
+    '<b style="color:#e2e8f0;">Looting/taxation:</b> Territorial control enables checkpoint taxation; humanitarian extortion<br>'+
+    '<b style="color:#e2e8f0;">GCC PMCs:</b> UAE-financed groups in Libya, Yemen; Saudi payments to Syrian tribal fighters<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Resource extraction model allows PMCs to operate with minimal state budget dependence</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #92400e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d97706;margin-bottom:8px;">ILLICIT FINANCING OF ARMED GROUPS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Drug trafficking:</b> Taliban: ~$400M/yr opium; FARC: cocaine; Hezbollah: global narco network<br>'+
+    '<b style="color:#e2e8f0;">Kidnap for ransom:</b> Al-Qaeda/ISIS affiliates; estimated $50M-125M annually in Sahel/MENA<br>'+
+    '<b style="color:#e2e8f0;">Cryptocurrency:</b> Hamas, Islamic Jihad fundraising via crypto; North Korean Lazarus Group hacking<br>'+
+    '<b style="color:#e2e8f0;">Hawala networks:</b> Informal value transfer; FATF designated jurisdictions unable to police flows<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Diversified financing makes armed groups resilient to single-vector disruption</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #92400e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d97706;margin-bottom:8px;">CONFLICT COMMODITY NEXUS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">DRC minerals:</b> Coltan, gold, cassiterite fund M23 and FDLR; value ~$1.2B annually illicit<br>'+
+    '<b style="color:#e2e8f0;">Sudan gold:</b> RSF (Hemedti) controls Darfur gold fields; exports via UAE outside official channels<br>'+
+    '<b style="color:#e2e8f0;">Yemen oil theft:</b> Houthis seize fuel shipments; generate revenue from controlled port fees<br>'+
+    '<b style="color:#e2e8f0;">Blood timber:</b> Myanmar junta/ethnic armed groups logging teak; Thailand/China import routes<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Conflict commodities self-sustain wars; key target for Kimberley/OECD due diligence</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #92400e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d97706;margin-bottom:8px;">ARMS TRAFFICKING ROUTES</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Libya overflow:</b> Post-Gaddafi arms flooded Sahel; MANPADS, AK-pattern weapons across region<br>'+
+    '<b style="color:#e2e8f0;">Ukraine war leakage:</b> Western-supplied arms diversion; MANPADS accountability gaps noted by NAFO<br>'+
+    '<b style="color:#e2e8f0;">Iran supply chains:</b> Weapons to Houthis, Hezbollah, Hamas via Iraq/Syria/maritime smuggling<br>'+
+    '<b style="color:#e2e8f0;">DPRK exports:</b> Artillery shells and missiles to Russia; ballistic missile tech proliferation<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Arms trafficking directly enables militia persistence; end-use monitoring inadequate globally</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 3: NUCLEAR SECURITY WATCH (p61nukesec) ---
+function P61_openNukesec(){
+  var o=document.getElementById('p61nukesec-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('nuclear security IAEA safeguards proliferation smuggling radiological dirty bomb','p61nukesec-gdelt',2);P61_renderNukesecAnalysis();}
+}
+function P61_closeNukesec(){var o=document.getElementById('p61nukesec-overlay');if(o)o.style.display='none';}
+function P61_renderNukesecAnalysis(){
+  var el=document.getElementById('p61nukesec-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">NPT FRAMEWORK STATUS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Treaty members:</b> 191 states; non-members: India, Pakistan, Israel (never joined), DPRK (withdrew 2003)<br>'+
+    '<b style="color:#e2e8f0;">Review Conference 2022:</b> Failed to adopt consensus final document; Russia blocked over Ukraine language<br>'+
+    '<b style="color:#e2e8f0;">Article VI obligations:</b> P5 disarmament commitments unmet; all five modernizing arsenals<br>'+
+    '<b style="color:#e2e8f0;">TPNW tension:</b> Treaty on Prohibition of Nuclear Weapons (2021); 93 signatories; P5 boycott<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> NPT regime under strain; no collapse imminent but norms eroding at margins</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">IAEA SAFEGUARDS COVERAGE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Comprehensive safeguards:</b> Cover ~97% of all non-nuclear-weapon states with significant nuclear material<br>'+
+    '<b style="color:#e2e8f0;">Additional Protocol:</b> Enhanced inspections; 140 states have AP in force; 6 have material but no AP<br>'+
+    '<b style="color:#e2e8f0;">Iran:</b> Suspended cooperation 2021; JCPOA negotiations stalled; enrichment at 60% (near weapons-grade)<br>'+
+    '<b style="color:#e2e8f0;">DPRK:</b> No IAEA access since 2009; estimated 40-50 warheads; continued fissile material production<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Safeguards effective for cooperative states; determined proliferators can deceive or withdraw</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">NUCLEAR SMUGGLING THREAT</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">IAEA ITDB:</b> 4,243 confirmed incidents of nuclear/radiological trafficking 1993-2022<br>'+
+    '<b style="color:#e2e8f0;">HEU/Pu seizures:</b> Multiple cases in Georgia, Moldova; organized crime-state nexus in FSU space<br>'+
+    '<b style="color:#e2e8f0;">Radiological devices:</b> Orphan sources (abandoned medical/industrial); 2,000+ unaccounted globally<br>'+
+    '<b style="color:#e2e8f0;">Dirty bomb risk:</b> Conventional explosive + radiological material; mass panic weapon; not WMD<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> HEU smuggling risk reduced since 1990s but not eliminated; state-sponsored transfer greatest threat</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">PROLIFERATION WATCH 2025</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Iran threshold:</b> Enrichment stockpile sufficient for multiple weapons; breakout time weeks if decided<br>'+
+    '<b style="color:#e2e8f0;">Saudi nuclear ambitions:</b> MBS stated "if Iran gets bomb, Saudi will too"; US-Saudi 123 agreement talks<br>'+
+    '<b style="color:#e2e8f0;">Turkey:</b> Erdogan statements on nuclear ambitions (2019); Akkuyu Russian NPP under construction<br>'+
+    '<b style="color:#e2e8f0;">ROK latent capability:</b> Advanced civilian nuclear program; polling shows public support for own weapons<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Middle East proliferation cascade most acute risk; extended deterrence credibility critical</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 4: DE-DOLLARIZATION (p61dedollar) ---
+function P61_openDedollar(){
+  var o=document.getElementById('p61dedollar-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('de-dollarization BRICS currency dollar reserve SWIFT CIPS petrodollar','p61dedollar-gdelt',2);P61_renderDedollarAnalysis();}
+}
+function P61_closeDedollar(){var o=document.getElementById('p61dedollar-overlay');if(o)o.style.display='none';}
+function P61_renderDedollarAnalysis(){
+  var el=document.getElementById('p61dedollar-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">DOLLAR RESERVE STATUS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Global FX reserves:</b> USD = 58% (down from 71% in 2000); EUR 20%; JPY 6%; CNY 2.3%<br>'+
+    '<b style="color:#e2e8f0;">Dollar invoicing:</b> ~50% of global trade still dollar-invoiced despite US share = 11% of world trade<br>'+
+    '<b style="color:#e2e8f0;">Petrodollar:</b> Saudi Aramco accepting yuan for some Chinese oil purchases; non-dollar contracts rising<br>'+
+    '<b style="color:#e2e8f0;">US debt risk:</b> $34T+ national debt; dollar confidence tied to fiscal trajectory and geopolitical trust<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Dollar dominance declining slowly; no credible alternative at scale; multi-polar currency era emerging</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">BRICS CURRENCY INITIATIVES</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">mBridge:</b> Multi-CBDC platform; China, UAE, Thailand, Saudi testing cross-border settlement<br>'+
+    '<b style="color:#e2e8f0;">BRICS settlement unit:</b> Proposed basket currency for intra-BRICS trade; design contested; no timeline<br>'+
+    '<b style="color:#e2e8f0;">India-Russia trade:</b> Bilateral trade in rupees and rubles; rupee surplus accumulation problem<br>'+
+    '<b style="color:#e2e8f0;">ASEAN local currency:</b> ASEAN+3 local currency settlement framework; reducing dollar settlement<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Fragmentation accelerating but BRICS currency remains aspirational; coherence lacking</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">CIPS vs SWIFT</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">SWIFT:</b> 11,000+ institutions in 200 countries; processes $400T+ transactions annually<br>'+
+    '<b style="color:#e2e8f0;">CIPS (China):</b> 1,400+ direct/indirect participants; handles ~$100B/day; growing but limited<br>'+
+    '<b style="color:#e2e8f0;">SPFS (Russia):</b> Domestic SWIFT alternative; ~400 banks; not an international system<br>'+
+    '<b style="color:#e2e8f0;">Interoperability:</b> CIPS relies partly on SWIFT messaging; not fully independent yet<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> SWIFT weaponization accelerating Chinese CIPS development; not yet a credible global alternative</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">CBDC GEOPOLITICS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Digital yuan (e-CNY):</b> 260M+ wallets; tested at 2022 Olympics; expanding internationally via mBridge<br>'+
+    '<b style="color:#e2e8f0;">Fed digital dollar:</b> Research phase; US Congress divided on retail CBDC privacy concerns<br>'+
+    '<b style="color:#e2e8f0;">ECB digital euro:</b> Preparation phase 2023; target 2027-2028 launch; retail focus<br>'+
+    '<b style="color:#e2e8f0;">Emerging market CBDCs:</b> Bahamas Sand Dollar, Nigeria eNaira, Eastern Caribbean DCash live<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> CBDCs reshape monetary sovereignty; Chinese CBDC most geopolitically significant globally</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 5: MERCENARY FORCES (p61merc) ---
+function P61_openMerc(){
+  var o=document.getElementById('p61merc-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('mercenary PMC Wagner private military Africa Middle East combat contractors','p61merc-gdelt',2);P61_renderMercAnalysis();}
+}
+function P61_closeMerc(){var o=document.getElementById('p61merc-overlay');if(o)o.style.display='none';}
+function P61_renderMercAnalysis(){
+  var el=document.getElementById('p61merc-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7c3aed;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">WAGNER / AFRICA CORPS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Post-Prigozhin:</b> Rebranded Africa Corps under Russian MOD control after June 2023 mutiny/death<br>'+
+    '<b style="color:#e2e8f0;">Active deployments:</b> Mali, Burkina Faso, Niger, CAR, Libya, Sudan; estimated 15,000-20,000 personnel<br>'+
+    '<b style="color:#e2e8f0;">Business model:</b> Security for regime protection + mining concessions (gold, diamonds, uranium)<br>'+
+    '<b style="color:#e2e8f0;">Atrocity record:</b> Moura massacre (Mali, 2022): 500+ civilians killed; ICC investigation pending<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Africa Corps institutionalized Wagner approach; Russian strategic foothold in 6+ African states</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7c3aed;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">MIDDLE EAST PMC NETWORKS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">UAE operations:</b> Spear Operations Group (Colombian mercenaries) used in Libya/Yemen; US contractors<br>'+
+    '<b style="color:#e2e8f0;">Saudi Yemen forces:</b> Blackwater successor firms; tribal militia payments; Sudanese RSF rentals<br>'+
+    '<b style="color:#e2e8f0;">Iran IRGC proxies:</b> Hezbollah, Kata ib Hezbollah, ISWAP-Iraq as non-state proxy forces<br>'+
+    '<b style="color:#e2e8f0;">Turkey Sadat:</b> Syrian National Army components deployed to Libya, Azerbaijan, potential Africa<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> PMC/proxy use normalizing great power competition below threshold of direct conflict</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7c3aed;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">US / WESTERN CONTRACTORS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Iraq/Afghanistan legacy:</b> Peak 200,000+ contractors in Iraq; still ~30,000 supporting US forces globally<br>'+
+    '<b style="color:#e2e8f0;">LOGCAP contracts:</b> Multi-billion logistics; KBR, Vectrus, Amentum operating in 50+ countries<br>'+
+    '<b style="color:#e2e8f0;">Air operations:</b> Constellis, AECOM air support; deniable aviation missions; medevac<br>'+
+    '<b style="color:#e2e8f0;">Ukraine advisory:</b> MPRI/Academi successor firms reportedly training Ukrainian forces<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Western PMCs institutionalized in US military strategy; accountability gap vs uniformed forces</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7c3aed;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">LEGAL FRAMEWORKS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Montreux Document:</b> 2008 non-binding; 58 states; IHL/IHRL duties for PMCs and hiring states<br>'+
+    '<b style="color:#e2e8f0;">ICOC:</b> International Code of Conduct for PSCs; 700+ companies signed; weak enforcement<br>'+
+    '<b style="color:#e2e8f0;">Mercenary prohibition:</b> UN Convention 1989; 35 states parties only; major users not signatories<br>'+
+    '<b style="color:#e2e8f0;">US MEJA:</b> Military Extraterritorial Jurisdiction Act; prosecuted fewer than 20 contractors since 2000<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Legal accountability framework largely ineffective; impunity remains the norm for PMC crimes</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 6: GEOPOLITICAL RISK SCORES (p62georisk) ---
+function P62_openGeoRisk(){
+  var o=document.getElementById('p62georisk-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('geopolitical risk political instability crisis conflict escalation fragile states','p62georisk-gdelt',2);P62_renderGeoRiskAnalysis();}
+}
+function P62_closeGeoRisk(){var o=document.getElementById('p62georisk-overlay');if(o)o.style.display='none';}
+function P62_renderGeoRiskAnalysis(){
+  var el=document.getElementById('p62georisk-analysis');
+  if(!el)return;
+  var risks=[
+    {c:'Sudan',score:96,tier:'CRITICAL',note:'RSF-SAF civil war; mass atrocities; famine; regional spillover'},
+    {c:'Myanmar',score:94,tier:'CRITICAL',note:'Military junta vs resistance; territorial fragmentation; ethnic cleansing'},
+    {c:'Haiti',score:93,tier:'CRITICAL',note:'Gang control 80% of Port-au-Prince; state collapse; multinational force deploying'},
+    {c:'North Korea',score:91,tier:'CRITICAL',note:'Nuclear escalation; ICBM tests; Russia arms cooperation; famine risk'},
+    {c:'Iran',score:87,tier:'VERY HIGH',note:'Nuclear threshold; proxy network; domestic protest latency; IRGC escalation'},
+    {c:'Russia-Ukraine',score:86,tier:'VERY HIGH',note:'Ongoing war; escalation to NATO territory; nuclear signaling'},
+    {c:'Venezuela',score:84,tier:'VERY HIGH',note:'Post-election crisis; Maduro entrenchment; border tensions with Guyana'},
+    {c:'Ethiopia',score:82,tier:'VERY HIGH',note:'Amhara conflict; Tigray fragile peace; Eritrea spoiler; economic stress'},
+    {c:'Pakistan',score:80,tier:'HIGH',note:'PTI political crisis; IMF conditionality; Afghanistan border; nuclear security'},
+    {c:'Israel-Gaza',score:79,tier:'HIGH',note:'Ongoing operations; hostage crisis; West Bank tensions; regional escalation risk'},
+    {c:'Taiwan Strait',score:77,tier:'HIGH',note:'PLA exercises; US arms sales; election outcomes; cross-strait miscalculation'},
+    {c:'Sahel',score:75,tier:'HIGH',note:'Mali/Niger/Burkina coup wave; AES bloc; French withdrawal; Wagner presence'},
+  ];
+  var rows=risks.map(function(r){
+    var col=r.tier==='CRITICAL'?'#ef4444':r.tier==='VERY HIGH'?'#f97316':'#eab308';
+    return '<tr><td style="color:#e2e8f0;font-weight:700;">'+r.c+'</td><td style="text-align:center;"><span style="color:'+col+';font-weight:900;">'+r.score+'</span></td><td style="color:'+col+';font-weight:700;">'+r.tier+'</td><td style="color:#94a3b8;font-size:7.5px;">'+r.note+'</td></tr>';
+  }).join('');
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;margin-bottom:20px;">'+
+    '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">COUNTRY/ZONE</th><th style="color:#475569;padding:6px 8px;">RISK SCORE</th><th style="text-align:left;color:#475569;padding:6px 8px;">TIER</th><th style="text-align:left;color:#475569;padding:6px 8px;">INTELLIGENCE NOTE</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #0ea5e9;border-radius:6px;padding:14px;margin-bottom:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#7dd3fc;margin-bottom:8px;">METHODOLOGY NOTE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    'Composite score (0-100) derived from: active conflict intensity (30%), state fragility index (25%), political violence trajectory (20%), economic stress indicators (15%), nuclear/WMD proximity (10%). '+
+    'Sources: Fund for Peace FSI, ACLED conflict data, World Bank political stability, EIU country risk, GDELT event intensity. Updated quarterly with real-time GDELT signals overlay.'+
+    '</div></div>';
+}
+
+// --- MODULE 7: GREAT POWER CHESS (p63gpc) ---
+function P63_openGPC(){
+  var o=document.getElementById('p63gpc-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('US China Russia strategic competition great power rivalry geopolitics influence','p63gpc-gdelt',2);P63_renderGPCAnalysis();}
+}
+function P63_closeGPC(){var o=document.getElementById('p63gpc-overlay');if(o)o.style.display='none';}
+function P63_renderGPCAnalysis(){
+  var el=document.getElementById('p63gpc-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #3b82f6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#93c5fd;margin-bottom:8px;">US-CHINA STRATEGIC COMPETITION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Economic:</b> Trade war; technology decoupling; supply chain reshoring; financial system bifurcation<br>'+
+    '<b style="color:#e2e8f0;">Military:</b> PLA modernization; Taiwan contingency planning; South China Sea; AUKUS/QUAD response<br>'+
+    '<b style="color:#e2e8f0;">Technology:</b> AI supremacy race; semiconductor controls; 5G/6G standards; quantum computing<br>'+
+    '<b style="color:#e2e8f0;">Diplomatic:</b> Competing multilateral architectures; Global South influence competition<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Structural competition; engagement channels maintained to prevent miscalculation; no decoupling from catastrophic</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #3b82f6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#93c5fd;margin-bottom:8px;">RUSSIA POSITIONING</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Ukraine war impact:</b> Military depleted; economy sanctions-stressed; isolation from West deepened<br>'+
+    '<b style="color:#e2e8f0;">China pivot:</b> Energy/trade redirected east; junior partner in Sino-Russian axis vs Western order<br>'+
+    '<b style="color:#e2e8f0;">Arctic ambition:</b> Northern Sea Route militarization; resource exploitation; NATO Arctic flank pressure<br>'+
+    '<b style="color:#e2e8f0;">Africa/ME influence:</b> Africa Corps presence; Libyan leverage; Syria foothold maintained<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Russia weakened but not contained; nuclear arsenal keeps major power status; long-term trajectory down</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #3b82f6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#93c5fd;margin-bottom:8px;">MULTI-POLAR ORDER EMERGING</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Structural shift:</b> Unipolar moment (1991-2008) ended; contested multi-polar order in formation<br>'+
+    '<b style="color:#e2e8f0;">Middle powers:</b> India, Turkey, Brazil, Saudi Arabia, UAE leveraging non-alignment for maximum gain<br>'+
+    '<b style="color:#e2e8f0;">Institution strain:</b> UN Security Council paralysis; WTO dispute mechanism broken; G20 consensus rare<br>'+
+    '<b style="color:#e2e8f0;">Regional orders:</b> Indo-Pacific, Greater Middle East, Euro-Atlantic as distinct sub-systems<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Multi-polarity increases conflict risk through miscalculation; stability requires new norms frameworks</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #3b82f6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#93c5fd;margin-bottom:8px;">KEY COMPETITION VECTORS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Infrastructure:</b> BRI vs G7 Partnership for Global Infrastructure (PGII); $600B commitment 2027<br>'+
+    '<b style="color:#e2e8f0;">Narrative warfare:</b> Information environment contest; RT/CGTN vs Western media; social media IO<br>'+
+    '<b style="color:#e2e8f0;">Standards setting:</b> China pushing ITU, ISO standards; US defending open internet; Huawei 5G lock-in<br>'+
+    '<b style="color:#e2e8f0;">Space competition:</b> Artemis vs China lunar program; ASAT tests; satellite constellation races<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Competition across all domains simultaneously; risk of inadvertent escalation highest in cyber/space</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 8: TECH COLD WAR (p63techcw) ---
+function P63_openTechCW(){
+  var o=document.getElementById('p63techcw-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('semiconductor chip war technology export controls AI race quantum tech decoupling','p63techcw-gdelt',2);P63_renderTechCWAnalysis();}
+}
+function P63_closeTechCW(){var o=document.getElementById('p63techcw-overlay');if(o)o.style.display='none';}
+function P63_renderTechCWAnalysis(){
+  var el=document.getElementById('p63techcw-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">SEMICONDUCTOR CONTROLS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Oct 2022 BIS rules:</b> Cut China off from advanced AI chips (A100/H100); EDA software; chipmaking tools<br>'+
+    '<b style="color:#e2e8f0;">Oct 2023 expansion:</b> Closed loopholes; extended to 21 countries; datacenter chip thresholds tightened<br>'+
+    '<b style="color:#e2e8f0;">ASML controls:</b> Netherlands banned EUV (2019) and DUV exports to China; Japan joined 2024<br>'+
+    '<b style="color:#e2e8f0;">China response:</b> Huawei Kirin 9000s (7nm breakthrough 2023); SMIC progress; massive state investment<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Controls slowing but not stopping China; 2-3 generation gap maintained; leakage through third countries</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">AI SUPREMACY RACE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">US lead:</b> GPT-4, Claude, Gemini frontier models; NVIDIA GPU dominance; $500B+ Stargate investment<br>'+
+    '<b style="color:#e2e8f0;">China position:</b> DeepSeek R1 (open source rival to GPT-4); Baidu ERNIE; Alibaba Qwen; data advantages<br>'+
+    '<b style="color:#e2e8f0;">Military AI:</b> US JAIC/CDAO; China military-civil fusion AI programs; autonomous systems race<br>'+
+    '<b style="color:#e2e8f0;">Frontier talent:</b> Chinese-origin researchers 25%+ of top US AI labs; visa policies becoming security tool<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> US leads on frontier models; China leads on deployment scale; military AI race most dangerous</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">AI GOVERNANCE DIVERGENCE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">EU AI Act (2024):</b> Risk-based regulation; prohibits social scoring, real-time biometrics in public<br>'+
+    '<b style="color:#e2e8f0;">China AI rules:</b> Generative AI regulation (2023); algorithmic rules; CCP content alignment required<br>'+
+    '<b style="color:#e2e8f0;">US approach:</b> Executive Order (Oct 2023); light-touch voluntary; export controls on frontier AI chips<br>'+
+    '<b style="color:#e2e8f0;">Military AI:</b> LAWS (lethal autonomous weapons) -- US/China racing; UN talks stalled at CCW<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Three regulatory blocs (EU, US, China) setting incompatible standards; governance gap most dangerous</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">QUANTUM COMPUTING RACE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">US lead:</b> Google Willow (105 qubit, 2024); IBM 1,000+ qubit roadmap; DARPA quantum programs<br>'+
+    '<b style="color:#e2e8f0;">China:</b> Jiuzhang photonic QC; heavy state investment; quantum comms satellite (Mozi)<br>'+
+    '<b style="color:#e2e8f0;">Cryptography threat:</b> Harvest now, decrypt later -- nation-states storing encrypted traffic now<br>'+
+    '<b style="color:#e2e8f0;">NIST PQC standards:</b> Post-quantum crypto algorithms finalized 2024; migration is decade-long process<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Cryptographically relevant QC likely 10-15 years away; quantum comms deployments nearer term</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 9: REGIME SURVIVAL (p63regsurv) ---
+function P63_openRegsurv(){
+  var o=document.getElementById('p63regsurv-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('authoritarian regime stability repression opposition protest crackdown coup','p63regsurv-gdelt',2);P63_renderRegsurvAnalysis();}
+}
+function P63_closeRegsurv(){var o=document.getElementById('p63regsurv-overlay');if(o)o.style.display='none';}
+function P63_renderRegsurvAnalysis(){
+  var el=document.getElementById('p63regsurv-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #c026d3;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#e879f9;margin-bottom:8px;">COUP-PROOFING TACTICS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Parallel military structures:</b> Republican Guards, IRGC, National Guard -- counterweight to regular army<br>'+
+    '<b style="color:#e2e8f0;">Ethnic/tribal loyalty:</b> Alawi (Assad), Sunni Tikritis (Saddam), Praetorian units from ruler\'s group<br>'+
+    '<b style="color:#e2e8f0;">Officer rotation:</b> Frequent shuffles to prevent loyalty networks building; North Korea model<br>'+
+    '<b style="color:#e2e8f0;">Patronage cash:</b> Rent payments to military elite; Russia siloviki patronage; Gulf rulers<br>'+
+    '<b style="color:#e2e8f0;">Institutional overlap:</b> Multiple competing agencies with surveillance of each other (redundancy)</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #c026d3;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#e879f9;margin-bottom:8px;">COLOR REVOLUTION COUNTERMEASURES</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">NGO laws:</b> Foreign agents legislation (Russia 2012, Hungary 2017, Georgia 2024)<br>'+
+    '<b style="color:#e2e8f0;">Media control:</b> State capture of TV; social media kill switches (internet shutdowns)<br>'+
+    '<b style="color:#e2e8f0;">Election manipulation:</b> Russian interference toolkit; observer intimidation; result falsification<br>'+
+    '<b style="color:#e2e8f0;">Pre-emptive arrests:</b> Opposition leaders jailed before elections; Belarus Lukashenko model<br>'+
+    '<b style="color:#e2e8f0;">Narrative:</b> Color revolution framed as Western interference; nationalist legitimacy defense</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #c026d3;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#e879f9;margin-bottom:8px;">DIGITAL SURVEILLANCE AS CONTROL</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">China SCS (Social Credit):</b> Financial/behavioral scoring; blacklists restrict travel, finance<br>'+
+    '<b style="color:#e2e8f0;">Xinjiang model:</b> Predictive policing; face recognition + ID checkpoints; exported to allies<br>'+
+    '<b style="color:#e2e8f0;">Pegasus/spyware:</b> NSO Group clients include 45 countries; Saudi, UAE, Azerbaijan documented<br>'+
+    '<b style="color:#e2e8f0;">Internet firewalls:</b> Great Firewall (China), Halal internet (Iran), RuNet isolation plans<br>'+
+    '<b style="color:#e2e8f0;">Effectiveness:</b> Surveillance delays but rarely prevents uprisings; Iran 2022 survived despite monitoring</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #c026d3;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#e879f9;margin-bottom:8px;">MOST VULNERABLE REGIMES 2025-26</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Belarus:</b> Lukashenko health; succession unclear; Russia as guarantor; frozen opposition<br>'+
+    '<b style="color:#e2e8f0;">Venezuela:</b> Maduro post-election crisis; military loyalty fragile; economic collapse ongoing<br>'+
+    '<b style="color:#e2e8f0;">Iran:</b> Khamenei succession; Revolutionary Guards vs reformists; economic pressure; protests latent<br>'+
+    '<b style="color:#e2e8f0;">Ethiopia:</b> Abiy Ahmed balancing act; Amhara insurgency; Tigray recidivism risk<br>'+
+    '<b style="color:#e2e8f0;">North Korea:</b> Kim health speculation; purge cycles; famine risk; succession to Kim Ju-ae?</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 10: ALLIANCE REALIGNMENT (p63alliance) ---
+function P63_openAlliance(){
+  var o=document.getElementById('p63alliance-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('NATO BRICS SCO QUAD alliance geopolitics realignment partnership security','p63alliance-gdelt',2);P63_renderAllianceAnalysis();}
+}
+function P63_closeAlliance(){var o=document.getElementById('p63alliance-overlay');if(o)o.style.display='none';}
+function P63_renderAllianceAnalysis(){
+  var el=document.getElementById('p63alliance-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #0369a1;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#38bdf8;margin-bottom:8px;">NATO EXPANSION STATUS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Finland:</b> Joined April 2023 (member 31); 1,340km border with Russia added to NATO perimeter<br>'+
+    '<b style="color:#e2e8f0;">Sweden:</b> Joined March 2024 (member 32); Baltic Sea now near-NATO lake; strategic shift<br>'+
+    '<b style="color:#e2e8f0;">Ukraine:</b> Membership aspirant; Zelenskyy seeking MAP; Russia red line; US/Germany cautious<br>'+
+    '<b style="color:#e2e8f0;">Georgia:</b> Association without MAP; Russian occupied 20% territory; domestic political crisis<br>'+
+    '<b style="color:#e2e8f0;">2% GDP defense:</b> 23 of 32 members now at or above target (up from 10 in 2022 post-invasion)</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #0369a1;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#38bdf8;margin-bottom:8px;">BRICS+ EXPANSION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">BRICS+ members (Jan 2024):</b> Original 5 + Saudi Arabia, UAE, Egypt, Ethiopia, Iran<br>'+
+    '<b style="color:#e2e8f0;">Argentina:</b> Invited but declined under Milei government (pro-West pivot)<br>'+
+    '<b style="color:#e2e8f0;">Additional candidates:</b> Turkey, Malaysia, Thailand, Nigeria expressing interest<br>'+
+    '<b style="color:#e2e8f0;">GDP combined:</b> BRICS+ ~40% of global GDP at PPP; 45% of global population<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> More anti-Western forum than functional alliance; divergent interests limit action</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #0369a1;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#38bdf8;margin-bottom:8px;">QUAD DEEPENING</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Members:</b> US, Japan, Australia, India -- informal security dialogue, not treaty alliance<br>'+
+    '<b style="color:#e2e8f0;">Deliverables:</b> Maritime surveillance sharing; vaccine diplomacy; clean energy tech cooperation<br>'+
+    '<b style="color:#e2e8f0;">MALABAR exercises:</b> Naval exercises now quadrilateral; anti-submarine warfare focus<br>'+
+    '<b style="color:#e2e8f0;">India caveats:</b> No formal alliance commitment; maintains SCO membership; Russian arms buyer<br>'+
+    '<b style="color:#e2e8f0;">AUKUS parallel:</b> US-UK-Australia submarines; AI/cyber/hypersonics Pillar II cooperation</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #0369a1;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#38bdf8;margin-bottom:8px;">GLOBAL SOUTH NON-ALIGNMENT 2.0</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">UN votes on Ukraine:</b> ~40 countries abstaining; India, South Africa, China, Brazil leading<br>'+
+    '<b style="color:#e2e8f0;">Strategic autonomy:</b> Modi doctrine; Lula "neither Washington nor Beijing"; ANC equidistance<br>'+
+    '<b style="color:#e2e8f0;">Leverage:</b> Both blocs competing for Global South; infrastructure, arms, debt relief offered<br>'+
+    '<b style="color:#e2e8f0;">G20:</b> India presidency 2023 centered Global South agenda; Brazil 2024 followed<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Non-alignment 2.0 is coherent strategy; maximizes aid/investment from both camps</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 11: BORDER INCIDENTS (p63border) ---
+function P63_openBorder(){
+  var o=document.getElementById('p63border-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('border incident skirmish territorial dispute military clash frontier conflict','p63border-gdelt',2);P63_renderBorderAnalysis();}
+}
+function P63_closeBorder(){var o=document.getElementById('p63border-overlay');if(o)o.style.display='none';}
+function P63_renderBorderAnalysis(){
+  var el=document.getElementById('p63border-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #b45309;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:8px;">INDIA-CHINA LAC TENSIONS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Line of Actual Control:</b> 3,488 km; multiple disputed sectors (Aksai Chin, Arunachal Pradesh)<br>'+
+    '<b style="color:#e2e8f0;">Galwan 2020:</b> 20 Indian, 4+ Chinese soldiers killed (first deaths since 1975); face-off pattern<br>'+
+    '<b style="color:#e2e8f0;">Current status:</b> Disengagement at Depsang and Demchok (Oct 2024); partial; patrols restricted<br>'+
+    '<b style="color:#e2e8f0;">PLA buildup:</b> Villages/roads in disputed territory; Doklam plateau construction; dual-use infra<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Managed tension; both sides avoiding 2020-level escalation; structural rivalry persists</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #b45309;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:8px;">ARMENIA-AZERBAIJAN POST-WAR</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">2023 Karabakh:</b> Azerbaijan blitz retook Karabakh in 24 hours; 100,000+ Armenians displaced<br>'+
+    '<b style="color:#e2e8f0;">Border delimitation:</b> Peace treaty negotiations ongoing; 4 villages transferred to Azerbaijan<br>'+
+    '<b style="color:#e2e8f0;">Zangezur corridor:</b> Azerbaijan demands transit to Nakhchivan through Armenian territory<br>'+
+    '<b style="color:#e2e8f0;">Armenian pivot:</b> Away from Russia toward EU/France; CSTO credibility destroyed<br>'+
+    '<b style="color:#e2e8f0;">Risk:</b> Azerbaijan leverage over peace process; potential for coercive pressure on border</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #b45309;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:8px;">KOSOVO-SERBIA TENSIONS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Status:</b> Kosovo independent (2008); Serbia/Russia/China do not recognize; UN member with caveats<br>'+
+    '<b style="color:#e2e8f0;">North Kosovo:</b> Serbian-majority; parallel structures; periodic barricades; KFOR presence<br>'+
+    '<b style="color:#e2e8f0;">Banjska incident (2023):</b> Armed Serb attack on Kosovo police; EU-mediated de-escalation<br>'+
+    '<b style="color:#e2e8f0;">Belgrade-Pristina dialogue:</b> Stalled; Vucic playing Russia card against EU integration pressure<br>'+
+    '<b style="color:#e2e8f0;">Risk:</b> Russian spoiler role; Serbian army modernization; North Kosovo provocation</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #b45309;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:8px;">ESCALATION LADDER ANALYSIS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Rung 1 - Patrol friction:</b> LAC face-offs, SCS water cannon; risk of rapid escalation low<br>'+
+    '<b style="color:#e2e8f0;">Rung 2 - Limited clash:</b> Galwan 2020 type; fatalities; nationalist pressure; escalation managed<br>'+
+    '<b style="color:#e2e8f0;">Rung 3 - Border war:</b> Kargil 1999 model; limited territorial conflict; nuclear backstop<br>'+
+    '<b style="color:#e2e8f0;">Rung 4 - Full war:</b> Requires decision by leadership; major political threshold; nuclear risk<br>'+
+    '<b style="color:#e2e8f0;">De-escalation tools:</b> Hotlines, military-to-military talks, buffer zones, neutralized terrain</div></div>'+
+    '</div>';
+}
+
+// --- MODULE 12: ECONOMIC COERCION (p63coerce) ---
+function P63_openCoerce(){
+  var o=document.getElementById('p63coerce-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('economic coercion sanctions trade weaponization BRI leverage China financial pressure','p63coerce-gdelt',2);P63_renderCoerceAnalysis();}
+}
+function P63_closeCoerce(){var o=document.getElementById('p63coerce-overlay');if(o)o.style.display='none';}
+function P63_renderCoerceAnalysis(){
+  var el=document.getElementById('p63coerce-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">CHINA BRI DEBT LEVERAGE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Sri Lanka / Hambantota:</b> $1.4B port debt; 99-year lease to China Merchants Port (2017)<br>'+
+    '<b style="color:#e2e8f0;">Zambia:</b> $6B+ Chinese debt; defaulted 2020; restructuring took 3 years; precedent-setting case<br>'+
+    '<b style="color:#e2e8f0;">Pakistan CPEC:</b> $62B investment; circular debt crisis; IPP contracts disputed with China<br>'+
+    '<b style="color:#e2e8f0;">Malaysia pushback:</b> Renegotiated ECRL from $16B to $11B (2019); shows counter-leverage possible<br>'+
+    '<b style="color:#e2e8f0;">AidData finding:</b> 42 debt-distress countries with hidden Chinese loans off official balance sheets</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">US SWIFT WEAPONIZATION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Iran:</b> Expelled from SWIFT 2012, 2018; oil exports collapsed 60-80%; nuclear concessions followed<br>'+
+    '<b style="color:#e2e8f0;">Russia:</b> 7 banks expelled Feb 2022; ruble crashed 40%; SPFS/CIPS as incomplete workarounds<br>'+
+    '<b style="color:#e2e8f0;">North Korea:</b> Comprehensive SWIFT isolation; still survives via cryptocurrency, smuggling<br>'+
+    '<b style="color:#e2e8f0;">Blowback risk:</b> Overuse driving de-dollarization; China building CIPS as precautionary escape route<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> SWIFT exclusion most effective on countries with high dollar integration; China is different</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">RUSSIAN GAS AS COERCION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">History:</b> Russia cut gas to Ukraine 2006, 2009; Bulgaria/Slovakia suffered collateral damage<br>'+
+    '<b style="color:#e2e8f0;">2022 cutoff:</b> Nord Stream capacity reduced 80%; Germany panic diversification; LNG race<br>'+
+    '<b style="color:#e2e8f0;">European response:</b> LNG terminals built; storage targets (90%); demand reduction 15%; diversification<br>'+
+    '<b style="color:#e2e8f0;">Current status:</b> Europe now ~15% Russian gas (from 40%); revenue halved; coercive power lost<br>'+
+    '<b style="color:#e2e8f0;">Lesson:</b> Energy coercion works short-term; accelerates target decoupling long-term</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">COUNTER-COERCION STRATEGIES</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Diversification:</b> Multiple suppliers; stockpiling; strategic reserves (Europe gas storage model)<br>'+
+    '<b style="color:#e2e8f0;">Collective response:</b> EU collective sanctions coordination; G7 price caps reduce leverage<br>'+
+    '<b style="color:#e2e8f0;">Financial firewalls:</b> Local currency settlement; bilateral swap lines; CIPS/SPFS backup systems<br>'+
+    '<b style="color:#e2e8f0;">Technology decoupling:</b> Reducing dependency before coercion applied; costly but resilience-building<br>'+
+    '<b style="color:#e2e8f0;">Retaliation capacity:</b> Credible counter-coercion deters; US tariff response to Chinese trade pressure</div></div>'+
+    '</div>';
+}
+
+// ===== END PHASE 61-63 =====
+
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
  const list=document.getElementById('sigint-feed');
@@ -37917,6 +38467,19 @@ function filterSIGINT(query){
 <button id="p60scs-btn">SOUTH CHINA SEA</button>
 <button id="p60taiwan-btn">TAIWAN STRAIT</button>
 <button id="p60korea-btn">KOREAN PENINSULA</button>
+<!-- Phase 61-63 buttons -->
+<button id="p61trade-btn" onclick="P61_openTrade()">TRADE WAR</button>
+<button id="p61milec-btn" onclick="P61_openMilec()">MILITIA ECON</button>
+<button id="p61nukesec-btn" onclick="P61_openNukesec()">NUKE SECURITY</button>
+<button id="p61dedollar-btn" onclick="P61_openDedollar()">DE-DOLLAR</button>
+<button id="p61merc-btn" onclick="P61_openMerc()">MERCENARIES</button>
+<button id="p62georisk-btn" onclick="P62_openGeoRisk()">GEO RISK</button>
+<button id="p63gpc-btn" onclick="P63_openGPC()">GREAT POWER</button>
+<button id="p63techcw-btn" onclick="P63_openTechCW()">TECH COLD WAR</button>
+<button id="p63regsurv-btn" onclick="P63_openRegsurv()">REGIME SURV</button>
+<button id="p63alliance-btn" onclick="P63_openAlliance()">ALLIANCES</button>
+<button id="p63border-btn" onclick="P63_openBorder()">BORDER INTEL</button>
+<button id="p63coerce-btn" onclick="P63_openCoerce()">ECON COERCION</button>
 
 <!-- South China Sea Overlay (Phase 60) -->
 <div id="p60scs-overlay">
@@ -39155,6 +39718,201 @@ function filterSIGINT(query){
  <div class="co-nexus-grid" id="co-nexus-grid"></div>
  <div class="co-section-title">GDELT LIVE INTELLIGENCE FEED</div>
  <div class="co-gdelt-feed" id="co-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+
+<!-- Phase 61-63 Overlays -->
+
+<div id="p61trade-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#f59e0b;">TRADE WAR TRACKER</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: WTO / USITC / PIIE / USTR / GDELT</div>
+  </div>
+  <button onclick="P61_closeTrade()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p61trade-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#f59e0b;margin-bottom:10px;">LIVE TRADE INTELLIGENCE -- GDELT</div>
+  <div id="p61trade-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p61milec-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#d97706;">MILITIA ECONOMICS</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ACLED / FATF / UN PANEL REPORTS / GDELT</div>
+  </div>
+  <button onclick="P61_closeMilec()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p61milec-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#d97706;margin-bottom:10px;">LIVE MILITIA INTELLIGENCE -- GDELT</div>
+  <div id="p61milec-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p61nukesec-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fca5a5;">NUCLEAR SECURITY WATCH</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: IAEA / NTI / SIPRI / GDELT</div>
+  </div>
+  <button onclick="P61_closeNukesec()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p61nukesec-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fca5a5;margin-bottom:10px;">LIVE NUCLEAR SECURITY FEED -- GDELT</div>
+  <div id="p61nukesec-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p61dedollar-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#86efac;">DE-DOLLARIZATION MONITOR</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: IMF COFER / BIS / SWIFT / GDELT</div>
+  </div>
+  <button onclick="P61_closeDedollar()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p61dedollar-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#86efac;margin-bottom:10px;">LIVE DE-DOLLARIZATION FEED -- GDELT</div>
+  <div id="p61dedollar-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p61merc-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#c4b5fd;">MERCENARY FORCES TRACKER</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ACLED / UN PANELS / BONN INT'L CENTER / GDELT</div>
+  </div>
+  <button onclick="P61_closeMerc()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p61merc-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#c4b5fd;margin-bottom:10px;">LIVE MERCENARY INTELLIGENCE -- GDELT</div>
+  <div id="p61merc-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p62georisk-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#7dd3fc;">GEOPOLITICAL RISK SCORES</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: FFP FSI / ACLED / EIU / WORLD BANK / GDELT</div>
+  </div>
+  <button onclick="P62_closeGeoRisk()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p62georisk-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#7dd3fc;margin-bottom:10px;">LIVE GEOPOLITICAL INTELLIGENCE -- GDELT</div>
+  <div id="p62georisk-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p63gpc-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#93c5fd;">GREAT POWER COMPETITION</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: CSIS / RAND / IISS / GDELT LIVE FEED</div>
+  </div>
+  <button onclick="P63_closeGPC()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p63gpc-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#93c5fd;margin-bottom:10px;">LIVE GREAT POWER INTELLIGENCE -- GDELT</div>
+  <div id="p63gpc-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p63techcw-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#67e8f9;">TECHNOLOGY COLD WAR</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: BIS / ASML / ITIF / CSIS / GDELT</div>
+  </div>
+  <button onclick="P63_closeTechCW()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p63techcw-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#67e8f9;margin-bottom:10px;">LIVE TECH INTELLIGENCE -- GDELT</div>
+  <div id="p63techcw-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p63regsurv-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#e879f9;">REGIME SURVIVAL ANALYSIS</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: V-DEM / FREEDOM HOUSE / EIU / GDELT</div>
+  </div>
+  <button onclick="P63_closeRegsurv()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p63regsurv-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#e879f9;margin-bottom:10px;">LIVE REGIME INTELLIGENCE -- GDELT</div>
+  <div id="p63regsurv-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p63alliance-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#38bdf8;">ALLIANCE REALIGNMENT</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: NATO / SIPRI / IISS / CSIS / GDELT</div>
+  </div>
+  <button onclick="P63_closeAlliance()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p63alliance-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#38bdf8;margin-bottom:10px;">LIVE ALLIANCE INTELLIGENCE -- GDELT</div>
+  <div id="p63alliance-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p63border-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fbbf24;">BORDER INCIDENTS TRACKER</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ACLED / IISS / ICG / GDELT</div>
+  </div>
+  <button onclick="P63_closeBorder()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p63border-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fbbf24;margin-bottom:10px;">LIVE BORDER INTELLIGENCE -- GDELT</div>
+  <div id="p63border-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p63coerce-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fca5a5;">ECONOMIC COERCION TRACKER</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: PIIE / CSIS / SWIFT / WORLD BANK / GDELT</div>
+  </div>
+  <button onclick="P63_closeCoerce()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p63coerce-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fca5a5;margin-bottom:10px;">LIVE ECONOMIC COERCION FEED -- GDELT</div>
+  <div id="p63coerce-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
 </div>
 
 </body>
