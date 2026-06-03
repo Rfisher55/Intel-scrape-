@@ -3364,6 +3364,103 @@ button{border-radius:2px!important}
 .re-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .re-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .re-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 43 buttons */
+#popintel-btn{position:fixed;top:175px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#popintel-btn:hover{border-color:#f97316;color:#fdba74;}
+#exportctrl-btn{position:fixed;top:215px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#exportctrl-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#nukeproliferation-btn{position:fixed;top:255px;right:1375px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#nukeproliferation-btn:hover{border-color:#8b5cf6;color:#c4b5fd;}
+
+/* Population Intel overlay */
+#popintel-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.pi-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.pi-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#f97316;}
+.pi-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.pi-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.pi-close:hover{color:#f97316;border-color:#f97316;}
+.pi-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.pi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:14px;margin-bottom:10px;}
+.pi-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.pi-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.pi-country{font-size:14px;font-weight:900;color:#f1f5f9;}
+.pi-row{font-size:8px;color:#94a3b8;line-height:1.6;margin-bottom:3px;}
+.pi-row b{color:#e2e8f0;}
+.pi-risk-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.6px;white-space:nowrap;}
+.pi-youth-bar-wrap{width:100%;height:6px;background:#0f172a;border-radius:3px;margin:6px 0 4px;position:relative;}
+.pi-youth-bar{height:6px;border-radius:3px;max-width:100%;}
+.pi-bar-label{font-size:7px;color:#64748b;margin-left:4px;}
+.pi-assessment{font-size:8px;color:#94a3b8;line-height:1.5;margin-top:6px;border-top:1px solid #1e293b;padding-top:6px;}
+.pi-drivers-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.pi-drivers-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.pi-drivers-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.pi-driver-name{color:#e2e8f0;font-weight:700;white-space:nowrap;}
+.pi-gdelt-feed{max-width:900px;}
+.pi-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.pi-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.pi-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Export Controls overlay */
+#exportctrl-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.ec-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#3b82f6;}
+.ec-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.ec-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.ec-close:hover{color:#3b82f6;border-color:#3b82f6;}
+.ec-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.ec-entity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:12px;margin-bottom:10px;}
+.ec-entity-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:12px;border-left-width:4px;}
+.ec-entity-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:6px;}
+.ec-entity-name{font-size:12px;font-weight:700;color:#f1f5f9;}
+.ec-entity-country{font-size:7px;color:#64748b;letter-spacing:.1em;margin-top:2px;}
+.ec-entity-badge{font-size:7px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.ec-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:3px;}
+.ec-row b{color:#e2e8f0;}
+.ec-controls{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.ec-ctrl-chip{font-size:7px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);padding:2px 6px;border-radius:2px;color:#fca5a5;}
+.ec-regimes-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.ec-regimes-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.ec-regimes-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.ec-regime-name{font-weight:700;}
+.ec-tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:10px;margin-bottom:10px;}
+.ec-tech-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;}
+.ec-tech-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.ec-tech-name{font-size:10px;font-weight:700;color:#e2e8f0;}
+.ec-tech-status{font-size:7px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.5px;}
+.ec-impact{font-size:8px;color:#64748b;font-style:italic;margin-top:4px;line-height:1.4;}
+.ec-gdelt-feed{max-width:900px;}
+.ec-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ec-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ec-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Nuke Proliferation overlay */
+#nukeproliferation-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.np-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.np-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#8b5cf6;}
+.np-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.np-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.np-close:hover{color:#8b5cf6;border-color:#8b5cf6;}
+.np-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.np-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:14px;margin-bottom:10px;}
+.np-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.np-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.np-country{font-size:14px;font-weight:900;color:#f1f5f9;}
+.np-status-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.np-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:3px;}
+.np-row b{color:#e2e8f0;}
+.np-latest{font-size:8px;color:#fbbf24;line-height:1.5;border-left:2px solid rgba(251,191,36,.3);padding-left:8px;margin-top:6px;}
+.np-net-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:10px;margin-bottom:10px;}
+.np-net-card{background:rgba(15,23,42,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;border-left-width:3px;}
+.np-net-name{font-size:11px;font-weight:700;color:#f1f5f9;margin-bottom:4px;}
+.np-vec-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.np-vec-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.np-vec-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.np-vec-name{color:#e2e8f0;font-weight:700;}
+.np-gdelt-feed{max-width:900px;}
+.np-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.np-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.np-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -26439,6 +26536,336 @@ function _closeResilience(){
 
 // ===== END PHASE 42 =====
 
+// ===== PHASE 43: POPULATION INTEL, EXPORT CONTROLS, NUKE PROLIFERATION =====
+
+var POPULATION_HOTSPOTS = [
+  {country:'Nigeria',iso:'NG',lat:9.08,lng:8.67,population_2024:229,projected_2050:400,youth_pct:62,conflict_risk:'CRITICAL',fertility:5.3,urbanization:54,color:'#ef4444',assessment:'Fastest-growing major economy with explosive youth demographics; 60%+ under 25 creates acute employment pressure. Lagos metro 25M+. Northeast Boko Haram insurgency correlates directly with youth unemployment crisis. 2050 projection makes Nigeria most populous African nation at 400M+.'},
+  {country:'Ethiopia',iso:'ET',lat:9.15,lng:40.48,population_2024:128,projected_2050:213,youth_pct:65,conflict_risk:'HIGH',fertility:4.1,urbanization:22,color:'#f97316',assessment:'Post-Tigray war with 2M+ displaced and shattered federal cohesion. Youth bulge driving Oromo and Amhara tensions. Nile water rights with Egypt add existential pressure. Drought-conflict-displacement nexus increasingly entrenched.'},
+  {country:'DRC',iso:'CD',lat:-2.87,lng:23.65,population_2024:106,projected_2050:215,youth_pct:64,conflict_risk:'CRITICAL',fertility:6.0,urbanization:46,color:'#ef4444',assessment:'6.0 TFR highest in conflict zone. Eastern DRC 7M+ displaced — largest Africa crisis. Mineral wealth (coltan, cobalt) funds 120+ armed groups. Population doubling by 2050 guarantees resource competition escalation.'},
+  {country:'Pakistan',iso:'PK',lat:30.37,lng:69.34,population_2024:245,projected_2050:338,youth_pct:58,conflict_risk:'HIGH',fertility:3.4,urbanization:37,color:'#f97316',assessment:'World\'s 5th most populous with nuclear arsenal. 60%+ under 30 amid chronic unemployment and weak governance. TTP resurgence, Afghanistan border instability, and water stress with India combine for severe risk trajectory.'},
+  {country:'Yemen',iso:'YE',lat:15.55,lng:48.51,population_2024:35,projected_2050:55,youth_pct:61,conflict_risk:'CRITICAL',fertility:4.2,urbanization:38,color:'#ef4444',assessment:'Decade of civil war with 70%+ population needing humanitarian aid. Youth bulge in failed state context generates Houthi recruit pool. Iran proxy operations exploit demographic pressure and state collapse.'},
+  {country:'Mali',iso:'ML',lat:17.57,lng:-3.99,population_2024:24,projected_2050:54,youth_pct:67,conflict_risk:'CRITICAL',fertility:5.9,urbanization:44,color:'#ef4444',assessment:'5.9 TFR and 67% youth cohort in coup-hit Sahel state. Wagner Group presence exploiting governance vacuum. Jihadist groups (JNIM, ISGS) recruit heavily from unemployed youth. Population doubling in 25 years with no economic base.'},
+  {country:'Afghanistan',iso:'AF',lat:33.93,lng:67.71,population_2024:43,projected_2050:72,youth_pct:63,conflict_risk:'CRITICAL',fertility:4.6,urbanization:26,color:'#ef4444',assessment:'Taliban rule since 2021 eliminated female education and workforce participation. 40M+ youth bulge with no formal economy. Opium-to-methamphetamine transition funding insurgent networks. Brain drain accelerating.'},
+  {country:'Iraq',iso:'IQ',lat:33.22,lng:43.68,population_2024:44,projected_2050:78,youth_pct:58,conflict_risk:'HIGH',fertility:3.4,urbanization:71,color:'#f97316',assessment:'Post-ISIS youth generation entering workforce amid chronic underemployment. Shia militias (PMF) serve as employer of last resort. Iranian influence competes with US presence for loyalties of 25M under-30 population.'},
+  {country:'Sudan',iso:'SD',lat:12.86,lng:30.21,population_2024:48,projected_2050:82,youth_pct:60,conflict_risk:'CRITICAL',fertility:4.4,urbanization:35,color:'#ef4444',assessment:'SAF-RSF civil war displaced 8M+ since April 2023. Youth mobilization by both factions. Darfur genocide echoes return. Regional spillover to Chad, Ethiopia, Egypt creates multi-state demographic pressure system.'},
+  {country:'Philippines',iso:'PH',lat:12.87,lng:121.77,population_2024:117,projected_2050:148,youth_pct:54,conflict_risk:'MODERATE',fertility:2.7,urbanization:47,color:'#eab308',assessment:'Demographic dividend window closing 2030-2040. Mindanao Islamic separatism (BIFF, Abu Sayyaf) feeds on youth unemployment. South China Sea tension adds external security pressure on young working-age population.'}
+];
+
+var YOUTH_BULGE_THRESHOLDS = [
+  {label:'CRITICAL RISK',threshold:60,color:'#ef4444',desc:'Youth under-25 exceeds 60% of population — historically highest conflict correlation. FSI studies show 90%+ of civil conflicts since 1970 occurred in high youth-bulge states.'},
+  {label:'HIGH RISK',threshold:50,color:'#f97316',desc:'50-60% youth cohort. Significant strain on employment, education, governance. Requires sustained GDP growth >6% to absorb new labor market entrants.'},
+  {label:'ELEVATED',threshold:40,color:'#eab308',desc:'40-50% youth cohort. Manageable with sound governance and economic growth. Demographic dividend window possible if investment in human capital occurs.'},
+  {label:'AGING PRESSURE',threshold:0,color:'#3b82f6',desc:'Below 40% — aging society dynamics. Pension and healthcare costs rising. Defense manpower constraints. Examples: Japan, Germany, Italy, South Korea.'}
+];
+
+var DEMOGRAPHIC_DRIVERS = [
+  {driver:'Youth Unemployment',impact:'PRIMARY',desc:'Unemployed youth 15-29 are primary recruit pool for insurgencies, criminal organizations, and revolutionary movements. 10% youth unemployment increase correlates with 2% conflict probability rise.'},
+  {driver:'Urban Migration Pressure',impact:'HIGH',desc:'Rural-urban migration without corresponding job creation creates megacity slums — concentrated grievance centers. Lagos, Karachi, Kinshasa, Dhaka exemplify this dynamic.'},
+  {driver:'Education-Employment Mismatch',impact:'HIGH',desc:'University expansion without economic absorption creates educated-unemployed cohort — most dangerous demographic for regime stability per RAND and World Bank studies.'},
+  {driver:'Climate-Migration Nexus',impact:'HIGH',desc:'Climate shocks (drought, flood) accelerate rural youth migration. Sahel states losing 10M hectares/year to desertification directly correlates with armed group recruitment surges.'},
+  {driver:'Diaspora Radicalization',impact:'MODERATE',desc:'Second-generation diaspora in Europe and North America show higher radicalization rates than homeland peers. Foreign fighter flows to ISIS/AQ demonstrated diaspora-homeland feedback loop.'},
+  {driver:'Water Scarcity Conflict',impact:'HIGH',desc:'By 2050, 5B people face water stress. Youth populations in MENA, Sahel, South Asia face compounding food-water-employment pressure that overwhelms governance capacity.'}
+];
+
+function _renderPopIntel(){
+  var grid = document.getElementById('pi-cards-grid');
+  if(!grid) return;
+  grid.innerHTML = POPULATION_HOTSPOTS.map(function(c){
+    var riskColor = c.conflict_risk==='CRITICAL'?'#ef4444':c.conflict_risk==='HIGH'?'#f97316':c.conflict_risk==='MODERATE'?'#eab308':'#22c55e';
+    var barW = Math.min(100, Math.round(c.youth_pct*1.4));
+    return '<div class="pi-card" style="border-top-color:'+c.color+';">'+
+      '<div class="pi-card-header">'+
+        '<div>'+
+          '<div class="pi-country">'+c.country+'</div>'+
+          '<div class="pi-row"><b>Population 2024:</b> '+c.population_2024+'M &nbsp;|&nbsp; <b>Projected 2050:</b> '+c.projected_2050+'M</div>'+
+        '</div>'+
+        '<div>'+
+          '<span class="pi-risk-badge" style="background:'+riskColor+'22;border:1px solid '+riskColor+';color:'+riskColor+';">'+c.conflict_risk+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="pi-row"><b>Youth Under-25:</b> '+c.youth_pct+'% &nbsp;|&nbsp; <b>Fertility Rate:</b> '+c.fertility+' &nbsp;|&nbsp; <b>Urbanization:</b> '+c.urbanization+'%</div>'+
+      '<div class="pi-youth-bar-wrap"><div class="pi-youth-bar" style="width:'+barW+'%;background:'+c.color+';"></div><span class="pi-bar-label">'+c.youth_pct+'% youth</span></div>'+
+      '<div class="pi-assessment">'+c.assessment+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('pi-drivers-tbody');
+  if(tbody){
+    tbody.innerHTML = DEMOGRAPHIC_DRIVERS.map(function(d){
+      var ic = d.impact==='PRIMARY'?'#ef4444':d.impact==='HIGH'?'#f97316':'#eab308';
+      return '<tr><td class="pi-driver-name">'+d.driver+'</td>'+
+        '<td><span style="color:'+ic+';font-weight:700;font-size:8px;">'+d.impact+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+d.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchPiGdelt(){
+  var feed = document.getElementById('pi-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('youth unemployment population demographics conflict insurgency radicalization');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url, {signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="pi-gdelt-item">'+
+        '<div class="pi-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="pi-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openPopIntel(){
+  var ov=document.getElementById('popintel-overlay');
+  if(ov){ov.style.display='flex';_renderPopIntel();_fetchPiGdelt();}
+  var pins = POPULATION_HOTSPOTS.filter(function(c){return c.conflict_risk==='CRITICAL'||c.conflict_risk==='HIGH';}).map(function(c){
+    return {lat:c.lat,lng:c.lng,type:'instability',severity:c.conflict_risk==='CRITICAL'?9:7,label:c.country+' POP PRESSURE',_popintel:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._popintel;}), ...pins];
+}
+function _closePopIntel(){
+  var ov=document.getElementById('popintel-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._popintel;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('popintel-btn');
+  if(b) b.addEventListener('click',_openPopIntel);
+  var c=document.getElementById('popintel-close');
+  if(c) c.addEventListener('click',_closePopIntel);
+});
+
+var WASSENAAR_CATEGORIES = [
+  {cat:'ML1',name:'Smooth-bore Weapons <20mm',examples:['Infantry weapons','Anti-material rifles','HMGs'],concern_level:'STANDARD',color:'#64748b'},
+  {cat:'ML6',name:'Ground Vehicles & Components',examples:['AFV armor packages','Night vision systems','Fire control','Active protection systems'],concern_level:'HIGH',color:'#f97316'},
+  {cat:'ML10',name:'Military Aircraft & UAVs',examples:['Combat UAV airframes','Turbofan engines','Avionics','Targeting pods'],concern_level:'CRITICAL',color:'#ef4444'},
+  {cat:'ML11',name:'Electronic Equipment',examples:['Radar systems','EW suites','Communications intercept','Crypto equipment'],concern_level:'CRITICAL',color:'#ef4444'},
+  {cat:'ML15',name:'Imaging & Countermeasure Systems',examples:['IRST sensors','Laser rangefinders','IR cameras','DIRCM systems'],concern_level:'HIGH',color:'#f97316'},
+  {cat:'ML22',name:'Technology & Software',examples:['Military AI/ML models','Weapons system source code','Simulation software','Cryptographic algorithms'],concern_level:'CRITICAL',color:'#ef4444'}
+];
+
+var BIS_ENTITY_LIST = [
+  {entity:'Huawei Technologies',country:'China',iso:'CN',lat:22.54,lng:114.09,added:'2019',reason:'National security — telecom infrastructure backdoors, Iran sanctions evasion',controls:['EAR99 license required','No AI chip sales','No 5G components'],color:'#ef4444'},
+  {entity:'SMIC (Semiconductor Manufacturing)',country:'China',iso:'CN',lat:31.23,lng:121.47,added:'2020',reason:'Risk of diversion to Chinese military end-uses; sub-10nm fab development',controls:['10nm+ tech blocked','EUV lithography denied','US person restriction'],color:'#ef4444'},
+  {entity:'Inspur Group',country:'China',iso:'CN',lat:36.67,lng:116.99,added:'2023',reason:'Procures US tech for Chinese military modernization and AI weapons development',controls:['Server components blocked','GPU restricted','Cloud services denied'],color:'#ef4444'},
+  {entity:'Aecc Beijing Institute',country:'China',iso:'CN',lat:39.92,lng:116.46,added:'2021',reason:'Develops military jet engines for J-20, H-20 programs under PLA direction',controls:['Engine tech blocked','Metallurgy restricted','CFD software denied'],color:'#ef4444'},
+  {entity:'Miltecno (Iran)',country:'Iran',iso:'IR',lat:35.69,lng:51.39,added:'2022',reason:'Drone component procurement for Shahed-136 used against Ukraine',controls:['All EAR items','No aviation parts','No electronics'],color:'#dc2626'},
+  {entity:'Azimuth Security (Russia)',country:'Russia',iso:'RU',lat:59.93,lng:30.32,added:'2023',reason:'Provides offensive cyber capabilities to FSB and GRU',controls:['Software denied','Crypto tools blocked','No cloud access'],color:'#dc2626'},
+  {entity:'Rosoboronexport',country:'Russia',iso:'RU',lat:55.75,lng:37.62,added:'2014',reason:'Primary Russian arms export entity, sanctioned post-Crimea, tightened 2022',controls:['All military tech','Dual-use blocked','Financial transactions prohibited'],color:'#dc2626'},
+  {entity:'CODA Octopus (front)',country:'Belarus',iso:'BY',lat:53.90,lng:27.57,added:'2022',reason:'Front company for Russian military procurement network post-Ukraine invasion',controls:['All EAR99 restricted','No re-export','BIS investigation ongoing'],color:'#b45309'}
+];
+
+var EXPORT_CONTROL_REGIMES = [
+  {regime:'Wassenaar Arrangement',members:42,focus:'Conventional arms + dual-use goods/tech',secretariat:'Vienna',established:1996,key_lists:['Munitions List','Dual-Use List','Very Sensitive List'],color:'#3b82f6',status:'ACTIVE'},
+  {regime:'Nuclear Suppliers Group (NSG)',members:48,focus:'Nuclear materials, equipment, technology',secretariat:'Vienna',established:1974,key_lists:['Trigger List','Dual-Use Annex'],color:'#8b5cf6',status:'ACTIVE'},
+  {regime:'Missile Technology Control Regime (MTCR)',members:35,focus:'Rockets/UAVs capable of WMD delivery',secretariat:'Paris',established:1987,key_lists:['Category I (complete systems)','Category II (components)'],color:'#f97316',status:'ACTIVE'},
+  {regime:'Australia Group',members:43,focus:'Chemical + biological precursors/equipment',secretariat:'Paris',established:1985,key_lists:['Chemical Weapons Precursors','Bio Agent Controls','Plant Pathogens'],color:'#22c55e',status:'ACTIVE'},
+  {regime:'Zangger Committee',members:39,focus:'Nuclear Trigger List (NPT Article III)',secretariat:'Vienna',established:1971,key_lists:['Trigger List — nuclear materials and equipment'],color:'#ec4899',status:'ACTIVE'}
+];
+
+var TECH_DENIAL_PRIORITIES = [
+  {tech:'Advanced Semiconductors (<7nm)',denied_to:['China','Russia','Iran','North Korea'],lead_tool:'EAR / SMIC Entity List',status:'ACTIVE',impact:'Blocks PLA AI acceleration, hypersonic guidance chips, modern radar processors'},
+  {tech:'EUV Lithography (ASML)',denied_to:['China'],lead_tool:'Dutch Export Controls + US re-export rules',status:'ACTIVE',impact:'Prevents China from closing semiconductor fabrication gap below 7nm node'},
+  {tech:'High-Performance AI Chips (H100/A100)',denied_to:['China','Russia'],lead_tool:'BIS Export Rules Oct 2022/Oct 2023',status:'ACTIVE',impact:'Slows PLA AI training, autonomous weapons development, strategic simulation'},
+  {tech:'Quantum Computing Components',denied_to:['China','Russia','Iran'],lead_tool:'Emerging Technology Controls',status:'DEVELOPING',impact:'Prevent cryptography-breaking capability and quantum sensing for submarine detection'},
+  {tech:'ITAR-Controlled Aerospace',denied_to:['All non-ally states'],lead_tool:'ITAR (22 CFR 120-130)',status:'ACTIVE',impact:'Satellite technology, missile guidance, advanced aircraft systems'},
+  {tech:'High-Thrust Rocket Engines',denied_to:['Iran','North Korea','DPRK-linked'],lead_tool:'MTCR Category I',status:'ACTIVE',impact:'Prevents ICBM-class propulsion development in rogue states'}
+];
+
+function _renderExportCtrl(){
+  var grid = document.getElementById('ec-entity-grid');
+  if(!grid) return;
+  grid.innerHTML = BIS_ENTITY_LIST.map(function(e){
+    return '<div class="ec-entity-card" style="border-left-color:'+e.color+';">'+
+      '<div class="ec-entity-header">'+
+        '<div>'+
+          '<div class="ec-entity-name">'+e.entity+'</div>'+
+          '<div class="ec-entity-country">'+e.country+' &nbsp;|&nbsp; Added: '+e.added+'</div>'+
+        '</div>'+
+        '<span class="ec-entity-badge" style="background:'+e.color+'22;border:1px solid '+e.color+';color:'+e.color+';">RESTRICTED</span>'+
+      '</div>'+
+      '<div class="ec-row"><b>Basis:</b> '+e.reason+'</div>'+
+      '<div class="ec-controls">'+e.controls.map(function(c){return '<span class="ec-ctrl-chip">'+c+'</span>';}).join('')+'</div>'+
+    '</div>';
+  }).join('');
+  var tbody = document.getElementById('ec-regimes-tbody');
+  if(tbody){
+    tbody.innerHTML = EXPORT_CONTROL_REGIMES.map(function(r){
+      return '<tr><td class="ec-regime-name" style="color:'+r.color+';">'+r.regime+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+r.members+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+r.focus+'</td>'+
+        '<td style="color:#64748b;font-size:8px;">'+r.secretariat+' / '+r.established+'</td></tr>';
+    }).join('');
+  }
+  var tgrid = document.getElementById('ec-tech-grid');
+  if(tgrid){
+    tgrid.innerHTML = TECH_DENIAL_PRIORITIES.map(function(t){
+      var sc = t.status==='ACTIVE'?'#22c55e':'#eab308';
+      return '<div class="ec-tech-card">'+
+        '<div class="ec-tech-header">'+
+          '<div class="ec-tech-name">'+t.tech+'</div>'+
+          '<span class="ec-tech-status" style="color:'+sc+';border-color:'+sc+';">'+t.status+'</span>'+
+        '</div>'+
+        '<div class="ec-row"><b>Denied to:</b> '+t.denied_to.join(', ')+'</div>'+
+        '<div class="ec-row"><b>Mechanism:</b> '+t.lead_tool+'</div>'+
+        '<div class="ec-impact">'+t.impact+'</div>'+
+      '</div>';
+    }).join('');
+  }
+}
+
+async function _fetchEcGdelt(){
+  var feed = document.getElementById('ec-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('export controls semiconductor chips China Russia technology transfer BIS entity list');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url, {signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="ec-gdelt-item">'+
+        '<div class="ec-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="ec-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openExportCtrl(){
+  var ov=document.getElementById('exportctrl-overlay');
+  if(ov){ov.style.display='flex';_renderExportCtrl();_fetchEcGdelt();}
+  var pins = BIS_ENTITY_LIST.map(function(e){
+    return {lat:e.lat,lng:e.lng,type:'hybrid',severity:7,label:e.entity+' [BIS]',_exportctrl:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._exportctrl;}), ...pins];
+}
+function _closeExportCtrl(){
+  var ov=document.getElementById('exportctrl-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._exportctrl;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('exportctrl-btn');
+  if(b) b.addEventListener('click',_openExportCtrl);
+  var c=document.getElementById('exportctrl-close');
+  if(c) c.addEventListener('click',_closeExportCtrl);
+});
+
+var AQ_KHAN_NETWORK = [
+  {node:'A.Q. Khan (Pakistan)',role:'Architect',lat:33.72,lng:73.04,status:'DECEASED 2021',supplied:['North Korea','Iran','Libya'],method:'Centrifuge blueprints, P-1/P-2 designs, uranium enrichment tech',color:'#ef4444'},
+  {node:'Urs Tinner (Switzerland)',role:'Centrifuge Manufacturer',lat:47.37,lng:8.54,status:'ACQUITTED 2012',supplied:['Libya','Iran'],method:'Manufactured P-2 centrifuge components in Malaysia and Switzerland',color:'#f97316'},
+  {node:'SCOMI Precision Engineering',role:'Malaysian Manufacturer',lat:3.14,lng:101.68,status:'DISMANTLED 2004',supplied:['Libya'],method:'Manufactured aluminum centrifuge components via front companies',color:'#f97316'},
+  {node:'Tahir (Gulf Procurement)',role:'Financial Facilitator',lat:25.20,lng:55.27,status:'IMPRISONED',supplied:['Libya','North Korea'],method:'Dubai-based financial and logistics hub for network payments and shipments',color:'#eab308'},
+  {node:'North Korea DPRK',role:'Customer/Re-exporter',lat:39.02,lng:125.75,status:'ACTIVE NUCLEAR',supplied:['Iran (suspected)','Myanmar (suspected)'],method:'Received centrifuge tech; now suspected of transferring ballistic missile tech for nuclear cooperation',color:'#dc2626'},
+  {node:'Iran AEOI',role:'Primary Customer',lat:35.69,lng:51.39,status:'ACTIVE PROGRAM',supplied:[],method:'Acquired P-1 centrifuge designs; built Natanz using Khan network specs; 60% enrichment achieved',color:'#dc2626'}
+];
+
+var PROLIFERATION_CASES = [
+  {country:'North Korea',status:'CONFIRMED NUCLEAR',warheads:50,lat:40.34,lng:127.51,color:'#ef4444',year_first_test:2006,delivery:'ICBMs (Hwasong-17/18), SLBMs, tactical weapons',latest:'2024: Hwasong-19 test (longest range ICBM). Tactical nuclear doctrine declared. 50+ warheads estimated.',vulnerability:'CRITICAL — no inspection regime; sanctions busted by Russia/China'},
+  {country:'Iran',status:'THRESHOLD STATE',warheads:0,lat:32.43,lng:53.68,color:'#f97316',year_first_test:null,delivery:'Ballistic missiles (Shahab-3, Kheibar Shekan), cruise missiles',latest:'2024: 60% enrichment (near-weapons-grade). Fordow expansion. IAEA access severely limited. Breakout time <2 weeks.',vulnerability:'HIGH — JCPOA dead; no verification framework operative'},
+  {country:'Pakistan',status:'CONFIRMED NUCLEAR',warheads:170,lat:30.37,lng:69.34,color:'#dc2626',year_first_test:1998,delivery:'Shaheen-III MRBM, Babur cruise missile, Nasr tactical',latest:'2024: Expanding Khushab plutonium reactors. Low-yield tactical nukes deployed against India escalation ladder. Export control failures persist.',vulnerability:'HIGH — AQ Khan legacy; state stability concerns; ISI compartmentalization'},
+  {country:'India',status:'CONFIRMED NUCLEAR',warheads:172,lat:20.59,lng:78.96,color:'#eab308',year_first_test:1974,delivery:'Agni-V ICBM (5500km), K-4 SLBM, Prithvi',latest:'2024: Agni-V MIRV testing. INS Arighaat SSBN commissioned. Expanding triad against China/Pakistan.',vulnerability:'MODERATE — stable civilian control; NPT non-signatory'},
+  {country:'Russia',status:'CONFIRMED NUCLEAR',warheads:5580,lat:55.75,lng:37.62,color:'#b91c1c',year_first_test:1949,delivery:'RS-28 Sarmat, Poseidon torpedo, Kinzhal, Avangard HGV',latest:'2024: Tactical nuclear threats vs Ukraine. Poseidon drone submarine tested. Sarmat deployed. New doctrine allows first use vs non-nuclear states.',vulnerability:'ELEVATED — Ukraine war; command authority questions; tactical escalation risk'},
+  {country:'China',status:'CONFIRMED NUCLEAR',warheads:500,lat:35.86,lng:104.19,color:'#dc2626',year_first_test:1964,delivery:'DF-41 ICBM (15000km), DF-5B, JL-3 SLBM, DF-17 HGV',latest:'2024: Silo expansion (400+ new silos Gansu/Xinjiang). Projected 1000 warheads by 2030. First MIRVed ICBMs operational.',vulnerability:'HIGH — fastest nuclear buildup in history; no transparency'},
+  {country:'Myanmar',status:'SUSPECTED PROGRAM',warheads:0,lat:19.74,lng:96.07,color:'#eab308',year_first_test:null,delivery:'Unknown',latest:'IAEA flagged undeclared nuclear activities 2024. North Korea cooperation suspected. Junta under sanctions with limited oversight.',vulnerability:'ELEVATED — coup government; NK cooperation; IAEA limited access'}
+];
+
+var SMUGGLING_VECTORS = [
+  {vector:'Centrifuge Component Networks',threat:'CRITICAL',color:'#ef4444',desc:'High-strength aluminum alloys and maraging steel procurement via front companies in Southeast Asia, Turkey, and UAE. Pakistani diaspora networks active in Germany, Netherlands.'},
+  {vector:'Dual-Use Chemical Procurement',threat:'HIGH',color:'#f97316',desc:'Uranium hexafluoride precursors, phosphoric acid, TBF solvent. Iran and DPRK use multiple intermediary countries to obscure end-user certificates.'},
+  {vector:'Missile Technology Transfer',threat:'CRITICAL',color:'#ef4444',desc:'DPRK-Iran-Russia triangle: North Korea exports ICBM/missile technology; Iran provides oil; Russia provides sanctions relief. Confirmed via UN Panel of Experts 2024.'},
+  {vector:'Nuclear Material Theft Risk',threat:'HIGH',color:'#f97316',desc:'Pakistan\'s 170+ warheads at multiple dispersed sites. IAEA rates Pakistan as highest insider threat risk among declared nuclear states.'},
+  {vector:'Cyber-Enabled Espionage',threat:'HIGH',color:'#f97316',desc:'APT state actors targeting nuclear facility SCADA systems, laboratory research, procurement databases. Stuxnet precedent shows offensive potential.'},
+  {vector:'Refugee/Diaspora Networks',threat:'MODERATE',color:'#eab308',desc:'Russian nuclear scientists (post-2022 emigration wave) targeted by Chinese/Iranian recruiters. Brain drain from Soviet nuclear complex continues.'}
+];
+
+function _renderNukeProliferation(){
+  var grid = document.getElementById('np-cases-grid');
+  if(!grid) return;
+  grid.innerHTML = PROLIFERATION_CASES.map(function(c){
+    return '<div class="np-card" style="border-top-color:'+c.color+';">'+
+      '<div class="np-card-header">'+
+        '<div>'+
+          '<div class="np-country">'+c.country+'</div>'+
+          '<div class="np-row"><b>Status:</b> '+c.status+(c.warheads?' &nbsp;|&nbsp; <b>Est. Warheads:</b> '+c.warheads:'')+'</div>'+
+        '</div>'+
+        '<span class="np-status-badge" style="background:'+c.color+'22;border:1px solid '+c.color+';color:'+c.color+';">'+c.status+'</span>'+
+      '</div>'+
+      '<div class="np-row"><b>Delivery:</b> '+c.delivery+'</div>'+
+      '<div class="np-latest">'+c.latest+'</div>'+
+      '<div class="np-row" style="margin-top:4px;"><b>Risk:</b> <span style="color:#f97316;">'+c.vulnerability+'</span></div>'+
+    '</div>';
+  }).join('');
+  var netGrid = document.getElementById('np-network-grid');
+  if(netGrid){
+    netGrid.innerHTML = AQ_KHAN_NETWORK.map(function(n){
+      return '<div class="np-net-card" style="border-left-color:'+n.color+';">'+
+        '<div class="np-net-name">'+n.node+'</div>'+
+        '<div class="np-row"><b>Role:</b> '+n.role+' &nbsp;|&nbsp; <b>Status:</b> '+n.status+'</div>'+
+        '<div class="np-row"><b>Method:</b> '+n.method+'</div>'+
+        (n.supplied.length?'<div class="np-row"><b>Supplied:</b> '+n.supplied.join(', ')+'</div>':'')+
+      '</div>';
+    }).join('');
+  }
+  var svTbody = document.getElementById('np-vectors-tbody');
+  if(svTbody){
+    svTbody.innerHTML = SMUGGLING_VECTORS.map(function(v){
+      return '<tr><td class="np-vec-name">'+v.vector+'</td>'+
+        '<td><span style="color:'+v.color+';font-weight:700;font-size:8px;">'+v.threat+'</span></td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+v.desc+'</td></tr>';
+    }).join('');
+  }
+}
+
+async function _fetchNpGdelt(){
+  var feed = document.getElementById('np-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('nuclear proliferation Iran North Korea centrifuge enrichment weapons IAEA');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url, {signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="np-gdelt-item">'+
+        '<div class="np-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="np-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openNukeProliferation(){
+  var ov=document.getElementById('nukeproliferation-overlay');
+  if(ov){ov.style.display='flex';_renderNukeProliferation();_fetchNpGdelt();}
+  var pins = PROLIFERATION_CASES.map(function(c){
+    return {lat:c.lat,lng:c.lng,type:'nuclear',severity:c.warheads>100?10:c.status==='THRESHOLD STATE'?8:6,label:c.country+' NUCLEAR',_nukeproliferation:true};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._nukeproliferation;}), ...pins];
+}
+function _closeNukeProliferation(){
+  var ov=document.getElementById('nukeproliferation-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h._nukeproliferation;});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('nukeproliferation-btn');
+  if(b) b.addEventListener('click',_openNukeProliferation);
+  var c=document.getElementById('nukeproliferation-close');
+  if(c) c.addEventListener('click',_closeNukeProliferation);
+});
+
+// ===== END PHASE 43 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -29071,6 +29498,75 @@ function filterSIGINT(query){
   <div class="mm-grid" id="mm-programs-grid"></div>
   <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
   <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 43 buttons -->
+<button id="popintel-btn">POP INTEL</button>
+<button id="exportctrl-btn">EXPORT CTRL</button>
+<button id="nukeproliferation-btn">NUKE PROLIF</button>
+
+<!-- Population Dynamics Intelligence Overlay -->
+<div id="popintel-overlay">
+  <div class="pi-header">
+    <div>
+      <div class="pi-title">POPULATION DYNAMICS &amp; YOUTH BULGE INTELLIGENCE</div>
+      <div class="pi-subtitle">SOURCE: UN POPULATION DIVISION 2024 / WORLD BANK / FSI CORRELATION STUDIES / UNCLASSIFIED</div>
+    </div>
+    <div class="pi-close" id="popintel-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="pi-section-title">HIGH-RISK POPULATION PRESSURE STATES</div>
+  <div class="pi-grid" id="pi-cards-grid"></div>
+  <div class="pi-section-title">DEMOGRAPHIC CONFLICT DRIVERS</div>
+  <table class="pi-drivers-table">
+    <thead><tr><th>DRIVER</th><th>IMPACT</th><th>ASSESSMENT</th></tr></thead>
+    <tbody id="pi-drivers-tbody"></tbody>
+  </table>
+  <div class="pi-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="pi-gdelt-feed" id="pi-gdelt-feed"></div>
+</div>
+
+<!-- Technology Export Controls Intelligence Overlay -->
+<div id="exportctrl-overlay">
+  <div class="ec-header">
+    <div>
+      <div class="ec-title">TECHNOLOGY EXPORT CONTROLS &amp; DENIAL REGIMES</div>
+      <div class="ec-subtitle">SOURCE: BIS ENTITY LIST / WASSENAAR ARRANGEMENT / MTCR / ITAR / UNCLASSIFIED</div>
+    </div>
+    <div class="ec-close" id="exportctrl-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="ec-section-title">BIS ENTITY LIST — KEY RESTRICTED ENTITIES</div>
+  <div class="ec-entity-grid" id="ec-entity-grid"></div>
+  <div class="ec-section-title">MULTILATERAL EXPORT CONTROL REGIMES</div>
+  <table class="ec-regimes-table">
+    <thead><tr><th>REGIME</th><th>MEMBERS</th><th>SCOPE</th><th>SECRETARIAT / EST.</th></tr></thead>
+    <tbody id="ec-regimes-tbody"></tbody>
+  </table>
+  <div class="ec-section-title">CRITICAL TECHNOLOGY DENIAL PRIORITIES</div>
+  <div class="ec-tech-grid" id="ec-tech-grid"></div>
+  <div class="ec-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="ec-gdelt-feed" id="ec-gdelt-feed"></div>
+</div>
+
+<!-- Nuclear Proliferation Network Intelligence Overlay -->
+<div id="nukeproliferation-overlay">
+  <div class="np-header">
+    <div>
+      <div class="np-title">NUCLEAR PROLIFERATION NETWORK INTELLIGENCE</div>
+      <div class="np-subtitle">SOURCE: IAEA SAFEGUARDS REPORTS / NTI NUCLEAR SECURITY INDEX / UN PANEL OF EXPERTS / UNCLASSIFIED</div>
+    </div>
+    <div class="np-close" id="nukeproliferation-close">&#x2715; CLOSE</div>
+  </div>
+  <div class="np-section-title">NUCLEAR STATE PROFILES &amp; PROLIFERATION RISK</div>
+  <div class="np-grid" id="np-cases-grid"></div>
+  <div class="np-section-title">AQ KHAN NETWORK — NODES &amp; LEGACY</div>
+  <div class="np-net-grid" id="np-network-grid"></div>
+  <div class="np-section-title">SMUGGLING VECTORS &amp; PROLIFERATION PATHWAYS</div>
+  <table class="np-vec-table">
+    <thead><tr><th>VECTOR</th><th>THREAT</th><th>ASSESSMENT</th></tr></thead>
+    <tbody id="np-vectors-tbody"></tbody>
+  </table>
+  <div class="np-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+  <div class="np-gdelt-feed" id="np-gdelt-feed"></div>
 </div>
 
 <!-- Phase 42 buttons -->
