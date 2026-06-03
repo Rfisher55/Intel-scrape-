@@ -5468,6 +5468,10 @@ button[id$="-btn"].feed-active::after {
  <div class="nuke-banner">OSINT AGGREGATE — UNCLASSIFIED OPEN-SOURCE ESTIMATES — NOT OFFICIAL US GOVERNMENT DATA</div>
  <div id="nuke-summary"></div>
  <div id="nuke-grid"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+ <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#ef4444;margin-bottom:10px;">LIVE NUCLEAR INTELLIGENCE FEED — GDELT</div>
+ <div id="nuke-live-feed" style="max-width:900px;"><div style="color:#475569;font-size:9px;">Loading live nuclear intelligence...</div></div>
+ </div>
 </div>
 <div id="rankings-btn" onclick="toggleRankings()">⬡ RANKINGS</div>
 <button id="proxy-btn" onclick="toggleProxyNet()">&#x1F578; PROXY NET</button>
@@ -17454,8 +17458,14 @@ async function renderLiveIntelTab(iso){
  </div>`;
  // Parallel fetch
  const [gdeltRes,wbGdp,wbMil,wbPop,rwCrises,redditRes]=await Promise.allSettled([
- // GDELT events for country
- fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent('"'+countryName+'"')+'&mode=artlist&maxrecords=20&format=json&timespan=12h',{signal:AbortSignal.timeout(8000)}).then(r=>r.ok?r.json():null),
+ // GDELT events for country (48H primary, falls back to name-only 1-week if too few results)
+ fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent('"'+countryName+'"')+'&mode=artlist&maxrecords=20&format=json&timespan=48H',{signal:AbortSignal.timeout(10000)}).then(r=>r.ok?r.json():null).then(async function(d){
+   if(!d||!d.articles||d.articles.length<3){
+     var r2=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(countryName)+'&mode=artlist&maxrecords=20&format=json&timespan=168H',{signal:AbortSignal.timeout(10000)});
+     return r2.ok?r2.json():d;
+   }
+   return d;
+ }).catch(function(){return null;}),
  // World Bank GDP growth
  iso2?fetch('https://api.worldbank.org/v2/country/'+iso2+'/indicator/NY.GDP.MKTP.KD.ZG?format=json&mrv=2',{signal:AbortSignal.timeout(6000)}).then(r=>r.ok?r.json():null):Promise.resolve(null),
  // World Bank military spending
@@ -17501,7 +17511,7 @@ async function renderLiveIntelTab(iso){
  </div>
  <!-- GDELT Events -->
  <div style="margin-bottom:14px">
- <div class="sec-label">GDELT EVENT MONITOR (12H) &nbsp;<span style="color:#4a5470;font-weight:400">${gdeltArticles.length} EVENTS · AVG TONE: <span style="color:${toneColor}">${avgTone.toFixed(1)}</span></span></div>
+ <div class="sec-label">GDELT EVENT MONITOR (48H) &nbsp;<span style="color:#4a5470;font-weight:400">${gdeltArticles.length} EVENTS · AVG TONE: <span style="color:${toneColor}">${avgTone.toFixed(1)}</span></span></div>
  ${gdeltArticles.length===0?'<div style="color:#4a5470;font-size:9px;text-align:center;padding:12px">NO EVENTS DETECTED IN 12H WINDOW</div>':
  gdeltArticles.slice(0,12).map(a=>{
  const et=_classifyEvent&&_classifyEvent(a.title)||'other';
@@ -18339,6 +18349,7 @@ function openNukeDash(){
  const ov=document.getElementById('nuke-overlay');
  ov.classList.add('open');
  _renderNukeDash();
+ _gdeltFetch('nuclear weapons IAEA arms control warhead strategic deterrence', 'nuke-live-feed', 2);
 }
 
 function closeNukeDash(){
@@ -20208,6 +20219,7 @@ const APT_DB=[
 function openAPT(){
  document.getElementById('apt-overlay').classList.add('open');
  _renderAPT();
+ _gdeltFetch('cyberattack APT nation state hacking espionage malware intrusion', 'apt-live-feed', 2);
 }
 function closeAPT(){
  document.getElementById('apt-overlay').classList.remove('open');
@@ -36049,6 +36061,10 @@ function filterSIGINT(query){
  <div class="apt-body">
  <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">CONFIRMED STATE-SPONSORED THREAT ACTORS &middot; MITRE ATT&amp;CK ALIGNED &middot; GDELT ACTIVITY TRACKING &middot; OSINT SOURCES</div>
  <div class="apt-grid" id="apt-grid"><div style="color:var(--dim);font-size:9px;grid-column:1/-1;">Loading APT threat database...</div></div>
+ <div style="margin-top:18px;border-top:1px solid #1e293b;padding-top:14px;">
+ <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#3b82f6;margin-bottom:10px;">LIVE CYBER THREAT INTELLIGENCE — GDELT</div>
+ <div id="apt-live-feed" style="max-width:900px;"><div style="color:#475569;font-size:9px;">Loading live cyber threat feed...</div></div>
+ </div>
  </div>
 </div>
 <button id="drone-btn" onclick="openDroneOps()">&#x1F6F0; DRONE OPS</button>
