@@ -1990,6 +1990,70 @@ button{border-radius:2px!important}
 .rf-trend-shifting{background:rgba(234,179,8,.1);border:1px solid #eab308;color:#fde047;}
 .rf-trend-critical{background:rgba(127,29,29,.3);border:1px solid #dc2626;color:#fca5a5;}
 .rf-trend-elevated{background:rgba(120,53,15,.2);border:1px solid #f97316;color:#fdba74;}
+/* === Column 6 buttons (right:800px) === */
+#techwar-btn{position:fixed;top:55px;right:800px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#techwar-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#covertops-btn{position:fixed;top:95px;right:800px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#covertops-btn:hover{border-color:#f97316;color:#fdba74;}
+#convergence-btn{position:fixed;top:135px;right:800px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#convergence-btn:hover{border-color:#eab308;color:#fde68a;}
+/* Tech War overlay */
+#techwar-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.tw-domain-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:8px;padding:16px;margin-bottom:14px;}
+.tw-domain-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.tw-domain-name{font-size:13px;font-weight:700;color:#e2e8f0;letter-spacing:1px;}
+.tw-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.tw-badge-threat{font-size:9px;padding:2px 8px;border-radius:3px;font-weight:700;letter-spacing:1px;}
+.tw-badge-critical{background:rgba(239,68,68,0.2);border:1px solid #ef4444;color:#fca5a5;}
+.tw-badge-high{background:rgba(249,115,22,0.2);border:1px solid #f97316;color:#fdba74;}
+.tw-badge-status{font-size:9px;padding:2px 8px;border-radius:3px;background:rgba(30,41,59,0.8);border:1px solid #334155;color:#94a3b8;letter-spacing:1px;}
+.tw-assets-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
+.tw-assets-col{background:rgba(8,16,34,0.6);border:1px solid #1e293b;border-radius:4px;padding:10px;}
+.tw-assets-label{font-size:9px;letter-spacing:2px;font-weight:700;margin-bottom:6px;}
+.tw-assets-label-us{color:#3b82f6;}
+.tw-assets-label-cn{color:#ef4444;}
+.tw-asset-item{font-size:9px;color:#94a3b8;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04);line-height:1.4;}
+.tw-asset-item:last-child{border-bottom:none;}
+.tw-keydev{font-size:9px;color:#cbd5e1;line-height:1.6;border-left:3px solid rgba(59,130,246,0.4);padding-left:10px;margin-bottom:8px;}
+.tw-outlook{font-size:9px;color:#64748b;line-height:1.5;font-style:italic;}
+.tw-winner{font-size:9px;padding:2px 8px;border-radius:3px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#86efac;letter-spacing:1px;}
+.tw-choke-card{background:rgba(15,23,42,0.7);border:1px solid rgba(239,68,68,0.3);border-left:3px solid #ef4444;border-radius:4px;padding:12px;margin-bottom:8px;}
+.tw-choke-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.tw-choke-item{font-size:11px;font-weight:700;color:#fca5a5;}
+.tw-choke-holder{font-size:9px;color:#94a3b8;}
+.tw-choke-note{font-size:9px;color:#cbd5e1;line-height:1.5;}
+.tw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.tw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.tw-gdelt-meta{font-size:8px;color:#475569;}
+/* Covert Ops overlay */
+#covertops-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.co-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:8px;padding:16px;margin-bottom:12px;}
+.co-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.co-op-name{font-size:12px;font-weight:700;color:#e2e8f0;letter-spacing:1px;}
+.co-meta-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.co-badge{font-size:8px;padding:2px 8px;border-radius:3px;letter-spacing:1px;font-weight:700;}
+.co-outcome-success{background:rgba(34,197,94,0.15);border:1px solid #22c55e;color:#86efac;}
+.co-outcome-failed{background:rgba(239,68,68,0.15);border:1px solid #ef4444;color:#fca5a5;}
+.co-outcome-partial{background:rgba(234,179,8,0.15);border:1px solid #eab308;color:#fde047;}
+.co-outcome-terminated{background:rgba(249,115,22,0.15);border:1px solid #f97316;color:#fdba74;}
+.co-outcome-catastrophic{background:rgba(127,29,29,0.3);border:1px solid #dc2626;color:#fca5a5;}
+.co-type-badge{background:rgba(30,41,59,0.8);border:1px solid #334155;color:#94a3b8;}
+.co-class-badge{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;}
+.co-desc{font-size:9px;color:#94a3b8;line-height:1.6;margin-bottom:6px;}
+.co-sig{font-size:9px;color:#cbd5e1;line-height:1.5;border-left:3px solid rgba(234,179,8,0.4);padding-left:10px;}
+.co-year{font-size:9px;color:#475569;}
+.co-agency{font-size:9px;color:#7dd3fc;font-weight:700;}
+.co-country{font-size:9px;color:#94a3b8;}
+.co-susp-card{background:rgba(120,53,15,0.1);border:1px solid rgba(234,179,8,0.3);border-left:3px solid #eab308;border-radius:4px;padding:12px;margin-bottom:8px;}
+.co-susp-name{font-size:10px;font-weight:700;color:#fde047;margin-bottom:4px;}
+.co-susp-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:8px;margin-bottom:6px;}
+.co-susp-targets{font-size:9px;color:#fde68a;line-height:1.5;margin-bottom:4px;}
+.co-susp-evidence{font-size:9px;color:#94a3b8;line-height:1.5;}
+.co-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.co-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.co-gdelt-meta{font-size:8px;color:#475569;}
+/* Convergence overlay */
+#convergence-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,0.97);z-index:2200;display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
 </style>
 </head>
 <body>
@@ -19003,6 +19067,308 @@ async function fetchDisplacementGDELT(){
   }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
 
+// ── MODULE: US-CHINA TECH WAR INTELLIGENCE ────────────────────────────────────
+const TECH_BATTLEGROUNDS = [
+  {"domain":"Semiconductor / Chips","winner":"USA (leading)","status":"ACTIVE CONFLICT","threat":"CRITICAL","color":"#ef4444",
+   "usAssets":["TSMC (Taiwan, US-ally)","ASML monopoly on EUV lithography (Netherlands)","NVIDIA H100/H200 GPU dominance","CHIPS Act $52B domestic fab investment","Entity List controls on 600+ Chinese firms"],
+   "chinaAssets":["SMIC (7nm achieved via multi-patterning workaround)","Huawei Kirin 9000S (7nm equivalent)","$150B+ state investment in self-sufficiency","NAURA/AMEC domestic tool development"],
+   "keyDev":"Oct 2023 US export controls banned 3nm+ chips to China. ASML restricted from China EUV shipments. NVIDIA A800/H800 workarounds then also banned.",
+   "outlook":"China targeting self-sufficiency by 2030 but 5+ years behind TSMC leading edge."},
+  {"domain":"Artificial Intelligence","winner":"USA (leading, narrowing gap)","status":"ACTIVE","threat":"HIGH","color":"#f97316",
+   "usAssets":["OpenAI GPT-4o, o1 frontier models","Anthropic Claude 3.5 Sonnet","Google DeepMind Gemini","Meta Llama open source","NVIDIA CUDA ecosystem lock-in"],
+   "chinaAssets":["DeepSeek R1/V3 (matched GPT-4 at 1/30th compute cost)","Baidu ERNIE Bot","Alibaba Qwen","ByteDance Doubao","Huawei Ascend AI chips"],
+   "keyDev":"DeepSeek Jan 2025 shock: matched frontier AI at fraction of cost, bypassing chip restrictions. US compute advantage may be less decisive than believed.",
+   "outlook":"China closing gap rapidly via algorithmic efficiency. DeepSeek demonstrated compute advantage not decisive."},
+  {"domain":"Quantum Computing","winner":"USA (leading)","status":"EMERGING","threat":"HIGH","color":"#f97316",
+   "usAssets":["Google Willow 105-qubit (2024)","IBM 1000+ qubit roadmap","DOE national quantum centers","NSA quantum-resistant crypto transition"],
+   "chinaAssets":["Origin Quantum 72-qubit Wuyuan","Zuchongzhi 2.0","$15B state quantum investment","Jiuzhang photonic quantum computer"],
+   "keyDev":"Harvest Now, Decrypt Later: China believed to be storing encrypted US traffic for future quantum decryption. NSA driving post-quantum crypto ASAP.",
+   "outlook":"Cryptographically relevant quantum computer (CRQC) capability ~10-15 years away. Race to implement PQC before CRQC arrives."},
+  {"domain":"6G / Telecommunications","winner":"China (leading in 5G infrastructure)","status":"ACTIVE","threat":"HIGH","color":"#f97316",
+   "usAssets":["Open RAN (O-RAN) standard promotion","Ericsson/Nokia partnerships","US restricting Huawei/ZTE from allies"],
+   "chinaAssets":["Huawei 5G dominance globally (31% market)","ZTE infrastructure","IMT-2030 6G standards push","Belt and Road telecom infrastructure"],
+   "keyDev":"EU Huawei ban accelerating. Huawei 5G in 170+ countries despite US pressure. China winning 6G standardization battle in developing world.",
+   "outlook":"China dominant in 5G infrastructure globally. US pushing open standards but Huawei entrenched in Global South."},
+  {"domain":"Hypersonic Weapons","winner":"China (leading)","status":"CRITICAL","threat":"CRITICAL","color":"#ef4444",
+   "usAssets":["LRHW (Dark Eagle) operational 2025","ARRW canceled","Conventional Prompt Strike (CPS) Navy","DARPA HAWC tests"],
+   "chinaAssets":["DF-17 HGV operational since 2019","DF-ZF hypersonic glide vehicle","YJ-21 carrier-killer anti-ship","PLA has largest HGV arsenal"],
+   "keyDev":"China deployed DF-17 operationally in 2019 — 3 years before any US hypersonic. Maneuvering HGVs defeat all US missile defense.",
+   "outlook":"US hypersonic programs 3-5 years behind China PLA deployments. Significant US vulnerability window."},
+  {"domain":"Autonomous / Drone Warfare","winner":"China (commercial dominance, military growing)","status":"ACTIVE","threat":"HIGH","color":"#f97316",
+   "usAssets":["Reaper/Predator proven systems","Collaborative combat aircraft (CCA) program","Kratos Valkyrie UCAV","Replicator Initiative (1000 drones)"],
+   "chinaAssets":["DJI 70%+ global commercial drone market (sensor data concern)","CH-7 UCAV","Wing Loong export success","CH-4 in 20+ countries"],
+   "keyDev":"Ukraine war validated drone mass attrition warfare. US Replicator Initiative aims for 1000 autonomous drones by 2025. China manufacturing capacity orders of magnitude greater.",
+   "outlook":"China can produce drones at 10x lower cost. US advantage in software/autonomy but hardware manufacturing at disadvantage."}
+];
+
+const TECH_CHOKE_POINTS = [
+  {"item":"ASML EUV Lithography","holder":"Netherlands (ASML)","risk":"CRITICAL","note":"Single company makes ALL EUV machines. Physical monopoly on advanced chip manufacturing.","lat":51.4,"lng":5.5},
+  {"item":"TSMC Advanced Fabs","holder":"Taiwan","risk":"CRITICAL","note":"90%+ of world\'s most advanced chips made in Taiwan. PRC invasion = global semiconductor collapse.","lat":24.0,"lng":121.0},
+  {"item":"NVIDIA CUDA Ecosystem","holder":"USA (NVIDIA)","risk":"HIGH","note":"CUDA software ecosystem creates switching costs. AI training dominated by NVIDIA H100/H200.","lat":37.4,"lng":-122.0},
+  {"item":"ARM Architecture Licenses","holder":"UK (ARM/SoftBank)","risk":"HIGH","note":"98% of smartphones use ARM. Qualcomm, Apple, Amazon all ARM-based. Chinese RISC-V alternative emerging.","lat":51.5,"lng":-0.1},
+  {"item":"Rare Earth Processing","holder":"China (85%+ global processing)","risk":"HIGH","note":"Even US rare earth mines send ore to China for processing. China restricted Ga/Ge exports Oct 2023.","lat":30.0,"lng":110.0}
+];
+
+function openTechWar(){
+  document.getElementById('techwar-overlay').style.display='flex';
+  _renderTechWarOverlay();
+}
+function closeTechWar(){
+  document.getElementById('techwar-overlay').style.display='none';
+}
+function _renderTechWarOverlay(){
+  const domainEl=document.getElementById('techwar-domains');
+  const chokeEl=document.getElementById('techwar-chokes');
+  if(domainEl){
+    domainEl.innerHTML=TECH_BATTLEGROUNDS.map(function(bg){
+      const threatClass=bg.threat==='CRITICAL'?'tw-badge-critical':'tw-badge-high';
+      const usItems=bg.usAssets.map(function(a){return '<div class="tw-asset-item">'+a+'</div>';}).join('');
+      const cnItems=bg.chinaAssets.map(function(a){return '<div class="tw-asset-item">'+a+'</div>';}).join('');
+      return '<div class="tw-domain-card" style="border-left:3px solid '+bg.color+';">'
+        +'<div class="tw-domain-header">'
+        +'<div class="tw-domain-name">'+bg.domain+'</div>'
+        +'<div class="tw-badges">'
+        +'<span class="tw-badge-threat '+threatClass+'">'+bg.threat+'</span>'
+        +'<span class="tw-badge-status">'+bg.status+'</span>'
+        +'<span class="tw-winner">'+bg.winner+'</span>'
+        +'</div></div>'
+        +'<div class="tw-assets-grid">'
+        +'<div class="tw-assets-col"><div class="tw-assets-label tw-assets-label-us">US ASSETS</div>'+usItems+'</div>'
+        +'<div class="tw-assets-col"><div class="tw-assets-label tw-assets-label-cn">CHINA ASSETS</div>'+cnItems+'</div>'
+        +'</div>'
+        +'<div class="tw-keydev">'+bg.keyDev+'</div>'
+        +'<div class="tw-outlook">OUTLOOK: '+bg.outlook+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  if(chokeEl){
+    chokeEl.innerHTML=TECH_CHOKE_POINTS.map(function(cp){
+      return '<div class="tw-choke-card">'
+        +'<div class="tw-choke-header">'
+        +'<span class="tw-choke-item">'+cp.item+'</span>'
+        +'<span class="tw-badge-threat '+(cp.risk==='CRITICAL'?'tw-badge-critical':'tw-badge-high')+'">'+cp.risk+'</span>'
+        +'</div>'
+        +'<div class="tw-choke-holder" style="margin-bottom:6px;">Controlled by: '+cp.holder+'</div>'
+        +'<div class="tw-choke-note">'+cp.note+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  _fetchTechWarGDELT();
+}
+async function _fetchTechWarGDELT(){
+  const el=document.getElementById('techwar-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live tech war feed...</div>';
+  try{
+    const q=encodeURIComponent('semiconductor chip technology war China export controls ASML TSMC NVIDIA');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="tw-gdelt-item"><div class="tw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="tw-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ── MODULE: COVERT OPERATIONS ARCHIVE ─────────────────────────────────────────
+const COVERT_OPS_ARCHIVE = [
+  {"op":"Operation NEPTUNE SPEAR","year":2011,"agency":"CIA / JSOC","country":"Pakistan","classification":"DECLASSIFIED",
+   "type":"Kinetic","outcome":"SUCCESS","description":"SEAL Team 6 raid on Abbottabad compound kills Osama bin Laden. CIA identified compound through courier network (Abu Ahmed al-Kuwaiti). Pakistani government not notified to prevent leak.",
+   "significance":"Ended 10-year manhunt. Demonstrated US willingness to violate allied sovereignty for HVT capture/kill.","color":"#22c55e"},
+  {"op":"Operation OLYMPIC GAMES (Stuxnet)","year":2010,"agency":"NSA / CIA / Unit 8200","country":"Iran","classification":"DECLASSIFIED (partially)",
+   "type":"Cyber","outcome":"SUCCESS","description":"First known use of cyberweapon to cause physical destruction. Stuxnet worm destroyed ~1,000 Iranian centrifuges at Natanz. Joint US-Israeli operation. Accidentally spread globally in 2010.",
+   "significance":"Established cyber as domain of warfare. Set precedent for state-on-state cyberattacks without kinetic response.","color":"#22c55e"},
+  {"op":"Operation TIMBER SYCAMORE","year":"2012-2017","agency":"CIA","country":"Syria/Jordan","classification":"DECLASSIFIED",
+   "type":"Paramilitary","outcome":"TERMINATED","description":"CIA program to arm, train and fund Syrian rebel groups fighting Assad. Operated via Jordan. $1B+ allocated. Program terminated by Trump 2017 after rebels routed by Russian/Iranian forces.",
+   "significance":"Largest CIA covert action since Afghanistan 1980s. Termination marked US strategic retreat from Syria.","color":"#f97316"},
+  {"op":"MOSSAD Pager Operation","year":2024,"agency":"Mossad (Israel)","country":"Lebanon","classification":"SUSPECTED - NOT CONFIRMED",
+   "type":"Kinetic/Supply Chain","outcome":"SUCCESS","description":"Explosives embedded in 5,000 pagers and 1,000 walkie-talkies ordered by Hezbollah. Simultaneously detonated Sept 17-18 2024 killing 39, wounding 3,400. Most sophisticated supply chain attack in history.",
+   "significance":"Unprecedented supply chain attack. Demonstrated ability to compromise Hezbollah secure comms supply chain. Preceded ground invasion of Lebanon.","color":"#ef4444"},
+  {"op":"Operation WRATH OF GOD","year":"1972-1988","agency":"Mossad (Israel)","country":"Europe/Global","classification":"DECLASSIFIED",
+   "type":"Kinetic","outcome":"PARTIAL","description":"Targeted assassination of Black September members responsible for 1972 Munich Olympics massacre. 12+ operatives killed over 16 years. Accidentally killed innocent waiter Ali Hassan Salameh in Lillehammer (Norway) error 1973.",
+   "significance":"Established Mossad targeted killing doctrine. Template for subsequent CT assassination programs.","color":"#eab308"},
+  {"op":"CIA Afghan Mujahideen Program","year":"1979-1989","agency":"CIA / ISI / Saudi GID","country":"Afghanistan","classification":"DECLASSIFIED",
+   "type":"Paramilitary","outcome":"SUCCESS (Pyrrhic)","description":"Operation CYCLONE: $2B+ in arms and funding to Afghan mujahideen fighting Soviet forces. Stinger MANPADS turned tide. Soviets withdrew 1989. Blowback: same networks became Taliban/al-Qaeda.",
+   "significance":"Largest covert action in CIA history. Contributed to Soviet collapse. Also seeded global jihadist networks.","color":"#eab308"},
+  {"op":"VAULT 7 CIA Toolkit Compromise","year":2017,"agency":"CIA (victim)","country":"USA","classification":"LEAKED",
+   "type":"Counterintel","outcome":"CATASTROPHIC","description":"WikiLeaks published 8,761 CIA documents from CCI (Center for Cyber Intelligence). Entire cyberweapon arsenal exposed including malware targeting iOS, Android, Windows, Samsung TVs. Worst CIA data loss ever. Joshua Schulte convicted.",
+   "significance":"Forced CIA to rebuild entire cyber capability. Revealed CIA kept vulnerabilities rather than disclosing to vendors. Damaged Five Eyes intelligence sharing.","color":"#ef4444"},
+  {"op":"GRU Salisbury Novichok Op","year":2018,"agency":"GRU Unit 29155","country":"UK","classification":"CONFIRMED",
+   "type":"Kinetic/Chemical","outcome":"FAILED","description":"GRU attempted assassination of Sergei Skripal with Novichok nerve agent in Salisbury UK. Skripal survived. Dawn Sturgess (bystander) killed. Two GRU officers identified by Bellingcat (Col. Anatoliy Chepiga, Dr. Alexander Mishkin). UK expelled 23 Russian diplomats.",
+   "significance":"Confirmed Russian willingness to use chemical weapons on NATO soil. Bellingcat OSINT investigation revolutionized covert op attribution.","color":"#ef4444"}
+];
+
+const SUSPECTED_CURRENT_OPS = [
+  {"op":"Sabotage of Russian War Economy","actors":"CIA/MI6 (suspected)","type":"Sabotage","targets":"Russian defense industry, fuel depots, ammunition dumps deep inside Russia","evidence":"Multiple deep-strike explosions at Russian facilities 2022-2024 beyond Ukrainian strike capability","classification":"UNCONFIRMED"},
+  {"op":"Assassination of Russian Generals","actors":"Ukraine/CIA (suspected)","type":"Targeted Killing","targets":"Russian general officers — 30+ killed since Feb 2022","evidence":"Pattern suggests intelligence-enabled targeting beyond battlefield chance","classification":"UNCONFIRMED"},
+  {"op":"Nord Stream Pipeline Sabotage","actors":"Disputed: Ukraine/US/UK/Russia (self-sabotage)","type":"Infrastructure","targets":"Nord Stream 1 and 2 gas pipelines (Sept 2022)","evidence":"Seymour Hersh claimed US Navy divers. Germany investigation ongoing. Significant state capability required.","classification":"UNSOLVED"},
+  {"op":"Houthi Targeting Intel","actors":"USA/UK intelligence","type":"ISR","targets":"Houthi command, storage, launch facilities","evidence":"US/UK airstrikes with precise targeting imply significant HUMINT/SIGINT","classification":"ACKNOWLEDGED (airstrikes) - INTEL SOURCES CLASSIFIED"}
+];
+
+function openCovertOps(){
+  document.getElementById('covertops-overlay').style.display='flex';
+  _renderCovertOpsOverlay();
+}
+function closeCovertOps(){
+  document.getElementById('covertops-overlay').style.display='none';
+}
+function _outcomeClass(outcome){
+  const o=outcome.toUpperCase();
+  if(o.indexOf('CATASTROPHIC')>=0)return 'co-outcome-catastrophic';
+  if(o.indexOf('SUCCESS')>=0)return 'co-outcome-success';
+  if(o.indexOf('FAIL')>=0)return 'co-outcome-failed';
+  if(o.indexOf('PARTIAL')>=0)return 'co-outcome-partial';
+  if(o.indexOf('TERMINATED')>=0)return 'co-outcome-terminated';
+  return 'co-type-badge';
+}
+function _renderCovertOpsOverlay(){
+  const archiveEl=document.getElementById('covertops-archive');
+  const suspEl=document.getElementById('covertops-suspected');
+  if(archiveEl){
+    archiveEl.innerHTML=COVERT_OPS_ARCHIVE.map(function(op){
+      return '<div class="co-card" style="border-left:3px solid '+op.color+';">'
+        +'<div class="co-header">'
+        +'<div class="co-op-name">'+op.op+'</div>'
+        +'<div class="co-year">'+op.year+'</div>'
+        +'</div>'
+        +'<div class="co-meta-row">'
+        +'<span class="co-badge co-agency">'+op.agency+'</span>'
+        +'<span class="co-badge co-country">'+op.country+'</span>'
+        +'<span class="co-badge '+_outcomeClass(op.outcome)+'">'+op.outcome+'</span>'
+        +'<span class="co-badge co-type-badge">'+op.type+'</span>'
+        +'<span class="co-badge co-class-badge">'+op.classification+'</span>'
+        +'</div>'
+        +'<div class="co-desc">'+op.description+'</div>'
+        +'<div class="co-sig">'+op.significance+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  if(suspEl){
+    suspEl.innerHTML=SUSPECTED_CURRENT_OPS.map(function(op){
+      return '<div class="co-susp-card">'
+        +'<div class="co-susp-name">'+op.op+'</div>'
+        +'<div class="co-susp-meta">'
+        +'<span style="color:#fbbf24;">'+op.actors+'</span>'
+        +'<span style="color:#94a3b8;">TYPE: '+op.type+'</span>'
+        +'<span style="color:#ef4444;font-size:8px;padding:1px 5px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:2px;">'+op.classification+'</span>'
+        +'</div>'
+        +'<div class="co-susp-targets"><strong style="color:#fde068;">TARGETS:</strong> '+op.targets+'</div>'
+        +'<div class="co-susp-evidence"><strong style="color:#94a3b8;">EVIDENCE:</strong> '+op.evidence+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  _fetchCovertOpsGDELT();
+}
+async function _fetchCovertOpsGDELT(){
+  const el=document.getElementById('covertops-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">Fetching live covert ops feed...</div>';
+  try{
+    const q=encodeURIComponent('covert operation intelligence CIA Mossad special operations clandestine');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="co-gdelt-item"><div class="co-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="co-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ── MODULE: MULTI-DOMAIN THREAT CONVERGENCE ENGINE ────────────────────────────
+function openConvergence(){
+  document.getElementById('convergence-overlay').style.display='flex';
+  _runConvergenceAnalysis();
+}
+function closeConvergence(){
+  document.getElementById('convergence-overlay').style.display='none';
+}
+function _runConvergenceAnalysis(){
+  const container=document.getElementById('convergence-results');
+  if(!container)return;
+  const typeCounts={};
+  const severityCounts={critical:0,high:0,medium:0,low:0};
+  const regionCounts={};
+  liveHotspots.forEach(function(h){
+    typeCounts[h.type]=(typeCounts[h.type]||0)+1;
+    if(h.severity)severityCounts[h.severity]=(severityCounts[h.severity]||0)+1;
+    var region='Other';
+    if(h.lat>35&&h.lat<72&&h.lng>-30&&h.lng<60)region='Europe';
+    else if(h.lat>15&&h.lat<45&&h.lng>24&&h.lng<65)region='Middle East';
+    else if(h.lat>-5&&h.lat<40&&h.lng>60&&h.lng<145)region='South/SE Asia';
+    else if(h.lat>30&&h.lat<72&&h.lng>60&&h.lng<180)region='East Asia';
+    else if(h.lat>-40&&h.lat<35&&h.lng>-20&&h.lng<55)region='Africa';
+    else if(h.lat>-60&&h.lat<35&&h.lng>-120&&h.lng<-30)region='Americas';
+    else if(h.lat>60)region='Arctic';
+    regionCounts[region]=(regionCounts[region]||0)+1;
+  });
+  const DEFCON=typeof _calcDEFCON==='function'?_calcDEFCON():3;
+  const totalHotspots=liveHotspots.length;
+  const criticalScore=severityCounts.critical*4+severityCounts.high*2+severityCounts.medium*1;
+  var dominantType='unknown';var maxCount=0;
+  Object.entries(typeCounts).forEach(function(entry){var t=entry[0];var c=entry[1];if(c>maxCount){maxCount=c;dominantType=t;}});
+  const sortedRegions=Object.entries(regionCounts).sort(function(a,b){return b[1]-a[1];});
+  const sevHTML=['critical','high','medium','low'].map(function(s){
+    var col=s==='critical'?'#ef4444':s==='high'?'#f97316':s==='medium'?'#eab308':'#22c55e';
+    return '<span style="background:rgba(30,41,59,0.8);border:1px solid #334155;border-radius:4px;padding:4px 10px;font-size:11px;color:'+col+';">'+s.toUpperCase()+': '+(severityCounts[s]||0)+'</span>';
+  }).join('');
+  const regionHTML=sortedRegions.slice(0,5).map(function(entry,i){
+    var r=entry[0];var c=entry[1];
+    var barW=Math.round(c/totalHotspots*200);
+    return '<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">'
+      +'<span style="color:#64748b;font-size:11px;width:16px;">'+(i+1)+'</span>'
+      +'<span style="color:#e2e8f0;font-size:12px;flex:1;">'+r+'</span>'
+      +'<div style="background:rgba(59,130,246,0.2);border-radius:4px;height:8px;width:'+barW+'px;max-width:200px;min-width:4px;"></div>'
+      +'<span style="color:#3b82f6;font-size:11px;width:30px;text-align:right;">'+c+'</span>'
+      +'</div>';
+  }).join('');
+  const domainHTML=Object.entries(typeCounts).sort(function(a,b){return b[1]-a[1];}).slice(0,8).map(function(entry){
+    return '<span style="background:rgba(30,41,59,0.8);border:1px solid #334155;border-radius:4px;padding:4px 10px;font-size:11px;color:#94a3b8;">'+entry[0]+': <strong style="color:#e2e8f0;">'+entry[1]+'</strong></span>';
+  }).join('');
+  var assessmentText='';
+  if(DEFCON<=2){
+    assessmentText='<strong style="color:#ef4444;">CRITICAL CONVERGENCE DETECTED.</strong> Multiple high-severity indicators across domains. Immediate escalation risk.';
+  } else if(DEFCON===3){
+    assessmentText='<strong style="color:#f97316;">ELEVATED MULTI-DOMAIN ACTIVITY.</strong> Significant threat clustering in '+(sortedRegions[0]?sortedRegions[0][0]:'unknown')+'. Cross-domain correlation suggests coordinated pressure.';
+  } else {
+    assessmentText='Threat environment MODERATE. Distributed hotspot activity across '+sortedRegions.length+' regions. Monitor dominant type: '+dominantType+'.';
+  }
+  container.innerHTML=''
+    +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">'
+    +'<div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:16px;text-align:center;">'
+    +'<div style="font-size:32px;font-weight:bold;color:#ef4444;">'+DEFCON+'</div>'
+    +'<div style="color:#94a3b8;font-size:11px;margin-top:4px;">CURRENT DEFCON</div></div>'
+    +'<div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:16px;text-align:center;">'
+    +'<div style="font-size:32px;font-weight:bold;color:#3b82f6;">'+totalHotspots+'</div>'
+    +'<div style="color:#94a3b8;font-size:11px;margin-top:4px;">ACTIVE HOTSPOTS</div></div>'
+    +'<div style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;padding:16px;text-align:center;">'
+    +'<div style="font-size:32px;font-weight:bold;color:#eab308;">'+criticalScore+'</div>'
+    +'<div style="color:#94a3b8;font-size:11px;margin-top:4px;">THREAT SCORE</div></div>'
+    +'</div>'
+    +'<div style="margin-bottom:24px;">'
+    +'<div style="color:#94a3b8;font-size:11px;letter-spacing:2px;margin-bottom:12px;">SEVERITY DISTRIBUTION</div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'+sevHTML+'</div>'
+    +'</div>'
+    +'<div style="margin-bottom:24px;">'
+    +'<div style="color:#94a3b8;font-size:11px;letter-spacing:2px;margin-bottom:12px;">HOTTEST CONVERGENCE REGIONS</div>'
+    +regionHTML
+    +'</div>'
+    +'<div style="margin-bottom:24px;">'
+    +'<div style="color:#94a3b8;font-size:11px;letter-spacing:2px;margin-bottom:12px;">DOMINANT THREAT DOMAINS</div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'+domainHTML+'</div>'
+    +'</div>'
+    +'<div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:16px;">'
+    +'<div style="color:#ef4444;font-size:11px;letter-spacing:2px;margin-bottom:8px;">CONVERGENCE ASSESSMENT</div>'
+    +'<div style="color:#cbd5e1;font-size:12px;line-height:1.7;">'+assessmentText
+    +' Active tracking: '+totalHotspots+' indicators across '+Object.keys(typeCounts).length+' threat domains.</div>'
+    +'</div>';
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -20581,6 +20947,64 @@ function filterSIGINT(query){
       <div id="displacement-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
     </div>
   </div>
+</div>
+
+<!-- Column 6 Buttons -->
+<button id="techwar-btn" onclick="openTechWar()">TECH WAR</button>
+<button id="covertops-btn" onclick="openCovertOps()">COVERT OPS</button>
+<button id="convergence-btn" onclick="openConvergence()">CONVERGENCE</button>
+
+<!-- Tech War Overlay -->
+<div id="techwar-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;border-bottom:1px solid #1e293b;padding-bottom:16px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">US-CHINA</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">TECHNOLOGY WAR INTELLIGENCE</div>
+      <div style="color:#64748b;font-size:11px;margin-top:2px;">Domain-by-domain competitive assessment &bull; Strategic choke points</div>
+    </div>
+    <button onclick="closeTechWar()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="color:#94a3b8;font-size:11px;letter-spacing:2px;margin-bottom:16px;">BATTLEGROUND DOMAINS</div>
+  <div id="techwar-domains"></div>
+  <div style="color:#ef4444;font-size:11px;letter-spacing:2px;margin:24px 0 12px;border-top:1px solid #1e293b;padding-top:20px;">STRATEGIC CHOKE POINTS</div>
+  <div id="techwar-chokes"></div>
+  <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+    <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:10px;">GDELT LIVE TECH WAR FEED</div>
+    <div id="techwar-gdelt-feed"><div style="color:#475569;font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+  </div>
+</div>
+
+<!-- Covert Ops Overlay -->
+<div id="covertops-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;border-bottom:1px solid #1e293b;padding-bottom:16px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#f97316;font-size:11px;letter-spacing:3px;">CLASSIFIED ARCHIVE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">COVERT OPERATIONS ARCHIVE</div>
+      <div style="color:#64748b;font-size:11px;margin-top:2px;">Historical ops &bull; Suspected current operations &bull; OSINT attribution</div>
+    </div>
+    <button onclick="closeCovertOps()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="color:#94a3b8;font-size:11px;letter-spacing:2px;margin-bottom:16px;">DECLASSIFIED &amp; CONFIRMED OPERATIONS</div>
+  <div id="covertops-archive"></div>
+  <div style="color:#eab308;font-size:11px;letter-spacing:2px;margin:24px 0 12px;border-top:1px solid #1e293b;padding-top:20px;">SUSPECTED CURRENT OPERATIONS (UNCONFIRMED)</div>
+  <div id="covertops-suspected"></div>
+  <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+    <div style="font-size:9px;letter-spacing:2px;color:#fdba74;font-weight:700;margin-bottom:10px;">GDELT LIVE COVERT OPS FEED</div>
+    <div id="covertops-gdelt-feed"><div style="color:#475569;font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+  </div>
+</div>
+
+<!-- Convergence Overlay -->
+<div id="convergence-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;border-bottom:1px solid #1e293b;padding-bottom:16px;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">MULTI-DOMAIN</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">THREAT CONVERGENCE ENGINE</div>
+      <div style="color:#64748b;font-size:11px;margin-top:2px;">Real-time multi-indicator correlation analysis</div>
+    </div>
+    <button onclick="closeConvergence()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div id="convergence-results"></div>
 </div>
 
 <!-- Cable Watch Overlay -->
