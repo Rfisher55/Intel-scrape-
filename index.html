@@ -2529,6 +2529,81 @@ button{border-radius:2px!important}
 .geocal-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .geocal-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .geocal-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === PHASE 34: CHEM WEAPONS, SPACE WAR, SOF INTEL === */
+#chemweap-btn{position:fixed;top:175px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#chemweap-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#spacewar-btn{position:fixed;top:215px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#spacewar-btn:hover{border-color:#8b5cf6;color:#c4b5fd;}
+#sof-btn{position:fixed;top:255px;right:1030px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#sof-btn:hover{border-color:#22c55e;color:#86efac;}
+
+/* Chem Weapons overlay */
+#chemweap-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.cw-program-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.cw-program-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.cw-country-name{font-size:16px;font-weight:700;letter-spacing:1.5px;}
+.cw-status-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+.cw-threat-critical{background:rgba(127,29,29,.6);border:1px solid #dc2626;color:#fca5a5;animation:nukepulse 3s infinite;}
+.cw-threat-high{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.cw-history{font-size:9px;color:#94a3b8;line-height:1.6;border-left:3px solid rgba(100,116,139,.3);padding-left:8px;margin-bottom:8px;}
+.cw-agents-list{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.cw-agent-chip{font-size:8px;padding:2px 7px;background:rgba(127,29,29,.35);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:3px;}
+.cw-incident-row{display:grid;grid-template-columns:70px 90px 80px 70px 1fr;gap:6px;align-items:start;padding:5px 8px;background:rgba(4,9,20,.5);border-left:2px solid rgba(239,68,68,.35);border-radius:0 3px 3px 0;margin-bottom:4px;font-size:8px;}
+.cw-inc-label{font-size:7px;color:#475569;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px;}
+.cw-inc-val{color:#e2e8f0;line-height:1.4;}
+.cw-inc-finding{color:#94a3b8;font-size:8px;line-height:1.4;}
+.cw-agent-ref-row{display:grid;grid-template-columns:120px 120px 100px 1fr 80px 80px;gap:6px;align-items:start;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.05);font-size:8px;}
+.cw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.cw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Space War overlay */
+#spacewar-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.sw-country-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.sw-country-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.sw-country-name{font-size:15px;font-weight:700;letter-spacing:1.5px;}
+.sw-threat-badge{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;}
+.sw-system-row{display:grid;grid-template-columns:180px 130px 120px 1fr;gap:8px;align-items:start;padding:6px 8px;background:rgba(4,9,20,.5);border-left:2px solid rgba(139,92,246,.3);border-radius:0 3px 3px 0;margin-bottom:4px;font-size:8px;}
+.sw-sys-name{font-size:9px;color:#e2e8f0;font-weight:700;line-height:1.3;}
+.sw-sys-type{color:#8b5cf6;font-size:8px;}
+.sw-sys-status{color:#64748b;}
+.sw-sys-detail{color:#94a3b8;line-height:1.4;}
+.sw-sat-row{display:grid;grid-template-columns:140px 80px 60px 100px 1fr;gap:6px;align-items:start;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.05);font-size:8px;}
+.sw-incident-card{background:rgba(15,23,42,0.5);border-left:3px solid #8b5cf6;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 4px 4px 0;padding:10px;margin-bottom:8px;}
+.sw-inc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;flex-wrap:wrap;gap:6px;}
+.sw-inc-event{font-size:10px;font-weight:700;color:#e2e8f0;}
+.sw-sev-badge{font-size:7px;padding:2px 7px;border-radius:2px;letter-spacing:1px;font-weight:700;}
+.sw-sev-high{background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.sw-sev-elevated{background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.sw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.sw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.sw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* SOF Intel overlay */
+#sof-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.sof-country-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:12px;}
+.sof-country-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.sof-country-name{font-size:16px;font-weight:700;letter-spacing:1.5px;}
+.sof-classification{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(30,41,59,.7);border:1px solid rgba(100,116,139,.4);color:#94a3b8;}
+.sof-unit-card{background:rgba(4,9,20,.5);border-left:3px solid rgba(59,130,246,.35);border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 4px 4px 0;padding:10px;margin-bottom:6px;}
+.sof-unit-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:6px;}
+.sof-unit-name{font-size:10px;font-weight:700;color:#e2e8f0;letter-spacing:.5px;}
+.sof-unit-mission{font-size:8px;color:#8b5cf6;letter-spacing:.1em;}
+.sof-unit-personnel{font-size:8px;color:#64748b;}
+.sof-unit-specialties{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px;}
+.sof-spec-chip{font-size:7px;padding:1px 6px;background:rgba(30,41,59,.6);border:1px solid rgba(100,116,139,.25);color:#94a3b8;border-radius:3px;}
+.sof-unit-ops{font-size:8px;color:#94a3b8;line-height:1.5;border-left:2px solid rgba(59,130,246,.25);padding-left:6px;}
+.sof-op-card{background:rgba(15,23,42,0.5);border-left:3px solid #22c55e;border-top:1px solid #1e293b;border-right:1px solid #1e293b;border-bottom:1px solid #1e293b;border-radius:0 4px 4px 0;padding:12px;margin-bottom:8px;}
+.sof-op-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;flex-wrap:wrap;gap:6px;}
+.sof-op-name{font-size:11px;font-weight:700;color:#e2e8f0;letter-spacing:.5px;}
+.sof-op-date{font-size:8px;color:#64748b;}
+.sof-op-nations{font-size:8px;color:#22c55e;margin-bottom:4px;}
+.sof-op-outcome{font-size:9px;color:#fde047;margin-bottom:4px;}
+.sof-op-detail{font-size:9px;color:#94a3b8;line-height:1.5;border-left:2px solid rgba(34,197,94,.25);padding-left:6px;}
+.sof-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.sof-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.sof-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -21996,6 +22071,372 @@ async function fetchGeoCalGDELT(){
 
 // ===== END PHASE 33 =====
 
+// ===== PHASE 34: CHEM WEAPONS, SPACE WARFARE, SOF INTEL =====
+
+// ---- CHEMICAL WEAPONS DATA ----
+const CW_STATE_PROGRAMS = [
+  {"country":"Syria","iso":"SY","status":"ACTIVE USE — UNDECLARED STOCKPILE","color":"#ef4444","threat":"CRITICAL",
+   "history":"Assad regime used chemical weapons 50+ times in civil war per OPCW/UN JIM findings. Declared stockpile destroyed 2014 under international supervision — but multiple attacks since.",
+   "agents":["Sarin (Khan Shaykhun 2017, Douma 2018)","Chlorine (barrel bomb delivery, 100+ incidents)","VX (suspected)","Mustard gas (ISIS also used)"],
+   "keyIncidents":[
+     {"date":"Aug 2013","location":"Ghouta","agent":"Sarin","killed":"1,400+","finding":"UN investigation confirmed sarin use. Red line Obama declared but did not enforce."},
+     {"date":"Apr 2017","location":"Khan Shaykhun","agent":"Sarin","killed":"89","finding":"OPCW-JIM attributed to Syrian Air Force. Trump ordered 59 Tomahawk strikes on Shayrat AB."},
+     {"date":"Apr 2018","location":"Douma","agent":"Chlorine","killed":"43+","finding":"OPCW confirmed chlorine. IIT (2021) attributed to Syrian Arab Air Force. US/UK/France struck Syria."}
+   ],
+   "lat":34,"lng":38},
+  {"country":"Russia","iso":"RU","status":"MAINTAINING UNDECLARED CAPABILITY","color":"#ef4444","threat":"CRITICAL",
+   "history":"Russia declared CW stockpile destroyed 2017 (OPCW certified). However: Novichok used in UK (2018), Navalny poisoning (2020). Novel agents not declared to OPCW.",
+   "agents":["Novichok (A-234/A-232 series)","Soviet legacy agents (VX, Soman stockpile status unknown)","Potentially novel agents"],
+   "keyIncidents":[
+     {"date":"Mar 2018","location":"Salisbury, UK","agent":"Novichok A-234","killed":"1 (Dawn Sturgess, bystander)","finding":"UK/OPCW confirmed Novichok. GRU Unit 29155 officers identified (Petrov/Boshirov/Mishkin)."},
+     {"date":"Aug 2020","location":"Russia (flight/Berlin)","agent":"Novichok","killed":"0 (survived)","finding":"OPCW confirmed Novichok on Navalny. Russia denied. Western sanctions imposed."}
+   ],
+   "lat":55,"lng":37},
+  {"country":"North Korea","iso":"KP","status":"ACTIVE PROGRAM","color":"#ef4444","threat":"CRITICAL",
+   "history":"DPRK not signatory to CWC. Assessed to have largest CW stockpile in Asia: 2,500-5,000 tons. VX used in assassination of Kim Jong-nam (2017).",
+   "agents":["VX (confirmed use — assassination)","Sarin","Tabun","Mustard gas","Phosgene"],
+   "keyIncidents":[
+     {"date":"Feb 2017","location":"Kuala Lumpur Airport","agent":"VX","killed":"1 (Kim Jong-nam)","finding":"Malaysian police confirmed VX. Two women coated hands in VX using cover story as prank. DPRK denied."}
+   ],
+   "lat":40,"lng":127},
+  {"country":"Iran","iso":"IR","status":"LATENT CAPABILITY","color":"#f97316","threat":"HIGH",
+   "history":"Iran CWC signatory (1997). But: used chemical weapons in Iran-Iraq war (Iraqi-supplied). Assessed to have latent production capability. Dual-use industrial base.",
+   "agents":["Historical: sulfur mustard, nerve agents from Iran-Iraq war","Potential: dual-use industrial chemicals for weaponization"],
+   "keyIncidents":[
+     {"date":"2022","location":"Iran (schools)","agent":"Unknown chemical","killed":"0","finding":"Hundreds of Iranian schoolgirls reported to hospital with suspected chemical poisoning. Iran blamed \'enemies\'. Unresolved."}
+   ],
+   "lat":32,"lng":53}
+];
+
+const CW_AGENTS_REFERENCE = [
+  {"agent":"VX","class":"Nerve Agent","lethality":"LETHAL — mg quantities","mechanism":"Irreversible acetylcholinesterase inhibition","antidote":"Atropine + pralidoxime (if rapid)","state":"Oily liquid","color":"#ef4444"},
+  {"agent":"Novichok (A-series)","class":"Nerve Agent — 4th Gen","lethality":"EXTREMELY LETHAL — 5-10x VX","mechanism":"Acetylcholinesterase inhibition + transient receptor inhibition","antidote":"Atropine + oximes (limited efficacy)","state":"Liquid/powder","color":"#ef4444"},
+  {"agent":"Sarin (GB)","class":"Nerve Agent","lethality":"LETHAL — volatile, rapid","mechanism":"Acetylcholinesterase inhibition","antidote":"Atropine + pralidoxime","state":"Volatile liquid","color":"#ef4444"},
+  {"agent":"Sulfur Mustard","class":"Blister Agent","lethality":"INCAPACITATING (rarely lethal in small doses)","mechanism":"DNA alkylation, tissue necrosis","antidote":"No antidote — decontamination only","state":"Oily liquid","color":"#f97316"},
+  {"agent":"Chlorine","class":"Choking Agent","lethality":"MODERATE — high concentrations lethal","mechanism":"Mucous membrane/lung tissue damage","antidote":"Supportive care","state":"Gas","color":"#eab308"}
+];
+
+let _cwHotspots = [];
+
+function openChemWeap(){
+  document.getElementById('chemweap-overlay').style.display='flex';
+  _renderCWPrograms();
+  _renderCWAgentRef();
+  _fetchCWGdelt();
+  // Add hotspots for CW incidents
+  _cwHotspots = [];
+  CW_STATE_PROGRAMS.forEach(function(p){
+    p.keyIncidents.forEach(function(inc){
+      _cwHotspots.push({lat:p.lat,lng:p.lng,label:p.country+' — '+inc.agent+' ('+inc.date+')',color:'#ef4444',_cw:true,r:6});
+    });
+  });
+  if(typeof hotspots !== 'undefined') hotspots = hotspots.concat(_cwHotspots);
+}
+function closeChemWeap(){
+  document.getElementById('chemweap-overlay').style.display='none';
+  if(typeof hotspots !== 'undefined') hotspots = hotspots.filter(function(h){return !h._cw;});
+  _cwHotspots = [];
+}
+function _renderCWPrograms(){
+  var el=document.getElementById('cw-programs-list');
+  if(!el)return;
+  el.innerHTML=CW_STATE_PROGRAMS.map(function(p){
+    var incRows=p.keyIncidents.map(function(inc){
+      return '<div class="cw-incident-row">'
+        +'<div><div class="cw-inc-label">DATE</div><div class="cw-inc-val">'+inc.date+'</div></div>'
+        +'<div><div class="cw-inc-label">LOCATION</div><div class="cw-inc-val">'+inc.location+'</div></div>'
+        +'<div><div class="cw-inc-label">AGENT</div><div class="cw-inc-val" style="color:#ef4444;">'+inc.agent+'</div></div>'
+        +'<div><div class="cw-inc-label">KILLED</div><div class="cw-inc-val" style="color:#fca5a5;font-weight:700;">'+inc.killed+'</div></div>'
+        +'<div class="cw-inc-finding">'+inc.finding+'</div>'
+        +'</div>';
+    }).join('');
+    var agentChips=p.agents.map(function(a){return '<span class="cw-agent-chip">'+a+'</span>';}).join('');
+    return '<div class="cw-program-card" style="border-left:3px solid '+p.color+';">'
+      +'<div class="cw-program-header">'
+      +'<div class="cw-country-name" style="color:'+p.color+';">'+p.country+'</div>'
+      +'<span class="cw-status-badge '+(p.threat==='CRITICAL'?'cw-threat-critical':'cw-threat-high')+'">'+p.threat+'</span>'
+      +'</div>'
+      +'<div style="font-size:9px;color:#64748b;margin-bottom:6px;letter-spacing:.5px;">'+p.status+'</div>'
+      +'<div class="cw-history">'+p.history+'</div>'
+      +'<div style="font-size:8px;color:#475569;letter-spacing:.12em;margin-bottom:4px;margin-top:6px;">CONFIRMED/ASSESSED AGENTS</div>'
+      +'<div class="cw-agents-list">'+agentChips+'</div>'
+      +'<div style="font-size:8px;color:#475569;letter-spacing:.12em;margin-bottom:4px;margin-top:6px;">KEY INCIDENTS</div>'
+      +incRows
+      +'</div>';
+  }).join('');
+}
+function _renderCWAgentRef(){
+  var el=document.getElementById('cw-agent-ref-list');
+  if(!el)return;
+  el.innerHTML=CW_AGENTS_REFERENCE.map(function(a){
+    return '<div class="cw-agent-ref-row" style="color:'+a.color+';">'
+      +'<div style="font-weight:700;">'+a.agent+'</div>'
+      +'<div style="color:#94a3b8;">'+a.class+'</div>'
+      +'<div>'+a.lethality+'</div>'
+      +'<div style="color:#64748b;">'+a.mechanism+'</div>'
+      +'<div style="color:#fde047;">'+a.antidote+'</div>'
+      +'<div style="color:#94a3b8;">'+a.state+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function _fetchCWGdelt(){
+  var el=document.getElementById('cw-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed...</div>';
+  try{
+    var q=encodeURIComponent('chemical weapons attack OPCW sarin chlorine CWC');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=2weeks';
+    var r=await fetch(url);var d=await r.json();
+    var arts=d.articles||[];
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="cw-gdelt-item"><div class="cw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ---- SPACE WARFARE DATA ----
+const ASAT_CAPABILITIES = [
+  {"country":"Russia","color":"#ef4444","threat":"OPERATIONAL",
+   "systems":[
+     {"name":"PL-19 Nudol (DA-ASAT)","type":"Direct Ascent ASAT","status":"OPERATIONAL","test":"Nov 2021 — destroyed own Cosmos 1408 satellite, created 1,500+ debris pieces","range":"LEO targets up to ~1,200km"},
+     {"name":"Peresvet Laser","type":"Directed Energy (dazzling)","status":"OPERATIONAL (since 2019)","test":"Deployed around ICBM bases. Claimed to blind observation satellites.","range":"LEO ISR satellites"},
+     {"name":"Cosmos 2543 (nesting doll)","type":"Co-orbital ASAT","status":"DEMONSTRATED","test":"Launched sub-satellite that performed high-speed flyby of US KH satellite. Called \'inspector\' by Russia.","range":"Any orbit"},
+     {"name":"Tirada-2S electronic warfare","type":"Electronic/Jamming","status":"OPERATIONAL","test":"GPS/GNSS jamming across Ukraine and Baltic confirmed","range":"Regional"}
+   ]},
+  {"country":"China","color":"#f97316","threat":"OPERATIONAL",
+   "systems":[
+     {"name":"SC-19 / DN-3 (DA-ASAT)","type":"Direct Ascent ASAT","status":"OPERATIONAL","test":"Jan 2007 — destroyed own FY-1C satellite at 850km. Largest debris field in history (3,000+ pieces).","range":"LEO/MEO"},
+     {"name":"SJ-21 (satellite servicing/ASAT)","type":"Co-orbital ASAT/robotic","status":"OPERATIONAL","test":"Moved defunct Beidou satellite to graveyard orbit 2022. Demonstrates rendezvous/grappling capability on GEO.","range":"GEO orbit"},
+     {"name":"Shijian-17 (GEO ASAT)","type":"Co-orbital GEO ASAT","status":"DEMONSTRATED","test":"Robotic arm demonstration near other GEO satellites. Can grab/disable GPS/comms satellites.","range":"GEO orbit"},
+     {"name":"Ground-based laser","type":"Directed Energy","status":"SUSPECTED OPERATIONAL","test":"Lasers tested against US satellite sensors (DIA 2022 report)","range":"LEO/MEO"}
+   ]},
+  {"country":"USA","color":"#3b82f6","threat":"LEADING (cyber/EW focus)",
+   "systems":[
+     {"name":"Ground-Based Midcourse Defense (GMD)","type":"Interceptor (dual ASAT use)","status":"OPERATIONAL","test":"Tested against ICBM-class targets","range":"MEO/GEO (theoretical)"},
+     {"name":"Counter Communications System (CCS)","type":"Electronic Warfare/Jamming","status":"OPERATIONAL","test":"Deployed with USSF — jams adversary satcoms","range":"Regional satellite links"},
+     {"name":"Rapid Capabilities Office (classified)","type":"Multiple (classified)","status":"CLASSIFIED","test":"Multiple classified ASAT programs per budget documents","range":"Classified"},
+     {"name":"Starlink Resiliency","type":"Defensive/Resilient constellation","status":"OPERATIONAL (Ukraine)","test":"SpaceX Starlink demonstrated ability to survive jamming/spoofing in Ukraine war","range":"Global"}
+   ]},
+  {"country":"India","color":"#22c55e","threat":"EMERGING",
+   "systems":[
+     {"name":"Mission Shakti (ASAT)","type":"Direct Ascent ASAT","status":"DEMONSTRATED","test":"Mar 2019 — destroyed own Microsat-R at 285km. Modi declared India \'Space Power\'.","range":"LEO (low altitude)"}
+   ]}
+];
+
+const MILITARY_SATELLITES = [
+  {"name":"GPS (USA)","type":"PNT","count":31,"operator":"USAF/USSF","vulnerability":"Jamming, DA-ASAT","importance":"CRITICAL — all precision weapons, financial systems, navigation"},
+  {"name":"Keyhole (KH-11) NRO","type":"ISR/IMINT","count":"~6-8 (classified)","operator":"NRO","vulnerability":"DA-ASAT, laser dazzling","importance":"CRITICAL — imagery intelligence backbone"},
+  {"name":"SBIRS","type":"Missile Warning","count":"6 GEO + HEO","operator":"USSF","vulnerability":"Co-orbital ASAT at GEO","importance":"CRITICAL — ICBM launch detection"},
+  {"name":"Starlink (SpaceX)","type":"Comms/Military","count":"6,500+","operator":"SpaceX (DoD contract)","vulnerability":"Jamming, co-orbital at scale","importance":"HIGH — Ukraine proven battlefield comms"},
+  {"name":"MUOS (Navy)","type":"Narrowband comms","count":"5","operator":"USN","vulnerability":"Jamming, GEO ASAT","importance":"HIGH — SUBCOM, forward deployed forces"},
+  {"name":"Yaogan (China)","type":"ISR","count":"80+","operator":"PLA SSF","vulnerability":"DA-ASAT, EW","importance":"HIGH — Pacific surveillance, carrier tracking"},
+  {"name":"Beidou (China)","type":"PNT","count":"35","operator":"PLA","vulnerability":"Jamming","importance":"HIGH — PLA PGM dependency growing"},
+  {"name":"Cosmos GLONASS (Russia)","type":"PNT","count":"24","operator":"Russian MoD","vulnerability":"Jamming","importance":"HIGH — Russian precision weapons dependency"}
+];
+
+const SPACE_INCIDENTS = [
+  {"date":"Nov 2021","actor":"Russia","event":"Cosmos 1408 DA-ASAT test","impact":"1,500+ trackable debris. ISS crew sheltered. Called irresponsible by US/UK.","severity":"HIGH"},
+  {"date":"Jan 2022","actor":"China","event":"SJ-21 towed defunct BeiDou-2 to graveyard orbit","impact":"Demonstrated GEO ASAT/servicing capability. Can disable GPS/comms satellites.","severity":"HIGH"},
+  {"date":"Feb-ongoing 2022","actor":"Russia","event":"Viasat KA-SAT hack (Ukraine invasion day 1)","impact":"Disrupted Ukrainian military comms. Collateral damage to European wind turbines, modems.","severity":"HIGH"},
+  {"date":"2023-ongoing","actor":"Russia/China","event":"GPS jamming Eastern Europe/Taiwan Strait","impact":"Commercial aviation affected. Military navigation degraded.","severity":"ELEVATED"},
+  {"date":"2024","actor":"Russia (Cosmos 2576)","event":"Deployed apparent inspector satellite near US NRO satellite","impact":"US Space Force issued warning. Co-orbital proximity concerning.","severity":"HIGH"}
+];
+
+function openSpaceWar(){
+  document.getElementById('spacewar-overlay').style.display='flex';
+  _renderASATList();
+  _renderSatInventory();
+  _renderSpaceIncidents();
+  _fetchSpaceWarGdelt();
+}
+function closeSpaceWar(){
+  document.getElementById('spacewar-overlay').style.display='none';
+}
+function _renderASATList(){
+  var el=document.getElementById('sw-asat-list');
+  if(!el)return;
+  el.innerHTML=ASAT_CAPABILITIES.map(function(c){
+    var sysRows=c.systems.map(function(s){
+      return '<div class="sw-system-row">'
+        +'<div><div class="sw-sys-name">'+s.name+'</div><div class="sw-sys-type">'+s.type+'</div></div>'
+        +'<div class="sw-sys-status">'+s.status+'</div>'
+        +'<div style="color:#64748b;font-size:8px;">'+s.range+'</div>'
+        +'<div class="sw-sys-detail">'+s.test+'</div>'
+        +'</div>';
+    }).join('');
+    return '<div class="sw-country-card" style="border-left:3px solid '+c.color+';">'
+      +'<div class="sw-country-header">'
+      +'<div class="sw-country-name" style="color:'+c.color+';">'+c.country+'</div>'
+      +'<span class="sw-threat-badge" style="background:rgba(30,41,59,.7);border:1px solid rgba(100,116,139,.4);color:#94a3b8;">'+c.threat+'</span>'
+      +'</div>'
+      +'<div style="font-size:7px;color:#475569;letter-spacing:.15em;margin-bottom:6px;text-transform:uppercase;display:grid;grid-template-columns:180px 130px 120px 1fr;gap:8px;padding:0 8px;">'
+      +'<div>SYSTEM</div><div>STATUS</div><div>RANGE</div><div>TEST/EVIDENCE</div></div>'
+      +sysRows
+      +'</div>';
+  }).join('');
+}
+function _renderSatInventory(){
+  var el=document.getElementById('sw-sat-list');
+  if(!el)return;
+  el.innerHTML=MILITARY_SATELLITES.map(function(s){
+    var imp=s.importance;
+    var impColor=imp.startsWith('CRITICAL')?'#ef4444':'#f97316';
+    return '<div class="sw-sat-row">'
+      +'<div style="font-weight:700;color:#e2e8f0;font-size:9px;">'+s.name+'</div>'
+      +'<div style="color:#8b5cf6;">'+s.type+'</div>'
+      +'<div style="color:#fde047;font-weight:700;">'+s.count+'</div>'
+      +'<div style="color:#ef4444;font-size:7px;line-height:1.3;">'+s.vulnerability+'</div>'
+      +'<div style="color:'+impColor+';font-size:8px;line-height:1.3;">'+imp+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderSpaceIncidents(){
+  var el=document.getElementById('sw-incidents-list');
+  if(!el)return;
+  el.innerHTML=SPACE_INCIDENTS.map(function(inc){
+    var sevColor=inc.severity==='HIGH'?'#f97316':'#eab308';
+    var sevBg=inc.severity==='HIGH'?'rgba(124,45,18,.4)':'rgba(113,63,18,.35)';
+    var sevBorder=inc.severity==='HIGH'?'#f97316':'#eab308';
+    return '<div class="sw-incident-card">'
+      +'<div class="sw-inc-header">'
+      +'<div><span style="color:#64748b;font-size:8px;">'+inc.date+'</span> <span class="sw-inc-event">'+inc.actor+' — '+inc.event+'</span></div>'
+      +'<span class="sw-sev-badge" style="background:'+sevBg+';border:1px solid '+sevBorder+';color:'+sevColor+';">'+inc.severity+'</span>'
+      +'</div>'
+      +'<div style="font-size:9px;color:#94a3b8;line-height:1.5;">'+inc.impact+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function _fetchSpaceWarGdelt(){
+  var el=document.getElementById('sw-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed...</div>';
+  try{
+    var q=encodeURIComponent('space warfare satellite ASAT anti-satellite weapons space force');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=2weeks';
+    var r=await fetch(url);var d=await r.json();
+    var arts=d.articles||[];
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="sw-gdelt-item"><div class="sw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="sw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ---- SPECIAL OPERATIONS FORCES DATA ----
+const SOF_UNITS = [
+  {"country":"USA","unit":"JSOC (Joint Special Operations Command)","color":"#3b82f6","classification":"CLASSIFIED STRUCTURE",
+   "components":[
+     {"name":"Delta Force (1st SFOD-D)","mission":"CT/DA/SR/FID/UW","personnel":"~1,000 operators","specialties":["Hostage rescue","HVT capture/kill","CT raids","Advanced sniper/breaching"],"recentOps":"Raids in Syria targeting ISIS senior leadership (Abu Ibrahim al-Qurashi killed Feb 2022)"},
+     {"name":"SEAL Team 6 (DEVGRU)","mission":"Maritime CT/DA/SR","personnel":"~300 operators + support","specialties":["Maritime CT","HVT capture","Underwater infiltration","HALO/HAHO insertion"],"recentOps":"OBL raid (NEPTUNE SPEAR 2011). Abu Sayyaf raid Syria 2015. Houthi hostage rescue Yemen."},
+     {"name":"75th Ranger Regiment","mission":"Direct Action/Airfield Seizure","personnel":"~3,500 (3 battalions)","specialties":["Large-scale direct action","Airfield seizure","Special Patrol Insertion","Ranger School mandatory for all officers"],"recentOps":"Multiple Afghanistan/Iraq raids. Ukraine SOF training. Syria anti-ISIS operations."},
+     {"name":"160th SOAR (Night Stalkers)","mission":"Special Operations Aviation","personnel":"~1,300 with 200+ aircraft","specialties":["Low-level night flight","NVG operations","Fast rope infiltration","Chinooks, Black Hawks, Little Birds modified"],"recentOps":"OBL raid aviation. Somalia CT support. ISIS raids Syria/Iraq."},
+     {"name":"ISA (Intelligence Support Activity)","mission":"Intelligence preparation","personnel":"Classified (~300 est)","specialties":["Signals intelligence","HUMINT for SOF missions","Technical surveillance","Called \'The Activity\', Grey Fox, Mission Support Activity"],"recentOps":"Bin Laden hunt. Iraqi HVT targeting. North Korea contingency prep."}
+   ]},
+  {"country":"UK","unit":"UKSF (United Kingdom Special Forces)","color":"#22c55e","classification":"EXISTS BUT NOT OFFICIALLY COMMENTED ON",
+   "components":[
+     {"name":"22 SAS (Special Air Service)","mission":"CT/SR/DA/UW","personnel":"~600 operators","specialties":["Hostage rescue (Princes Gate 1980 — public)","HVT targeting","Train-and-advise","Free-fall/HALO"],"recentOps":"Ukraine SOF support (admitted). Iraq/Afghanistan HVT. Libya training."},
+     {"name":"Special Boat Service (SBS)","mission":"Maritime special operations","personnel":"~250 operators","specialties":["Maritime CT","Subsurface infiltration","Ship boarding","VBSS"],"recentOps":"Classified. Known: piracy response, maritime CT."},
+     {"name":"Special Reconnaissance Regiment (SRR)","mission":"Strategic reconnaissance","personnel":"~300","specialties":["Long-term surveillance","Urban reconnaissance","HUMINT support to SOF","Women recruits for \'soft\' cover"],"recentOps":"Classified"}
+   ]},
+  {"country":"Israel","unit":"Israel Defense Forces SOF","color":"#8b5cf6","classification":"SEMI-OPEN",
+   "components":[
+     {"name":"Sayeret Matkal","mission":"Deep reconnaissance/CT","personnel":"~200","specialties":["HVT targeting","Deep penetration raids","Signal interception","Equivalent to Delta/SAS"],"recentOps":"Operation \'Glass Jaw\' (Lebanon air defenses 2024). Lebanon air defense map capture."},
+     {"name":"Shayetet 13","mission":"Maritime CT","personnel":"~200","specialties":["Maritime raids","Gaza tunnel flooding","Ship interdiction","Naval commando equivalent of DEVGRU"],"recentOps":"Gaza tunnel operations. Arms interdiction at sea."},
+     {"name":"Kidon (Mossad)","mission":"Targeted killing","personnel":"Classified","specialties":["Assassination","Lethal ops abroad","Pager operation 2024 supply chain attack"],"recentOps":"Pager/radio detonation Lebanon Sept 2024. Nasrallah assassination precision strike."}
+   ]},
+  {"country":"Russia","unit":"Russian Special Operations Forces","color":"#ef4444","classification":"SEMI-OPEN",
+   "components":[
+     {"name":"Spetsnaz GRU (29155 etc)","mission":"Sabotage/assassination/SR","personnel":"Unknown","specialties":["Political assassination (Salisbury)","Infrastructure sabotage","Foreign election interference","Behind-enemy-lines operations"],"recentOps":"Salisbury Novichok (2018). Navalny poisoning (2020). Ukraine special operations."},
+     {"name":"FSB Alpha Group","mission":"Domestic CT/HRT","personnel":"~700","specialties":["Hostage rescue (Moscow Theater 2002)","VIP protection","Domestic CT","Chechen operations"],"recentOps":"Crocus City Hall response 2024. Ongoing North Caucasus CT."},
+     {"name":"Wagner Group (Africa Corps)","mission":"Paramilitary/mercenary","personnel":"~50,000 (Africa)","specialties":["Plausible deniability ops","Mine security","Coup support","Political influence"],"recentOps":"Africa (Mali/CAR/Sudan/Libya/Mozambique). Ukraine (until Prigozhin death 2023)."}
+   ]}
+];
+
+const SOF_RECENT_OPS = [
+  {"op":"Houthi Hostage Rescue","date":"2024","nations":"USA/UK SOF","target":"UAE-flagged Galaxy Leader vessel crew","outcome":"Planning stages — crew still held as of 2025","detail":"JSOC and UKSF assessed options for rescue of 25-crew seized Nov 2023"},
+  {"op":"ISIS Senior Leadership Raids","date":"2021-2024","nations":"USA (JSOC/SOCOM)","target":"Multiple ISIS leadership Syria/Iraq","outcome":"Multiple senior ISIS leaders killed","detail":"Abu Ibrahim al-Hashimi al-Qurashi (ISIS caliph) killed Feb 2022 Syria (self-detonated). ISIS-K leaders targeted Afghanistan."},
+  {"op":"Ukraine SOF Train-and-Advise","date":"2022-present","nations":"USA/UK/France/Canada SOF","target":"Ukrainian SOF (SSO)","outcome":"Ongoing — classified location (outside Ukraine)","detail":"Western SOF training Ukrainian special operations outside Ukraine. German KSK, French COS, UKSF all confirmed training roles."},
+  {"op":"Israel \'Glass Jaw\' Operation","date":"Oct 2024","nations":"Israel (IDF SOF/Mossad)","target":"Lebanon Hezbollah air defense network","outcome":"Air defense network map captured, commanders killed","detail":"Sayeret Matkal deep penetration into Lebanon months before air campaign. Air defense positions mapped enabling October strikes."}
+];
+
+function openSOFIntel(){
+  document.getElementById('sof-overlay').style.display='flex';
+  _renderSOFUnits();
+  _renderSOFOps();
+  _fetchSOFGdelt();
+}
+function closeSOFIntel(){
+  document.getElementById('sof-overlay').style.display='none';
+}
+function _renderSOFUnits(){
+  var el=document.getElementById('sof-units-list');
+  if(!el)return;
+  el.innerHTML=SOF_UNITS.map(function(c){
+    var compCards=c.components.map(function(u){
+      var specChips=u.specialties.map(function(s){return '<span class="sof-spec-chip">'+s+'</span>';}).join('');
+      return '<div class="sof-unit-card" style="border-left-color:'+c.color+'40;">'
+        +'<div class="sof-unit-header">'
+        +'<div class="sof-unit-name">'+u.name+'</div>'
+        +'<span class="sof-unit-mission">'+u.mission+'</span>'
+        +'</div>'
+        +'<div class="sof-unit-personnel">'+u.personnel+'</div>'
+        +'<div class="sof-unit-specialties">'+specChips+'</div>'
+        +'<div class="sof-unit-ops">'+u.recentOps+'</div>'
+        +'</div>';
+    }).join('');
+    return '<div class="sof-country-card" style="border-left:3px solid '+c.color+';">'
+      +'<div class="sof-country-header">'
+      +'<div>'
+      +'<div class="sof-country-name" style="color:'+c.color+';">'+c.country+'</div>'
+      +'<div style="font-size:9px;color:#64748b;margin-top:2px;letter-spacing:.5px;">'+c.unit+'</div>'
+      +'</div>'
+      +'<span class="sof-classification">'+c.classification+'</span>'
+      +'</div>'
+      +compCards
+      +'</div>';
+  }).join('');
+}
+function _renderSOFOps(){
+  var el=document.getElementById('sof-ops-list');
+  if(!el)return;
+  el.innerHTML=SOF_RECENT_OPS.map(function(op){
+    return '<div class="sof-op-card">'
+      +'<div class="sof-op-header">'
+      +'<div class="sof-op-name">'+op.op+'</div>'
+      +'<div class="sof-op-date">'+op.date+'</div>'
+      +'</div>'
+      +'<div class="sof-op-nations">'+op.nations+'</div>'
+      +'<div style="font-size:8px;color:#64748b;margin-bottom:3px;">TARGET: '+op.target+'</div>'
+      +'<div class="sof-op-outcome">'+op.outcome+'</div>'
+      +'<div class="sof-op-detail">'+op.detail+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function _fetchSOFGdelt(){
+  var el=document.getElementById('sof-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading live feed...</div>';
+  try{
+    var q=encodeURIComponent('special operations forces commando raid Seal Delta SAS');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=8&format=json&timespan=2weeks';
+    var r=await fetch(url);var d=await r.json();
+    var arts=d.articles||[];
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="sof-gdelt-item"><div class="sof-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#86efac;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="sof-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 34 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -23790,6 +24231,9 @@ function filterSIGINT(query){
 <button id="icstruct-btn" onclick="openICStruct()">IC STRUCTURE</button>
 <button id="terrortrack-btn" onclick="openTerrorTrack()">TERROR TRACK</button>
 <button id="geocal-btn" onclick="openGeoCal()">GEO CALENDAR</button>
+<button id="chemweap-btn" onclick="openChemWeap()">CHEM WEAPONS</button>
+<button id="spacewar-btn" onclick="openSpaceWar()">SPACE WAR</button>
+<button id="sof-btn" onclick="openSOFIntel()">SOF INTEL</button>
 
 <!-- IC STRUCTURE OVERLAY -->
 <div id="icstruct-overlay">
@@ -24023,6 +24467,102 @@ function filterSIGINT(query){
   <div id="chokepoints-list" style="margin-bottom:20px;"></div>
   <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE CHOKEPOINT &amp; SHIPPING DISRUPTION INTELLIGENCE FEED</div>
   <div id="chokepoints-gdelt-feed"></div>
+</div>
+
+<!-- CHEM WEAPONS OVERLAY -->
+<div id="chemweap-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">CHEMICAL WEAPONS INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">CHEM WEAPONS — STATE PROGRAMS &amp; INCIDENTS</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">OPCW &bull; UN JIM &bull; DIA &bull; OSINT — Open Source Assessment</div>
+    </div>
+    <button onclick="closeChemWeap()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(127,29,29,0.25);border:1px solid rgba(239,68,68,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:9px;color:#fca5a5;letter-spacing:.5px;line-height:1.6;">
+    &#9888; OPCW (Organisation for the Prohibition of Chemical Weapons) has documented use of Schedule 1 agents in Syria, Russia, and Malaysia. 193 CWC member states. DPRK is <strong>not</strong> a CWC signatory.
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">STATE PROGRAMS WITH ACTIVE / ASSESSED CAPABILITY</div>
+      <div id="cw-programs-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">CW AGENT REFERENCE TABLE</div>
+      <div style="background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:4px;overflow:hidden;margin-bottom:16px;">
+        <div style="display:grid;grid-template-columns:120px 120px 100px 1fr 80px 80px;gap:6px;padding:5px 8px;background:rgba(4,9,20,.8);border-bottom:1px solid #1e293b;font-size:7px;color:#475569;letter-spacing:.15em;text-transform:uppercase;">
+          <div>AGENT</div><div>CLASS</div><div>LETHALITY</div><div>MECHANISM</div><div>ANTIDOTE</div><div>STATE</div>
+        </div>
+        <div id="cw-agent-ref-list"></div>
+      </div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:8px;border-bottom:1px solid #1e293b;padding-bottom:6px;">GDELT LIVE CW INTELLIGENCE FEED</div>
+      <div id="cw-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SPACE WAR OVERLAY -->
+<div id="spacewar-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#8b5cf6;font-size:11px;letter-spacing:3px;">SPACE WARFARE &amp; ORBITAL INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">SPACE WAR — ASAT CAPABILITIES &amp; ORBITAL THREATS</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">USSF &bull; DIA &bull; ESA &bull; LeoLabs — Open Source Assessment</div>
+    </div>
+    <button onclick="closeSpaceWar()" style="background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:#c4b5fd;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="display:grid;grid-template-columns:3px 1fr;gap:0;margin-bottom:12px;">
+    <div style="background:rgba(139,92,246,0.4);border-radius:3px;"></div>
+    <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,.25);border-radius:0 4px 4px 0;padding:10px 14px;font-size:9px;color:#c4b5fd;line-height:1.6;letter-spacing:.3px;">
+      Orbital debris: <strong>27,000+ trackable objects</strong> (10cm+). Space: <strong>no binding rules of engagement</strong>. Outer Space Treaty (1967) prohibits WMDs in orbit but does not ban conventional ASAT weapons. No agreed norms for co-orbital proximity operations.
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">ASAT CAPABILITIES BY NATION</div>
+      <div id="sw-asat-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">MILITARY SATELLITE INVENTORY</div>
+      <div style="background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:4px;overflow:hidden;margin-bottom:16px;">
+        <div style="display:grid;grid-template-columns:140px 80px 60px 100px 1fr;gap:6px;padding:5px 8px;background:rgba(4,9,20,.8);border-bottom:1px solid #1e293b;font-size:7px;color:#475569;letter-spacing:.15em;text-transform:uppercase;">
+          <div>SYSTEM</div><div>TYPE</div><div>COUNT</div><div>VULNERABILITY</div><div>IMPORTANCE</div>
+        </div>
+        <div id="sw-sat-list"></div>
+      </div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:10px;border-bottom:1px solid #1e293b;padding-bottom:6px;">RECENT SPACE INCIDENTS</div>
+      <div id="sw-incidents-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#8b5cf6;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE SPACE WARFARE FEED</div>
+      <div id="sw-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SOF INTEL OVERLAY -->
+<div id="sof-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#22c55e;font-size:11px;letter-spacing:3px;">SPECIAL OPERATIONS FORCES INTELLIGENCE</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">SOF INTEL — UNITS, CAPABILITIES &amp; OPERATIONS</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">Open Source Reporting &bull; All information from unclassified sources</div>
+    </div>
+    <button onclick="closeSOFIntel()" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#86efac;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(15,83,32,0.2);border:1px solid rgba(34,197,94,0.3);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:9px;color:#86efac;letter-spacing:.3px;line-height:1.6;">
+    &#9432; All information sourced from open source reporting, congressional records, and declassified documents. SOF operations are typically classified. Unit structures are approximate and from public sources.
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#22c55e;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">SOF UNITS BY NATION</div>
+      <div id="sof-units-list"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#22c55e;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">RECENT SIGNIFICANT OPERATIONS</div>
+      <div id="sof-ops-list" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#22c55e;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:16px;">GDELT LIVE SOF INTELLIGENCE FEED</div>
+      <div id="sof-gdelt-feed"></div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
