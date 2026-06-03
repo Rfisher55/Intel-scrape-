@@ -4065,6 +4065,91 @@ button{border-radius:2px!important}
 .sa2-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .sa2-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .sa2-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Phase 50 buttons */
+#proxywars-btn{position:fixed;top:295px;right:1605px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#proxywars-btn:hover{border-color:#7c3aed;color:#c4b5fd;}
+#nuclearposture-btn{position:fixed;top:335px;right:1605px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#nuclearposture-btn:hover{border-color:#dc2626;color:#fca5a5;}
+#waterwars-btn{position:fixed;top:375px;right:1605px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#waterwars-btn:hover{border-color:#0ea5e9;color:#7dd3fc;}
+
+/* Proxy Wars overlay */
+#proxywars-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.pw-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.pw-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#7c3aed;}
+.pw-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.pw-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.pw-close:hover{color:#7c3aed;border-color:#7c3aed;}
+.pw-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.pw-actors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.pw-actor-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.pw-actor-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.pw-actor-name{font-size:14px;font-weight:900;}
+.pw-proxies{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.pw-proxy-chip{font-size:7px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);padding:2px 5px;border-radius:2px;color:#c4b5fd;}
+.pw-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.pw-hotspots-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.pw-hotspots-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.pw-hotspots-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.pw-sev-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.pw-gdelt-feed{max-width:900px;}
+.pw-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.pw-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.pw-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Nuclear Posture overlay */
+#nuclearposture-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.np-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.np-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#dc2626;}
+.np-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.np-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.np-close:hover{color:#dc2626;border-color:#dc2626;}
+.np-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.np-arsenals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.np-arsenal-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.np-arsenal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.np-state-name{font-size:14px;font-weight:900;}
+.np-warhead-count{font-size:22px;font-weight:900;color:#ef4444;line-height:1;}
+.np-warhead-label{font-size:7px;color:#475569;letter-spacing:.1em;}
+.np-alert-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.np-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.np-row b{color:#e2e8f0;}
+.np-alert-text{font-size:8px;color:#fbbf24;line-height:1.4;margin-bottom:4px;}
+.np-assessment{font-size:8px;color:#64748b;font-style:italic;border-top:1px solid #1e293b;padding-top:6px;line-height:1.4;margin-top:4px;}
+.np-gdelt-feed{max-width:900px;}
+.np-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.np-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.np-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Water Wars overlay */
+#waterwars-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ww-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.ww-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#0ea5e9;}
+.ww-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
+.ww-close{cursor:pointer;font-size:10px;color:#475569;border:1px solid #1e293b;padding:4px 10px;letter-spacing:1px;}
+.ww-close:hover{color:#0ea5e9;border-color:#0ea5e9;}
+.ww-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
+.ww-disputes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px;margin-bottom:10px;}
+.ww-dispute-card{background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-radius:6px;padding:14px;border-top-width:3px;}
+.ww-dispute-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+.ww-dispute-name{font-size:13px;font-weight:700;color:#f1f5f9;}
+.ww-sev-badge{font-size:7px;font-weight:700;padding:3px 8px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;}
+.ww-states{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;}
+.ww-state-chip{font-size:7px;background:rgba(14,165,233,.15);border:1px solid rgba(14,165,233,.3);padding:2px 5px;border-radius:2px;color:#7dd3fc;}
+.ww-row{font-size:8px;color:#94a3b8;line-height:1.5;margin-bottom:4px;}
+.ww-row b{color:#e2e8f0;}
+.ww-trigger{font-size:8px;color:#f97316;line-height:1.4;margin-bottom:4px;}
+.ww-trigger b{color:#f1f5f9;}
+.ww-risk{font-size:8px;color:#fbbf24;line-height:1.4;margin-bottom:4px;}
+.ww-stress-table{width:100%;border-collapse:collapse;font-size:8px;margin-bottom:10px;}
+.ww-stress-table th{text-align:left;padding:5px 8px;background:rgba(15,23,42,0.8);color:#475569;font-size:7px;letter-spacing:.1em;border-bottom:1px solid #1e293b;}
+.ww-stress-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.ww-indicator-name{color:#e2e8f0;font-weight:700;}
+.ww-gdelt-feed{max-width:900px;}
+.ww-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ww-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ww-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -29715,6 +29800,355 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== END PHASE 49 =====
 
+// ===== PHASE 50: PROXY WARS, NUCLEAR POSTURE, WATER WARS =====
+
+var PROXY_NETWORK = [
+  {actor:'Russia',proxies:['Wagner/Africa Corps (Sahel, Libya, Sudan)','Chechen Kadyrovites','Pro-Russian separatists (Donbas 2014-2022)'],lat:55.75,lng:37.62,color:'#ef4444',
+   assessment:'Wagner rebranded as Africa Corps post-Prigozhin death. Operating in Mali, Burkina Faso, Niger, Libya, Sudan, CAR. Replaced French COIN presence across Sahel. Russia gains access to bases, minerals, influence.'},
+  {actor:'Iran',proxies:['Hezbollah Lebanon (100,000+ rockets)','Hamas Gaza (Oct 7 operation)','Houthis/Ansar Allah Yemen','PMF Iraq (60+ factions)','IRGC-QF Syrian presence'],lat:35.69,lng:51.39,color:'#f97316',
+   assessment:'Most sophisticated proxy network in history. Axis of Resistance links Beirut-Damascus-Baghdad-Sanaa. Each proxy independently capable but coordinates via IRGC-QF. Oct 7 exposed operational integration.'},
+  {actor:'USA',proxies:['SDF/YPG Syria (Kurdish forces)','Peshmerga Iraq support','Afghan Commandos (pre-2021 collapse)','Partner Force programs (AFRICOM/SOCOM)'],lat:38.89,lng:-77.03,color:'#3b82f6',
+   assessment:'US relies on local partner forces for counter-terrorism. SDF holds NE Syria with ~900 US troops. Partner force model reduces US casualties but creates dependency/abandonment dynamics (Afghanistan 2021).'},
+  {actor:'Turkey',proxies:['Syrian National Army (NW Syria)','SADAT-trained factions','Libyan GNU forces (Tripoli-based)'],lat:39.92,lng:32.86,color:'#22c55e',
+   assessment:'Turkey built proxy capability from Syrian civil war. SNA controls Afrin, Ras al-Ayn, Azaz. Libya intervention (2019-20) reversed Haftar advance, secured Turkish maritime deal. SADAT private military company active.'},
+  {actor:'UAE',proxies:['STC Southern Transitional Council (Yemen)','Haftar LNA Libya (air support, funding)','Somali Puntland forces'],lat:24.47,lng:54.37,color:'#eab308',
+   assessment:'UAE punches above weight via proxy investment. STC de facto controls Aden, S. Yemen despite nominal Saudi partnership. Haftar LNA controls E. Libya oil. UAE pursuing independent strategic depth via proxy network.'},
+  {actor:'China',proxies:['Economic leverage (BRI debt diplomacy)','Information operations via state media','Djibouti military base (first overseas)','Hambantota Port (Sri Lanka 99-yr lease)'],lat:39.91,lng:116.39,color:'#dc2626',
+   assessment:'China uses economic coercion more than armed proxies. BRI creates strategic leverage (port access, debt pressure). Djibouti first step toward overseas basing network. Information proxies (Xinhua, CGTN) in 140+ countries.'}
+];
+
+var PROXY_HOTSPOTS = [
+  {name:'Yemen -- Houthi',lat:15.55,lng:48.52,severity:'CRITICAL',patron:'Iran',proxy:'Ansar Allah/Houthis',
+   desc:'Iran-backed Houthis control Sanaa, N. Yemen. Red Sea drone/missile attacks disrupted 15% global shipping (2024). Ballistic missiles reaching Israel. Saudi Arabia unable to defeat despite 9-year campaign.'},
+  {name:'Lebanon -- Hezbollah',lat:33.89,lng:35.50,severity:'CRITICAL',patron:'Iran',proxy:'Hezbollah',
+   desc:'State-within-state. 100,000+ rockets. Post-Oct 7: active front vs Israel. Israeli strikes killed Nasrallah (Sept 2024). Hezbollah degraded but not defeated. Iran\'s most valuable asset.'},
+  {name:'Gaza -- Hamas',lat:31.35,lng:34.31,severity:'CATASTROPHIC',patron:'Iran',proxy:'Hamas/PIJ',
+   desc:'Oct 7 2023 attack (1,200 killed). Israeli military campaign ongoing. Hamas political leadership largely eliminated. Iran providing rocket tech/funding pre-Oct 7 now more cautious post-Israeli retaliation.'},
+  {name:'Syria -- Multi-proxy',lat:34.80,lng:38.99,severity:'HIGH',patron:'Multiple',proxy:'SDF/SNA/HTS/IRGC',
+   desc:'World\'s most complex proxy battlespace. US+SDF NE, Turkey+SNA NW, Iran+Hezbollah S, Russia air support Damascus. HTS controls Idlib. De facto partition in place since 2019.'},
+  {name:'Sahel -- Wagner/Africa Corps',lat:14.69,lng:0.00,severity:'HIGH',patron:'Russia',proxy:'Africa Corps (fmr Wagner)',
+   desc:'Mali, Burkina, Niger expelled French forces; invited Wagner/Africa Corps. Estimated 2,000+ personnel. Access to gold mines, uranium deposits. Anti-France sentiment weaponized. ECOWAS paralyzed.'},
+  {name:'Libya -- UAE/Turkey',lat:27.04,lng:14.44,severity:'MODERATE',patron:'UAE vs Turkey',proxy:'LNA vs GNU',
+   desc:'Frozen proxy conflict. UAE+Egypt+Russia backing Haftar LNA (east). Turkey backing GNU (west/Tripoli). 2020 ceasefire held but no political resolution. Oil installations key flashpoint.'}
+];
+
+function _renderProxyWars(){
+  var grid = document.getElementById('pw-actors-grid');
+  if(grid){
+    grid.innerHTML = PROXY_NETWORK.map(function(a){
+      return '<div class="pw-actor-card" style="border-top-color:'+a.color+';">'+
+        '<div class="pw-actor-header">'+
+          '<div class="pw-actor-name" style="color:'+a.color+';">'+a.actor+'</div>'+
+        '</div>'+
+        '<div class="pw-proxies">'+a.proxies.map(function(p){return '<span class="pw-proxy-chip">'+p+'</span>';}).join('')+'</div>'+
+        '<div class="pw-assessment">'+a.assessment+'</div>'+
+      '</div>';
+    }).join('');
+  }
+  var tbody = document.getElementById('pw-hotspots-tbody');
+  if(tbody){
+    tbody.innerHTML = PROXY_HOTSPOTS.map(function(h){
+      var sc = h.severity==='CATASTROPHIC'?'#7f1d1d':h.severity==='CRITICAL'?'#ef4444':h.severity==='HIGH'?'#f97316':'#eab308';
+      var tc = h.severity==='CATASTROPHIC'?'#fca5a5':h.severity==='CRITICAL'?'#fca5a5':h.severity==='HIGH'?'#fdba74':'#fde68a';
+      return '<tr>'+
+        '<td style="color:#e2e8f0;font-weight:700;font-size:8px;">'+h.name+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+h.patron+'</td>'+
+        '<td style="color:#94a3b8;font-size:8px;">'+h.proxy+'</td>'+
+        '<td><span class="pw-sev-badge" style="background:'+sc+'33;border:1px solid '+sc+';color:'+tc+';">'+h.severity+'</span></td>'+
+        '<td style="color:#64748b;font-size:7px;line-height:1.4;">'+h.desc+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+}
+
+async function _fetchPwGdelt(){
+  var feed = document.getElementById('pw-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('proxy war militia armed group state-sponsored conflict');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="pw-gdelt-item">'+
+        '<div class="pw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="pw-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openProxyWars(){
+  var ov=document.getElementById('proxywars-overlay');
+  if(ov){ov.style.display='flex';_renderProxyWars();_fetchPwGdelt();}
+  var pins = PROXY_HOTSPOTS.map(function(h){
+    var sev = h.severity==='CATASTROPHIC'?10:h.severity==='CRITICAL'?9:h.severity==='HIGH'?7:6;
+    return {lat:h.lat,lng:h.lng,type:'active_conflict',severity:sev,label:h.name,TAG:'_proxywars'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_proxywars';}), ...pins];
+}
+function _closeProxyWars(){
+  var ov=document.getElementById('proxywars-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_proxywars';});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('proxywars-btn');
+  if(b) b.addEventListener('click',_openProxyWars);
+  var c=document.getElementById('proxywars-close');
+  if(c) c.addEventListener('click',_closeProxyWars);
+});
+
+var NUCLEAR_ARSENALS = [
+  {state:'Russia',lat:55.75,lng:37.62,color:'#ef4444',
+   total:5889,deployed:1674,tactical:'~2000',
+   delivery:'RS-28 Sarmat ICBM, Avangard HGV, Bulava SLBM, Tu-160 bombers, Kinzhal hypersonic ALBM',
+   doctrine:'Escalate-to-deescalate. First use if existential conventional threat. New START suspended Feb 2023. No constraints after Feb 2026.',
+   alert:'ELEVATED',
+   alertDetail:'Ukrainian conflict. Putin nuclear threats (14 since 2022). Tactical nuclear deployment to Belarus.',
+   assessment:'Largest arsenal globally. New START suspension removes verification. Tactical nuclear doctrine more permissive than US. Sarmat (RS-28) can carry 15 warheads, FOBS capability.'},
+  {state:'USA',lat:38.89,lng:-77.03,color:'#3b82f6',
+   total:5244,deployed:1670,tactical:'~200',
+   delivery:'Minuteman III ICBM (450 silos), Trident II D5 SLBM (14 SSBNs), B-2A Spirit, B-52H, F-35A/B/C nuclear-capable, B61-12 gravity bomb',
+   doctrine:'Calculated ambiguity on first use. 2022 NPR: use only in extreme circumstances. NATO extended deterrence. SLBM continuous patrol.',
+   alert:'NORMAL',
+   alertDetail:'Modernization underway. Sentinel ICBM replacing Minuteman III. Columbia-class SSBN program.',
+   assessment:'$1.7T modernization over 30 years. B-21 Raider entering service 2024. Triad maintained. Nuclear sharing with 5 NATO allies (B61-12 forward deployed in Europe).'},
+  {state:'China',lat:39.91,lng:116.39,color:'#dc2626',
+   total:500,deployed:'~350',tactical:'Developing',
+   delivery:'DF-5B/DF-41 ICBM, DF-31AG ICBM, DF-26 IRBM, JL-2/JL-3 SLBM (6 Type 094 SSBNs), H-6K bomber',
+   doctrine:'No First Use stated. Minimum deterrence shifting to peer competition. Silo expansion: 300+ new silos under construction (2021-present). 1,000 warheads by 2030 (DoD estimate).',
+   alert:'ELEVATED',
+   alertDetail:'Unprecedented buildup. Hypersonic fractional orbital bombardment test (2021). DF-41 MIRVed.',
+   assessment:'Most significant nuclear expansion since Soviet buildup. Doubling warhead count every 5 years. New silos suggest launch-on-warning posture developing. No arms control engagement.'},
+  {state:'France',lat:48.86,lng:2.35,color:'#3b82f6',
+   total:290,deployed:280,tactical:'None declared',
+   delivery:'ASMP-A nuclear air-launched cruise missile (Rafale), M51 SLBM (4 Triomphant-class SSBNs)',
+   doctrine:'Strict deterrence. Continuous SSBN patrol. President sole authority. Strategic autonomy -- not integrated with NATO nuclear command.',
+   alert:'NORMAL',
+   alertDetail:'No change in posture.',
+   assessment:'Credible second-strike capability. France alone in Europe with independent nuclear deterrent. Post-Ukraine: renewed European discussion of French extended deterrence.'},
+  {state:'UK',lat:51.50,lng:-0.12,color:'#3b82f6',
+   total:225,deployed:120,tactical:'None',
+   delivery:'Trident D5 SLBM (4 Vanguard-class SSBNs, 1 at-sea continuous deterrent patrol)',
+   doctrine:'Minimum deterrent. 2021 ISR raised ceiling from 180 to 260. Solely submarine-based since 1998 (WE177 retired). NATO integrated.',
+   alert:'NORMAL',
+   alertDetail:'No change in posture.',
+   assessment:'Most concentrated deterrent (single delivery system). Dreadnought SSBN program (Columbia-class equivalent) in construction. Increasing ceiling signals response to Russia/China expansion.'},
+  {state:'Pakistan',lat:33.72,lng:73.06,color:'#f97316',
+   total:170,deployed:'~170',tactical:'ACTIVE -- Nasr (HATF-9)',
+   delivery:'Shaheen I/II/III MRBM, Ra\'ad ALCM, Babur GLCM, Nasr battlefield nuclear missile, developing SLCM capability',
+   doctrine:'First use if conventional forces overwhelmed by India. Tactical nuclear weapons explicitly for battlefield use (Nasr). No NFU.',
+   alert:'HIGH BASELINE',
+   alertDetail:'India-Pakistan tension chronic. Kashmir flashpoint. Army controls arsenal separately from civilian government.',
+   assessment:'Most dangerous nuclear arsenal. Tactical nuclear weapons lower nuclear threshold. Rapid delivery of Nasr (60km range) for battlefield use. India-Pakistan crises (2019 Balakot) demonstrate escalation risk.'},
+  {state:'India',lat:28.61,lng:77.21,color:'#f97316',
+   total:172,deployed:'~172',tactical:'None stated',
+   delivery:'Agni-V ICBM (MIRV test 2024), Agni-IV, Prithvi II SRBM, K-4/K-15 SLBM (Arihant-class SSBN)',
+   doctrine:'No First Use (NFU). Credible Minimum Deterrence. Massive retaliation against nuclear use. Triad development ongoing.',
+   alert:'NORMAL',
+   alertDetail:'Agni-V MIRV test Feb 2024 signals capability advancement.',
+   assessment:'Credible triad emerging. K-4 SLBM extends deterrent to second-strike. NFU creates escalation ambiguity with Pakistan (Nasr). China threat driving Agni-V/MIRV development.'},
+  {state:'North Korea',lat:40.34,lng:127.51,color:'#ef4444',
+   total:'~50',deployed:'~50 (all potentially deliverable)',tactical:'DEVELOPING',
+   delivery:'Hwasong-15/17/18 ICBM (US range), KN-23/25/SRBMs, Pukguksong-3 SLBM, Hwasong-11Da tactical',
+   doctrine:'Preemptive use authorized (2022 constitution). Use if survival threatened, enemy attack imminent, WMD attack incoming. No NFU -- preemptive strike doctrine.',
+   alert:'CRITICAL',
+   alertDetail:'Continuous missile testing. 2024: record missile launches. Russia-DPRK military cooperation (arms for tech).',
+   assessment:'Most opaque, most preemptive doctrine. Constitutional mandate to use preemptively undermines deterrence stability. Russia providing satellite/ICBM re-entry vehicle technology. Kim Jong-un explicit threats unprecedented frequency.'},
+  {state:'Israel',lat:31.77,lng:35.23,color:'#eab308',
+   total:'~90',deployed:'Unknown (ambiguity)',tactical:'Assumed -- battlefield application',
+   delivery:'Jericho III ICBM, submarine-launched cruise missiles (Dolphin/Dakar-class), F-35I/F-15I aircraft',
+   doctrine:'Nuclear ambiguity -- neither confirms nor denies. Samson Option: massive retaliation if state existence threatened. Preemptive conventional strikes preferred.',
+   alert:'ELEVATED',
+   alertDetail:'Oct 7 aftermath. Iran direct attack (April 2024). Deterrence doctrine under stress.',
+   assessment:'Sole Middle East nuclear power. Ambiguity eroding (former officials increasingly public). Samson Option deterred Arab states 1973. Iran nuclear program drives Israeli red lines. First direct Iran-Israel exchange April 2024.'}
+];
+
+function _renderNuclearPosture(){
+  var grid = document.getElementById('np-arsenals-grid');
+  if(!grid) return;
+  grid.innerHTML = NUCLEAR_ARSENALS.map(function(s){
+    var alertColor = s.alert==='CRITICAL'?'#ef4444':s.alert==='HIGH BASELINE'?'#dc2626':s.alert==='ELEVATED'?'#f97316':s.alert==='NORMAL'?'#22c55e':'#eab308';
+    var alertTxt = s.alert==='CRITICAL'?'#fca5a5':s.alert==='HIGH BASELINE'?'#fca5a5':s.alert==='ELEVATED'?'#fdba74':s.alert==='NORMAL'?'#86efac':'#fde68a';
+    return '<div class="np-arsenal-card" style="border-top-color:'+s.color+';">'+
+      '<div class="np-arsenal-header">'+
+        '<div class="np-state-name" style="color:'+s.color+';">'+s.state+'</div>'+
+        '<span class="np-alert-badge" style="background:'+alertColor+'22;border:1px solid '+alertColor+';color:'+alertTxt+';">'+s.alert+'</span>'+
+      '</div>'+
+      '<div style="display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap;">'+
+        '<div><div class="np-warhead-count">'+s.total+'</div><div class="np-warhead-label">TOTAL WARHEADS</div></div>'+
+        '<div><div class="np-warhead-count" style="color:#f97316;">'+s.deployed+'</div><div class="np-warhead-label">DEPLOYED</div></div>'+
+        '<div><div class="np-warhead-count" style="color:#eab308;font-size:14px;">'+s.tactical+'</div><div class="np-warhead-label">TACTICAL</div></div>'+
+      '</div>'+
+      '<div class="np-row"><b>Delivery Systems:</b> '+s.delivery+'</div>'+
+      '<div class="np-row"><b>Doctrine:</b> '+s.doctrine+'</div>'+
+      '<div class="np-alert-text"><b>Alert Status:</b> '+s.alertDetail+'</div>'+
+      '<div class="np-assessment">'+s.assessment+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+async function _fetchNpGdelt(){
+  var feed = document.getElementById('np-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('nuclear weapons warhead arsenal deterrence arms control START proliferation');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="np-gdelt-item">'+
+        '<div class="np-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="np-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openNuclearPosture(){
+  var ov=document.getElementById('nuclearposture-overlay');
+  if(ov){ov.style.display='flex';_renderNuclearPosture();_fetchNpGdelt();}
+  var pins = NUCLEAR_ARSENALS.map(function(s){
+    var sev = s.alert==='CRITICAL'?10:s.alert==='HIGH BASELINE'?8:s.alert==='ELEVATED'?7:6;
+    return {lat:s.lat,lng:s.lng,type:'nuclear',severity:sev,label:s.state+' Nuclear',TAG:'_nuclearposture'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_nuclearposture';}), ...pins];
+}
+function _closeNuclearPosture(){
+  var ov=document.getElementById('nuclearposture-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_nuclearposture';});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('nuclearposture-btn');
+  if(b) b.addEventListener('click',_openNuclearPosture);
+  var c=document.getElementById('nuclearposture-close');
+  if(c) c.addEventListener('click',_closeNuclearPosture);
+});
+
+var WATER_DISPUTES = [
+  {name:'Nile Basin -- GERD',lat:10.32,lng:35.60,severity:'CRITICAL',color:'#ef4444',
+   states:['Ethiopia','Egypt','Sudan'],
+   dispute:'Grand Ethiopian Renaissance Dam (GERD) -- 74 billion m3 capacity. Ethiopia filling since 2020 despite Egyptian objections. Egypt calls Nile water existential (97% freshwater from Nile). Military options repeatedly discussed. No binding agreement reached (2020-2024 AU mediation failed).',
+   risk:'Egypt may conduct military strike on GERD if filling threatens annual Nile allocation below 55.5 BCM. Ethiopia will not halt construction. Sudan caught between both.',
+   escalation_trigger:'Severe drought + GERD rapid filling below 40.5 BCM Egyptian share'},
+  {name:'Indus Waters Treaty Collapse',lat:31.55,lng:74.34,severity:'HIGH',color:'#f97316',
+   states:['India','Pakistan'],
+   dispute:'1960 Indus Waters Treaty (World Bank-brokered) governing Indus, Jhelum, Chenab rivers. India suspended treaty Jan 2023 after Pakistan-based attacks. Pakistan calls water access existential (70% agriculture dependent). Kishenganga/Ratle dam disputes before arbitration.',
+   risk:'Treaty collapse would remove only functional India-Pakistan cooperation mechanism. Pakistan agriculture collapse scenario. Nuclear-armed states.',
+   escalation_trigger:'Indian dam construction blocking Pakistan water share during drought year'},
+  {name:'Mekong -- Chinese Dam Control',lat:15.87,lng:100.99,severity:'HIGH',color:'#f97316',
+   states:['China','Laos','Thailand','Cambodia','Vietnam'],
+   dispute:'China operates 11 mega-dams on upper Mekong (Lancang). Controls seasonal water flow affecting 60M downstream people. 2019-2020 drought: Chinese dams held water while downstream suffered worst drought in decades. Mekong River Commission data shows China\'s dams reduced flow 3.0 m3/s.',
+   risk:'Food security for SEA riparian states. Fishing collapse (Tonle Sap Lake, Cambodia). Vietnam Mekong Delta rice production threatened. China uses water as coercive leverage.',
+   escalation_trigger:'Multi-year drought + dam closure creates regional food crisis and political crisis for downstream governments'},
+  {name:'Tigris-Euphrates -- Turkish GAP',lat:33.34,lng:44.40,severity:'CRITICAL',color:'#ef4444',
+   states:['Turkey','Syria','Iraq'],
+   dispute:'Turkey\'s Southeastern Anatolia Project (GAP) -- 22 dams including Ataturk Dam reduced Euphrates flow to Iraq by 80%. Iraq facing desertification (2M ha of arable land lost). Marshes shrinking. ISIS weaponized Mosul Dam 2014. Turkey and Syria have no water-sharing treaty with Iraq.',
+   risk:'Iraq faces existential water shortage. Tigris/Euphrates may not reach Persian Gulf seasonally by 2030s. Mass displacement driver.',
+   escalation_trigger:'Turkish dam closure during Iraqi drought year; Iraq-Iran border water disputes escalate'},
+  {name:'Jordan River -- Israel/Palestine/Jordan',lat:31.77,lng:35.93,severity:'HIGH',color:'#f97316',
+   states:['Israel','Jordan','Palestine','Lebanon','Syria'],
+   dispute:'Most over-extracted river basin. Israel controls 80% of West Bank water via Oslo II Annex III. Palestinians per capita water 3x less than Israelis. Jordan River flow reduced 98% from natural level (sewage + diversion). Jordan water-stressed (2nd most water-scarce globally).',
+   risk:'Palestinian water access as grievance driver of conflict. Jordan stability dependent on water security. Climate change reducing precipitation 20% by 2050.',
+   escalation_trigger:'Extended drought year reducing Sea of Galilee below red line; Israeli-Palestinian water conflict escalation'},
+  {name:'Amu Darya -- Aral Sea Basin',lat:39.65,lng:63.84,severity:'HIGH',color:'#eab308',
+   states:['Tajikistan','Kyrgyzstan','Uzbekistan','Turkmenistan','Afghanistan','Kazakhstan'],
+   dispute:'Aral Sea effectively dead (10% original volume). Amu Darya and Syr Darya over-allocated for Soviet-era cotton irrigation. Tajikistan\'s Rogun Dam (world\'s tallest when complete) will control Uzbekistan\'s water. Uzbekistan-Tajikistan military standoff 2022. Afghanistan\'s Qosh Tepa Canal (2023) will divert 20% of Amu Darya.',
+   risk:'Multi-country water conflict in nuclear-adjacent region. Uzbekistan existential threat from both upstream Tajikistan and upstream Afghanistan.',
+   escalation_trigger:'Rogun Dam completion + Qosh Tepa Canal operational simultaneously during drought'}
+];
+
+var WATER_STRESS_INDICATORS = [
+  {indicator:'Glacial Retreat Rate',status:'ACCELERATING',desc:'Hindu Kush-Himalayan glaciers losing 65 billion tons/year. Feeds Ganges, Indus, Yangtze, Mekong, Brahmaputra, Irrawaddy, Salween, Yellow -- 10 major river systems.'},
+  {indicator:'Dam Weaponization',status:'ACTIVE',desc:'Upstream states increasingly using dam releases/closures as coercion. Documented: China (Mekong), Turkey (Euphrates), Ethiopia (Nile), Tajikistan (Amu Darya). Emerging norm of water as geopolitical weapon.'},
+  {indicator:'Aquifer Depletion',status:'CRITICAL',desc:'Arabian aquifer: non-renewable, 25-40yr depletion horizon. High Plains Ogallala (US): 30% depletion, 50yr horizon. North China Plain: critical depletion. Groundwater sustaining 50% food production.'},
+  {indicator:'Climate Projection',status:'WORSENING',desc:'IPCC AR6: MENA region loses 20-30% precipitation by 2050. Wet seasons shorter, dry seasons longer. 3.5B people in water-stressed regions by 2050 (currently 1.5B).'},
+  {indicator:'Food-Water Nexus',status:'HIGH RISK',desc:'70% global freshwater = agriculture. Water wars are food wars. Egypt, Jordan, Yemen, Iraq, Syria -- all import 50-80%+ of calories. Water stress = food import dependency = political vulnerability.'}
+];
+
+function _renderWaterWars(){
+  var grid = document.getElementById('ww-disputes-grid');
+  if(grid){
+    grid.innerHTML = WATER_DISPUTES.map(function(d){
+      var sc = d.severity==='CRITICAL'?'#ef4444':d.severity==='HIGH'?'#f97316':'#eab308';
+      var tc = d.severity==='CRITICAL'?'#fca5a5':d.severity==='HIGH'?'#fdba74':'#fde68a';
+      return '<div class="ww-dispute-card" style="border-top-color:'+d.color+';">'+
+        '<div class="ww-dispute-header">'+
+          '<div class="ww-dispute-name">'+d.name+'</div>'+
+          '<span class="ww-sev-badge" style="background:'+sc+'22;border:1px solid '+sc+';color:'+tc+';">'+d.severity+'</span>'+
+        '</div>'+
+        '<div class="ww-states">'+d.states.map(function(st){return '<span class="ww-state-chip">'+st+'</span>';}).join('')+'</div>'+
+        '<div class="ww-row">'+d.dispute+'</div>'+
+        '<div class="ww-risk"><b>Risk:</b> '+d.risk+'</div>'+
+        '<div class="ww-trigger"><b>Escalation Trigger:</b> '+d.escalation_trigger+'</div>'+
+      '</div>';
+    }).join('');
+  }
+  var tbody = document.getElementById('ww-stress-tbody');
+  if(tbody){
+    tbody.innerHTML = WATER_STRESS_INDICATORS.map(function(i){
+      var sc = i.status==='CRITICAL'||i.status==='ACCELERATING'?'#ef4444':i.status==='ACTIVE'||i.status==='HIGH RISK'?'#f97316':'#eab308';
+      return '<tr>'+
+        '<td class="ww-indicator-name" style="font-size:8px;">'+i.indicator+'</td>'+
+        '<td><span style="color:'+sc+';font-size:7px;font-weight:700;">'+i.status+'</span></td>'+
+        '<td style="color:#64748b;font-size:7px;line-height:1.4;">'+i.desc+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+}
+
+async function _fetchWwGdelt(){
+  var feed = document.getElementById('ww-gdelt-feed');
+  if(!feed) return;
+  feed.innerHTML = '<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q = encodeURIComponent('water dispute dam river conflict Nile Mekong Indus water security drought');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=48H&format=json';
+    var r = await fetch(url,{signal:AbortSignal.timeout(10000)});
+    var d = await r.json();
+    var arts = (d&&d.articles)||[];
+    if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    feed.innerHTML = arts.map(function(a){
+      return '<div class="ww-gdelt-item">'+
+        '<div class="ww-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
+        '<div class="ww-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
+}
+
+function _openWaterWars(){
+  var ov=document.getElementById('waterwars-overlay');
+  if(ov){ov.style.display='flex';_renderWaterWars();_fetchWwGdelt();}
+  var pins = WATER_DISPUTES.map(function(d){
+    var type = d.severity==='CRITICAL'?'active_conflict':d.severity==='HIGH'?'humanitarian':'instability';
+    var sev = d.severity==='CRITICAL'?9:d.severity==='HIGH'?7:6;
+    return {lat:d.lat,lng:d.lng,type:type,severity:sev,label:d.name,TAG:'_waterwars'};
+  });
+  liveHotspots=[...liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_waterwars';}), ...pins];
+}
+function _closeWaterWars(){
+  var ov=document.getElementById('waterwars-overlay');
+  if(ov) ov.style.display='none';
+  liveHotspots=liveHotspots.filter(function(h){return !h.TAG||h.TAG!=='_waterwars';});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var b=document.getElementById('waterwars-btn');
+  if(b) b.addEventListener('click',_openWaterWars);
+  var c=document.getElementById('waterwars-close');
+  if(c) c.addEventListener('click',_closeWaterWars);
+});
+
+// ===== END PHASE 50 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -32347,6 +32781,66 @@ function filterSIGINT(query){
  <div class="mm-grid" id="mm-programs-grid"></div>
  <div class="mm-section-title">GDELT LIVE INTELLIGENCE FEED</div>
  <div class="mm-gdelt-feed" id="mm-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Phase 50 buttons -->
+<button id="proxywars-btn">PROXY WARS</button>
+<button id="nuclearposture-btn">NUCLEAR POSTURE</button>
+<button id="waterwars-btn">WATER WARS</button>
+
+<!-- Proxy Wars Intelligence Overlay -->
+<div id="proxywars-overlay">
+ <div class="pw-header">
+ <div>
+ <div class="pw-title">PROXY WAR NETWORKS INTELLIGENCE</div>
+ <div class="pw-subtitle">SOURCE: ACLED / ISW / CSIS / RAND / OPEN SOURCE INTELLIGENCE / UNCLASSIFIED</div>
+ </div>
+ <div class="pw-close" id="proxywars-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="pw-section-title">STATE ACTORS &amp; PROXY NETWORKS</div>
+ <div class="pw-actors-grid" id="pw-actors-grid"></div>
+ <div class="pw-section-title">ACTIVE PROXY CONFLICT HOTSPOTS</div>
+ <table class="pw-hotspots-table">
+ <thead><tr><th>LOCATION</th><th>PATRON</th><th>PROXY FORCE</th><th>SEVERITY</th><th>ASSESSMENT</th></tr></thead>
+ <tbody id="pw-hotspots-tbody"></tbody>
+ </table>
+ <div class="pw-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="pw-gdelt-feed" id="pw-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Nuclear Posture Intelligence Overlay -->
+<div id="nuclearposture-overlay">
+ <div class="np-header">
+ <div>
+ <div class="np-title">NUCLEAR POSTURE &amp; ARSENAL INTELLIGENCE</div>
+ <div class="np-subtitle">SOURCE: SIPRI / FAS / BULLETIN OF ATOMIC SCIENTISTS / DOD NPR / IISS / UNCLASSIFIED</div>
+ </div>
+ <div class="np-close" id="nuclearposture-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="np-section-title">NUCLEAR ARSENALS — STATUS &amp; ALERT</div>
+ <div class="np-arsenals-grid" id="np-arsenals-grid"></div>
+ <div class="np-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="np-gdelt-feed" id="np-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
+</div>
+
+<!-- Water Wars Intelligence Overlay -->
+<div id="waterwars-overlay">
+ <div class="ww-header">
+ <div>
+ <div class="ww-title">WATER CONFLICT &amp; RESOURCE SECURITY INTELLIGENCE</div>
+ <div class="ww-subtitle">SOURCE: UN WATER / PACIFIC INSTITUTE / WRI AQUEDUCT / IPCC / OPEN SOURCE / UNCLASSIFIED</div>
+ </div>
+ <div class="ww-close" id="waterwars-close">&#x2715; CLOSE</div>
+ </div>
+ <div class="ww-section-title">ACTIVE WATER DISPUTES &amp; CRISIS ZONES</div>
+ <div class="ww-disputes-grid" id="ww-disputes-grid"></div>
+ <div class="ww-section-title">GLOBAL WATER STRESS INDICATORS</div>
+ <table class="ww-stress-table">
+ <thead><tr><th>INDICATOR</th><th>STATUS</th><th>ASSESSMENT</th></tr></thead>
+ <tbody id="ww-stress-tbody"></tbody>
+ </table>
+ <div class="ww-section-title">GDELT LIVE INTELLIGENCE FEED</div>
+ <div class="ww-gdelt-feed" id="ww-gdelt-feed"><div style="color:#475569;font-size:9px;">Loading...</div></div>
 </div>
 
 <!-- Phase 49 buttons -->
