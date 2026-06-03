@@ -1739,6 +1739,76 @@ button{border-radius:2px!important}
 .rs-bar-bg{height:8px;background:var(--panel);border-radius:2px;overflow:hidden;}
 .rs-bar-fill{height:100%;border-radius:2px;transition:width 1s;}
 .rs-region-detail{font-size:8px;color:var(--dim);margin-top:5px;line-height:1.5;}
+/* === PSYCH INTEL === */
+#psych-btn{position:fixed;top:415px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(168,85,247,.35);border-radius:2px;color:#c084fc;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#psych-btn:hover{background:rgba(168,85,247,.1);border-color:#9333ea;}
+#psych-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#psych-overlay.open{display:block;}
+.psych-hdr{background:var(--panel);border-bottom:2px solid rgba(168,85,247,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.psych-hdr h2{color:#c084fc;font-size:12px;letter-spacing:.2em;margin:0;}
+.psych-body{padding:16px 24px;max-width:1200px;}
+.psych-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.psych-card{background:var(--panel2);border:1px solid var(--border);padding:12px;cursor:pointer;transition:border-color .2s;}
+.psych-card:hover{border-color:rgba(168,85,247,.5);}
+.psych-card.active{border-color:#c084fc;border-left:3px solid #c084fc;}
+.psych-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.psych-name{font-size:10px;font-weight:700;color:var(--text);}
+.psych-title{font-size:7px;color:var(--dim);margin-top:2px;line-height:1.4;}
+.psych-threat{font-size:7px;padding:2px 6px;letter-spacing:.1em;font-weight:700;}
+.psych-archetype{font-size:8px;color:#c084fc;margin-bottom:4px;font-style:italic;}
+.psych-detail-section{background:var(--panel2);border:1px solid rgba(168,85,247,.2);padding:14px 16px;margin-top:12px;}
+.psych-detail-title{font-size:9px;color:#c084fc;letter-spacing:.2em;margin-bottom:10px;padding-bottom:4px;border-bottom:1px solid rgba(168,85,247,.2);}
+.psych-row{display:grid;grid-template-columns:160px 1fr;gap:8px;margin-bottom:8px;font-size:8px;}
+.psych-label{color:var(--dim);letter-spacing:.1em;padding-top:1px;}
+.psych-value{color:var(--text);line-height:1.5;}
+.psych-tag{display:inline-block;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);color:#c084fc;font-size:7px;padding:1px 5px;margin:1px;letter-spacing:.05em;}
+.psych-tag-red{display:inline-block;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;font-size:7px;padding:1px 5px;margin:1px;letter-spacing:.05em;}
+.psych-tag-yellow{display:inline-block;background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.3);color:#facc15;font-size:7px;padding:1px 5px;margin:1px;letter-spacing:.05em;}
+.psych-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.psych-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.psych-news-meta{color:var(--dim);font-size:8px;}
+/* === LEAK MONITOR === */
+#leakmon-btn{position:fixed;top:455px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(251,191,36,.35);border-radius:2px;color:#fbbf24;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#leakmon-btn:hover{background:rgba(251,191,36,.1);border-color:#d97706;}
+#leakmon-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#leakmon-overlay.open{display:block;}
+.lm-hdr{background:var(--panel);border-bottom:2px solid rgba(251,191,36,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.lm-hdr h2{color:#fbbf24;font-size:12px;letter-spacing:.2em;margin:0;}
+.lm-body{padding:16px 24px;max-width:1100px;}
+.lm-live-item{background:var(--panel2);border:1px solid var(--border);border-left:3px solid #fbbf24;padding:8px 12px;margin-bottom:6px;}
+.lm-live-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:2px;}
+.lm-live-meta{font-size:7px;color:var(--dim);}
+.lm-hist-card{background:var(--panel2);border:1px solid var(--border);padding:10px 12px;margin-bottom:6px;display:grid;grid-template-columns:120px 1fr 90px;gap:8px;align-items:start;}
+.lm-hist-year{font-size:20px;font-weight:900;color:rgba(251,191,36,.4);line-height:1;}
+.lm-hist-name{font-size:10px;font-weight:700;color:#fbbf24;margin-bottom:3px;}
+.lm-hist-actor{font-size:8px;color:var(--dim);margin-bottom:3px;}
+.lm-hist-impact{font-size:8px;color:var(--text);line-height:1.4;}
+.lm-sev{font-size:7px;padding:2px 6px;letter-spacing:.1em;font-weight:700;text-align:center;}
+/* === CLIMATE SEC === */
+#climatesec-btn{position:fixed;top:495px;right:570px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(34,197,94,.35);border-radius:2px;color:#4ade80;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px;}
+#climatesec-btn:hover{background:rgba(34,197,94,.1);border-color:#16a34a;}
+#climatesec-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,8,15,.97);z-index:2100;display:none;overflow-y:auto;font-family:var(--mono);}
+#climatesec-overlay.open{display:block;}
+.cs-hdr{background:var(--panel);border-bottom:2px solid rgba(34,197,94,.5);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;}
+.cs-hdr h2{color:#4ade80;font-size:12px;letter-spacing:.2em;margin:0;}
+.cs-body{padding:16px 24px;max-width:1200px;}
+.cs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.cs-card{background:var(--panel2);border:1px solid var(--border);padding:12px;position:relative;}
+.cs-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.cs-region{font-size:10px;font-weight:700;color:var(--text);}
+.cs-risk-badge{font-size:7px;padding:2px 6px;letter-spacing:.1em;font-weight:700;}
+.cs-driver{font-size:8px;color:#4ade80;margin-bottom:4px;font-style:italic;}
+.cs-conflict{font-size:8px;color:var(--dim);line-height:1.4;margin-bottom:3px;}
+.cs-displaced{font-size:8px;color:#fbbf24;}
+.cs-trend{font-size:7px;color:var(--dim);margin-top:4px;letter-spacing:.08em;}
+.cs-index{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px;}
+.cs-index-item{background:var(--panel2);border:1px solid rgba(34,197,94,.2);padding:10px 12px;}
+.cs-index-label{font-size:7px;color:var(--dim);letter-spacing:.12em;margin-bottom:4px;}
+.cs-index-value{font-size:14px;font-weight:900;color:#4ade80;}
+.cs-index-sub{font-size:8px;color:var(--text);margin-top:3px;line-height:1.4;}
+.cs-news-item{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.cs-news-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
+.cs-news-meta{color:var(--dim);font-size:8px;}
 </style>
 </head>
 <body>
@@ -17294,6 +17364,387 @@ function _renderRegionalStab(){
       '</div>';
   }).join('');
 }
+/* ============================================================
+   MODULE: PSYCH INTEL
+   ============================================================ */
+const PSYCH_PROFILES = [
+  {
+    name: 'Vladimir Putin',
+    title: 'President, Russian Federation',
+    iso: 'RU',
+    threat: 'CRITICAL',
+    threatColor: '#ef4444',
+    archetype: 'Authoritarian Nationalist',
+    decisionStyle: 'Deliberate / Risk-Tolerant under perceived existential threat',
+    cogBiases: ['Siege mentality', 'Historical grievance fixation', 'Zero-sum worldview', 'Overconfidence in coercive signaling'],
+    triggers: ['NATO expansion', 'Color revolutions near Russian borders', 'Personal humiliation', 'Loss of sphere of influence'],
+    redLines: ['Ukraine NATO membership', 'Russian territorial loss', 'Regime survival threat'],
+    stressIndicators: ['Isolation from advisors', 'Purges in inner circle', 'Increased military posturing'],
+    leverage: ['Economic sanctions pressure', 'Oligarch discontent', 'Casualty rates', 'Oil price manipulation'],
+    mbti: 'INTJ',
+    riskAppetite: 'HIGH',
+    source: 'Open source OSINT aggregation'
+  },
+  {
+    name: 'Xi Jinping',
+    title: 'General Secretary / President, PRC',
+    iso: 'CN',
+    threat: 'HIGH',
+    threatColor: '#f97316',
+    archetype: 'Technocratic Authoritarian / Chinese Nationalist',
+    decisionStyle: 'Consensus-building then decisive / Long-term horizon planning',
+    cogBiases: ['Century of Humiliation narrative', 'Taiwan as core interest non-negotiable', 'CCP legitimacy conflated with personal power'],
+    triggers: ['Taiwan independence declarations', 'Tiananmen references', 'Xinjiang/Tibet internationalization', 'Economic slowdown threatening CCP legitimacy'],
+    redLines: ['Taiwan de jure independence', 'External interference in HK/Xinjiang', 'Leadership succession challenges'],
+    stressIndicators: ['Unusual Politburo Standing Committee reshuffles', 'PLA readiness surges', 'Increased propaganda intensity'],
+    leverage: ['Economic interdependence', 'Supply chain dependencies', 'Belt and Road leverage on client states'],
+    mbti: 'ISTJ',
+    riskAppetite: 'MODERATE-HIGH',
+    source: 'Open source OSINT aggregation'
+  },
+  {
+    name: 'Kim Jong-un',
+    title: 'Supreme Leader, DPRK',
+    iso: 'KP',
+    threat: 'CRITICAL',
+    threatColor: '#ef4444',
+    archetype: 'Hereditary Totalitarian / Survival-Focused',
+    decisionStyle: 'Unpredictable / Uses brinkmanship as negotiating tool',
+    cogBiases: ['Regime survival above all', 'Distrust of external promises', 'Nuclear weapons as existential guarantee'],
+    triggers: ['US-ROK military exercises', 'Perceived assassination threat', 'Economic collapse risk', 'Elite defections'],
+    redLines: ['DPRK denuclearization without security guarantee', 'Regime change operations'],
+    stressIndicators: ['Execution of senior officials', 'Extended public absences', 'Missile test frequency spikes'],
+    leverage: ['Food/energy supply (China)', 'Sanctions relief', 'Security guarantees'],
+    mbti: 'ENTJ',
+    riskAppetite: 'HIGH (controlled escalation)',
+    source: 'Open source OSINT aggregation'
+  },
+  {
+    name: 'Ali Khamenei',
+    title: 'Supreme Leader, Islamic Republic of Iran',
+    iso: 'IR',
+    threat: 'HIGH',
+    threatColor: '#f97316',
+    archetype: 'Theocratic Ideologue / Anti-Western Strategist',
+    decisionStyle: 'Ideologically constrained / Proxy-preferring over direct confrontation',
+    cogBiases: ['US as existential adversary', 'Israel as illegitimate entity', 'Resistance axis as strategic depth'],
+    triggers: ['Assassination of IRGC commanders', 'Nuclear program sabotage', 'Internal popular uprising'],
+    redLines: ['Regime overthrow', 'Nuclear program dismantlement', 'Normalization with Israel'],
+    stressIndicators: ['IRGC Quds Force high-tempo operations', 'Proxy escalation in multiple theaters simultaneously'],
+    leverage: ['Nuclear deal relief', 'Sanctions lifting', 'Regional security architecture'],
+    mbti: 'INTJ',
+    riskAppetite: 'MODERATE (proxy preference)',
+    source: 'Open source OSINT aggregation'
+  },
+  {
+    name: 'Benjamin Netanyahu',
+    title: 'Prime Minister, State of Israel',
+    iso: 'IL',
+    threat: 'ELEVATED',
+    threatColor: '#eab308',
+    archetype: 'Security Hawk / Political Survivor',
+    decisionStyle: 'Coalition-constrained / Security-first framing',
+    cogBiases: ['Holocaust memory shaping existential threat perception', 'Iran as primary strategic threat', 'Occupation of right-wing coalition space'],
+    triggers: ['Iranian nuclear breakout', 'Hezbollah precision missile buildup', 'ICC proceedings', 'Coalition collapse'],
+    redLines: ['Iranian nuclear weapon', 'Hamas/Hezbollah strategic military capability'],
+    stressIndicators: ['Judicial reform acceleration', 'Coalition partner demands', 'US diplomatic pressure'],
+    leverage: ['US military aid conditionality', 'ICC threat', 'Hostage negotiations'],
+    mbti: 'ENTJ',
+    riskAppetite: 'HIGH (when politically cornered)',
+    source: 'Open source OSINT aggregation'
+  },
+  {
+    name: 'Donald Trump',
+    title: 'President, United States of America',
+    iso: 'US',
+    threat: 'MONITOR',
+    threatColor: '#3b82f6',
+    archetype: 'Transactional Nationalist / Disruptor',
+    decisionStyle: 'Instinct-driven / Bilateral deal preference / Unpredictable to allies and adversaries',
+    cogBiases: ['Zero-sum trade worldview', 'Personal loyalty over institutional loyalty', 'Strength/weakness binary framing'],
+    triggers: ['Perceived disrespect', 'Trade deficits', 'NATO burden-sharing imbalance', 'Political opponents'],
+    redLines: ['Perceived personal humiliation', 'Electoral fraud narrative challenges'],
+    stressIndicators: ['Social media escalation patterns', 'Inner circle turnover', 'Legal proceedings'],
+    leverage: ['Economic interdependence with US', 'Security guarantees', 'Personal relationships'],
+    mbti: 'ESTP',
+    riskAppetite: 'HIGH (transactional)',
+    source: 'Open source OSINT aggregation'
+  }
+];
+let _psychActiveIdx = 0;
+function openPsychIntel() {
+  const ov = document.getElementById('psych-overlay');
+  if (!ov) return;
+  ov.classList.add('open');
+  _renderPsychProfiles();
+}
+function closePsychIntel() {
+  const ov = document.getElementById('psych-overlay');
+  if (ov) ov.classList.remove('open');
+}
+function _renderPsychProfiles() {
+  const ov = document.getElementById('psych-overlay');
+  if (!ov) return;
+  const cards = PSYCH_PROFILES.map((p, i) => {
+    const active = i === _psychActiveIdx ? ' active' : '';
+    return '<div class="psych-card' + active + '" onclick="_psychSelect(' + i + ')">' +
+      '<div class="psych-card-top">' +
+      '<div><div class="psych-name">' + p.name + '</div><div class="psych-title">' + p.title + '</div></div>' +
+      '<div class="psych-threat" style="background:' + p.threatColor + ';color:#fff;">' + p.threat + '</div>' +
+      '</div>' +
+      '<div class="psych-archetype">' + p.archetype + '</div>' +
+      '<div style="font-size:7px;color:var(--dim);">MBTI: <span style="color:var(--text);">' + p.mbti + '</span> &nbsp;|&nbsp; RISK: <span style="color:var(--text);">' + p.riskAppetite + '</span></div>' +
+      '</div>';
+  }).join('');
+  const profile = PSYCH_PROFILES[_psychActiveIdx];
+  const detail = '<div class="psych-detail-section">' +
+    '<div class="psych-detail-title">&#x1F9E0; DEEP PROFILE: ' + profile.name.toUpperCase() + '</div>' +
+    '<div class="psych-row"><div class="psych-label">DECISION STYLE</div><div class="psych-value">' + profile.decisionStyle + '</div></div>' +
+    '<div class="psych-row"><div class="psych-label">COG. BIASES</div><div class="psych-value">' + profile.cogBiases.map(function(b){return '<span class="psych-tag">' + b + '</span>';}).join('') + '</div></div>' +
+    '<div class="psych-row"><div class="psych-label">TRIGGER EVENTS</div><div class="psych-value">' + profile.triggers.map(function(t){return '<span class="psych-tag-red">' + t + '</span>';}).join('') + '</div></div>' +
+    '<div class="psych-row"><div class="psych-label">RED LINES</div><div class="psych-value">' + profile.redLines.map(function(r){return '<span class="psych-tag-red">' + r + '</span>';}).join('') + '</div></div>' +
+    '<div class="psych-row"><div class="psych-label">STRESS SIGNALS</div><div class="psych-value">' + profile.stressIndicators.map(function(s){return '<span class="psych-tag-yellow">' + s + '</span>';}).join('') + '</div></div>' +
+    '<div class="psych-row"><div class="psych-label">LEVERAGE POINTS</div><div class="psych-value">' + profile.leverage.map(function(l){return '<span class="psych-tag">' + l + '</span>';}).join('') + '</div></div>' +
+    '<div class="psych-row"><div class="psych-label">SOURCE</div><div class="psych-value" style="color:var(--dim);">' + profile.source + '</div></div>' +
+    '</div>' +
+    '<div style="background:var(--panel2);border:1px solid rgba(168,85,247,.2);padding:12px 16px;margin-top:10px;">' +
+    '<div style="font-size:8px;color:#c084fc;letter-spacing:.15em;margin-bottom:8px;">LIVE GDELT INTELLIGENCE FEED: ' + profile.name.toUpperCase() + '</div>' +
+    '<div id="psych-news-feed"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>' +
+    '</div>';
+  ov.innerHTML = '<div class="psych-hdr"><div>' +
+    '<div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">PSYCHOLOGICAL INTELLIGENCE PROFILES // OSINT-DERIVED BEHAVIORAL ANALYSIS</div>' +
+    '<h2>&#x1F9E0; PSYCH INTEL — WORLD LEADERS</h2></div>' +
+    '<button onclick="closePsychIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>' +
+    '</div>' +
+    '<div class="psych-body">' +
+    '<div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">CLICK PROFILE TO EXPAND &middot; GDELT LIVE FEED PER ACTOR &middot; OSINT-DERIVED &middot; UNCLASSIFIED</div>' +
+    '<div class="psych-grid">' + cards + '</div>' +
+    detail +
+    '</div>';
+  _fetchPsychNews(profile.name);
+}
+function _psychSelect(idx) {
+  _psychActiveIdx = idx;
+  _renderPsychProfiles();
+}
+async function _fetchPsychNews(name) {
+  const el = document.getElementById('psych-news-feed');
+  if (!el) return;
+  try {
+    const url = 'https://api.gdeltproject.org/api/v2/doc/doc?query=' + encodeURIComponent(name) + '&mode=artlist&maxrecords=5&format=json';
+    const resp = await fetch(url);
+    const data = await resp.json();
+    const arts = data.articles || [];
+    if (!arts.length) { el.innerHTML = '<div style="color:var(--dim);font-size:9px;">No recent articles found.</div>'; return; }
+    el.innerHTML = arts.map(function(a) {
+      const domain = a.domain || (a.url ? a.url.replace(/^https?:\/\//,'').split('/')[0] : '');
+      const date = a.seendate ? a.seendate.substring(0,8) : '';
+      return '<div class="psych-news-item"><div class="psych-news-title"><a href="' + (a.url||'#') + '" target="_blank" style="color:var(--text);text-decoration:none;">' + (a.title||'').replace(/</g,'&lt;') + '</a></div>' +
+        '<div class="psych-news-meta">' + domain + ' &nbsp;&middot;&nbsp; ' + date + '</div></div>';
+    }).join('');
+  } catch(e) {
+    if (el) el.innerHTML = '<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';
+  }
+}
+
+/* ============================================================
+   MODULE: LEAK MONITOR
+   ============================================================ */
+const HISTORICAL_LEAKS = [
+  {name:'Pentagon Papers',year:1971,actor:'Daniel Ellsberg',source:'RAND/DoD',impact:'Ended Vietnam War public support',severity:'CRITICAL'},
+  {name:'NSA PRISM/BOUNDLESS INFORMANT',year:2013,actor:'Edward Snowden',source:'NSA/GCHQ',impact:'Revealed global mass surveillance program',severity:'CRITICAL'},
+  {name:'Afghanistan War Logs',year:2010,actor:'Chelsea Manning / WikiLeaks',source:'US Military',impact:'91,000+ classified reports on Afghan war',severity:'HIGH'},
+  {name:'Iraq War Logs',year:2010,actor:'Chelsea Manning / WikiLeaks',source:'US Military',impact:'391,832 US Army field reports',severity:'HIGH'},
+  {name:'Vault 7 CIA Tools',year:2017,actor:'Joshua Schulte (alleged) / WikiLeaks',source:'CIA CCI',impact:'Largest CIA data loss — cyberweapons exposed',severity:'CRITICAL'},
+  {name:'Panama Papers',year:2016,actor:'John Doe / ICIJ',source:'Mossack Fonseca law firm',impact:'11.5M documents exposing offshore tax evasion',severity:'HIGH'},
+  {name:'Jack Teixeira Discord Leaks',year:2023,actor:'Jack Teixeira (USAF ANG)',source:'Pentagon/JWICS',impact:'Classified battlefield intelligence on Ukraine war',severity:'HIGH'},
+  {name:'Pandora Papers',year:2021,actor:'ICIJ',source:'14 financial services companies',impact:'11.9M documents on offshore wealth of world leaders',severity:'HIGH'}
+];
+function openLeakMonitor() {
+  const ov = document.getElementById('leakmon-overlay');
+  if (!ov) return;
+  ov.classList.add('open');
+  _renderLeakMonitor();
+}
+function closeLeakMonitor() {
+  const ov = document.getElementById('leakmon-overlay');
+  if (ov) ov.classList.remove('open');
+}
+async function _renderLeakMonitor() {
+  const ov = document.getElementById('leakmon-overlay');
+  if (!ov) return;
+  const histHTML = HISTORICAL_LEAKS.map(function(lk) {
+    const sevColor = lk.severity === 'CRITICAL' ? '#ef4444' : lk.severity === 'HIGH' ? '#f97316' : '#eab308';
+    return '<div class="lm-hist-card">' +
+      '<div><div class="lm-hist-year">' + lk.year + '</div></div>' +
+      '<div><div class="lm-hist-name">' + lk.name + '</div>' +
+      '<div class="lm-hist-actor">Actor: ' + lk.actor + ' &nbsp;|&nbsp; Source: ' + lk.source + '</div>' +
+      '<div class="lm-hist-impact">' + lk.impact + '</div></div>' +
+      '<div><span class="lm-sev" style="background:' + sevColor + ';color:#fff;">' + lk.severity + '</span></div>' +
+      '</div>';
+  }).join('');
+  ov.innerHTML = '<div class="lm-hdr"><div>' +
+    '<div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">LEAK & WHISTLEBLOWER MONITOR // GDELT LIVE FEED // CLASSIFIED RELEASE TRACKING</div>' +
+    '<h2>&#x1F512; LEAK & WHISTLEBLOWER MONITOR</h2></div>' +
+    '<button onclick="closeLeakMonitor()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>' +
+    '</div>' +
+    '<div class="lm-body">' +
+    '<div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">LIVE GDELT COLLECTION &middot; DOCUMENT LEAKS &middot; WHISTLEBLOWER EVENTS &middot; CLASSIFIED RELEASES</div>' +
+    '<div style="font-size:9px;letter-spacing:.15em;color:#fbbf24;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(251,191,36,.2);">&#x25CF; LIVE LEAK INTELLIGENCE FEED</div>' +
+    '<div id="leakmon-live-feed"><div style="color:var(--dim);font-size:9px;">Fetching live intelligence...</div></div>' +
+    '<div style="font-size:9px;letter-spacing:.15em;color:#fbbf24;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid rgba(251,191,36,.2);">&#x25A0; HISTORICAL SIGNIFICANT LEAKS</div>' +
+    histHTML +
+    '</div>';
+  _fetchLeakNews();
+}
+async function _fetchLeakNews() {
+  const el = document.getElementById('leakmon-live-feed');
+  if (!el) return;
+  const queries = [
+    'leaked documents classified',
+    'whistleblower intelligence',
+    'classified files released',
+    'government leak documents',
+    'WikiLeaks documents'
+  ];
+  try {
+    const results = await Promise.all(queries.map(function(q) {
+      return fetch('https://api.gdeltproject.org/api/v2/doc/doc?query=' + encodeURIComponent(q) + '&mode=artlist&maxrecords=10&format=json')
+        .then(function(r){return r.json();})
+        .catch(function(){return {articles:[]};});
+    }));
+    const seen = new Set();
+    const all = [];
+    results.forEach(function(r) {
+      (r.articles || []).forEach(function(a) {
+        if (a.url && !seen.has(a.url)) { seen.add(a.url); all.push(a); }
+      });
+    });
+    all.sort(function(a,b){ return (b.seendate||'').localeCompare(a.seendate||''); });
+    if (!all.length) { el.innerHTML = '<div style="color:var(--dim);font-size:9px;">No recent articles found.</div>'; return; }
+    el.innerHTML = all.slice(0, 30).map(function(a) {
+      const domain = a.domain || (a.url ? a.url.replace(/^https?:\/\//,'').split('/')[0] : '');
+      const date = a.seendate ? a.seendate.substring(0,8) : '';
+      return '<div class="lm-live-item"><div class="lm-live-title"><a href="' + (a.url||'#') + '" target="_blank" style="color:var(--text);text-decoration:none;">' + (a.title||'').replace(/</g,'&lt;') + '</a></div>' +
+        '<div class="lm-live-meta">' + domain + ' &nbsp;&middot;&nbsp; ' + date + '</div></div>';
+    }).join('');
+  } catch(e) {
+    if (el) el.innerHTML = '<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';
+  }
+}
+
+/* ============================================================
+   MODULE: CLIMATE SECURITY INTEL
+   ============================================================ */
+const CLIMATE_THREATS = [
+  {region:'Sahel / Sub-Saharan Africa',risk:'CRITICAL',driver:'Desertification + crop failure',
+   conflict:'Armed group expansion (JNIM, ISIS-Sahel) exploiting food insecurity',
+   displaced:'4.2M+ climate displaced in Lake Chad Basin',
+   trend:'WORSENING',color:'#ef4444',lat:14,lng:2},
+  {region:'South Asia (Indus Basin)',risk:'HIGH',driver:'Himalayan glacier retreat + monsoon disruption',
+   conflict:'India-Pakistan water treaty stress; Bangladesh flooding → migration pressure on India',
+   displaced:'19M+ flood displaced Bangladesh annually',
+   trend:'WORSENING',color:'#f97316',lat:25,lng:70},
+  {region:'Middle East / MENA',risk:'HIGH',driver:'Extreme heat (55°C+), aquifer depletion',
+   conflict:'Iraq/Syria/Iran water wars (Tigris-Euphrates system); Jordan water crisis',
+   displaced:'1.3M displaced by Yemen drought compounding conflict',
+   trend:'WORSENING',color:'#f97316',lat:33,lng:44},
+  {region:'Arctic (Geopolitical)',risk:'HIGH',driver:'Sea ice loss → Northern Sea Route opening',
+   conflict:'Russia/NATO Arctic militarization; resource extraction disputes',
+   displaced:'4M+ indigenous Arctic peoples at risk',
+   trend:'ACCELERATING',color:'#f97316',lat:75,lng:0},
+  {region:'Pacific Island States',risk:'HIGH',driver:'Sea level rise 3.7mm/year',
+   conflict:'China influence competition in existential-threat states (Tuvalu, Kiribati)',
+   displaced:'Entire nations at risk of submersion by 2050',
+   trend:'CRITICAL TRAJECTORY',color:'#f97316',lat:-8,lng:170},
+  {region:'Central America',risk:'ELEVATED',driver:'Drought + crop failure → economic collapse',
+   conflict:'Gang violence fills governance vacuum; mass migration to US border',
+   displaced:'783K+ climate-displaced in Guatemala, Honduras, El Salvador',
+   trend:'WORSENING',color:'#eab308',lat:15,lng:-89},
+  {region:'Eastern Africa (Horn)',risk:'CRITICAL',driver:'Multi-season drought (worst in 40 years)',
+   conflict:'Al-Shabaab exploiting food insecurity for recruitment; Ethiopia conflict overlap',
+   displaced:'22M+ facing acute food insecurity in Ethiopia, Somalia, Kenya',
+   trend:'ACUTE CRISIS',color:'#ef4444',lat:7,lng:42},
+  {region:'Mekong Basin (SE Asia)',risk:'ELEVATED',driver:'Chinese upstream dams + drought',
+   conflict:'Cambodia/Vietnam/Thailand fishery collapse; food security threat to 60M people',
+   displaced:'Agricultural community displacement across basin',
+   trend:'WORSENING',color:'#eab308',lat:16,lng:103}
+];
+function openClimateSec() {
+  const ov = document.getElementById('climatesec-overlay');
+  if (!ov) return;
+  ov.classList.add('open');
+  liveHotspots = [...liveHotspots.filter(function(h){return !h._climate;}),
+    ...CLIMATE_THREATS.map(function(t){return {lat:t.lat,lng:t.lng,type:'humanitarian',
+      severity:t.risk==='CRITICAL'?'critical':t.risk==='HIGH'?'high':'medium',
+      label:t.region+' Climate Risk',_climate:true};})
+  ];
+  _renderClimateSec();
+}
+function closeClimateSec() {
+  const ov = document.getElementById('climatesec-overlay');
+  if (ov) ov.classList.remove('open');
+  liveHotspots = liveHotspots.filter(function(h){return !h._climate;});
+}
+async function _renderClimateSec() {
+  const ov = document.getElementById('climatesec-overlay');
+  if (!ov) return;
+  const threatCards = CLIMATE_THREATS.map(function(t) {
+    const riskColor = t.color;
+    return '<div class="cs-card" style="border-left:3px solid ' + riskColor + ';">' +
+      '<div class="cs-card-top">' +
+      '<div class="cs-region">' + t.region + '</div>' +
+      '<span class="cs-risk-badge" style="background:' + riskColor + ';color:#fff;">' + t.risk + '</span>' +
+      '</div>' +
+      '<div class="cs-driver">' + t.driver + '</div>' +
+      '<div class="cs-conflict">' + t.conflict + '</div>' +
+      '<div class="cs-displaced">&#x1F6BA; ' + t.displaced + '</div>' +
+      '<div class="cs-trend">TREND: ' + t.trend + '</div>' +
+      '</div>';
+  }).join('');
+  const indexHTML = '<div class="cs-index">' +
+    '<div class="cs-index-item"><div class="cs-index-label">FRESHWATER STRESS</div><div class="cs-index-value">40%</div><div class="cs-index-sub">of world population by 2040</div></div>' +
+    '<div class="cs-index-item"><div class="cs-index-label">ARABLE LAND LOSS</div><div class="cs-index-value">1%/yr</div><div class="cs-index-sub">to desertification globally</div></div>' +
+    '<div class="cs-index-item"><div class="cs-index-label">MINERAL COMPETITION</div><div class="cs-index-value">HIGH</div><div class="cs-index-sub">EV/battery minerals increasingly conflict-linked</div></div>' +
+    '<div class="cs-index-item"><div class="cs-index-label">ARCTIC ICE LOSS</div><div class="cs-index-value">75%</div><div class="cs-index-sub">summer extent lost since 1980</div></div>' +
+    '</div>';
+  ov.innerHTML = '<div class="cs-hdr"><div>' +
+    '<div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CLIMATE & ENVIRONMENTAL SECURITY INTELLIGENCE // RESOURCE COMPETITION // CONFLICT NEXUS</div>' +
+    '<h2>&#x1F331; CLIMATE SECURITY INTEL</h2></div>' +
+    '<button onclick="closeClimateSec()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>' +
+    '</div>' +
+    '<div class="cs-body">' +
+    '<div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">CLIMATE-LINKED SECURITY RISKS &middot; RESOURCE COMPETITION &middot; DISPLACEMENT &middot; CONFLICT NEXUS &middot; GLOBE HOTSPOTS ACTIVE</div>' +
+    '<div style="font-size:9px;letter-spacing:.15em;color:#4ade80;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(34,197,94,.2);">&#x26A0; ACTIVE CLIMATE SECURITY HOTSPOTS</div>' +
+    '<div class="cs-grid">' + threatCards + '</div>' +
+    '<div style="font-size:9px;letter-spacing:.15em;color:#4ade80;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(34,197,94,.2);">&#x1F4CA; RESOURCE COMPETITION INDEX</div>' +
+    indexHTML +
+    '<div style="font-size:9px;letter-spacing:.15em;color:#4ade80;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(34,197,94,.2);">&#x25CF; LIVE CLIMATE SECURITY NEWS (GDELT)</div>' +
+    '<div id="climatesec-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>' +
+    '</div>';
+  _fetchClimateNews();
+}
+async function _fetchClimateNews() {
+  const el = document.getElementById('climatesec-news');
+  if (!el) return;
+  try {
+    const q = 'climate security conflict displacement food water';
+    const url = 'https://api.gdeltproject.org/api/v2/doc/doc?query=' + encodeURIComponent(q) + '&mode=artlist&maxrecords=15&format=json';
+    const resp = await fetch(url);
+    const data = await resp.json();
+    const arts = data.articles || [];
+    if (!arts.length) { el.innerHTML = '<div style="color:var(--dim);font-size:9px;">No recent articles found.</div>'; return; }
+    el.innerHTML = arts.map(function(a) {
+      const domain = a.domain || (a.url ? a.url.replace(/^https?:\/\//,'').split('/')[0] : '');
+      const date = a.seendate ? a.seendate.substring(0,8) : '';
+      return '<div class="cs-news-item"><div class="cs-news-title"><a href="' + (a.url||'#') + '" target="_blank" style="color:var(--text);text-decoration:none;">' + (a.title||'').replace(/</g,'&lt;') + '</a></div>' +
+        '<div class="cs-news-meta">' + domain + ' &nbsp;&middot;&nbsp; ' + date + '</div></div>';
+    }).join('');
+  } catch(e) {
+    if (el) el.innerHTML = '<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';
+  }
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -18620,6 +19071,12 @@ function filterSIGINT(query){
   </div>
 </div>
 <button id="regstab-btn" onclick="openRegionalStab()">&#x1F30D; REG STABILITY</button>
+<button id="psych-btn" onclick="openPsychIntel()">&#x1F9E0; PSYCH INTEL</button>
+<button id="leakmon-btn" onclick="openLeakMonitor()">&#x1F512; LEAK MONITOR</button>
+<button id="climatesec-btn" onclick="openClimateSec()">&#x1F331; CLIMATE SEC</button>
+<div id="psych-overlay"></div>
+<div id="leakmon-overlay"></div>
+<div id="climatesec-overlay"></div>
 <div id="regstab-overlay">
   <div class="rs-hdr">
     <div>
