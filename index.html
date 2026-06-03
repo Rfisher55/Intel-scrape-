@@ -1877,6 +1877,54 @@ button{border-radius:2px!important}
 .cn-gdelt-item{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .cn-gdelt-title{color:var(--text);font-size:9px;line-height:1.4;margin-bottom:1px;}
 .cn-gdelt-meta{color:var(--dim);font-size:8px;}
+/* === Human Trafficking, Illicit Finance, Cable Watch buttons === */
+#humantraffic-btn{position:fixed;top:175px;right:685px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#humantraffic-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#illicitfin-btn{position:fixed;top:215px;right:685px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#illicitfin-btn:hover{border-color:#8b5cf6;color:#c4b5fd;}
+#cablewatch-btn{position:fixed;top:255px;right:685px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#cablewatch-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+/* Human Trafficking cards */
+.ht-route-card{background:var(--panel2);border:1px solid var(--border);padding:10px 12px;margin-bottom:7px;border-left:3px solid;}
+.ht-route-name{font-size:10px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.ht-route-meta{display:flex;gap:10px;font-size:8px;color:var(--dim);margin-bottom:3px;flex-wrap:wrap;}
+.ht-type-badge{font-size:7px;padding:1px 5px;border-radius:2px;font-weight:700;letter-spacing:.08em;}
+.ht-type-labor{background:rgba(234,179,8,.15);border:1px solid #eab308;color:#fde047;}
+.ht-type-sex{background:rgba(168,85,247,.15);border:1px solid #8b5cf6;color:#c4b5fd;}
+.ht-type-mixed{background:rgba(249,115,22,.15);border:1px solid #f97316;color:#fdba74;}
+.ht-type-cyber{background:rgba(239,68,68,.15);border:1px solid #ef4444;color:#fca5a5;}
+.ht-hotspot-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:10px 12px;margin-bottom:7px;}
+.ht-hotspot-name{font-size:10px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.ht-hotspot-meta{font-size:8px;color:var(--dim);line-height:1.5;}
+/* Illicit Finance cards */
+.if-fatf-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:flex-start;}
+.if-fatf-country{font-size:10px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.if-fatf-concern{font-size:8px;color:var(--dim);line-height:1.4;}
+.if-risk-badge{font-size:7px;padding:2px 6px;border-radius:2px;font-weight:700;letter-spacing:.08em;white-space:nowrap;}
+.if-risk-extreme{background:rgba(127,29,29,.3);border:1px solid #dc2626;color:#fca5a5;}
+.if-risk-high{background:rgba(124,45,18,.25);border:1px solid #f97316;color:#fdba74;}
+.if-risk-elevated{background:rgba(120,53,15,.2);border:1px solid #eab308;color:#fde047;}
+.if-method-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:11px 13px;margin-bottom:8px;}
+.if-method-name{font-size:10px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.if-method-volume{font-size:9px;color:#fca5a5;font-weight:700;margin-bottom:3px;}
+.if-method-actors{font-size:8px;color:var(--dim);line-height:1.4;margin-bottom:3px;}
+.if-method-indicators{font-size:7px;color:#7dd3fc;border-left:2px solid rgba(59,130,246,.3);padding-left:5px;line-height:1.5;}
+/* Cable Watch cards */
+.cw-incident-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:11px 13px;margin-bottom:8px;}
+.cw-incident-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;}
+.cw-incident-cable{font-size:10px;font-weight:700;color:var(--text);}
+.cw-sev-badge{font-size:7px;padding:2px 6px;border-radius:2px;font-weight:700;letter-spacing:.08em;}
+.cw-sev-critical{background:rgba(127,29,29,.3);border:1px solid #dc2626;color:#fca5a5;}
+.cw-sev-high{background:rgba(124,45,18,.25);border:1px solid #f97316;color:#fdba74;}
+.cw-incident-meta{font-size:8px;color:var(--dim);line-height:1.5;margin-bottom:3px;}
+.cw-incident-actor{font-size:8px;color:#fda4af;border-left:2px solid rgba(239,68,68,.3);padding-left:5px;}
+.cw-cable-card{background:var(--panel2);border:1px solid var(--border);border-left:3px solid;padding:9px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:flex-start;}
+.cw-cable-name{font-size:9px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.cw-cable-meta{font-size:8px;color:var(--dim);}
+.cw-threat-badge{font-size:7px;padding:1px 6px;border-radius:2px;font-weight:700;letter-spacing:.06em;white-space:nowrap;}
+.cw-threat-critical{background:rgba(127,29,29,.3);border:1px solid #dc2626;color:#fca5a5;}
+.cw-threat-high{background:rgba(124,45,18,.25);border:1px solid #f97316;color:#fdba74;}
+.cw-threat-elevated{background:rgba(120,53,15,.2);border:1px solid #eab308;color:#fde047;}
 </style>
 </head>
 <body>
@@ -8183,6 +8231,8 @@ function draw(){
   if(_armsTradeActive)drawArmsTradeNet();
   if(_threatVecActive)drawThreatVectors();
   if(_narcoActive)drawNarcoRoutes();
+  if(_trafficActive)drawTrafficRoutes();
+  if(_cableActive)drawCableNetwork();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -18179,6 +18229,386 @@ async function fetchNarcoGDELT(){
   }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
 
+// ── PHASE 25: Human Trafficking, Illicit Finance, Cable Watch ──────────────
+
+const TRAFFICKING_ROUTES = [
+  {"name":"SE Asia → Middle East (Domestic Workers)","color":"rgba(239,68,68,0.55)",
+   "waypoints":[{"lat":15,"lng":100},{"lat":15,"lng":80},{"lat":24,"lng":55},{"lat":25,"lng":51}],
+   "type":"LABOR","volume":"600,000+ workers/year in exploitative conditions","actors":"Recruitment agencies, kafala system"},
+  {"name":"West Africa → Europe (Sahara Route)","color":"rgba(239,68,68,0.55)",
+   "waypoints":[{"lat":5,"lng":2},{"lat":13,"lng":2},{"lat":20,"lng":13},{"lat":33,"lng":13},{"lat":37,"lng":10},{"lat":40,"lng":14}],
+   "type":"MIXED","volume":"200,000+ annually via Libya","actors":"Libyan militias, West African smuggling networks"},
+  {"name":"Central America → USA","color":"rgba(168,85,247,0.55)",
+   "waypoints":[{"lat":14,"lng":-88},{"lat":18,"lng":-91},{"lat":24,"lng":-106},{"lat":32,"lng":-117}],
+   "type":"MIXED","volume":"80,000+ smuggled annually","actors":"Sinaloa, CJNG, MS-13"},
+  {"name":"Eastern Europe → Western Europe","color":"rgba(251,146,60,0.55)",
+   "waypoints":[{"lat":47,"lng":28},{"lat":47,"lng":22},{"lat":48,"lng":17},{"lat":48,"lng":13},{"lat":50,"lng":7}],
+   "type":"SEX","volume":"100,000+ victims annually","actors":"Romanian/Bulgarian criminal networks"},
+  {"name":"South Asia → Gulf States","color":"rgba(234,179,8,0.55)",
+   "waypoints":[{"lat":28,"lng":78},{"lat":24,"lng":68},{"lat":23,"lng":58},{"lat":25,"lng":51}],
+   "type":"LABOR","volume":"400,000+ migrant workers","actors":"Recruitment brokers, kafala system employers"},
+  {"name":"Greater Mekong → Global","color":"rgba(239,68,68,0.6)",
+   "waypoints":[{"lat":21,"lng":100},{"lat":16,"lng":102},{"lat":13,"lng":101},{"lat":1,"lng":104}],
+   "type":"CYBER SLAVERY","volume":"100,000+ forced into crypto/romance scam centers","actors":"Chinese criminal syndicates, KK Park Myanmar"}
+];
+
+const TRAFFICKING_HOTSPOTS = [
+  {"name":"Libya (Transit Hub)","lat":27,"lng":17,"type":"TRANSIT","victims":"500,000+ migrants held/trafficked annually",
+   "actors":"Al-Nasr Martyrs Brigade, SSA militias","severity":"critical","color":"#ef4444"},
+  {"name":"KK Park, Myanmar (Cyber Scam City)","lat":21.6,"lng":99.0,"type":"CYBER SLAVERY",
+   "victims":"100,000+ forced scam workers","actors":"Chinese criminal syndicates under UWSA protection",
+   "severity":"critical","color":"#ef4444"},
+  {"name":"Gulf States (Kafala System)","lat":25,"lng":51,"type":"LABOR",
+   "victims":"millions of migrant workers","actors":"Employers under kafala sponsorship system",
+   "severity":"high","color":"#f97316"},
+  {"name":"Balkans Route (Serbia/North Macedonia)","lat":44,"lng":20,"type":"TRANSIT",
+   "victims":"100,000+ annually","actors":"Serbian/Albanian organized crime",
+   "severity":"high","color":"#f97316"},
+  {"name":"Mexico Border Zone","lat":26,"lng":-99,"type":"SMUGGLING",
+   "victims":"80,000+ annually","actors":"Cartel coyotes, MS-13",
+   "severity":"high","color":"#f97316"},
+  {"name":"West Africa Sahel Exit Points","lat":20,"lng":13,"type":"TRANSIT",
+   "victims":"200,000+ annually","actors":"Tuareg smuggling networks, militias",
+   "severity":"high","color":"#f97316"}
+];
+
+let _trafficActive = false;
+
+function drawTrafficRoutes(){
+  const t=(Date.now()%3000)/3000;
+  for(const route of TRAFFICKING_ROUTES){
+    ctx.save();
+    ctx.strokeStyle=route.color;
+    ctx.lineWidth=1.5;
+    ctx.setLineDash([4,6]);
+    ctx.lineDashOffset=-t*30;
+    ctx.beginPath();
+    let started=false;
+    for(const wp of route.waypoints){
+      const p=project(wp.lat,wp.lng);
+      if(!p.visible){started=false;continue;}
+      if(!started){ctx.moveTo(p.px,p.py);started=true;}
+      else ctx.lineTo(p.px,p.py);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function openHumanTraffic(){
+  const ov=document.getElementById('humantraffic-overlay');
+  if(!ov)return;
+  ov.classList.add('open');
+  _trafficActive=true;
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._traffic;}),
+    ...TRAFFICKING_HOTSPOTS.map(function(s){return {lat:s.lat,lng:s.lng,type:'humanitarian',
+      severity:s.severity,label:s.name,_traffic:true};})
+  ];
+  _renderTrafficRoutes();
+  _renderTrafficHotspots();
+  fetchTrafficGDELT();
+}
+function closeHumanTraffic(){
+  const ov=document.getElementById('humantraffic-overlay');
+  if(ov)ov.classList.remove('open');
+  _trafficActive=false;
+  liveHotspots=liveHotspots.filter(function(h){return !h._traffic;});
+}
+function _renderTrafficRoutes(){
+  const grid=document.getElementById('humantraffic-routes-grid');
+  if(!grid)return;
+  const typeBadge=function(t){
+    if(t==='LABOR')return 'ht-type-labor';
+    if(t==='SEX')return 'ht-type-sex';
+    if(t==='CYBER SLAVERY')return 'ht-type-cyber';
+    return 'ht-type-mixed';
+  };
+  grid.innerHTML=TRAFFICKING_ROUTES.map(function(r){
+    const borderCol=r.color.replace(/rgba?\(([^,]+,[^,]+,[^,]+),.+\)/,'rgba($1,1)');
+    return '<div class="ht-route-card" style="border-left-color:'+borderCol+';">'
+      +'<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">'
+      +'<span class="ht-type-badge '+typeBadge(r.type)+'">'+r.type+'</span>'
+      +'<span class="ht-route-name" style="margin-bottom:0;">'+r.name+'</span>'
+      +'</div>'
+      +'<div class="ht-route-meta"><span>VOL: '+r.volume+'</span></div>'
+      +'<div style="font-size:8px;color:#fda4af;">'+r.actors+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderTrafficHotspots(){
+  const grid=document.getElementById('humantraffic-hotspot-grid');
+  if(!grid)return;
+  grid.innerHTML=TRAFFICKING_HOTSPOTS.map(function(h){
+    return '<div class="ht-hotspot-card" style="border-left-color:'+h.color+';">'
+      +'<div class="ht-hotspot-name">'+h.name+'</div>'
+      +'<div style="font-size:7px;padding:1px 5px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;display:inline-block;border-radius:2px;margin-bottom:4px;letter-spacing:.06em;">'+h.type+'</div>'
+      +'<div class="ht-hotspot-meta">Victims: <span style="color:var(--text);">'+h.victims+'</span></div>'
+      +'<div class="ht-hotspot-meta">Actors: <span style="color:#fda4af;">'+h.actors+'</span></div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchTrafficGDELT(){
+  const el=document.getElementById('humantraffic-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">Fetching live human trafficking feed...</div>';
+  try{
+    const q=encodeURIComponent('human trafficking modern slavery forced labor');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ── Illicit Finance ──────────────────────────────────────────────────────────
+
+const FATF_BLACKLIST = [
+  {"country":"North Korea","iso":"KP","risk":"EXTREME","concern":"State-sponsored cyber heist, sanctions evasion, WMD financing"},
+  {"country":"Iran","iso":"IR","risk":"EXTREME","concern":"Terror financing (Hezbollah, Hamas, Houthis), sanctions evasion via UAE/Turkey"},
+  {"country":"Myanmar","iso":"MM","risk":"HIGH","concern":"Junta money laundering, KK Park proceeds, drug trafficking proceeds"},
+  {"country":"Russia","iso":"RU","risk":"HIGH","concern":"Oligarch asset concealment, sanctions evasion via UAE/Turkey/India"},
+  {"country":"Venezuela","iso":"VE","risk":"HIGH","concern":"PDVSA corruption, narco proceeds, gold smuggling"},
+  {"country":"Syria","iso":"SY","risk":"HIGH","concern":"Captagon proceeds, reconstruction graft, sanctions evasion"},
+  {"country":"Cuba","iso":"CU","risk":"ELEVATED","concern":"Sanctions evasion, regime financing"},
+  {"country":"Haiti","iso":"HT","risk":"ELEVATED","concern":"Gang control of financial system"},
+  {"country":"Pakistan","iso":"PK","risk":"ELEVATED","concern":"Terror financing conduit, hawala networks"}
+];
+
+const LAUNDERING_METHODS = [
+  {"method":"Cryptocurrency Mixing","volume":"$8.8B laundered 2023 (Chainalysis)","actors":"Lazarus Group (DPRK), Russian ransomware groups, darknet markets",
+   "indicators":"Tornado Cash, ChipMixer, Wasabi Wallet usage","color":"#8b5cf6"},
+  {"method":"Trade-Based Money Laundering (TBML)","volume":"$1-2T annually (FATF est.)","actors":"Cartels, terrorist financiers, sanctions evaders",
+   "indicators":"Over/under-invoicing, ghost shipments, commodity price manipulation","color":"#f97316"},
+  {"method":"Hawala Networks","volume":"$200-350B annually (est.)","actors":"Hawala brokers (hawaladars) in South Asia, Middle East, UAE",
+   "indicators":"UAE/Dubai gold markets, informal value transfer, no paper trail","color":"#eab308"},
+  {"method":"Shell Company Cascades","volume":"Unknown — jurisdictions: BVI, Cayman, Panama","actors":"Oligarchs, corrupt officials, tax evaders",
+   "indicators":"Bearer shares, nominee directors, opaque ownership structures","color":"#6b7280"},
+  {"method":"Real Estate Laundering","volume":"$1.6T globally (UN est.)","actors":"Narco groups, kleptocrats, oligarchs",
+   "indicators":"All-cash purchases, LLCs, price distortion in Miami/NYC/London/Dubai","color":"#22c55e"},
+  {"method":"DPRK Crypto Heists","volume":"$3B stolen 2016-2023 (FBI)","actors":"Lazarus Group / APT38 (DPRK RGB)",
+   "indicators":"Ronin Bridge ($625M), Harmony ($100M), WazirX ($235M)","color":"#ef4444"}
+];
+
+const SANCTIONS_EVASION_HUBS = [
+  {"city":"Dubai, UAE","lat":25.2,"lng":55.3,"role":"Primary hub for Russian oligarch assets, Iranian oil, North Korean front companies","color":"#f97316"},
+  {"city":"Hong Kong","lat":22.3,"lng":114.2,"role":"DPRK sanctions evasion, Chinese capital flight, crypto OTC desks","color":"#f97316"},
+  {"city":"Istanbul, Turkey","lat":41.0,"lng":29.0,"role":"Russian sanctions evasion, Iranian goods transit, gold-for-gas schemes","color":"#f97316"},
+  {"city":"Moscow (offshore)","lat":55.7,"lng":37.6,"role":"Oligarch shell network hub, Cyprus/BVI routing","color":"#ef4444"},
+  {"city":"Panama City","lat":8.9,"lng":-79.5,"role":"Panama Papers hub, shell company registry, cartel laundering","color":"#eab308"},
+  {"city":"Minsk, Belarus","lat":53.9,"lng":27.5,"role":"Russian sanctions evasion conduit, re-export of controlled goods","color":"#f97316"}
+];
+
+function openIllicitFin(){
+  const ov=document.getElementById('illicitfin-overlay');
+  if(!ov)return;
+  ov.classList.add('open');
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._illicit;}),
+    ...SANCTIONS_EVASION_HUBS.map(function(h){return {lat:h.lat,lng:h.lng,type:'military',
+      severity:'high',label:h.city,_illicit:true};})
+  ];
+  _renderFATFList();
+  _renderLaunderingMethods();
+  _renderSanctionsHubs();
+  fetchIllicitFinGDELT();
+}
+function closeIllicitFin(){
+  const ov=document.getElementById('illicitfin-overlay');
+  if(ov)ov.classList.remove('open');
+  liveHotspots=liveHotspots.filter(function(h){return !h._illicit;});
+}
+function _renderFATFList(){
+  const grid=document.getElementById('illicitfin-fatf-grid');
+  if(!grid)return;
+  const riskBadge=function(r){
+    if(r==='EXTREME')return 'if-risk-extreme';
+    if(r==='HIGH')return 'if-risk-high';
+    return 'if-risk-elevated';
+  };
+  const borderCol=function(r){
+    if(r==='EXTREME')return '#dc2626';
+    if(r==='HIGH')return '#f97316';
+    return '#eab308';
+  };
+  grid.innerHTML=FATF_BLACKLIST.map(function(f){
+    return '<div class="if-fatf-card" style="border-left-color:'+borderCol(f.risk)+';">'
+      +'<div style="flex:1;">'
+      +'<div class="if-fatf-country">'+f.country+' <span style="font-size:8px;color:var(--dim);">['+f.iso+']</span></div>'
+      +'<div class="if-fatf-concern">'+f.concern+'</div>'
+      +'</div>'
+      +'<span class="if-risk-badge '+riskBadge(f.risk)+'" style="margin-left:8px;">'+f.risk+'</span>'
+      +'</div>';
+  }).join('');
+}
+function _renderLaunderingMethods(){
+  const grid=document.getElementById('illicitfin-methods-grid');
+  if(!grid)return;
+  grid.innerHTML=LAUNDERING_METHODS.map(function(m){
+    return '<div class="if-method-card" style="border-left-color:'+m.color+';">'
+      +'<div class="if-method-name">'+m.method+'</div>'
+      +'<div class="if-method-volume">'+m.volume+'</div>'
+      +'<div class="if-method-actors">'+m.actors+'</div>'
+      +'<div class="if-method-indicators">'+m.indicators+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderSanctionsHubs(){
+  const grid=document.getElementById('illicitfin-hubs-grid');
+  if(!grid)return;
+  grid.innerHTML=SANCTIONS_EVASION_HUBS.map(function(h){
+    return '<div class="ht-hotspot-card" style="border-left-color:'+h.color+';">'
+      +'<div class="ht-hotspot-name">'+h.city+'</div>'
+      +'<div class="ht-hotspot-meta">'+h.role+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchIllicitFinGDELT(){
+  const el=document.getElementById('illicitfin-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">Fetching live financial crime feed...</div>';
+  try{
+    const q=encodeURIComponent('money laundering sanctions evasion financial crime');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ── Undersea Cable Watch ─────────────────────────────────────────────────────
+
+const UNDERSEA_CABLES = [
+  {"name":"FLAG (Fiber-Optic Link Around the Globe)","segments":[{"lat":51,"lng":1},{"lat":37,"lng":10},{"lat":30,"lng":32},{"lat":12,"lng":44},{"lat":22,"lng":60},{"lat":23,"lng":67},{"lat":13,"lng":80},{"lat":1,"lng":104},{"lat":22,"lng":114}],"color":"rgba(59,130,246,0.5)","capacity":"10 Tbps","owner":"Reliance/FLAG Telecom","threat":"ELEVATED"},
+  {"name":"SEA-ME-WE 4","segments":[{"lat":51,"lng":1},{"lat":38,"lng":24},{"lat":30,"lng":32},{"lat":12,"lng":44},{"lat":22,"lng":60},{"lat":23,"lng":67},{"lat":13,"lng":80},{"lat":1,"lng":104},{"lat":22,"lng":114},{"lat":35,"lng":137}],"color":"rgba(59,130,246,0.5)","capacity":"1.28 Tbps","owner":"Consortium","threat":"HIGH"},
+  {"name":"MAREA (Transatlantic)","segments":[{"lat":38,"lng":-9},{"lat":36,"lng":-25},{"lat":39,"lng":-65},{"lat":38,"lng":-77}],"color":"rgba(34,197,94,0.5)","capacity":"200 Tbps","owner":"Microsoft/Facebook/Telxius","threat":"ELEVATED"},
+  {"name":"FASTER (Transpacific)","segments":[{"lat":36,"lng":136},{"lat":34,"lng":160},{"lat":38,"lng":-180},{"lat":38,"lng":-122}],"color":"rgba(34,197,94,0.5)","capacity":"60 Tbps","owner":"Google/China Telecom consortium","threat":"HIGH"},
+  {"name":"Baltic Sea Cables (Recent Incidents)","segments":[{"lat":57,"lng":20},{"lat":59,"lng":24},{"lat":60,"lng":25},{"lat":58,"lng":12}],"color":"rgba(239,68,68,0.7)","capacity":"Multiple cables","owner":"Various","threat":"CRITICAL - ACTIVE SABOTAGE"},
+  {"name":"Red Sea Cables (Houthi Threat Zone)","segments":[{"lat":30,"lng":32},{"lat":22,"lng":38},{"lat":15,"lng":42},{"lat":12,"lng":44}],"color":"rgba(239,68,68,0.7)","capacity":"15+ cables, 17% global traffic","owner":"Multiple","threat":"CRITICAL - ACTIVE THREAT"}
+];
+
+const CABLE_INCIDENTS = [
+  {"date":"Nov 2024","cable":"BCS East-West Interlink + C-Lion1","location":"Baltic Sea","description":"Two cables cut within hours — suspected Russian shadow fleet anchor dragging. NATO activated BACS monitoring.",
+   "actor":"Russia (suspected)","severity":"HIGH","lat":57.5,"lng":20},
+  {"date":"Feb 2024","cable":"Houthi Red Sea Cuts (AAE-1, Seacom, EIG)","location":"Red Sea, Yemen","description":"Houthi naval forces deliberately cut 4 undersea cables carrying 25% of traffic between Asia and Europe.",
+   "actor":"Houthi Forces (Yemen)","severity":"CRITICAL","lat":15,"lng":42},
+  {"date":"Oct 2023","cable":"BalticConnector Gas + Data Cable","location":"Gulf of Finland","description":"Gas pipeline and telecom cable severed — Chinese vessel Newnew Polar Bear anchor drag confirmed by Finnish investigation.",
+   "actor":"China (NewNew Polar Bear)","severity":"HIGH","lat":59.5,"lng":24},
+  {"date":"Jan 2022","cable":"TONGA undersea cable","location":"Pacific","description":"Hunga Tonga volcanic eruption severed sole cable. Tonga isolated for 38 days.",
+   "actor":"Natural disaster","severity":"HIGH","lat":-21,"lng":-175},
+  {"date":"2013","cable":"Alexandria Egypt cable cut","location":"Mediterranean","description":"Egyptian authorities arrested divers cutting SEA-ME-WE 4. Caused 60% bandwidth reduction across Egypt.",
+   "actor":"Unknown (sabotage)","severity":"HIGH","lat":31,"lng":29}
+];
+
+let _cableActive = false;
+
+function drawCableNetwork(){
+  for(const cable of UNDERSEA_CABLES){
+    const isCritical=cable.threat.includes('CRITICAL');
+    ctx.save();
+    ctx.strokeStyle=cable.color;
+    ctx.lineWidth=isCritical?3:1.5;
+    ctx.setLineDash(isCritical?[8,4]:[]);
+    ctx.beginPath();
+    let started=false;
+    for(const seg of cable.segments){
+      const p=project(seg.lat,seg.lng);
+      if(!p.visible){started=false;continue;}
+      if(!started){ctx.moveTo(p.px,p.py);started=true;}
+      else ctx.lineTo(p.px,p.py);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function openCableWatch(){
+  const ov=document.getElementById('cablewatch-overlay');
+  if(!ov)return;
+  ov.classList.add('open');
+  _cableActive=true;
+  liveHotspots=[...liveHotspots.filter(function(h){return !h._cable;}),
+    ...CABLE_INCIDENTS.map(function(i){return {lat:i.lat,lng:i.lng,type:'conflict',
+      severity:i.severity==='CRITICAL'?'critical':'high',label:i.cable,_cable:true};})
+  ];
+  _renderCableIncidents();
+  _renderCableList();
+  fetchCableGDELT();
+}
+function closeCableWatch(){
+  const ov=document.getElementById('cablewatch-overlay');
+  if(ov)ov.classList.remove('open');
+  _cableActive=false;
+  liveHotspots=liveHotspots.filter(function(h){return !h._cable;});
+}
+function _renderCableIncidents(){
+  const grid=document.getElementById('cablewatch-incidents-grid');
+  if(!grid)return;
+  const sevBadge=function(s){
+    return s==='CRITICAL'?'cw-sev-critical':'cw-sev-high';
+  };
+  const borderCol=function(s){
+    return s==='CRITICAL'?'#dc2626':'#f97316';
+  };
+  const sorted=[...CABLE_INCIDENTS].sort(function(a,b){
+    return (a.severity==='CRITICAL'?0:1)-(b.severity==='CRITICAL'?0:1);
+  });
+  grid.innerHTML=sorted.map(function(i){
+    return '<div class="cw-incident-card" style="border-left-color:'+borderCol(i.severity)+';">'
+      +'<div class="cw-incident-top">'
+      +'<div class="cw-incident-cable">'+i.cable+'</div>'
+      +'<span class="cw-sev-badge '+sevBadge(i.severity)+'">'+i.severity+'</span>'
+      +'</div>'
+      +'<div class="cw-incident-meta"><span style="color:var(--text);">'+i.date+'</span> &middot; '+i.location+'</div>'
+      +'<div class="cw-incident-meta">'+i.description+'</div>'
+      +'<div class="cw-incident-actor">ACTOR: '+i.actor+'</div>'
+      +'</div>';
+  }).join('');
+}
+function _renderCableList(){
+  const grid=document.getElementById('cablewatch-cables-grid');
+  if(!grid)return;
+  const threatBadge=function(t){
+    if(t.includes('CRITICAL'))return 'cw-threat-critical';
+    if(t==='HIGH')return 'cw-threat-high';
+    return 'cw-threat-elevated';
+  };
+  grid.innerHTML=UNDERSEA_CABLES.map(function(c){
+    return '<div class="cw-cable-card" style="border-left-color:'+c.color.replace(/rgba?\(([^,]+,[^,]+,[^,]+),.+\)/,'rgba($1,1)')+';">'
+      +'<div>'
+      +'<div class="cw-cable-name">'+c.name+'</div>'
+      +'<div class="cw-cable-meta">Cap: '+c.capacity+' &middot; '+c.owner+'</div>'
+      +'</div>'
+      +'<span class="cw-threat-badge '+threatBadge(c.threat)+'">'+c.threat+'</span>'
+      +'</div>';
+  }).join('');
+}
+async function fetchCableGDELT(){
+  const el=document.getElementById('cablewatch-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">Fetching live undersea cable feed...</div>';
+  try{
+    const q=encodeURIComponent('undersea cable cut sabotage submarine infrastructure');
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
+    const r=await fetch(url);const d=await r.json();
+    const arts=(d.articles||[]);
+    if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
+      return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
+}
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -19529,6 +19959,9 @@ function filterSIGINT(query){
 <button id="pandemic-btn" onclick="openPandemicWatch()">PANDEMIC WATCH</button>
 <button id="elecwatch-btn" onclick="openElecWatch()">ELECTION WATCH</button>
 <button id="narco-btn" onclick="openNarcoWatch()">COUNTER-NARCO</button>
+<button id="humantraffic-btn" onclick="openHumanTraffic()">HUMAN TRAFFIC</button>
+<button id="illicitfin-btn" onclick="openIllicitFin()">ILLICIT FLOWS</button>
+<button id="cablewatch-btn" onclick="openCableWatch()">CABLE WATCH</button>
 
 <!-- Pandemic Watch Overlay -->
 <div id="pandemic-overlay" class="col5-overlay">
@@ -19604,6 +20037,92 @@ function filterSIGINT(query){
     <div style="margin-top:14px;">
       <div style="font-size:8px;letter-spacing:.2em;color:#f97316;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(249,115,22,.2);">GDELT LIVE COUNTER-NARCOTICS FEED</div>
       <div id="narco-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Human Trafficking Overlay -->
+<div id="humantraffic-overlay" class="col5-overlay">
+  <div class="col5-hdr" style="border-bottom-color:#ef4444;">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">HUMAN TRAFFICKING &amp; MODERN SLAVERY // UNODC / IOM / GDELT LIVE FEED</div>
+      <h2 style="color:#fca5a5;">&#x26D4; HUMAN TRAFFICKING &amp; MODERN SLAVERY NETWORK</h2>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button onclick="fetchTrafficGDELT()" style="background:none;border:1px solid rgba(239,68,68,.4);color:#fca5a5;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
+      <button onclick="closeHumanTraffic()" style="background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="col5-body">
+    <div style="display:flex;gap:20px;flex-wrap:wrap;background:rgba(127,29,29,.1);border:1px solid rgba(239,68,68,.3);padding:10px 14px;margin-bottom:14px;">
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#fca5a5;">50M+</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">IN MODERN SLAVERY</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#fca5a5;">$150B</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">ANNUAL REVENUE (USD)</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#fca5a5;">71%</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">FEMALE VICTIMS</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#fca5a5;">152</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">COUNTRIES AFFECTED</div></div>
+    </div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#fca5a5;margin-bottom:8px;font-weight:700;">ACTIVE TRAFFICKING ROUTES (GLOBE VISUALIZATION ACTIVE)</div>
+    <div id="humantraffic-routes-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#f87171;margin-bottom:8px;font-weight:700;border-top:1px solid rgba(239,68,68,.2);padding-top:12px;">CRITICAL HOTSPOTS &amp; TRANSIT HUBS</div>
+    <div id="humantraffic-hotspot-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="margin-top:14px;">
+      <div style="font-size:8px;letter-spacing:.2em;color:#ef4444;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(239,68,68,.2);">GDELT LIVE HUMAN TRAFFICKING FEED</div>
+      <div id="humantraffic-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Illicit Finance Overlay -->
+<div id="illicitfin-overlay" class="col5-overlay">
+  <div class="col5-hdr" style="border-bottom-color:#8b5cf6;">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ILLICIT FINANCE &amp; MONEY LAUNDERING // FATF / FinCEN / GDELT LIVE FEED</div>
+      <h2 style="color:#c4b5fd;">&#x1F4B8; ILLICIT FINANCE &amp; MONEY LAUNDERING INTELLIGENCE</h2>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button onclick="fetchIllicitFinGDELT()" style="background:none;border:1px solid rgba(139,92,246,.4);color:#c4b5fd;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
+      <button onclick="closeIllicitFin()" style="background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="col5-body">
+    <div style="font-size:9px;letter-spacing:.15em;color:#c4b5fd;margin-bottom:8px;font-weight:700;">FATF HIGH-RISK &amp; SANCTIONED JURISDICTIONS</div>
+    <div id="illicitfin-fatf-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#fda4af;margin-bottom:8px;font-weight:700;border-top:1px solid rgba(139,92,246,.2);padding-top:12px;">MONEY LAUNDERING METHODS &amp; TYPOLOGIES</div>
+    <div id="illicitfin-methods-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#fdba74;margin-bottom:8px;font-weight:700;border-top:1px solid rgba(139,92,246,.2);padding-top:12px;">SANCTIONS EVASION HUBS (GLOBE VISUALIZATION ACTIVE)</div>
+    <div id="illicitfin-hubs-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="margin-top:14px;">
+      <div style="font-size:8px;letter-spacing:.2em;color:#8b5cf6;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(139,92,246,.2);">GDELT LIVE FINANCIAL CRIME FEED</div>
+      <div id="illicitfin-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Cable Watch Overlay -->
+<div id="cablewatch-overlay" class="col5-overlay">
+  <div class="col5-hdr" style="border-bottom-color:#3b82f6;">
+    <div>
+      <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">UNDERSEA CABLE &amp; CRITICAL INFRASTRUCTURE // NATO BACS / GDELT LIVE FEED</div>
+      <h2 style="color:#93c5fd;">&#x1F5FA; UNDERSEA CABLE &amp; CRITICAL INFRASTRUCTURE WATCH</h2>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button onclick="fetchCableGDELT()" style="background:none;border:1px solid rgba(59,130,246,.4);color:#93c5fd;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
+      <button onclick="closeCableWatch()" style="background:none;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+    </div>
+  </div>
+  <div class="col5-body">
+    <div style="display:flex;gap:20px;flex-wrap:wrap;background:rgba(30,58,95,.2);border:1px solid rgba(59,130,246,.3);padding:10px 14px;margin-bottom:14px;">
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#93c5fd;">400+</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">ACTIVE CABLES</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#93c5fd;">1.3M km</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">TOTAL LENGTH</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#93c5fd;">95%</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">GLOBAL INTERNET TRAFFIC</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:#ef4444;">200+</div><div style="font-size:7px;color:var(--dim);letter-spacing:.1em;">FAULTS/YEAR</div></div>
+    </div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#fca5a5;margin-bottom:8px;font-weight:700;">RECENT INCIDENTS &amp; SABOTAGE EVENTS</div>
+    <div id="cablewatch-incidents-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="font-size:9px;letter-spacing:.15em;color:#93c5fd;margin-bottom:8px;font-weight:700;border-top:1px solid rgba(59,130,246,.2);padding-top:12px;">CRITICAL CABLE NETWORK (GLOBE VISUALIZATION ACTIVE)</div>
+    <div id="cablewatch-cables-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;"></div>
+    <div style="margin-top:14px;">
+      <div style="font-size:8px;letter-spacing:.2em;color:#3b82f6;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(59,130,246,.2);">GDELT LIVE UNDERSEA CABLE FEED</div>
+      <div id="cablewatch-gdelt-feed"><div style="color:var(--dim);font-size:9px;text-align:center;padding:20px;">Fetching live feed...</div></div>
     </div>
   </div>
 </div>
