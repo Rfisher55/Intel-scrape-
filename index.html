@@ -2772,6 +2772,65 @@ button{border-radius:2px!important}
 .ae-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .ae-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
 .ae-gdelt-meta{font-size:8px;color:#475569;}
+
+/* === COLUMN 9 new buttons (top:175px, 215px, 255px) === */
+#polpris-btn{position:fixed;top:175px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#polpris-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#watersec-btn{position:fixed;top:215px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#watersec-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#confmin-btn{position:fixed;top:255px;right:1145px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#confmin-btn:hover{border-color:#f97316;color:#fdba74;}
+
+/* Pol Prisoners overlay */
+#polpris-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.pp-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.pp-name{font-size:14px;font-weight:700;letter-spacing:1px;color:#f1f5f9;margin-bottom:2px;}
+.pp-country{font-size:9px;color:#64748b;letter-spacing:1px;margin-bottom:8px;}
+.pp-status-dead{font-size:8px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.pp-status-imp{font-size:8px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.pp-status-rel{font-size:8px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(20,83,45,.5);border:1px solid #22c55e;color:#86efac;}
+.pp-status-exl{font-size:8px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(113,63,18,.4);border:1px solid #eab308;color:#fde047;}
+.pp-detail{font-size:9px;color:#94a3b8;line-height:1.6;margin-top:8px;}
+.pp-sig{font-size:9px;color:#f87171;line-height:1.5;border-left:3px solid rgba(239,68,68,.4);padding-left:8px;margin-top:7px;font-style:italic;}
+.pp-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.pp-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.pp-gdelt-meta{font-size:8px;color:#475569;}
+.pp-state-row{display:flex;gap:10px;align-items:flex-start;padding:10px;background:rgba(15,23,42,0.5);border:1px solid #1e293b;border-radius:4px;margin-bottom:8px;}
+.pp-state-name{font-size:11px;font-weight:700;color:#f1f5f9;min-width:80px;}
+.pp-state-rating{font-size:7px;padding:2px 6px;border-radius:2px;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+
+/* Water Security overlay */
+#watersec-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.ws-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.ws-card-name{font-size:13px;font-weight:700;letter-spacing:1px;color:#f1f5f9;margin-bottom:4px;}
+.ws-risk-crit{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.ws-risk-high{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.ws-risk-elev{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.ws-detail{font-size:9px;color:#94a3b8;line-height:1.6;margin-top:8px;}
+.ws-weapon{font-size:9px;color:#f87171;line-height:1.5;border-left:3px solid rgba(239,68,68,.4);padding-left:8px;margin-top:7px;font-style:italic;}
+.ws-parties{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.ws-party-chip{font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93c5fd;}
+.ws-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.ws-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.ws-gdelt-meta{font-size:8px;color:#475569;}
+
+/* Conflict Minerals overlay */
+#confmin-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,6,23,0.97);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
+.cm-card{background:rgba(15,23,42,0.7);border:1px solid #1e293b;border-radius:6px;padding:14px;margin-bottom:14px;}
+.cm-mineral-name{font-size:15px;font-weight:700;letter-spacing:1px;margin-bottom:2px;}
+.cm-chem{font-size:9px;color:#64748b;letter-spacing:2px;margin-bottom:6px;}
+.cm-risk-crit{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(127,29,29,.5);border:1px solid #ef4444;color:#fca5a5;}
+.cm-risk-high{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(124,45,18,.4);border:1px solid #f97316;color:#fdba74;}
+.cm-risk-elev{font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:1px;font-weight:700;background:rgba(113,63,18,.35);border:1px solid #eab308;color:#fde047;}
+.cm-detail{font-size:9px;color:#94a3b8;line-height:1.6;margin-top:8px;}
+.cm-strat{font-size:9px;color:#fbbf24;line-height:1.5;border-left:3px solid rgba(234,179,8,.4);padding-left:8px;margin-top:7px;font-style:italic;}
+.cm-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.cm-chip-use{font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#86efac;}
+.cm-chip-actor{font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#fca5a5;}
+.cm-chip-chain{font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#93c5fd;}
+.cm-gdelt-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cm-gdelt-title{font-size:9px;color:#e2e8f0;line-height:1.4;margin-bottom:2px;}
+.cm-gdelt-meta{font-size:8px;color:#475569;}
 </style>
 </head>
 <body>
@@ -9082,6 +9141,7 @@ function draw(){
   if(_cableActive)drawCableNetwork();
   if(_shadowActive)drawShadowRoutes();
   if(_armsEmbActive)drawArmsEmbRoutes();
+  if(_confMinActive)drawConfMinRoutes();
   if(showHotspots)drawHotspots();
   // Globe border ring
   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
@@ -23367,6 +23427,396 @@ async function fetchArmsEmbGDELT(){
 
 // ===== END PHASE 36 =====
 
+// ===== PHASE 37: POLITICAL PRISONERS, WATER SECURITY, CONFLICT MINERALS =====
+
+const POLITICAL_PRISONERS = [
+  {"name":"Alexei Navalny","country":"Russia","iso":"RU","lat":68.0,"lng":62.0,"color":"#ef4444",
+   "status":"DECEASED — murdered in custody","detained":"Feb 2021 (arrested on return to Russia)","released":false,
+   "charges":"Fraud, extremism (fabricated)","sentence":"19 years IK-6 Arctic colony",
+   "outcome":"Died Feb 16 2024 at IK-6 Kharp. Russian authorities claimed \'natural causes\'. Western governments called it murder. Body returned to family after weeks.",
+   "significance":"Most prominent Russian opposition leader. Assassination silenced organized Russian opposition.",
+   "org":"Amnesty International, Memorial Human Rights"},
+  {"name":"Evan Gershkovich","country":"Russia (American)","iso":"RU","lat":56.8,"lng":60.6,"color":"#ef4444",
+   "status":"RELEASED — prisoner swap Aug 2024","detained":"Mar 29 2023 (Wall Street Journal correspondent)","released":true,
+   "charges":"Espionage (fabricated)","sentence":"16 years (convicted Jul 2024 in closed trial)",
+   "outcome":"Released Aug 1 2024 in historic 24-person prisoner swap (US/Russia/Germany). Exchanged with Paul Whelan, others. Russia received convicted hitman Vadim Krasikov from Germany.",
+   "significance":"First American journalist held in Russia since Cold War. Used as bargaining chip.",
+   "org":"CPJ, RSF, US State Dept"},
+  {"name":"Ilham Tohti","country":"China","iso":"CN","lat":43.8,"lng":87.6,"color":"#f97316",
+   "status":"IMPRISONED — life sentence","detained":"Jan 2014","released":false,
+   "charges":"Separatism (fabricated)","sentence":"Life imprisonment",
+   "outcome":"Uyghur economist advocating for minority rights. Stripped of all property. Family members also detained. Won Martin Ennals Award (not allowed to receive).",
+   "significance":"Symbol of China\'s criminalization of peaceful advocacy for Uyghur rights. EU/US sanctioned Chinese officials in response.",
+   "org":"Amnesty International, Human Rights Watch"},
+  {"name":"Jimmy Lai","country":"China/Hong Kong","iso":"HK","lat":22.3,"lng":114.2,"color":"#f97316",
+   "status":"ON TRIAL — national security","detained":"Dec 2020","released":false,
+   "charges":"Foreign collusion, sedition (NSL)","sentence":"Trial ongoing 2024-2025",
+   "outcome":"Apple Daily founder, pro-democracy media mogul. NSL trial under judges without jury. UK government demanded release (Lai is UK citizen). Life sentence possible.",
+   "significance":"Test case for Hong Kong judicial independence. Chilling effect on all HK press freedom.",
+   "org":"RSF, CPJ, UK government"},
+  {"name":"Narges Mohammadi","country":"Iran","iso":"IR","lat":35.7,"lng":51.4,"color":"#8b5cf6",
+   "status":"IMPRISONED — multiple sentences","detained":"Multiple arrests (current from 2021)","released":false,
+   "charges":"Propaganda against state, assembly charges","sentence":"31 years + 154 lashes (multiple accumulated sentences)",
+   "outcome":"Won Nobel Peace Prize 2023 while in Evin Prison. Prison authorities denied her access to prize ceremony video. Leading figure in Woman, Life, Freedom movement.",
+   "significance":"Symbol of Iranian women\'s resistance. Nobel while incarcerated creates massive diplomatic pressure.",
+   "org":"Nobel Committee, Amnesty International"},
+  {"name":"Leila Alikarami","country":"Iran","iso":"IR","lat":35.7,"lng":51.5,"color":"#8b5cf6",
+   "status":"IMPRISONED","detained":"2024","released":false,
+   "charges":"National security","sentence":"Pending",
+   "outcome":"Human rights lawyer arrested amid post-Mahsa Amini protests wave. Represents pattern of Iran jailing lawyers who defend protesters.",
+   "significance":"Systemic targeting of legal defenders of human rights.",
+   "org":"Amnesty International"},
+  {"name":"Edmundo Gonzalez","country":"Venezuela","iso":"VE","lat":10.5,"lng":-66.9,"color":"#eab308",
+   "status":"EXILE — arrest warrant issued","detained":"Not yet detained (exile in Spain)","released":false,
+   "charges":"Conspiracy, fraud (political)","sentence":"Arrest warrant — 25 years if caught",
+   "outcome":"Won 2024 Venezuelan presidential election per opposition tally sheets. Maduro declared winner. Gonzalez fled to Spain Sept 2024. Recognized as president-elect by US, EU, most LatAm states.",
+   "significance":"Disputed election winner in exile. Venezuela heading toward protracted illegitimacy crisis.",
+   "org":"OAS, US State Dept"},
+  {"name":"Julian Assange","country":"Australia/UK","iso":"AU","lat":-35.3,"lng":149.1,"color":"#eab308",
+   "status":"RELEASED — plea deal Jun 2024","detained":"Apr 2019 (Belmarsh UK)","released":true,
+   "charges":"Espionage Act violations (US)","sentence":"Time served — pled guilty Jun 2024 in Saipan CNMI court",
+   "outcome":"Spent 5 years in Belmarsh Prison. Released after pleading guilty to single count of conspiracy to obtain classified information. Returned to Australia.",
+   "significance":"Largest press freedom case of generation. WikiLeaks exposure of war crimes vs Espionage Act prosecution.",
+   "org":"CPJ, RSF, Amnesty International"}
+];
+
+const WORST_OFFENDER_STATES = [
+  {"country":"China","iso":"CN","rating":"WORST OFFENDER","imprisoned_est":"1M+ (Xinjiang)","color":"#ef4444","note":"Systematic mass detention of Uyghurs in \'vocational training centers\'. Falun Gong practitioners. HK democracy activists. Tibet Buddhist monks."},
+  {"country":"North Korea","iso":"KP","rating":"WORST OFFENDER","imprisoned_est":"80,000-120,000","color":"#ef4444","note":"Political prison camps (Kwanliso) holding entire families for 3 generations. No due process. Forced labor, starvation, execution."},
+  {"country":"Eritrea","iso":"ER","rating":"WORST OFFENDER","imprisoned_est":"10,000+","color":"#ef4444","note":"Africa\'s North Korea. Indefinite national service. Journalists held in shipping containers. No elections since independence."},
+  {"country":"Russia","iso":"RU","rating":"SEVERE","imprisoned_est":"1,000+ (political)","color":"#f97316","note":"Anti-war protesters jailed. Navalny murder. Journalists arrested. Systematic silencing of opposition."},
+  {"country":"Iran","iso":"IR","rating":"SEVERE","imprisoned_est":"20,000+ (post-2022 protests)","color":"#f97316","note":"19,000+ arrested in Woman Life Freedom protests. Executions increasing. Journalists, lawyers, students targeted."},
+  {"country":"Belarus","iso":"BY","rating":"SEVERE","imprisoned_est":"1,500+","color":"#f97316","note":"Lukashenko crackdown post-2020 election. Raman Pratasevich (journalist) plane forced down. All opposition jailed."},
+  {"country":"Saudi Arabia","iso":"SA","rating":"ELEVATED","imprisoned_est":"200+","color":"#eab308","note":"Women\'s rights activists. Dissidents. Khashoggi assassination. MBS critics targeted."}
+];
+
+const WATER_CONFLICTS = [
+  {"name":"Grand Ethiopian Renaissance Dam (GERD) / Nile","lat":11,"lng":35,"color":"#ef4444","risk":"CRITICAL",
+   "parties":["Ethiopia (builder)","Egypt (downstream)","Sudan (middle)"],
+   "status":"ACTIVE DISPUTE — no agreement",
+   "detail":"Ethiopia filling GERD despite Egyptian objections. Egypt considers GERD existential threat — 97% dependent on Nile. Egyptian military has contingency plans for strike on GERD (documented threats). 100M+ Egyptians at water risk.",
+   "weaponization":"Ethiopia using dam filling as leverage. Egypt threatening military action.",
+   "treaty":"1929 colonial treaty gives Egypt veto — Ethiopia rejects as colonial relic. No new agreement.",
+   "lat_conflict":27,"lng_conflict":31},
+  {"name":"Tigris-Euphrates Basin / Turkey-Iraq-Syria-Iran","lat":37,"lng":38,"color":"#ef4444","risk":"CRITICAL",
+   "parties":["Turkey (upstream)","Syria (middle)","Iraq (downstream)","Iran (tributaries)"],
+   "status":"SEVERE WATER STRESS — no resolution",
+   "detail":"Turkey\'s GAP project (22 dams) reduced Euphrates flow to Iraq by 80%. Iraq suffering desertification. Tigris flow to Iraq reduced. Southern Iraq marshes (World Heritage) shrinking. 30M+ Iraqis facing water crisis.",
+   "weaponization":"Turkey used water flow reduction as leverage during diplomatic disputes with Syria/Iraq.",
+   "treaty":"No binding water-sharing agreement. 1987 Turkey-Syria protocol (rejected by Iraq).",
+   "lat_conflict":33,"lng_conflict":44},
+  {"name":"Mekong River / China Dams","lat":22,"lng":101,"color":"#f97316","risk":"HIGH",
+   "parties":["China (upstream — 11 dams)","Myanmar","Laos","Thailand","Cambodia","Vietnam"],
+   "status":"ONGOING DISPUTE — Chinese dominance",
+   "detail":"China\'s 11 dams on Upper Mekong reduced downstream flows causing severe droughts in 2019-2020. Mekong River Commission found evidence of Chinese dam manipulation. 60M people depend on Mekong fisheries (world\'s largest inland fishery). Cambodia Tonle Sap lake shrinking.",
+   "weaponization":"China uses dam operations as leverage over ASEAN downstream states. \'Water diplomacy\' as tool.",
+   "treaty":"Mekong Agreement 1995 excludes China. China not party to main treaty.",
+   "lat_conflict":12,"lng_conflict":105},
+  {"name":"Indus Waters Treaty / India-Pakistan","lat":31,"lng":74,"color":"#f97316","risk":"HIGH",
+   "parties":["India (upper)","Pakistan (lower)"],
+   "status":"TREATY STRAINED — India withdrew 2023",
+   "detail":"1960 Indus Waters Treaty one of world\'s oldest water-sharing agreements. India suspended treaty meetings 2023 citing Pakistani terrorism. Pakistan 80% dependent on Indus system. Indian dam projects on western rivers (Pakistan\'s share) raise tensions.",
+   "weaponization":"India threatened water as weapon after Uri/Pulwama attacks. Treaty withdrawal announcement as pressure.",
+   "treaty":"1960 World Bank-brokered Indus Waters Treaty — now suspended by India.",
+   "lat_conflict":31,"lng_conflict":71},
+  {"name":"Jordan River / Israel-Palestine-Jordan","lat":32,"lng":35,"color":"#f97316","risk":"HIGH",
+   "parties":["Israel","Palestine (West Bank)","Jordan","Lebanon (upstream)"],
+   "status":"SEVERE DISPARITY — occupation control",
+   "detail":"West Bank Palestinians allocated 20 liters/day vs Israeli settler 300+ liters/day (WHO minimum: 50L). Israel controls all water infrastructure in West Bank. Gaza water system destroyed in 2023-2024 war. Jordan River reduced to 2% of natural flow.",
+   "weaponization":"Israel used water infrastructure as target in Gaza war. West Bank water as control mechanism.",
+   "treaty":"1994 Israel-Jordan Peace Treaty water provisions — Israel controls Jordan Valley springs.",
+   "lat_conflict":32,"lng_conflict":35},
+  {"name":"Amu Darya / Aral Sea / Central Asia","lat":41,"lng":60,"color":"#eab308","risk":"ELEVATED",
+   "parties":["Afghanistan (upstream)","Uzbekistan","Turkmenistan","Tajikistan","Kazakhstan"],
+   "status":"ONGOING COMPETITION — fragile cooperation",
+   "detail":"Aral Sea virtually eliminated (5% of original size) due to Soviet irrigation diversion. Taliban megacanal (Qosh Tepa) diverting 30% of Amu Darya flow from Afghanistan. Uzbekistan/Turkmenistan at risk. 50M people in water stress.",
+   "weaponization":"Taliban Qosh Tepa canal as economic/political tool — unilateral action without downstream consultation.",
+   "treaty":"1992 Almaty Agreement on water sharing — Afghanistan (Taliban) not party.",
+   "lat_conflict":40,"lng_conflict":62}
+];
+
+const WATER_STRESS_COUNTRIES = [
+  {"country":"Egypt","iso":"EG","stress":"EXTREME","dep":"97% Nile","lat":27,"lng":30},
+  {"country":"Yemen","iso":"YE","stress":"EXTREME","dep":"Fossil aquifers (depleting)","lat":15,"lng":48},
+  {"country":"Jordan","iso":"JO","stress":"EXTREME","dep":"Fossil aquifer + Syrian refugee burden","lat":31,"lng":36},
+  {"country":"Libya","iso":"LY","stress":"HIGH","dep":"Great Manmade River (fossil water)","lat":27,"lng":17},
+  {"country":"Pakistan","iso":"PK","stress":"HIGH","dep":"Indus system (disputed)","lat":30,"lng":70},
+  {"country":"Iraq","iso":"IQ","stress":"HIGH","dep":"Tigris-Euphrates (being depleted by Turkey)","lat":33,"lng":44},
+  {"country":"India","iso":"IN","stress":"HIGH","dep":"Groundwater overextraction — depletion by 2050","lat":22,"lng":80},
+  {"country":"Mexico","iso":"MX","stress":"HIGH","dep":"Aquifer depletion. Mexico City subsidence (10m in 150 years)","lat":19,"lng":-99}
+];
+
+const CONFLICT_MINERALS = [
+  {"mineral":"Cobalt","chemical":"Co","color":"#3b82f6","risk":"CRITICAL",
+   "concentration":"DRC: 70%+ of global production (Katanga province)","lat":-10,"lng":26,
+   "conflict":"DRC armed groups (ADF, FDLR, M23) tax and control artisanal mining. Child labor documented (40,000+ children). Artisanal miners die in tunnel collapses — uninspected.",
+   "supplyChain":"DRC → China (80% processing) → EV battery manufacturers globally","uses":["EV batteries (Li-ion cathode)","Smartphones","Laptops","Medical devices"],
+   "controlling_actors":["Glencore (industrial)","China Molybdenum (CMOC)","Armed groups (ASM taxation)","DRC government (royalties)"],
+   "strategic":"All EV manufacturers dependent on DRC cobalt. Chinese companies control majority of processing."},
+  {"mineral":"Coltan (Tantalum-Niobium)","chemical":"Ta/Nb","color":"#8b5cf6","risk":"CRITICAL",
+   "concentration":"DRC: 60%+ of global coltan reserves. Eastern DRC (North/South Kivu)","lat":-2,"lng":29,
+   "conflict":"M23, FDLR, and dozens of armed groups control coltan mining areas in eastern DRC. Rwanda facilitates coltan smuggling despite own production (Rwandan coltan often re-exported DRC coltan).",
+   "supplyChain":"DRC/Rwanda → Southeast Asian processors → Electronics manufacturers","uses":["Capacitors (phones, computers)","Jet engines","Medical implants","Missile systems"],
+   "controlling_actors":["M23/RDF (Rwanda)","FDLR","Local Mai-Mai groups","Artisanal miners"],
+   "strategic":"Every smartphone contains coltan. DRC conflict partly financed by coltan."},
+  {"mineral":"Gold","chemical":"Au","color":"#eab308","risk":"HIGH",
+   "concentration":"Multiple conflict zones: DRC, CAR, Sudan, Mali, Colombia, Venezuela","lat":0,"lng":25,
+   "conflict":"Wagner Group controls CAR and Sudan gold mines. South American cartels control artisanal gold in Colombia/Venezuela/Peru. DRC armed groups control Ituri artisanal gold.",
+   "supplyChain":"Conflict zones → Dubai (gold laundromat) → Swiss refineries → global financial system","uses":["Finance","Electronics","Jewelry","Central bank reserves"],
+   "controlling_actors":["Wagner/Africa Corps (CAR, Sudan)","Cartel networks (S. America)","UAE/Dubai dealers","Swiss refiners"],
+   "strategic":"Gold is the primary revenue for Wagner Group operations. Dubai is the key laundering hub."},
+  {"mineral":"Lithium","chemical":"Li","color":"#22c55e","risk":"HIGH",
+   "concentration":"Lithium Triangle: Bolivia, Argentina, Chile (65%). Also: Australia, China","lat":-22,"lng":-67,
+   "conflict":"Bolivia nationalized lithium — political instability risk. Indigenous community opposition in Chile/Argentina. China controls 60%+ of processing. US trying to diversify via FTA allies.",
+   "supplyChain":"Brine extraction → China processing (60%) → EV battery manufacturers","uses":["EV batteries","Consumer electronics","Grid storage"],
+   "controlling_actors":["CATL (China)","Albemarle (USA)","SQM (Chile)","Bolivia state YLB","Australia miners"],
+   "strategic":"EV transition entirely dependent on lithium. China controls processing. Bolivia\'s nationalization complicates supply."},
+  {"mineral":"Rare Earth Elements (REE)","chemical":"La/Ce/Nd/Dy etc","color":"#f97316","risk":"CRITICAL",
+   "concentration":"China: 60%+ mining, 85%+ processing. Myanmar: HREE. US, Australia: alternatives developing","lat":35,"lng":110,
+   "conflict":"Myanmar REE mines controlled by KIA (Kachin Independence Army) and Chinese-linked operators. Environmental devastation. No labor protections.",
+   "supplyChain":"China/Myanmar → China processing (85%) → global manufacturers","uses":["EV motors (neodymium magnets)","Wind turbines","F-35 fighter (17 REE components)","MRI machines","Smartphones"],
+   "controlling_actors":["China state enterprises","MP Materials (USA, Mountain Pass)","Lynas (Australia)","KIA Myanmar"],
+   "strategic":"China controls REE processing and can restrict access as geopolitical weapon. Did so vs Japan 2010."},
+  {"mineral":"Diamonds","chemical":"C","color":"#94a3b8","risk":"ELEVATED",
+   "concentration":"Russia: 30%+ global. Botswana: 20%. DRC, Angola, Zimbabwe: significant","lat":0,"lng":25,
+   "conflict":"ALROSA (Russia) largest diamond producer — under sanctions but diamonds excluded. Zimbabwe ZANU-PF diamond revenues fund Mnangagwa government. CAR diamond revenues taxed by armed groups.",
+   "supplyChain":"Diamond mines → Antwerp/Dubai cutting → retail","uses":["Jewelry","Industrial cutting","Abrasive materials"],
+   "controlling_actors":["ALROSA (Russia-sanctioned)","De Beers (Anglo-American)","Catoca (Angola)","Zimplats/ZANU-PF"],
+   "strategic":"Russian diamonds excluded from EU/US sanctions. G7 diamond ban implemented Jan 2024 — partially effective."}
+];
+
+const CONFLICT_MINERAL_SUPPLY_CHAINS = [
+  {"name":"DRC Cobalt → EV","color":"rgba(59,130,246,0.5)","waypoints":[{"lat":-10,"lng":26},{"lat":-2,"lng":38},{"lat":22,"lng":114},{"lat":35,"lng":138}]},
+  {"name":"DRC Gold → Dubai","color":"rgba(234,179,8,0.5)","waypoints":[{"lat":-2,"lng":29},{"lat":2,"lng":38},{"lat":25,"lng":55}]},
+  {"name":"Myanmar REE → China","color":"rgba(239,68,68,0.5)","waypoints":[{"lat":24,"lng":97},{"lat":26,"lng":100},{"lat":35,"lng":110}]},
+  {"name":"Lithium Triangle → Factories","color":"rgba(34,197,94,0.5)","waypoints":[{"lat":-22,"lng":-67},{"lat":-34,"lng":-58},{"lat":22,"lng":114}]},
+  {"name":"CAR Gold → Wagner → Dubai","color":"rgba(239,68,68,0.4)","waypoints":[{"lat":5,"lng":19},{"lat":15,"lng":32},{"lat":55,"lng":37},{"lat":25,"lng":55}]}
+];
+
+let _confMinActive = false;
+
+// ---- Political Prisoners ----
+function openPolPris(){
+  document.getElementById('polpris-overlay').style.display='flex';
+  var ppHotspots = POLITICAL_PRISONERS.map(function(p){
+    return {lat:p.lat,lng:p.lng,type:'instability',severity:'high',label:p.name+' ('+p.country+')',_polpris:true};
+  });
+  var stateHotspots = WORST_OFFENDER_STATES.map(function(s){
+    var coords={CN:{lat:35,lng:105},KP:{lat:40,lng:127},ER:{lat:15,lng:39},RU:{lat:61,lng:60},IR:{lat:32,lng:53},BY:{lat:53,lng:28},SA:{lat:24,lng:45}};
+    var c=coords[s.iso]||{lat:0,lng:0};
+    return {lat:c.lat,lng:c.lng,type:'conflict',severity:'critical',label:s.country+' — '+s.rating,_polpris:true};
+  });
+  liveHotspots = liveHotspots.concat(ppHotspots).concat(stateHotspots);
+  _renderPolPrisCards();
+  fetchPolPrisGDELT();
+}
+function closePolPris(){
+  liveHotspots = liveHotspots.filter(function(h){return !h._polpris;});
+  document.getElementById('polpris-overlay').style.display='none';
+}
+function _renderPolPrisCards(){
+  var el=document.getElementById('polpris-cards');
+  if(!el)return;
+  el.innerHTML=POLITICAL_PRISONERS.map(function(p){
+    var statusClass, statusLabel;
+    if(p.status.indexOf('DECEASED')>=0){statusClass='pp-status-dead';statusLabel='DECEASED';}
+    else if(p.status.indexOf('RELEASED')>=0){statusClass='pp-status-rel';statusLabel='RELEASED';}
+    else if(p.status.indexOf('EXILE')>=0){statusClass='pp-status-exl';statusLabel='EXILE';}
+    else{statusClass='pp-status-imp';statusLabel='IMPRISONED';}
+    return '<div class="pp-card" style="border-left:3px solid '+p.color+';">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:6px;">'
+      +'<div><div class="pp-name">'+p.name+'</div><div class="pp-country">'+p.country+' &bull; '+p.org+'</div></div>'
+      +'<span class="'+statusClass+'">'+statusLabel+'</span>'
+      +'</div>'
+      +'<div class="pp-detail"><b>DETAINED:</b> '+p.detained+'<br><b>CHARGES:</b> '+p.charges+'<br><b>SENTENCE:</b> '+p.sentence+'</div>'
+      +'<div class="pp-detail" style="margin-top:6px;color:#cbd5e1;">'+p.outcome+'</div>'
+      +'<div class="pp-sig">'+p.significance+'</div>'
+      +'</div>';
+  }).join('');
+  var stateEl=document.getElementById('polpris-states');
+  if(!stateEl)return;
+  stateEl.innerHTML=WORST_OFFENDER_STATES.map(function(s){
+    var rateClass=s.rating==='WORST OFFENDER'?'pp-status-dead':s.rating==='SEVERE'?'pp-status-imp':'pp-status-exl';
+    return '<div class="pp-state-row">'
+      +'<div><div class="pp-state-name">'+s.country+'</div><div style="font-size:9px;color:#64748b;margin-top:2px;">Est. '+s.imprisoned_est+' political prisoners</div></div>'
+      +'<span class="pp-state-rating '+rateClass+'">'+s.rating+'</span>'
+      +'<div style="font-size:9px;color:#94a3b8;line-height:1.5;flex:1;">'+s.note+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchPolPrisGDELT(){
+  var el=document.getElementById('polpris-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q=encodeURIComponent('political prisoner human rights detained journalist arrested');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=12&timespan=48h&sort=hybridrel&format=json';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="pp-gdelt-item"><div class="pp-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="pp-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ---- Water Security ----
+function openWaterSec(){
+  document.getElementById('watersec-overlay').style.display='flex';
+  var waterHotspots = WATER_CONFLICTS.map(function(w){
+    return {lat:w.lat,lng:w.lng,type:'instability',severity:'high',label:w.name,_water:true};
+  });
+  liveHotspots = liveHotspots.concat(waterHotspots);
+  _renderWaterSecCards();
+  fetchWaterSecGDELT();
+}
+function closeWaterSec(){
+  liveHotspots = liveHotspots.filter(function(h){return !h._water;});
+  document.getElementById('watersec-overlay').style.display='none';
+}
+function _renderWaterSecCards(){
+  var el=document.getElementById('watersec-cards');
+  if(!el)return;
+  el.innerHTML=WATER_CONFLICTS.map(function(w){
+    var riskClass=w.risk==='CRITICAL'?'ws-risk-crit':w.risk==='HIGH'?'ws-risk-high':'ws-risk-elev';
+    var partiesHtml='<div class="ws-parties">'+w.parties.map(function(p){return '<span class="ws-party-chip">'+p+'</span>';}).join('')+'</div>';
+    return '<div class="ws-card" style="border-left:3px solid '+w.color+';">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:6px;">'
+      +'<div class="ws-card-name">'+w.name+'</div>'
+      +'<span class="'+riskClass+'">'+w.risk+'</span>'
+      +'</div>'
+      +'<div style="font-size:9px;font-weight:700;color:#f1f5f9;margin-bottom:4px;">'+w.status+'</div>'
+      +partiesHtml
+      +'<div class="ws-detail">'+w.detail+'</div>'
+      +'<div class="ws-weapon"><b>WEAPONIZATION:</b> '+w.weaponization+'</div>'
+      +'<div class="ws-detail" style="margin-top:5px;color:#64748b;"><b>TREATY STATUS:</b> '+w.treaty+'</div>'
+      +'</div>';
+  }).join('');
+  var stressEl=document.getElementById('watersec-stress');
+  if(!stressEl)return;
+  stressEl.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:9px;">'
+    +'<thead><tr><th style="text-align:left;padding:4px 6px;color:#64748b;font-size:8px;letter-spacing:1px;border-bottom:1px solid #1e293b;">COUNTRY</th>'
+    +'<th style="text-align:left;padding:4px 6px;color:#64748b;font-size:8px;letter-spacing:1px;border-bottom:1px solid #1e293b;">STRESS</th>'
+    +'<th style="text-align:left;padding:4px 6px;color:#64748b;font-size:8px;letter-spacing:1px;border-bottom:1px solid #1e293b;">DEPENDENCY / THREAT</th></tr></thead>'
+    +'<tbody>'+WATER_STRESS_COUNTRIES.map(function(c){
+      var col=c.stress==='EXTREME'?'#ef4444':'#f97316';
+      return '<tr><td style="padding:5px 6px;color:#f1f5f9;font-weight:700;">'+c.country+'</td>'
+        +'<td style="padding:5px 6px;"><span style="font-size:7px;padding:2px 6px;border-radius:2px;background:rgba(239,68,68,.15);border:1px solid '+col+';color:'+col+';font-weight:700;letter-spacing:1px;">'+c.stress+'</span></td>'
+        +'<td style="padding:5px 6px;color:#94a3b8;line-height:1.5;">'+c.dep+'</td></tr>';
+    }).join('')+'</tbody></table>';
+}
+async function fetchWaterSecGDELT(){
+  var el=document.getElementById('watersec-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q=encodeURIComponent('water conflict dam dispute river transboundary water security');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=12&timespan=48h&sort=hybridrel&format=json';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="ws-gdelt-item"><div class="ws-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="ws-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ---- Conflict Minerals ----
+function drawConfMinRoutes(){
+  if(!CONFLICT_MINERAL_SUPPLY_CHAINS)return;
+  CONFLICT_MINERAL_SUPPLY_CHAINS.forEach(function(route){
+    var pts=route.waypoints;
+    if(!pts||pts.length<2)return;
+    ctx.beginPath();
+    ctx.setLineDash([6,4]);
+    ctx.strokeStyle=route.color;
+    ctx.lineWidth=1.5;
+    var started=false;
+    for(var i=0;i<pts.length;i++){
+      var proj=latLngToXY(pts[i].lat,pts[i].lng);
+      if(!proj)continue;
+      if(!started){ctx.moveTo(proj.x,proj.y);started=true;}
+      else{ctx.lineTo(proj.x,proj.y);}
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // Draw arrowhead at last visible point
+    if(pts.length>=2){
+      var p1=latLngToXY(pts[pts.length-2].lat,pts[pts.length-2].lng);
+      var p2=latLngToXY(pts[pts.length-1].lat,pts[pts.length-1].lng);
+      if(p1&&p2){
+        var ang=Math.atan2(p2.y-p1.y,p2.x-p1.x);
+        ctx.save();ctx.translate(p2.x,p2.y);ctx.rotate(ang);
+        ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-8,-4);ctx.lineTo(-8,4);ctx.closePath();
+        ctx.fillStyle=route.color;ctx.fill();ctx.restore();
+      }
+    }
+  });
+}
+function openConfMin(){
+  _confMinActive=true;
+  document.getElementById('confmin-overlay').style.display='flex';
+  var mineralHotspots=CONFLICT_MINERALS.map(function(m){
+    return {lat:m.lat,lng:m.lng,type:'instability',severity:'high',label:m.mineral+' — '+m.risk,_confmin:true};
+  });
+  liveHotspots=liveHotspots.concat(mineralHotspots);
+  _renderConfMinCards();
+  fetchConfMinGDELT();
+}
+function closeConfMin(){
+  _confMinActive=false;
+  liveHotspots=liveHotspots.filter(function(h){return !h._confmin;});
+  document.getElementById('confmin-overlay').style.display='none';
+}
+function _renderConfMinCards(){
+  var el=document.getElementById('confmin-cards');
+  if(!el)return;
+  el.innerHTML=CONFLICT_MINERALS.map(function(m){
+    var riskClass=m.risk==='CRITICAL'?'cm-risk-crit':m.risk==='HIGH'?'cm-risk-high':'cm-risk-elev';
+    var usesHtml=m.uses.map(function(u){return '<span class="cm-chip-use">'+u+'</span>';}).join('');
+    var actorsHtml=m.controlling_actors.map(function(a){return '<span class="cm-chip-actor">'+a+'</span>';}).join('');
+    return '<div class="cm-card" style="border-left:3px solid '+m.color+';">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;flex-wrap:wrap;gap:6px;">'
+      +'<div><div class="cm-mineral-name" style="color:'+m.color+';">'+m.mineral+'</div>'
+      +'<div class="cm-chem">'+m.chemical+'</div></div>'
+      +'<span class="'+riskClass+'">'+m.risk+'</span>'
+      +'</div>'
+      +'<div style="font-size:9px;color:#64748b;margin-bottom:6px;">'+m.concentration+'</div>'
+      +'<div class="cm-detail"><b>CONFLICT:</b> '+m.conflict+'</div>'
+      +'<div class="cm-detail" style="margin-top:4px;"><b>SUPPLY CHAIN:</b> <span class="cm-chip-chain">'+m.supplyChain+'</span></div>'
+      +'<div style="margin-top:6px;"><div style="font-size:8px;color:#64748b;letter-spacing:1px;margin-bottom:4px;">USES:</div><div class="cm-chips">'+usesHtml+'</div></div>'
+      +'<div style="margin-top:6px;"><div style="font-size:8px;color:#64748b;letter-spacing:1px;margin-bottom:4px;">CONTROLLING ACTORS:</div><div class="cm-chips">'+actorsHtml+'</div></div>'
+      +'<div class="cm-strat">'+m.strategic+'</div>'
+      +'</div>';
+  }).join('');
+}
+async function fetchConfMinGDELT(){
+  var el=document.getElementById('confmin-gdelt-feed');
+  if(!el)return;
+  el.innerHTML='<div style="color:#475569;font-size:9px;">Loading GDELT feed...</div>';
+  try{
+    var q=encodeURIComponent('conflict minerals cobalt lithium rare earth DRC mining');
+    var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=12&timespan=48h&sort=hybridrel&format=json';
+    var r=await fetch(url);
+    var d=await r.json();
+    var arts=(d.articles||[]).slice(0,10);
+    if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
+    el.innerHTML=arts.map(function(a){
+      var ts=a.seendate?a.seendate.substring(0,8):'';
+      return '<div class="cm-gdelt-item"><div class="cm-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
+        +'<div class="cm-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
+}
+
+// ===== END PHASE 37 =====
+
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
@@ -25557,6 +26007,9 @@ function filterSIGINT(query){
 <button id="emergtech-btn" onclick="openEmergTech()">EMERG TECH</button>
 <button id="piracy-btn" onclick="openPiracyWatch()">PIRACY WATCH</button>
 <button id="armsemb-btn" onclick="openArmsEmb()">ARMS EMBARGO</button>
+<button id="polpris-btn" onclick="openPolPris()">POL PRISONERS</button>
+<button id="watersec-btn" onclick="openWaterSec()">WATER INTEL</button>
+<button id="confmin-btn" onclick="openConfMin()">CONFLICT MIN</button>
 
 <!-- EMERGING TECH OVERLAY -->
 <div id="emergtech-overlay">
@@ -25637,6 +26090,89 @@ function filterSIGINT(query){
       </div>
       <div style="font-size:9px;letter-spacing:2px;color:#a855f7;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:14px;">GDELT LIVE FEED — ARMS EMBARGO</div>
       <div id="armsemb-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- POLITICAL PRISONERS OVERLAY -->
+<div id="polpris-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#ef4444;font-size:11px;letter-spacing:3px;">HUMAN RIGHTS INTELLIGENCE — POLITICAL IMPRISONMENT</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">POLITICAL PRISONERS &amp; HUMAN RIGHTS WATCH</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">Amnesty International &bull; Human Rights Watch &bull; CPJ &bull; RSF &bull; UN Special Rapporteurs</div>
+    </div>
+    <button onclick="closePolPris()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(127,29,29,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#fca5a5;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    8 FEATURED CASES TRACKED &bull; 7 WORST-OFFENDER STATES PROFILED &bull; EST. 1M+ HELD IN XINJIANG ALONE &bull; GLOBAL CRACKDOWN ON CIVIL SOCIETY
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">FEATURED CASES — HIGH PROFILE POLITICAL PRISONERS</div>
+      <div id="polpris-cards"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#ef4444;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">WORST OFFENDER STATES</div>
+      <div id="polpris-states" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#fca5a5;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — POLITICAL PRISONERS &amp; HUMAN RIGHTS</div>
+      <div id="polpris-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WATER SECURITY OVERLAY -->
+<div id="watersec-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#3b82f6;font-size:11px;letter-spacing:3px;">WATER SECURITY INTELLIGENCE — TRANSBOUNDARY DISPUTES</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">WATER SECURITY &amp; TRANSBOUNDARY WATER INTELLIGENCE</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">UN-Water &bull; World Resources Institute &bull; Pacific Institute &bull; SIPRI &bull; Open Source Intelligence</div>
+    </div>
+    <button onclick="closeWaterSec()" style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(30,58,138,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#93c5fd;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    2 BILLION PEOPLE FACE WATER INSECURITY &bull; 3.5 BILLION BY 2025 (UN) &bull; WATER IS THE NEXT OIL &bull; 6 ACTIVE TRANSBOUNDARY DISPUTES
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">TRANSBOUNDARY WATER CONFLICT ZONES</div>
+      <div id="watersec-cards"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#3b82f6;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">WATER STRESS COUNTRIES — ACUTE RISK</div>
+      <div id="watersec-stress" style="margin-bottom:16px;"></div>
+      <div style="font-size:9px;letter-spacing:2px;color:#93c5fd;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — WATER SECURITY</div>
+      <div id="watersec-gdelt-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFLICT MINERALS OVERLAY -->
+<div id="confmin-overlay">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e293b;padding-bottom:14px;position:sticky;top:0;background:rgba(2,6,23,0.97);z-index:5;">
+    <div>
+      <div style="color:#f97316;font-size:11px;letter-spacing:3px;">RESOURCE INTELLIGENCE — CONFLICT MINERAL SUPPLY CHAINS</div>
+      <div style="color:#f1f5f9;font-size:20px;font-weight:bold;letter-spacing:2px;">CONFLICT MINERALS &amp; RESOURCE INTELLIGENCE</div>
+      <div style="color:#64748b;font-size:10px;margin-top:2px;">USGS &bull; UN GoE DRC &bull; OECD Due Diligence &bull; Global Witness &bull; SIPRI</div>
+    </div>
+    <button onclick="closeConfMin()" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#fdba74;padding:8px 16px;font-family:monospace;cursor:pointer;font-size:11px;">CLOSE</button>
+  </div>
+  <div style="background:rgba(124,45,18,0.2);border:1px solid rgba(249,115,22,0.4);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#fdba74;letter-spacing:.5px;line-height:1.8;font-weight:700;text-align:center;">
+    6 CRITICAL MINERALS PROFILED &bull; SUPPLY CHAIN ROUTES RENDERED ON GLOBE &bull; DRC ARMED GROUP MINING CONTROL &bull; CHINA PROCESSING DOMINANCE
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">CONFLICT MINERAL PROFILES</div>
+      <div id="confmin-cards"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;color:#f97316;font-weight:700;margin-bottom:12px;border-bottom:1px solid #1e293b;padding-bottom:6px;">NOTE — SUPPLY CHAIN ROUTES VISIBLE ON GLOBE</div>
+      <div style="background:rgba(124,45,18,0.15);border:1px solid rgba(249,115,22,0.2);border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:9px;color:#fdba74;line-height:1.7;">
+        5 confirmed conflict mineral supply chain routes are rendered as dashed lines on the globe while this panel is open. Routes mapped: DRC Cobalt to East Asia EV factories, DRC Gold to Dubai laundering hub, Myanmar REE to Chinese processors, Lithium Triangle to global battery factories, and CAR Gold through Wagner Group to Dubai. All routes sourced from UN GoE reports, OECD due diligence assessments, and open source intelligence.
+      </div>
+      <div style="font-size:9px;letter-spacing:2px;color:#fdba74;font-weight:700;margin-bottom:8px;border-top:1px solid #1e293b;padding-top:12px;">GDELT LIVE FEED — CONFLICT MINERALS</div>
+      <div id="confmin-gdelt-feed"></div>
     </div>
   </div>
 </div>
