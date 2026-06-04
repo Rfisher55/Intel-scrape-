@@ -5185,6 +5185,25 @@ button{border-radius:2px!important}
 #p66warpow-btn{position:fixed;top:375px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
 #p66warpow-btn:hover{border-color:#dc2626;color:#fca5a5;}
 
+
+#p67drone-btn{position:fixed;top:55px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67drone-btn:hover{border-color:#f97316;color:#fed7aa;}
+#p67chembio-btn{position:fixed;top:95px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67chembio-btn:hover{border-color:#84cc16;color:#d9f99d;}
+#p67spacewar-btn{position:fixed;top:135px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67spacewar-btn:hover{border-color:#a78bfa;color:#ddd6fe;}
+#p67elecwar-btn{position:fixed;top:175px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67elecwar-btn:hover{border-color:#22d3ee;color:#a5f3fc;}
+#p67cyberops-btn{position:fixed;top:215px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67cyberops-btn:hover{border-color:#10b981;color:#6ee7b7;}
+#p67mediawar-btn{position:fixed;top:255px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67mediawar-btn:hover{border-color:#f59e0b;color:#fde68a;}
+#p67energysec-btn{position:fixed;top:295px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67energysec-btn:hover{border-color:#fb923c;color:#fed7aa;}
+#p67terrornet-btn{position:fixed;top:335px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67terrornet-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#p67bordersec-btn{position:fixed;top:375px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p67bordersec-btn:hover{border-color:#64748b;color:#cbd5e1;}
 /* South China Sea overlay */
 #p60scs-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
 .p60scs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
@@ -32590,6 +32609,16 @@ var _MOBILE_MODULES = [
   ['geo','POWER INDEX','P66_openPowerIdx','#0ea5e9'],
   ['intel','COVERT OPS','P66_openCovertOps','#ec4899'],
   ['threats','WAR POWERS','P66_openWarPow','#dc2626'],
+
+,['threats','DRONE WAR','P67_openDrone','#f97316']
+,['threats','CHEM BIO','P67_openChemBio','#84cc16']
+,['tech','SPACE WAR','P67_openSpaceWar','#a78bfa']
+,['conflicts','ELEC WAR','P67_openElecWar','#22d3ee']
+,['tech','CYBER OPS','P67_openCyberOps','#10b981']
+,['intel','MEDIA WAR','P67_openMediaWar','#f59e0b']
+,['econ','ENERGY SEC','P67_openEnergySec','#fb923c']
+,['threats','TERROR NET','P67_openTerrorNet','#ef4444']
+,['conflicts','BORDER SEC','P67_openBorderSec','#64748b']
 ];
 
 var _mobileCatMap = {
@@ -37731,6 +37760,428 @@ function P66_renderWarPowAnalysis(){
 
 // ===== END PHASE 66 =====
 
+
+// PHASE 67 MODULES
+function P67_openDrone(){
+  var o=document.getElementById('p67drone-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('drone warfare UAV swarm attack Shahed Bayraktar Reaper Switchblade counter-drone','p67drone-gdelt',2);P67_renderDrone();}
+}
+function P67_closeDrone(){var o=document.getElementById('p67drone-overlay');if(o)o.style.display='none';}
+function P67_renderDrone(){
+  var el=document.getElementById('p67drone-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fb923c;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; KEY COMBAT UAS SYSTEMS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#f97316;"><th style="text-align:left;padding:2px 4px;">SYSTEM</th><th>ORIGIN</th><th>TYPE</th><th>RANGE</th><th>STATUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Bayraktar TB2</td><td style="text-align:center;">Turkey</td><td style="text-align:center;">MALE</td><td style="text-align:center;">150km</td><td style="text-align:center;color:#4ade80;">COMBAT</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Shahed-136</td><td style="text-align:center;">Iran</td><td style="text-align:center;">Loitering</td><td style="text-align:center;">2500km</td><td style="text-align:center;color:#ef4444;">THREAT</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">MQ-9 Reaper</td><td style="text-align:center;">USA</td><td style="text-align:center;">MALE</td><td style="text-align:center;">1850km</td><td style="text-align:center;color:#4ade80;">ACTIVE</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">RQ-4 Global Hawk</td><td style="text-align:center;">USA</td><td style="text-align:center;">HALE ISR</td><td style="text-align:center;">18500km</td><td style="text-align:center;color:#4ade80;">ACTIVE</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Wing Loong II</td><td style="text-align:center;">China</td><td style="text-align:center;">MALE</td><td style="text-align:center;">2000km</td><td style="text-align:center;color:#f59e0b;">EXPORT</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Harop</td><td style="text-align:center;">Israel</td><td style="text-align:center;">Loitering</td><td style="text-align:center;">1000km</td><td style="text-align:center;color:#4ade80;">COMBAT</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Switchblade 600</td><td style="text-align:center;">USA</td><td style="text-align:center;">Loitering</td><td style="text-align:center;">40km</td><td style="text-align:center;color:#4ade80;">FIELDED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Lancet-3</td><td style="text-align:center;">Russia</td><td style="text-align:center;">Loitering</td><td style="text-align:center;">40km</td><td style="text-align:center;color:#ef4444;">COMBAT</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fb923c;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; COUNTER-UAS (C-UAS) SYSTEMS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f97316;">KINETIC:</span> Patriots/SHORAD for larger UAS; 30mm autocannon; shotgun rounds; net launchers for small UAS</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">EW/JAMMING:</span> Dedrone; DroneShield; SkyFence; Coyote; RF/GPS jamming effective vs consumer UAS</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">LASER (DEW):</span> Iron Beam (Israel) -- 100kW; HELIOS (US Navy); Raytheon HELWS; DE systems ~$1/shot vs $50K+ missile</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">SWARM C-UAS:</span> Counter-swarm remains unsolved -- no mature system can engage 100+ simultaneous UAS; major gap</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">RADAR LIMITS:</span> Small UAS RCS comparable to birds -- conventional air defense radar struggles below 100m AGL</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fb923c;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; UKRAINE DRONE WAR LESSONS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f97316;">FPV DRONES:</span> Modified racing drones with shaped charges; cost $300-500; replacing anti-tank missiles in many engagements</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">ISR REVOLUTION:</span> Ubiquitous drone surveillance means no concealed movement; artillery adjustment in real-time</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">DRONE ON DRONE:</span> First true drone-vs-drone combat at scale; net guns, jamming, and intercept UAS all employed</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">INDUSTRIAL SCALE:</span> Ukraine/Russia producing 1M+ FPV drones/year; whoever controls supply chain wins attrition</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">SWARM TACTICS:</span> Shahed swarms saturate air defense; force expenditure of expensive missiles on cheap drones</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fb923c;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; FUTURE: AUTONOMOUS WEAPONS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f97316;">LAWS:</span> Lethal Autonomous Weapons Systems -- no international treaty; ICRC calls for prohibition; US, Russia, China blocking</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">AI TARGETING:</span> Machine learning for target ID; concern over civilian discrimination failures; IHL compliance unclear</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">DRONE MOTHERSHIPS:</span> MQ-28 Ghost Bat; DARPA Gremlins; carrier aircraft deploying/recovering swarms mid-flight</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">UNDERSEA UUV:</span> Poseidon (Russia) nuclear-armed UUV; DARPA CLAWS; Boeing Orca; proliferating undersea autonomy</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openChemBio(){
+  var o=document.getElementById('p67chembio-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('chemical biological weapons attack OPCW anthrax nerve agent Novichok Syria CW investigation','p67chembio-gdelt',2);P67_renderChemBio();}
+}
+function P67_closeChemBio(){var o=document.getElementById('p67chembio-overlay');if(o)o.style.display='none';}
+function P67_renderChemBio(){
+  var el=document.getElementById('p67chembio-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(132,204,22,0.06);border:1px solid rgba(132,204,22,0.25);padding:14px;">'
+  +'<div style="color:#a3e635;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CHEMICAL WEAPONS THREAT ACTORS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#84cc16;"><th style="text-align:left;padding:2px 4px;">STATE/ACTOR</th><th>AGENT</th><th>INCIDENT</th><th>STATUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Syria (Assad)</td><td style="text-align:center;">Sarin, Chlorine</td><td style="text-align:center;">Ghouta 2013, Douma 2018</td><td style="text-align:center;color:#ef4444;">USED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia (GRU)</td><td style="text-align:center;">Novichok</td><td style="text-align:center;">Salisbury 2018, Navalny 2020</td><td style="text-align:center;color:#ef4444;">USED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">North Korea (DPRK)</td><td style="text-align:center;">VX</td><td style="text-align:center;">Kim Jong-nam 2017</td><td style="text-align:center;color:#f59e0b;">DECLARED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">ISIS / AQ</td><td style="text-align:center;">Chlorine, Mustard</td><td style="text-align:center;">Iraq/Syria 2014-2017</td><td style="text-align:center;color:#f59e0b;">NSA</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Iran</td><td style="text-align:center;">Undisclosed</td><td style="text-align:center;">Schoolgirl poisonings 2023</td><td style="text-align:center;color:#f59e0b;">SUSPECT</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(132,204,22,0.06);border:1px solid rgba(132,204,22,0.25);padding:14px;">'
+  +'<div style="color:#a3e635;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; BIOLOGICAL THREAT ASSESSMENT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#84cc16;">HIGH-RISK PATHOGENS:</span> Bacillus anthracis (anthrax); Yersinia pestis (plague); Variola (smallpox); Viral hemorrhagic fevers</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">SOVIET BIOPREPARAT:</span> Cold War program weaponized smallpox, anthrax, plague; Sverdlovsk anthrax leak 1979 -- 64+ dead; program officially ended 1992</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">CURRENT CONCERN:</span> CBRN convergence -- synthetic biology making novel agents accessible; dual-use lab equipment; gain-of-function research debate</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">BIODEFENSE:</span> US BARDA; Project BioShield; Strategic National Stockpile; Biowatch program; BSL-4 labs worldwide ~60</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">ATTRIBUTION CHALLENGE:</span> Natural pandemic vs engineered release distinction requires genomic forensics; politically contested</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(132,204,22,0.06);border:1px solid rgba(132,204,22,0.25);padding:14px;">'
+  +'<div style="color:#a3e635;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; OPCW FRAMEWORK</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#84cc16;">MEMBERS:</span> 193 states parties to CWC; only 3 non-members (North Korea, Egypt, South Sudan)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">DECLARED DESTRUCTION:</span> US completed destruction of 30,000+ ton CW stockpile 2023; Russia declared complete 2017 (disputed)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">SCHEDULE 1 AGENTS:</span> Sarin, VX, Novichok, Mustard, Lewisite -- most strictly controlled; any possession prohibited</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">ATTRIBUTION MECHANISM:</span> OPCW Investigation and Identification Team (IIT) -- established 2018 post-Syria; attributions contested by Russia</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(132,204,22,0.06);border:1px solid rgba(132,204,22,0.25);padding:14px;">'
+  +'<div style="color:#a3e635;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; NOVICHOK: THE MODERN CW THREAT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#84cc16;">CLASSIFICATION:</span> Fourth-generation nerve agents; 5-10x more toxic than VX; developed USSR under Foliant program</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">SALISBURY 2018:</span> Sergei and Yulia Skripal attacked; Detective Nick Bailey hospitalized; Dawn Sturgess died July 2018</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">NAVALNY 2020:</span> Alexei Navalny poisoned on flight; treated in Berlin; survived; variant A-232 confirmed by German military lab</div>'
+  +'<div style="margin-top:6px;"><span style="color:#84cc16;">MECHANISM:</span> Acetylcholinesterase inhibitor; irreversible binding; atropine/pralidoxime antidotes partially effective if given fast</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openSpaceWar(){
+  var o=document.getElementById('p67spacewar-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('space war ASAT satellite weapon anti-satellite missile GPS jamming orbital weapons military space','p67spacewar-gdelt',2);P67_renderSpaceWar();}
+}
+function P67_closeSpaceWar(){var o=document.getElementById('p67spacewar-overlay');if(o)o.style.display='none';}
+function P67_renderSpaceWar(){
+  var el=document.getElementById('p67spacewar-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; ASAT PROGRAMS BY NATION</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#a78bfa;"><th style="text-align:left;padding:2px 4px;">NATION</th><th>SYSTEM</th><th>TEST</th><th>CAPABILITY</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">USA</td><td style="text-align:center;">SM-3/GBI/SC-19</td><td style="text-align:center;">2008 (USA-193)</td><td style="text-align:center;color:#4ade80;">FULL</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">China</td><td style="text-align:center;">SC-19/DN-3</td><td style="text-align:center;">2007 (FY-1C)</td><td style="text-align:center;color:#4ade80;">FULL</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia</td><td style="text-align:center;">Nudol/Burevestnik</td><td style="text-align:center;">Multiple tests</td><td style="text-align:center;color:#4ade80;">FULL</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">India</td><td style="text-align:center;">Mission Shakti</td><td style="text-align:center;">2019 (Microsat-R)</td><td style="text-align:center;color:#f59e0b;">LIMITED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia</td><td style="text-align:center;">Cosmos-2543 (co-orbital)</td><td style="text-align:center;">2020</td><td style="text-align:center;color:#ef4444;">INSPECTOR</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; SPACE DOMAIN THREATS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#a78bfa;">GPS JAMMING:</span> Russia jams GPS around Black Sea, Finland border; spoofing aircraft over Baltic; ships report false positions in Med</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">DIRECTED ENERGY:</span> China ground-based laser dazzling satellites confirmed; Russia Peresvet laser system deployed 2019</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">CYBER vs SAT:</span> Viasat KA-SAT hack Feb 2022 disrupted Ukraine military comms; modem firmware wiped across Europe</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">CO-ORBITAL ASAT:</span> Satellites approaching others for inspection/attack; Cosmos-2576 shadowed US spy sat 2024</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">KESSLER SYNDROME:</span> Debris cascade risk; 2021 Russia Nudol test destroyed Cosmos 1408 -- 1500+ trackable fragments; ISS threatened</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; US SPACE FORCE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#a78bfa;">ESTABLISHED:</span> December 20, 2019 -- 6th branch of US armed forces; split from Air Force</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">MISSION:</span> Space domain awareness; satellite operations; protect US space assets; deny adversary use</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">BUDGET:</span> ~$30B FY2025; operates GPS constellation; missile warning satellites (SBIRS/Next-Gen OPIR); GEOINT</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">X-37B:</span> Autonomous spaceplane; 7 missions; OTV-6 orbit 908 days; classified payload/mission; land at KSC</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">COUNTERSPACE:</span> JAMSS (jammer); AEHF (anti-jam SATCOM); Counter Communications System; proliferated LEO to complicate ASAT targeting</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; OUTER SPACE TREATY FRAMEWORK</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#a78bfa;">OST 1967:</span> No WMD in orbit; no national appropriation of celestial bodies; 112 states parties; no prohibition on conventional weapons in orbit</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">GAPS:</span> No ban on ASAT tests; no on-orbit inspection norms; debris accountability absent; "peaceful use" interpretation disputed</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">ARTEMIS ACCORDS:</span> US-led bilateral framework; 40+ signatories; norms for lunar activities; non-binding; China/Russia not signatories</div>'
+  +'<div style="margin-top:6px;"><span style="color:#a78bfa;">TREATY VOID:</span> No agreed rules of engagement in space; escalation dynamics poorly understood; risk of miscalculation high</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openElecWar(){
+  var o=document.getElementById('p67elecwar-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('electronic warfare jamming GPS spoofing EW system radar ECM SEAD JASSM Ukraine Russia','p67elecwar-gdelt',2);P67_renderElecWar();}
+}
+function P67_closeElecWar(){var o=document.getElementById('p67elecwar-overlay');if(o)o.style.display='none';}
+function P67_renderElecWar(){
+  var el=document.getElementById('p67elecwar-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.25);padding:14px;">'
+  +'<div style="color:#67e8f9;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; ELECTRONIC WARFARE DOMAINS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#22d3ee;"><th style="text-align:left;padding:2px 4px;">DOMAIN</th><th>MISSION</th><th>KEY SYSTEM</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">EA (Electronic Attack)</td><td style="text-align:center;">Jam/deceive enemy</td><td style="text-align:center;">EA-18G Growler</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">EP (Electronic Protection)</td><td style="text-align:center;">Protect own systems</td><td style="text-align:center;">Frequency hopping</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">ES (Electronic Support)</td><td style="text-align:center;">SIGINT/sensing</td><td style="text-align:center;">RC-135 Rivet Joint</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">GPS Jamming</td><td style="text-align:center;">Deny navigation</td><td style="text-align:center;">R-330Zh Zhitel</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Comm Jamming</td><td style="text-align:center;">Deny C2</td><td style="text-align:center;">Krasukha-4</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">SEAD/DEAD</td><td style="text-align:center;">Suppress enemy AD</td><td style="text-align:center;">AGM-88 HARM</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.25);padding:14px;">'
+  +'<div style="color:#67e8f9;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; RUSSIA EW CAPABILITIES</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#22d3ee;">KRASUKHA-4:</span> Broadband multi-functional EW system; jams AWACS, airborne radar, satellite signals; 300km range</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">MURMANSK-BN:</span> HF communication suppression; 5000km range; disrupts NATO strategic communications</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">R-330Zh ZHITEL:</span> Satellite and cellular network jammer; defeats Starlink terminals; deployed Ukraine 2022+</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">UKRAINE ADAPTATION:</span> Ukraine adapted Starlink after Russian jamming; frequency hopping; SpaceX pushed firmware updates mid-conflict</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">KALIBR JAMMING:</span> Russian cruise missiles use terrain-following + GLONASS; GPS jamming affects less than Western PGMs</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.25);padding:14px;">'
+  +'<div style="color:#67e8f9;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; NATO EW POSTURE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#22d3ee;">EA-18G GROWLER:</span> US Navy primary EW aircraft; ALQ-218 receiver; ALQ-99 jammer pods; AARGM-ER; 160 aircraft</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">EC-130H COMPASS CALL:</span> USAF airborne attack system; communications disruption; C2 warfare; being replaced by EC-37B</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">NEXT-GEN JAMMER:</span> NGJ-Mid replaces ALQ-99; Raytheon; 10x more power; covers more spectrum; EA-18G integration</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">EW DEFICIT:</span> Decade of EW disinvestment post-Cold War; NATO allies lag Russia in ground-based EW; remediation underway</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.25);padding:14px;">'
+  +'<div style="color:#67e8f9;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; ELECTROMAGNETIC SPECTRUM CONFLICT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#22d3ee;">SPECTRUM DOMAINS:</span> HF (3-30MHz), VHF, UHF, SHF -- each layer contested in modern conflict; spectrum management key terrain</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">CIVILIAN IMPACT:</span> Military GPS jamming in Baltic affects commercial aviation; flight path deviations over Finland, Estonia documented</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">DRONES + EW:</span> FPV drones use 2.4/5.8GHz control bands; frequency-hopping and analog switching used to defeat jamming</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22d3ee;">STARLINK vs JAM:</span> Adaptive beamforming + frequency agility makes Starlink hardest satellite system to jam; military version harder still</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openCyberOps(){
+  var o=document.getElementById('p67cyberops-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('nation state cyber attack APT hacking critical infrastructure ransomware espionage breach','p67cyberops-gdelt',2);P67_renderCyberOps();}
+}
+function P67_closeCyberOps(){var o=document.getElementById('p67cyberops-overlay');if(o)o.style.display='none';}
+function P67_renderCyberOps(){
+  var el=document.getElementById('p67cyberops-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.25);padding:14px;">'
+  +'<div style="color:#34d399;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; MAJOR APT GROUPS (NATION STATE)</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#10b981;"><th style="text-align:left;padding:2px 4px;">APT</th><th>NATION</th><th>ALIAS</th><th>FOCUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">APT29</td><td style="text-align:center;">Russia/SVR</td><td style="text-align:center;">Cozy Bear</td><td style="text-align:center;">Gov/think tank espionage</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">APT28</td><td style="text-align:center;">Russia/GRU</td><td style="text-align:center;">Fancy Bear</td><td style="text-align:center;">Military/political hack</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Sandworm</td><td style="text-align:center;">Russia/GRU</td><td style="text-align:center;">Voodoo Bear</td><td style="text-align:center;">Critical infrastructure</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">APT41</td><td style="text-align:center;">China/MSS</td><td style="text-align:center;">Double Dragon</td><td style="text-align:center;">Espionage + financial</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Volt Typhoon</td><td style="text-align:center;">China/PLA</td><td style="text-align:center;">Bronze Silhouette</td><td style="text-align:center;">CI pre-positioning</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Lazarus</td><td style="text-align:center;">DPRK/RGB</td><td style="text-align:center;">Hidden Cobra</td><td style="text-align:center;">Finance theft, espionage</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">APT33/34</td><td style="text-align:center;">Iran/MOIS</td><td style="text-align:center;">Elfin/Helix Kitten</td><td style="text-align:center;">Oil/gas, gov</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.25);padding:14px;">'
+  +'<div style="color:#34d399;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; LANDMARK CYBER OPERATIONS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#10b981;">STUXNET (2010):</span> US/Israel destroyed Iranian centrifuges; PLC manipulation via Siemens; first cyber weapon causing physical damage</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">NOTPETYA (2017):</span> Russian Sandworm; disguised as ransomware; destroyed Ukrainian systems; spread globally; $10B+ damage; Maersk, Merck, FedEx</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">SOLARWINDS (2020):</span> APT29 supply chain; Orion software backdoor; compromised Treasury, State, Homeland Security, NNSA; 18,000 organizations</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">COLONIAL PIPELINE (2021):</span> DarkSide ransomware; 5,500 miles pipeline shutdown; fuel shortage US East Coast; $4.4M ransom paid</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">VOLT TYPHOON:</span> China pre-positioned in US water, power, telecom CI; CISA/NSA joint advisory 2024; "biding time" for Taiwan scenario</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.25);padding:14px;">'
+  +'<div style="color:#34d399;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; OFFENSIVE CYBER DOCTRINE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#10b981;">US CYBERCOM:</span> Established 2009; elevated to unified combatant command 2018; "defend forward" and "persistent engagement" doctrine</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">HUNT FORWARD:</span> CYBERCOM deploys teams to allied networks to hunt adversary intrusions; 60+ operations in 25+ countries</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">PPD-20 / NSPM-13:</span> Obama restricted offensive cyber; Trump NSPM-13 loosened authority; streamlined approval for Tier 1-2 operations</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">DPRK CRYPTO THEFT:</span> Lazarus/Kimsuky stole $3B+ in crypto 2017-2023; funds DPRK WMD programs; Bybit hack 2025 ~$1.5B</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.25);padding:14px;">'
+  +'<div style="color:#34d399;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CRITICAL INFRASTRUCTURE RISK</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#10b981;">16 CI SECTORS:</span> Energy, water, finance, telecom, transport, healthcare -- all designated as CI by CISA; attack = potential casus belli</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">OT/ICS ATTACKS:</span> Operational technology increasingly networked; Triton/TRISIS malware targeted safety systems at Saudi Aramco 2017</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">CYBER DETERRENCE:</span> Attribution required for deterrence; varies 3 months to 3 years; ambiguity exploited by state actors</div>'
+  +'<div style="margin-top:6px;"><span style="color:#10b981;">TALLINN MANUAL:</span> NATO CCDCOE legal framework for cyber ops; not binding but influential; Article 5 threshold for cyber attacks debated</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openMediaWar(){
+  var o=document.getElementById('p67mediawar-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('information warfare disinformation propaganda influence operations social media manipulation election interference','p67mediawar-gdelt',2);P67_renderMediaWar();}
+}
+function P67_closeMediaWar(){var o=document.getElementById('p67mediawar-overlay');if(o)o.style.display='none';}
+function P67_renderMediaWar(){
+  var el=document.getElementById('p67mediawar-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fbbf24;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; STATE INFORMATION OPERATIONS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#f59e0b;"><th style="text-align:left;padding:2px 4px;">ACTOR</th><th>NETWORK</th><th>REACH</th><th>PRIMARY TARGET</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia</td><td style="text-align:center;">RT/Sputnik/IRA</td><td style="text-align:center;">Global</td><td style="text-align:center;">NATO cohesion</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">China</td><td style="text-align:center;">CGTN/Xinhua/GEC</td><td style="text-align:center;">Global/Africa/SE Asia</td><td style="text-align:center;">Taiwan narrative</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Iran</td><td style="text-align:center;">PressTV/IRIB</td><td style="text-align:center;">ME/W Africa</td><td style="text-align:center;">Anti-Israel/US</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">DPRK</td><td style="text-align:center;">KCNA/Sogwipo cells</td><td style="text-align:center;">Regional</td><td style="text-align:center;">Legitimacy</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">US</td><td style="text-align:center;">RFE/RL/VOA</td><td style="text-align:center;">Global</td><td style="text-align:center;">Democracy promotion</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fbbf24;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; RUSSIAN INFORMATION WARFARE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f59e0b;">GERASIMOV DOCTRINE:</span> Informational space as a domain of warfare; reflexive control theory; shaping adversary decision-making</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">IRA (INTERNET RESEARCH AGENCY):</span> St. Petersburg troll farm; 2016 US election interference; 470+ Facebook pages; 80M+ reached; 3500 ads</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">RT/SPUTNIK:</span> RT banned EU/UK post-Ukraine invasion; still accessible via VPN; $300M+ annual Russian state budget</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">FIREHOSE OF FALSEHOOD:</span> RAND model; flood information space with contradictory narratives; overwhelm fact-checking; deny objective reality</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">DOPPELGANGER:</span> EU-designated Russian op; clones Western media websites; injects pro-Russia content; Meta removed 2023</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fbbf24;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CHINA COGNITIVE WARFARE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f59e0b;">THREE WARFARES:</span> PLA doctrine -- legal warfare (falv zhan); media warfare (yulun zhan); psychological warfare (xinli zhan)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">TAIWAN NARRATIVES:</span> Continuous CGTN/Xinhua content framing Taiwan as rogue province; targets SE Asia, Africa, Latin America</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">TIKTOK CONCERN:</span> ByteDance data/algorithm concern; US ban law 2024; algorithm influence on content served to Western audiences</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">SPAMOUFLAGE:</span> Meta-designated Chinese influence network; fake accounts; flooding social media with pro-CCP content; disrupted 2023</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fbbf24;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; AI IN INFORMATION WARFARE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f59e0b;">DEEPFAKES:</span> AI-generated video/audio of political figures; Zelensky surrender deepfake 2022; detection increasingly difficult</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">LLM-GENERATED CONTENT:</span> AI persona farms; automated posting at scale; personalized targeting; ProKremlin content generation documented</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">SYNTHETIC MEDIA:</span> AI-generated images as "evidence" of atrocities; attribution and verification crisis; C2PA provenance standard emerging</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">COUNTERMEASURES:</span> EU DSA platform obligations; CISA pre-bunking campaigns; Meta/Google AI labeling; limited effectiveness</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openEnergySec(){
+  var o=document.getElementById('p67energysec-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('energy security pipeline attack oil supply disruption gas embargo LNG sanctions critical infrastructure','p67energysec-gdelt',2);P67_renderEnergySec();}
+}
+function P67_closeEnergySec(){var o=document.getElementById('p67energysec-overlay');if(o)o.style.display='none';}
+function P67_renderEnergySec(){
+  var el=document.getElementById('p67energysec-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.25);padding:14px;">'
+  +'<div style="color:#fdba74;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CRITICAL ENERGY CHOKEPOINTS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#fb923c;"><th style="text-align:left;padding:2px 4px;">CHOKEPOINT</th><th>DAILY OIL</th><th>RISK ACTOR</th><th>STATUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Strait of Hormuz</td><td style="text-align:center;">21 Mb/d (20% world)</td><td style="text-align:center;">Iran/IRGC</td><td style="text-align:center;color:#f59e0b;">CONTESTED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Strait of Malacca</td><td style="text-align:center;">16 Mb/d</td><td style="text-align:center;">Piracy/China</td><td style="text-align:center;color:#4ade80;">OPEN</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Suez Canal</td><td style="text-align:center;">9 Mb/d</td><td style="text-align:center;">Houthi</td><td style="text-align:center;color:#ef4444;">THREATENED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Bab el-Mandeb</td><td style="text-align:center;">6 Mb/d</td><td style="text-align:center;">Houthi</td><td style="text-align:center;color:#ef4444;">ATTACKED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Turkish Straits</td><td style="text-align:center;">3 Mb/d</td><td style="text-align:center;">Turkey leverage</td><td style="text-align:center;color:#4ade80;">OPEN</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.25);padding:14px;">'
+  +'<div style="color:#fdba74;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; NORD STREAM SABOTAGE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#fb923c;">EVENT:</span> September 26, 2022 -- explosions on Nord Stream 1 and 2 pipelines in Baltic Sea; 4 ruptures; ~500M cubic feet gas released</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">ATTRIBUTION:</span> Contested -- US officials, pro-Ukraine group (Hersh report); Germany closed investigation 2025 citing lack of evidence; Sweden, Denmark dropped probes</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">IMPACT:</span> Eliminated 55 bcm/year Russia-Germany gas route; accelerated EU LNG imports; Germany dependency permanently broken</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">PRECEDENT:</span> First major subsea pipeline sabotage; Baltic Sea infrastructure now under enhanced NATO naval patrol</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.25);padding:14px;">'
+  +'<div style="color:#fdba74;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; EUROPE ENERGY SECURITY POST-UKRAINE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#fb923c;">RUSSIAN DEPENDENCY:</span> Pre-2022: Russia supplied 40% EU gas; 27% oil; post-invasion emergency diversification began</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">LNG SURGE:</span> EU LNG imports doubled 2022-2023; US became top EU LNG supplier; Qatar, Norway also expanded</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">ENERGY PRICES:</span> TTF gas peaked EUR 339/MWh Aug 2022; demand destruction, mild winter, storage refill collapsed prices 2023</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">REMAINING FLOWS:</span> Some EU members still import Russian LNG (TurkStream route to Balkans); Hungary, Slovakia transit dependency remains</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.25);padding:14px;">'
+  +'<div style="color:#fdba74;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; OPEC+ OIL POLITICS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#fb923c;">OPEC+ COMPACT:</span> OPEC (13) + Russia-led non-OPEC (10); Saudi Arabia and Russia de facto co-leaders; ~40% world production</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">SAUDI LEVERAGE:</span> Spare capacity 2-3 Mb/d; swing producer; weaponized 2019 Abqaiq drone attack response; Saudi-US relations strained post-2022 cuts</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">US SHALE COUNTER:</span> US produces 13+ Mb/d; world largest producer; limits OPEC pricing power; strategic petroleum reserve leverage</div>'
+  +'<div style="margin-top:6px;"><span style="color:#fb923c;">CHINA FACTOR:</span> China largest oil importer; buys sanctioned Russian/Iranian/Venezuelan crude at discount; shapes geopolitical alignment</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openTerrorNet(){
+  var o=document.getElementById('p67terrornet-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('terrorism attack ISIS al-Qaeda threat plot extremism jihadist network Sahel Nigeria Somalia Yemen','p67terrornet-gdelt',2);P67_renderTerrorNet();}
+}
+function P67_closeTerrorNet(){var o=document.getElementById('p67terrornet-overlay');if(o)o.style.display='none';}
+function P67_renderTerrorNet(){
+  var el=document.getElementById('p67terrornet-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; GLOBAL TERRORIST ORGANIZATIONS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#ef4444;"><th style="text-align:left;padding:2px 4px;">ORGANIZATION</th><th>BASE</th><th>THREAT LEVEL</th><th>STATUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">ISIS-K (ISKP)</td><td style="text-align:center;">Afghanistan/Pakistan</td><td style="text-align:center;color:#ef4444;">CRITICAL</td><td style="text-align:center;">EXPANDING</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">al-Shabaab</td><td style="text-align:center;">Somalia/E.Africa</td><td style="text-align:center;color:#ef4444;">HIGH</td><td style="text-align:center;">ACTIVE</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">JNIM (AQ Sahel)</td><td style="text-align:center;">Mali/Burkina/Niger</td><td style="text-align:center;color:#ef4444;">HIGH</td><td style="text-align:center;">EXPANDING</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">ISIS West Africa</td><td style="text-align:center;">Nigeria/Lake Chad</td><td style="text-align:center;color:#f59e0b;">ELEVATED</td><td style="text-align:center;">ACTIVE</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">AQ Core (AQAP)</td><td style="text-align:center;">Yemen</td><td style="text-align:center;color:#f59e0b;">ELEVATED</td><td style="text-align:center;">DEGRADED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Hayat Tahrir al-Sham</td><td style="text-align:center;">Syria (Idlib/new gov)</td><td style="text-align:center;color:#f59e0b;">MONITOR</td><td style="text-align:center;">GOVERNING</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; ISIS RESURGENCE: KEY INDICATORS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#ef4444;">AFRICA VECTOR:</span> Sahel becoming primary ISIS/AQ expansion zone; French withdrawal (Mali, Burkina, Niger) created vacuum; Russian Wagner/Africa Corps filling</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">ISIS-K REACH:</span> Moscow Crocus City Hall attack March 2024 -- 145 killed; planning reach extends to Europe, Central Asia</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">EXTERNAL OPS:</span> ISIS-K claimed 2024 Vienna concert plot; Barcelona plot; demonstrated intent and capability for European attacks</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">PRISON BREAK RISK:</span> Thousands of ISIS fighters in Kurdish-controlled NE Syria camps; al-Hol camp 50,000+ people; recurring escape plots</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; COUNTERTERRORISM FRAMEWORKS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#ef4444;">AUMF 2001:</span> Authorization for Use of Military Force still in effect; used to justify operations in 19+ countries; never repealed</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">GLOBAL CT COALITIONS:</span> Operation Inherent Resolve (ISIS); Combined Maritime Forces (piracy); CTSAMM (Somalia); MNJTF (Lake Chad)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">CT TOOLS:</span> Drone strikes; SOF raids; financial sanctions (OFAC); intelligence sharing; partner force training (JCET, SFA)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">FINANCING NETWORK:</span> ISIS self-finances via oil, kidnap ransoms, taxation, crypto; AQ relies more on Gulf donations, remittances</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; DOMESTIC TERRORISM THREAT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#ef4444;">FBI ASSESSMENT:</span> Domestic Violent Extremism (DVE) co-equal threat with international terrorism per FBI 2021 terrorism assessment</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">RACIALLY MOTIVATED:</span> White supremacist extremism largest domestic terrorism category; accelerationist movements (AWD, Siege culture)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">ANTI-GOVERNMENT:</span> Sovereign citizen; militia movement; anti-government extremism; Jan 6 prosecutions changed landscape</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ef4444;">LONE WOLF:</span> Leaderless resistance model; self-radicalized online; hardest to detect; Las Vegas 2017; Christchurch 2019; Buffalo 2022</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P67_openBorderSec(){
+  var o=document.getElementById('p67bordersec-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('border security migration crisis smuggling cartels human trafficking illegal crossing CBP enforcement','p67bordersec-gdelt',2);P67_renderBorderSec();}
+}
+function P67_closeBorderSec(){var o=document.getElementById('p67bordersec-overlay');if(o)o.style.display='none';}
+function P67_renderBorderSec(){
+  var el=document.getElementById('p67bordersec-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(100,116,139,0.08);border:1px solid rgba(100,116,139,0.3);padding:14px;">'
+  +'<div style="color:#cbd5e1;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; GLOBAL BORDER CRISIS HOTSPOTS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#64748b;"><th style="text-align:left;padding:2px 4px;">BORDER</th><th>SCALE</th><th>DRIVER</th><th>STATUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">US-Mexico</td><td style="text-align:center;">2.5M/yr encounters</td><td style="text-align:center;">Cartel/economic</td><td style="text-align:center;color:#ef4444;">CRISIS</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">EU Mediterranean</td><td style="text-align:center;">300K+/yr arrivals</td><td style="text-align:center;">Libya/Tunisia route</td><td style="text-align:center;color:#f59e0b;">ELEVATED</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Belarus-Poland</td><td style="text-align:center;">Hybrid pressure</td><td style="text-align:center;">Lukashenko weaponization</td><td style="text-align:center;color:#ef4444;">HYBRID ATTACK</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Ethiopia-Sudan</td><td style="text-align:center;">1M+ displaced</td><td style="text-align:center;">Conflict spillover</td><td style="text-align:center;color:#ef4444;">CRISIS</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Rohingya/Bangladesh</td><td style="text-align:center;">1M+ camp</td><td style="text-align:center;">Myanmar violence</td><td style="text-align:center;color:#f59e0b;">PROTRACTED</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(100,116,139,0.08);border:1px solid rgba(100,116,139,0.3);padding:14px;">'
+  +'<div style="color:#cbd5e1;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CARTEL THREAT ASSESSMENT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#94a3b8;">SINALOA CARTEL:</span> Largest trafficking network; fentanyl production/export primary revenue; Ismael "El Mayo" Zambada arrested 2024; succession dynamics</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">JALISCO NEW GENERATION (CJNG):</span> Most violent; military-grade weapons; drone attacks on rivals; expanding into US retail distribution</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">FENTANYL PIPELINE:</span> Chinese precursors via Mexico labs; 100,000+ US overdose deaths/year; 2mg lethal dose; primary national security threat designation</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">HUMAN SMUGGLING:</span> Coyote networks $8,000-$25,000/person; profit rivals drug trade; Venezuela/Haiti/Central America routes</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(100,116,139,0.08);border:1px solid rgba(100,116,139,0.3);padding:14px;">'
+  +'<div style="color:#cbd5e1;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; HYBRID MIGRATION WARFARE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#94a3b8;">DEFINITION:</span> State deliberately facilitates/weaponizes irregular migration to coerce neighboring states; new form of hybrid conflict</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">BELARUS 2021:</span> Lukashenko flew migrants from Iraq/Syria/Africa to Minsk; bused to Poland/Lithuania border; pushed across at night; fences built</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">RUSSIA/FINLAND:</span> Russia opened border crossings for African/ME migrants late 2023; Finland closed border; hybrid pressure tactic</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">EU RESPONSE:</span> Frontex expanded; EU-Tunisia/Libya deals controversial; pushback legality questioned by ECHR; emergency Article 78(3) invoked</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(100,116,139,0.08);border:1px solid rgba(100,116,139,0.3);padding:14px;">'
+  +'<div style="color:#cbd5e1;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; US BORDER ENFORCEMENT POSTURE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#94a3b8;">CBP ENCOUNTERS:</span> FY2023: 2.5M+ CBP encounters; FY2024: 2.1M; FY2025: declining under Title 8/expedited removal expansion</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">TITLE 42/8:</span> Title 42 (COVID expulsion) ended May 2023; Title 8 (removal/bars) reinstated; rapid DNA testing deployed</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">MILITARY ROLE:</span> 10th Mountain Division + other units deployed; support CBP; Title 10 vs Posse Comitatus constraints limit direct enforcement</div>'
+  +'<div style="margin-top:6px;"><span style="color:#94a3b8;">TECH INVESTMENTS:</span> AI surveillance towers; underground tunnel detection; autonomous ground sensors; biometric entry-exit system expansion</div>'
+  +'</div></div>'
+  +'</div>';}
+
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
  const list=document.getElementById('sigint-feed');
@@ -39955,6 +40406,15 @@ function filterSIGINT(query){
 <button id="p66poweridx-btn" onclick="P66_openPowerIdx()">POWER INDEX</button>
 <button id="p66covertops-btn" onclick="P66_openCovertOps()">COVERT OPS</button>
 <button id="p66warpow-btn" onclick="P66_openWarPow()">WAR POWERS</button>
+<button id="p67drone-btn" onclick="P67_openDrone()">DRONE WAR</button>
+<button id="p67chembio-btn" onclick="P67_openChemBio()">CHEM BIO</button>
+<button id="p67spacewar-btn" onclick="P67_openSpaceWar()">SPACE WAR</button>
+<button id="p67elecwar-btn" onclick="P67_openElecWar()">ELEC WAR</button>
+<button id="p67cyberops-btn" onclick="P67_openCyberOps()">CYBER OPS</button>
+<button id="p67mediawar-btn" onclick="P67_openMediaWar()">MEDIA WAR</button>
+<button id="p67energysec-btn" onclick="P67_openEnergySec()">ENERGY SEC</button>
+<button id="p67terrornet-btn" onclick="P67_openTerrorNet()">TERROR NET</button>
+<button id="p67bordersec-btn" onclick="P67_openBorderSec()">BORDER SEC</button>
 
 <!-- South China Sea Overlay (Phase 60) -->
 <div id="p60scs-overlay">
@@ -41879,5 +42339,140 @@ function filterSIGINT(query){
  </div>
 </div>
 
+
+<div id="p67drone-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#fb923c;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; DRONE WARFARE INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">UAS SYSTEMS -- COUNTER-DRONE -- UKRAINE LESSONS -- AUTONOMOUS WEAPONS</div>
+  </div>
+  <button onclick="P67_closeDrone()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67drone-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE DRONE WARFARE FEED -- GDELT</div>
+  <div id="p67drone-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67chembio-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#a3e635;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x2623; CHEMICAL &amp; BIOLOGICAL THREAT INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">CW ACTORS -- BIOWEAPONS -- OPCW FRAMEWORK -- NOVICHOK</div>
+  </div>
+  <button onclick="P67_closeChemBio()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67chembio-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE CBRN FEED -- GDELT</div>
+  <div id="p67chembio-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67spacewar-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#c4b5fd;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; SPACE WARFARE INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">ASAT PROGRAMS -- SPACE DOMAIN -- US SPACE FORCE -- OST FRAMEWORK</div>
+  </div>
+  <button onclick="P67_closeSpaceWar()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67spacewar-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE SPACE WAR FEED -- GDELT</div>
+  <div id="p67spacewar-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67elecwar-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#67e8f9;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; ELECTRONIC WARFARE INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">EW DOMAINS -- RUSSIA EW -- NATO POSTURE -- SPECTRUM CONFLICT</div>
+  </div>
+  <button onclick="P67_closeElecWar()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67elecwar-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE EW FEED -- GDELT</div>
+  <div id="p67elecwar-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67cyberops-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#34d399;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; CYBER OPERATIONS INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">APT GROUPS -- LANDMARK OPS -- OFFENSIVE DOCTRINE -- CI RISK</div>
+  </div>
+  <button onclick="P67_closeCyberOps()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67cyberops-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE CYBER OPS FEED -- GDELT</div>
+  <div id="p67cyberops-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67mediawar-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#fbbf24;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; INFORMATION WARFARE INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">STATE IO -- RUSSIA DISINFO -- CHINA COG WAR -- AI IN IW</div>
+  </div>
+  <button onclick="P67_closeMediaWar()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67mediawar-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE INFORMATION WARFARE FEED -- GDELT</div>
+  <div id="p67mediawar-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67energysec-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#fdba74;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; ENERGY SECURITY INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">CHOKEPOINTS -- NORD STREAM -- EU ENERGY -- OPEC+ POLITICS</div>
+  </div>
+  <button onclick="P67_closeEnergySec()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67energysec-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE ENERGY SECURITY FEED -- GDELT</div>
+  <div id="p67energysec-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67terrornet-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#fca5a5;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; TERRORISM NETWORK INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">GLOBAL ORGS -- ISIS RESURGENCE -- CT FRAMEWORKS -- DOMESTIC TERROR</div>
+  </div>
+  <button onclick="P67_closeTerrorNet()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67terrornet-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE TERRORISM FEED -- GDELT</div>
+  <div id="p67terrornet-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p67bordersec-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#cbd5e1;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; BORDER SECURITY INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">GLOBAL HOTSPOTS -- CARTEL THREAT -- HYBRID MIGRATION -- US POSTURE</div>
+  </div>
+  <button onclick="P67_closeBorderSec()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p67bordersec-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE BORDER SECURITY FEED -- GDELT</div>
+  <div id="p67bordersec-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
 </body>
 </html>
