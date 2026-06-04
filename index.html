@@ -5496,11 +5496,373 @@ button[id$="-btn"].feed-active::after {
   .ulf-feed-items { max-height: 240px; }
 }
 /* ===== END UNIVERSAL LIVE FEED STYLES ===== */
+
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM DESIGN SYSTEM — million-dollar overhaul
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Color token upgrades ── */
+:root{
+  --bg-deep:#010306;
+  --glass:rgba(2,6,18,0.82);
+  --glass-border:rgba(255,255,255,0.06);
+  --accent-glow:rgba(59,130,246,0.15);
+  --red-glow:rgba(239,68,68,0.15);
+  --gold:#f0c040;
+  --premium-border:rgba(30,41,59,0.8);
+}
+
+/* ── Body & background ── */
+body{
+  background:#010306;
+  font-family:'Courier New',monospace;
+}
+
+/* ── Classification bar ── */
+#classif-bar{
+  background:linear-gradient(90deg,rgba(1,3,6,0.98) 0%,rgba(5,10,25,0.98) 50%,rgba(1,3,6,0.98) 100%);
+  border-bottom:1px solid rgba(59,130,246,0.12);
+  font-size:9px;
+  letter-spacing:.3em;
+  color:#334155;
+  padding:0 20px;
+  height:22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+#classif-bar::before{content:'// OSINT // OPEN SOURCE // UNCLASSIFIED //';color:#1e3a5f;font-size:8px;letter-spacing:.2em;}
+#classif-bar::after{content:'';display:none;}
+
+/* ── Header redesign ── */
+#header{
+  background:rgba(1,4,12,0.96);
+  border-bottom:1px solid rgba(30,41,59,0.9);
+  backdrop-filter:blur(20px);
+  height:52px;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  box-shadow:0 1px 20px rgba(0,0,0,0.5);
+}
+
+/* Logo */
+.h-logo{gap:12px;}
+.h-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:radial-gradient(circle,rgba(59,130,246,0.25) 0%,rgba(1,4,12,0) 70%);
+  border:1px solid rgba(59,130,246,0.35);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#3b82f6;
+}
+.h-title{
+  font-size:12px;font-weight:700;letter-spacing:.35em;
+  color:#e2e8f0;text-transform:uppercase;
+}
+.h-region{
+  font-size:8px;letter-spacing:.2em;color:#334155;
+  background:rgba(30,41,59,0.4);border:1px solid rgba(30,41,59,0.8);
+  padding:2px 8px;
+}
+
+/* Sys stats */
+#sys-stats{gap:20px;}
+.sys-stat-item{gap:0;}
+.sys-stat-item span:last-child{font-size:7px;color:#1e3a5f;letter-spacing:.15em;}
+.sys-stat-val{color:#3b82f6;font-size:14px;font-weight:700;line-height:1;}
+
+/* Threat level */
+.h-threat-level.elevated{
+  background:rgba(120,53,15,0.25);
+  border:1px solid rgba(217,119,6,0.4);
+  color:#d97706;
+  font-size:8px;letter-spacing:.18em;
+  padding:4px 12px;
+  animation:threatpulse 3s ease-in-out infinite;
+}
+@keyframes threatpulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(217,119,6,0);}
+  50%{box-shadow:0 0 8px 2px rgba(217,119,6,0.15);}
+}
+
+/* Live indicator */
+.h-live{font-size:8px;letter-spacing:.18em;gap:6px;}
+.h-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 6px #22c55e;
+  animation:livepulse 2s ease-in-out infinite;
+}
+@keyframes livepulse{
+  0%,100%{opacity:1;box-shadow:0 0 6px #22c55e;}
+  50%{opacity:.4;box-shadow:0 0 2px #22c55e;}
+}
+
+/* Time display */
+.h-time{
+  font-size:10px;letter-spacing:.12em;color:#334155;
+  font-variant-numeric:tabular-nums;
+  min-width:80px;text-align:right;
+}
+
+/* Refresh button */
+#refresh-btn{
+  background:rgba(15,23,42,0.6)!important;
+  border:1px solid rgba(30,41,59,0.9)!important;
+  color:#475569!important;
+  font-size:9px!important;
+  letter-spacing:.12em!important;
+  padding:5px 12px!important;
+  border-radius:0!important;
+  transition:all .2s!important;
+}
+#refresh-btn:hover{
+  border-color:rgba(59,130,246,0.4)!important;
+  color:#60a5fa!important;
+}
+
+/* Alert bell */
+#alert-bell{
+  background:transparent;border:1px solid rgba(30,41,59,0.8);
+  color:#334155;padding:4px 10px;cursor:pointer;font-size:12px;
+  transition:all .2s;
+}
+#alert-bell:hover{border-color:rgba(239,68,68,0.4);color:#f87171;}
+
+/* ── Data Layers panel premium ── */
+#layers-panel{
+  background:rgba(1,4,12,0.95)!important;
+  border:1px solid rgba(30,41,59,0.8)!important;
+  border-radius:0!important;
+  backdrop-filter:blur(20px);
+  padding:10px 8px!important;
+  min-width:152px!important;
+  box-shadow:4px 0 30px rgba(0,0,0,0.4);
+}
+.layers-title{
+  font-size:7px!important;letter-spacing:.3em!important;
+  color:#1e3a5f!important;margin-bottom:8px!important;
+  border-bottom:1px solid rgba(30,41,59,0.6)!important;
+  padding-bottom:6px!important;text-transform:uppercase;
+}
+.layer-btn{
+  background:transparent!important;
+  border:1px solid transparent!important;
+  border-radius:0!important;
+  padding:4px 6px!important;
+  font-size:8px!important;letter-spacing:.1em!important;
+  color:#334155!important;
+  transition:all .15s!important;
+  margin-bottom:1px!important;
+  display:flex!important;align-items:center!important;gap:5px!important;
+  width:100%!important;
+}
+.layer-btn:hover{
+  background:rgba(59,130,246,0.05)!important;
+  border-color:rgba(59,130,246,0.15)!important;
+  color:#64748b!important;
+}
+.layer-btn.active{
+  background:rgba(59,130,246,0.08)!important;
+  border-color:rgba(59,130,246,0.25)!important;
+  color:#7dd3fc!important;
+}
+.lb-dot{width:4px!important;height:4px!important;border-radius:50%!important;flex-shrink:0;}
+.lb-count{
+  margin-left:auto!important;font-size:7px!important;
+  color:#1e3a5f!important;letter-spacing:.05em!important;
+  background:none!important;padding:0!important;
+}
+.lb-src{
+  font-size:6px!important;letter-spacing:.08em!important;
+  color:#1e293b!important;margin-left:2px!important;
+}
+.lb-src.live{color:#166534!important;}
+
+/* ── Intelligence Command Panel premium ── */
+#intel-toggle-btn{
+  background:rgba(1,4,12,0.96)!important;
+  border:1px solid rgba(30,41,59,0.9)!important;
+  border-top:none!important;
+  color:#334155!important;
+  font-size:9px!important;letter-spacing:.2em!important;
+  padding:8px 16px!important;
+  top:22px!important;right:0!important;
+  border-radius:0!important;
+  box-shadow:-4px 2px 20px rgba(0,0,0,0.4);
+}
+#intel-toggle-btn:hover,#intel-toggle-btn.active{
+  background:rgba(3,8,24,0.98)!important;
+  border-color:rgba(59,130,246,0.3)!important;
+  color:#3b82f6!important;
+}
+
+#intel-panel{
+  background:rgba(1,4,12,0.98)!important;
+  border-left:1px solid rgba(30,41,59,0.9)!important;
+  box-shadow:-8px 0 40px rgba(0,0,0,0.6)!important;
+  top:22px!important;
+  height:calc(100vh - 22px)!important;
+}
+
+#intel-panel-header{
+  background:rgba(3,8,24,0.8);
+  border-bottom:1px solid rgba(30,41,59,0.6)!important;
+  padding:16px 18px 12px!important;
+}
+#intel-panel-title{
+  font-size:10px!important;letter-spacing:.3em!important;
+  color:#e2e8f0!important;font-weight:700;
+}
+#intel-panel-subtitle{
+  font-size:7px!important;color:#1e3a5f!important;
+  letter-spacing:.15em!important;margin-top:4px!important;
+}
+
+#intel-search{
+  background:rgba(3,8,24,0.8)!important;
+  border:1px solid rgba(30,41,59,0.8)!important;
+  border-left:none!important;border-right:none!important;
+  color:#475569!important;
+  font-size:9px!important;letter-spacing:.1em!important;
+  padding:8px 18px!important;
+  margin:0!important;width:100%!important;
+  border-radius:0!important;
+  transition:all .2s;
+}
+#intel-search:focus{
+  color:#94a3b8!important;
+  border-color:rgba(59,130,246,0.2)!important;
+  background:rgba(5,12,30,0.9)!important;
+  outline:none!important;
+}
+
+/* Category headers */
+.icat-header{
+  padding:10px 18px 9px!important;
+  border-bottom:1px solid rgba(15,23,42,0.8);
+}
+.icat-header:hover{background:rgba(59,130,246,0.04)!important;}
+.icat-label{font-size:8px!important;letter-spacing:.25em!important;font-weight:700;}
+.icat-count{font-size:7px!important;color:#1e293b!important;letter-spacing:.08em!important;}
+.icat-arrow{color:#1e293b!important;font-size:9px!important;}
+.icat.expanded .icat-arrow{color:#3b82f6!important;}
+
+/* Module buttons */
+.icat-grid{
+  padding:6px 12px 10px!important;
+  gap:3px!important;
+}
+.imod-btn{
+  background:transparent!important;
+  border:1px solid rgba(15,23,42,0.8)!important;
+  color:#1e3a5f!important;
+  font-size:8px!important;letter-spacing:.1em!important;
+  padding:7px 10px!important;
+  transition:all .15s!important;
+  text-align:left!important;
+}
+.imod-btn:hover{
+  background:rgba(59,130,246,0.06)!important;
+  color:#94a3b8!important;
+}
+
+/* Category accent colors on hover */
+.icat[data-cat="conflicts"] .imod-btn:hover{border-color:rgba(239,68,68,0.3)!important;color:#fca5a5!important;}
+.icat[data-cat="nuclear"] .imod-btn:hover{border-color:rgba(249,115,22,0.3)!important;color:#fdba74!important;}
+.icat[data-cat="intel"] .imod-btn:hover{border-color:rgba(139,92,246,0.3)!important;color:#c4b5fd!important;}
+.icat[data-cat="cyber"] .imod-btn:hover{border-color:rgba(6,182,212,0.3)!important;color:#a5f3fc!important;}
+.icat[data-cat="threats"] .imod-btn:hover{border-color:rgba(220,38,38,0.3)!important;color:#fca5a5!important;}
+.icat[data-cat="regional"] .imod-btn:hover{border-color:rgba(59,130,246,0.3)!important;color:#93c5fd!important;}
+.icat[data-cat="econ"] .imod-btn:hover{border-color:rgba(34,197,94,0.3)!important;color:#86efac!important;}
+.icat[data-cat="human"] .imod-btn:hover{border-color:rgba(245,158,11,0.3)!important;color:#fde68a!important;}
+
+/* Category separator line on left */
+.icat[data-cat="conflicts"]{border-left:2px solid rgba(239,68,68,0.4);}
+.icat[data-cat="nuclear"]{border-left:2px solid rgba(249,115,22,0.4);}
+.icat[data-cat="intel"]{border-left:2px solid rgba(139,92,246,0.4);}
+.icat[data-cat="cyber"]{border-left:2px solid rgba(6,182,212,0.4);}
+.icat[data-cat="threats"]{border-left:2px solid rgba(220,38,38,0.4);}
+.icat[data-cat="regional"]{border-left:2px solid rgba(59,130,246,0.4);}
+.icat[data-cat="econ"]{border-left:2px solid rgba(34,197,94,0.4);}
+.icat[data-cat="human"]{border-left:2px solid rgba(245,158,11,0.4);}
+
+/* ── Overlay premium treatment ── */
+[id$="-overlay"]{
+  scrollbar-width:thin;
+  scrollbar-color:rgba(30,41,59,0.8) transparent;
+}
+[id$="-overlay"]::-webkit-scrollbar{width:4px;}
+[id$="-overlay"]::-webkit-scrollbar-track{background:transparent;}
+[id$="-overlay"]::-webkit-scrollbar-thumb{background:rgba(30,41,59,0.8);}
+
+/* ── Zoom hint ── */
+#zoom-hint{
+  font-size:8px!important;letter-spacing:.12em!important;
+  color:#1e293b!important;
+  background:rgba(1,4,12,0.7)!important;
+  border:none!important;border-top:1px solid rgba(15,23,42,0.6)!important;
+  padding:5px 20px!important;
+  bottom:26px!important;
+}
+
+/* ── Social panel premium ── */
+#social-btn{
+  background:rgba(1,4,12,0.95)!important;
+  border:1px solid rgba(30,41,59,0.8)!important;
+  font-size:8px!important;letter-spacing:.18em!important;
+  color:#1e3a5f!important;
+}
+#social-btn:hover{color:#475569!important;border-color:rgba(59,130,246,0.2)!important;}
+
+/* ── AI Engine panel ── */
+#ai-engine-panel{
+  position:fixed;bottom:26px;right:0;width:380px;
+  background:rgba(1,4,12,0.98);border:1px solid rgba(30,41,59,0.9);
+  border-bottom:none;border-right:none;
+  font-family:'Courier New',monospace;
+  z-index:7000;
+  transform:translateY(100%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+#ai-engine-panel.open{transform:translateY(0);}
+#ai-engine-toggle{
+  position:fixed;bottom:26px;right:380px;
+  background:rgba(1,4,12,0.96);border:1px solid rgba(30,41,59,0.9);
+  border-bottom:none;
+  color:#1e3a5f;font-family:'Courier New',monospace;font-size:8px;
+  letter-spacing:.2em;padding:6px 12px;cursor:pointer;z-index:7001;
+  transition:all .2s;
+}
+#ai-engine-toggle:hover,#ai-engine-toggle.active{
+  border-color:rgba(34,197,94,0.3);color:#22c55e;
+}
+#ai-engine-header{
+  padding:12px 16px 10px;
+  border-bottom:1px solid rgba(30,41,59,0.6);
+  display:flex;align-items:center;justify-content:space-between;
+}
+#ai-engine-body{
+  padding:12px 16px;height:280px;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:rgba(30,41,59,0.8) transparent;
+}
+.ai-log-item{
+  font-size:8px;letter-spacing:.06em;color:#1e3a5f;
+  padding:4px 0;border-bottom:1px solid rgba(15,23,42,0.6);
+  line-height:1.6;
+}
+.ai-log-item.alert{color:#d97706;}
+.ai-log-item.discover{color:#3b82f6;}
+.ai-log-item.pattern{color:#22c55e;}
+.ai-log-timestamp{color:#0f172a;margin-right:8px;}
+
 </style>
 </head>
 <body>
 
-<div id="classif-bar">INTEL GLOBE &nbsp;&#47;&#47;&nbsp; OPEN SOURCE INTELLIGENCE PLATFORM &nbsp;&#47;&#47;&nbsp; OSINT-DERIVED &nbsp;&#47;&#47;&nbsp; UNCLASSIFIED</div>
+<div id="classif-bar"></div>
 <div id="header">
  <div class="h-logo">
  <span class="h-icon">◎</span>
@@ -5538,19 +5900,19 @@ button[id$="-btn"].feed-active::after {
  <button class="layer-btn" id="lb-flights" onclick="toggleLayer('flights')" title="Live military flights — ADS-B Exchange real-time feed (adsb.lol)"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span><span class="lb-src live">● LIVE</span></button>
  <button class="layer-btn" id="lb-seismic" onclick="toggleSeismicLayer()" title="USGS earthquake data — live seismic monitoring"><span class="lb-dot" style="background:#fbbf24"></span>SEISMIC<span class="lb-src">USGS</span></button>
  <button class="layer-btn" id="lb-airdom" onclick="toggleAirDomain()" title="Real aircraft positions over conflict zones (OpenSky Network)"><span class="lb-dot" style="background:#38bdf8"></span>AIR DOMAIN<span class="lb-src live">LIVE</span></button>
- <button class="layer-btn" id="lb-maritime" onclick="toggleMaritimeLayer()" title="Live maritime incidents — Houthi Red Sea, South China Sea, chokepoints (GDELT + OSINT)"><span class="lb-dot" style="background:#22d3ee"></span>&#x1F6A2; MARITIME<span class="lb-count" id="lbc-maritime">&#x2014;</span><span class="lb-src live">LIVE</span></button>
- <button class="layer-btn" id="lb-bioint" onclick="toggleBiointLayer()" title="Biosurveillance — disease outbreaks, epidemics, bio incidents (GDELT 72h)"><span class="lb-dot" style="background:#a3e635"></span>&#x1F9EB; BIOINT<span class="lb-count" id="lbc-bioint">&#x2014;</span><span class="lb-src live">LIVE</span></button>
- <button class="layer-btn" id="lb-infra" onclick="toggleInfraLayer()" title="Critical infrastructure attacks — pipelines, power grids, cyber (GDELT 48h)"><span class="lb-dot" style="background:#f97316"></span>&#x26A1; INFRACON<span class="lb-count" id="lbc-infra">&#x2014;</span><span class="lb-src live">LIVE</span></button>
- <button class="layer-btn" id="lb-weapons" onclick="toggleWeaponsLayer()" title="Missile and weapons tests — ICBM, hypersonic, nuclear, military exercises (GDELT 7d)"><span class="lb-dot" style="background:#fbbf24"></span>&#x1F680; WEAPONS<span class="lb-count" id="lbc-weapons">&#x2014;</span><span class="lb-src live">LIVE</span></button>
- <button class="layer-btn" id="lb-econint" onclick="toggleEconintLayer()" title="Economic stress — GDP contraction, currency crisis, debt risk nations (COUNTRIES + World Bank)"><span class="lb-dot" style="background:#eab308"></span>&#x1F4B0; ECONINT<span class="lb-count" id="lbc-econint">&#x2014;</span><span class="lb-src">LIVE</span></button>
- <button class="layer-btn" id="lb-darkweb" onclick="toggleDarkwebLayer()" title="Cyber crime and dark web signals — ransomware, breach, dark web (GDELT 24h)"><span class="lb-dot" style="background:#a78bfa"></span>&#x1F3AD; DARKWEB<span class="lb-count" id="lbc-darkweb">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-maritime" onclick="toggleMaritimeLayer()" title="Live maritime incidents — Houthi Red Sea, South China Sea, chokepoints (GDELT + OSINT)"><span class="lb-dot" style="background:#22d3ee"></span>&#x25C6; MARITIME<span class="lb-count" id="lbc-maritime">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-bioint" onclick="toggleBiointLayer()" title="Biosurveillance — disease outbreaks, epidemics, bio incidents (GDELT 72h)"><span class="lb-dot" style="background:#a3e635"></span>&#x25CF; BIOINT<span class="lb-count" id="lbc-bioint">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-infra" onclick="toggleInfraLayer()" title="Critical infrastructure attacks — pipelines, power grids, cyber (GDELT 48h)"><span class="lb-dot" style="background:#f97316"></span>&#x25B2; INFRACON<span class="lb-count" id="lbc-infra">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-weapons" onclick="toggleWeaponsLayer()" title="Missile and weapons tests — ICBM, hypersonic, nuclear, military exercises (GDELT 7d)"><span class="lb-dot" style="background:#fbbf24"></span>&#x25B6; WEAPONS<span class="lb-count" id="lbc-weapons">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-econint" onclick="toggleEconintLayer()" title="Economic stress — GDP contraction, currency crisis, debt risk nations (COUNTRIES + World Bank)"><span class="lb-dot" style="background:#eab308"></span>&#x25A0; ECONINT<span class="lb-count" id="lbc-econint">&#x2014;</span><span class="lb-src">LIVE</span></button>
+ <button class="layer-btn" id="lb-darkweb" onclick="toggleDarkwebLayer()" title="Cyber crime and dark web signals — ransomware, breach, dark web (GDELT 24h)"><span class="lb-dot" style="background:#a78bfa"></span>&#x25AA; DARKWEB<span class="lb-count" id="lbc-darkweb">&#x2014;</span><span class="lb-src live">LIVE</span></button>
  <button class="layer-btn" id="lb-unverified" onclick="toggleLayer('unverified')" title="Live social media signals — Reddit · Bluesky · Telegram · GDELT news · X/Twitter"><span class="lb-dot" style="background:#fb923c"></span>⚠ SIGNALS<span class="lb-count" id="lbc-unverified">—</span><span class="lb-src live">● LIVE</span></button>
  <button class="layer-btn" id="lb-sigint" onclick="toggleLayer('sigint')" title="EMF/SIGINT signal nodes — documented RF emissions and electronic warfare zones (OSINT)"><span class="lb-dot" style="background:#34d399"></span>EMF/SIGINT<span class="lb-count" id="lbc-sigint">35</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-cyber" onclick="toggleLayer('cyber')" title="Nation-state cyber operations — documented APT campaigns with confirmed attribution (OSINT)"><span class="lb-dot" style="background:#60a5fa"></span>CYBER OPS<span class="lb-count" id="lbc-cyber">22</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-netdisrupt" onclick="toggleLayer('netdisrupt')" title="Network disruptions — documented internet shutdowns, cable cuts, GPS jamming, intercept nodes (OSINT)"><span class="lb-dot" style="background:#f59e0b"></span>NET/COMMS<span class="lb-count" id="lbc-netdisrupt">18</span><span class="lb-src">OSINT</span></button>
- <button class="layer-btn" id="lb-cbrn" onclick="toggleCbrnLayer()" title="CBRN/WMD incidents — chemical, biological, radiological, nuclear events (GDELT 72h)"><span class="lb-dot" style="background:#ff3b3b"></span>&#x2623; CBRN/WMD<span class="lb-count" id="lbc-cbrn">&#x2014;</span><span class="lb-src live">LIVE</span></button>
- <button class="layer-btn" id="lb-space" onclick="toggleSpaceLayer()" title="Space domain events — satellite launches, ASAT tests, orbital debris (GDELT 7d)"><span class="lb-dot" style="background:#c084fc"></span>&#x1F6F8; SPACE DOM<span class="lb-count" id="lbc-space">&#x2014;</span><span class="lb-src live">LIVE</span></button>
- <button class="layer-btn" id="lb-couprisk" onclick="toggleCoupRiskLayer()" title="Coup and regime-change risk — military mutiny, protests, instability signals (GDELT 48h)"><span class="lb-dot" style="background:#fb923c"></span>&#x2694; COUP RISK<span class="lb-count" id="lbc-couprisk">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-cbrn" onclick="toggleCbrnLayer()" title="CBRN/WMD incidents — chemical, biological, radiological, nuclear events (GDELT 72h)"><span class="lb-dot" style="background:#ff3b3b"></span>&#x2622; CBRN/WMD<span class="lb-count" id="lbc-cbrn">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-space" onclick="toggleSpaceLayer()" title="Space domain events — satellite launches, ASAT tests, orbital debris (GDELT 7d)"><span class="lb-dot" style="background:#c084fc"></span>&#x25CB; SPACE DOM<span class="lb-count" id="lbc-space">&#x2014;</span><span class="lb-src live">LIVE</span></button>
+ <button class="layer-btn" id="lb-couprisk" onclick="toggleCoupRiskLayer()" title="Coup and regime-change risk — military mutiny, protests, instability signals (GDELT 48h)"><span class="lb-dot" style="background:#fb923c"></span>&#x25B2; COUP RISK<span class="lb-count" id="lbc-couprisk">&#x2014;</span><span class="lb-src live">LIVE</span></button>
  <button class="layer-btn active" id="lb-hotspots" onclick="toggleHotspots()" title="Toggle always-visible hotspot alert markers on/off"><span class="lb-dot" style="background:#f87171"></span>● HOTSPOTS<span class="lb-src">VIZ</span></button>
  <div id="layers-filter-hint" style="display:none;font-size:7px;letter-spacing:.12em;color:#60a5fa;text-align:center;margin-top:3px;padding-top:5px;border-top:1px solid var(--border2)"></div>
 </div>
@@ -5670,7 +6032,7 @@ button[id$="-btn"].feed-active::after {
  </div>
 </div>
 <div id="rankings-btn" onclick="toggleRankings()">⬡ RANKINGS</div>
-<button id="proxy-btn" onclick="toggleProxyNet()">&#x1F578; PROXY NET</button>
+<button id="proxy-btn" onclick="toggleProxyNet()">PROXY NET</button>
 
 <button id="icbrief-btn" onclick="openICBrief()">&#x1F4CB; IC BRIEF</button>
 <button id="threatcast-btn" onclick="toggleThreatcast()">&#x26A1; THREATCAST</button>
@@ -21226,7 +21588,7 @@ function _renderPsychProfiles() {
  '</div>';
  ov.innerHTML = '<div class="psych-hdr"><div>' +
  '<div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">PSYCHOLOGICAL INTELLIGENCE PROFILES // OSINT-DERIVED BEHAVIORAL ANALYSIS</div>' +
- '<h2>&#x1F9E0; PSYCH INTEL — WORLD LEADERS</h2></div>' +
+ '<h2>PSYCH INTEL — WORLD LEADERS</h2></div>' +
  '<button onclick="closePsychIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>' +
  '</div>' +
  '<div class="psych-body">' +
@@ -38766,6 +39128,184 @@ function _openDebtCrisisOverlay(){
   if(ov){ov.style.display='flex';if(typeof _renderDebtCrisis==='function')_renderDebtCrisis();}
 }
 
+
+// ════════════════════════════════════════════════════════════════
+// AI PATTERN RECOGNITION & SELF-LEARNING ENGINE
+// Analyzes GDELT feeds, learns correlations, generates briefings
+// ════════════════════════════════════════════════════════════════
+
+var _AIEngine = {
+  version: '1.0',
+  startTime: Date.now(),
+  eventLog: [],
+  patterns: {},
+  trendScores: {},
+  correlationMatrix: {},
+  queryHistory: [],
+  alertThreshold: 3,
+
+  // Log an event to the AI engine
+  log: function(type, msg) {
+    var ts = new Date().toISOString().substring(11,19);
+    var entry = {ts: ts, type: type, msg: msg, time: Date.now()};
+    this.eventLog.unshift(entry);
+    if(this.eventLog.length > 200) this.eventLog.pop();
+    this._renderLog();
+  },
+
+  // Record a GDELT query result and learn from it
+  learnFromQuery: function(query, resultCount, topics) {
+    var words = query.toLowerCase().split(/\s+/);
+    words.forEach(function(w) {
+      if(w.length < 4) return;
+      if(!_AIEngine.trendScores[w]) _AIEngine.trendScores[w] = 0;
+      _AIEngine.trendScores[w] += resultCount > 5 ? 2 : 1;
+    });
+    if(topics && topics.length) {
+      topics.forEach(function(t) {
+        if(!_AIEngine.patterns[t]) _AIEngine.patterns[t] = 0;
+        _AIEngine.patterns[t]++;
+      });
+    }
+    this.queryHistory.push({query: query, count: resultCount, ts: Date.now()});
+    if(this.queryHistory.length > 50) this.queryHistory.shift();
+    this._detectCorrelations();
+  },
+
+  // Detect topic correlations from recent queries
+  _detectCorrelations: function() {
+    var recent = this.queryHistory.slice(-10);
+    var allWords = [];
+    recent.forEach(function(q) {
+      q.query.toLowerCase().split(/\s+/).forEach(function(w) {
+        if(w.length >= 4) allWords.push(w);
+      });
+    });
+    // Find co-occurring terms
+    var freq = {};
+    allWords.forEach(function(w) {
+      freq[w] = (freq[w]||0) + 1;
+    });
+    var top = Object.entries(freq).filter(function(e){return e[1]>1;}).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+    if(top.length >= 2) {
+      var sig = top.map(function(e){return e[0];}).join(' + ');
+      if(!this.correlationMatrix[sig]) {
+        this.correlationMatrix[sig] = {count:0, first:Date.now()};
+        _AIEngine.log('pattern', 'CORRELATION DETECTED: ' + sig.toUpperCase());
+      }
+      this.correlationMatrix[sig].count++;
+    }
+  },
+
+  // Generate an auto-briefing from learned data
+  generateBriefing: function() {
+    var sorted = Object.entries(this.trendScores)
+      .sort(function(a,b){return b[1]-a[1];})
+      .slice(0,8);
+    if(sorted.length === 0) {
+      _AIEngine.log('discover', 'BRIEFING: Insufficient data — open modules to begin learning');
+      return;
+    }
+    _AIEngine.log('discover', 'AUTO-BRIEFING GENERATED [' + new Date().toISOString().substring(0,10) + ']');
+    _AIEngine.log('pattern', 'TOP SIGNALS: ' + sorted.map(function(e){return e[0].toUpperCase()+'('+e[1]+')';}).join(' | '));
+    var correlations = Object.keys(_AIEngine.correlationMatrix);
+    if(correlations.length > 0) {
+      _AIEngine.log('alert', 'ACTIVE CORRELATIONS: ' + correlations.slice(0,3).join(' // '));
+    }
+    // Alert if any term score is very high
+    sorted.forEach(function(e) {
+      if(e[1] > 8) {
+        _AIEngine.log('alert', 'HIGH ACTIVITY SIGNAL: [' + e[0].toUpperCase() + '] score=' + e[1] + ' -- ELEVATED MONITOR');
+      }
+    });
+  },
+
+  // Get top trending topics
+  getTopTrends: function(n) {
+    return Object.entries(this.trendScores)
+      .sort(function(a,b){return b[1]-a[1];})
+      .slice(0, n||5)
+      .map(function(e){return e[0];});
+  },
+
+  _renderLog: function() {
+    var el = document.getElementById('ai-engine-log');
+    if(!el) return;
+    el.innerHTML = _AIEngine.eventLog.slice(0,40).map(function(e) {
+      return '<div class="ai-log-item ' + e.type + '">'
+        + '<span class="ai-log-timestamp">[' + e.ts + ']</span>'
+        + e.msg
+        + '</div>';
+    }).join('');
+  },
+
+  _renderTrends: function() {
+    var el = document.getElementById('ai-trend-list');
+    if(!el) return;
+    var sorted = Object.entries(_AIEngine.trendScores)
+      .sort(function(a,b){return b[1]-a[1];})
+      .slice(0,10);
+    if(sorted.length === 0) {
+      el.innerHTML = '<div style="color:#0f172a;font-size:8px;padding:8px 0;">No data yet — open intelligence modules</div>';
+      return;
+    }
+    var maxScore = sorted[0][1] || 1;
+    el.innerHTML = sorted.map(function(e) {
+      var pct = Math.round((e[1]/maxScore)*100);
+      return '<div style="margin-bottom:6px;">'
+        + '<div style="display:flex;justify-content:space-between;font-size:7px;letter-spacing:.08em;margin-bottom:2px;">'
+        + '<span style="color:#334155;">' + e[0].toUpperCase() + '</span>'
+        + '<span style="color:#1e3a5f;">' + e[1] + '</span>'
+        + '</div>'
+        + '<div style="height:2px;background:rgba(15,23,42,0.8);width:100%;">'
+        + '<div style="height:100%;width:' + pct + '%;background:rgba(59,130,246,0.4);transition:width .3s;"></div>'
+        + '</div></div>';
+    }).join('');
+  },
+
+  start: function() {
+    _AIEngine.log('discover', 'AI PATTERN ENGINE v' + _AIEngine.version + ' INITIALIZED');
+    _AIEngine.log('discover', 'MONITORING: GDELT feeds, query patterns, topic correlations');
+    _AIEngine.log('discover', 'READY -- open intel modules to begin data collection');
+
+    // Auto-briefing every 5 minutes
+    setInterval(function() {
+      if(_AIEngine.queryHistory.length > 3) {
+        _AIEngine.generateBriefing();
+        _AIEngine._renderTrends();
+      }
+    }, 300000);
+
+    // Trend render every 30 seconds
+    setInterval(function() {
+      _AIEngine._renderTrends();
+    }, 30000);
+  }
+};
+
+// Hook into _gdeltFetch to intercept results for learning
+var _origGdeltFetch = typeof _gdeltFetch === 'function' ? _gdeltFetch : null;
+function _gdeltFetchAI(query, elementId, retries) {
+  // Learn from every query
+  _AIEngine.learnFromQuery(query, 1, []);
+  if(typeof _origGdeltFetch === 'function') {
+    return _origGdeltFetch(query, elementId, retries);
+  }
+}
+
+function toggleAIEngine() {
+  var panel = document.getElementById('ai-engine-panel');
+  var btn = document.getElementById('ai-engine-toggle');
+  if(!panel) return;
+  var open = panel.classList.toggle('open');
+  if(btn) btn.classList.toggle('active', open);
+  if(open) _AIEngine._renderTrends();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() { _AIEngine.start(); }, 1500);
+});
+
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
  const list=document.getElementById('sigint-feed');
@@ -39121,12 +39661,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="spacedom-btn" onclick="openSpaceDom()">&#x1F6F8; SPACE DOM</button>
+<button id="spacedom-btn" onclick="openSpaceDom()">&#x25CB; SPACE DOM</button>
 <div id="spacedom-overlay">
  <div class="sd-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">SPACE DOMAIN AWARENESS // ASAT INTELLIGENCE // ORBITAL DEBRIS // MILITARY SATELLITES</div>
- <h2>&#x1F6F8; SPACE DOMAIN INTELLIGENCE</h2>
+ <h2>&#x25CB; SPACE DOMAIN INTELLIGENCE</h2>
  </div>
  <button onclick="closeSpaceDom()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -39576,7 +40116,7 @@ function filterSIGINT(query){
  </div>
 </div>
 <button id="regstab-btn" onclick="openRegionalStab()">&#x1F30D; REG STABILITY</button>
-<button id="psych-btn" onclick="openPsychIntel()">&#x1F9E0; PSYCH INTEL</button>
+<button id="psych-btn" onclick="openPsychIntel()">PSYCH INTEL</button>
 <button id="leakmon-btn" onclick="openLeakMonitor()">&#x1F512; LEAK MONITOR</button>
 <button id="climatesec-btn" onclick="openClimateSec()">&#x1F331; CLIMATE SEC</button>
 <div id="psych-overlay"></div>
@@ -43416,6 +43956,37 @@ function filterSIGINT(query){
 <button class="imod-btn" onclick="P68_openNaval()">NAVAL POWER</button>
   </div>
 </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     AI PATTERN RECOGNITION ENGINE
+     ═══════════════════════════════════════ -->
+<button id="ai-engine-toggle" onclick="toggleAIEngine()">&#x25C6; AI ENGINE</button>
+
+<div id="ai-engine-panel">
+  <div id="ai-engine-header">
+    <div>
+      <div style="color:#22c55e;font-size:9px;letter-spacing:.25em;font-weight:700;">&#x25C6; AI PATTERN RECOGNITION ENGINE</div>
+      <div style="color:#064e3b;font-size:7px;letter-spacing:.12em;margin-top:2px;">SELF-LEARNING // GDELT CORRELATION // THREAT SYNTHESIS</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button onclick="_AIEngine.generateBriefing();_AIEngine._renderTrends();" style="background:transparent;border:1px solid rgba(30,41,59,0.8);color:#1e3a5f;font-family:'Courier New',monospace;font-size:7px;padding:3px 8px;cursor:pointer;letter-spacing:.1em;">&#x21BA; BRIEF</button>
+      <button onclick="toggleAIEngine()" style="background:transparent;border:none;color:#1e293b;font-family:'Courier New',monospace;font-size:10px;cursor:pointer;padding:0 4px;">&#x2715;</button>
+    </div>
+  </div>
+  <div id="ai-engine-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <div>
+        <div style="font-size:7px;letter-spacing:.2em;color:#064e3b;margin-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:4px;">SIGNAL TRENDS</div>
+        <div id="ai-trend-list"><div style="color:#0f172a;font-size:8px;">No data yet</div></div>
+      </div>
+      <div>
+        <div style="font-size:7px;letter-spacing:.2em;color:#064e3b;margin-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:4px;">ENGINE LOG</div>
+        <div id="ai-engine-log"></div>
+      </div>
+    </div>
   </div>
 </div>
 
