@@ -5165,6 +5165,26 @@ button{border-radius:2px!important}
 #p65balkans-btn{position:fixed;top:375px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
 #p65balkans-btn:hover{border-color:#f43f5e;color:#fda4af;}
 
+/* Phase 66 — Col 21 (right:2525px) */
+#p66nuccc-btn{position:fixed;top:55px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66nuccc-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#p66sof-btn{position:fixed;top:95px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66sof-btn:hover{border-color:#10b981;color:#6ee7b7;}
+#p66icmap-btn{position:fixed;top:135px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66icmap-btn:hover{border-color:#6366f1;color:#a5b4fc;}
+#p66armstreaties-btn{position:fixed;top:175px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66armstreaties-btn:hover{border-color:#f59e0b;color:#fcd34d;}
+#p66hybrid-btn{position:fixed;top:215px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66hybrid-btn:hover{border-color:#8b5cf6;color:#c4b5fd;}
+#p66finint-btn{position:fixed;top:255px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66finint-btn:hover{border-color:#22c55e;color:#86efac;}
+#p66poweridx-btn{position:fixed;top:295px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66poweridx-btn:hover{border-color:#0ea5e9;color:#7dd3fc;}
+#p66covertops-btn{position:fixed;top:335px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66covertops-btn:hover{border-color:#ec4899;color:#f9a8d4;}
+#p66warpow-btn{position:fixed;top:375px;right:2525px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p66warpow-btn:hover{border-color:#dc2626;color:#fca5a5;}
+
 /* South China Sea overlay */
 #p60scs-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
 .p60scs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
@@ -32561,6 +32581,15 @@ var _MOBILE_MODULES = [
   ['conflicts','CAUCASUS','P65_openCaucasus','#a855f7'],
   ['geo','CENTRAL ASIA','P65_openCentAsia','#84cc16'],
   ['conflicts','BALKANS INTEL','P65_openBalkans','#f43f5e'],
+  ['nuclear','NUC C2','P66_openNucCC','#ef4444'],
+  ['intel','SPEC OPS','P66_openSOF','#10b981'],
+  ['intel','IC MAP','P66_openICMap','#6366f1'],
+  ['nuclear','ARMS CTRL','P66_openArmsTreaties','#f59e0b'],
+  ['threats','HYBRID WAR','P66_openHybrid','#8b5cf6'],
+  ['econ','FININT','P66_openFinInt','#22c55e'],
+  ['geo','POWER INDEX','P66_openPowerIdx','#0ea5e9'],
+  ['intel','COVERT OPS','P66_openCovertOps','#ec4899'],
+  ['threats','WAR POWERS','P66_openWarPow','#dc2626'],
 ];
 
 var _mobileCatMap = {
@@ -37303,6 +37332,404 @@ function P65_renderBalkansAnalysis(){
 }
 
 // ===== END PHASE 65 =====
+// ===== PHASE 66: Col 21 Thematic Analysis =====
+
+// --- NUCLEAR COMMAND & CONTROL (p66nuccc) ---
+function P66_openNucCC(){
+  var o=document.getElementById('p66nuccc-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('nuclear command control launch authority ICBM submarine warning system','p66nuccc-gdelt',2);P66_renderNucCCAnalysis();}
+}
+function P66_closeNucCC(){var o=document.getElementById('p66nuccc-overlay');if(o)o.style.display='none';}
+function P66_renderNucCCAnalysis(){
+  var el=document.getElementById('p66nuccc-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">US NUCLEAR C2</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">NCA:</b> National Command Authority = President + SecDef; sole authority for nuclear release order<br>'+
+    '<b style="color:#e2e8f0;">FPCON/DEFCON:</b> Defense Condition levels 5-1; DEFCON 1 = nuclear war imminent; never reached<br>'+
+    '<b style="color:#e2e8f0;">STRATCOM:</b> US Strategic Command; Omaha; executes SIOP/OPLAN 8010; USSTRATCOM commander<br>'+
+    '<b style="color:#e2e8f0;">Fail-safe:</b> Two-man rule; PALs (Permissive Action Links); launch control centers; EMP hardening<br>'+
+    '<b style="color:#e2e8f0;">Launch time:</b> ICBM 30 min; SLBM 15 min; President has 6-12 min decision time after warning</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">RUSSIA NUCLEAR C2</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Cheget:</b> Nuclear briefcase; carried by president, defense minister, chief of general staff<br>'+
+    '<b style="color:#e2e8f0;">Kazbek system:</b> Command network linking leadership to strategic forces; hardened against EMP<br>'+
+    '<b style="color:#e2e8f0;">Perimeter (Dead Hand):</b> Semi-automatic retaliatory system; launches if command disrupted<br>'+
+    '<b style="color:#e2e8f0;">SPRN:</b> Space Missile Warning System; early warning satellite constellation; aging but functional<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Perimeter system = existential deterrent; delegation protocols less transparent than US</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">CHINA NUCLEAR C2</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">CMC control:</b> Central Military Commission; Xi Jinping chair; tightly centralized launch authority<br>'+
+    '<b style="color:#e2e8f0;">No First Use:</b> Declared NFU policy; but US IC doubts credibility given arsenal buildup<br>'+
+    '<b style="color:#e2e8f0;">Launch on warning?</b> 2023 silos suggest shift; rocket force modernization; DF-41, JL-3 deployed<br>'+
+    '<b style="color:#e2e8f0;">Nuclear signaling:</b> Less public signaling than Russia; internal debates on NFU credibility ongoing<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> C2 opaque; NFU credibility declining; arsenal buildup suggests doctrine evolution</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">NUCLEAR RISKS / ACCIDENTS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Close calls:</b> 1983 Petrov incident; Able Archer 83; 1995 Norwegian rocket; computer errors<br>'+
+    '<b style="color:#e2e8f0;">Broken Arrows:</b> 32+ US nuclear weapon accidents; 6 weapons lost/destroyed; Palomares (1966)<br>'+
+    '<b style="color:#e2e8f0;">AI risks:</b> AI-assisted early warning; false positive risk; decision time compression by automation<br>'+
+    '<b style="color:#e2e8f0;">Hypersonic ambiguity:</b> Conventional vs nuclear warheads; early warning misinterpretation risk<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Nuclear safety improving but AI/hypersonic era introducing new decision-time risks</div></div>'+
+    '</div>';
+}
+
+// --- SPECIAL OPERATIONS (p66sof) ---
+function P66_openSOF(){
+  var o=document.getElementById('p66sof-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('special operations forces Delta SEAL SAS counterterrorism direct action covert raid','p66sof-gdelt',2);P66_renderSOFAnalysis();}
+}
+function P66_closeSOF(){var o=document.getElementById('p66sof-overlay');if(o)o.style.display='none';}
+function P66_renderSOFAnalysis(){
+  var el=document.getElementById('p66sof-analysis');
+  if(!el)return;
+  var units=[
+    {c:'USA',unit:'JSOC (Delta/DEVGRU/75th Ranger)',mission:'CT, DA, SR, FID, PSYOP, CA',note:'Most capable SOF globally; Bin Laden, Baghdadi raids'},
+    {c:'UK',unit:'22 SAS / Special Boat Service',mission:'CT, DA, SR, HVT',note:'Hereford; mentor to Western SOF; Ukraine advisory'},
+    {c:'Russia',unit:'Spetsnaz (GRU) / Vympel / Alfa',mission:'UW, DA, VIP protection, sabotage',note:'Ukraine covert ops; Skripal assassination; Nord Stream'},
+    {c:'France',unit:'COS (13e RDP, CPA10)',mission:'CT, DA, Africa ops, SR',note:'Largest African SOF presence; Sahel operations'},
+    {c:'Israel',unit:'Sayeret Matkal / Shayetet 13',mission:'CT, DA, hostage rescue, HVT',note:'Entebbe; Munich response; Gaza tunnel ops'},
+    {c:'China',unit:'SSF Special Ops / SOD',mission:'EW, cyber, HUMINT, DA',note:'Expanding capability; doctrine less mature than West'},
+    {c:'Iran',unit:'IRGC Qods Force',mission:'Proxy management, foreign ops, training',note:'Hamas, Hezbollah, Houthi; Soleimani killed 2020'},
+    {c:'Australia',unit:'SASR / 2 Commando',mission:'CT, DA, SR, FID',note:'Afghanistan war crimes inquiry; Five Eyes intel sharing'},
+  ];
+  var rows=units.map(function(r){
+    return '<tr><td style="color:#6ee7b7;font-weight:700;padding:5px 8px;">'+r.c+'</td>'+
+      '<td style="color:#e2e8f0;padding:5px;">'+r.unit+'</td>'+
+      '<td style="color:#94a3b8;font-size:7px;padding:5px;">'+r.mission+'</td>'+
+      '<td style="color:#94a3b8;font-size:7.5px;padding:5px;">'+r.note+'</td></tr>';
+  }).join('');
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;margin-bottom:20px;">'+
+    '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">NATION</th><th style="text-align:left;color:#475569;padding:6px;">UNIT</th><th style="text-align:left;color:#475569;padding:6px;">MISSION PROFILE</th><th style="text-align:left;color:#475569;padding:6px;">NOTES</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table>'+
+    '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #10b981;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#6ee7b7;margin-bottom:8px;">SOF MISSION TYPES</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">DA (Direct Action):</b> Short-duration offensive strikes; HVT raids; EKIA/ETIC objectives<br>'+
+    '<b style="color:#e2e8f0;">SR (Special Recon):</b> Intelligence collection; target acquisition; deep penetration<br>'+
+    '<b style="color:#e2e8f0;">UW (Unconventional Warfare):</b> Training/equipping resistance forces; Ukraine advisory<br>'+
+    '<b style="color:#e2e8f0;">FID (Foreign Internal Defense):</b> Building partner nation security forces<br>'+
+    '<b style="color:#e2e8f0;">CT (Counter-terrorism):</b> Direct action against terrorist networks; hostage rescue</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #10b981;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#6ee7b7;margin-bottom:8px;">JSOC MAJOR OPERATIONS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Operation Neptune Spear (2011):</b> SEAL Team 6 killed Bin Laden; Abbottabad, Pakistan<br>'+
+    '<b style="color:#e2e8f0;">Operation Kayla Mueller (2019):</b> Delta Force raid killed Baghdadi; Barisha, Syria<br>'+
+    '<b style="color:#e2e8f0;">Quds Force kill (2020):</b> MQ-9 Reaper; Soleimani; Baghdad airport; massive escalation avoided<br>'+
+    '<b style="color:#e2e8f0;">Zawahiri (2022):</b> CIA drone strike; Kabul rooftop; precision; zero collateral casualties<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> JSOC most capable and prolifically employed SOF; GWOT shaped doctrine</div></div>'+
+    '</div>';
+}
+
+// --- IC MAP (p66icmap) ---
+function P66_openICMap(){
+  var o=document.getElementById('p66icmap-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('CIA NSA intelligence community spy espionage surveillance collection HUMINT SIGINT','p66icmap-gdelt',2);P66_renderICMapAnalysis();}
+}
+function P66_closeICMap(){var o=document.getElementById('p66icmap-overlay');if(o)o.style.display='none';}
+function P66_renderICMapAnalysis(){
+  var el=document.getElementById('p66icmap-analysis');
+  if(!el)return;
+  var agencies=[
+    {flag:'US',name:'CIA',focus:'HUMINT / covert action',personnel:'~21,000',budget:'$15B est'},
+    {flag:'US',name:'NSA',focus:'SIGINT / cyber / EW',personnel:'~30,000',budget:'$10B est'},
+    {flag:'US',name:'DIA',focus:'Military intelligence',personnel:'~17,000',budget:'$3B est'},
+    {flag:'US',name:'NGA',focus:'GEOINT / imagery',personnel:'~14,000',budget:'$5B est'},
+    {flag:'UK',name:'MI6 (SIS)',focus:'HUMINT / covert',personnel:'~3,500',budget:'GBP 3.2B'},
+    {flag:'UK',name:'GCHQ',focus:'SIGINT / cyber',personnel:'~6,000',budget:'GBP 3.2B'},
+    {flag:'RU',name:'SVR',focus:'Foreign intelligence (HUMINT)',personnel:'~13,000',budget:'Unknown'},
+    {flag:'RU',name:'GRU',focus:'Military intelligence / covert',personnel:'~25,000',budget:'Unknown'},
+    {flag:'RU',name:'FSB',focus:'Counter-intelligence / domestic',personnel:'~350,000',budget:'Unknown'},
+    {flag:'CN',name:'MSS',focus:'Civilian intel / counter-intel',personnel:'~100,000 est',budget:'Unknown'},
+    {flag:'CN',name:'SSF (Strategic Support Force)',focus:'Cyber / space / SIGINT',personnel:'~175,000',budget:'Unknown'},
+    {flag:'IL',name:'Mossad',focus:'HUMINT / covert / CT',personnel:'~7,000',budget:'Unknown'},
+  ];
+  var rows=agencies.map(function(r){
+    return '<tr><td style="color:#a5b4fc;font-weight:700;padding:5px 8px;">'+r.flag+'/'+r.name+'</td>'+
+      '<td style="color:#94a3b8;padding:5px;font-size:7.5px;">'+r.focus+'</td>'+
+      '<td style="text-align:center;color:#94a3b8;padding:5px;">'+r.personnel+'</td>'+
+      '<td style="text-align:center;color:#94a3b8;padding:5px;">'+r.budget+'</td></tr>';
+  }).join('');
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;margin-bottom:20px;">'+
+    '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">AGENCY</th><th style="text-align:left;color:#475569;padding:6px;">PRIMARY FOCUS</th><th style="color:#475569;padding:6px;">PERSONNEL</th><th style="color:#475569;padding:6px;">BUDGET</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table>'+
+    '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #6366f1;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#a5b4fc;margin-bottom:8px;">FIVE EYES ALLIANCE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">UKUSA Agreement (1946):</b> US, UK, Canada, Australia, New Zealand; SIGINT sharing<br>'+
+    '<b style="color:#e2e8f0;">ECHELON network:</b> Shared interception infrastructure; satellite, undersea cable taps<br>'+
+    '<b style="color:#e2e8f0;">Nine Eyes:</b> 5E + France, Netherlands, Denmark, Norway; broader sharing arrangement<br>'+
+    '<b style="color:#e2e8f0;">14 Eyes:</b> 9E + Germany, Belgium, Italy, Spain, Sweden; secondary cooperation<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Most capable intelligence alliance in history; China/Russia equivalent fragmented</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #6366f1;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#a5b4fc;margin-bottom:8px;">HUMINT TRADECRAFT</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Recruitment MICE:</b> Money, Ideology, Coercion, Ego -- motivations for assets<br>'+
+    '<b style="color:#e2e8f0;">NOC officers:</b> Non-official cover; no diplomatic protection; highest risk operational posture<br>'+
+    '<b style="color:#e2e8f0;">Dead drops / tradecraft:</b> TESS, brush passes; Moscow rules; digital tradecraft evolution<br>'+
+    '<b style="color:#e2e8f0;">Double agents:</b> Aldrich Ames, Robert Hanssen (US); Kim Philby (UK); George Blake<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> HUMINT hardest to master; technology supplements but cannot replace human sources</div></div>'+
+    '</div>';
+}
+
+// --- ARMS CONTROL TREATIES (p66armstreaties) ---
+function P66_openArmsTreaties(){
+  var o=document.getElementById('p66armstreaties-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('arms control treaty New START INF Open Skies nuclear disarmament verification','p66armstreaties-gdelt',2);P66_renderArmsTreatiesAnalysis();}
+}
+function P66_closeArmsTreaties(){var o=document.getElementById('p66armstreaties-overlay');if(o)o.style.display='none';}
+function P66_renderArmsTreatiesAnalysis(){
+  var el=document.getElementById('p66armstreaties-analysis');
+  if(!el)return;
+  var treaties=[
+    {name:'New START',parties:'US / Russia',status:'SUSPENDED',detail:'Russia suspended Feb 2023; US still observing limits; expires 2026 with no follow-on'},
+    {name:'INF Treaty',parties:'US / Russia',status:'DEAD',detail:'US withdrew 2019 after Russia violated; Russia deployed 9M729; both testing prohibited missiles'},
+    {name:'Open Skies',parties:'34 states',status:'DEAD',detail:'US withdrew 2020; Russia 2021; treaty defunct; aerial observation capability lost'},
+    {name:'NPT',parties:'191 states',status:'STRAINED',detail:'Noncompliance (Iran, DPRK); P5 modernizing; review conference failed 2022'},
+    {name:'CWC',parties:'193 states',status:'ACTIVE',detail:'Syria violations; Russia Novichok; OPCW enforcement; UK/US supporting'},
+    {name:'BWC',parties:'183 states',status:'ACTIVE*',detail:'No verification protocol since 2001 US withdrawal; weak enforcement'},
+    {name:'CTBT',parties:'187 signed / 178 ratified',status:'NOT IN FORCE',detail:'US, China, India, Pakistan, Israel not ratified; North Korea not party; tests occurring'},
+    {name:'CFE Treaty',parties:'NATO / Russia',status:'DEAD',detail:'Russia suspended 2007, formally withdrew 2023; conventional forces unconstrained Europe'},
+    {name:'Antarctic Treaty',parties:'56 parties',status:'ACTIVE',detail:'Demilitarized continent; scientific cooperation; territorial claims frozen; China expanding presence'},
+    {name:'Outer Space Treaty',parties:'113 parties',status:'ACTIVE*',detail:'No WMDs in space; peaceful use; but ASAT weapons permitted; gaps growing'},
+  ];
+  var rows=treaties.map(function(t){
+    var col=t.status==='ACTIVE'?'#22c55e':t.status==='SUSPENDED'?'#f59e0b':t.status==='DEAD'?'#ef4444':t.status==='NOT IN FORCE'?'#64748b':'#eab308';
+    return '<tr><td style="color:#e2e8f0;font-weight:700;padding:5px 8px;">'+t.name+'</td>'+
+      '<td style="color:#94a3b8;padding:5px;font-size:7.5px;">'+t.parties+'</td>'+
+      '<td style="padding:5px;"><span style="color:'+col+';font-weight:700;">'+t.status+'</span></td>'+
+      '<td style="color:#94a3b8;font-size:7.5px;padding:5px;">'+t.detail+'</td></tr>';
+  }).join('');
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;">'+
+    '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">TREATY</th><th style="text-align:left;color:#475569;padding:6px;">PARTIES</th><th style="text-align:left;color:#475569;padding:6px;">STATUS</th><th style="text-align:left;color:#475569;padding:6px;">DETAIL</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table>';
+}
+
+// --- HYBRID WARFARE (p66hybrid) ---
+function P66_openHybrid(){
+  var o=document.getElementById('p66hybrid-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('hybrid warfare gray zone operations Russia China information cyber sabotage proxy','p66hybrid-gdelt',2);P66_renderHybridAnalysis();}
+}
+function P66_closeHybrid(){var o=document.getElementById('p66hybrid-overlay');if(o)o.style.display='none';}
+function P66_renderHybridAnalysis(){
+  var el=document.getElementById('p66hybrid-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #8b5cf6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">RUSSIAN HYBRID WARFARE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Gerasimov doctrine:</b> Blend military/nonmilitary tools; information, cyber, economic, proxy, covert<br>'+
+    '<b style="color:#e2e8f0;">Ukraine 2014:</b> Little green men; deniable forces seize Crimea; no unified Western response<br>'+
+    '<b style="color:#e2e8f0;">Donbas 2014-2022:</b> Proxy forces; Russian officers; supply; information domain dominance<br>'+
+    '<b style="color:#e2e8f0;">Baltic pressure:</b> GPS jamming; airspace violations; cyberattacks; energy cutoffs; election IO<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Hybrid warfare succeeded in Crimea; failed in Ukraine 2022; full conventional needed</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #8b5cf6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">CHINESE GRAY ZONE TACTICS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Three Warfares doctrine:</b> Public opinion warfare; psychological warfare; legal warfare (lawfare)<br>'+
+    '<b style="color:#e2e8f0;">Maritime militia:</b> Civilian-crewed vessels with military tasking; SCS presence/harassment<br>'+
+    '<b style="color:#e2e8f0;">Salami tactics:</b> Incremental SCS island-building; each step deniable; fait accompli by cumulation<br>'+
+    '<b style="color:#e2e8f0;">Economic coercion:</b> Trade restrictions; tourism ban; investment leverage; BRI dependency<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Gray zone works below response threshold; Taiwan contingency may shift to overt</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #8b5cf6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">NATO HYBRID RESPONSE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Article 5 threshold:</b> Hybrid attacks may not trigger Article 5; attribution problem; ambiguity<br>'+
+    '<b style="color:#e2e8f0;">STRATCOM Riga:</b> NATO Center of Excellence; monitoring; doctrine development<br>'+
+    '<b style="color:#e2e8f0;">eFP:</b> Enhanced Forward Presence; 4 battlegroups; deterrence by presence not warfighting<br>'+
+    '<b style="color:#e2e8f0;">EU Hybrid Toolbox:</b> Sanctions, diplomatic expulsions, export controls for hybrid attacks<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> NATO improving hybrid resilience; eastern members most exposed; societal resilience key</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #8b5cf6;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#c4b5fd;margin-bottom:8px;">KEY HYBRID TOOLS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Cyber operations:</b> NotPetya ($10B damage); Sandworm Ukraine grid; SolarWinds supply chain<br>'+
+    '<b style="color:#e2e8f0;">Sabotage:</b> Nord Stream; rail lines; GPS jamming in Finland/Baltic; arson at logistics hubs<br>'+
+    '<b style="color:#e2e8f0;">Migration weaponization:</b> Belarus 2021 Iraq migrant crisis; Belarus-Poland border weapon<br>'+
+    '<b style="color:#e2e8f0;">Assassination abroad:</b> Salisbury; Navalny; Khashoggi; Selimovic in Germany; Yenin in Turkey<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Hybrid toolkit expanding; democratic societies more vulnerable; rule of law = vulnerability</div></div>'+
+    '</div>';
+}
+
+// --- FINANCIAL INTELLIGENCE (p66finint) ---
+function P66_openFinInt(){
+  var o=document.getElementById('p66finint-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('financial intelligence FinCEN FINTRAC money laundering terrorism financing sanctions evasion','p66finint-gdelt',2);P66_renderFinIntAnalysis();}
+}
+function P66_closeFinInt(){var o=document.getElementById('p66finint-overlay');if(o)o.style.display='none';}
+function P66_renderFinIntAnalysis(){
+  var el=document.getElementById('p66finint-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">FINANCIAL INTELLIGENCE FRAMEWORK</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">FinCEN (US):</b> Financial Crimes Enforcement Network; SARs (Suspicious Activity Reports); 3M+/yr<br>'+
+    '<b style="color:#e2e8f0;">OFAC (US Treasury):</b> Sanctions enforcement; SDN list; 15,000+ designations; $1B+ penalties<br>'+
+    '<b style="color:#e2e8f0;">Egmont Group:</b> 168 Financial Intelligence Units sharing data; STRs cross-border<br>'+
+    '<b style="color:#e2e8f0;">FATF (Paris):</b> Sets AML/CFT standards; 39 members; blacklist/greylist with market consequences<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Financial intelligence most powerful non-kinetic national security tool after SIGINT</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">SANCTIONS ARCHITECTURE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">US OFAC regime:</b> 38 active sanctions programs; IEEPA authority; secondary sanctions extraterritorial<br>'+
+    '<b style="color:#e2e8f0;">EU sanctions:</b> Unanimity required; Hungary often blocks; less enforcement; Euro not dollar<br>'+
+    '<b style="color:#e2e8f0;">Secondary sanctions:</b> US penalizes third-country entities dealing with sanctioned parties<br>'+
+    '<b style="color:#e2e8f0;">Russia case:</b> G7 $300B frozen; oil price cap; 50th package since 2022; Sberbank/VTB cut off<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Sanctions work with buy-in; evasion via UAE/Turkey/China eroding effectiveness</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">TERRORISM FINANCING TRACKING</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">TFTP (Terrorist Finance Tracking):</b> US-EU SWIFT access program; 40,000+ leads since 9/11<br>'+
+    '<b style="color:#e2e8f0;">Hawala interdiction:</b> Hard to interdict; Pakistan/UAE key hubs; regulation often fails<br>'+
+    '<b style="color:#e2e8f0;">Iran sanctions evasion:</b> Oil sales via ghost ships; front companies; cryptocurrency<br>'+
+    '<b style="color:#e2e8f0;">North Korea crypto:</b> $3B+ stolen; Lazarus converts via mixers; no correspondent banks<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Formal banking tracked well; informal/crypto channels major gap; AI improving detection</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">FinCEN FILES / LEAKS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">FinCEN Files (2020):</b> Leaked SARs; $2T suspicious transactions 1999-2017; HSBC, Deutsche Bank<br>'+
+    '<b style="color:#e2e8f0;">Panama Papers (2016):</b> Mossack Fonseca; 11.5M documents; offshore wealth of global leaders<br>'+
+    '<b style="color:#e2e8f0;">Pandora Papers (2021):</b> 35 world leaders; 300 politicians; $11.3T offshore wealth exposed<br>'+
+    '<b style="color:#e2e8f0;">Luanda Leaks (2020):</b> Isabel dos Santos; Angola wealth; West enabling kleptocracy ecosystem<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Leaks reveal systemic enablement; reform slow; beneficial ownership registries key fix</div></div>'+
+    '</div>';
+}
+
+// --- GLOBAL POWER INDEX (p66poweridx) ---
+function P66_openPowerIdx(){
+  var o=document.getElementById('p66poweridx-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('global power index military GDP diplomatic soft power comprehensive national power','p66poweridx-gdelt',2);P66_renderPowerIdxAnalysis();}
+}
+function P66_closePowerIdx(){var o=document.getElementById('p66poweridx-overlay');if(o)o.style.display='none';}
+function P66_renderPowerIdxAnalysis(){
+  var el=document.getElementById('p66poweridx-analysis');
+  if(!el)return;
+  var powers=[
+    {r:1,c:'United States',mil:100,econ:97,diplo:95,soft:90,score:96,note:'Dominant across all domains; alliance network unique'},
+    {r:2,c:'China',mil:78,econ:88,diplo:75,soft:55,score:79,note:'Rising; gaps in alliance/soft power; nuclear parity building'},
+    {r:3,c:'Russia',mil:75,econ:42,diplo:55,soft:35,score:52,note:'Military power relative to economy; Ukraine depleting reserves'},
+    {r:4,c:'Germany',mil:40,econ:72,diplo:70,soft:75,score:64,note:'Economic/diplomatic leader; military rebuilding post-2022'},
+    {r:5,c:'United Kingdom',mil:55,econ:58,diplo:72,soft:78,score:66,note:'AUKUS/Five Eyes; UNSC; post-Brexit reduced influence'},
+    {r:6,c:'India',mil:65,econ:70,diplo:60,soft:52,score:62,note:'Rising trajectory; democratic anchor; QUAD; non-aligned history'},
+    {r:7,c:'France',mil:58,econ:60,diplo:70,soft:72,score:65,note:'Nuclear; UNSC; EU leadership; Africa influence declining'},
+    {r:8,c:'Japan',mil:45,econ:65,diplo:55,soft:68,score:58,note:'Remilitarizing; Article 9 revision; QUAD; Indo-Pacific pivot'},
+    {r:9,c:'Saudi Arabia',mil:40,econ:55,diplo:50,soft:38,score:46,note:'Energy leverage; Vision 2030; regional power; US dependent'},
+    {r:10,c:'Israel',mil:60,econ:45,diplo:42,soft:35,score:46,note:'Nuclear (undeclared); SIGINT/cyber; regional military superiority'},
+  ];
+  var rows=powers.map(function(p){
+    return '<tr><td style="text-align:center;color:#475569;padding:5px;">#'+p.r+'</td>'+
+      '<td style="color:#e2e8f0;font-weight:700;padding:5px 8px;">'+p.c+'</td>'+
+      '<td style="text-align:center;color:#ef4444;padding:5px;">'+p.mil+'</td>'+
+      '<td style="text-align:center;color:#22c55e;padding:5px;">'+p.econ+'</td>'+
+      '<td style="text-align:center;color:#3b82f6;padding:5px;">'+p.diplo+'</td>'+
+      '<td style="text-align:center;color:#f59e0b;padding:5px;">'+p.soft+'</td>'+
+      '<td style="text-align:center;color:#7dd3fc;font-weight:900;padding:5px;">'+p.score+'</td>'+
+      '<td style="color:#94a3b8;font-size:7.5px;padding:5px;">'+p.note+'</td></tr>';
+  }).join('');
+  el.innerHTML='<div style="font-size:9px;color:#475569;margin-bottom:12px;">COMPOSITE NATIONAL POWER INDEX (0-100) -- Military + Economic + Diplomatic + Soft Power weighted composite</div>'+
+    '<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;">'+
+    '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="color:#475569;padding:6px;">RK</th><th style="text-align:left;color:#475569;padding:6px 8px;">COUNTRY</th><th style="color:#ef4444;padding:6px;">MIL</th><th style="color:#22c55e;padding:6px;">ECON</th><th style="color:#3b82f6;padding:6px;">DIPLO</th><th style="color:#f59e0b;padding:6px;">SOFT</th><th style="color:#7dd3fc;padding:6px;">SCORE</th><th style="text-align:left;color:#475569;padding:6px;">NOTES</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table>';
+}
+
+// --- COVERT OPERATIONS (p66covertops) ---
+function P66_openCovertOps(){
+  var o=document.getElementById('p66covertops-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('covert operation CIA intelligence operation regime change assassination sabotage proxy war','p66covertops-gdelt',2);P66_renderCovertOpsAnalysis();}
+}
+function P66_closeCovertOps(){var o=document.getElementById('p66covertops-overlay');if(o)o.style.display='none';}
+function P66_renderCovertOpsAnalysis(){
+  var el=document.getElementById('p66covertops-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ec4899;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#f9a8d4;margin-bottom:8px;">COVERT ACTION LEGAL BASIS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">US Title 50:</b> National Security Act; Presidential Finding required for covert action<br>'+
+    '<b style="color:#e2e8f0;">Gang of Eight:</b> Congressional notification; limited oversight; key members briefed<br>'+
+    '<b style="color:#e2e8f0;">Executive Order 12333:</b> Reagan 1981; governs intelligence collection; assassination prohibition<br>'+
+    '<b style="color:#e2e8f0;">Legal targeting:</b> US targeted killing legal memo; OLC opinions; AUMF as authority<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> US covert action most institutionalized; accountability mechanisms better than adversaries</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ec4899;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#f9a8d4;margin-bottom:8px;">HISTORICAL OPERATIONS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Operation Ajax (1953):</b> CIA/MI6 overthrew Mosaddegh in Iran; restored Shah; blowback 1979<br>'+
+    '<b style="color:#e2e8f0;">Bay of Pigs (1961):</b> CIA-trained Cuban exiles; failed invasion; JFK humiliation; Cuba-Soviet<br>'+
+    '<b style="color:#e2e8f0;">Operation Cyclone:</b> CIA armed Afghan mujahideen vs Soviets 1979-89; largest covert program<br>'+
+    '<b style="color:#e2e8f0;">Stuxnet (2010):</b> US-Israel cyberweapon; destroyed 1,000 Iranian centrifuges; covert cyber op<br>'+
+    '<b style="color:#e2e8f0;">Ukraine 2013:</b> CIA, NED, State involvement in Euromaidan; Russia narrative of Western coup</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ec4899;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#f9a8d4;margin-bottom:8px;">CURRENT COVERT ACTION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Ukraine support:</b> CIA training since 2015; SOF presence; intelligence sharing confirmed<br>'+
+    '<b style="color:#e2e8f0;">Iran sabotage:</b> Suspected Mossad/CIA operations; scientist assassinations; Natanz explosions<br>'+
+    '<b style="color:#e2e8f0;">Pager attack (2024):</b> Mossad supply chain attack; Hezbollah pagers/radios exploded; 40+ killed<br>'+
+    '<b style="color:#e2e8f0;">Russia sabotage:</b> GRU-linked sabotage of European defense industry; arson; rail disruption<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Covert action normalized; plausible deniability increasingly transparent; blowback risks</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ec4899;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#f9a8d4;margin-bottom:8px;">CYBER AS COVERT ACTION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">US Cyber Command:</b> USCYBERCOM; offensive/defensive; HUNT FORWARD teams in 30+ countries<br>'+
+    '<b style="color:#e2e8f0;">Russian GRU Sandworm:</b> Most aggressive; Ukraine power grid 2015/2016; NotPetya; Olympic Destroyer<br>'+
+    '<b style="color:#e2e8f0;">China APT41:</b> Espionage + financially motivated; healthcare, telecom, government sectors<br>'+
+    '<b style="color:#e2e8f0;">Deniability:</b> Cyber covert action deniable short-term; attribution improving; norms lagging<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Cyber is default covert action tool; lowest cost/risk; high scalability; normalize</div></div>'+
+    '</div>';
+}
+
+// --- WAR POWERS (p66warpow) ---
+function P66_openWarPow(){
+  var o=document.getElementById('p66warpow-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('war powers authorization military force conflict escalation nuclear posture defense doctrine','p66warpow-gdelt',2);P66_renderWarPowAnalysis();}
+}
+function P66_closeWarPow(){var o=document.getElementById('p66warpow-overlay');if(o)o.style.display='none';}
+function P66_renderWarPowAnalysis(){
+  var el=document.getElementById('p66warpow-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">US WAR POWERS FRAMEWORK</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">War Powers Resolution (1973):</b> 60-day limit on unauthorized deployments; rarely enforced<br>'+
+    '<b style="color:#e2e8f0;">AUMF 2001:</b> Authorization vs Al-Qaeda/9/11 groups; expanded far beyond original intent by 20+ administrations<br>'+
+    '<b style="color:#e2e8f0;">AUMF 2002:</b> Iraq; still technically on books; used for ISIS strikes in Iraq<br>'+
+    '<b style="color:#e2e8f0;">Article II authority:</b> Presidents claim inherent CIC authority; bypass Congress; escalation risk<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Congressional war power eroded; executive dominance entrenched; reform stalled</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">NUCLEAR POSTURE REVIEW 2022</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Declaratory policy:</b> US nuclear forces "extreme circumstances" including non-nuclear attack<br>'+
+    '<b style="color:#e2e8f0;">No First Use rejected:</b> Biden NFU pledge abandoned in NPR; alliances demanded extended deterrence<br>'+
+    '<b style="color:#e2e8f0;">Russia threat:</b> Russia primary pacing threat; tactical nuclear use in Ukraine cited as concern<br>'+
+    '<b style="color:#e2e8f0;">China priority:</b> China nuclear buildup acknowledged; two peer competitor first in NPR history<br>'+
+    '<b style="color:#e2e8f0;">Modernization:</b> Columbia-class SSBNs; B21 Raider; LRSO; Sentinel ICBM; W93 warhead</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">ESCALATION DYNAMICS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Kahn escalation ladder:</b> 44 rungs from crisis to nuclear war; each step deliberate<br>'+
+    '<b style="color:#e2e8f0;">Inadvertent escalation:</b> Accidents, misperceptions, third-party provocations triggering larger conflict<br>'+
+    '<b style="color:#e2e8f0;">Conventional-nuclear threshold:</b> Attacks on nuclear facilities or C2 may trigger nuclear response<br>'+
+    '<b style="color:#e2e8f0;">Cyber escalation:</b> Major cyber attack on nuclear infrastructure = potential nuclear response<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Escalation risks highest since Cold War; ambiguity in thresholds increases danger</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #dc2626;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">INTERNATIONAL HUMANITARIAN LAW</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Geneva Conventions:</b> 4 Conventions + 3 Additional Protocols; 196 states; POW, civilian protection<br>'+
+    '<b style="color:#e2e8f0;">Rome Statute:</b> ICC jurisdiction; war crimes, crimes against humanity, genocide, aggression<br>'+
+    '<b style="color:#e2e8f0;">Gaza ICJ case:</b> South Africa vs Israel; provisional measures; genocide allegation<br>'+
+    '<b style="color:#e2e8f0;">Ukraine ICC warrants:</b> Putin, Lvova-Belova arrested if enter ICC territory<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> IHL universally accepted; enforcement selective; accountability possible but rare</div></div>'+
+    '</div>';
+}
+
+// ===== END PHASE 66 =====
 
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
@@ -39518,6 +39945,16 @@ function filterSIGINT(query){
 <button id="p65caucasus-btn" onclick="P65_openCaucasus()">CAUCASUS</button>
 <button id="p65centasia-btn" onclick="P65_openCentAsia()">CENTRAL ASIA</button>
 <button id="p65balkans-btn" onclick="P65_openBalkans()">BALKANS INTEL</button>
+<!-- Phase 66 Col 21 buttons -->
+<button id="p66nuccc-btn" onclick="P66_openNucCC()">NUC C2</button>
+<button id="p66sof-btn" onclick="P66_openSOF()">SPEC OPS</button>
+<button id="p66icmap-btn" onclick="P66_openICMap()">IC MAP</button>
+<button id="p66armstreaties-btn" onclick="P66_openArmsTreaties()">ARMS CTRL</button>
+<button id="p66hybrid-btn" onclick="P66_openHybrid()">HYBRID WAR</button>
+<button id="p66finint-btn" onclick="P66_openFinInt()">FININT</button>
+<button id="p66poweridx-btn" onclick="P66_openPowerIdx()">POWER INDEX</button>
+<button id="p66covertops-btn" onclick="P66_openCovertOps()">COVERT OPS</button>
+<button id="p66warpow-btn" onclick="P66_openWarPow()">WAR POWERS</button>
 
 <!-- South China Sea Overlay (Phase 60) -->
 <div id="p60scs-overlay">
@@ -41292,6 +41729,153 @@ function filterSIGINT(query){
  <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
   <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fda4af;margin-bottom:10px;">LIVE BALKANS INTELLIGENCE -- GDELT</div>
   <div id="p65balkans-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+
+<!-- Phase 66 Overlays -->
+
+<div id="p66nuccc-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fca5a5;">NUCLEAR C2 ANALYSIS</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: USSTRATCOM / SIPRI / NTI / RAND / GDELT</div>
+  </div>
+  <button onclick="P66_closeNucCC()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66nuccc-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fca5a5;margin-bottom:10px;">LIVE NUCLEAR C2 FEED -- GDELT</div>
+  <div id="p66nuccc-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66sof-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#6ee7b7;">SPECIAL OPERATIONS INTEL</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: SOCOM / IISS / CSIS / RAND / GDELT</div>
+  </div>
+  <button onclick="P66_closeSOF()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66sof-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#6ee7b7;margin-bottom:10px;">LIVE SOF INTELLIGENCE -- GDELT</div>
+  <div id="p66sof-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66icmap-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#a5b4fc;">INTELLIGENCE COMMUNITY MAP</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ODNI / OPEN SOURCE / FIVE EYES / GDELT</div>
+  </div>
+  <button onclick="P66_closeICMap()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66icmap-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#a5b4fc;margin-bottom:10px;">LIVE IC INTELLIGENCE -- GDELT</div>
+  <div id="p66icmap-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66armstreaties-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fcd34d;">ARMS CONTROL TREATIES</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: UN ODA / SIPRI / ARMS CONTROL ASSOCIATION / GDELT</div>
+  </div>
+  <button onclick="P66_closeArmsTreaties()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66armstreaties-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fcd34d;margin-bottom:10px;">LIVE ARMS CONTROL FEED -- GDELT</div>
+  <div id="p66armstreaties-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66hybrid-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#c4b5fd;">HYBRID WARFARE DOCTRINE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: NATO STRATCOM / IISS / RAND / HYBRID COE / GDELT</div>
+  </div>
+  <button onclick="P66_closeHybrid()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66hybrid-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#c4b5fd;margin-bottom:10px;">LIVE HYBRID WARFARE FEED -- GDELT</div>
+  <div id="p66hybrid-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66finint-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#86efac;">FINANCIAL INTELLIGENCE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: FINCEN / OFAC / FATF / EGMONT GROUP / GDELT</div>
+  </div>
+  <button onclick="P66_closeFinInt()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66finint-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#86efac;margin-bottom:10px;">LIVE FININT FEED -- GDELT</div>
+  <div id="p66finint-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66poweridx-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#7dd3fc;">GLOBAL POWER INDEX</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: IISS / RAND / CFR / LOWY / CSIS / GDELT</div>
+  </div>
+  <button onclick="P66_closePowerIdx()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66poweridx-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#7dd3fc;margin-bottom:10px;">LIVE POWER DYNAMICS FEED -- GDELT</div>
+  <div id="p66poweridx-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66covertops-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#f9a8d4;">COVERT OPERATIONS</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: OPEN SOURCE / DECLASSIFIED / CONGRESSIONAL RECORDS / GDELT</div>
+  </div>
+  <button onclick="P66_closeCovertOps()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66covertops-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#f9a8d4;margin-bottom:10px;">LIVE COVERT OPS FEED -- GDELT</div>
+  <div id="p66covertops-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p66warpow-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fca5a5;">WAR POWERS ANALYSIS</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: CRS / DOD LAW OF WAR / ICRC / ARMS CONTROL ASSOCIATION / GDELT</div>
+  </div>
+  <button onclick="P66_closeWarPow()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p66warpow-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fca5a5;margin-bottom:10px;">LIVE WAR POWERS FEED -- GDELT</div>
+  <div id="p66warpow-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
  </div>
 </div>
 
