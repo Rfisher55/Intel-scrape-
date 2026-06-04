@@ -5145,6 +5145,26 @@ button{border-radius:2px!important}
 #p64polfinance-btn{position:fixed;top:375px;right:2295px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
 #p64polfinance-btn:hover{border-color:#0369a1;color:#38bdf8;}
 
+/* Phase 65 — Col 20 (right:2410px) regional intelligence */
+#p65arctic-btn{position:fixed;top:55px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65arctic-btn:hover{border-color:#7dd3fc;color:#bae6fd;}
+#p65gulf-btn{position:fixed;top:95px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65gulf-btn:hover{border-color:#fbbf24;color:#fde68a;}
+#p65latam-btn{position:fixed;top:135px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65latam-btn:hover{border-color:#22c55e;color:#86efac;}
+#p65africa-btn{position:fixed;top:175px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65africa-btn:hover{border-color:#f97316;color:#fdba74;}
+#p65sea-btn{position:fixed;top:215px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65sea-btn:hover{border-color:#06b6d4;color:#67e8f9;}
+#p65me-btn{position:fixed;top:255px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65me-btn:hover{border-color:#ef4444;color:#fca5a5;}
+#p65caucasus-btn{position:fixed;top:295px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65caucasus-btn:hover{border-color:#a855f7;color:#d8b4fe;}
+#p65centasia-btn{position:fixed;top:335px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65centasia-btn:hover{border-color:#84cc16;color:#bef264;}
+#p65balkans-btn{position:fixed;top:375px;right:2410px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p65balkans-btn:hover{border-color:#f43f5e;color:#fda4af;}
+
 /* South China Sea overlay */
 #p60scs-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
 .p60scs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
@@ -32532,6 +32552,15 @@ var _MOBILE_MODULES = [
   ['nuclear','BIOSECURITY','P64_openBio','#10b981'],
   ['econ','ENERGY SEC','P64_openEnergy','#f59e0b'],
   ['econ','POL FINANCE','P64_openPolFinance','#0369a1'],
+  ['geo','ARCTIC INTEL','P65_openArctic','#7dd3fc'],
+  ['geo','GULF SECURITY','P65_openGulf','#fbbf24'],
+  ['conflicts','LATIN AMERICA','P65_openLatam','#22c55e'],
+  ['conflicts','AFRICA INTEL','P65_openAfrica','#f97316'],
+  ['geo','SE ASIA INTEL','P65_openSEA','#06b6d4'],
+  ['conflicts','MIDDLE EAST','P65_openME','#ef4444'],
+  ['conflicts','CAUCASUS','P65_openCaucasus','#a855f7'],
+  ['geo','CENTRAL ASIA','P65_openCentAsia','#84cc16'],
+  ['conflicts','BALKANS INTEL','P65_openBalkans','#f43f5e'],
 ];
 
 var _mobileCatMap = {
@@ -36866,6 +36895,414 @@ function P64_renderPolFinanceAnalysis(){
 }
 
 // ===== END PHASE 64 =====
+// ===== PHASE 65: Col 20 Regional Intelligence =====
+
+// --- ARCTIC INTEL (p65arctic) ---
+function P65_openArctic(){
+  var o=document.getElementById('p65arctic-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Arctic military Russia China NATO icebreaker Northern Sea Route sovereignty','p65arctic-gdelt',2);P65_renderArcticAnalysis();}
+}
+function P65_closeArctic(){var o=document.getElementById('p65arctic-overlay');if(o)o.style.display='none';}
+function P65_renderArcticAnalysis(){
+  var el=document.getElementById('p65arctic-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7dd3fc;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bae6fd;margin-bottom:8px;">ARCTIC MILITARY BUILDUP</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Russia Arctic Command:</b> Northern Fleet elevated to military district 2021; 6 Arctic bases reopened<br>'+
+    '<b style="color:#e2e8f0;">Icebreaker fleet:</b> Russia 50+ nuclear icebreakers; US 2 heavy (Polar Star operational); gap critical<br>'+
+    '<b style="color:#e2e8f0;">Bastion defense:</b> Kola Peninsula Bastions of nuclear subs, S-400, Kinzhal; A2/AD zone<br>'+
+    '<b style="color:#e2e8f0;">NATO Arctic:</b> Finland/Sweden joining closed Baltic; Norway, Denmark, Canada increasing exercises<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Arctic militarization accelerating; Russia dominant but NATO closing capability gap</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7dd3fc;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bae6fd;margin-bottom:8px;">NORTHERN SEA ROUTE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Route significance:</b> NSR = 40% shorter Europe-Asia vs Suez; 35+ days saved; ice-free summers by 2035<br>'+
+    '<b style="color:#e2e8f0;">Russian control:</b> Rosatom state corporation manages NSR; icebreaker escort required; fees charged<br>'+
+    '<b style="color:#e2e8f0;">China interest:</b> Polar Silk Road; Chinese vessels using NSR; investment in Russian Arctic LNG<br>'+
+    '<b style="color:#e2e8f0;">Western exclusion:</b> Russian sanctions impede Western shipping; NSR use contested under UNCLOS<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> NSR becoming commercially viable; Russia monetizing but sanctions limiting growth</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7dd3fc;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bae6fd;margin-bottom:8px;">SOVEREIGNTY DISPUTES</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Arctic Council:</b> 8 members; suspended Russian cooperation 2022; governance gap in active militarization<br>'+
+    '<b style="color:#e2e8f0;">Continental shelf claims:</b> Russia, Canada, Denmark (Greenland) overlapping claims at North Pole<br>'+
+    '<b style="color:#e2e8f0;">Svalbard:</b> Norwegian sovereignty; Russian mining presence; demilitarization treaty tensions<br>'+
+    '<b style="color:#e2e8f0;">Greenland:</b> US strategic interest; Trump statements; Denmark sovereignty; rare earth competition<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> UNCLOS arbitration venue; political will for enforcement lacking; strategic competition real</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #7dd3fc;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bae6fd;margin-bottom:8px;">ARCTIC CLIMATE CHANGE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Warming rate:</b> Arctic warming 4x faster than global average; permafrost thaw; methane release<br>'+
+    '<b style="color:#e2e8f0;">Sea ice loss:</b> Summer Arctic ice-free by 2030s-2040s; new shipping routes open; ecosystem collapse<br>'+
+    '<b style="color:#e2e8f0;">Resources unlocked:</b> 13% undiscovered oil; 30% gas; manganese nodules; fisheries migration<br>'+
+    '<b style="color:#e2e8f0;">Permafrost infrastructure:</b> Russian towns sinking; pipeline stability threatened; $182B damage by 2050<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Climate change is the primary driver of Arctic strategic competition</div></div>'+
+    '</div>';
+}
+
+// --- GULF SECURITY (p65gulf) ---
+function P65_openGulf(){
+  var o=document.getElementById('p65gulf-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Gulf security Iran Saudi Arabia UAE Strait of Hormuz Houthis GCC conflict','p65gulf-gdelt',2);P65_renderGulfAnalysis();}
+}
+function P65_closeGulf(){var o=document.getElementById('p65gulf-overlay');if(o)o.style.display='none';}
+function P65_renderGulfAnalysis(){
+  var el=document.getElementById('p65gulf-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #fbbf24;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fde68a;margin-bottom:8px;">IRAN-GCC RIVALRY</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">China-brokered deal:</b> Saudi-Iran diplomatic normalization (March 2023); ambassadors returned<br>'+
+    '<b style="color:#e2e8f0;">Yemen conflict:</b> Houthi-Saudi war; ceasefire holding; Houthis attacking Red Sea shipping<br>'+
+    '<b style="color:#e2e8f0;">Proxy network:</b> IRGC-supported Houthis, Hezbollah, Kataib Hezbollah, Palestinian groups<br>'+
+    '<b style="color:#e2e8f0;">UAE-Iran:</b> Three islands dispute (Abu Musa, Greater/Lesser Tunb); GCC sovereignty demand<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Tactical normalization; structural rivalry unchanged; proxy competition ongoing</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #fbbf24;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fde68a;margin-bottom:8px;">STRAIT OF HORMUZ</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Chokepoint significance:</b> 20% of global oil; 17M bbl/day; closure = global recession<br>'+
+    '<b style="color:#e2e8f0;">Iran threat:</b> Mine warfare; IRGCN speedboat swarms; Shahab-3 anti-ship missiles; closure threat<br>'+
+    '<b style="color:#e2e8f0;">US Fifth Fleet:</b> Bahrain-based; carrier strike group rotations; Operation Prosperity Guardian<br>'+
+    '<b style="color:#e2e8f0;">Tanker incidents:</b> IRGC seizures 2019-2024; UK-flagged Stena Impero; UK-flagged MV Advantage<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Iran will not close strait (economic self-harm); harassment as deterrence and signaling</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #fbbf24;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fde68a;margin-bottom:8px;">GCC GEOPOLITICAL EVOLUTION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Saudi Vision 2030:</b> Economic diversification; NEOM; MBS consolidating power; oil dependency hedge<br>'+
+    '<b style="color:#e2e8f0;">UAE hedging:</b> Strategic autonomy from US; China trade; Abraham Accords with Israel (cooling)<br>'+
+    '<b style="color:#e2e8f0;">Qatar isolation end:</b> Saudi-Qatar blockade (2017-2021) resolved; FIFA World Cup 2022 rehabilitation<br>'+
+    '<b style="color:#e2e8f0;">Kuwait/Bahrain:</b> Kuwait succession dispute; Bahrain dependent on Saudi security guarantee<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> GCC fragmented on Iran policy; unified on regime stability; Saudi-UAE competition in Africa</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #fbbf24;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fde68a;margin-bottom:8px;">HOUTHI RED SEA CAMPAIGN</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Oct 2023 - present:</b> Houthis attacking Israel-linked shipping; 100+ attacks; 2 ships sunk<br>'+
+    '<b style="color:#e2e8f0;">US/UK strikes:</b> Operation Prosperity Guardian strikes on Houthi sites; limited deterrence effect<br>'+
+    '<b style="color:#e2e8f0;">Shipping reroute:</b> $1T/yr Suez rerouting to Cape; 14-day delay; container rates x3-4<br>'+
+    '<b style="color:#e2e8f0;">Weapon supply:</b> Iran providing ballistic missiles, drones; intercepted shipments documented<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Houthis surviving strikes; campaign ongoing; Gaza ceasefire = key trigger for halt</div></div>'+
+    '</div>';
+}
+
+// --- LATIN AMERICA (p65latam) ---
+function P65_openLatam(){
+  var o=document.getElementById('p65latam-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Latin America cartel drug trafficking Venezuela Mexico security crisis authoritarianism','p65latam-gdelt',2);P65_renderLatamAnalysis();}
+}
+function P65_closeLatam(){var o=document.getElementById('p65latam-overlay');if(o)o.style.display='none';}
+function P65_renderLatamAnalysis(){
+  var el=document.getElementById('p65latam-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">CARTEL-STATE DYNAMICS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">CJNG expansion:</b> Cartel Jalisco in 27+ Mexican states; 24+ countries globally; fentanyl supply chain<br>'+
+    '<b style="color:#e2e8f0;">Sinaloa Cartel:</b> El Chapo successors; Chapitos vs Los Mayos civil war 2024; US DEA operations<br>'+
+    '<b style="color:#e2e8f0;">Ecuador collapse:</b> Strategic position for cocaine transshipment; assassination of candidate Villavicencio<br>'+
+    '<b style="color:#e2e8f0;">Haiti gang control:</b> Barbeque (Cherizier) gangs controlling 80% Port-au-Prince; state collapse<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Criminal sovereignty challenging state authority across region; US fentanyl demand driver</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">VENEZUELA CRISIS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Post-election crisis:</b> Maduro declared winner July 2024; Edmundo Gonzalez actual winner per records<br>'+
+    '<b style="color:#e2e8f0;">Military loyalty:</b> FANB remains Maduro pillar; Colectivos paramilitary; SEBIN intelligence<br>'+
+    '<b style="color:#e2e8f0;">Migration crisis:</b> 7.7M Venezuelans displaced; largest regional displacement; Colombia (2.9M) hosting<br>'+
+    '<b style="color:#e2e8f0;">ELN/FARC remnants:</b> Operating in border zones; cocaine production; TREN DE ARAGUA transnational<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Maduro entrenched; economic collapse continuing; US sanctions maintain pressure without effect</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">MEXICO SECURITY</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Homicide rate:</b> 30,000+/yr; cartel territorial disputes; femicide crisis; Journalists killed leader<br>'+
+    '<b style="color:#e2e8f0;">Sheinbaum government:</b> Claudia Sheinbaum first female president; AMLO security approach continuation<br>'+
+    '<b style="color:#e2e8f0;">Fentanyl pressure:</b> US designation threats; tariff linkage; Operation Blue Lotus; Chinese precursors<br>'+
+    '<b style="color:#e2e8f0;">US-Mexico security:</b> Merida Initiative successor; National Guard; 100,000+ Mexican troops deployed<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Cartel-state equilibrium; selective enforcement; US pressure on fentanyl key determinant</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #22c55e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#86efac;margin-bottom:8px;">AUTHORITARIAN DRIFT</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Cuba:</b> Post-Castro era; Diaz-Canel; 2021 protests (11J); economic crisis; fuel shortages<br>'+
+    '<b style="color:#e2e8f0;">Nicaragua:</b> Ortega stripped opposition citizenship; Catholic Church leaders arrested; EU/US sanctions<br>'+
+    '<b style="color:#e2e8f0;">El Salvador:</b> Bukele state of exception; 75,000+ imprisoned; homicide rate dropped 90%<br>'+
+    '<b style="color:#e2e8f0;">Bolivia:</b> Arce vs Morales conflict; attempted coup July 2024; MAS party fragmentation<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Authoritarian resilience in region; Bukele model attracting imitators; democratic backsliding</div></div>'+
+    '</div>';
+}
+
+// --- AFRICA INTEL (p65africa) ---
+function P65_openAfrica(){
+  var o=document.getElementById('p65africa-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Africa security coup Sahel conflict Sudan Congo Nigeria al-Shabaab instability','p65africa-gdelt',2);P65_renderAfricaAnalysis();}
+}
+function P65_closeAfrica(){var o=document.getElementById('p65africa-overlay');if(o)o.style.display='none';}
+function P65_renderAfricaAnalysis(){
+  var el=document.getElementById('p65africa-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f97316;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fdba74;margin-bottom:8px;">SAHEL COUP WAVE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">AES Alliance:</b> Mali, Burkina Faso, Niger junta alliance; expelled France/ECOWAS; invited Wagner<br>'+
+    '<b style="color:#e2e8f0;">ECOWAS response:</b> Military intervention threatened (Niger 2023); backed down; Nigerian opposition<br>'+
+    '<b style="color:#e2e8f0;">French withdrawal:</b> Barkhane ended; Sabre special forces expelled; last French troops 2024<br>'+
+    '<b style="color:#e2e8f0;">Jihadist expansion:</b> JNIM (GSIM) and ISGS advancing despite Africa Corps; civilian massacres<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Sahel becoming ungoverned; coups not solving insecurity; civilian displacement worsening</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f97316;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fdba74;margin-bottom:8px;">SUDAN CIVIL WAR</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">SAF vs RSF:</b> April 2023 outbreak; Khartoum destroyed; RSF controls Darfur and west<br>'+
+    '<b style="color:#e2e8f0;">Humanitarian scale:</b> 10.7M displaced; largest internal crisis globally; famine conditions<br>'+
+    '<b style="color:#e2e8f0;">External actors:</b> UAE backing RSF (gold, drones); Egypt/others supporting SAF; Libya proxy<br>'+
+    '<b style="color:#e2e8f0;">Atrocity evidence:</b> Ethnic cleansing of Masalit in Darfur; ICC investigation opened<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> No military solution imminent; Sudan fragmenting; AU/Jeddah process stalled</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f97316;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fdba74;margin-bottom:8px;">DRC / GREAT LAKES</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">M23 resurgence:</b> Rwanda-backed M23 seized Goma (Jan 2025); eastern DRC fragmented<br>'+
+    '<b style="color:#e2e8f0;">FARDC weakness:</b> DRC army unable to hold territory; SADC mission deployed; casualties<br>'+
+    '<b style="color:#e2e8f0;">Rwanda factor:</b> Kagame denies M23 support; UN Group of Experts documented supply; ICC case<br>'+
+    '<b style="color:#e2e8f0;">Mineral nexus:</b> Coltan, gold, cassiterite funding armed groups; EU conflict minerals regulation<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Eastern DRC permanent crisis; mineral wealth curse; MONUSCO drawdown risky</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f97316;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fdba74;margin-bottom:8px;">HORN OF AFRICA</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Al-Shabaab:</b> Controls 20%+ of Somalia; tax base; AMISOM successor ATMIS; KDF/Kenya pressure<br>'+
+    '<b style="color:#e2e8f0;">Ethiopia stability:</b> Post-Tigray fragile peace; Amhara Fano insurgency; Oromia conflict ongoing<br>'+
+    '<b style="color:#e2e8f0;">Somaliland:</b> De facto independent; Ethiopia MOU controversy; Gulf investment; port access<br>'+
+    '<b style="color:#e2e8f0;">Djibouti:</b> Multi-power basing (US, France, China, Japan); strategic hub; China PLAN expansion<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Horn remains fragile; al-Shabaab resilient; Ethiopia internal tensions key wildcard</div></div>'+
+    '</div>';
+}
+
+// --- SE ASIA INTEL (p65sea) ---
+function P65_openSEA(){
+  var o=document.getElementById('p65sea-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Southeast Asia ASEAN South China Sea Myanmar Philippines Vietnam Indonesia security','p65sea-gdelt',2);P65_renderSEAAnalysis();}
+}
+function P65_closeSEA(){var o=document.getElementById('p65sea-overlay');if(o)o.style.display='none';}
+function P65_renderSEAAnalysis(){
+  var el=document.getElementById('p65sea-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">MYANMAR CIVIL WAR</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Operation 1027 (Oct 2023):</b> MNDAA/TNLA/AA coalition seized major towns; junta losing control<br>'+
+    '<b style="color:#e2e8f0;">PDF/NUG resistance:</b> People Defense Force coordinated with EAOs; junta airstrikes on civilians<br>'+
+    '<b style="color:#e2e8f0;">Junta survival:</b> China tacit support (Kokang issue); Russia weapons supply; conscription desperation<br>'+
+    '<b style="color:#e2e8f0;">Fragmentation:</b> Territory fragmented among 20+ armed groups; de facto partition emerging<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Junta losing but not fallen; no unified opposition; civil war may last decade</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">PHILIPPINES-CHINA SCS FRICTION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Second Thomas Shoal:</b> BRP Sierra Madre beached; PRC CCG water cannon vs AFP resupply<br>'+
+    '<b style="color:#e2e8f0;">Marcos Jr. pro-US pivot:</b> Revived EDCA bases (4 new including Luzon facing Taiwan); US pre-positioning<br>'+
+    '<b style="color:#e2e8f0;">PRC escalation:</b> Military-grade lasers on Philippine vessels; CCG law (2021) claiming jurisdiction<br>'+
+    '<b style="color:#e2e8f0;">US MDT:</b> Mutual Defense Treaty applies to South China Sea attacks; Blinken reaffirmed 2023<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Highest SCS friction since 2016; risk of US-China incident via Philippines escalation</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">ASEAN COHESION</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Myanmar paralysis:</b> Junta excluded from ASEAN summits; Five-Point Consensus ignored; deadlock<br>'+
+    '<b style="color:#e2e8f0;">SCS split:</b> Vietnam, Philippines want stronger language; Cambodia, Laos (China-aligned) water down<br>'+
+    '<b style="color:#e2e8f0;">ASEAN centrality myth:</b> Great powers act regardless; ASEAN consultation but not consultation-driven<br>'+
+    '<b style="color:#e2e8f0;">Economic integration:</b> RCEP (2022) largest FTA; ASEAN-China trade $695B; strategic vs economic split<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> ASEAN cohesion under structural pressure; consensus mechanism fails on hard security</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #06b6d4;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#67e8f9;margin-bottom:8px;">MEKONG GEOPOLITICS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Lancang-Mekong Cooperation:</b> China-led framework vs US-Japan Lower Mekong Initiative<br>'+
+    '<b style="color:#e2e8f0;">Dam cascade:</b> 11 Chinese dams; downstream flow disruption; fisheries collapse; Thailand drought<br>'+
+    '<b style="color:#e2e8f0;">Golden Triangle:</b> Myanmar/Laos/Thailand border; opium/meth production; scam compound operations<br>'+
+    '<b style="color:#e2e8f0;">Scam cities:</b> KK Park, Myawaddy; Chinese telecom fraud billion-dollar industry; 100,000+ trafficked<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Mekong basin = climate, crime, and geopolitical nexus; dam issue intractable</div></div>'+
+    '</div>';
+}
+
+// --- MIDDLE EAST (p65me) ---
+function P65_openME(){
+  var o=document.getElementById('p65me-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Middle East Iran nuclear Gaza Israel Lebanon Syria Iraq conflict ceasefire','p65me-gdelt',2);P65_renderMEAnalysis();}
+}
+function P65_closeME(){var o=document.getElementById('p65me-overlay');if(o)o.style.display='none';}
+function P65_renderMEAnalysis(){
+  var el=document.getElementById('p65me-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">IRAN NUCLEAR PROGRAM</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Enrichment status:</b> 60% U-235 enrichment; stockpile sufficient for multiple weapons if decided<br>'+
+    '<b style="color:#e2e8f0;">Breakout time:</b> Estimated 1-2 weeks to weapons-grade material; warhead development additional<br>'+
+    '<b style="color:#e2e8f0;">IAEA access:</b> Iran revoked inspector access 2021; cameras disabled; monitoring degraded<br>'+
+    '<b style="color:#e2e8f0;">JCPOA status:</b> Dead; Biden revive attempt failed; Trump maximum pressure return; EU E3 talks<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Iran at threshold; political decision to weaponize not yet made; regional proliferation trigger</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">ISRAEL-GAZA-WEST BANK</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Oct 7 aftermath:</b> Hamas attack killed 1,200 Israelis; 250+ hostages; IDF Gaza operation ongoing<br>'+
+    '<b style="color:#e2e8f0;">Gaza casualties:</b> 45,000+ Palestinian deaths (Gaza MoH); 90% population displaced<br>'+
+    '<b style="color:#e2e8f0;">ICJ ruling:</b> Provisional measures against Israel; genocide case by South Africa; ICC warrant issued<br>'+
+    '<b style="color:#e2e8f0;">West Bank:</b> Settler violence escalating; IDF raids; PA authority collapsing; annexation debate<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Two-state solution existentially threatened; regional normalization (Saudi) paused</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">SYRIA POST-ASSAD</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">HTS governance:</b> Hayat Tahrir al-Sham leading transition; Ahmad al-Sharaa (al-Julani) PM<br>'+
+    '<b style="color:#e2e8f0;">Minority concerns:</b> Alawi, Christian, Kurdish communities; early violence incidents; SRSG monitoring<br>'+
+    '<b style="color:#e2e8f0;">Israel strikes:</b> Destroyed 80%+ Syrian military assets Dec 2023; buffer zone expanded<br>'+
+    '<b style="color:#e2e8f0;">Sanctions removal:</b> EU suspended 6 months; US Syria Caesar Act waiver discussions; IMF access<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> HTS pragmatic; Western engagement cautious; reconstruction requires massive investment</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #ef4444;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fca5a5;margin-bottom:8px;">LEBANON HEZBOLLAH</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Nasrallah killed:</b> Hassan Nasrallah killed Sept 2024; Naim Qassem new leader; degraded capability<br>'+
+    '<b style="color:#e2e8f0;">Ceasefire (Nov 2024):</b> Israel-Hezbollah ceasefire; UNIFIL monitoring; LAF deployment south<br>'+
+    '<b style="color:#e2e8f0;">Hezbollah arsenal:</b> 150,000+ rockets pre-war; used 8,000+ in conflict; Iran resupply attempted<br>'+
+    '<b style="color:#e2e8f0;">Lebanon political:</b> President elected after 2-year vacuum (Joseph Aoun); government formation pending<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Hezbollah severely weakened; Syria loss cuts supply route; Iran losing strategic position</div></div>'+
+    '</div>';
+}
+
+// --- CAUCASUS (p65caucasus) ---
+function P65_openCaucasus(){
+  var o=document.getElementById('p65caucasus-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Caucasus Armenia Azerbaijan Georgia South Ossetia Abkhazia Russia conflict','p65caucasus-gdelt',2);P65_renderCaucasusAnalysis();}
+}
+function P65_closeCaucasus(){var o=document.getElementById('p65caucasus-overlay');if(o)o.style.display='none';}
+function P65_renderCaucasusAnalysis(){
+  var el=document.getElementById('p65caucasus-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #a855f7;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d8b4fe;margin-bottom:8px;">ARMENIA-AZERBAIJAN PEACE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Post-Karabakh:</b> Azerbaijan completed military unification Sept 2023; 100K+ Armenians fled<br>'+
+    '<b style="color:#e2e8f0;">Peace treaty:</b> Talks ongoing; 4 villages exchanged; Zangezur corridor demand outstanding<br>'+
+    '<b style="color:#e2e8f0;">Armenia pivot:</b> Exited CSTO de facto; joined ICC; EU mission deployed; US security dialogue<br>'+
+    '<b style="color:#e2e8f0;">Azerbaijan leverage:</b> Energy (BTC pipeline); Israeli arms buyer; EU gas diversification partner<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Peace possible but Azerbaijan has leverage; corridor demand is core sticking point</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #a855f7;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d8b4fe;margin-bottom:8px;">GEORGIA POLITICAL CRISIS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">October 2024 elections:</b> Georgian Dream disputed victory; mass protests; foreign agents law<br>'+
+    '<b style="color:#e2e8f0;">EU candidate:</b> Status granted 2023; now suspended by EU over democratic backsliding<br>'+
+    '<b style="color:#e2e8f0;">Russian influence:</b> Oligarch Ivanishvili Russian business ties; Georgian Dream ambiguous on Ukraine<br>'+
+    '<b style="color:#e2e8f0;">S. Ossetia/Abkhazia:</b> Russian occupied since 2008; Tskhinvali regime; no integration progress<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Georgia at geopolitical crossroads; EU path vs Russian orbit; democratic regression concerning</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #a855f7;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d8b4fe;margin-bottom:8px;">SOUTH CAUCASUS GEOPOLITICS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Russia weakened:</b> Ukraine war reduced Russia leverage; CSTO credibility destroyed in Karabakh<br>'+
+    '<b style="color:#e2e8f0;">Turkey role:</b> Mediated 2020 Nagorno-Karabakh ceasefire; drone supply to Azerbaijan; Zangezur interest<br>'+
+    '<b style="color:#e2e8f0;">Iran factor:</b> Borders Armenia and Azerbaijan; fears Azerbaijani encirclement of Iranian-Azeris<br>'+
+    '<b style="color:#e2e8f0;">EU engagement:</b> Energy corridor; civilian mission; election monitoring; normalization facilitation<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Russia losing South Caucasus; Turkey/EU filling vacuum; region integrating westward</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #a855f7;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#d8b4fe;margin-bottom:8px;">NORTH CAUCASUS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Chechnya:</b> Kadyrov forces in Ukraine; domestic dissent suppressed; succession uncertainty<br>'+
+    '<b style="color:#e2e8f0;">Dagestan attack (2024):</b> Armed attacks on Orthodox church and synagogue; ISIS link claimed<br>'+
+    '<b style="color:#e2e8f0;">Ingushetia/Kabardino-Balkaria:</b> Persistent low-level insurgency; federal security operations<br>'+
+    '<b style="color:#e2e8f0;">Russia internal threat:</b> North Caucasus most volatile RF region; potential rear threat in Ukraine war<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> North Caucasus stable but fragile; Kadyrov succession key risk; ISIS reemergence possible</div></div>'+
+    '</div>';
+}
+
+// --- CENTRAL ASIA (p65centasia) ---
+function P65_openCentAsia(){
+  var o=document.getElementById('p65centasia-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Central Asia Kazakhstan Uzbekistan Kyrgyzstan Tajikistan SCO Russia China influence','p65centasia-gdelt',2);P65_renderCentAsiaAnalysis();}
+}
+function P65_closeCentAsia(){var o=document.getElementById('p65centasia-overlay');if(o)o.style.display='none';}
+function P65_renderCentAsiaAnalysis(){
+  var el=document.getElementById('p65centasia-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #84cc16;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bef264;margin-bottom:8px;">KAZAKHSTAN STABILITY</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">January 2022 crisis:</b> Mass protests; CSTO intervention; Nazarbayev power removed; Tokayev consolidating<br>'+
+    '<b style="color:#e2e8f0;">Multi-vector policy:</b> Refusing anti-Russia sanctions; but not recognizing Ukraine annexations<br>'+
+    '<b style="color:#e2e8f0;">China economic:</b> BRI gateway; Kazakhstan major transit route; Chinese investment without troops<br>'+
+    '<b style="color:#e2e8f0;">Russia sanctions route:</b> Secondary sanction risk; parallel import channel for Russia<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Most stable C5 state; Tokayev navigating Russia/China/West; economic modernization priority</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #84cc16;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bef264;margin-bottom:8px;">TAJIKISTAN-KYRGYZSTAN BORDER</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Sept 2022 war:</b> 3-day armed conflict; 100+ deaths; villages destroyed; 140,000 displaced<br>'+
+    '<b style="color:#e2e8f0;">Settlement:</b> Border delimitation ongoing; CSTO mediation; Russian leverage limited both sides<br>'+
+    '<b style="color:#e2e8f0;">Water/energy nexus:</b> Rogun Dam (Tajikistan) = water weapon against Uzbekistan downstream<br>'+
+    '<b style="color:#e2e8f0;">Fergana Valley:</b> Enclaves, disputed territory, water rights = permanent friction source<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Border conflict risk remains; water disputes will worsen with climate change</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #84cc16;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bef264;margin-bottom:8px;">CHINA IN CENTRAL ASIA</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">BRI investment:</b> $87B+ committed; Kazakhstan, Uzbekistan, Kyrgyzstan key transit routes<br>'+
+    '<b style="color:#e2e8f0;">Uighur question:</b> C5 states repatriating Uighurs to China; Chinese pressure; silence on Xinjiang<br>'+
+    '<b style="color:#e2e8f0;">Security presence:</b> Chinese counter-terrorism cooperation; Tajikistan base reports; Gwadar parallel<br>'+
+    '<b style="color:#e2e8f0;">C5+1 format:</b> US engagement format; infrastructure, climate, security; countering China/Russia<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> China dominant economic player; Russia dominant security player; US limited but present</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #84cc16;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#bef264;margin-bottom:8px;">AFGHANISTAN SPILLOVER</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Taliban border:</b> TTP attacks into Pakistan; ISKP attacks on Uzbekistan/Tajikistan from Afghanistan<br>'+
+    '<b style="color:#e2e8f0;">Drug flows:</b> Afghan heroin still reaching C5/Russia/Europe despite Taliban opium ban<br>'+
+    '<b style="color:#e2e8f0;">Refugee buffer:</b> 1.5M+ Afghans in Iran; C5 states closed borders; Pakistan expelling 1.7M<br>'+
+    '<b style="color:#e2e8f0;">ISKP threat:</b> Moscow Crocus City attack (March 2024) by Tajik ISKP members; Central Asian cells<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Afghanistan exporting instability; C5 security services under ISKP pressure</div></div>'+
+    '</div>';
+}
+
+// --- BALKANS (p65balkans) ---
+function P65_openBalkans(){
+  var o=document.getElementById('p65balkans-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Balkans Serbia Kosovo Bosnia Herzegovina EU enlargement Russia influence stability','p65balkans-gdelt',2);P65_renderBalkansAnalysis();}
+}
+function P65_closeBalkans(){var o=document.getElementById('p65balkans-overlay');if(o)o.style.display='none';}
+function P65_renderBalkansAnalysis(){
+  var el=document.getElementById('p65balkans-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f43f5e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fda4af;margin-bottom:8px;">SERBIA-KOSOVO STATUS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Kosovo recognition:</b> 100+ UN members recognize; Serbia, Russia, China do not; ICJ advisory (2010)<br>'+
+    '<b style="color:#e2e8f0;">North Kosovo 2023:</b> Banjska incident; armed Serb group attacked Kosovo police; KFOR response<br>'+
+    '<b style="color:#e2e8f0;">Dialogue stalled:</b> EU-facilitated Brussels talks; Vucic using Russia card; no implementation<br>'+
+    '<b style="color:#e2e8f0;">Serbian military:</b> Biggest peacetime buildup in 20 years; F-16 purchase; EU arms embargo tension<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Low-level provocation risk; full conflict unlikely given EU/NATO deterrence; frozen conflict</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f43f5e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fda4af;margin-bottom:8px;">BOSNIA INSTABILITY</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Dodik secession:</b> RS entity president Dodik pushing Republika Srpska toward secession; Russia-backed<br>'+
+    '<b style="color:#e2e8f0;">Dayton framework:</b> Dayton Peace Agreement fraying; High Representative still active; EU protectorate<br>'+
+    '<b style="color:#e2e8f0;">NATO membership:</b> BiH NATO aspirant; RS blocking; MAP (Membership Action Plan) progress slow<br>'+
+    '<b style="color:#e2e8f0;">EU candidate:</b> Status granted Dec 2022; accession negotiations opened 2024; RS blocking<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Bosnia most fragile WB state; Dodik emboldened by Russian support; secession unlikely short-term</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f43f5e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fda4af;margin-bottom:8px;">EU ENLARGEMENT PROSPECTS</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Western Balkans 6:</b> Albania, North Macedonia, Serbia, Bosnia, Montenegro, Kosovo; 2030 target floated<br>'+
+    '<b style="color:#e2e8f0;">Montenegro closest:</b> 33 of 35 chapters opened; rule of law key obstacle; Djukanovic replaced<br>'+
+    '<b style="color:#e2e8f0;">Albania/N. Macedonia:</b> Joined opening conferences; progress on judicial reform; bilateral issues<br>'+
+    '<b style="color:#e2e8f0;">Enlargement fatigue:</b> EU internal reform needed before expansion; Hungary/Austria skeptics<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> EU integration = peace anchor; enlargement delay = Russian spoiler opportunity</div></div>'+
+    '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #f43f5e;border-radius:6px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:900;color:#fda4af;margin-bottom:8px;">RUSSIAN INFLUENCE</div>'+
+    '<div style="font-size:8px;color:#94a3b8;line-height:1.6;">'+
+    '<b style="color:#e2e8f0;">Serbian energy:</b> NIS oil company majority Russian-owned; gas dependency; Serbia-Russia gas deal<br>'+
+    '<b style="color:#e2e8f0;">Orthodox church:</b> Russian-Serbian Orthodox alignment; common narrative of Western anti-Slavic bias<br>'+
+    '<b style="color:#e2e8f0;">Disinformation:</b> Anti-NATO, anti-EU narratives in Serbian media; Russian-backed outlets<br>'+
+    '<b style="color:#e2e8f0;">Intelligence networks:</b> GRU coup attempt in Montenegro (2016); election interference Albania<br>'+
+    '<b style="color:#e2e8f0;">Assessment:</b> Russia presence weakened post-2022 but embedded; Balkans = geopolitical buffer zone</div></div>'+
+    '</div>';
+}
+
+// ===== END PHASE 65 =====
 
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
@@ -39071,6 +39508,16 @@ function filterSIGINT(query){
 <button id="p64bio-btn" onclick="P64_openBio()">BIOSECURITY</button>
 <button id="p64energy-btn" onclick="P64_openEnergy()">ENERGY SEC</button>
 <button id="p64polfinance-btn" onclick="P64_openPolFinance()">POL FINANCE</button>
+<!-- Phase 65 Col 20 buttons -->
+<button id="p65arctic-btn" onclick="P65_openArctic()">ARCTIC INTEL</button>
+<button id="p65gulf-btn" onclick="P65_openGulf()">GULF SECURITY</button>
+<button id="p65latam-btn" onclick="P65_openLatam()">LATIN AMERICA</button>
+<button id="p65africa-btn" onclick="P65_openAfrica()">AFRICA INTEL</button>
+<button id="p65sea-btn" onclick="P65_openSEA()">SE ASIA INTEL</button>
+<button id="p65me-btn" onclick="P65_openME()">MIDDLE EAST</button>
+<button id="p65caucasus-btn" onclick="P65_openCaucasus()">CAUCASUS</button>
+<button id="p65centasia-btn" onclick="P65_openCentAsia()">CENTRAL ASIA</button>
+<button id="p65balkans-btn" onclick="P65_openBalkans()">BALKANS INTEL</button>
 
 <!-- South China Sea Overlay (Phase 60) -->
 <div id="p60scs-overlay">
@@ -40698,6 +41145,153 @@ function filterSIGINT(query){
  <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
   <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#38bdf8;margin-bottom:10px;">LIVE POLITICAL FINANCE FEED -- GDELT</div>
   <div id="p64polfinance-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+
+<!-- Phase 65 Overlays -->
+
+<div id="p65arctic-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#bae6fd;">ARCTIC INTELLIGENCE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: CSIS / IISS / SIPRI / US ARCTIC STRATEGY / GDELT</div>
+  </div>
+  <button onclick="P65_closeArctic()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65arctic-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#bae6fd;margin-bottom:10px;">LIVE ARCTIC INTELLIGENCE -- GDELT</div>
+  <div id="p65arctic-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65gulf-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fde68a;">GULF SECURITY MONITOR</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: IISS / RAND / CENTCOM / ICG / GDELT</div>
+  </div>
+  <button onclick="P65_closeGulf()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65gulf-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fde68a;margin-bottom:10px;">LIVE GULF INTELLIGENCE -- GDELT</div>
+  <div id="p65gulf-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65latam-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#86efac;">LATIN AMERICA INTEL</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ICG / WOLA / InSight Crime / IOM / GDELT</div>
+  </div>
+  <button onclick="P65_closeLatam()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65latam-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#86efac;margin-bottom:10px;">LIVE LATAM INTELLIGENCE -- GDELT</div>
+  <div id="p65latam-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65africa-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fdba74;">AFRICA INTELLIGENCE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ACLED / AU / OCHA / ICG / GDELT</div>
+  </div>
+  <button onclick="P65_closeAfrica()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65africa-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fdba74;margin-bottom:10px;">LIVE AFRICA INTELLIGENCE -- GDELT</div>
+  <div id="p65africa-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65sea-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#67e8f9;">SOUTHEAST ASIA INTEL</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ASEAN / IISS / ISEAS-YUSOF ISHAK / GDELT</div>
+  </div>
+  <button onclick="P65_closeSEA()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65sea-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#67e8f9;margin-bottom:10px;">LIVE SE ASIA INTELLIGENCE -- GDELT</div>
+  <div id="p65sea-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65me-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fca5a5;">MIDDLE EAST INTELLIGENCE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: IAEA / ICG / IISS / SIPRI / GDELT</div>
+  </div>
+  <button onclick="P65_closeME()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65me-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fca5a5;margin-bottom:10px;">LIVE MIDDLE EAST INTELLIGENCE -- GDELT</div>
+  <div id="p65me-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65caucasus-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#d8b4fe;">CAUCASUS INTELLIGENCE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: ICG / EEAS / OSCE / COUNCIL OF EUROPE / GDELT</div>
+  </div>
+  <button onclick="P65_closeCaucasus()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65caucasus-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#d8b4fe;margin-bottom:10px;">LIVE CAUCASUS INTELLIGENCE -- GDELT</div>
+  <div id="p65caucasus-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65centasia-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#bef264;">CENTRAL ASIA INTELLIGENCE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: SCO / OSCE / ICG / CABAR / GDELT</div>
+  </div>
+  <button onclick="P65_closeCentAsia()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65centasia-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#bef264;margin-bottom:10px;">LIVE CENTRAL ASIA INTELLIGENCE -- GDELT</div>
+  <div id="p65centasia-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p65balkans-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="font-size:7px;letter-spacing:.18em;color:#475569;margin-bottom:2px;">CLASSIFICATION: UNCLASSIFIED // OSINT DERIVED</div>
+   <div style="font-size:18px;font-weight:900;letter-spacing:.3em;color:#fda4af;">BALKANS INTELLIGENCE</div>
+   <div style="font-size:9px;color:#475569;letter-spacing:.1em;">SOURCE: EU / OSCE / NATO / ICG / GDELT</div>
+  </div>
+  <button onclick="P65_closeBalkans()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p65balkans-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#fda4af;margin-bottom:10px;">LIVE BALKANS INTELLIGENCE -- GDELT</div>
+  <div id="p65balkans-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
  </div>
 </div>
 
