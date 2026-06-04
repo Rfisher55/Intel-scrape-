@@ -5223,6 +5223,98 @@ button{border-radius:2px!important}
 #p68asiapac-btn:hover{border-color:#ec4899;color:#f9a8d4;}
 #p68globalorg-btn{position:fixed;top:375px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
 #p68globalorg-btn:hover{border-color:#06b6d4;color:#a5f3fc;}
+
+/* ── REDESIGN: hide all scattered legacy buttons ── */
+#darkweb-btn,#debtcrisis-btn,#orgcrime-btn,#p40energysec-btn,#migration-btn,#p40arctic-btn,#p46sigint-btn,#proxy-btn,#psych-btn,#pandemic-btn,#piracy-btn,#polpris-btn,#protests-btn,#icstruct-btn,#terrortrack-btn,#geocal-btn,#chemweap-btn,#spacewar-btn,#proxywars-btn,#portsecurity-btn,#popintel-btn,#p51coupwatch-btn,#p52narco-btn,#p52refugee-btn,#p52climate-btn,#p53bio-btn,#p53crime-btn,#p53drone-btn,#p54space-btn,#p54cable-btn,#p54pandemic-btn,#p55hostage-btn,#p55election-btn,#p55finwar-btn,#p56arctic-btn,#p56infra-btn,#p56nuclear-btn,#p57tranrep-btn,#p57milspend-btn,#p57supplychain-btn,#p58doctrine-btn,#p58migration-btn,#p58infowar-btn,#p59crisis-btn,#p59intel-btn,#p59lawfare-btn,#p60scs-btn,#p60taiwan-btn,#p60korea-btn,#p61trade-btn,#p61milec-btn,#p61nukesec-btn,#p61dedollar-btn,#p61merc-btn,#p62georisk-btn,#p63gpc-btn,#p63techcw-btn,#p63regsurv-btn,#p63alliance-btn,#p63border-btn,#p63coerce-btn,#p64propwar-btn,#p64refugee-btn,#p64reswars-btn,#p64space-btn,#p64chem-btn,#p64critinfra-btn,#p64disinfoops-btn,#p64climate-btn,#p64transcrime-btn,#p64bio-btn,#p64energy-btn,#p64polfinance-btn,#p65arctic-btn,#p65gulf-btn,#p65latam-btn,#p65africa-btn,#p65sea-btn,#p65me-btn,#p65caucasus-btn,#p65centasia-btn,#p65balkans-btn,#p66nuccc-btn,#p66sof-btn,#p66icmap-btn,#p66armstreaties-btn,#p66hybrid-btn,#p66finint-btn,#p66poweridx-btn,#p66covertops-btn,#p66warpow-btn,#p67drone-btn,#p67chembio-btn,#p67spacewar-btn,#p67elecwar-btn,#p67cyberops-btn,#p67mediawar-btn,#p67energysec-btn,#p67terrornet-btn,#p67bordersec-btn,#p68naval-btn,#p68wmdprolif-btn,#p68intelops-btn,#p68arcticrace-btn,#p68afrstrat-btn,#p68latam-btn,#p68mebal-btn,#p68asiapac-btn,#p68globalorg-btn{display:none!important;}
+
+/* ════════════════════════════════════════════════════════
+   INTELLIGENCE COMMAND PANEL — redesigned navigation
+   ════════════════════════════════════════════════════════ */
+#intel-toggle-btn{
+  position:fixed;top:12px;right:12px;z-index:9000;
+  background:rgba(15,23,42,0.95);border:1px solid #334155;
+  color:#94a3b8;font-family:'Courier New',monospace;font-size:10px;
+  letter-spacing:.15em;padding:7px 14px;cursor:pointer;
+  transition:all .2s;user-select:none;
+}
+#intel-toggle-btn:hover{border-color:#3b82f6;color:#93c5fd;background:rgba(15,23,42,1);}
+#intel-toggle-btn.active{border-color:#3b82f6;color:#93c5fd;}
+
+#intel-panel{
+  position:fixed;top:0;right:0;height:100vh;width:380px;z-index:8999;
+  background:rgba(2,4,14,0.98);border-left:1px solid #1e293b;
+  display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+  font-family:'Courier New',monospace;
+}
+#intel-panel.open{transform:translateX(0);}
+
+#intel-panel-header{
+  padding:14px 16px 10px;border-bottom:1px solid #1e293b;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+#intel-panel-title{color:#e2e8f0;font-size:11px;letter-spacing:.25em;}
+#intel-panel-subtitle{color:#475569;font-size:8px;letter-spacing:.1em;margin-top:2px;}
+
+#intel-search{
+  margin:10px 12px;padding:6px 10px;flex-shrink:0;
+  background:rgba(15,23,42,0.8);border:1px solid #1e293b;
+  color:#94a3b8;font-family:'Courier New',monospace;font-size:9px;
+  letter-spacing:.05em;outline:none;width:calc(100% - 24px);box-sizing:border-box;
+}
+#intel-search:focus{border-color:#334155;}
+#intel-search::placeholder{color:#334155;}
+
+#intel-panel-body{flex:1;overflow-y:auto;padding:0 0 20px;scrollbar-width:thin;scrollbar-color:#1e293b transparent;}
+
+.icat{border-bottom:1px solid rgba(255,255,255,.04);}
+.icat-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 14px 8px;cursor:pointer;user-select:none;
+}
+.icat-header:hover{background:rgba(255,255,255,.02);}
+.icat-label{font-size:9px;letter-spacing:.2em;font-weight:700;}
+.icat-count{font-size:8px;color:#334155;letter-spacing:.05em;}
+.icat-arrow{font-size:8px;color:#334155;transition:transform .2s;}
+.icat.expanded .icat-arrow{transform:rotate(90deg);}
+.icat-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:4px;
+  padding:4px 12px 10px;
+  display:none;
+}
+.icat.expanded .icat-grid{display:grid;}
+
+.imod-btn{
+  background:rgba(15,23,42,0.6);border:1px solid #1e293b;
+  color:#64748b;font-family:'Courier New',monospace;font-size:8px;
+  letter-spacing:.08em;padding:6px 8px;cursor:pointer;text-align:left;
+  transition:all .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.imod-btn:hover{background:rgba(15,23,42,0.9);color:#cbd5e1;}
+.imod-btn.hidden-filter{display:none;}
+
+/* Category color accents */
+.icat[data-cat="conflicts"] .icat-label{color:#ef4444;}
+.icat[data-cat="conflicts"] .imod-btn:hover{border-color:#ef4444;}
+.icat[data-cat="nuclear"] .icat-label{color:#f97316;}
+.icat[data-cat="nuclear"] .imod-btn:hover{border-color:#f97316;}
+.icat[data-cat="intel"] .icat-label{color:#8b5cf6;}
+.icat[data-cat="intel"] .imod-btn:hover{border-color:#8b5cf6;}
+.icat[data-cat="cyber"] .icat-label{color:#06b6d4;}
+.icat[data-cat="cyber"] .imod-btn:hover{border-color:#06b6d4;}
+.icat[data-cat="threats"] .icat-label{color:#dc2626;}
+.icat[data-cat="threats"] .imod-btn:hover{border-color:#dc2626;}
+.icat[data-cat="regional"] .icat-label{color:#3b82f6;}
+.icat[data-cat="regional"] .imod-btn:hover{border-color:#3b82f6;}
+.icat[data-cat="econ"] .icat-label{color:#22c55e;}
+.icat[data-cat="econ"] .imod-btn:hover{border-color:#22c55e;}
+.icat[data-cat="human"] .icat-label{color:#f59e0b;}
+.icat[data-cat="human"] .imod-btn:hover{border-color:#f59e0b;}
+
+#intel-panel-body::-webkit-scrollbar{width:4px;}
+#intel-panel-body::-webkit-scrollbar-track{background:transparent;}
+#intel-panel-body::-webkit-scrollbar-thumb{background:#1e293b;border-radius:2px;}
+
 /* South China Sea overlay */
 #p60scs-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
 .p60scs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
@@ -38631,6 +38723,49 @@ function P68_renderGlobalOrg(){
   +'</div></div>'
   +'</div>';}
 
+
+// ── Intelligence Command Panel ──
+function toggleIntelPanel(){
+  var panel=document.getElementById('intel-panel');
+  var btn=document.getElementById('intel-toggle-btn');
+  if(!panel)return;
+  var open=panel.classList.toggle('open');
+  if(btn){btn.classList.toggle('active',open);btn.innerHTML=open?'&#x25A6; INTEL &nbsp;&#x25B4;':'&#x25A6; INTEL &nbsp;&#x25BE;';}
+}
+function toggleIntelCat(el){
+  el.classList.toggle('expanded');
+}
+function filterIntelModules(query){
+  var q=query.toLowerCase().trim();
+  document.querySelectorAll('.imod-btn').forEach(function(b){
+    b.classList.toggle('hidden-filter', q.length>0 && !b.textContent.toLowerCase().includes(q));
+  });
+  // Auto-expand cats that have matches when filtering
+  document.querySelectorAll('.icat').forEach(function(cat){
+    var visible=[...cat.querySelectorAll('.imod-btn')].filter(b=>!b.classList.contains('hidden-filter'));
+    if(q.length>0){
+      cat.classList.toggle('expanded', visible.length>0);
+    }
+  });
+}
+// Helpers for buttons that use addEventListener (ensure they work via direct call)
+function _openPortSecurity(){
+  var ov=document.getElementById('portsecurity-overlay');
+  if(ov){ov.style.display='flex';if(typeof _renderPortSecurity==='function')_renderPortSecurity();}
+}
+function _openPopIntel(){
+  var ov=document.getElementById('popintel-overlay');
+  if(ov){ov.style.display='flex';if(typeof _renderPopIntel==='function')_renderPopIntel();}
+}
+function _openOrgCrimeOverlay(){
+  var ov=document.getElementById('orgcrime-overlay');
+  if(ov){ov.style.display='flex';if(typeof _renderOrgCrime==='function')_renderOrgCrime();}
+}
+function _openDebtCrisisOverlay(){
+  var ov=document.getElementById('debtcrisis-overlay');
+  if(ov){ov.style.display='flex';if(typeof _renderDebtCrisis==='function')_renderDebtCrisis();}
+}
+
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
  const list=document.getElementById('sigint-feed');
@@ -43067,5 +43202,222 @@ function filterSIGINT(query){
   <div id="p68globalorg-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
  </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════
+     INTELLIGENCE COMMAND PANEL
+     ═══════════════════════════════════════════════════ -->
+<button id="intel-toggle-btn" onclick="toggleIntelPanel()">&#x25A6; INTEL &nbsp;&#x25BE;</button>
+
+<div id="intel-panel">
+  <div id="intel-panel-header">
+    <div>
+      <div id="intel-panel-title">&#x25A6; INTELLIGENCE COMMAND</div>
+      <div id="intel-panel-subtitle">94 MODULES &nbsp;/&nbsp; 8 CATEGORIES &nbsp;/&nbsp; LIVE GDELT FEEDS</div>
+    </div>
+    <button onclick="toggleIntelPanel()" style="background:transparent;border:1px solid #1e293b;color:#475569;font-family:'Courier New',monospace;font-size:9px;padding:3px 8px;cursor:pointer;letter-spacing:.1em;">&#x2715;</button>
+  </div>
+  <input id="intel-search" type="text" placeholder="Search modules..." oninput="filterIntelModules(this.value)">
+  <div id="intel-panel-body">
+<div class="icat" data-cat="conflicts">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">⚔ ACTIVE CONFLICTS</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">10 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="_openSCSModule()">SOUTH CHINA SEA</button>
+<button class="imod-btn" onclick="_openTaiwanModule()">TAIWAN STRAIT</button>
+<button class="imod-btn" onclick="_openKoreaModule()">KOREAN PENINSULA</button>
+<button class="imod-btn" onclick="_openProxyWars()">PROXY WARS</button>
+<button class="imod-btn" onclick="_openCoupWatch()">COUP WATCH</button>
+<button class="imod-btn" onclick="_openCrisisModule()">CRISIS FEED</button>
+<button class="imod-btn" onclick="P63_openGPC()">GREAT POWER</button>
+<button class="imod-btn" onclick="P63_openAlliance()">ALLIANCES</button>
+<button class="imod-btn" onclick="P63_openBorder()">BORDER INTEL</button>
+<button class="imod-btn" onclick="P62_openGeoRisk()">GEO RISK</button>
+  </div>
+</div>
+<div class="icat" data-cat="nuclear">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">&#x2622; NUCLEAR & WMD</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">9 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="P66_openNucCC()">NUC COMMAND CTRL</button>
+<button class="imod-btn" onclick="P68_openWmdProlif()">WMD PROLIF</button>
+<button class="imod-btn" onclick="P66_openArmsTreaties()">ARMS TREATIES</button>
+<button class="imod-btn" onclick="P61_openNukesec()">NUKE SECURITY</button>
+<button class="imod-btn" onclick="openChemWeap()">CHEM WEAPONS</button>
+<button class="imod-btn" onclick="P67_openChemBio()">CHEM BIO</button>
+<button class="imod-btn" onclick="_openNuclearModule()">NUCLEAR ACCIDENTS</button>
+<button class="imod-btn" onclick="P64_openSpace()">SPACE WEAPONS</button>
+<button class="imod-btn" onclick="P64_openBio()">BIOSECURITY</button>
+  </div>
+</div>
+<div class="icat" data-cat="intel">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">&#x25C9; INTELLIGENCE</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">10 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="P68_openIntelOps()">INTEL OPS</button>
+<button class="imod-btn" onclick="P66_openICMap()">IC MAP</button>
+<button class="imod-btn" onclick="P66_openSOF()">SPEC OPS</button>
+<button class="imod-btn" onclick="P66_openCovertOps()">COVERT OPS</button>
+<button class="imod-btn" onclick="P66_openWarPow()">WAR POWERS</button>
+<button class="imod-btn" onclick="openPsychIntel()">PSYCH INTEL</button>
+<button class="imod-btn" onclick="openICStruct()">IC STRUCTURE</button>
+<button class="imod-btn" onclick="openTerrorTrack()">TERROR TRACK</button>
+<button class="imod-btn" onclick="openGeoCal()">GEO CALENDAR</button>
+<button class="imod-btn" onclick="_openCyberIntel()">IC COMMUNITY</button>
+  </div>
+</div>
+<div class="icat" data-cat="cyber">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">&#x25A3; CYBER & TECH</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">12 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="P67_openCyberOps()">CYBER OPS</button>
+<button class="imod-btn" onclick="P67_openElecWar()">ELEC WARFARE</button>
+<button class="imod-btn" onclick="P67_openSpaceWar()">SPACE WAR</button>
+<button class="imod-btn" onclick="P67_openDrone()">DRONE WAR</button>
+<button class="imod-btn" onclick="P66_openHybrid()">HYBRID WAR</button>
+<button class="imod-btn" onclick="P63_openTechCW()">TECH COLD WAR</button>
+<button class="imod-btn" onclick="P64_openCritInfra()">CRIT INFRA</button>
+<button class="imod-btn" onclick="_openCableModule()">UNDERSEA CABLES</button>
+<button class="imod-btn" onclick="_openDarkWebOverlay()">DARK WEB</button>
+<button class="imod-btn" onclick="_openSupplyChainModule()">SUPPLY CHAIN</button>
+<button class="imod-btn" onclick="P64_openDisinfoOps()">DISINFO OPS</button>
+<button class="imod-btn" onclick="P67_openMediaWar()">MEDIA WAR</button>
+  </div>
+</div>
+<div class="icat" data-cat="threats">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">&#x25B2; THREATS</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">12 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="P67_openTerrorNet()">TERROR NET</button>
+<button class="imod-btn" onclick="_openBio()">BIOTERROR</button>
+<button class="imod-btn" onclick="P64_openTranscrime()">TRANS CRIME</button>
+<button class="imod-btn" onclick="_openNarcoModule()">NARCO STATES</button>
+<button class="imod-btn" onclick="P67_openBorderSec()">BORDER SEC</button>
+<button class="imod-btn" onclick="P63_openRegsurv()">REGIME SURVEIL</button>
+<button class="imod-btn" onclick="_openTranRepModule()">TRANS REPRESSION</button>
+<button class="imod-btn" onclick="_openCrimeModule()">CRIME SYNDICATES</button>
+<button class="imod-btn" onclick="openPiracyWatch()">PIRACY WATCH</button>
+<button class="imod-btn" onclick="openPolPris()">POL PRISONERS</button>
+<button class="imod-btn" onclick="openProtests()">PROTESTS</button>
+<button class="imod-btn" onclick="_openLawfareModule()">LAWFARE</button>
+  </div>
+</div>
+<div class="icat" data-cat="regional">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">&#x25E6; REGIONAL</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">13 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="P68_openMEBal()">MIDEAST BALANCE</button>
+<button class="imod-btn" onclick="P68_openAsiaPac()">ASIA PACIFIC</button>
+<button class="imod-btn" onclick="P68_openAfrStrat()">AFRICA STRATEGY</button>
+<button class="imod-btn" onclick="P68_openLatam()">LATAM SECURITY</button>
+<button class="imod-btn" onclick="P65_openSEA()">SE ASIA</button>
+<button class="imod-btn" onclick="P65_openGulf()">GULF SECURITY</button>
+<button class="imod-btn" onclick="P65_openCaucasus()">CAUCASUS</button>
+<button class="imod-btn" onclick="P65_openCentAsia()">CENTRAL ASIA</button>
+<button class="imod-btn" onclick="P65_openBalkans()">BALKANS</button>
+<button class="imod-btn" onclick="P68_openArcticRace()">ARCTIC RACE</button>
+<button class="imod-btn" onclick="P65_openME()">MIDDLE EAST</button>
+<button class="imod-btn" onclick="P65_openAfrica()">AFRICA INTEL</button>
+<button class="imod-btn" onclick="P65_openArctic()">ARCTIC INTEL</button>
+  </div>
+</div>
+<div class="icat" data-cat="econ">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">&#x25B8; ECONOMIC</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">15 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="P67_openEnergySec()">ENERGY SECURITY</button>
+<button class="imod-btn" onclick="P61_openTrade()">TRADE WAR</button>
+<button class="imod-btn" onclick="P61_openDedollar()">DE-DOLLARIZATION</button>
+<button class="imod-btn" onclick="P64_openPolFinance()">POL FINANCE</button>
+<button class="imod-btn" onclick="P66_openFinInt()">FIN INTELLIGENCE</button>
+<button class="imod-btn" onclick="P64_openResWars()">RESOURCE WARS</button>
+<button class="imod-btn" onclick="P66_openPowerIdx()">POWER INDEX</button>
+<button class="imod-btn" onclick="_openFinwarModule()">FINANCIAL WARFARE</button>
+<button class="imod-btn" onclick="P63_openCoerce()">ECON COERCION</button>
+<button class="imod-btn" onclick="_openMilSpendModule()">MIL SPENDING</button>
+<button class="imod-btn" onclick="P61_openMerc()">MERCENARIES</button>
+<button class="imod-btn" onclick="P61_openMilec()">MILITIA ECON</button>
+<button class="imod-btn" onclick="P64_openPropwar()">PROP WARFARE</button>
+<button class="imod-btn" onclick="_openDebtCrisisOverlay()">DEBT CRISIS</button>
+<button class="imod-btn" onclick="_openOrgCrimeOverlay()">ORG CRIME</button>
+  </div>
+</div>
+<div class="icat" data-cat="human">
+  <div class="icat-header" onclick="toggleIntelCat(this.parentElement)">
+    <div>
+      <div class="icat-label">&#x25A1; HUMAN & GOV</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="icat-count">13 modules</span>
+      <span class="icat-arrow">&#x25B6;</span>
+    </div>
+  </div>
+  <div class="icat-grid">
+<button class="imod-btn" onclick="P64_openRefugee()">REFUGEE CRISIS</button>
+<button class="imod-btn" onclick="_openHostageModule()">HOSTAGE TRACKER</button>
+<button class="imod-btn" onclick="P64_openClimate()">CLIMATE SECURITY</button>
+<button class="imod-btn" onclick="_openMigration()">MIGRATION CRISIS</button>
+<button class="imod-btn" onclick="_openPandemicModule()">PANDEMIC WATCH</button>
+<button class="imod-btn" onclick="_openElectionModule()">ELECTION SEC</button>
+<button class="imod-btn" onclick="_openDoctrineModule()">MIL DOCTRINE</button>
+<button class="imod-btn" onclick="_openInfowarModule()">INFO WARFARE</button>
+<button class="imod-btn" onclick="P68_openGlobalOrg()">GLOBAL ORG</button>
+<button class="imod-btn" onclick="_openPortSecurity()">PORT SECURITY</button>
+<button class="imod-btn" onclick="_openPopIntel()">POP INTEL</button>
+<button class="imod-btn" onclick="_openSpace()">SPACE INTEL</button>
+<button class="imod-btn" onclick="P68_openNaval()">NAVAL POWER</button>
+  </div>
+</div>
+  </div>
+</div>
+
 </body>
 </html>
