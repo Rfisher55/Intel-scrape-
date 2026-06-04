@@ -5858,9 +5858,572 @@ body{
 .ai-log-item.pattern{color:#22c55e;}
 .ai-log-timestamp{color:#0f172a;margin-right:8px;}
 
+
+/* ── UX OVERHAUL: Hide globe-view clutter ── */
+/* ── Hide all overlay/module containers by default ── */
+/* Low specificity: overridden by .open rules and inline style="" attribute */
+div[id$="-overlay"], div[id$="-module"] { display: none; }
+div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
+
+/* Extra: hide specific non-overlay panels that shouldn't show by default */
+#p40energysec-overlay { display: none !important; }
+#intel-dashboard:not(.open) { display: none !important; }
+
+/* ── NUKE ALL LEGACY BUTTONS ── */
+[id$="-btn"]:not(#tab-globe):not(#tab-intel):not(#tab-layers) {
+  display: none !important;
+}
+/* Also hide specific non-btn clutter */
+#defcon-display { display: none !important; }
+#rankings-btn   { display: none !important; }
+#sigint-btn     { display: none !important; }
+#newsticker     { display: none !important; }
+/* Keep live-ticker but push it below mode-bar */
+#live-ticker    { top: 68px !important; z-index: 5900 !important; }
+#live-status-bar{ display: none !important; }
+#intel-panel    { display: none !important; }
+
+#intel-toggle-btn { display:none !important; }
+#ai-engine-toggle { display:none !important; }
+#ai-engine-panel  { display:none !important; }
+#social-btn       { display:none !important; }
+#social-panel     { display:none !important; }
+
+/* Layers panel: collapsed by default, icon-only strip */
+#layers-panel {
+  left: 12px !important;
+  top: 74px !important;
+  transform: none !important;
+  min-width: 38px !important;
+  width: 38px !important;
+  padding: 8px 4px !important;
+  overflow: hidden !important;
+  transition: width .25s ease, min-width .25s ease !important;
+}
+#layers-panel:hover, #layers-panel.expanded {
+  width: 164px !important;
+  min-width: 164px !important;
+}
+#layers-panel .layers-title { display:none !important; }
+.layer-btn {
+  padding: 5px 4px !important;
+  font-size: 0 !important;        /* hide text when collapsed */
+  white-space: nowrap;
+  overflow: hidden;
+}
+#layers-panel:hover .layer-btn,
+#layers-panel.expanded .layer-btn {
+  font-size: 8px !important;
+  padding: 5px 6px !important;
+}
+.lb-dot { flex-shrink: 0 !important; width:5px !important; height:5px !important; }
+.lb-count, .lb-src { display:none !important; }
+#layers-panel:hover .lb-count,
+#layers-panel:hover .lb-src,
+#layers-panel.expanded .lb-count,
+#layers-panel.expanded .lb-src { display:inline !important; }
+
+/* Top bar mode buttons */
+#mode-bar {
+  position: fixed;
+  top: 22px; left: 0; right: 0;
+  height: 46px;
+  background: rgba(1,4,12,0.97);
+  border-bottom: 1px solid rgba(30,41,59,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 6000;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+.mode-logo {
+  display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0;
+}
+.mode-logo-icon {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(59,130,246,0.35);
+  display: flex; align-items: center; justify-content: center;
+  color: #3b82f6; font-size: 13px;
+  background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+}
+.mode-logo-name {
+  font-size: 11px; font-weight: 700; letter-spacing: .35em;
+  color: #e2e8f0;
+}
+.mode-logo-version {
+  font-size: 7px; letter-spacing: .2em; color: #1e3a5f;
+  background: rgba(30,41,59,0.4); border: 1px solid rgba(30,41,59,0.7);
+  padding: 2px 7px;
+}
+.mode-tabs {
+  display: flex; align-items: center; gap: 2px;
+  background: rgba(3,8,24,0.6);
+  border: 1px solid rgba(30,41,59,0.7);
+  padding: 3px;
+}
+.mode-tab {
+  font-family: 'Courier New', monospace;
+  font-size: 9px; letter-spacing: .18em;
+  padding: 5px 20px;
+  background: transparent; border: none;
+  color: #334155; cursor: pointer;
+  transition: all .15s;
+}
+.mode-tab:hover { color: #64748b; }
+.mode-tab.active {
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.2);
+  color: #93c5fd;
+}
+.mode-right {
+  display: flex; align-items: center; gap: 16px;
+  flex-shrink: 0;
+}
+.mode-stat {
+  display: flex; flex-direction: column; align-items: flex-end;
+  font-size: 7px; color: #1e3a5f; letter-spacing: .12em;
+}
+.mode-stat-val { font-size: 12px; color: #3b82f6; font-weight: 700; line-height: 1; }
+.mode-threat {
+  font-size: 8px; letter-spacing: .15em; padding: 4px 12px;
+  border: 1px solid rgba(217,119,6,0.35);
+  background: rgba(120,53,15,0.2); color: #d97706;
+  animation: threatpulse 3s ease-in-out infinite;
+}
+.mode-live {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 8px; letter-spacing: .18em; color: #166534;
+}
+.mode-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e; box-shadow: 0 0 6px #22c55e;
+  animation: livepulse 2s ease-in-out infinite;
+}
+.mode-time {
+  font-size: 10px; color: #1e3a5f; letter-spacing: .1em;
+  min-width: 75px; text-align: right;
+}
+
+/* Adjust globe wrap for new header heights */
+#globe-wrap { top: 68px !important; }
+#zoom-hint   { bottom: 0 !important; }
+
+/* ── INTEL DASHBOARD ── */
+#intel-dashboard {
+  position: fixed;
+  inset: 0;
+  top: 68px;
+  background: #010306;
+  z-index: 5500;
+  display: none;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(30,41,59,0.8) transparent;
+}
+#intel-dashboard.open { display: flex; }
+
+.dash-header {
+  padding: 32px 48px 20px;
+  border-bottom: 1px solid rgba(30,41,59,0.6);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.dash-title {
+  font-size: 11px; letter-spacing: .4em; color: #e2e8f0; font-weight: 700;
+}
+.dash-subtitle {
+  font-size: 8px; letter-spacing: .2em; color: #1e3a5f; margin-top: 4px;
+}
+.dash-search-wrap {
+  display: flex; align-items: center; gap: 12px;
+}
+#dash-search {
+  background: rgba(3,8,24,0.8);
+  border: 1px solid rgba(30,41,59,0.8);
+  color: #475569; font-family: 'Courier New', monospace;
+  font-size: 9px; letter-spacing: .1em;
+  padding: 7px 16px; outline: none; width: 240px;
+}
+#dash-search:focus { border-color: rgba(59,130,246,0.2); color: #94a3b8; }
+#dash-search::placeholder { color: #1e293b; }
+.dash-module-count {
+  font-size: 8px; letter-spacing: .15em; color: #1e3a5f;
+}
+
+.dash-body {
+  padding: 32px 48px 48px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+  align-content: start;
+}
+
+/* Category cards */
+.dash-cat {
+  background: rgba(3,8,24,0.6);
+  border: 1px solid rgba(30,41,59,0.7);
+  transition: border-color .2s;
+}
+.dash-cat:hover { border-color: rgba(30,41,59,1); }
+.dash-cat-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid rgba(15,23,42,0.8);
+  cursor: pointer;
+}
+.dash-cat-header:hover { background: rgba(255,255,255,0.01); }
+.dash-cat-name {
+  font-size: 9px; font-weight: 700; letter-spacing: .25em;
+}
+.dash-cat-meta {
+  display: flex; align-items: center; gap: 10px;
+}
+.dash-cat-count {
+  font-size: 7px; letter-spacing: .1em; color: #1e293b;
+}
+.dash-cat-toggle {
+  font-size: 8px; color: #1e293b; transition: transform .2s;
+}
+.dash-cat.open .dash-cat-toggle { transform: rotate(90deg); color: #334155; }
+
+.dash-modules {
+  display: none;
+  padding: 10px 14px 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+.dash-cat:not(.open) .dash-modules { display: none !important; }
+.dash-cat.open .dash-modules { display: grid !important; }
+
+.dash-mod {
+  background: transparent;
+  border: 1px solid rgba(15,23,42,0.9);
+  color: #1e3a5f;
+  font-family: 'Courier New', monospace;
+  font-size: 8px; letter-spacing: .1em;
+  padding: 8px 10px;
+  cursor: pointer; text-align: left;
+  transition: all .15s;
+  display: flex; align-items: center; gap: 7px;
+}
+.dash-mod::before {
+  content: '';
+  width: 3px; height: 3px; border-radius: 50%;
+  background: currentColor; flex-shrink: 0; opacity: .4;
+}
+.dash-mod:hover {
+  background: rgba(59,130,246,0.05);
+  color: #64748b;
+}
+.dash-mod.dm-hidden { display: none !important; }
+
+/* Category accent colors */
+.dash-cat[data-cat="conflicts"] .dash-cat-name { color: #ef4444; }
+.dash-cat[data-cat="conflicts"] .dash-cat { border-left: 2px solid rgba(239,68,68,.3); }
+.dash-cat[data-cat="conflicts"] .dash-mod:hover { border-color: rgba(239,68,68,.25); color: #fca5a5; }
+
+.dash-cat[data-cat="nuclear"] .dash-cat-name { color: #f97316; }
+.dash-cat[data-cat="nuclear"] .dash-mod:hover { border-color: rgba(249,115,22,.25); color: #fdba74; }
+
+.dash-cat[data-cat="intel"] .dash-cat-name { color: #8b5cf6; }
+.dash-cat[data-cat="intel"] .dash-mod:hover { border-color: rgba(139,92,246,.25); color: #c4b5fd; }
+
+.dash-cat[data-cat="cyber"] .dash-cat-name { color: #06b6d4; }
+.dash-cat[data-cat="cyber"] .dash-mod:hover { border-color: rgba(6,182,212,.25); color: #a5f3fc; }
+
+.dash-cat[data-cat="threats"] .dash-cat-name { color: #dc2626; }
+.dash-cat[data-cat="threats"] .dash-mod:hover { border-color: rgba(220,38,38,.25); color: #fca5a5; }
+
+.dash-cat[data-cat="regional"] .dash-cat-name { color: #3b82f6; }
+.dash-cat[data-cat="regional"] .dash-mod:hover { border-color: rgba(59,130,246,.25); color: #93c5fd; }
+
+.dash-cat[data-cat="econ"] .dash-cat-name { color: #22c55e; }
+.dash-cat[data-cat="econ"] .dash-mod:hover { border-color: rgba(34,197,94,.25); color: #86efac; }
+
+.dash-cat[data-cat="human"] .dash-cat-name { color: #f59e0b; }
+.dash-cat[data-cat="human"] .dash-mod:hover { border-color: rgba(245,158,11,.25); color: #fde68a; }
+
+/* Left accent stripe on cards */
+.dash-cat[data-cat="conflicts"] { border-left: 2px solid rgba(239,68,68,.3) !important; }
+.dash-cat[data-cat="nuclear"]   { border-left: 2px solid rgba(249,115,22,.3) !important; }
+.dash-cat[data-cat="intel"]     { border-left: 2px solid rgba(139,92,246,.3) !important; }
+.dash-cat[data-cat="cyber"]     { border-left: 2px solid rgba(6,182,212,.3)  !important; }
+.dash-cat[data-cat="threats"]   { border-left: 2px solid rgba(220,38,38,.3)  !important; }
+.dash-cat[data-cat="regional"]  { border-left: 2px solid rgba(59,130,246,.3) !important; }
+.dash-cat[data-cat="econ"]      { border-left: 2px solid rgba(34,197,94,.3)  !important; }
+.dash-cat[data-cat="human"]     { border-left: 2px solid rgba(245,158,11,.3) !important; }
+
+/* AI Briefing section inside dashboard */
+.dash-ai-section {
+  grid-column: 1 / -1;
+  background: rgba(1,10,6,0.6);
+  border: 1px solid rgba(20,83,45,.3);
+  padding: 20px 22px;
+}
+.dash-ai-title {
+  font-size: 8px; letter-spacing: .25em; color: #166534;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.dash-ai-title::after {
+  content: ''; flex: 1; height: 1px; background: rgba(20,83,45,.3);
+}
+.dash-ai-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.dash-ai-col-title {
+  font-size: 7px; letter-spacing: .2em; color: #064e3b;
+  margin-bottom: 8px; padding-bottom: 4px;
+  border-bottom: 1px solid rgba(20,83,45,.2);
+}
+
+/* Hide old header, replace with mode-bar */
+#header { display: none !important; }
+#classif-bar { display: none !important; }
+#hud-corners { display: none !important; }
+
 </style>
 </head>
 <body>
+
+<!-- ════════════════════════════════════════════
+     MODE BAR — replaces old header
+     ════════════════════════════════════════════ -->
+<div id="mode-bar">
+  <div class="mode-logo">
+    <div class="mode-logo-icon">&#x25CE;</div>
+    <span class="mode-logo-name">INTEL GLOBE</span>
+    <span class="mode-logo-version">OSINT v4.0</span>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" id="tab-globe" onclick="switchToGlobe()">&#x25CB; GLOBE</button>
+    <button class="mode-tab" id="tab-intel" onclick="switchToIntel()">&#x25A6; INTEL &nbsp;<span style="color:#1e3a5f;font-size:7px;">91</span></button>
+    <button class="mode-tab" id="tab-layers" onclick="toggleLayersDock()">&#x2261; LAYERS</button>
+  </div>
+
+  <div class="mode-right">
+    <div class="mode-stat"><span class="mode-stat-val" id="mbar-hotspots">102</span><span>HOTSPOTS</span></div>
+    <div class="mode-stat"><span class="mode-stat-val" id="mbar-conflicts">98</span><span>CONFLICTS</span></div>
+    <div class="mode-threat">&#x2691; ELEVATED</div>
+    <div class="mode-live"><div class="mode-live-dot"></div>LIVE</div>
+    <div class="mode-time" id="mbar-time"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     INTEL DASHBOARD
+     ════════════════════════════════════════════ -->
+<div id="intel-dashboard">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">&#x25A6; INTELLIGENCE COMMAND</div>
+      <div class="dash-subtitle">SELECT A MODULE TO OPEN // ALL DATA IS LIVE GDELT // 91 MODULES ACROSS 8 CATEGORIES</div>
+    </div>
+    <div class="dash-search-wrap">
+      <input id="dash-search" type="text" placeholder="Search modules..." oninput="filterDashModules(this.value)">
+      <span class="dash-module-count" id="dash-mod-count">91 modules</span>
+    </div>
+  </div>
+  <div class="dash-body" id="dash-body">
+<div class="dash-cat" data-cat="conflicts">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x2B25; ACTIVE CONFLICTS</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">10 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="_openSCSModule();switchToGlobe();">SOUTH CHINA SEA</button>
+<button class="dash-mod" onclick="_openTaiwanModule();switchToGlobe();">TAIWAN STRAIT</button>
+<button class="dash-mod" onclick="_openKoreaModule();switchToGlobe();">KOREAN PENINSULA</button>
+<button class="dash-mod" onclick="_openProxyWars();switchToGlobe();">PROXY WARS</button>
+<button class="dash-mod" onclick="_openCoupWatch();switchToGlobe();">COUP WATCH</button>
+<button class="dash-mod" onclick="_openCrisisModule();switchToGlobe();">CRISIS FEED</button>
+<button class="dash-mod" onclick="P63_openGPC();switchToGlobe();">GREAT POWER</button>
+<button class="dash-mod" onclick="P63_openAlliance();switchToGlobe();">ALLIANCES</button>
+<button class="dash-mod" onclick="P63_openBorder();switchToGlobe();">BORDER INTEL</button>
+<button class="dash-mod" onclick="P62_openGeoRisk();switchToGlobe();">GEO RISK</button>
+  </div>
+</div>
+<div class="dash-cat" data-cat="nuclear">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x2622; NUCLEAR & WMD</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">9 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="P66_openNucCC();switchToGlobe();">NUC COMMAND CTRL</button>
+<button class="dash-mod" onclick="P68_openWmdProlif();switchToGlobe();">WMD PROLIFERATION</button>
+<button class="dash-mod" onclick="P66_openArmsTreaties();switchToGlobe();">ARMS TREATIES</button>
+<button class="dash-mod" onclick="P61_openNukesec();switchToGlobe();">NUKE SECURITY</button>
+<button class="dash-mod" onclick="openChemWeap();switchToGlobe();">CHEM WEAPONS</button>
+<button class="dash-mod" onclick="P67_openChemBio();switchToGlobe();">CHEM / BIO THREAT</button>
+<button class="dash-mod" onclick="_openNuclearModule();switchToGlobe();">NUCLEAR ACCIDENTS</button>
+<button class="dash-mod" onclick="P64_openSpace();switchToGlobe();">SPACE WEAPONS</button>
+<button class="dash-mod" onclick="P64_openBio();switchToGlobe();">BIOSECURITY</button>
+  </div>
+</div>
+<div class="dash-cat" data-cat="intel">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x25C9; INTELLIGENCE</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">10 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="P68_openIntelOps();switchToGlobe();">INTEL OPERATIONS</button>
+<button class="dash-mod" onclick="P66_openICMap();switchToGlobe();">IC MAP</button>
+<button class="dash-mod" onclick="P66_openSOF();switchToGlobe();">SPEC OPS</button>
+<button class="dash-mod" onclick="P66_openCovertOps();switchToGlobe();">COVERT OPS</button>
+<button class="dash-mod" onclick="P66_openWarPow();switchToGlobe();">WAR POWERS</button>
+<button class="dash-mod" onclick="openPsychIntel();switchToGlobe();">PSYCH INTEL</button>
+<button class="dash-mod" onclick="openICStruct();switchToGlobe();">IC STRUCTURE</button>
+<button class="dash-mod" onclick="openTerrorTrack();switchToGlobe();">TERROR TRACK</button>
+<button class="dash-mod" onclick="openGeoCal();switchToGlobe();">GEO CALENDAR</button>
+<button class="dash-mod" onclick="_openCyberIntel();switchToGlobe();">IC COMMUNITY</button>
+  </div>
+</div>
+<div class="dash-cat" data-cat="cyber">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x25A3; CYBER & TECH</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">12 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="P67_openCyberOps();switchToGlobe();">CYBER OPERATIONS</button>
+<button class="dash-mod" onclick="P67_openElecWar();switchToGlobe();">ELECTRONIC WARFARE</button>
+<button class="dash-mod" onclick="P67_openSpaceWar();switchToGlobe();">SPACE WAR</button>
+<button class="dash-mod" onclick="P67_openDrone();switchToGlobe();">DRONE WAR</button>
+<button class="dash-mod" onclick="P66_openHybrid();switchToGlobe();">HYBRID WAR</button>
+<button class="dash-mod" onclick="P63_openTechCW();switchToGlobe();">TECH COLD WAR</button>
+<button class="dash-mod" onclick="P64_openCritInfra();switchToGlobe();">CRITICAL INFRA</button>
+<button class="dash-mod" onclick="_openCableModule();switchToGlobe();">UNDERSEA CABLES</button>
+<button class="dash-mod" onclick="_openDarkWebOverlay();switchToGlobe();">DARK WEB</button>
+<button class="dash-mod" onclick="_openSupplyChainModule();switchToGlobe();">SUPPLY CHAIN</button>
+<button class="dash-mod" onclick="P64_openDisinfoOps();switchToGlobe();">DISINFO OPS</button>
+<button class="dash-mod" onclick="P67_openMediaWar();switchToGlobe();">MEDIA WARFARE</button>
+  </div>
+</div>
+<div class="dash-cat" data-cat="threats">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x25B2; THREATS</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">12 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="P67_openTerrorNet();switchToGlobe();">TERROR NETWORKS</button>
+<button class="dash-mod" onclick="_openBio();switchToGlobe();">BIOTERROR</button>
+<button class="dash-mod" onclick="P64_openTranscrime();switchToGlobe();">TRANS CRIME</button>
+<button class="dash-mod" onclick="_openNarcoModule();switchToGlobe();">NARCO STATES</button>
+<button class="dash-mod" onclick="P67_openBorderSec();switchToGlobe();">BORDER SECURITY</button>
+<button class="dash-mod" onclick="P63_openRegsurv();switchToGlobe();">REGIME SURVEILLANCE</button>
+<button class="dash-mod" onclick="_openTranRepModule();switchToGlobe();">TRANS REPRESSION</button>
+<button class="dash-mod" onclick="_openCrimeModule();switchToGlobe();">CRIME SYNDICATES</button>
+<button class="dash-mod" onclick="openPiracyWatch();switchToGlobe();">PIRACY WATCH</button>
+<button class="dash-mod" onclick="openPolPris();switchToGlobe();">POL PRISONERS</button>
+<button class="dash-mod" onclick="openProtests();switchToGlobe();">PROTESTS</button>
+<button class="dash-mod" onclick="_openLawfareModule();switchToGlobe();">LAWFARE</button>
+  </div>
+</div>
+<div class="dash-cat" data-cat="regional">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x25E6; REGIONAL</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">13 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="P68_openMEBal();switchToGlobe();">MIDEAST BALANCE</button>
+<button class="dash-mod" onclick="P68_openAsiaPac();switchToGlobe();">ASIA PACIFIC</button>
+<button class="dash-mod" onclick="P68_openAfrStrat();switchToGlobe();">AFRICA STRATEGY</button>
+<button class="dash-mod" onclick="P68_openLatam();switchToGlobe();">LATIN AMERICA</button>
+<button class="dash-mod" onclick="P65_openSEA();switchToGlobe();">SE ASIA</button>
+<button class="dash-mod" onclick="P65_openGulf();switchToGlobe();">GULF SECURITY</button>
+<button class="dash-mod" onclick="P65_openCaucasus();switchToGlobe();">CAUCASUS</button>
+<button class="dash-mod" onclick="P65_openCentAsia();switchToGlobe();">CENTRAL ASIA</button>
+<button class="dash-mod" onclick="P65_openBalkans();switchToGlobe();">BALKANS</button>
+<button class="dash-mod" onclick="P68_openArcticRace();switchToGlobe();">ARCTIC RACE</button>
+<button class="dash-mod" onclick="P65_openME();switchToGlobe();">MIDDLE EAST</button>
+<button class="dash-mod" onclick="P65_openAfrica();switchToGlobe();">AFRICA INTEL</button>
+<button class="dash-mod" onclick="P65_openArctic();switchToGlobe();">ARCTIC INTEL</button>
+  </div>
+</div>
+<div class="dash-cat" data-cat="econ">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x25B8; ECONOMIC</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">13 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="P67_openEnergySec();switchToGlobe();">ENERGY SECURITY</button>
+<button class="dash-mod" onclick="P61_openTrade();switchToGlobe();">TRADE WAR</button>
+<button class="dash-mod" onclick="P61_openDedollar();switchToGlobe();">DE-DOLLARIZATION</button>
+<button class="dash-mod" onclick="P64_openPolFinance();switchToGlobe();">POL FINANCE</button>
+<button class="dash-mod" onclick="P66_openFinInt();switchToGlobe();">FIN INTELLIGENCE</button>
+<button class="dash-mod" onclick="P64_openResWars();switchToGlobe();">RESOURCE WARS</button>
+<button class="dash-mod" onclick="P66_openPowerIdx();switchToGlobe();">POWER INDEX</button>
+<button class="dash-mod" onclick="_openFinwarModule();switchToGlobe();">FINANCIAL WARFARE</button>
+<button class="dash-mod" onclick="P63_openCoerce();switchToGlobe();">ECON COERCION</button>
+<button class="dash-mod" onclick="_openMilSpendModule();switchToGlobe();">MIL SPENDING</button>
+<button class="dash-mod" onclick="P61_openMerc();switchToGlobe();">MERCENARIES</button>
+<button class="dash-mod" onclick="P64_openPropwar();switchToGlobe();">PROP WARFARE</button>
+<button class="dash-mod" onclick="_openDebtCrisisOverlay();switchToGlobe();">DEBT CRISIS</button>
+  </div>
+</div>
+<div class="dash-cat" data-cat="human">
+  <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
+    <span class="dash-cat-name">&#x25A1; HUMAN & GOV</span>
+    <span class="dash-cat-meta">
+      <span class="dash-cat-count">12 MODULES</span>
+      <span class="dash-cat-toggle">&#x25B6;</span>
+    </span>
+  </div>
+  <div class="dash-modules">
+<button class="dash-mod" onclick="P64_openRefugee();switchToGlobe();">REFUGEE CRISIS</button>
+<button class="dash-mod" onclick="_openHostageModule();switchToGlobe();">HOSTAGE TRACKER</button>
+<button class="dash-mod" onclick="P64_openClimate();switchToGlobe();">CLIMATE SECURITY</button>
+<button class="dash-mod" onclick="_openMigration();switchToGlobe();">MIGRATION CRISIS</button>
+<button class="dash-mod" onclick="_openPandemicModule();switchToGlobe();">PANDEMIC WATCH</button>
+<button class="dash-mod" onclick="_openElectionModule();switchToGlobe();">ELECTION SECURITY</button>
+<button class="dash-mod" onclick="_openDoctrineModule();switchToGlobe();">MIL DOCTRINE</button>
+<button class="dash-mod" onclick="_openInfowarModule();switchToGlobe();">INFO WARFARE</button>
+<button class="dash-mod" onclick="P68_openGlobalOrg();switchToGlobe();">GLOBAL ORG</button>
+<button class="dash-mod" onclick="_openPortSecurity();switchToGlobe();">PORT SECURITY</button>
+<button class="dash-mod" onclick="_openPopIntel();switchToGlobe();">POP INTEL</button>
+<button class="dash-mod" onclick="P68_openNaval();switchToGlobe();">NAVAL POWER</button>
+  </div>
+</div>
+    <!-- AI Briefing strip -->
+    <div class="dash-ai-section">
+      <div class="dash-ai-title">&#x25C6; AI PATTERN ENGINE</div>
+      <div class="dash-ai-grid">
+        <div>
+          <div class="dash-ai-col-title">SIGNAL TRENDS</div>
+          <div id="dash-ai-trends"><div style="color:#064e3b;font-size:8px;">Open modules to begin learning</div></div>
+        </div>
+        <div>
+          <div class="dash-ai-col-title">ENGINE LOG</div>
+          <div id="dash-ai-log"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="classif-bar"></div>
 <div id="header">
@@ -39304,6 +39867,104 @@ function toggleAIEngine() {
 
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() { _AIEngine.start(); }, 1500);
+});
+
+
+// ── Mode switching ──
+function switchToGlobe() {
+  document.getElementById('intel-dashboard').classList.remove('open');
+  document.getElementById('tab-globe').classList.add('active');
+  document.getElementById('tab-intel').classList.remove('active');
+}
+function switchToIntel() {
+  document.getElementById('intel-dashboard').classList.add('open');
+  document.getElementById('tab-intel').classList.add('active');
+  document.getElementById('tab-globe').classList.remove('active');
+  _updateDashAI();
+}
+function toggleLayersDock() {
+  var lp = document.getElementById('layers-panel');
+  if(lp) lp.classList.toggle('expanded');
+}
+function toggleDashCat(el) {
+  // Close others, open this one
+  if(!el.classList.contains('open')) {
+    document.querySelectorAll('.dash-cat.open').forEach(function(c) {
+      if(c !== el) c.classList.remove('open');
+    });
+  }
+  el.classList.toggle('open');
+}
+function filterDashModules(q) {
+  q = q.toLowerCase().trim();
+  var visible = 0;
+  document.querySelectorAll('.dash-cat').forEach(function(cat) {
+    var catHasMatch = false;
+    cat.querySelectorAll('.dash-mod').forEach(function(btn) {
+      var match = !q || btn.textContent.toLowerCase().includes(q);
+      btn.classList.toggle('dm-hidden', !match);
+      if(match) { catHasMatch = true; visible++; }
+    });
+    if(q) {
+      cat.classList.toggle('open', catHasMatch);
+    }
+  });
+  var el = document.getElementById('dash-mod-count');
+  if(el) el.textContent = (q ? visible : 91) + ' modules';
+}
+
+// ── Mode bar clock ──
+function _updateModeBarTime() {
+  var el = document.getElementById('mbar-time');
+  if(el) el.textContent = new Date().toUTCString().split(' ')[4] + ' UTC';
+}
+setInterval(_updateModeBarTime, 1000);
+_updateModeBarTime();
+
+// ── Sync AI data to dashboard ──
+function _updateDashAI() {
+  if(typeof _AIEngine === 'undefined') return;
+  // Trends
+  var trendsEl = document.getElementById('dash-ai-trends');
+  if(trendsEl) {
+    var sorted = Object.entries(_AIEngine.trendScores)
+      .sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+    if(sorted.length === 0) {
+      trendsEl.innerHTML = '<div style="color:#064e3b;font-size:8px;">Open modules to begin learning</div>';
+    } else {
+      var max = sorted[0][1]||1;
+      trendsEl.innerHTML = sorted.map(function(e) {
+        var pct = Math.round(e[1]/max*100);
+        return '<div style="margin-bottom:6px;">'
+          +'<div style="display:flex;justify-content:space-between;font-size:7px;letter-spacing:.08em;margin-bottom:2px;">'
+          +'<span style="color:#134e4a;">'+e[0].toUpperCase()+'</span>'
+          +'<span style="color:#064e3b;">'+e[1]+'</span></div>'
+          +'<div style="height:2px;background:rgba(20,83,45,0.2);">'
+          +'<div style="height:100%;width:'+pct+'%;background:rgba(34,197,94,0.35);"></div>'
+          +'</div></div>';
+      }).join('');
+    }
+  }
+  // Log
+  var logEl = document.getElementById('dash-ai-log');
+  if(logEl && _AIEngine.eventLog) {
+    logEl.innerHTML = _AIEngine.eventLog.slice(0,8).map(function(e) {
+      return '<div style="font-size:7px;letter-spacing:.05em;color:#064e3b;padding:3px 0;'
+        +'border-bottom:1px solid rgba(20,83,45,0.15);line-height:1.5;">'
+        +'<span style="color:#052e16;margin-right:6px;">['+e.ts+']</span>'+e.msg+'</div>';
+    }).join('');
+  }
+}
+
+// Open dashboard by default on keyboard shortcut I
+document.addEventListener('keydown', function(e) {
+  if(e.key === 'i' || e.key === 'I') {
+    var dash = document.getElementById('intel-dashboard');
+    if(dash && !document.activeElement.tagName.match(/INPUT|TEXTAREA/)) {
+      if(dash.classList.contains('open')) switchToGlobe();
+      else switchToIntel();
+    }
+  }
 });
 
 // PHASE 11: SIGINT Feed Filter
