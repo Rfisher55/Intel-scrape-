@@ -6346,6 +6346,22 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
   font-family: 'Courier New', monospace;
 }
 
+
+/* Brain shockwave rings */
+.brain-shock {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid;
+  pointer-events: none;
+  z-index: 5;
+  animation: bshock 0.85s ease-out forwards;
+}
+@keyframes bshock {
+  0%   { transform: scale(0.05); opacity: 1; }
+  60%  { opacity: 0.5; }
+  100% { transform: scale(1);    opacity: 0; }
+}
+
 </style>
 </head>
 <body>
@@ -40995,6 +41011,52 @@ document.addEventListener('keydown',function(e){
   if(document.readyState==='loading'){
     document.addEventListener('DOMContentLoaded',attachObs);
   } else { attachObs(); }
+})();
+
+
+// ── Brain flash/shockwave enhancer ──
+(function(){
+  var _CLc=['#ef4444','#f97316','#8b5cf6','#06b6d4','#dc2626','#3b82f6','#22c55e','#f59e0b'];
+  var _CLp=[
+    [-220,-120,140],[50,-250,170],[220,-30,-160],[-210,80,-150],
+    [160,200,70],[-155,185,-100],[30,55,-255],[-85,-175,235]
+  ];
+
+  function spawnRings(ci){
+    var bv=document.getElementById('brain-view');
+    var cv=document.getElementById('brain-canvas');
+    if(!bv||!cv) return;
+    var col=_CLc[ci]||'#8b5cf6';
+    var pos=_CLp[ci]||[0,0,0];
+    var W=cv.width||1440, H=cv.height||832;
+    var sx=W/2+pos[0]*0.52, sy=H/2+pos[1]*0.52;
+    for(var k=0;k<4;k++){
+      (function(delay,size){
+        setTimeout(function(){
+          var r=document.createElement('div');
+          r.className='brain-shock';
+          r.style.width=size+'px'; r.style.height=size+'px';
+          r.style.left=(sx-size/2)+'px'; r.style.top=(sy-size/2)+'px';
+          r.style.borderColor=col;
+          r.style.boxShadow='0 0 14px '+col;
+          r.style.animationDuration=(0.7+k*0.15)+'s';
+          bv.appendChild(r);
+          setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r);},1100);
+        },delay);
+      })(k*100, 60+k*120);
+    }
+  }
+
+  /* patch _BrainEngine.fireCluster after it is defined */
+  var _patch=function(){
+    if(typeof _BrainEngine==='undefined'||!_BrainEngine.fireCluster) return setTimeout(_patch,200);
+    var _orig=_BrainEngine.fireCluster;
+    _BrainEngine.fireCluster=function(ci){
+      _orig(ci);
+      spawnRings(ci);
+    };
+  };
+  setTimeout(_patch,300);
 })();
 
 // PHASE 11: SIGINT Feed Filter
