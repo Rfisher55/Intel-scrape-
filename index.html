@@ -5204,6 +5204,25 @@ button{border-radius:2px!important}
 #p67terrornet-btn:hover{border-color:#ef4444;color:#fca5a5;}
 #p67bordersec-btn{position:fixed;top:375px;right:2640px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
 #p67bordersec-btn:hover{border-color:#64748b;color:#cbd5e1;}
+
+#p68naval-btn{position:fixed;top:55px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68naval-btn:hover{border-color:#3b82f6;color:#93c5fd;}
+#p68wmdprolif-btn{position:fixed;top:95px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68wmdprolif-btn:hover{border-color:#dc2626;color:#fca5a5;}
+#p68intelops-btn{position:fixed;top:135px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68intelops-btn:hover{border-color:#8b5cf6;color:#c4b5fd;}
+#p68arcticrace-btn{position:fixed;top:175px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68arcticrace-btn:hover{border-color:#7dd3fc;color:#e0f2fe;}
+#p68afrstrat-btn{position:fixed;top:215px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68afrstrat-btn:hover{border-color:#f59e0b;color:#fde68a;}
+#p68latam-btn{position:fixed;top:255px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68latam-btn:hover{border-color:#22c55e;color:#86efac;}
+#p68mebal-btn{position:fixed;top:295px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68mebal-btn:hover{border-color:#f97316;color:#fed7aa;}
+#p68asiapac-btn{position:fixed;top:335px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68asiapac-btn:hover{border-color:#ec4899;color:#f9a8d4;}
+#p68globalorg-btn{position:fixed;top:375px;right:2755px;background:rgba(15,23,42,0.92);color:#94a3b8;border:1px solid #334155;padding:4px 8px;font-size:9px;font-family:'Courier New',monospace;cursor:pointer;z-index:100;letter-spacing:1px;}
+#p68globalorg-btn:hover{border-color:#06b6d4;color:#a5f3fc;}
 /* South China Sea overlay */
 #p60scs-overlay{position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);display:none;flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;}
 .p60scs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
@@ -32619,6 +32638,16 @@ var _MOBILE_MODULES = [
 ,['econ','ENERGY SEC','P67_openEnergySec','#fb923c']
 ,['threats','TERROR NET','P67_openTerrorNet','#ef4444']
 ,['conflicts','BORDER SEC','P67_openBorderSec','#64748b']
+
+,['conflicts','NAVAL PWR','P68_openNaval','#3b82f6']
+,['nuclear','WMD PROLIF','P68_openWmdProlif','#dc2626']
+,['intel','INTEL OPS','P68_openIntelOps','#8b5cf6']
+,['geo','ARCTIC RACE','P68_openArcticRace','#7dd3fc']
+,['conflicts','AFRICA STRAT','P68_openAfrStrat','#f59e0b']
+,['conflicts','LATAM SEC','P68_openLatam','#22c55e']
+,['conflicts','MIDEAST BAL','P68_openMEBal','#f97316']
+,['conflicts','ASIA PAC','P68_openAsiaPac','#ec4899']
+,['intel','GLOBAL ORG','P68_openGlobalOrg','#06b6d4']
 ];
 
 var _mobileCatMap = {
@@ -38182,6 +38211,426 @@ function P67_renderBorderSec(){
   +'</div></div>'
   +'</div>';}
 
+
+// PHASE 68 MODULES
+function P68_openNaval(){
+  var o=document.getElementById('p68naval-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('naval warfare fleet carrier submarine surface warfare sea control Pacific Atlantic','p68naval-gdelt',2);P68_renderNaval();}
+}
+function P68_closeNaval(){var o=document.getElementById('p68naval-overlay');if(o)o.style.display='none';}
+function P68_renderNaval(){
+  var el=document.getElementById('p68naval-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.25);padding:14px;">'
+  +'<div style="color:#93c5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CARRIER STRIKE GROUP ASSETS (2026)</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#3b82f6;"><th style="text-align:left;padding:2px 4px;">NAVY</th><th>CARRIERS</th><th>SUBS (SSBN/SSN)</th><th>DESTROYERS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">United States</td><td style="text-align:center;">11 (CVN)</td><td style="text-align:center;">14 SSBN / 53 SSN</td><td style="text-align:center;">91</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">China (PLAN)</td><td style="text-align:center;">3 (CV/CVN)</td><td style="text-align:center;">6 SSBN / 12 SSN</td><td style="text-align:center;">50+</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia</td><td style="text-align:center;">1 (CV, non-op)</td><td style="text-align:center;">11 SSBN / 24 SSN</td><td style="text-align:center;">12</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">United Kingdom</td><td style="text-align:center;">2 (CVF)</td><td style="text-align:center;">4 SSBN / 6 SSN</td><td style="text-align:center;">6</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">France</td><td style="text-align:center;">1 (CVN)</td><td style="text-align:center;">4 SSBN / 6 SSN</td><td style="text-align:center;">11</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">India</td><td style="text-align:center;">2 (CV)</td><td style="text-align:center;">2 SSBN / 1 SSN</td><td style="text-align:center;">10</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.25);padding:14px;">'
+  +'<div style="color:#93c5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CHINA PLAN: A2/AD DOCTRINE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#3b82f6;">A2/AD CONCEPT:</span> Anti-Access/Area Denial; deny USN freedom of action inside first island chain; DF-21D/DF-26 carrier-killer missiles</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">DF-21D ASBM:</span> First operational anti-ship ballistic missile; 1,500km range; 500kg warhead; hypersonic terminal phase; carrier threat</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">ISLAND CHAINS:</span> 1st chain: Japan-Taiwan-Philippines; 2nd chain: Guam-Mariana; 3rd chain: Hawaii; PLAN seeks control to 1st chain</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">MINE WARFARE:</span> PLAN mine inventory 100,000+; waters around Taiwan archipelago; minefields could deny USN access during Taiwan contingency</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">SUBSURFACE:</span> Type 094 Jin-class SSBN (12 JL-2/JL-3 SLBM); Type 093 Shang-class SSN; still trailing US in quiet submarine tech</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.25);padding:14px;">'
+  +'<div style="color:#93c5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; RED SEA / HOUTHI NAVAL THREAT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#3b82f6;">HOUTHI CAMPAIGN:</span> Ansar Allah targeting commercial shipping since Nov 2023; 100+ attacks; 4 ships sunk; Bab el-Mandeb 30% traffic diversion</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">WEAPONS USED:</span> Iranian-supplied ASCMs (Quds-3); Shahed drones; Houthi-developed naval mines; ASBMs; underwater USVs</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">OPERATION PROSPERITY GUARDIAN:</span> US-led coalition; USS Eisenhower CSG; USS Gravely; USS Carney; hundreds of intercepts; SM-2/SM-6/CIWS</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">ECONOMIC IMPACT:</span> Suez traffic down 60%; shipping costs tripled; global supply chain pressure; Red Sea insurance premiums 1-5% cargo value</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.25);padding:14px;">'
+  +'<div style="color:#93c5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; SUBMARINE WARFARE TRENDS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#3b82f6;">AUKUS SUBS:</span> Australia will receive 3-5 Virginia-class SSNs by ~2033; then build SSN-AUKUS with UK by 2040s; trilateral deep tech sharing</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">RUSSIAN SUBS:</span> Project 885M Yasen-M SSGNs (Kazan, Novosibirsk); 32 Kalibr cruise missiles; most capable Russian SSN; 5 planned</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">UUV REVOLUTION:</span> Boeing Orca XLUUV; Poseidon nuclear-armed UUV (Russia); distributed lethality under sea; anti-submarine UUV networks</div>'
+  +'<div style="margin-top:6px;"><span style="color:#3b82f6;">SUBSEA CABLES:</span> 97% internet traffic on undersea cables; critical vulnerability; NATO established Maritime Centre for Security of CI 2023</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openWmdProlif(){
+  var o=document.getElementById('p68wmdprolif-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('WMD proliferation nuclear weapons missile IAEA Iran DPRK North Korea Pakistan ballistic','p68wmdprolif-gdelt',2);P68_renderWmdProlif();}
+}
+function P68_closeWmdProlif(){var o=document.getElementById('p68wmdprolif-overlay');if(o)o.style.display='none';}
+function P68_renderWmdProlif(){
+  var el=document.getElementById('p68wmdprolif-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x2622; NUCLEAR WEAPONS STATES INVENTORY</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#dc2626;"><th style="text-align:left;padding:2px 4px;">STATE</th><th>WARHEADS</th><th>DEPLOYED</th><th>TREATY STATUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia</td><td style="text-align:center;">~5,580</td><td style="text-align:center;">1,558</td><td style="text-align:center;color:#ef4444;">New START SUSP</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">United States</td><td style="text-align:center;">~5,044</td><td style="text-align:center;">1,419</td><td style="text-align:center;color:#ef4444;">New START SUSP</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">China</td><td style="text-align:center;">~500</td><td style="text-align:center;">~350</td><td style="text-align:center;color:#f59e0b;">NPT P5</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">France</td><td style="text-align:center;">~290</td><td style="text-align:center;">~280</td><td style="text-align:center;color:#4ade80;">NPT P5</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">UK</td><td style="text-align:center;">~225</td><td style="text-align:center;">~120</td><td style="text-align:center;color:#4ade80;">NPT P5</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Pakistan</td><td style="text-align:center;">~170</td><td style="text-align:center;">Unknown</td><td style="text-align:center;color:#ef4444;">NPT non-member</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">India</td><td style="text-align:center;">~164</td><td style="text-align:center;">Unknown</td><td style="text-align:center;color:#ef4444;">NPT non-member</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Israel</td><td style="text-align:center;">~90 (est)</td><td style="text-align:center;">Unknown</td><td style="text-align:center;color:#ef4444;">Undeclared</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">DPRK</td><td style="text-align:center;">40-50 (est)</td><td style="text-align:center;">Unknown</td><td style="text-align:center;color:#ef4444;">Withdrew NPT 2003</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x2622; IRAN NUCLEAR PROGRAM</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#dc2626;">ENRICHMENT STATUS:</span> Iran enriching to 60% U-235 at Fordow and Natanz; 90% (weapons grade) achievable in ~1 week breakout</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">JCPOA STATUS:</span> US withdrew 2018; JCPOA effectively dead; Iran not IAEA compliant; cameras disabled at enrichment sites</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">BREAKOUT TIME:</span> IAEA estimates Iran could produce enough HEU for 1 device in ~1-2 weeks; weaponization additional 6-24 months</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">HARDENED SITES:</span> Fordow buried 80m underground; Natanz hardened; makes military strike less effective; Parchin suspected testing site</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">SABOTAGE:</span> Stuxnet (2010); Natanz explosion 2020; IAEA inspector car bomb 2021; assassination of Fakhrizadeh Nov 2020</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x2622; DPRK MISSILE PROGRAM</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#dc2626;">ICBM INVENTORY:</span> Hwasong-17 (ICBM, 15,000km range, tested 2022); Hwasong-18 (solid-fuel ICBM, 2023 test); US mainland in range</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">SLBM:</span> Pukguksong-3/4/5 SLBM series; SINPO-C submarine built for SLBM; sea-based second strike capability approaching</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">HYPERSONIC:</span> Hwasong-8 HGV tested 2021; claimed Mach 10; glide vehicle; designed to defeat THAAD/Aegis intercept geometry</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">PRODUCTION:</span> Kim Jong-un 2023: "exponential increase" in nuclear weapons production; targeting 200 warheads by 2027 (US est)</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.25);padding:14px;">'
+  +'<div style="color:#fca5a5;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x2622; PROLIFERATION NETWORKS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#dc2626;">AQ KHAN NETWORK:</span> Pakistani physicist sold nuclear designs to Libya, Iran, DPRK, Malaysia; centrifuge blueprints; network dismantled 2004</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">RUSSIA-DPRK:</span> 2023-24 DPRK supplying artillery shells to Russia; Russia suspected to provide satellite/reentry vehicle tech in return</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">SUPPLIER STATES:</span> China dual-use tech exports to Iran/DPRK; Pakistan ISI-nuclear entity links; Belarus transit for sanctioned goods</div>'
+  +'<div style="margin-top:6px;"><span style="color:#dc2626;">IAEA SAFEGUARDS:</span> 187 states with comprehensive safeguards; Additional Protocol tightens inspections; Iran withdrew from AP 2021</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openIntelOps(){
+  var o=document.getElementById('p68intelops-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('intelligence operations CIA spy espionage covert HUMINT SIGINT defector mole double agent','p68intelops-gdelt',2);P68_renderIntelOps();}
+}
+function P68_closeIntelOps(){var o=document.getElementById('p68intelops-overlay');if(o)o.style.display='none';}
+function P68_renderIntelOps(){
+  var el=document.getElementById('p68intelops-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; MAJOR INTELLIGENCE SERVICES</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#8b5cf6;"><th style="text-align:left;padding:2px 4px;">SERVICE</th><th>COUNTRY</th><th>MISSION</th><th>BUDGET (EST)</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">CIA</td><td style="text-align:center;">USA</td><td style="text-align:center;">HUMINT/Covert action</td><td style="text-align:center;">$15B+</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">NSA</td><td style="text-align:center;">USA</td><td style="text-align:center;">SIGINT/Cyber</td><td style="text-align:center;">$11B+</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">MI6 (SIS)</td><td style="text-align:center;">UK</td><td style="text-align:center;">HUMINT</td><td style="text-align:center;">~$4B</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">GCHQ</td><td style="text-align:center;">UK</td><td style="text-align:center;">SIGINT</td><td style="text-align:center;">~$4B</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">SVR</td><td style="text-align:center;">Russia</td><td style="text-align:center;">Foreign intel</td><td style="text-align:center;">Unknown</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">GRU</td><td style="text-align:center;">Russia</td><td style="text-align:center;">Military intel</td><td style="text-align:center;">Unknown</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">MSS</td><td style="text-align:center;">China</td><td style="text-align:center;">CI/Foreign intel</td><td style="text-align:center;">Unknown</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Mossad</td><td style="text-align:center;">Israel</td><td style="text-align:center;">Foreign intel</td><td style="text-align:center;">~$3B</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; FIVE EYES ALLIANCE (FVEY)</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#8b5cf6;">MEMBERS:</span> US (NSA/CIA), UK (GCHQ/MI6), Canada (CSE/CSIS), Australia (ASD/ASIS), New Zealand (GCSB/SIS)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">ORIGINS:</span> UKUSA Agreement 1946; grew from WWII signals intelligence cooperation; Echelon program intercept network</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">AGREEMENTS:</span> First Party (US/UK) share most; Second Parties (Canada/Australia/NZ) somewhat less; Third Parties (Germany/Japan/Sweden) limited</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">SNOWDEN REVELATIONS:</span> 2013 Snowden leaks exposed PRISM, XKeyscore, TEMPORA, MUSCULAR; bulk collection of metadata; strained EU relations</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">EXPANSION:</span> Informal ties with Japan, South Korea, Germany -- sometimes called "9 Eyes" or "14 Eyes"; non-binding cooperation</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; NOTABLE ESPIONAGE CASES</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#8b5cf6;">ALDRICH AMES:</span> CIA officer; KGB asset 1985-1994; burned 10+ CIA assets executed by USSR; caught by spending habits</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">ROBERT HANSSEN:</span> FBI agent; SVR spy 22 years; revealed FBI counterintel methods; three spy rings burned; executed 2023 in prison</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">ANNA CHAPMAN:</span> SVR Illegals Program; 10 Russian sleeper agents arrested 2010; exchanged for 4 Western assets; diplomatic incident</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">CHINA TALENT PLAN:</span> PRC recruits academics/scientists; Thousand Talents Plan; 2,000+ DOJ investigations; economic espionage focus</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);padding:14px;">'
+  +'<div style="color:#c4b5fd;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; MODERN TRADECRAFT: TECHNICAL COLLECTION</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#8b5cf6;">GEOINT:</span> Commercial satellite imagery (Maxar, Planet); NRO classified platforms; AI-powered change detection; 50cm resolution commercial</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">OSINT:</span> Open source intelligence from social media, satellite, shipping, flight tracking; Bellingcat model; democratized intel</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">MASINT:</span> Measurement and signature intelligence; nuclear event detection; chemical agent sensors; seismic monitoring (CTBTO IMS)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#8b5cf6;">CYBER COLLECTION:</span> CNE (Computer Network Exploitation); TAO (NSA Tailored Access Operations); implants in target networks pre-positioned</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openArcticRace(){
+  var o=document.getElementById('p68arcticrace-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Arctic military competition Russia China NATO ice melt Northern Sea Route resources sovereignty','p68arcticrace-gdelt',2);P68_renderArcticRace();}
+}
+function P68_closeArcticRace(){var o=document.getElementById('p68arcticrace-overlay');if(o)o.style.display='none';}
+function P68_renderArcticRace(){
+  var el=document.getElementById('p68arcticrace-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(125,211,252,0.06);border:1px solid rgba(125,211,252,0.25);padding:14px;">'
+  +'<div style="color:#e0f2fe;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; ARCTIC GEOPOLITICAL CLAIMS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#7dd3fc;"><th style="text-align:left;padding:2px 4px;">STATE</th><th>ARCTIC COASTLINE</th><th>KEY CLAIM</th><th>MILITARY POSTURE</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia</td><td style="text-align:center;">53% of Arctic coast</td><td style="text-align:center;">Lomonosov Ridge ECS</td><td style="text-align:center;color:#ef4444;">EXTENSIVE</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Canada</td><td style="text-align:center;">NW Passage sovereign waters</td><td style="text-align:center;">Hans Island (settled)</td><td style="text-align:center;color:#f59e0b;">MODERATE</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">USA (Alaska)</td><td style="text-align:center;">Yes</td><td style="text-align:center;">Beaufort Sea EEZ</td><td style="text-align:center;color:#f59e0b;">GROWING</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Norway</td><td style="text-align:center;">Svalbard sovereignty</td><td style="text-align:center;">Barents Sea</td><td style="text-align:center;color:#4ade80;">NATO</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">China</td><td style="text-align:center;">None (observer)</td><td style="text-align:center;">"Near-Arctic state"</td><td style="text-align:center;color:#f59e0b;">RESEARCHING</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(125,211,252,0.06);border:1px solid rgba(125,211,252,0.25);padding:14px;">'
+  +'<div style="color:#e0f2fe;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; RUSSIA ARCTIC MILITARY BUILDUP</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#7dd3fc;">NORTHERN FLEET:</span> Russia upgraded Northern Fleet to Military District 2021; Arctic-capable Yasen-M SSGNs based Severomorsk; Borei SSBNs</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">BASES REOPENED:</span> Temp (Novaya Zemlya); Nagurskoye (Franz Josef Land); Tiksi (Laptev Sea); upgraded Soviet-era facilities</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">ICEBREAKERS:</span> Russia has 40+ icebreakers including 7 nuclear; US has 2 operational heavy icebreakers -- massive gap</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">S-400 ARCTIC:</span> S-400 SAM systems deployed along Arctic coast; A2/AD zone extending into Arctic; anti-access for NATO forces</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(125,211,252,0.06);border:1px solid rgba(125,211,252,0.25);padding:14px;">'
+  +'<div style="color:#e0f2fe;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; NORTHERN SEA ROUTE (NSR)</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#7dd3fc;">ROUTE ADVANTAGE:</span> NSR cuts Europe-Asia shipping ~40% vs Suez (14,000km vs 23,000km); navigable 6+ months per year now due to warming</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">RUSSIA FEES/CONTROL:</span> Russia claims NSR as internal waters; requires icebreaker escort (fee); US/EU contest this as international strait</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">CHINA INTEREST:</span> "Polar Silk Road" BRI extension; China invested in NSR infrastructure; Yamal LNG project (Novatek); ice-capable vessels</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">CLIMATE DRIVER:</span> Arctic warming 4x faster than global average; summer sea ice could be near-zero by 2040s; permanently alters strategic geography</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(125,211,252,0.06);border:1px solid rgba(125,211,252,0.25);padding:14px;">'
+  +'<div style="color:#e0f2fe;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; NATO ARCTIC POSTURE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#7dd3fc;">FINLAND/SWEDEN:</span> Both joined NATO 2023-2024; adds 1,340km NATO-Russia border; Lapland terrain expertise; Gripen/F-35 interoperability</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">NATO COLD WEATHER:</span> Norwegian Cold Response exercise; Marine Raiders Arctic training; Allied Joint Force Command Brunssum covers Arctic</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">GREENLAND:</span> Trump interest in purchase 2019/2025; US maintains Thule/Pituffik Space Base; strategic location for polar missile defense</div>'
+  +'<div style="margin-top:6px;"><span style="color:#7dd3fc;">ICEBREAKER GAP:</span> US Polar Security Cutter program behind schedule; Healy only operational heavy icebreaker; Canada also limited</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openAfrStrat(){
+  var o=document.getElementById('p68afrstrat-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Africa strategic competition China Russia US influence Sahel coup Wagner military base conflict resources','p68afrstrat-gdelt',2);P68_renderAfrStrat();}
+}
+function P68_closeAfrStrat(){var o=document.getElementById('p68afrstrat-overlay');if(o)o.style.display='none';}
+function P68_renderAfrStrat(){
+  var el=document.getElementById('p68afrstrat-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fde68a;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; AFRICA COUP BELT (SAHEL)</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#f59e0b;"><th style="text-align:left;padding:2px 4px;">COUNTRY</th><th>COUP DATE</th><th>JUNTA</th><th>FOREIGN TIES</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Mali</td><td style="text-align:center;">Aug 2020, May 2021</td><td style="text-align:center;">Col. Goita</td><td style="text-align:center;color:#ef4444;">Russia/Wagner</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Guinea</td><td style="text-align:center;">Sep 2021</td><td style="text-align:center;">Col. Mamadi Doumbouya</td><td style="text-align:center;color:#f59e0b;">Russia links</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Burkina Faso</td><td style="text-align:center;">Jan 2022, Sep 2022</td><td style="text-align:center;">Capt. Traore</td><td style="text-align:center;color:#ef4444;">Russia/Wagner</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Niger</td><td style="text-align:center;">Jul 2023</td><td style="text-align:center;">Gen. Tiani</td><td style="text-align:center;color:#ef4444;">Russia/AES</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Gabon</td><td style="text-align:center;">Aug 2023</td><td style="text-align:center;">Gen. Nguema</td><td style="text-align:center;color:#f59e0b;">Transitional</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fde68a;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CHINA IN AFRICA</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f59e0b;">BRI INVESTMENT:</span> China invested $300B+ in Africa since 2000; infrastructure loans; ports (Djibouti, Mombasa, Dar es Salaam); rail; roads</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">DJIBOUTI BASE:</span> China first overseas military base (2017); adjacent to Camp Lemonnier (US); strategic Horn of Africa location</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">DEBT TRAP DEBATE:</span> Zambia defaulted 2020 (Chinese creditor); Kenya SGR debt controversy; IMF/World Bank study shows mixed evidence on "debt trap" label</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">DIPLOMATIC WINS:</span> China brokered Saudi-Iran rapprochement 2023; positioning as alternative peacemaker vs US; AU member support at UNGA</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fde68a;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; RUSSIA WAGNER / AFRICA CORPS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f59e0b;">WAGNER GROUP:</span> Prigozhin-led PMC; deployed CAR, Libya, Sudan, Mali, Mozambique; Prigozhin killed Aug 2023 post-mutiny</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">AFRICA CORPS:</span> Renamed/reorganized successor to Wagner; GRU control; continues Mali, Niger, Burkina Faso operations</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">PAYMENT MODEL:</span> Russia mercenaries receive mining concessions, resource extraction rights, timber; CAR gold; Mali gold; Libyan oil</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">DISINFORMATION:</span> Russian IO amplifies anti-French, anti-Western sentiment; social media manipulation; flags/symbols in coup celebrations</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);padding:14px;">'
+  +'<div style="color:#fde68a;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; US AFRICA STRATEGY</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f59e0b;">AFRICOM:</span> US Africa Command (Stuttgart); 2,000 troops in Niger expelled 2024; counterterrorism focus; drone bases Agadez, Djibouti</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">PROSPER AFRICA:</span> US trade/investment initiative; competing with BRI; Lobito Corridor (DRC-Zambia-Angola) rail project</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">CT PARTNERSHIPS:</span> Training G5 Sahel force; Nigeria military assistance; Kenya, Ethiopia CT cooperation; AMISOM Somalia support</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f59e0b;">RETREAT:</span> France expelled from Mali, Burkina, Niger; US expelled from Niger air base; Western influence declining in Sahel</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openLatam(){
+  var o=document.getElementById('p68latam-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Latin America security Venezuela Cuba Nicaragua cartel drug war crime migration instability','p68latam-gdelt',2);P68_renderLatam();}
+}
+function P68_closeLatam(){var o=document.getElementById('p68latam-overlay');if(o)o.style.display='none';}
+function P68_renderLatam(){
+  var el=document.getElementById('p68latam-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.25);padding:14px;">'
+  +'<div style="color:#86efac;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; REGIONAL SECURITY THREATS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#22c55e;"><th style="text-align:left;padding:2px 4px;">COUNTRY</th><th>THREAT TYPE</th><th>STATUS</th><th>EXTERNAL ACTORS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Venezuela</td><td style="text-align:center;">Authoritarian/criminal</td><td style="text-align:center;color:#ef4444;">CRISIS</td><td style="text-align:center;">Russia/China/Cuba/Iran</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Ecuador</td><td style="text-align:center;">Cartel/MS-13 takeover</td><td style="text-align:center;color:#ef4444;">EMERGENCY</td><td style="text-align:center;">Sinaloa/CJNG</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Haiti</td><td style="text-align:center;">Gang control (G9/Viv Ansanm)</td><td style="text-align:center;color:#ef4444;">FAILED STATE</td><td style="text-align:center;">MSS Kenya</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Colombia</td><td style="text-align:center;">FARC dissident/ELN</td><td style="text-align:center;color:#f59e0b;">ELEVATED</td><td style="text-align:center;">Venezuela links</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Mexico</td><td style="text-align:center;">Cartel supremacy</td><td style="text-align:center;color:#ef4444;">HIGH</td><td style="text-align:center;">CJNG/Sinaloa</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.25);padding:14px;">'
+  +'<div style="color:#86efac;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; VENEZUELA STRATEGIC THREAT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#22c55e;">MADURO REGIME:</span> 2024 election stolen; Edmundo Gonzalez recognized by 20+ countries; Maduro maintained power via military loyalty/repression</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">RUSSIAN PRESENCE:</span> Russian military advisors; S-300VM Antei SAMs; Tu-160 nuclear bomber landings 2018; Rosneft oil cooperation</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">IRAN/HEZBOLLAH:</span> IRGC-QF presence in Venezuela; Caracas-Tehran flight corridor; Hezbollah financing via gold/drug trade</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">ESSEQUIBO:</span> Venezuela claims 2/3 of Guyana; Essequibo oil discovery 2015+ (11B+ barrels); 2023 referendum; military buildup; ExxonMobil operations</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.25);padding:14px;">'
+  +'<div style="color:#86efac;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; CUBA / NICARAGUA: RUSSIA-CHINA TIES</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#22c55e;">CUBA SIGINT:</span> Russia reportedly upgraded Lourdes signals intelligence facility; intercept US communications; proximity to US East Coast</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">CHINA IN CUBA:</span> China negotiating military training facility in Cuba; signals intelligence cooperation; Caribbean presence concern for SOUTHCOM</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">NICARAGUA:</span> Ortega invited Russian warships to Nicaraguan ports; expelled US and EU diplomats; OAS suspended; authoritarian consolidation</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">MONROE DOCTRINE:</span> US SOUTHCOM refocused on great power competition; Cuba/Venezuela as adversary proxies in Western Hemisphere</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.25);padding:14px;">'
+  +'<div style="color:#86efac;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; HAITIAN COLLAPSE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#22c55e;">GANG CONTROL:</span> G9 federation and Viv Ansanm coalition control 80%+ of Port-au-Prince; police overwhelmed; government evacuated 2024</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">KENYA MSS:</span> Kenyan Multinational Security Support Mission; 1,000 Kenyan police deployed 2024; limited effectiveness vs well-armed gangs</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">HUMANITARIAN:</span> 5M Haitians in acute food insecurity; 700,000 internally displaced; cholera resurgence; total institutional collapse</div>'
+  +'<div style="margin-top:6px;"><span style="color:#22c55e;">US RISK:</span> Boat migration surge; narco-gang links to Dominican Republic/US supply chains; refugee flows; proximity to critical Caribbean sea lanes</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openMEBal(){
+  var o=document.getElementById('p68mebal-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Middle East balance power Iran Saudi Arabia Israel conflict proxy war Yemen Iraq Syria Lebanon','p68mebal-gdelt',2);P68_renderMEBal();}
+}
+function P68_closeMEBal(){var o=document.getElementById('p68mebal-overlay');if(o)o.style.display='none';}
+function P68_renderMEBal(){
+  var el=document.getElementById('p68mebal-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fed7aa;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; REGIONAL POWER BALANCE</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#f97316;"><th style="text-align:left;padding:2px 4px;">ACTOR</th><th>MILITARY POWER</th><th>PROXY NETWORK</th><th>NUCLEAR STATUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Israel</td><td style="text-align:center;color:#4ade80;">DOMINANT</td><td style="text-align:center;">Limited</td><td style="text-align:center;color:#f59e0b;">Undeclared</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Iran</td><td style="text-align:center;color:#f59e0b;">STRONG</td><td style="text-align:center;color:#ef4444;">EXTENSIVE</td><td style="text-align:center;color:#ef4444;">Threshold state</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Saudi Arabia</td><td style="text-align:center;color:#f59e0b;">STRONG</td><td style="text-align:center;">Moderate</td><td style="text-align:center;color:#4ade80;">None</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Turkey</td><td style="text-align:center;color:#f59e0b;">STRONG</td><td style="text-align:center;">Libya/Syria</td><td style="text-align:center;color:#4ade80;">None (NATO)</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">UAE</td><td style="text-align:center;color:#f59e0b;">MODERATE</td><td style="text-align:center;">Libya/Sudan</td><td style="text-align:center;color:#4ade80;">None</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fed7aa;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; IRAN AXIS OF RESISTANCE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f97316;">IRGC-QF:</span> Quds Force; foreign operations arm; arms Hezbollah/Hamas/Houthi/PMF; Maj. Gen. Esmail Qaani leads post-Soleimani</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">HEZBOLLAH:</span> 150,000+ rockets/missiles; south Lebanon buffer; degraded by Israel 2024 operations; leadership decapitated (Nasrallah killed)</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">HAMAS FUTURE:</span> Hamas military wing decimated Gaza 2023-24; political leadership survived Qatar/Istanbul; reconstruction and rearmament ongoing</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">PMF IRAQ:</span> Popular Mobilization Forces; 100,000+ fighters; rival Iraqi state authority; Iranian-linked Kataib Hezbollah targeted US forces</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">HOUTHI SURVIVAL:</span> US/UK strikes 2024 degraded missile capability; Houthis rebuilt; still targeting Red Sea; Iran resupply via Oman continues</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fed7aa;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; ISRAEL MILITARY POSTURE</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f97316;">IRON DOME/DAVID SLING:</span> Tiered air defense; Iron Dome intercepts short-range rockets (90%+ rate); David Sling for medium range; Arrow 3 for ballistic</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">F-35I ADIR:</span> Israeli-modified F-35 with Israeli avionics/EW; cleared for export modifications; long-range strike capability with aerial refueling</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">STRIKE ON IRAN:</span> Oct 2024 Israeli strike hit Iranian air defense radars, S-300 sites; demonstrated deep strike capability; precedent set</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">PAGER ATTACK:</span> Sep 2024 exploding pager/walkie-talkie attack killed 32 Hezbollah; supply chain operation attributed to Mossad; unprecedented</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);padding:14px;">'
+  +'<div style="color:#fed7aa;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; GULF ARAB REALIGNMENT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#f97316;">ABRAHAM ACCORDS:</span> UAE, Bahrain, Morocco, Sudan normalized with Israel 2020; Saudi normalization sought; Hamas Oct 7 disrupted but not killed process</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">SAUDI HEDGING:</span> Saudi buying Chinese weapons (drones, missiles); BRICS observer; OPEC+ coordination with Russia; but still US security dependent</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">UAE ROLE:</span> Dubai financial hub for sanctioned entities; F-35 suspended over Huawei; EDGE defense industry building; Abraham Accords leader</div>'
+  +'<div style="margin-top:6px;"><span style="color:#f97316;">QATAR GAS:</span> World largest LNG exporter; hosts US Al-Udeid Air Base (10,000 troops); Hamas political bureau; dual role as mediator</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openAsiaPac(){
+  var o=document.getElementById('p68asiapac-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('Asia Pacific security Taiwan China India Japan South China Sea AUKUS Quad military competition','p68asiapac-gdelt',2);P68_renderAsiaPac();}
+}
+function P68_closeAsiaPac(){var o=document.getElementById('p68asiapac-overlay');if(o)o.style.display='none';}
+function P68_renderAsiaPac(){
+  var el=document.getElementById('p68asiapac-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.25);padding:14px;">'
+  +'<div style="color:#f9a8d4;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; QUAD + AUKUS FRAMEWORKS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#ec4899;"><th style="text-align:left;padding:2px 4px;">FRAMEWORK</th><th>MEMBERS</th><th>PURPOSE</th><th>KEY OUTPUT</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">QUAD</td><td style="text-align:center;">US/Japan/India/Aus</td><td style="text-align:center;">Indo-Pacific stability</td><td style="text-align:center;">Maritime awareness/vaccines</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">AUKUS Pillar 1</td><td style="text-align:center;">US/UK/Aus</td><td style="text-align:center;">SSN submarines</td><td style="text-align:center;">Virginia-class by ~2033</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">AUKUS Pillar 2</td><td style="text-align:center;">US/UK/Aus</td><td style="text-align:center;">Advanced tech</td><td style="text-align:center;">AI, QC, cyber, hypersonic</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">US-Japan-Korea</td><td style="text-align:center;">US/Japan/ROK</td><td style="text-align:center;">DPRK deterrence</td><td style="text-align:center;">Trilateral exercises</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">FPDA</td><td style="text-align:center;">UK/Aus/NZ/Malay/Sing</td><td style="text-align:center;">Malay defense</td><td style="text-align:center;">Malaysia air defense</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.25);padding:14px;">'
+  +'<div style="color:#f9a8d4;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; TAIWAN STRAIT THREAT ASSESSMENT</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#ec4899;">PLA CAPABILITY:</span> PLAN can execute blockade now; amphibious assault capability growing but not yet sufficient for forced reunification per most assessments</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">TIMELINE ESTIMATES:</span> US intel: Xi directed PLA readiness by 2027; not necessarily invasion timeline; INDOPACOM: 2027 "most dangerous decade"</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">TAIWAN DEFENSE:</span> $19B US arms sales 2023-24; Harpoon coastal defense; HIMARS; F-16V upgrade; asymmetric "porcupine strategy" adopted</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">GRAY ZONE:</span> Daily PLA aircraft ADIZ incursions; coast guard operations near Kinmen/Matsu; balloon surveillance; psychological pressure campaign</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">CHIPS ACT STAKES:</span> TSMC produces 90%+ of advanced chips; Taiwan invasion would end global semiconductor supply -- existential economic threat</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.25);padding:14px;">'
+  +'<div style="color:#f9a8d4;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; INDIA STRATEGIC POSITION</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#ec4899;">STRATEGIC AUTONOMY:</span> India refuses alignment; Quad member but non-NATO; buys Russian oil + S-400; also F/A-18 evaluation; hedging between US and Russia</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">INDIA-CHINA LAC:</span> 2020 Galwan clash killed 20 Indians, 4+ Chinese; ongoing LAC standoff Ladakh; Dec 2022 Arunachal clash; limited de-escalation</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">MILITARY BUILDUP:</span> India: 1.4M active military; 3rd largest defense budget; Rafale jets; INS Vikrant carrier; DRDO hypersonic program</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">INDIA-PAKISTAN:</span> LOC sporadic fire; Pakistan terrorist proxies (LeT/JeM); Pulwama/Balakot 2019; both nuclear; crisis management mechanisms weak</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.25);padding:14px;">'
+  +'<div style="color:#f9a8d4;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; JAPAN REMILITARIZATION</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#ec4899;">ARTICLE 9 REINTERPRETATION:</span> Abe reinterpreted "collective self-defense" 2015; Japan now can defend allies; Kishida NSS 2022 historic shift</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">BUDGET DOUBLING:</span> Japan 2% GDP defense target by 2027 (from ~1%); $318B 5-year plan; Tomahawk purchase for strike capability</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">COUNTERATTACK CAPABILITY:</span> Japan acquiring Tomahawk LACM for "counterattack" (strike) missions; F-35A/B fleet; US consultations for joint strike planning</div>'
+  +'<div style="margin-top:6px;"><span style="color:#ec4899;">SOUTH KOREA:</span> ROK fielded Hyunmoo-5 ballistic missile (800km); THAAD controversy with China; Seoul within DPRK artillery range</div>'
+  +'</div></div>'
+  +'</div>';}
+
+function P68_openGlobalOrg(){
+  var o=document.getElementById('p68globalorg-overlay');
+  if(o){o.style.display='flex';_gdeltFetch('UN Security Council international organizations NATO BRICS SCO global governance reform veto crisis','p68globalorg-gdelt',2);P68_renderGlobalOrg();}
+}
+function P68_closeGlobalOrg(){var o=document.getElementById('p68globalorg-overlay');if(o)o.style.display='none';}
+function P68_renderGlobalOrg(){
+  var el=document.getElementById('p68globalorg-analysis');
+  if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;">'
+  +'<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.25);padding:14px;">'
+  +'<div style="color:#a5f3fc;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; UN SECURITY COUNCIL DYNAMICS</div>'
+  +'<table style="width:100%;font-size:9px;color:#94a3b8;border-collapse:collapse;">'
+  +'<tr style="color:#06b6d4;"><th style="text-align:left;padding:2px 4px;">P5 MEMBER</th><th>VETOES 1946-2025</th><th>RECENT VETO FOCUS</th></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">Russia</td><td style="text-align:center;">143</td><td style="text-align:center;">Ukraine, Syria, DPRK</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">United States</td><td style="text-align:center;">86</td><td style="text-align:center;">Israel/Palestine, Cuba</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">United Kingdom</td><td style="text-align:center;">32</td><td style="text-align:center;">Zimbabwe, Falklands</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">France</td><td style="text-align:center;">18</td><td style="text-align:center;">Syria (pre-2011)</td></tr>'
+  +'<tr style="border-top:1px solid #1e293b;"><td style="padding:2px 4px;">China</td><td style="text-align:center;">20</td><td style="text-align:center;">Taiwan-adjacent, Myanmar</td></tr>'
+  +'</table></div>'
+  +'<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.25);padding:14px;">'
+  +'<div style="color:#a5f3fc;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; RIVAL MULTILATERAL BLOCS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#06b6d4;">BRICS+:</span> Brazil, Russia, India, China, South Africa + Egypt, Ethiopia, Iran, UAE, Saudi Arabia (2024 expansion); $28T+ combined GDP; anti-dollar agenda</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">SCO:</span> Shanghai Cooperation Organisation; China, Russia, India, Pakistan, Iran (2023 full member); Central Asia; security/counterterrorism focus</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">CSTO:</span> Collective Security Treaty Organization; Russia-led; Armenia, Belarus, Kazakhstan, Kyrgyzstan, Tajikistan; Article 4 invoked 2022 Kazakhstan</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">G20 FAULT LINES:</span> G20 splits US/Europe vs Russia/China on Ukraine; consensus communiques impossible; G20 value diminishing; G7+partners more cohesive</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.25);padding:14px;">'
+  +'<div style="color:#a5f3fc;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; ICC / ICJ: LEGAL INSTRUMENTS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#06b6d4;">ICC WARRANT -- PUTIN:</span> ICC issued arrest warrant Vladimir Putin March 2023 for deportation of Ukrainian children; 124 state parties obligated to arrest</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">ICC -- NETANYAHU/GALLANT:</span> ICC Prosecutor sought warrants for Netanyahu and Gallant Nov 2024 re Gaza; ICC Appeals Chamber confirmed jurisdiction</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">ICJ GENOCIDE CASE:</span> South Africa filed ICJ genocide case vs Israel Jan 2024; ICJ ordered provisional measures; final judgment years away</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">US ICC POSITION:</span> US not ICC member (withdrew Rome Statute 2002); sanctioned ICC prosecutor Bensouda; Biden restored relations; Trump re-sanctioned</div>'
+  +'</div></div>'
+  +'<div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.25);padding:14px;">'
+  +'<div style="color:#a5f3fc;font-size:10px;letter-spacing:.15em;margin-bottom:10px;">&#x25B2; GLOBAL ORDER STRESS INDICATORS</div>'
+  +'<div style="font-size:9px;color:#94a3b8;line-height:1.7;">'
+  +'<div><span style="color:#06b6d4;">RULES-BASED ORDER:</span> Post-WWII framework (UN, Bretton Woods, WTO, NPT) under stress from great power revisionism; no clear successor framework</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">WTO PARALYSIS:</span> Appellate body non-functional since 2019; US blocking judge appointments; trade disputes accumulate unresolved</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">DOLLAR HEGEMONY:</span> USD share of global reserves declining (58% vs 71% in 1999); BRICS dedollarization push; oil trades in RMB growing</div>'
+  +'<div style="margin-top:6px;"><span style="color:#06b6d4;">FRAGMENTATION RISK:</span> World bifurcating into US-led and China-led blocs; Global South increasingly transactional; multilateralism weakening</div>'
+  +'</div></div>'
+  +'</div>';}
+
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
  const list=document.getElementById('sigint-feed');
@@ -40415,6 +40864,15 @@ function filterSIGINT(query){
 <button id="p67energysec-btn" onclick="P67_openEnergySec()">ENERGY SEC</button>
 <button id="p67terrornet-btn" onclick="P67_openTerrorNet()">TERROR NET</button>
 <button id="p67bordersec-btn" onclick="P67_openBorderSec()">BORDER SEC</button>
+<button id="p68naval-btn" onclick="P68_openNaval()">NAVAL PWR</button>
+<button id="p68wmdprolif-btn" onclick="P68_openWmdProlif()">WMD PROLIF</button>
+<button id="p68intelops-btn" onclick="P68_openIntelOps()">INTEL OPS</button>
+<button id="p68arcticrace-btn" onclick="P68_openArcticRace()">ARCTIC RACE</button>
+<button id="p68afrstrat-btn" onclick="P68_openAfrStrat()">AFRICA STRAT</button>
+<button id="p68latam-btn" onclick="P68_openLatam()">LATAM SEC</button>
+<button id="p68mebal-btn" onclick="P68_openMEBal()">MIDEAST BAL</button>
+<button id="p68asiapac-btn" onclick="P68_openAsiaPac()">ASIA PAC</button>
+<button id="p68globalorg-btn" onclick="P68_openGlobalOrg()">GLOBAL ORG</button>
 
 <!-- South China Sea Overlay (Phase 60) -->
 <div id="p60scs-overlay">
@@ -42472,6 +42930,141 @@ function filterSIGINT(query){
  <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
   <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE BORDER SECURITY FEED -- GDELT</div>
   <div id="p67bordersec-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68naval-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#93c5fd;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; NAVAL POWER INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">CARRIER FLEETS -- CHINA A2/AD -- RED SEA -- SUBMARINE WARFARE</div>
+  </div>
+  <button onclick="P68_closeNaval()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68naval-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE NAVAL POWER FEED -- GDELT</div>
+  <div id="p68naval-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68wmdprolif-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#fca5a5;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x2622; WMD PROLIFERATION INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">NUCLEAR INVENTORY -- IRAN PROGRAM -- DPRK MISSILES -- PROLIF NETWORKS</div>
+  </div>
+  <button onclick="P68_closeWmdProlif()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68wmdprolif-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE WMD PROLIFERATION FEED -- GDELT</div>
+  <div id="p68wmdprolif-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68intelops-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#c4b5fd;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; INTELLIGENCE OPERATIONS</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">MAJOR SERVICES -- FIVE EYES -- ESPIONAGE CASES -- TRADECRAFT</div>
+  </div>
+  <button onclick="P68_closeIntelOps()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68intelops-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE INTELLIGENCE OPS FEED -- GDELT</div>
+  <div id="p68intelops-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68arcticrace-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#e0f2fe;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; ARCTIC STRATEGIC COMPETITION</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">CLAIMS -- RUSSIA BUILDUP -- NSR -- NATO POSTURE</div>
+  </div>
+  <button onclick="P68_closeArcticRace()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68arcticrace-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE ARCTIC COMPETITION FEED -- GDELT</div>
+  <div id="p68arcticrace-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68afrstrat-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#fde68a;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; AFRICA STRATEGIC INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">COUP BELT -- CHINA AFRICA -- RUSSIA WAGNER -- US STRATEGY</div>
+  </div>
+  <button onclick="P68_closeAfrStrat()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68afrstrat-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE AFRICA STRATEGY FEED -- GDELT</div>
+  <div id="p68afrstrat-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68latam-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#86efac;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; LATIN AMERICA SECURITY INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">REGIONAL THREATS -- VENEZUELA -- CUBA/NICARAGUA -- HAITI COLLAPSE</div>
+  </div>
+  <button onclick="P68_closeLatam()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68latam-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE LATAM SECURITY FEED -- GDELT</div>
+  <div id="p68latam-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68mebal-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#fed7aa;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; MIDDLE EAST BALANCE OF POWER</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">POWER BALANCE -- IRAN AXIS -- ISRAEL POSTURE -- GULF REALIGNMENT</div>
+  </div>
+  <button onclick="P68_closeMEBal()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68mebal-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE MIDDLE EAST FEED -- GDELT</div>
+  <div id="p68mebal-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68asiapac-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#f9a8d4;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; ASIA PACIFIC SECURITY INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">QUAD/AUKUS -- TAIWAN -- INDIA -- JAPAN REMILITARIZATION</div>
+  </div>
+  <button onclick="P68_closeAsiaPac()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68asiapac-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE ASIA PACIFIC FEED -- GDELT</div>
+  <div id="p68asiapac-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
+ </div>
+</div>
+
+<div id="p68globalorg-overlay" style="display:none;position:fixed;inset:0;z-index:2200;background:rgba(2,4,14,0.98);flex-direction:column;overflow-y:auto;padding:24px;font-family:'Courier New',monospace;">
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <div>
+   <div style="color:#a5f3fc;font-size:13px;letter-spacing:.2em;font-weight:700;">&#x25B2; GLOBAL ORGANIZATION INTELLIGENCE</div>
+   <div style="color:#475569;font-size:9px;margin-top:3px;letter-spacing:.1em;">UN SECURITY COUNCIL -- RIVAL BLOCS -- ICC/ICJ -- ORDER STRESS</div>
+  </div>
+  <button onclick="P68_closeGlobalOrg()" style="background:transparent;border:1px solid #334155;color:#475569;cursor:pointer;padding:4px 10px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
+ </div>
+ <div id="p68globalorg-analysis"></div>
+ <div style="margin-top:20px;border-top:1px solid #1e293b;padding-top:16px;">
+  <div style="color:#475569;font-size:9px;letter-spacing:.1em;margin-bottom:8px;">LIVE GLOBAL ORGANIZATIONS FEED -- GDELT</div>
+  <div id="p68globalorg-gdelt"><div style="color:#475569;font-size:9px;">Loading live feed...</div></div>
  </div>
 </div>
 </body>
