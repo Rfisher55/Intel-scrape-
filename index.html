@@ -6185,6 +6185,118 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
 #classif-bar { display: none !important; }
 #hud-corners { display: none !important; }
 
+
+/* ═══════════════════════════════════════
+   BRAIN CENTER
+   ═══════════════════════════════════════ */
+#brain-view {
+  position: fixed;
+  inset: 0;
+  top: 68px;
+  background: #00010a;
+  z-index: 5400;
+  display: none;
+  overflow: hidden;
+}
+#brain-view.open { display: block; }
+
+#brain-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+/* HUD overlay on the brain */
+#brain-hud {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Top-left: title */
+#brain-title-block {
+  position: absolute;
+  top: 32px; left: 48px;
+}
+.brain-title {
+  font-size: 11px; letter-spacing: .45em; font-weight: 700;
+  color: rgba(139,92,246,0.9);
+  text-shadow: 0 0 20px rgba(139,92,246,0.5);
+}
+.brain-subtitle {
+  font-size: 7px; letter-spacing: .2em; color: rgba(30,41,59,0.9);
+  margin-top: 4px;
+}
+
+/* Bottom stats bar */
+#brain-stats-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: linear-gradient(to top, rgba(0,1,10,0.95), transparent);
+  display: flex; align-items: center;
+  padding: 0 48px;
+  gap: 40px;
+  pointer-events: none;
+}
+.brain-stat {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.brain-stat-label {
+  font-size: 6px; letter-spacing: .2em; color: rgba(30,41,59,0.8);
+}
+.brain-stat-val {
+  font-size: 14px; font-weight: 700; letter-spacing: .05em;
+  line-height: 1;
+}
+
+/* Cluster labels */
+.brain-cluster-label {
+  position: absolute;
+  font-size: 7px; letter-spacing: .2em; font-weight: 700;
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity .3s;
+  text-shadow: 0 0 8px currentColor;
+}
+
+/* Right panel: active signals */
+#brain-signals-panel {
+  position: absolute;
+  top: 32px; right: 48px;
+  width: 200px;
+  pointer-events: none;
+}
+.brain-signal-title {
+  font-size: 7px; letter-spacing: .25em; color: rgba(30,41,59,0.7);
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(30,41,59,0.3);
+  padding-bottom: 4px;
+}
+.brain-signal-item {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 5px;
+  font-size: 7px; letter-spacing: .1em;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.brain-signal-item.visible { opacity: 1; }
+.brain-signal-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  flex-shrink: 0;
+  animation: braindotpulse 1.5s ease-in-out infinite;
+}
+@keyframes braindotpulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.6; }
+}
+
+@keyframes brainpulse {
+  0%,100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
 </style>
 </head>
 <body>
@@ -6203,6 +6315,7 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
     <button class="mode-tab active" id="tab-globe" onclick="switchToGlobe()">&#x25CB; GLOBE</button>
     <button class="mode-tab" id="tab-intel" onclick="switchToIntel()">&#x25A6; INTEL &nbsp;<span style="color:#1e3a5f;font-size:7px;">91</span></button>
     <button class="mode-tab" id="tab-layers" onclick="toggleLayersDock()">&#x2261; LAYERS</button>
+    <button class="mode-tab" id="tab-brain" onclick="switchToBrain()">&#x25C6; BRAIN</button>
   </div>
 
   <div class="mode-right">
@@ -39967,6 +40080,398 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+
+// ══════════════════════════════════════════════════════════════
+//  BRAIN ENGINE — Live neural visualization
+// ══════════════════════════════════════════════════════════════
+var _BrainEngine = (function() {
+  var canvas, ctx, W, H;
+  var nodes = [], edges = [], signals = [];
+  var frame = 0, active = false;
+  var animId = null;
+
+  // 8 clusters = 8 intel categories
+  var CLUSTERS = [
+    {key:'conflicts', color:'#ef4444', label:'ACTIVE CONFLICTS'},
+    {key:'nuclear',   color:'#f97316', label:'NUCLEAR & WMD'},
+    {key:'intel',     color:'#8b5cf6', label:'INTELLIGENCE'},
+    {key:'cyber',     color:'#06b6d4', label:'CYBER & TECH'},
+    {key:'threats',   color:'#dc2626', label:'THREATS'},
+    {key:'regional',  color:'#3b82f6', label:'REGIONAL'},
+    {key:'econ',      color:'#22c55e', label:'ECONOMIC'},
+    {key:'human',     color:'#f59e0b', label:'HUMAN & GOV'},
+  ];
+
+  function hexRgb(hex) {
+    var r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+    return r+','+g+','+b;
+  }
+  function rgba(hex, a) { return 'rgba('+hexRgb(hex)+','+a+')'; }
+
+  function clusterCenters() {
+    // Place 8 clusters in a loose brain-lobe arrangement
+    return [
+      {x:W*0.32, y:H*0.28},  // conflicts
+      {x:W*0.52, y:H*0.18},  // nuclear
+      {x:W*0.70, y:H*0.30},  // intel
+      {x:W*0.78, y:H*0.52},  // cyber
+      {x:W*0.65, y:H*0.72},  // threats
+      {x:W*0.45, y:H*0.78},  // regional
+      {x:W*0.25, y:H*0.65},  // econ
+      {x:W*0.22, y:H*0.45},  // human
+    ];
+  }
+
+  function buildNetwork() {
+    nodes = []; edges = [];
+    var centers = clusterCenters();
+    var N_PER = 90;  // nodes per cluster
+
+    for(var c=0; c<8; c++) {
+      var cx = centers[c].x, cy = centers[c].y;
+      for(var i=0; i<N_PER; i++) {
+        // Organic placement: multiple radii, irregular
+        var angle = Math.random() * Math.PI * 2;
+        var r = Math.pow(Math.random(), 0.6) * (100 + Math.random() * 60);
+        var jitter = (Math.random()-0.5) * 30;
+        nodes.push({
+          x:  cx + Math.cos(angle)*r + jitter,
+          y:  cy + Math.sin(angle)*r + jitter,
+          ox: cx + Math.cos(angle)*r + jitter,  // origin for drift
+          oy: cy + Math.sin(angle)*r + jitter,
+          cluster: c,
+          col: CLUSTERS[c].color,
+          rgb: hexRgb(CLUSTERS[c].color),
+          r: 0.8 + Math.random() * 2.2,
+          phase:  Math.random() * Math.PI * 2,
+          speed:  0.015 + Math.random() * 0.025,
+          activity: 0,
+          driftT: Math.random() * 100,
+          driftF: 0.003 + Math.random() * 0.004,
+        });
+      }
+    }
+
+    // Build edges: connect nearby nodes
+    var MAX_D = 85;
+    for(var i=0; i<nodes.length; i++) {
+      var n1 = nodes[i], conns = 0;
+      for(var j=i+1; j<nodes.length && conns < 5; j++) {
+        var n2 = nodes[j];
+        var dx = n2.x-n1.x, dy = n2.y-n1.y;
+        var d = Math.sqrt(dx*dx+dy*dy);
+        if(d < MAX_D) {
+          var al = Math.pow(1 - d/MAX_D, 1.4) * 0.35;
+          edges.push({a:i, b:j, baseAlpha:al, activity:0,
+            // bezier control points for organic curves
+            cpx1: n1.x + (n2.x-n1.x)*0.33 + (Math.random()-0.5)*20,
+            cpy1: n1.y + (n2.y-n1.y)*0.33 + (Math.random()-0.5)*20,
+            cpx2: n1.x + (n2.x-n1.x)*0.66 + (Math.random()-0.5)*20,
+            cpy2: n1.y + (n2.y-n1.y)*0.66 + (Math.random()-0.5)*20,
+          });
+          conns++;
+        }
+      }
+    }
+
+    _placeBrainLabels(centers);
+    _buildSignalList();
+  }
+
+  function _placeBrainLabels(centers) {
+    // Remove old labels
+    document.querySelectorAll('.brain-cluster-label').forEach(function(el){el.remove();});
+    var hud = document.getElementById('brain-hud');
+    if(!hud) return;
+    var rect = document.getElementById('brain-view').getBoundingClientRect();
+    CLUSTERS.forEach(function(cl, i) {
+      var lbl = document.createElement('div');
+      lbl.className = 'brain-cluster-label';
+      lbl.id = 'bcl-'+cl.key;
+      lbl.textContent = cl.label;
+      lbl.style.color = cl.color;
+      lbl.style.left = (centers[i].x - 40) + 'px';
+      lbl.style.top  = (centers[i].y - 90) + 'px';
+      hud.appendChild(lbl);
+    });
+  }
+
+  function _buildSignalList() {
+    var list = document.getElementById('brain-signal-list');
+    if(!list) return;
+    list.innerHTML = '';
+    CLUSTERS.forEach(function(cl) {
+      var item = document.createElement('div');
+      item.className = 'brain-signal-item';
+      item.id = 'bsig-'+cl.key;
+      item.innerHTML = '<div class="brain-signal-dot" style="background:'+cl.color+';box-shadow:0 0 4px '+cl.color+';"></div>'
+        + '<span style="color:'+cl.color+';">'+cl.label+'</span>';
+      list.appendChild(item);
+    });
+  }
+
+  function fireCluster(ci) {
+    // Activate a burst in a cluster — pick a random start node
+    var clusterNodes = [];
+    for(var i=0; i<nodes.length; i++) {
+      if(nodes[i].cluster===ci) clusterNodes.push(i);
+    }
+    if(!clusterNodes.length) return;
+
+    var startIdx = clusterNodes[Math.floor(Math.random()*clusterNodes.length)];
+    nodes[startIdx].activity = 1;
+
+    // Find edges connected to this node and propagate
+    var toActivate = [startIdx];
+    for(var step=0; step<3; step++) {
+      var next = [];
+      edges.forEach(function(e) {
+        if(toActivate.indexOf(e.a)>=0 && nodes[e.b].cluster===ci) {
+          e.activity = Math.random()*0.8+0.5;
+          nodes[e.b].activity = Math.max(nodes[e.b].activity, 0.7);
+          next.push(e.b);
+        } else if(toActivate.indexOf(e.b)>=0 && nodes[e.a].cluster===ci) {
+          e.activity = Math.random()*0.8+0.5;
+          nodes[e.a].activity = Math.max(nodes[e.a].activity, 0.7);
+          next.push(e.a);
+        }
+      });
+      toActivate = next;
+    }
+
+    // Add a traveling signal
+    signals.push({cluster:ci, nodes: clusterNodes.slice(0,6), t:0, color:CLUSTERS[ci].color});
+
+    // Light up cluster label
+    var lbl = document.getElementById('bcl-'+CLUSTERS[ci].key);
+    if(lbl) {
+      lbl.style.opacity = '1';
+      lbl.style.textShadow = '0 0 20px '+CLUSTERS[ci].color;
+      setTimeout(function(){
+        if(lbl){lbl.style.opacity='0.45'; lbl.style.textShadow='0 0 8px '+CLUSTERS[ci].color;}
+      }, 800);
+    }
+
+    // Light up signal list item
+    var sig = document.getElementById('bsig-'+CLUSTERS[ci].key);
+    if(sig) {
+      sig.classList.add('visible');
+      clearTimeout(sig._to);
+      sig._to = setTimeout(function(){sig.classList.remove('visible');}, 2000);
+    }
+  }
+
+  function draw() {
+    if(!active) return;
+    animId = requestAnimationFrame(draw);
+    frame++;
+
+    ctx.fillStyle = 'rgba(0,1,10,0.18)';
+    ctx.fillRect(0,0,W,H);
+
+    // Draw edges
+    for(var i=0; i<edges.length; i++) {
+      var e = edges[i];
+      var n1=nodes[e.a], n2=nodes[e.b];
+      if(e.activity > 0.02) {
+        ctx.beginPath();
+        ctx.moveTo(n1.x, n1.y);
+        ctx.bezierCurveTo(e.cpx1,e.cpy1,e.cpx2,e.cpy2,n2.x,n2.y);
+        ctx.strokeStyle = 'rgba('+n1.rgb+','+(e.baseAlpha + e.activity*0.5)+')';
+        ctx.lineWidth = 0.3 + e.activity*1.2;
+        ctx.stroke();
+        e.activity *= 0.975;
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(n1.x, n1.y);
+        ctx.bezierCurveTo(e.cpx1,e.cpy1,e.cpx2,e.cpy2,n2.x,n2.y);
+        ctx.strokeStyle = 'rgba(20,28,50,'+e.baseAlpha+')';
+        ctx.lineWidth = 0.25;
+        ctx.stroke();
+      }
+    }
+
+    // Draw nodes
+    for(var i=0; i<nodes.length; i++) {
+      var n = nodes[i];
+      n.phase += n.speed;
+      n.driftT += n.driftF;
+      // Subtle organic drift around origin
+      n.x = n.ox + Math.sin(n.driftT*1.3) * 4 + Math.cos(n.driftT*0.7) * 3;
+      n.y = n.oy + Math.cos(n.driftT*1.1) * 4 + Math.sin(n.driftT*0.9) * 3;
+
+      var pulse = (Math.sin(n.phase)+1)*0.5;
+      var act = n.activity;
+      var size = n.r * (1 + pulse*0.4 + act*2.5);
+
+      if(act > 0.08) {
+        // Glow halo
+        var gR = size * 12;
+        var grad = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,gR);
+        grad.addColorStop(0, 'rgba('+n.rgb+','+(act*0.5)+')');
+        grad.addColorStop(1, 'rgba('+n.rgb+',0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, gR, 0, 6.2832);
+        ctx.fill();
+        n.activity *= 0.96;
+      }
+
+      var alpha = 0.35 + pulse*0.3 + act*0.6;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, size, 0, 6.2832);
+      ctx.fillStyle = 'rgba('+n.rgb+','+alpha+')';
+      ctx.fill();
+    }
+
+    // Draw traveling signals (bright dots along paths)
+    signals = signals.filter(function(s) { return s.t < 1; });
+    signals.forEach(function(s) {
+      s.t += 0.018;
+      var n = nodes[s.nodes[Math.floor(s.t * s.nodes.length) % s.nodes.length]];
+      if(!n) return;
+      var gR = 6;
+      var grad = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,gR);
+      grad.addColorStop(0, 'rgba(255,255,255,0.9)');
+      grad.addColorStop(0.4, 'rgba('+hexRgb(s.color)+',0.6)');
+      grad.addColorStop(1, 'rgba('+hexRgb(s.color)+',0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, gR, 0, 6.2832);
+      ctx.fill();
+    });
+
+    // Auto-fire
+    if(frame % 45 === 0) {
+      fireCluster(Math.floor(Math.random()*8));
+    }
+    if(frame % 120 === 0) {
+      // Cross-cluster signal: two clusters light up together
+      var c1 = Math.floor(Math.random()*8);
+      var c2 = (c1 + 1 + Math.floor(Math.random()*6)) % 8;
+      fireCluster(c1);
+      setTimeout(function(){fireCluster(c2);}, 200);
+    }
+
+    // Update stats
+    if(frame % 15 === 0) _updateStats();
+  }
+
+  function _updateStats() {
+    var activeSyn = 0;
+    for(var i=0;i<edges.length;i++) if(edges[i].activity>0.05) activeSyn++;
+    var freq = (58 + Math.sin(frame*0.04)*8 + Math.random()*4).toFixed(1);
+    var sig  = (72 + Math.sin(frame*0.03)*15 + Math.random()*8).toFixed(0);
+    var load = (35 + Math.sin(frame*0.05)*20 + Math.random()*10).toFixed(0);
+    var pat  = typeof _AIEngine!=='undefined' ? Object.keys(_AIEngine.trendScores||{}).length : '--';
+
+    var el;
+    el = document.getElementById('bstat-freq'); if(el) el.textContent = freq + ' Hz';
+    el = document.getElementById('bstat-syn');  if(el) el.textContent = activeSyn;
+    el = document.getElementById('bstat-sig');  if(el) el.textContent = sig + ' dB';
+    el = document.getElementById('bstat-pat');  if(el) el.textContent = pat;
+    el = document.getElementById('bstat-load'); if(el) el.textContent = load + '%';
+  }
+
+  function start() {
+    canvas = document.getElementById('brain-canvas');
+    if(!canvas) return;
+    ctx = canvas.getContext('2d');
+    resize();
+    buildNetwork();
+    active = true;
+    draw();
+    window.addEventListener('resize', function() {
+      if(!active) return;
+      resize();
+      buildNetwork();
+    });
+  }
+
+  function resize() {
+    var view = document.getElementById('brain-view');
+    W = view ? view.offsetWidth : window.innerWidth;
+    H = view ? view.offsetHeight : (window.innerHeight - 68);
+    canvas.width = W;
+    canvas.height = H;
+  }
+
+  function stop() {
+    active = false;
+    if(animId) { cancelAnimationFrame(animId); animId = null; }
+  }
+
+  return {
+    start: start,
+    stop: stop,
+    fireCluster: fireCluster,
+    resize: resize,
+    buildNetwork: buildNetwork
+  };
+})();
+
+// Mode switching for brain
+function switchToBrain() {
+  document.getElementById('intel-dashboard').classList.remove('open');
+  document.getElementById('brain-view').classList.add('open');
+  document.getElementById('tab-globe').classList.remove('active');
+  document.getElementById('tab-intel').classList.remove('active');
+  document.getElementById('tab-layers').classList.remove('active');
+  document.getElementById('tab-brain').classList.add('active');
+  if(!_BrainEngine._started) {
+    _BrainEngine._started = true;
+    _BrainEngine.start();
+  } else {
+    _BrainEngine._active = true;
+    // Resume if paused
+  }
+}
+
+// Patch switchToGlobe to also close brain view
+var _origSwitchToGlobe = switchToGlobe;
+switchToGlobe = function() {
+  _origSwitchToGlobe();
+  var bv = document.getElementById('brain-view');
+  if(bv) bv.classList.remove('open');
+  var tb = document.getElementById('tab-brain');
+  if(tb) tb.classList.remove('active');
+};
+
+// Patch switchToIntel likewise
+var _origSwitchToIntel = switchToIntel;
+switchToIntel = function() {
+  _origSwitchToIntel();
+  var bv = document.getElementById('brain-view');
+  if(bv) bv.classList.remove('open');
+  var tb = document.getElementById('tab-brain');
+  if(tb) tb.classList.remove('active');
+};
+
+// When modules fire from AI Engine, pulse corresponding cluster
+if(typeof _AIEngine !== 'undefined') {
+  var _origLearn = _AIEngine.learnFromQuery;
+  if(_origLearn) {
+    _AIEngine.learnFromQuery = function(query, resultCount, topics) {
+      _origLearn.call(_AIEngine, query, resultCount, topics);
+      // Fire a random cluster when data comes in
+      if(_BrainEngine._started) {
+        _BrainEngine.fireCluster(Math.floor(Math.random()*8));
+      }
+    };
+  }
+}
+
+// Keyboard shortcut B = brain
+document.addEventListener('keydown', function(e) {
+  if((e.key==='b'||e.key==='B') && !document.activeElement.tagName.match(/INPUT|TEXTAREA/)) {
+    var bv = document.getElementById('brain-view');
+    if(bv) {
+      if(bv.classList.contains('open')) switchToGlobe();
+      else switchToBrain();
+    }
+  }
+});
+
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
  const list=document.getElementById('sigint-feed');
@@ -44646,6 +45151,54 @@ function filterSIGINT(query){
       <div>
         <div style="font-size:7px;letter-spacing:.2em;color:#064e3b;margin-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:4px;">ENGINE LOG</div>
         <div id="ai-engine-log"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     BRAIN CENTER
+     ════════════════════════════════════════════ -->
+<div id="brain-view">
+  <canvas id="brain-canvas"></canvas>
+
+  <div id="brain-hud">
+    <!-- Title -->
+    <div id="brain-title-block">
+      <div class="brain-title">&#x25C6; NEURAL COMMAND</div>
+      <div class="brain-subtitle">LIVE COGNITIVE ARCHITECTURE &nbsp;//&nbsp; AI PATTERN ENGINE v4.0 &nbsp;//&nbsp; GDELT SIGNAL PROCESSING</div>
+    </div>
+
+    <!-- Cluster labels injected by JS -->
+
+    <!-- Right: active signals -->
+    <div id="brain-signals-panel">
+      <div class="brain-signal-title">ACTIVE SIGNALS</div>
+      <div id="brain-signal-list"></div>
+    </div>
+
+    <!-- Bottom stats -->
+    <div id="brain-stats-bar">
+      <div class="brain-stat">
+        <span class="brain-stat-label">NEURAL FREQ</span>
+        <span class="brain-stat-val" id="bstat-freq" style="color:#8b5cf6;">--</span>
+      </div>
+      <div class="brain-stat">
+        <span class="brain-stat-label">ACTIVE SYNAPSES</span>
+        <span class="brain-stat-val" id="bstat-syn" style="color:#06b6d4;">--</span>
+      </div>
+      <div class="brain-stat">
+        <span class="brain-stat-label">SIGNAL STRENGTH</span>
+        <span class="brain-stat-val" id="bstat-sig" style="color:#22c55e;">--</span>
+      </div>
+      <div class="brain-stat">
+        <span class="brain-stat-label">PATTERNS LEARNED</span>
+        <span class="brain-stat-val" id="bstat-pat" style="color:#f59e0b;">--</span>
+      </div>
+      <div class="brain-stat">
+        <span class="brain-stat-label">COGNITIVE LOAD</span>
+        <span class="brain-stat-val" id="bstat-load" style="color:#ef4444;">--</span>
       </div>
     </div>
   </div>
