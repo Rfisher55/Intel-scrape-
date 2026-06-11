@@ -64,7 +64,7 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:9999;
 .h-title{font-size:13px;font-weight:700;letter-spacing:.22em;color:#b8d0ff;
  text-transform:uppercase}
 .h-region{font-size:9px;color:var(--muted);border-left:1px solid var(--border-hi);padding-left:14px;letter-spacing:.18em;text-transform:uppercase}
-.h-middle{flex:1;text-align:center;font-size:9px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
+.h-middle{flex:1;text-align:center;font-size:9px;color:#64748b;letter-spacing:.18em;text-transform:uppercase}
 .h-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .h-live{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--live);letter-spacing:.14em;text-transform:uppercase}
 .h-dot{width:4px;height:4px;border-radius:50%;background:var(--live);animation:blink 1.6s step-start infinite}
@@ -6496,6 +6496,17 @@ a:hover { color: #bfdbfe !important; }
   box-shadow: 0 0 12px rgba(239,68,68,0.3) !important;
 }
 
+
+/* Brain HUD text brighter */
+#brain-view canvas + * { color: #64748b; }
+/* Intel stream articles */
+#ils-feed div { break-inside: avoid; margin-bottom: 6px; }
+/* Header middle text brighter */
+#h-status { color: #64748b !important; }
+/* Module count badge */
+.dash-cat-count { color: #334155 !important; font-size: 7px !important; }
+.dash-cat.open .dash-cat-count { color: rgba(239,68,68,0.7) !important; }
+
 </style>
 </head>
 <body>
@@ -6757,7 +6768,7 @@ a:hover { color: #bfdbfe !important; }
  <span class="h-title">INTEL GLOBE</span>
  <span class="h-region">OSINT Platform v3.1</span>
  </div>
- <div class="h-middle" id="h-status">Double-click country · Dots are hotspots · Scroll to zoom</div>
+ <div class="h-middle" id="h-status">Double-click country · Dots are hotspots · Scroll to zoom · Press G / I / B</div>
  <div class="h-right">
  <div id="sys-stats">
  <div class="sys-stat-item"><span class="sys-stat-val" id="stat-countries">125</span><span>COUNTRIES</span></div>
@@ -42210,6 +42221,16 @@ window._openKoreaModule  = function(){ if(typeof P60_openKoreaModule==='function
 window._openCrisisModule = function(){ if(typeof _openFlashpoints==='function') _openFlashpoints(); };
 window._openNuclearModule= function(){ if(typeof P61_openNukesec==='function') P61_openNukesec(); };
 window.openChemWeap      = window.openChemWeap || function(){ if(typeof P64_openChem==='function') P64_openChem(); };
+
+
+// ── Keyboard shortcuts: G = Globe, I = Intel, B = Brain ──
+document.addEventListener('keydown', function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.key==='g'||e.key==='G'){if(typeof switchToGlobe==='function') switchToGlobe();}
+  if(e.key==='i'||e.key==='I'){if(typeof switchToIntel==='function') switchToIntel();}
+  if(e.key==='b'||e.key==='B'){if(typeof switchToBrain==='function') switchToBrain();}
+  if(e.key==='l'||e.key==='L'){if(typeof toggleLayersDock==='function') toggleLayersDock();}
+});
 
 // PHASE 11: SIGINT Feed Filter
 function filterSIGINT(query){
