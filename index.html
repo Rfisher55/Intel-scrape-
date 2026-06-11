@@ -5870,7 +5870,7 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
 #intel-dashboard:not(.open) { display: none !important; }
 
 /* ── NUKE ALL LEGACY BUTTONS ── */
-[id$="-btn"]:not(#tab-globe):not(#tab-intel):not(#tab-layers) {
+[id$="-btn"]:not(#tab-globe):not(#tab-intel):not(#tab-layers):not(#brain-close-btn):not(#brain-reset-btn):not(#uclose-btn) {
   display: none !important;
 }
 /* Also hide specific non-btn clutter */
@@ -6302,8 +6302,8 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
 #brain-view { cursor: crosshair; }
 #brain-close-btn {
   position: absolute; top: 18px; right: 18px; z-index: 10;
-  background: rgba(3,8,24,0.9); border: 1px solid rgba(30,41,59,0.8);
-  color: #334155; font-family: 'Courier New', monospace;
+  background: rgba(3,8,24,0.9); border: 1px solid rgba(239,68,68,0.4);
+  color: #ef4444; font-family: 'Courier New', monospace;
   font-size: 8px; letter-spacing: .2em; padding: 6px 14px;
   cursor: pointer; pointer-events: all;
   transition: all .15s;
@@ -6506,6 +6506,12 @@ a:hover { color: #bfdbfe !important; }
 /* Module count badge */
 .dash-cat-count { color: #334155 !important; font-size: 7px !important; }
 .dash-cat.open .dash-cat-count { color: rgba(239,68,68,0.7) !important; }
+
+
+/* Brain cluster legend + reset */
+#brain-cluster-legend div:hover > span:last-child { color: #93c5fd !important; }
+#brain-reset-btn:hover { border-color: rgba(59,130,246,0.6) !important; color: #93c5fd !important; }
+#brain-node-panel { transition: opacity 0.2s; }
 
 </style>
 </head>
@@ -41992,11 +41998,19 @@ var _BrainEngine = (function(){
       }
 
       /* Cluster label when zoomed in on root nodes */
-      if(v.node.depth===0&&v.sr>22){
-        ctx.fillStyle=cl.c;
-        ctx.font=Math.min(11,v.sr*0.5)+'px "Courier New"';
+      if(v.node.depth===0){
         ctx.textAlign='center';
-        ctx.fillText(cl.n,v.sx,v.sy-r2-5);
+        if(v.sr>14){
+          var lsz=Math.max(7,Math.min(11,v.sr*0.5));
+          ctx.fillStyle='rgba('+cl.r+','+Math.min(1,v.af||1)+')';
+          ctx.font=lsz+'px "Courier New"';
+          ctx.fillText(cl.n,v.sx,v.sy-Math.max(r2,6)-4);
+        } else if(v.sr>5){
+          /* abbreviated 3-char key at lower zoom */
+          ctx.fillStyle='rgba('+cl.r+',0.7)';
+          ctx.font='6px "Courier New"';
+          ctx.fillText(cl.n.slice(0,3),v.sx,v.sy-Math.max(r2,4)-3);
+        }
       }
     }
 
@@ -42060,7 +42074,7 @@ var _BrainEngine = (function(){
     p.innerHTML=
       '<div style="color:'+cl.c+';font-size:10px;letter-spacing:.18em;margin-bottom:7px;font-weight:600;">'+cl.n+'</div>'
       +'<div style="color:#94a3b8;font-size:8px;margin-bottom:3px;">DEPTH LEVEL: <span style="color:#cbd5e1;">'+node.depth+'</span></div>'
-      +'<div style="color:#94a3b8;font-size:8px;margin-bottom:3px;">AXON CONNECTIONS: <span style="color:#cbd5e1;">'+conn+' outbound</span></div>'
+      +'<div style="color:#94a3b8;font-size:8px;margin-bottom:3px;">AXON CONNECTIONS: <span style="color:#cbd5e1;">'+conn+' outbound</span> <span style="color:#334155;">/ '+(node.lateralEdges?node.lateralEdges.length:0)+' lateral</span></div>'
       +'<div style="color:#94a3b8;font-size:8px;margin-bottom:8px;">POSITION: <span style="color:#64748b;">'+node.wx.toFixed(0)+', '+node.wy.toFixed(0)+'</span></div>'
       +'<div style="color:'+cl.c+';font-size:8px;letter-spacing:.12em;margin-bottom:5px;">LIVE INTELLIGENCE FEED</div>'
       +'<div id="bnp-feed" style="max-height:180px;overflow-y:auto;font-size:7px;"></div>'
@@ -42089,6 +42103,24 @@ var _BrainEngine = (function(){
     cam.x=28;cam.y=-28;cam.zoom=0.78;
     ON=true;initialized=true;render();
     setTimeout(function(){var h=document.getElementById("brain-hint");if(h)h.classList.add("hide");},5000);
+  /* Populate cluster legend */
+  (function(){
+    var leg=document.getElementById('brain-cluster-legend');
+    if(!leg) return;
+    var out='';
+    for(var i=0;i<CL.length;i++){
+      var cl=CL[i];
+      var idx=i;
+      out+='<div style="cursor:pointer;padding:1px 0" '
+        +'onclick="(function(){var c=window._brain_cam;if(c){c.x='+cl.wx+';c.y='+cl.wy+';c.zoom=1.6;}})()" '
+        +'title="Click to zoom to '+cl.n+'">'
+        +'<span style="color:'+cl.c+'">&#x25CF;</span> '
+        +'<span style="color:#4a5568;">'+cl.n+'</span>'
+        +'</div>';
+    }
+    leg.innerHTML=out;
+  })();
+
 
     /* Mouse wheel zoom */
     cv.addEventListener('wheel',function(e){
@@ -42211,6 +42243,14 @@ var _BrainEngine = (function(){
     var dash=document.getElementById('intel-dashboard');
     if(dash&&dash.classList.contains('open')) _loadStream();
   },2000);
+  /* auto-refresh every 45s when intel tab is active */
+  setInterval(function(){
+    var dash=document.getElementById('intel-dashboard');
+    if(dash&&dash.style.display!=='none'&&dash.classList.contains('open')){
+      _ils_loaded=false;
+      _loadStream();
+    }
+  },45000);
 })();
 
 
@@ -46932,6 +46972,17 @@ function filterSIGINT(query){
   <div id="brain-node-panel" style="position:absolute;right:14px;top:14px;width:240px;background:rgba(2,6,18,0.96);border:1px solid rgba(30,58,138,0.5);padding:14px 16px;display:none;font-family:'Courier New',monospace;z-index:200;box-shadow:0 0 24px rgba(30,58,138,0.18);"></div>
   <canvas id="brain-canvas"></canvas>
 
+  <button id="brain-reset-btn" onclick="(function(){
+  var cam=window._brain_cam;
+  if(cam){cam.x=28;cam.y=-28;cam.zoom=0.78;}
+  var p=document.getElementById('brain-node-panel');
+  if(p) p.style.display='none';
+})()" style="position:absolute;left:14px;top:80px;background:none;border:1px solid rgba(30,58,138,0.55);
+  color:#4a7fb5;font-family:'Courier New',monospace;font-size:7px;letter-spacing:.14em;
+  padding:4px 10px;cursor:pointer;z-index:210;">&#x2302; RESET VIEW</button>
+  <div id="brain-cluster-legend" style="position:absolute;left:14px;bottom:52px;z-index:210;
+  font-family:'Courier New',monospace;font-size:7px;letter-spacing:.1em;line-height:1.9;">
+  </div>
   <div id="brain-hud">
     <!-- Title -->
     <div id="brain-title-block">
@@ -46939,7 +46990,7 @@ function filterSIGINT(query){
       <div class="brain-subtitle">LIVE COGNITIVE ARCHITECTURE &nbsp;//&nbsp; AI PATTERN ENGINE v4.0 &nbsp;//&nbsp; GDELT SIGNAL PROCESSING</div>
     </div>
 
-    <!-- Cluster labels injected by JS -->
+        <!-- Cluster labels injected by JS -->
 
     <!-- Right: active signals -->
     
@@ -46965,7 +47016,7 @@ function filterSIGINT(query){
         <span class="brain-stat-val" id="bstat-sig" style="color:#22c55e;">--</span>
       </div>
       <div class="brain-stat">
-        <span class="brain-stat-label">PATTERNS LEARNED</span>
+        <span class="brain-stat-label">EXPLORE DEPTH</span>
         <span class="brain-stat-val" id="bstat-pat" style="color:#f59e0b;">--</span>
       </div>
       <div class="brain-stat">
