@@ -6540,6 +6540,22 @@ a:hover { color: #bfdbfe !important; }
 .dash-cat:hover .dash-cat-arrow { color: #4a7fb5 !important; }
 .dash-cat.open .dash-cat-title { color: #cbd5e1 !important; }
 
+
+/* Brain hover tooltip */
+#brain-hover-tip {
+  position: absolute;
+  display: none;
+  font-family: 'Courier New', monospace;
+  font-size: 7.5px;
+  letter-spacing: .14em;
+  background: rgba(2,6,18,0.92);
+  border: 1px solid rgba(30,58,138,0.5);
+  padding: 3px 8px;
+  pointer-events: none;
+  z-index: 300;
+  white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -6781,7 +6797,7 @@ a:hover { color: #bfdbfe !important; }
       </div>
     </div>
     <!-- Global Intelligence Stream ticker -->
-    <div id="intel-live-stream" style="margin:14px 10px 12px;border:1px solid rgba(30,58,138,0.35);background:rgba(2,6,18,0.7);padding:14px 18px 12px;flex-shrink:0;align-self:stretch;">
+    <div id="intel-live-stream" style="margin:14px 10px 12px;border:1px solid rgba(30,58,138,0.35);background:rgba(2,6,18,0.7);padding:14px 18px 12px;flex-shrink:0;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
         <span style="color:#ef4444;font-size:7px;letter-spacing:.15em;">&#x25CF; LIVE</span>
         <span style="color:#e2e8f0;font-size:9px;letter-spacing:.22em;font-family:Courier New,monospace;">GLOBAL INTELLIGENCE STREAM</span>
@@ -6801,7 +6817,7 @@ a:hover { color: #bfdbfe !important; }
  <span class="h-title">INTEL GLOBE</span>
  <span class="h-region">OSINT Platform v3.1</span>
  </div>
- <div class="h-middle" id="h-status">Double-click country · Dots are hotspots · Scroll to zoom · Press G / I / B</div>
+ <div class="h-middle" id="h-status">Double-click country · Dots are hotspots · G / I / B to switch · Brain: dbl-click zooms · R resets</div>
  <div class="h-right">
  <div id="sys-stats">
  <div class="sys-stat-item"><span class="sys-stat-val" id="stat-countries">125</span><span>COUNTRIES</span></div>
@@ -42001,6 +42017,15 @@ var _BrainEngine = (function(){
       var isSel=_sel&&_sel===v.node;
       var r2=Math.max(0.5,v.sr);
 
+      /* Pulsing ring on root cluster nodes */
+      if(v.node.depth===0&&v.sr>8){
+        var pf=(Math.sin(frame*0.04+v.node.ci*0.7)*0.5+0.5);
+        var pr=v.sr*(1.5+pf*0.4);
+        var pa=0.15+pf*0.12;
+        ctx.beginPath();ctx.arc(v.sx,v.sy,pr,0,Math.PI*2);
+        ctx.strokeStyle='rgba('+cl.r+','+pa+')';
+        ctx.lineWidth=0.8;ctx.stroke();
+      }
       if(isSel){
         ctx.beginPath();ctx.arc(v.sx,v.sy,r2*3.2,0,Math.PI*2);
         ctx.strokeStyle=cl.c;ctx.lineWidth=0.7;ctx.stroke();
@@ -42085,8 +42110,26 @@ var _BrainEngine = (function(){
       se=document.getElementById('bstat-freq');if(se)se.textContent=(38+_vn.length*0.012+Math.sin(frame*0.05)*4).toFixed(1)+' Hz';
       se=document.getElementById('bstat-syn'); if(se)se.textContent=_ve.length;
       se=document.getElementById('bstat-sig'); if(se)se.textContent=(60+Math.log(cam.zoom+1)*9).toFixed(0)+' dB';
-      se=document.getElementById('bstat-pat'); if(se)se.textContent=typeof _AIEngine!=='undefined'?Object.keys(_AIEngine.trendScores||{}).length:_maxDepth;
+      se=document.getElementById('bstat-pat');
+      if(se){
+        var dv=cam.zoom>1000?Math.round(Math.log10(cam.zoom))+'e'+Math.floor(Math.log10(cam.zoom)):_maxDepth;
+        se.textContent=dv;
+      }
       se=document.getElementById('bstat-load');if(se)se.textContent=Math.round(_vn.length/_nodeLimit*100)+'%';
+      /* Update signal list */
+      var sl=document.getElementById('brain-signal-list');
+      if(sl&&frame%90===0){
+        var sigs=[];
+        for(var ci=0;ci<CL.length;ci++){
+          var hasRoot=false;
+          for(var vi=0;vi<_vn.length;vi++){if(_vn[vi].node.ci===ci&&_vn[vi].node.depth<=1){hasRoot=true;break;}}
+          if(hasRoot) sigs.push(ci);
+        }
+        sl.innerHTML=sigs.map(function(ci){
+          var sc=CL[ci];
+          return '<div style="color:'+sc.c+';font-size:7px;letter-spacing:.1em;margin-bottom:3px;opacity:0.7;">&#x25CF; '+sc.n+'</div>';
+        }).join('');
+      }
     }
   }
 
@@ -42208,11 +42251,28 @@ var _BrainEngine = (function(){
 
     /* Drag pan */
     cv.addEventListener('mousedown',function(e){drag.on=true;drag.sx=e.clientX;drag.sy=e.clientY;drag.cx=cam.x;drag.cy=cam.y;drag.moved=false;});
+    var _tipTO=null;
     cv.addEventListener('mousemove',function(e){
       if(drag.on){
         if(Math.abs(e.clientX-drag.sx)+Math.abs(e.clientY-drag.sy)>3) drag.moved=true;
         cam.x=drag.cx-(e.clientX-drag.sx)/cam.zoom;
         cam.y=drag.cy-(e.clientY-drag.sy)/cam.zoom;
+      }
+      var rect=cv.getBoundingClientRect();
+      var mx=e.clientX-rect.left,my=e.clientY-rect.top;
+      var node=findAt(mx,my);
+      cv.style.cursor=node?'pointer':'crosshair';
+      var tip=document.getElementById('brain-hover-tip');
+      if(tip){
+        if(node){
+          var cl=CL[node.ci];
+          tip.textContent=cl.n+' // DEPTH '+node.depth;
+          tip.style.left=(mx+14)+'px';tip.style.top=(my-8)+'px';
+          tip.style.display='block';tip.style.color=cl.c;
+          if(_tipTO){clearTimeout(_tipTO);_tipTO=null;}
+        } else {
+          if(!_tipTO) _tipTO=setTimeout(function(){if(tip)tip.style.display='none';_tipTO=null;},100);
+        }
       }
     });
     cv.addEventListener('mouseup',function(e){
@@ -42340,6 +42400,17 @@ document.addEventListener('keydown', function(e){
   if(e.key==='i'||e.key==='I'){if(typeof switchToIntel==='function') switchToIntel();}
   if(e.key==='b'||e.key==='B'){if(typeof switchToBrain==='function') switchToBrain();}
   if(e.key==='l'||e.key==='L'){if(typeof toggleLayersDock==='function') toggleLayersDock();}
+  /* Brain keyboard controls */
+  var bv=document.getElementById('brain-view');
+  if(bv&&bv.classList.contains('open')){
+    var cam=window._brain_cam;
+    if(cam){
+      if(e.key==='='||e.key==='+'){cam.zoom=Math.min(10000000,cam.zoom*1.25);}
+      if(e.key==='-'||e.key==='_'){cam.zoom=Math.max(0.04,cam.zoom/1.25);}
+      if(e.key==='r'||e.key==='R'){cam.x=28;cam.y=-28;cam.zoom=0.78;var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
+      if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}}
+    }
+  }
 });
 
 // PHASE 11: SIGINT Feed Filter
