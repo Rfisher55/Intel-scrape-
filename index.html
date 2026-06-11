@@ -32624,7 +32624,9 @@ document.addEventListener('DOMContentLoaded',function(){
 
 async function _checkLiveFeeds(){
   var now=new Date().toISOString().replace('T',' ').slice(0,19)+' UTC';
-  document.getElementById('lfs-lastupdate').textContent='LAST SYNC: '+now;
+  var lfsU=document.getElementById('lfs-lastupdate');
+  if(!lfsU) return; /* status bar not present in this layout */
+  lfsU.textContent='LAST SYNC: '+now;
   // GDELT check
   try{
     var r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query=conflict&mode=artlist&maxrecords=1&timespan=168H&format=json',{signal:AbortSignal.timeout(8000)});
@@ -41690,23 +41692,23 @@ var _BrainEngine = (function(){
   var cam={x:0,y:0,zoom:0.88};
   var drag={on:false,sx:0,sy:0,cx:0,cy:0,moved:false};
   var pinch={on:false,d0:0,z0:1};
-  var _sel=null;
+  var _sel=null,_zt=null;
 
   /* Visible cache rebuilt each frame */
   var _vn=[],_ve=[];
   var _maxDepth=0;
-  var _nodeLimit=2200; /* performance cap */
+  var _nodeLimit=3500; /* performance cap */
 
   /* Cluster definitions */
   var CL=[
-    {k:'conflicts',n:'ACTIVE CONFLICTS',c:'#ef4444',r:'239,68,68',  wx:-400,wy:-280},
-    {k:'nuclear',  n:'NUCLEAR & WMD',   c:'#f97316',r:'249,115,22',wx: 200,wy:-450},
-    {k:'intel',    n:'INTELLIGENCE',    c:'#8b5cf6',r:'139,92,246',wx: 500,wy: -90},
-    {k:'cyber',    n:'CYBER & TECH',    c:'#06b6d4',r:'6,182,212', wx:-450,wy: 130},
-    {k:'threats',  n:'THREATS',         c:'#dc2626',r:'220,38,38', wx: 360,wy: 370},
-    {k:'regional', n:'REGIONAL',        c:'#3b82f6',r:'59,130,246',wx:-290,wy: 410},
-    {k:'econ',     n:'ECONOMIC',        c:'#22c55e',r:'34,197,94', wx:  60,wy:-440},
-    {k:'human',    n:'HUMAN & GOV',     c:'#f59e0b',r:'245,158,11',wx:-160,wy:-420},
+    {k:'conflicts',n:'ACTIVE CONFLICTS',c:'#ef4444',r:'239,68,68',  wx:-400,wy:-280,q:'armed conflict war offensive'},
+    {k:'nuclear',  n:'NUCLEAR & WMD',   c:'#f97316',r:'249,115,22',wx: 200,wy:-450,q:'nuclear weapons proliferation'},
+    {k:'intel',    n:'INTELLIGENCE',    c:'#8b5cf6',r:'139,92,246',wx: 500,wy: -90,q:'intelligence agency espionage'},
+    {k:'cyber',    n:'CYBER & TECH',    c:'#06b6d4',r:'6,182,212', wx:-450,wy: 130,q:'cyberattack hacking breach'},
+    {k:'threats',  n:'THREATS',         c:'#dc2626',r:'220,38,38', wx: 360,wy: 370,q:'terrorism threat security'},
+    {k:'regional', n:'REGIONAL',        c:'#3b82f6',r:'59,130,246',wx:-290,wy: 410,q:'geopolitical crisis diplomacy'},
+    {k:'econ',     n:'ECONOMIC',        c:'#22c55e',r:'34,197,94', wx:  60,wy:-440,q:'economic sanctions trade'},
+    {k:'human',    n:'HUMAN & GOV',     c:'#f59e0b',r:'245,158,11',wx:-160,wy:-420,q:'humanitarian crisis government'},
   ];
 
   /* Seeded PRNG (mulberry32) */
@@ -41726,9 +41728,12 @@ var _BrainEngine = (function(){
   }
 
   /* Node factory */
+  /* Self-similar geometry: child radius 0.34x, child spread 2.6x parent
+     radius. Each zoom of 3x resolves one more generation at the same
+     on-screen density — the dive looks identical forever. */
   function mkNode(id,wx,wy,depth,ci){
     return {id:id,wx:wx,wy:wy,depth:depth,ci:ci,
-      r:Math.max(0.5,16*Math.pow(0.58,depth)),
+      r:40*Math.pow(0.34,depth),
       children:null,lateralEdges:null};
   }
 
@@ -41737,11 +41742,11 @@ var _BrainEngine = (function(){
     if(node.children!==null||node.depth>=22) return;
     var rng=mkRng(hashStr(node.id+'_c'));
     var n=5+Math.floor(rng()*4); /* 5-8 children */
-    var spread=node.r*5.4;
+    var spread=node.r*2.6;
     var ch=[];
     for(var i=0;i<n;i++){
       var ang=(i/n)*Math.PI*2+rng()*0.55-0.27;
-      var dist=spread*(0.60+rng()*0.80);
+      var dist=spread*(0.75+rng()*0.70);
       ch.push(mkNode(node.id+'.'+i,
         node.wx+Math.cos(ang)*dist,
         node.wy+Math.sin(ang)*dist,
@@ -41764,31 +41769,56 @@ var _BrainEngine = (function(){
   function inView(wx,wy,m){var s=w2s(wx,wy);return s.sx>-m&&s.sx<W+m&&s.sy>-m&&s.sy<H+m;}
 
   /* Recursive collection */
+  /* LOD band: a node is visible while its screen radius sits inside
+     [0.6 .. 260] px, fading in at the small end and out at the large end.
+     Only ~2-3 fractal generations show at once — the zoom stays clean
+     at any depth. */
+  function fadeA(sr){
+    if(sr<=3) return 0;
+    if(sr<6) return (sr-3)/3;
+    if(sr<100) return 1;
+    if(sr<200) return 1-(sr-100)/100;
+    return 0;
+  }
+
   function collect(node){
     if(_vn.length>=_nodeLimit) return;
-    var p=w2s(node.wx,node.wy);
     var sr=node.r*cam.zoom;
-    if(sr<0.4&&!inView(node.wx,node.wy,sr+30)) return;
-    _vn.push({node:node,sx:p.sx,sy:p.sy,sr:sr});
-    if(node.depth>_maxDepth) _maxDepth=node.depth;
+    /* skip the whole subtree when its bounding circle misses the viewport
+       (subtree extent is ~5x the node radius — geometric series of child spreads) */
+    if(!inView(node.wx,node.wy,sr*5+60)) return;
+    var p=w2s(node.wx,node.wy);
+    var af=fadeA(sr);
+    var onScreen=p.sx>-sr-30&&p.sx<W+sr+30&&p.sy>-sr-30&&p.sy<H+sr+30;
+    if(onScreen&&af>0){
+      _vn.push({node:node,sx:p.sx,sy:p.sy,sr:sr,af:af});
+      if(node.depth>_maxDepth) _maxDepth=node.depth;
+    }
 
     /* Recurse when screen radius is large enough */
-    if(sr>11&&_vn.length<_nodeLimit){
+    if(sr>9&&_vn.length<_nodeLimit){
       ensureChildren(node);
       if(!node.children) return;
       var ch=node.children;
+      var M=80;
+      var pVis=p.sx>-M&&p.sx<W+M&&p.sy>-M&&p.sy<H+M;
       for(var i=0;i<ch.length;i++){
         var cp=w2s(ch[i].wx,ch[i].wy);
-        _ve.push({x1:p.sx,y1:p.sy,x2:cp.sx,y2:cp.sy,depth:node.depth,ci:node.ci,lat:false});
+        if(af>0&&(pVis||(cp.sx>-M&&cp.sx<W+M&&cp.sy>-M&&cp.sy<H+M)))
+          _ve.push({x1:p.sx,y1:p.sy,x2:cp.sx,y2:cp.sy,depth:node.depth,ci:node.ci,lat:false,af:af});
         collect(ch[i]);
       }
-      /* Lateral edges */
-      for(var i=0;i<node.lateralEdges.length;i++){
-        var le=node.lateralEdges[i];
-        if(le.a<ch.length&&le.b<ch.length){
-          var pa2=w2s(ch[le.a].wx,ch[le.a].wy);
-          var pb2=w2s(ch[le.b].wx,ch[le.b].wy);
-          _ve.push({x1:pa2.sx,y1:pa2.sy,x2:pb2.sx,y2:pb2.sy,depth:node.depth+1,ci:node.ci,lat:true});
+      /* Lateral edges — fade with the siblings they connect */
+      var caf=fadeA(sr*0.58);
+      if(caf>0){
+        for(var i=0;i<node.lateralEdges.length;i++){
+          var le=node.lateralEdges[i];
+          if(le.a<ch.length&&le.b<ch.length){
+            var pa2=w2s(ch[le.a].wx,ch[le.a].wy);
+            var pb2=w2s(ch[le.b].wx,ch[le.b].wy);
+            if((pa2.sx>-M&&pa2.sx<W+M&&pa2.sy>-M&&pa2.sy<H+M)||(pb2.sx>-M&&pb2.sx<W+M&&pb2.sy>-M&&pb2.sy<H+M))
+              _ve.push({x1:pa2.sx,y1:pa2.sy,x2:pb2.sx,y2:pb2.sy,depth:node.depth+1,ci:node.ci,lat:true,af:caf});
+          }
         }
       }
     }
@@ -41828,9 +41858,10 @@ var _BrainEngine = (function(){
     ctx.save();
     for(var i=0;i<_ve.length;i++){
       var e=_ve[i];
-      var a=e.cross?0.05:(e.lat?0.055:Math.min(0.22,0.03+0.18/(e.depth+1)));
-      ctx.strokeStyle='rgba(80,120,210,'+a+')';
-      ctx.lineWidth=e.cross?0.2:(e.lat?0.15:Math.max(0.15,0.45-e.depth*0.03));
+      var a=(e.cross?0.10:(e.lat?0.20:0.34))*(e.af===undefined?1:e.af);
+      if(a<=0.01) continue;
+      ctx.strokeStyle='rgba(110,150,235,'+a+')';
+      ctx.lineWidth=e.cross?0.35:(e.lat?0.4:0.6);
       ctx.beginPath();ctx.moveTo(e.x1,e.y1);ctx.lineTo(e.x2,e.y2);ctx.stroke();
     }
     ctx.restore();
@@ -41848,9 +41879,23 @@ var _BrainEngine = (function(){
         ctx.strokeStyle=cl.c;ctx.lineWidth=0.7;ctx.stroke();
       }
 
-      ctx.beginPath();ctx.arc(v.sx,v.sy,r2,0,Math.PI*2);
-      ctx.fillStyle='rgba('+cl.r+','+Math.min(0.95,0.32+r2*0.06)+')';
-      ctx.fill();
+      /* dots stay dots at every zoom level — cap the visual size so the
+         network always reads as dots and lines, never solid blobs */
+      var dr=r2<5?r2:5+Math.log(r2-4)*0.8;
+      var na=Math.min(0.95,0.35+r2*0.06)*(v.af===undefined?1:v.af);
+      if(na>0.01){
+        ctx.beginPath();ctx.arc(v.sx,v.sy,Math.min(dr,8),0,Math.PI*2);
+        ctx.fillStyle='rgba('+cl.r+','+na+')';
+        ctx.fill();
+      }
+      if(r2>40&&v.af>0){
+        /* faint membrane showing the true extent of the neuron */
+        var ra=0.18*v.af;
+        ctx.beginPath();ctx.arc(v.sx,v.sy,r2,0,Math.PI*2);
+        ctx.strokeStyle='rgba('+cl.r+','+ra+')';
+        ctx.lineWidth=0.8;
+        ctx.stroke();
+      }
 
       /* Cluster label when zoomed in on root nodes */
       if(v.node.depth===0&&v.sr>22){
@@ -41866,6 +41911,15 @@ var _BrainEngine = (function(){
     ctx.font='7px "Courier New"';
     ctx.textAlign='left';
     ctx.fillText('ZOOM '+cam.zoom.toFixed(1)+'x  DEPTH '+_maxDepth+'  NEURONS '+_vn.length, 10, H-8);
+
+    if(frame%30===0){
+      var se;
+      se=document.getElementById('bstat-freq');if(se)se.textContent=(38+_vn.length*0.012+Math.sin(frame*0.05)*4).toFixed(1)+' Hz';
+      se=document.getElementById('bstat-syn'); if(se)se.textContent=_ve.length;
+      se=document.getElementById('bstat-sig'); if(se)se.textContent=(60+Math.log(cam.zoom+1)*9).toFixed(0)+' dB';
+      se=document.getElementById('bstat-pat'); if(se)se.textContent=typeof _AIEngine!=='undefined'?Object.keys(_AIEngine.trendScores||{}).length:_maxDepth;
+      se=document.getElementById('bstat-load');if(se)se.textContent=Math.round(_vn.length/_nodeLimit*100)+'%';
+    }
   }
 
   function findAt(sx,sy){
@@ -41897,7 +41951,7 @@ var _BrainEngine = (function(){
       +'<button onclick="var cl=_BrainEngine._CL&&_BrainEngine._CL['+node.ci+'];if(cl){window._brain_cam.x=cl.wx;window._brain_cam.y=cl.wy;window._brain_cam.zoom=1.8;}" '
       +'style="background:none;border:1px solid rgba('+cl.r+',0.4);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 12px;cursor:pointer;font-family:\'Courier New\';margin-left:6px;">ZOOM TO CLUSTER</button></div>';
     p.style.display='block';
-    if(typeof _gdeltFetch==='function') _gdeltFetch(cl.k+' intelligence security threat', 'bnp-feed', 1);
+    if(typeof _gdeltFetch==='function') _gdeltFetch(cl.q, 'bnp-feed', 2);
   }
 
   /* Expose camera for zoom-to button */
@@ -41922,9 +41976,31 @@ var _BrainEngine = (function(){
       var rect=cv.getBoundingClientRect();
       var mx=e.clientX-rect.left,my=e.clientY-rect.top;
       var wb=s2w(mx,my);
-      cam.zoom=Math.max(0.04,Math.min(100000,cam.zoom*(e.deltaY<0?1.13:0.885)));
+      cam.zoom=Math.max(0.04,Math.min(10000000,cam.zoom*(e.deltaY<0?1.13:0.885)));
       var wa=s2w(mx,my);
       cam.x+=wb.wx-wa.wx;cam.y+=wb.wy-wa.wy;
+      /* guided dive: when zooming in, pull the nearest neuron toward the
+         cursor faster than the zoom pushes it away — you always land
+         inside the network, never in empty space */
+      if(e.deltaY<0){
+        var tn=null,bd=Infinity;
+        for(var i=0;i<_vn.length;i++){
+          var dxs=_vn[i].sx-mx,dys=_vn[i].sy-my,ds=dxs*dxs+dys*dys;
+          if(ds<bd){bd=ds;tn=_vn[i].node;}
+        }
+        if(!tn){
+          var cw=s2w(mx,my),bwd=Infinity;
+          for(var i=0;i<roots.length;i++){
+            var dxw=roots[i].wx-cw.wx,dyw=roots[i].wy-cw.wy,dw=dxw*dxw+dyw*dyw;
+            if(dw<bwd){bwd=dw;tn=roots[i];}
+          }
+        }
+        if(tn){
+          var tp=w2s(tn.wx,tn.wy);
+          cam.x+=(tp.sx-mx)/cam.zoom*0.45;
+          cam.y+=(tp.sy-my)/cam.zoom*0.45;
+        }
+      }
     },{passive:false});
 
     /* Drag pan */
@@ -41963,7 +42039,7 @@ var _BrainEngine = (function(){
         cam.y=drag.cy-(e.touches[0].clientY-drag.sy)/cam.zoom;
       } else if(pinch.on&&e.touches.length===2){
         var dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;
-        cam.zoom=Math.max(0.04,Math.min(100000,pinch.z0*Math.sqrt(dx*dx+dy*dy)/pinch.d0));
+        cam.zoom=Math.max(0.04,Math.min(10000000,pinch.z0*Math.sqrt(dx*dx+dy*dy)/pinch.d0));
       }
       e.preventDefault();
     },{passive:false});
@@ -46672,6 +46748,7 @@ function filterSIGINT(query){
      BRAIN CENTER
      ════════════════════════════════════════════ -->
 <div id="brain-view">
+  <div id="brain-node-panel" style="position:absolute;right:14px;top:14px;width:240px;background:rgba(2,6,18,0.96);border:1px solid rgba(30,58,138,0.5);padding:14px 16px;display:none;font-family:'Courier New',monospace;z-index:200;box-shadow:0 0 24px rgba(30,58,138,0.18);"></div>
   <canvas id="brain-canvas"></canvas>
 
   <div id="brain-hud">
