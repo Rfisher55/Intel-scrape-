@@ -6602,6 +6602,14 @@ a:hover { color: #bfdbfe !important; }
 .dash-mod { color: #475569 !important; }
 .dash-mod:hover { color: inherit !important; }
 
+
+/* Globe hotspot dots — slightly brighter */
+.hotspot-dot { opacity: 0.85 !important; }
+.hotspot-dot:hover { opacity: 1 !important; }
+/* Alert legend text */
+.legend-label, .alert-leg-label, .legend-item-text { color: #64748b !important; }
+#legend-wrap { font-size: 8.5px !important; }
+
 </style>
 </head>
 <body>
@@ -42043,6 +42051,28 @@ var _BrainEngine = (function(){
 
     for(var i=0;i<roots.length;i++) collect(roots[i]);
 
+    /* Background: very faint "neural space" star field */
+    if(frame===0||(frame%300===0)){
+      if(!window._bgStars){
+        window._bgStars=[];
+        for(var bi=0;bi<180;bi++){
+          window._bgStars.push({x:Math.random()*4000-2000,y:Math.random()*4000-2000,
+            r:Math.random()*0.6+0.1,a:Math.random()*0.12+0.02});
+        }
+      }
+    }
+    if(window._bgStars){
+      ctx.save();
+      for(var bi=0;bi<window._bgStars.length;bi++){
+        var bs=window._bgStars[bi];
+        var bsp=w2s(bs.x,bs.y);
+        if(bsp.sx<-10||bsp.sx>W+10||bsp.sy<-10||bsp.sy>H+10) continue;
+        ctx.beginPath();ctx.arc(bsp.sx,bsp.sy,bs.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(148,163,184,'+bs.a+')';ctx.fill();
+      }
+      ctx.restore();
+    }
+
     /* Draw edges — slight bezier curve for organic look */
     ctx.save();
     for(var i=0;i<_ve.length;i++){
@@ -42197,6 +42227,22 @@ var _BrainEngine = (function(){
       ctx.fillText(bc.n+' / DEPTH '+_sel.depth, 10, H-8);
     }
 
+    /* Depth progress bar — right edge */
+    if(cam.zoom>1.5){
+      var dpbH=Math.min(H-120,400);
+      var dpbX=W-8,dpbY=(H-dpbH)/2;
+      var maxPossibleDepth=Math.floor(Math.log(cam.zoom+1)*3.5)+1;
+      var depthFrac=Math.min(1,_maxDepth/Math.max(1,maxPossibleDepth));
+      ctx.save();
+      ctx.globalAlpha=0.35;
+      ctx.fillStyle='rgba(30,41,59,0.8)';
+      ctx.fillRect(dpbX-2,dpbY,5,dpbH);
+      ctx.fillStyle='rgba(147,197,253,0.6)';
+      ctx.fillRect(dpbX-2,dpbY+dpbH*(1-depthFrac),5,dpbH*depthFrac);
+      ctx.globalAlpha=1;
+      ctx.restore();
+    }
+
     /* Mini-map: shown when not at overview (zoom > 1.2) */
     if(cam.zoom>1.2){
       var MM=80,MMx=12,MMy=H-MM-210;
@@ -42234,7 +42280,11 @@ var _BrainEngine = (function(){
 
     if(frame%30===0){
       var se;
-      se=document.getElementById('bstat-freq');if(se)se.textContent=(38+_vn.length*0.012+Math.sin(frame*0.05)*4).toFixed(1)+' Hz';
+      /* Count active clusters: clusters that have visible nodes */
+      var _activeClusters=new Set();
+      for(var _aci=0;_aci<_vn.length;_aci++) _activeClusters.add(_vn[_aci].node.ci);
+      se=document.getElementById('bstat-freq');
+      if(se)se.textContent=(38+_vn.length*0.012+Math.sin(frame*0.05)*4).toFixed(1)+' Hz';
       se=document.getElementById('bstat-syn'); if(se)se.textContent=_ve.length;
       se=document.getElementById('bstat-sig'); if(se)se.textContent=(60+Math.log(cam.zoom+1)*9).toFixed(0)+' dB';
       se=document.getElementById('bstat-pat');
