@@ -6513,7 +6513,7 @@ a:hover { color: #bfdbfe !important; }
 /* Brain cluster legend + reset */
 #brain-cluster-legend div { transition: background 0.15s; padding: 1px 4px; border-radius: 2px; }
 #brain-cluster-legend div:hover { background: rgba(59,130,246,0.1); }
-#brain-cluster-legend div span:last-child { color: #64748b !important; }
+#brain-cluster-legend div span:last-child { color: #6b7280 !important; }
 #brain-cluster-legend div:hover span:last-child { color: #93c5fd !important; }
 #brain-reset-btn:hover { border-color: rgba(59,130,246,0.6) !important; color: #93c5fd !important; }
 #brain-node-panel { transition: opacity 0.2s; }
@@ -6555,6 +6555,31 @@ a:hover { color: #bfdbfe !important; }
   z-index: 300;
   white-space: nowrap;
 }
+
+
+/* Alert level legend brightness */
+#alert-legend, .alert-leg-item { opacity: 1 !important; }
+.alert-leg-label { color: #64748b !important; }
+.alert-leg-swatch { opacity: 0.85 !important; }
+#legend-wrap { opacity: 0.9 !important; }
+
+
+/* Layers panel text visibility */
+#layers-panel .layer-btn { color: #475569 !important; }
+#layers-panel .layer-btn:hover { color: #94a3b8 !important; }
+#layers-panel .layer-btn.active { color: #93c5fd !important; border-color: rgba(59,130,246,0.5) !important; }
+.layers-chevron { color: #475569 !important; }
+#layers-panel .layers-title { color: #4b5563 !important; }
+
+
+/* Country panel tabs brighter */
+.tab-btn { color: #475569 !important; border-bottom: 1px solid rgba(30,58,95,0.4) !important; }
+.tab-btn:hover { color: #64748b !important; }
+.tab-btn.active { color: #93c5fd !important; border-bottom-color: rgba(147,197,253,0.6) !important; }
+/* Country panel close button */
+.p-minimize { color: #475569 !important; border-color: rgba(71,85,105,0.4) !important; }
+.p-expand { color: #475569 !important; border-color: rgba(71,85,105,0.4) !important; }
+.p-minimize:hover, .p-expand:hover { color: #64748b !important; }
 
 </style>
 </head>
@@ -41997,7 +42022,7 @@ var _BrainEngine = (function(){
 
     for(var i=0;i<roots.length;i++) collect(roots[i]);
 
-    /* Draw edges */
+    /* Draw edges — slight bezier curve for organic look */
     ctx.save();
     for(var i=0;i<_ve.length;i++){
       var e=_ve[i];
@@ -42005,7 +42030,18 @@ var _BrainEngine = (function(){
       if(a<=0.01) continue;
       ctx.strokeStyle='rgba(110,150,235,'+a+')';
       ctx.lineWidth=e.cross?0.35:(e.lat?0.4:0.6);
-      ctx.beginPath();ctx.moveTo(e.x1,e.y1);ctx.lineTo(e.x2,e.y2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(e.x1,e.y1);
+      if(!e.cross&&!e.lat){
+        /* slight perpendicular offset for non-cross, non-lateral edges */
+        var mx=(e.x1+e.x2)*0.5,my=(e.y1+e.y2)*0.5;
+        var dx=e.x2-e.x1,dy=e.y2-e.y1,len=Math.sqrt(dx*dx+dy*dy)||1;
+        var cx2=mx+(-dy/len)*Math.min(len*0.12,8);
+        var cy2=my+(dx/len)*Math.min(len*0.12,8);
+        ctx.quadraticCurveTo(cx2,cy2,e.x2,e.y2);
+      } else {
+        ctx.lineTo(e.x2,e.y2);
+      }
+      ctx.stroke();
     }
     ctx.restore();
 
@@ -42036,9 +42072,16 @@ var _BrainEngine = (function(){
       var dr=r2<5?r2:5+Math.log(r2-4)*0.8;
       var na=Math.min(0.95,0.35+r2*0.06)*(v.af===undefined?1:v.af);
       if(na>0.01){
-        ctx.beginPath();ctx.arc(v.sx,v.sy,Math.min(dr,8),0,Math.PI*2);
+        var ddr=Math.min(dr,8);
+        /* glow for selected node or high-zoom roots */
+        if(isSel||(v.node.depth===0&&v.sr>20)){
+          ctx.shadowBlur=isSel?18:8;
+          ctx.shadowColor='rgba('+cl.r+',0.8)';
+        }
+        ctx.beginPath();ctx.arc(v.sx,v.sy,ddr,0,Math.PI*2);
         ctx.fillStyle='rgba('+cl.r+','+na+')';
         ctx.fill();
+        if(isSel||v.node.depth===0) ctx.shadowBlur=0;
       }
       if(r2>40&&v.af>0){
         /* faint membrane showing the true extent of the neuron */
