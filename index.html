@@ -6616,6 +6616,68 @@ a:hover { color: #bfdbfe !important; }
   50% { opacity: 1.0; }
 }
 
+
+/* ─── Comprehensive text brightness override ─── */
+
+/* Intel category headers */
+.icat-count { color: #475569 !important; }
+.icat-arrow { color: #475569 !important; }
+.icat-label { color: #64748b !important; }
+.icat-name { color: #64748b !important; }
+
+/* Dash search placeholder */
+#dash-search::placeholder { color: #475569 !important; }
+#dash-search { color: #94a3b8 !important; }
+
+/* Dashboard category toggle/count */
+.dash-cat-count { color: #475569 !important; }
+.dash-cat-toggle { color: #334155 !important; }
+.dash-cat.open .dash-cat-toggle { color: #4a7fb5 !important; }
+.dash-cat.open .dash-cat-count { color: rgba(239,68,68,0.65) !important; }
+
+/* AI engine log timestamp */
+.ai-log-timestamp { color: #334155 !important; }
+.ai-log-entry { color: #3d5066 !important; }
+
+/* Brain signals */
+.brain-signal-title { color: #334155 !important; letter-spacing: .22em !important; }
+.brain-signal-item { color: #2d4060 !important; }
+
+/* Brain stats bar */
+.brain-stat-label { color: #334155 !important; font-size: 6.5px !important; }
+.brain-stat-val { font-size: 11px !important; }
+
+/* Brain subtitle (update) */
+.brain-subtitle { color: #334155 !important; }
+
+/* No-data placeholders */
+.no-data, [class*="no-data"] { color: #334155 !important; }
+
+/* Signal strength indicator */
+#bstat-sig { font-size: 10px !important; }
+
+/* Country panel */
+.p-cap { color: #475569 !important; }
+.p-head { border-bottom-color: rgba(30,58,95,0.4) !important; }
+.connect-btn { color: #334155 !important; border-color: rgba(30,58,95,0.4) !important; }
+.connect-btn:hover { color: #4a7fb5 !important; }
+
+/* Intel search */
+#intel-search { color: #64748b !important; }
+#intel-search::placeholder { color: #334155 !important; }
+
+/* Dash category name */
+.dash-cat-name { color: #64748b !important; letter-spacing: .18em !important; }
+.dash-cat.open .dash-cat-name { color: #94a3b8 !important; }
+
+/* Section labels in country panel */
+.sec-label { color: #475569 !important; border-color: rgba(30,58,95,0.4) !important; }
+.source-line { color: #334155 !important; }
+
+/* Report meta */
+.report-meta { color: #334155 !important; border-color: rgba(30,58,95,0.3) !important; }
+.report-meta span { color: #3d5066 !important; }
+
 </style>
 </head>
 <body>
@@ -40256,7 +40318,7 @@ var _AIEngine = {
       .sort(function(a,b){return b[1]-a[1];})
       .slice(0,10);
     if(sorted.length === 0) {
-      el.innerHTML = '<div style="color:#0f172a;font-size:8px;padding:8px 0;">No data yet — open intelligence modules</div>';
+      el.innerHTML = '<div style="color:#334155;font-size:8px;padding:8px 0;letter-spacing:.1em;">No data yet — open intelligence modules</div>';
       return;
     }
     var maxScore = sorted[0][1] || 1;
@@ -41836,7 +41898,7 @@ var _BrainEngine = (function(){
         if(e.name === 'AbortError') return; /* cancelled intentionally */
         if(attempt === retries){
           if(_controllers[targetId] !== ctrl) return;
-          el.innerHTML = '<div style="color:#1e293b;font-size:8px;padding:4px 0;">No live data available right now.</div>';
+          el.innerHTML = '<div style="color:#334155;font-size:8px;padding:4px 0;letter-spacing:.08em;">NO LIVE DATA — GDELT FETCH FAILED</div>';
         }
       }
     }
@@ -47282,7 +47344,7 @@ function filterSIGINT(query){
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
       <div>
         <div style="font-size:7px;letter-spacing:.2em;color:#064e3b;margin-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:4px;">SIGNAL TRENDS</div>
-        <div id="ai-trend-list"><div style="color:#0f172a;font-size:8px;">No data yet</div></div>
+        <div id="ai-trend-list"><div style="color:#334155;font-size:8px;">No data yet</div></div>
       </div>
       <div>
         <div style="font-size:7px;letter-spacing:.2em;color:#064e3b;margin-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:4px;">ENGINE LOG</div>
