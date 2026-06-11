@@ -6581,6 +6581,27 @@ a:hover { color: #bfdbfe !important; }
 .p-expand { color: #475569 !important; border-color: rgba(71,85,105,0.4) !important; }
 .p-minimize:hover, .p-expand:hover { color: #64748b !important; }
 
+
+/* Module close buttons — universal bright red */
+[class*="-close"]:not(.brain-signal-title):not(.brain-stat-label) {
+  color: #ef4444 !important;
+  border-color: rgba(239,68,68,0.5) !important;
+}
+[class*="-close"]:hover {
+  color: #f87171 !important;
+  border-color: rgba(239,68,68,0.8) !important;
+}
+/* NP close specifically */
+.np-close, .fp-close, .cmp-close, .p54sp-close {
+  color: #ef4444 !important;
+  border: 1px solid rgba(239,68,68,0.5) !important;
+}
+
+
+/* Module button text brighter */
+.dash-mod { color: #475569 !important; }
+.dash-mod:hover { color: inherit !important; }
+
 </style>
 </head>
 <body>
@@ -42028,7 +42049,11 @@ var _BrainEngine = (function(){
       var e=_ve[i];
       var a=(e.cross?0.10:(e.lat?0.20:0.34))*(e.af===undefined?1:e.af);
       if(a<=0.01) continue;
-      ctx.strokeStyle='rgba(110,150,235,'+a+')';
+      /* edge color: blues shift cooler at depth */
+      var er=Math.max(50,110-e.depth*3);
+      var eg=Math.max(80,150-e.depth*3);
+      var eb=Math.min(255,235+e.depth*3);
+      ctx.strokeStyle='rgba('+er+','+eg+','+eb+','+a+')';
       ctx.lineWidth=e.cross?0.35:(e.lat?0.4:0.6);
       ctx.beginPath();ctx.moveTo(e.x1,e.y1);
       if(!e.cross&&!e.lat){
@@ -42079,9 +42104,17 @@ var _BrainEngine = (function(){
           ctx.shadowBlur=isSel?18:8;
           ctx.shadowColor='rgba('+cl.r+',0.8)';
         }
+        /* depth shift: nodes get slightly dimmer at higher depth */
+        var depthFade=Math.max(0.5, 1-v.node.depth*0.03);
+        var effectiveAlpha=na*depthFade;
         ctx.beginPath();ctx.arc(v.sx,v.sy,ddr,0,Math.PI*2);
-        ctx.fillStyle='rgba('+cl.r+','+na+')';
+        ctx.fillStyle='rgba('+cl.r+','+effectiveAlpha+')';
         ctx.fill();
+        /* highlight: small bright core for visible depth-0 nodes */
+        if(v.node.depth===0&&v.sr>12&&na>0.3){
+          ctx.beginPath();ctx.arc(v.sx,v.sy,ddr*0.35,0,Math.PI*2);
+          ctx.fillStyle='rgba(255,255,255,0.25)';ctx.fill();
+        }
         if(isSel||v.node.depth===0) ctx.shadowBlur=0;
       }
       if(r2>40&&v.af>0){
@@ -42094,18 +42127,25 @@ var _BrainEngine = (function(){
       }
 
       /* Cluster label when zoomed in on root nodes */
+      ctx.textAlign='center';
       if(v.node.depth===0){
-        ctx.textAlign='center';
         if(v.sr>14){
           var lsz=Math.max(7,Math.min(11,v.sr*0.5));
           ctx.fillStyle='rgba('+cl.r+','+Math.min(1,v.af||1)+')';
           ctx.font=lsz+'px "Courier New"';
           ctx.fillText(cl.n,v.sx,v.sy-Math.max(r2,6)-4);
         } else if(v.sr>5){
-          /* abbreviated 3-char key at lower zoom */
           ctx.fillStyle='rgba('+cl.r+',0.7)';
           ctx.font='6px "Courier New"';
           ctx.fillText(cl.n.slice(0,3),v.sx,v.sy-Math.max(r2,4)-3);
+        }
+      }
+      /* Depth milestone badges at level 10, 20, 50 */
+      if(v.node.depth>0&&(v.node.depth===10||v.node.depth===20||v.node.depth===50||v.node.depth===100)){
+        if(v.sr>8&&v.af>0.5){
+          ctx.font='5.5px "Courier New"';
+          ctx.fillStyle='rgba('+cl.r+',0.5)';
+          ctx.fillText('L'+v.node.depth,v.sx,v.sy+Math.min(r2,5)+7);
         }
       }
     }
