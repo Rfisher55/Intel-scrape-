@@ -132,7 +132,7 @@ canvas.dragging{cursor:grabbing}
 .p-cap{font-size:12px;color:var(--dim);margin-top:3px}
 .p-controls{display:flex;align-items:center;gap:10px}
 .alert-badge{font-size:10px;font-weight:bold;letter-spacing:.12em;padding:3px 8px;border-radius:3px;border:1px solid}
-.p-close{background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:3px 8px;border-radius:2px;font-size:11px;transition:all .2s;letter-spacing:.05em}
+.p-close{background:none;border:1px solid rgba(239,68,68,0.45);color:#ef4444;cursor:pointer;padding:3px 8px;border-radius:2px;font-size:11px;transition:all .2s;letter-spacing:.05em}
 .p-close:hover{border-color:rgba(232,64,64,.6);color:#fca5a5}
 
 .connect-btn{
@@ -5880,6 +5880,8 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
 #newsticker     { display: none !important; }
 /* Keep live-ticker but push it below mode-bar */
 #live-ticker    { top: 68px !important; z-index: 5900 !important; }
+#live-ticker .ticker-item { color: #94a3b8 !important; }
+#live-ticker .ticker-country { color: #64748b !important; }
 #live-status-bar{ display: none !important; }
 #intel-panel    { display: none !important; }
 
@@ -6225,7 +6227,7 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
   text-shadow: 0 0 20px rgba(139,92,246,0.5);
 }
 .brain-subtitle {
-  font-size: 7px; letter-spacing: .2em; color: rgba(30,41,59,0.9);
+  font-size: 7px; letter-spacing: .2em; color: rgba(71,85,105,0.8);
   margin-top: 4px;
 }
 
@@ -6516,6 +6518,27 @@ a:hover { color: #bfdbfe !important; }
 #brain-reset-btn:hover { border-color: rgba(59,130,246,0.6) !important; color: #93c5fd !important; }
 #brain-node-panel { transition: opacity 0.2s; }
 #brain-close-btn:hover { color: #f87171 !important; border-color: rgba(239,68,68,0.6) !important; }
+
+
+/* Brain signals panel */
+#brain-signals-panel {
+  background: rgba(2,6,18,0.85) !important;
+  border: 1px solid rgba(30,58,138,0.3) !important;
+}
+.brain-signal-title { color: #475569 !important; }
+.brain-signal-item { color: #4a5568 !important; }
+.brain-signal-item.active { color: #94a3b8 !important; }
+/* Brain stat bar labels */
+.brain-stat-label { color: #475569 !important; }
+
+
+/* Intel category cards polish */
+.dash-cat { transition: border-color 0.2s !important; }
+.dash-cat:hover { border-color: rgba(30,58,138,0.6) !important; }
+.dash-cat-title { color: #94a3b8 !important; font-size: 10px !important; }
+.dash-cat-arrow { color: #334155 !important; }
+.dash-cat:hover .dash-cat-arrow { color: #4a7fb5 !important; }
+.dash-cat.open .dash-cat-title { color: #cbd5e1 !important; }
 
 </style>
 </head>
@@ -7298,7 +7321,7 @@ a:hover { color: #bfdbfe !important; }
  <span class="alert-badge" id="p-badge">—</span>
  <button class="p-minimize" id="p-minimize" onclick="toggleMinimize()" title="Minimize panel">▼</button>
  <button class="p-expand" id="p-expand" onclick="toggleFullscreen()" title="Expand to full screen">⤢</button>
- <button class="p-close" onclick="closePanel()"></button>
+ <button class="p-close" onclick="closePanel()">&#x2715;</button>
  </div>
  </div>
  <button class="connect-btn" id="connect-btn" onclick="toggleArcs()">
@@ -42043,10 +42066,19 @@ var _BrainEngine = (function(){
       ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+sa*0.85+')';
       ctx.fill();
     }
-    ctx.fillStyle='rgba(148,163,184,0.55)';
-    ctx.font='7px "Courier New"';
-    ctx.textAlign='left';
-    ctx.fillText('ZOOM '+cam.zoom.toFixed(1)+'x  DEPTH '+_maxDepth+'  NEURONS '+_vn.length, 10, H-8);
+    /* Bottom-right HUD: depth breadcrumb */
+    ctx.fillStyle='rgba(100,116,139,0.7)';
+    ctx.font='7.5px "Courier New"';
+    ctx.textAlign='right';
+    var zstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':Math.round(cam.zoom)+'x';
+    ctx.fillText('DEPTH: '+_maxDepth+'  NEURONS: '+_vn.length+'  ZOOM: '+zstr, W-10, H-8);
+    /* Bottom-left: cluster breadcrumb */
+    if(_sel&&_sel.ci!==undefined){
+      var bc=CL[_sel.ci];
+      ctx.textAlign='left';
+      ctx.fillStyle='rgba('+bc.r+',0.6)';
+      ctx.fillText('&#x25CF; '+bc.n+' / DEPTH '+_sel.depth, 10, H-8);
+    }
 
     if(frame%30===0){
       var se;
