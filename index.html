@@ -42035,8 +42035,9 @@ var _BrainEngine = (function(){
         /* slight perpendicular offset for non-cross, non-lateral edges */
         var mx=(e.x1+e.x2)*0.5,my=(e.y1+e.y2)*0.5;
         var dx=e.x2-e.x1,dy=e.y2-e.y1,len=Math.sqrt(dx*dx+dy*dy)||1;
-        var cx2=mx+(-dy/len)*Math.min(len*0.12,8);
-        var cy2=my+(dx/len)*Math.min(len*0.12,8);
+        var perp=Math.min(len*0.22,16);
+        var cx2=mx+(-dy/len)*perp;
+        var cy2=my+(dx/len)*perp;
         ctx.quadraticCurveTo(cx2,cy2,e.x2,e.y2);
       } else {
         ctx.lineTo(e.x2,e.y2);
@@ -42129,23 +42130,66 @@ var _BrainEngine = (function(){
       var sy2=sg.y1+(sg.y2-sg.y1)*sg.t;
       var sa=sg.t<0.15?sg.t/0.15:(sg.t>0.82?(1-sg.t)/0.18:1);
       var scl=CL[sg.ci];
+      /* trail: slightly larger faded dot behind */
+      var tr=sg.t-sg.sp*3;
+      if(tr>0){
+        var tsx=sg.x1+(sg.x2-sg.x1)*tr,tsy=sg.y1+(sg.y2-sg.y1)*tr;
+        ctx.beginPath();ctx.arc(tsx,tsy,sg.lat?1.2:1.8,0,Math.PI*2);
+        ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+(sa*0.3)+')';
+        ctx.fill();
+      }
       ctx.beginPath();
-      ctx.arc(sx2,sy2,sg.lat?0.9:1.3,0,Math.PI*2);
-      ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+sa*0.85+')';
+      ctx.arc(sx2,sy2,sg.lat?1.0:1.5,0,Math.PI*2);
+      ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+sa*0.9+')';
       ctx.fill();
     }
     /* Bottom-right HUD: depth breadcrumb */
     ctx.fillStyle='rgba(100,116,139,0.7)';
     ctx.font='7.5px "Courier New"';
     ctx.textAlign='right';
-    var zstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':Math.round(cam.zoom)+'x';
+    var zstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':cam.zoom<1000?Math.round(cam.zoom)+'x':'1e'+Math.floor(Math.log10(cam.zoom))+'x';
     ctx.fillText('DEPTH: '+_maxDepth+'  NEURONS: '+_vn.length+'  ZOOM: '+zstr, W-10, H-8);
     /* Bottom-left: cluster breadcrumb */
     if(_sel&&_sel.ci!==undefined){
       var bc=CL[_sel.ci];
       ctx.textAlign='left';
       ctx.fillStyle='rgba('+bc.r+',0.6)';
-      ctx.fillText('&#x25CF; '+bc.n+' / DEPTH '+_sel.depth, 10, H-8);
+      ctx.fillText(bc.n+' / DEPTH '+_sel.depth, 10, H-8);
+    }
+
+    /* Mini-map: shown when not at overview (zoom > 1.2) */
+    if(cam.zoom>1.2){
+      var MM=80,MMx=12,MMy=H-MM-210;
+      ctx.save();
+      ctx.fillStyle='rgba(2,6,18,0.82)';
+      ctx.strokeStyle='rgba(30,58,138,0.5)';
+      ctx.lineWidth=0.8;
+      ctx.fillRect(MMx,MMy,MM,MM);
+      ctx.strokeRect(MMx,MMy,MM,MM);
+      /* world bounds of the overview */
+      var wx0=-600,wy0=-520,wx1=700,wy1=520;
+      var wW=wx1-wx0,wH=wy1-wy0;
+      /* draw root node dots on minimap */
+      for(var mi=0;mi<roots.length;mi++){
+        var r=roots[mi];
+        var cl=CL[r.ci];
+        var mx2=MMx+((r.wx-wx0)/wW)*MM;
+        var my2=MMy+((r.wy-wy0)/wH)*MM;
+        ctx.beginPath();ctx.arc(mx2,my2,3,0,Math.PI*2);
+        ctx.fillStyle='rgba('+cl.r+',0.7)';ctx.fill();
+      }
+      /* draw current viewport rect */
+      var vl=cam.x-W/(2*cam.zoom),vt=cam.y-H/(2*cam.zoom);
+      var vr=cam.x+W/(2*cam.zoom),vb=cam.y+H/(2*cam.zoom);
+      var vmx=MMx+((vl-wx0)/wW)*MM,vmy=MMy+((vt-wy0)/wH)*MM;
+      var vmw=((vr-vl)/wW)*MM,vmh=((vb-vt)/wH)*MM;
+      ctx.strokeStyle='rgba(147,197,253,0.5)';ctx.lineWidth=0.8;
+      ctx.strokeRect(vmx,vmy,vmw,vmh);
+      /* mini-map label */
+      ctx.fillStyle='rgba(71,85,105,0.8)';
+      ctx.font='6px "Courier New"';ctx.textAlign='center';
+      ctx.fillText('OVERVIEW',MMx+MM/2,MMy-3);
+      ctx.restore();
     }
 
     if(frame%30===0){
