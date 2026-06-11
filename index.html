@@ -6509,9 +6509,13 @@ a:hover { color: #bfdbfe !important; }
 
 
 /* Brain cluster legend + reset */
-#brain-cluster-legend div:hover > span:last-child { color: #93c5fd !important; }
+#brain-cluster-legend div { transition: background 0.15s; padding: 1px 4px; border-radius: 2px; }
+#brain-cluster-legend div:hover { background: rgba(59,130,246,0.1); }
+#brain-cluster-legend div span:last-child { color: #64748b !important; }
+#brain-cluster-legend div:hover span:last-child { color: #93c5fd !important; }
 #brain-reset-btn:hover { border-color: rgba(59,130,246,0.6) !important; color: #93c5fd !important; }
 #brain-node-panel { transition: opacity 0.2s; }
+#brain-close-btn:hover { color: #f87171 !important; border-color: rgba(239,68,68,0.6) !important; }
 
 </style>
 </head>
@@ -6760,7 +6764,7 @@ a:hover { color: #bfdbfe !important; }
         <span style="color:#e2e8f0;font-size:9px;letter-spacing:.22em;font-family:Courier New,monospace;">GLOBAL INTELLIGENCE STREAM</span>
         <span style="color:#475569;font-size:7px;margin-left:auto;font-family:Courier New,monospace;" id="ils-updated"></span>
       </div>
-      <div id="ils-feed" style="columns:3 380px;column-gap:22px;max-height:200px;overflow:hidden;font-family:Courier New,monospace;font-size:7.5px;color:#94a3b8;line-height:1.8;">
+      <div id="ils-feed" style="columns:4 280px;column-gap:18px;max-height:180px;overflow:hidden;font-family:Courier New,monospace;font-size:7.5px;color:#94a3b8;line-height:1.75;">
         <span style="color:#1e3a5f;font-size:8px;">Connecting to live intelligence feed...</span>
       </div>
     </div>
@@ -42071,17 +42075,32 @@ var _BrainEngine = (function(){
     ensureChildren(node);
     var cl=CL[node.ci];
     var conn=node.children?node.children.length:0;
+    var lat=node.lateralEdges?node.lateralEdges.length:0;
     p.innerHTML=
-      '<div style="color:'+cl.c+';font-size:10px;letter-spacing:.18em;margin-bottom:7px;font-weight:600;">'+cl.n+'</div>'
-      +'<div style="color:#94a3b8;font-size:8px;margin-bottom:3px;">DEPTH LEVEL: <span style="color:#cbd5e1;">'+node.depth+'</span></div>'
-      +'<div style="color:#94a3b8;font-size:8px;margin-bottom:3px;">AXON CONNECTIONS: <span style="color:#cbd5e1;">'+conn+' outbound</span> <span style="color:#334155;">/ '+(node.lateralEdges?node.lateralEdges.length:0)+' lateral</span></div>'
-      +'<div style="color:#94a3b8;font-size:8px;margin-bottom:8px;">POSITION: <span style="color:#64748b;">'+node.wx.toFixed(0)+', '+node.wy.toFixed(0)+'</span></div>'
-      +'<div style="color:'+cl.c+';font-size:8px;letter-spacing:.12em;margin-bottom:5px;">LIVE INTELLIGENCE FEED</div>'
-      +'<div id="bnp-feed" style="max-height:180px;overflow-y:auto;font-size:7px;"></div>'
-      +'<div style="margin-top:10px;"><button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';window._brainSel=null;" '
-      +'style="background:none;border:1px solid rgba(239,68,68,0.4);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 12px;cursor:pointer;font-family:\'Courier New\';">CLOSE</button>'
-      +'<button onclick="var cl=_BrainEngine._CL&&_BrainEngine._CL['+node.ci+'];if(cl){window._brain_cam.x=cl.wx;window._brain_cam.y=cl.wy;window._brain_cam.zoom=1.8;}" '
-      +'style="background:none;border:1px solid rgba('+cl.r+',0.4);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 12px;cursor:pointer;font-family:\'Courier New\';margin-left:6px;">ZOOM TO CLUSTER</button></div>';
+      '<div style="background:rgba('+cl.r+',0.12);border-bottom:1px solid rgba('+cl.r+',0.3);padding:10px 14px 8px;">'
+        +'<div style="color:'+cl.c+';font-size:9px;letter-spacing:.2em;font-weight:700;">'+cl.n+'</div>'
+        +'<div style="color:rgba('+cl.r+',0.55);font-size:7px;letter-spacing:.12em;margin-top:2px;">NEURAL CLUSTER &#x25CF; DEPTH '+node.depth+'</div>'
+      +'</div>'
+      +'<div style="padding:10px 14px;">'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">'
+          +'<div style="background:rgba(30,41,59,0.5);padding:5px 8px;border-radius:2px;">'
+            +'<div style="color:#475569;font-size:6px;letter-spacing:.12em;">OUTBOUND</div>'
+            +'<div style="color:#94a3b8;font-size:11px;font-weight:bold;">'+conn+'</div>'
+          +'</div>'
+          +'<div style="background:rgba(30,41,59,0.5);padding:5px 8px;border-radius:2px;">'
+            +'<div style="color:#475569;font-size:6px;letter-spacing:.12em;">LATERAL</div>'
+            +'<div style="color:#94a3b8;font-size:11px;font-weight:bold;">'+lat+'</div>'
+          +'</div>'
+        +'</div>'
+        +'<div style="color:rgba('+cl.r+',0.7);font-size:7px;letter-spacing:.14em;margin-bottom:5px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:5px;">&#x25A0; LIVE INTELLIGENCE FEED</div>'
+        +'<div id="bnp-feed" style="max-height:160px;overflow-y:auto;font-size:7px;color:#64748b;line-height:1.6;"></div>'
+        +'<div style="margin-top:10px;display:flex;gap:6px;">'
+          +'<button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';" '
+          +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">CLOSE</button>'
+          +'<button onclick="(function(){var c=window._brain_cam;if(c){c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}})()" '
+          +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE INTO NODE &#x25B6;</button>'
+        +'</div>'
+      +'</div>';
     p.style.display='block';
     if(typeof _gdeltFetch==='function') _gdeltFetch(cl.q, 'bnp-feed', 2);
   }
@@ -42172,7 +42191,26 @@ var _BrainEngine = (function(){
         if(node) showPanel(node);
       }
     });
-    cv.addEventListener('mouseleave',function(){drag.on=false;});
+    cv.addEventListener('mouseleave',function(){drag.on=false;cv.style.cursor='crosshair';});
+
+    /* Double-click: zoom into the nearest node 4x */
+    cv.addEventListener('dblclick',function(e){
+      var rect=cv.getBoundingClientRect();
+      var mx=e.clientX-rect.left,my=e.clientY-rect.top;
+      var node=findAt(mx,my);
+      if(node){
+        ensureChildren(node);
+        cam.x=node.wx;cam.y=node.wy;
+        cam.zoom=Math.min(10000000,cam.zoom*4.5);
+        showPanel(node);
+      } else {
+        var wb=s2w(mx,my);
+        cam.zoom=Math.min(10000000,cam.zoom*2.5);
+        var wa=s2w(mx,my);
+        cam.x+=wb.wx-wa.wx;cam.y+=wb.wy-wa.wy;
+      }
+      e.preventDefault();
+    });
 
     /* Touch */
     cv.addEventListener('touchstart',function(e){
@@ -46969,7 +47007,7 @@ function filterSIGINT(query){
 <style>
 #brain-hint.hide{opacity:0;}
 </style>
-  <div id="brain-node-panel" style="position:absolute;right:14px;top:14px;width:240px;background:rgba(2,6,18,0.96);border:1px solid rgba(30,58,138,0.5);padding:14px 16px;display:none;font-family:'Courier New',monospace;z-index:200;box-shadow:0 0 24px rgba(30,58,138,0.18);"></div>
+  <div id="brain-node-panel" style="position:absolute;right:14px;top:14px;width:260px;background:rgba(2,6,18,0.97);border:1px solid rgba(30,58,138,0.6);padding:0;display:none;font-family:'Courier New',monospace;z-index:200;box-shadow:0 0 32px rgba(0,0,0,0.8);overflow:hidden;"></div>
   <canvas id="brain-canvas"></canvas>
 
   <button id="brain-reset-btn" onclick="(function(){
