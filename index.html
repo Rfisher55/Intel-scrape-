@@ -7379,6 +7379,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: FPS warning banner */
 /* Globe: polygon fill pulsing */
 
+
+/* v85 */
+/* Brain: track last fire time per cluster */
+/* Globe: arms flow line width by amount */
+/* Brain: panel header child count badge */
+/* Brain: scan fill shifts by DEFCON */
+/* Brain: last fire timer in stats bar */
+
 </style>
 </head>
 <body>
@@ -14380,8 +14388,9 @@ function drawArmsFlows(){
  for(const a of list){
  const from=COUNTRIES[a.from],to=COUNTRIES[a.to];if(!from||!to)continue;
  const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
+ var _afLw=a.amount?Math.min(3,0.8+Math.log10(a.amount+1)*0.4):1.2;
  drawCurvedArc(p1,p2,'rgba(245,158,11',.06,5,null,null);
- drawCurvedArc(p1,p2,'rgba(245,158,11',.8,1.2,[6,5],-t*35);
+ drawCurvedArc(p1,p2,'rgba(245,158,11',.8,_afLw,[6,5],-t*35);
  if(p2.visible){arrowHead(p2.px,p2.py,Math.atan2(p2.py-p1.py,p2.px-p1.px),8,'rgba(245,158,11,.9)');}
  drawArcMarker(p1,p2,0.32,'rgba(245,158,11,.9)',a.label);
  }
@@ -43213,7 +43222,11 @@ var _BrainEngine = (function(){
       ctx.lineTo(_scx,_scy);ctx.closePath();
       /* Fading trail behind sweep */
       var _scanTrailGrad=ctx.createConicalGradient?null:null; /* fallback */
-      ctx.fillStyle='rgba(34,197,94,0.03)';ctx.fill();
+      /* Scan fill shifts by DEFCON level */
+      var _defconEl=document.getElementById('defcon-num');
+      var _scanDefN=_defconEl?parseInt(_defconEl.textContent)||3:3;
+      var _scanFillC=_scanDefN<=1?'239,68,68':_scanDefN===2?'249,115,22':_scanDefN===3?'34,197,94':'59,130,246';
+      ctx.fillStyle='rgba('+_scanFillC+',0.03)';ctx.fill();
       ctx.beginPath();
       ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
       ctx.closePath();
@@ -43954,6 +43967,17 @@ var _BrainEngine = (function(){
           uptEl.textContent=(uh>0?uh+':':'')+(uh>0?String(um).padStart(2,'0'):um)+':'+String(us).padStart(2,'0');
         }
       }
+      /* Last fire timer for selected cluster */
+      var _lfEl=document.getElementById('bstat-lastfire');
+      if(_lfEl){
+        if(window._lastFireTimes&&_sel&&window._lastFireTimes[_sel.ci]!==undefined){
+          var _lftAgo=Math.round((Date.now()-window._lastFireTimes[_sel.ci])/1000);
+          _lfEl.textContent=_lftAgo<3600?_lftAgo+'s ago':'--';
+          _lfEl.style.color=_lftAgo<5?'#ef4444':_lftAgo<30?'#f97316':'#475569';
+        } else {
+          _lfEl.textContent='--';_lfEl.style.color='#475569';
+        }
+      }
       /* Update signal list */
       var sl=document.getElementById('brain-signal-list');
       if(sl&&frame%90===0){
@@ -44002,7 +44026,7 @@ var _BrainEngine = (function(){
     var lat=node.lateralEdges?node.lateralEdges.length:0;
     p.innerHTML=
       '<div style="background:rgba('+cl.r+',0.12);border-bottom:1px solid rgba('+cl.r+',0.3);padding:10px 14px 8px;">'
-        +'<div style="color:'+cl.c+';font-size:9px;letter-spacing:.2em;font-weight:700;">'+cl.n+'</div>'
+        +'<div style="color:'+cl.c+';font-size:9px;letter-spacing:.2em;font-weight:700;">'+cl.n+(conn>0?'<span style="font-size:6px;background:rgba('+cl.r+',0.2);padding:1px 4px;border-radius:2px;margin-left:4px;color:'+cl.c+';">'+conn+' CHILDREN</span>':'')+'</div>'
         +(function(){var dc=node.depth<5?'#22c55e':node.depth<20?'#fbbf24':node.depth<50?'#f97316':'#ef4444';var parN=node.parent?(node.parent.label||node.parent.n||'ROOT'):'ROOT';return '<div style="color:'+dc+';font-size:7px;letter-spacing:.12em;margin-top:2px;">NEURAL CLUSTER &#x25CF; DEPTH '+node.depth+'</div><div style="color:#475569;font-size:6px;letter-spacing:.08em;margin-top:1px;">PARENT: '+(node.depth>0?parN:'[ROOT NODE]')+'</div>';}())
       +'</div>'
       +'<div style="padding:10px 14px;">'
@@ -44219,6 +44243,9 @@ var _BrainEngine = (function(){
       window._brainBursts.push({sx:_fp.sx,sy:_fp.sy,t:0,ci:ci});
       if(!window._burstRings)window._burstRings=[];
       window._burstRings.push({x:_fp.sx,y:_fp.sy,t:0,ci:ci});
+      /* Track last fire time per cluster */
+      if(!window._lastFireTimes)window._lastFireTimes={};
+      window._lastFireTimes[ci]=Date.now();
       if(!window._brainTextFlashes)window._brainTextFlashes=[];
       window._brainTextFlashes.push({txt:CL[ci].n,x:_fp.sx,y:_fp.sy,t:0,ci:ci});
       /* Also show neuron count */
@@ -49240,6 +49267,10 @@ function filterSIGINT(query){
       <div class="brain-stat">
         <span class="brain-stat-label">SESSION</span>
         <span class="brain-stat-val" id="bstat-uptime" style="color:#475569;">--</span>
+      </div>
+      <div class="brain-stat">
+        <span class="brain-stat-label">LAST FIRE</span>
+        <span class="brain-stat-val" id="bstat-lastfire" style="color:#f97316;">--</span>
       </div>
     </div>
   </div>
