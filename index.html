@@ -7063,6 +7063,21 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: animated threat ring on selected country (canvas) */
 /* Brain: lateral edges dashed (canvas) */
 
+
+/* v43 */
+/* Brain: R key smooth lerp reset */
+/* Brain: cluster breadcrumb shows node name */
+/* Brain: focus cluster label in corner */
+
+
+/* v44 */
+/* Globe: panel tabs active underline */
+.tab-btn.active { border-bottom: 2px solid #3b82f6 !important; color: #93c5fd !important; }
+/* Globe: h-status flash animation */
+@keyframes hstatusFlash { 0%{border-color:rgba(59,130,246,0.6)} 50%{border-color:rgba(59,130,246,0.15)} 100%{border-color:rgba(59,130,246,0.6)} }
+.h-status-flash { animation: hstatusFlash 0.5s ease 2; }
+/* Brain: cluster ring node count label (canvas) */
+
 </style>
 </head>
 <body>
@@ -42820,6 +42835,11 @@ var _BrainEngine = (function(){
           ctx.fillStyle='rgba('+cl.r+',0.7)';
           ctx.font='6px "Courier New"';
           ctx.fillText(cl.n.slice(0,3),v.sx,v.sy-Math.max(r2,4)-3);
+        } else if(cam.zoom<1.1){
+          /* Overview: always show abbreviated cluster name */
+          ctx.fillStyle='rgba('+cl.r+',0.45)';
+          ctx.font='5px "Courier New"';
+          ctx.fillText(cl.n.slice(0,4),v.sx,v.sy-Math.max(r2,3)-2);
         }
       }
       /* Depth milestone badges at level 10, 20, 50 */
@@ -42877,7 +42897,14 @@ var _BrainEngine = (function(){
       var bc=CL[_sel.ci];
       ctx.textAlign='left';
       ctx.fillStyle='rgba('+bc.r+',0.6)';
-      ctx.fillText(bc.n+' / DEPTH '+_sel.depth, 10, H-8);
+      ctx.fillText(bc.n+' / DEPTH '+_sel.depth+' / '+(_sel.label||_sel.n||''), 10, H-8);
+    } else {
+      /* Show current view cluster if any cluster focus active */
+      if(typeof _brainFocusIdx!=='undefined'&&_brainFocusIdx>=0&&_brainFocusIdx<CL.length){
+        var _fbc=CL[_brainFocusIdx];
+        ctx.textAlign='left';ctx.fillStyle='rgba('+_fbc.r+',0.35)';
+        ctx.fillText('FOCUS: '+_fbc.n, 10, H-8);
+      }
     }
 
     /* Click flash ring */
@@ -43014,6 +43041,9 @@ var _BrainEngine = (function(){
         /* Subtle glow ring */
         ctx.beginPath();ctx.arc(mx2,my2,4.5,0,Math.PI*2);
         ctx.strokeStyle='rgba('+cl.r+',0.25)';ctx.lineWidth=0.6;ctx.stroke();
+        /* Cluster abbreviated name */
+        ctx.font='4px "Courier New"';ctx.fillStyle='rgba('+cl.r+',0.5)';ctx.textAlign='center';
+        ctx.fillText(cl.n.slice(0,4),mx2,my2-5.5);ctx.textAlign='left';
       }
       /* draw current viewport rect */
       var vl=cam.x-W/(2*cam.zoom),vt=cam.y-H/(2*cam.zoom);
@@ -43432,7 +43462,7 @@ document.addEventListener('keydown', function(e){
       if(e.key==='ArrowUp')   {if(cam.tx!==undefined)cam.ty-=panStep;else cam.y-=panStep;e.preventDefault();}
       if(e.key==='ArrowDown') {if(cam.tx!==undefined)cam.ty+=panStep;else cam.y+=panStep;e.preventDefault();}
       if(e.key==='-'||e.key==='_'){cam.zoom=Math.max(0.04,cam.zoom/1.25);}
-      if(e.key==='r'||e.key==='R'){cam.x=28;cam.y=-28;cam.zoom=0.78;if(cam.tx!==undefined){cam.tx=28;cam.ty=-28;cam.tz=0.78;}var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
+      if(e.key==='r'||e.key==='R'){if(cam.tx!==undefined){cam.tx=0;cam.ty=0;cam.tz=0.78;}else{cam.x=0;cam.y=0;cam.zoom=0.78;}var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
       if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}if(cam&&cam.tx!==undefined){if(cam.tz>2){cam.tx=0;cam.ty=0;cam.tz=0.78;}else{cam.tx=cam.x;cam.ty=cam.y;cam.tz=cam.zoom;}}}
       if(e.key==='?'||e.key==='/'){var cs=document.getElementById('brain-cheatsheet');if(cs)cs.style.display=(cs.style.display==='none'?'block':'none');}
       /* Q/W = cycle through clusters */
