@@ -7466,6 +7466,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: world coords at very high zoom */
 /* Brain: depth bar fades with HUD idle */
 
+
+/* v97 */
+/* Brain: panel DEFCON border indicator */
+/* Brain: T key toggle labels */
+/* Brain: label guard _brainHideLabels */
+/* Brain: scan trail scales with node density */
+/* Globe: globe inertia slower decay */
+
 </style>
 </head>
 <body>
@@ -43416,7 +43424,7 @@ var _BrainEngine = (function(){
       ctx.lineTo(_scx,_scy);ctx.closePath();
       /* Fading trail behind sweep — use wider arc at lower opacity */
       {
-        var _stArcW=_scanArcW*2.5;
+        var _stArcW=_scanArcW*(2.5+Math.min(1.5,_vn.length/800));
         ctx.save();ctx.beginPath();
         ctx.moveTo(_scx,_scy);
         ctx.arc(_scx,_scy,_scanLen,_scanAngle-_stArcW,_scanAngle-_scanArcW,false);
@@ -43766,7 +43774,7 @@ var _BrainEngine = (function(){
         }
       }
       /* Individual node label at high zoom */
-      if(v.node.depth>0&&v.sr>22&&v.af>0.5){
+      if(!window._brainHideLabels&&v.node.depth>0&&v.sr>22&&v.af>0.5){
         var _nl=(v.node.label||v.node.n||'').slice(0,28);
         if(_nl){
           ctx.textAlign='center';
@@ -44288,7 +44296,7 @@ var _BrainEngine = (function(){
     var conn=node.children?node.children.length:0;
     var lat=node.lateralEdges?node.lateralEdges.length:0;
     p.innerHTML=
-      '<div style="background:rgba('+cl.r+',0.12);border-bottom:1px solid rgba('+cl.r+',0.3);padding:10px 14px 8px;">'
+      '<div style="background:rgba('+cl.r+',0.12);border-bottom:1px solid rgba('+cl.r+',0.3);border-left:3px solid '+(function(){var d=document.getElementById('defcon-num');var n=d?parseInt(d.textContent)||3:3;return n<=1?'#ef4444':n===2?'#f97316':n===3?cl.c:'#3b82f6';}())+';padding:10px 14px 8px;">'
         +'<div style="color:'+cl.c+';font-size:9px;letter-spacing:.2em;font-weight:700;">'+cl.n+(conn>0?'<span style="font-size:6px;background:rgba('+cl.r+',0.2);padding:1px 4px;border-radius:2px;margin-left:4px;color:'+cl.c+';">'+conn+' CHILDREN</span>':'')+'</div>'
         +(function(){var dc=node.depth<5?'#22c55e':node.depth<20?'#fbbf24':node.depth<50?'#f97316':'#ef4444';var parN=node.parent?(node.parent.label||node.parent.n||'ROOT'):'ROOT';var _xClSet=new Set();for(var _xei=0;_xei<_ve.length;_xei++){var _xe=_ve[_xei];if((_xe.a===node||_xe.b===node)&&_xe.cross&&_xe.ci!==node.ci){_xClSet.add(_xe.ci);}}var _xClStr=_xClSet.size>0?' &#x2022; '+_xClSet.size+' CROSS-CLUSTER':'';return '<div style="color:'+dc+';font-size:7px;letter-spacing:.12em;margin-top:2px;">NEURAL CLUSTER &#x25CF; DEPTH '+node.depth+_xClStr+'</div><div style="color:#475569;font-size:6px;letter-spacing:.08em;margin-top:1px;">PARENT: '+(node.depth>0?parN:'[ROOT NODE]')+'</div>';}())
       +'</div>'
@@ -44656,6 +44664,13 @@ document.addEventListener('keydown', function(e){
         else cam.zoom=Math.max(0.1,cam.zoom/1.5);
       }
       /* H = toggle stats bar */
+      /* T = toggle all node labels */
+      if(e.key==='t'||e.key==='T'){
+        window._brainHideLabels=!window._brainHideLabels;
+        var toastT=document.getElementById('brain-cluster-toast');
+        if(toastT){toastT.textContent=window._brainHideLabels?'LABELS OFF':'LABELS ON';toastT.style.color=window._brainHideLabels?'#ef4444':'#22c55e';toastT.style.display='block';toastT.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastT.style.opacity='0';setTimeout(function(){toastT.style.display='none';},400);},1200);}
+        return;
+      }
       /* J/K navigate clusters */
       if(e.key==='j'||e.key==='J'||e.key==='k'||e.key==='K'){
         var _jDir=(e.key==='k'||e.key==='K')?-1:1;
