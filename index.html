@@ -6761,6 +6761,29 @@ a:hover { color: #bfdbfe !important; }
 /* Brain node panel scrollbar */
 #brain-node-panel { scrollbar-width: thin !important; scrollbar-color: rgba(30,58,138,0.4) transparent !important; }
 
+
+/* Category-colored module button glow on hover */
+.dash-cat[data-cat="conflicts"] .dash-mod:hover { box-shadow: 0 0 8px rgba(239,68,68,0.15) !important; }
+.dash-cat[data-cat="nuclear"]   .dash-mod:hover { box-shadow: 0 0 8px rgba(249,115,22,0.15) !important; }
+.dash-cat[data-cat="intel"]     .dash-mod:hover { box-shadow: 0 0 8px rgba(139,92,246,0.15) !important; }
+.dash-cat[data-cat="cyber"]     .dash-mod:hover { box-shadow: 0 0 8px rgba(6,182,212,0.15) !important; }
+.dash-cat[data-cat="threats"]   .dash-mod:hover { box-shadow: 0 0 8px rgba(220,38,38,0.15) !important; }
+.dash-cat[data-cat="regional"]  .dash-mod:hover { box-shadow: 0 0 8px rgba(59,130,246,0.15) !important; }
+.dash-cat[data-cat="econ"]      .dash-mod:hover { box-shadow: 0 0 8px rgba(34,197,94,0.15) !important; }
+.dash-cat[data-cat="human"]     .dash-mod:hover { box-shadow: 0 0 8px rgba(245,158,11,0.15) !important; }
+
+/* Intel panel module buttons: same treatment */
+.icat[data-cat="conflicts"] .imod-btn:hover { box-shadow: 0 0 6px rgba(239,68,68,0.12) !important; }
+.icat[data-cat="nuclear"]   .imod-btn:hover { box-shadow: 0 0 6px rgba(249,115,22,0.12) !important; }
+.icat[data-cat="intel"]     .imod-btn:hover { box-shadow: 0 0 6px rgba(139,92,246,0.12) !important; }
+.icat[data-cat="cyber"]     .imod-btn:hover { box-shadow: 0 0 6px rgba(6,182,212,0.12) !important; }
+
+/* Mode bar active tab glow */
+.mode-tab.active { text-shadow: 0 0 8px rgba(147,197,253,0.4) !important; }
+
+/* Brain title subtle glow */
+.brain-title { text-shadow: 0 0 20px rgba(99,102,241,0.3); }
+
 </style>
 </head>
 <body>
@@ -6785,6 +6808,7 @@ a:hover { color: #bfdbfe !important; }
   <div class="mode-right">
     <div class="mode-stat"><span class="mode-stat-val" id="mbar-hotspots">102</span><span>HOTSPOTS</span></div>
     <div class="mode-stat"><span class="mode-stat-val" id="mbar-conflicts">98</span><span>CONFLICTS</span></div>
+    <div class="mode-stat" style="margin-left:8px;border-left:1px solid rgba(30,58,95,0.4);padding-left:10px;"><span style="color:#ef4444;animation:blink 1.8s step-start infinite;font-size:8px;">&#x25CF;</span><span style="color:#475569;font-size:6.5px;letter-spacing:.12em;margin-left:4px;">LIVE</span></div>
     <div class="mode-threat">&#x2691; ELEVATED</div>
     <div class="mode-live"><div class="mode-live-dot"></div>LIVE</div>
     <div class="mode-time" id="mbar-time"></div>
@@ -13337,8 +13361,8 @@ function draw(){
    ctx.textAlign='center';
    const alertC={CRITICAL:'#fca5a5',HIGH:'#fdba74',MEDIUM:'#fcd34d',LOW:'#86efac'}[sc.alertLevel]||'#94a3b8';
    ctx.fillStyle=alertC;
-   ctx.globalAlpha=0.7;
-   ctx.fillText('◆ '+sc.name.toUpperCase()+' — '+sc.alertLevel,canvas.width/2,22);
+   ctx.globalAlpha=0.65;
+   ctx.fillText('◆ '+sc.name.toUpperCase()+' — '+sc.alertLevel,(W||800)/2,22);
    ctx.restore();
  }
  // Globe border ring
@@ -42552,8 +42576,9 @@ var _BrainEngine = (function(){
     if(typeof _gdeltFetch==='function') _gdeltFetch(cl.q, 'bnp-feed', 2);
   }
 
-  /* Expose camera for zoom-to button */
+  /* Expose camera and cluster list for external access */
   window._brain_cam=cam;
+  if(typeof _BrainEngine!=='undefined') _BrainEngine.CL=CL;
 
   function resize(){
     var view=document.getElementById('brain-view');
@@ -42638,7 +42663,9 @@ var _BrainEngine = (function(){
       if(tip){
         if(node){
           var cl=CL[node.ci];
-          tip.textContent=cl.n+' // DEPTH '+node.depth;
+          var conn2=node.children?node.children.length:0;
+          var lat2=node.lateralEdges?node.lateralEdges.length:0;
+          tip.textContent=cl.n+' // D'+node.depth+(conn2?' // '+conn2+'C':'')+(lat2?' '+lat2+'L':'');
           tip.style.left=(mx+14)+'px';tip.style.top=(my-8)+'px';
           tip.style.display='block';tip.style.color=cl.c;
           if(_tipTO){clearTimeout(_tipTO);_tipTO=null;}
@@ -42781,6 +42808,25 @@ document.addEventListener('keydown', function(e){
       if(e.key==='-'||e.key==='_'){cam.zoom=Math.max(0.04,cam.zoom/1.25);}
       if(e.key==='r'||e.key==='R'){cam.x=28;cam.y=-28;cam.zoom=0.78;var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
       if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}}
+      /* Q/W = cycle through clusters */
+      if(e.key==='q'||e.key==='Q'){
+        if(typeof _BrainEngine!=='undefined'&&_BrainEngine.CL){
+          if(!window._brainFocusIdx) window._brainFocusIdx=0;
+          window._brainFocusIdx=(window._brainFocusIdx-1+_BrainEngine.CL.length)%_BrainEngine.CL.length;
+          var cl=_BrainEngine.CL[window._brainFocusIdx];
+          if(cam&&cl){cam.x=cl.wx;cam.y=cl.wy;cam.zoom=1.6;}
+        }
+      }
+      if(e.key==='w'||e.key==='W'){
+        if(typeof _BrainEngine!=='undefined'&&_BrainEngine.CL){
+          if(!window._brainFocusIdx) window._brainFocusIdx=0;
+          window._brainFocusIdx=(window._brainFocusIdx+1)%_BrainEngine.CL.length;
+          var cl=_BrainEngine.CL[window._brainFocusIdx];
+          if(cam&&cl){cam.x=cl.wx;cam.y=cl.wy;cam.zoom=1.6;}
+        }
+      }
+      /* 0 = overview zoom out */
+      if(e.key==='0'){cam.x=28;cam.y=-28;cam.zoom=0.78;}
     }
   }
 });
