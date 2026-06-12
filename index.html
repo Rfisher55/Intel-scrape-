@@ -7221,6 +7221,12 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: PAUSED overlay (canvas) */
 /* Brain: root node cluster fill */
 
+
+/* v66 */
+/* Globe: selected country glow halo */
+/* Brain: axon signals cluster color with glow */
+/* Brain: node tooltip world position */
+
 </style>
 </head>
 <body>
@@ -13769,7 +13775,8 @@ function draw(){
  var isCrit=c.alertLevel==='CRITICAL';var isHigh=c.alertLevel==='HIGH';
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.65)':isHigh?'rgba(249,115,22,.45)':'rgba(100,150,220,.5)';
  ctx.lineWidth=isSel?1.5:isCrit?1.1:isHigh?.85:.8;
- if((isCrit||isHigh)&&!isSel){ctx.shadowColor=isCrit?'rgba(239,68,68,0.28)':'rgba(249,115,22,0.2)';ctx.shadowBlur=isCrit?5:3;}
+ if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
+ else if((isCrit||isHigh)&&!isSel){ctx.shadowColor=isCrit?'rgba(239,68,68,0.28)':'rgba(249,115,22,0.2)';ctx.shadowBlur=isCrit?5:3;}
  drawGeoFeature(feature,fill,true,true);
  ctx.shadowBlur=0;
  const ctr=project(c.lat,c.lng);
@@ -13798,7 +13805,8 @@ function draw(){
  const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(180,205,255,.92)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  const isCritF=c.alertLevel==='CRITICAL';const isHighF=c.alertLevel==='HIGH';
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCritF?'rgba(239,68,68,.55)':isHighF?'rgba(249,115,22,.4)':'rgba(100,150,220,.3)';
- if((isCritF||isHighF)&&!isSel){ctx.shadowColor=isCritF?'rgba(239,68,68,0.25)':'rgba(249,115,22,0.15)';ctx.shadowBlur=isCritF?4:2;}
+ if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
+ else if((isCritF||isHighF)&&!isSel){ctx.shadowColor=isCritF?'rgba(239,68,68,0.25)':'rgba(249,115,22,0.15)';ctx.shadowBlur=isCritF?4:2;}
  ctx.lineWidth=isSel?1.5:isCritF?1.0:isHighF?.85:.8;
  drawPoly(c.poly,fill,true,true);
  const ctr=project(c.lat,c.lng);
@@ -43260,10 +43268,12 @@ var _BrainEngine = (function(){
         ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+(sa*0.3)+')';
         ctx.fill();
       }
+      if(scl){ctx.shadowColor=scl.c;ctx.shadowBlur=3;}
       ctx.beginPath();
       ctx.arc(sx2,sy2,sg.lat?1.0:1.5,0,Math.PI*2);
-      ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+sa*0.9+')';
+      ctx.fillStyle=scl?scl.c:'rgba(255,255,255,'+sa*0.9+')';
       ctx.fill();
+      ctx.shadowBlur=0;
     }
     /* Bottom-right HUD: depth breadcrumb */
     ctx.fillStyle='rgba(100,116,139,0.7)';
@@ -43687,7 +43697,9 @@ var _BrainEngine = (function(){
           var conn2=node.children?node.children.length:0;
           var lat2=node.lateralEdges?node.lateralEdges.length:0;
           var _tipIn=0,_tipOut=0;for(var _tei=0;_tei<_ve.length;_tei++){if(_ve[_tei].a===node)_tipOut++;if(_ve[_tei].b===node)_tipIn++;}
-          tip.textContent=cl.n+' // D'+node.depth+(conn2?' // '+conn2+'C':'')+(lat2?' '+lat2+'L':'')+(_tipIn+_tipOut>0?' // '+_tipIn+'in/'+_tipOut+'out':'');
+          var _wx=node.wx!==undefined?node.wx.toFixed(0):'?';
+          var _wy=node.wy!==undefined?node.wy.toFixed(0):'?';
+          tip.textContent=cl.n+' // D'+node.depth+(conn2?' // '+conn2+'C':'')+(lat2?' '+lat2+'L':'')+(_tipIn+_tipOut>0?' // '+_tipIn+'in/'+_tipOut+'out':'')+' ['+_wx+','+_wy+']';
           tip.style.left=(mx+14)+'px';tip.style.top=(my-8)+'px';
           tip.style.display='block';tip.style.color=cl.c;
           if(_tipTO){clearTimeout(_tipTO);_tipTO=null;}
