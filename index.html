@@ -6865,6 +6865,15 @@ a:hover { color: #bfdbfe !important; }
 /* Session timer (mono digits don't shift) */
 #bstat-uptime { letter-spacing: .04em !important; }
 
+
+/* v24 node+edge stat */
+#bstat-nodes { letter-spacing: .02em !important; font-size: 7px !important; }
+/* Hotspot critical ring size handled in JS */
+/* Depth stat color transition */
+#bstat-pat { transition: color 0.6s ease !important; }
+/* Brain panel breadcrumb */
+#brain-node-panel .node-breadcrumb { color: #334155; font-size: 6px; letter-spacing: .1em; margin-bottom: 4px; }
+
 </style>
 </head>
 <body>
@@ -11789,13 +11798,14 @@ let lastPinchDist=null, pinchMidX=null, pinchMidY=null;
 let worldFeatures=[];
 const numericToISO={};
 let geoReady=false;
-// Pre-computed star field
-const STARS=Array.from({length:280},()=>({
- x:Math.random(),y:Math.random(),
- r:Math.random()*0.9+0.2,
- a:Math.random()*0.5+0.15,
- tw:Math.random()*2000+1000,ph:Math.random()*6.28,
-}));
+// Pre-computed star field (280 normal + 20 brighter foreground stars)
+const STARS=Array.from({length:300},(_,si)=>{
+ const bright=si<20;
+ return {x:Math.random(),y:Math.random(),
+  r:bright?Math.random()*0.7+1.0:Math.random()*0.9+0.2,
+  a:bright?Math.random()*0.3+0.55:Math.random()*0.5+0.15,
+  tw:Math.random()*2000+1000,ph:Math.random()*6.28};
+});
 
 /* ── Tracking layer data ── */
 const TROOP_MOVEMENTS=[
@@ -42646,12 +42656,13 @@ var _BrainEngine = (function(){
       for(var _aci=0;_aci<_vn.length;_aci++) _activeClusters.add(_vn[_aci].node.ci);
       se=document.getElementById('bstat-freq');
       if(se)se.textContent=(38+_vn.length*0.012+Math.sin(frame*0.05)*4).toFixed(1)+' Hz';
-      se=document.getElementById('bstat-syn'); if(se)se.textContent=_ve.length;
+      se=document.getElementById('bstat-syn'); if(se)se.textContent=_vn.length+'/'+_ve.length;
       se=document.getElementById('bstat-sig'); if(se)se.textContent=(60+Math.log(cam.zoom+1)*9).toFixed(0)+' dB';
       se=document.getElementById('bstat-pat');
       if(se){
         var dv=cam.zoom>1000?Math.round(Math.log10(cam.zoom))+'e'+Math.floor(Math.log10(cam.zoom)):_maxDepth;
         se.textContent=dv;
+        se.style.color=_maxDepth<5?'#22c55e':_maxDepth<20?'#fbbf24':_maxDepth<50?'#f97316':'#ef4444';
       }
       se=document.getElementById('bstat-load');if(se)se.textContent=Math.round(_vn.length/_nodeLimit*100)+'%';
       /* Uptime display */
