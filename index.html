@@ -16002,6 +16002,13 @@ function openByISO(iso){
 
 function openCountry(iso){
  selectedISO=iso;camTabISO='';showArcs=false;updateConnBtn();updateLayerFilterHint();
+ /* Smoothly rotate globe to center on selected country */
+ const _gc=COUNTRIES[iso];
+ if(_gc&&typeof rotX!=='undefined'){
+   const _toX=-_gc.lat*Math.PI/180, _toY=-_gc.lng*Math.PI/180;
+   dragVelX=0;dragVelY=0;
+   vipAnimTarget={fromX:rotX,fromY:rotY,toX:_toX,toY:_toY,startMs:Date.now(),dur:1200};
+ }
  const panel=document.getElementById('panel');
  panel.classList.remove('minimized','fullscreen');
  document.getElementById('p-minimize').textContent='▼';
@@ -42546,8 +42553,15 @@ var _BrainEngine = (function(){
         ctx.lineWidth=0.8;ctx.stroke();
       }
       if(isSel){
+        /* Static selection ring */
         ctx.beginPath();ctx.arc(v.sx,v.sy,r2*3.2,0,Math.PI*2);
         ctx.strokeStyle=cl.c;ctx.lineWidth=0.7;ctx.stroke();
+        /* Pulsing outer ring on selected node */
+        var spf=(Math.sin(frame*0.06)*0.5+0.5);
+        var spr=r2*(3.8+spf*1.8);
+        ctx.beginPath();ctx.arc(v.sx,v.sy,spr,0,Math.PI*2);
+        ctx.strokeStyle='rgba('+cl.r+','+(0.35+spf*0.2)+')';
+        ctx.lineWidth=0.5;ctx.stroke();
       }
 
       /* dots stay dots at every zoom level — cap the visual size so the
