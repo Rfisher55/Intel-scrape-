@@ -6853,6 +6853,18 @@ a:hover { color: #bfdbfe !important; }
 /* H-region (version) */
 .h-region { color: #334155 !important; }
 
+
+/* v23 depth stat + FPS */
+#brain-depth-stat { transition: color 0.4s; }
+/* Globe HUD alert level sub-label */
+.glob-hud-alert { letter-spacing: .18em; font-size: 7px; }
+/* Brain signal separator lines */
+#brain-signals-list > div > div[style*="border-top"] { opacity: 0.6; }
+/* Stats bar uptime */
+#bstat-uptime { font-variant-numeric: tabular-nums; }
+/* Session timer (mono digits don't shift) */
+#bstat-uptime { letter-spacing: .04em !important; }
+
 </style>
 </head>
 <body>
@@ -42300,10 +42312,14 @@ var _BrainEngine = (function(){
   }
 
   /* Render */
+  var _fps=0,_fpsAcc=0,_fpsLast=0;
   function render(){
     if(!ON) return;
     RAF=requestAnimationFrame(render);
     frame++;
+    var _fpsNow=performance.now();
+    _fpsAcc++;
+    if(_fpsNow-_fpsLast>=800){_fps=Math.round(_fpsAcc*1000/(_fpsNow-_fpsLast));_fpsAcc=0;_fpsLast=_fpsNow;}
     /* Smooth camera lerp towards navigation targets */
     if(cam.tx!==undefined){
       var lf=0.12;
@@ -42551,6 +42567,14 @@ var _BrainEngine = (function(){
       ctx.restore();
     }
 
+    /* FPS counter top-right */
+    ctx.save();
+    ctx.font='6px "Courier New"';
+    ctx.fillStyle='rgba(71,85,105,0.5)';
+    ctx.textAlign='right';
+    ctx.fillText(_fps+'fps',W-8,12);
+    ctx.restore();
+
     /* Current cluster name + milestone when zoomed deep */
     if(cam.zoom>5&&_sel){
       var fCl=CL[_sel.ci];
@@ -42655,6 +42679,7 @@ var _BrainEngine = (function(){
               '<span style="color:rgba('+sc.r+',0.5);font-size:6px;">'+cnt+'</span>'+
             '</div>'+
             '<div style="font-size:5.5px;color:rgba('+sc.r+',0.3);letter-spacing:.06em;margin-left:10px;">'+qAbbr+'</div>'+
+            (ci<sigs.length-1?'<div style="border-top:1px solid rgba(30,58,95,0.18);margin:3px 0;"></div>':'')+
           '</div>';
         }).join('');
         var ds=document.getElementById('brain-depth-stat');
