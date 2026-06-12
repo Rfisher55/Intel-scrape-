@@ -6950,6 +6950,16 @@ a:hover { color: #bfdbfe !important; }
 #bnp-feed a { color: inherit; }
 #bnp-feed a:hover { opacity: 0.8; text-decoration: underline !important; }
 
+
+/* v30 layer count badge */
+#layers-count-badge:empty { display: none !important; }
+#layers-count-badge:not(:empty) { display: inline-block !important; }
+/* Lateral edges teal (handled in JS) */
+/* Globe drag cancels fly-to */
+/* Brain node panel ESC hint */
+/* Brain zoom chain text */
+#brain-canvas { font-smooth: always; -webkit-font-smoothing: antialiased; }
+
 </style>
 </head>
 <body>
@@ -7233,7 +7243,7 @@ a:hover { color: #bfdbfe !important; }
 
 <!-- Data layer controls -->
 <div id="layers-panel">
- <div class="layers-title" onclick="toggleLayersPanel()" title="Collapse / expand panel">DATA LAYERS <span class="layers-chevron" id="panel-chevron">▲</span></div>
+ <div class="layers-title" onclick="toggleLayersPanel()" title="Collapse / expand panel">DATA LAYERS <span id="layers-count-badge" style="background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.4);color:#93c5fd;font-size:6px;padding:1px 4px;margin-left:4px;letter-spacing:.1em;display:none;"></span><span class="layers-chevron" id="panel-chevron">▲</span></div>
  <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')" title="Real documented active conflicts — OSINT verified open-source intelligence database"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS<span class="lb-count">98</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-troops" onclick="toggleLayer('troops')" title="Troop deployments and movements — documented OSINT intelligence database"><span class="lb-dot" style="background:#ef4444"></span>TROOPS<span class="lb-count">30</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-arms" onclick="toggleLayer('arms')" title="Arms transfers and weapons flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS<span class="lb-count">29</span><span class="lb-src">OSINT</span></button>
@@ -13913,7 +13923,7 @@ canvas.addEventListener('mousemove',e=>{
  tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
  }else tt.style.opacity='0';
 });
-canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dragging');lastX=e.clientX;lastY=e.clientY;dragVelX=0;dragVelY=0;});
+canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dragging');lastX=e.clientX;lastY=e.clientY;dragVelX=0;dragVelY=0;vipAnimTarget=null;});
 canvas.addEventListener('mouseup',e=>{
  if(!isDragging)return;isDragging=false;canvas.classList.remove('dragging');
  const dx=e.clientX-lastX,dy=e.clientY-lastY;
@@ -16776,6 +16786,11 @@ function toggleHotspots(){
  if(btn)btn.classList.toggle('active',showHotspots);
 }
 function updateLayerFilterHint(){
+ /* Update active layer count badge */
+ var _allLK=Object.keys(activeLayers);
+ var _actCnt=_allLK.filter(function(k){return activeLayers[k];}).length;
+ var _lcBadge=document.getElementById('layers-count-badge');
+ if(_lcBadge){_lcBadge.textContent=_actCnt>0?String(_actCnt):'';_lcBadge.style.display=_actCnt>0?'inline-block':'none';}
  const anyActive=Object.values(activeLayers).some(Boolean);
  const hint=document.getElementById('layers-filter-hint');
  if(hint){
@@ -42502,9 +42517,13 @@ var _BrainEngine = (function(){
       var a=(e.cross?0.10:(e.lat?0.20:0.34))*(e.af===undefined?1:e.af)*_depthFade;
       if(a<=0.01) continue;
       /* edge color: blues shift cooler at depth */
-      var er=Math.max(50,110-e.depth*3);
-      var eg=Math.max(80,150-e.depth*3);
-      var eb=Math.min(255,235+e.depth*3);
+      var er,eg,eb;
+      if(e.lat){
+        /* Lateral edges: teal hue */
+        er=Math.max(10,50-e.depth*2); eg=Math.max(130,190-e.depth*3); eb=Math.min(255,200+e.depth*2);
+      } else {
+        er=Math.max(50,110-e.depth*3); eg=Math.max(80,150-e.depth*3); eb=Math.min(255,235+e.depth*3);
+      }
       ctx.strokeStyle='rgba('+er+','+eg+','+eb+','+a+')';
       if(e.lat){ctx.setLineDash([2,3]);}else{ctx.setLineDash([]);}
       ctx.lineWidth=e.cross?0.35:(e.lat?0.4:0.6);
@@ -42888,7 +42907,7 @@ var _BrainEngine = (function(){
         +'<div id="bnp-feed" style="max-height:160px;overflow-y:auto;font-size:7px;color:#64748b;line-height:1.6;"></div>'
         +'<div style="margin-top:10px;display:flex;gap:6px;">'
           +'<button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';" '
-          +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">CLOSE</button>'
+          +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">&#x2715; ESC</button>'
           +'<button onclick="(function(){var c=window._brain_cam;if(c){if(c.tx!==undefined){c.tx='+node.wx+';c.ty='+node.wy+';c.tz=Math.min(10000000,c.zoom*4.5);}else{c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}}})()" '
           +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE &#x25B6; '+Math.round(cam.zoom*4.5)+'x</button>'
         +'</div>'
