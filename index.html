@@ -6840,6 +6840,19 @@ a:hover { color: #bfdbfe !important; }
 /* ILS title line */
 #intel-live-stream > div > span:first-child { letter-spacing: .18em !important; }
 
+
+/* Globe legend improvements */
+#legend { border: 1px solid rgba(30,58,95,0.4) !important; }
+.legend-item span:first-child { font-size: 8px !important; }
+.legend-alert-text, .alert-leg-label { color: #64748b !important; }
+#legend-wrap .legend-item { color: #64748b !important; }
+/* Threat level badge */
+#global-threat { letter-spacing: .14em !important; }
+/* H-status bar */
+#h-status { color: #475569 !important; font-size: 8.5px !important; }
+/* H-region (version) */
+.h-region { color: #334155 !important; }
+
 </style>
 </head>
 <body>
@@ -13379,7 +13392,9 @@ function draw(){
  for(const[iso,c]of Object.entries(COUNTRIES)){
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
  const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
- ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':'rgba(100,150,220,.3)';
+ const isCritF=c.alertLevel==='CRITICAL';
+ ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCritF?'rgba(239,68,68,.5)':'rgba(100,150,220,.3)';
+ if(isCritF&&!isSel){ctx.shadowColor='rgba(239,68,68,0.25)';ctx.shadowBlur=4;}
  ctx.lineWidth=isSel?1.5:.8;
  drawPoly(c.poly,fill,true,true);
  const ctr=project(c.lat,c.lng);
@@ -42615,6 +42630,12 @@ var _BrainEngine = (function(){
         se.textContent=dv;
       }
       se=document.getElementById('bstat-load');if(se)se.textContent=Math.round(_vn.length/_nodeLimit*100)+'%';
+      /* Uptime display */
+      if(window._brainStartTime){
+        var elap=Math.floor((Date.now()-window._brainStartTime)/1000);
+        var uptEl=document.getElementById('bstat-uptime');
+        if(uptEl){var m=Math.floor(elap/60),s=elap%60;uptEl.textContent=(m>0?m+'m ':'')+s+'s';}
+      }
       /* Update signal list */
       var sl=document.getElementById('brain-signal-list');
       if(sl&&frame%90===0){
@@ -42627,9 +42648,13 @@ var _BrainEngine = (function(){
         sl.innerHTML=sigs.map(function(ci){
           var sc=CL[ci];
           var cnt=0;for(var vi2=0;vi2<_vn.length;vi2++){if(_vn[vi2].node.ci===ci)cnt++;}
-          return '<div style="color:'+sc.c+';font-size:7px;letter-spacing:.1em;margin-bottom:3px;opacity:0.7;display:flex;justify-content:space-between;">'+
-            '<span>&#x25CF; '+sc.n+'</span>'+
-            '<span style="color:rgba('+sc.r+',0.5);font-size:6px;">'+cnt+'</span>'+
+          var qAbbr=sc.q?sc.q.split(' ').slice(0,2).join(' ').toUpperCase():'';
+          return '<div style="color:'+sc.c+';font-size:7px;letter-spacing:.1em;margin-bottom:4px;opacity:0.72;">'+
+            '<div style="display:flex;justify-content:space-between;align-items:center;">'+
+              '<span>&#x25CF; '+sc.n+'</span>'+
+              '<span style="color:rgba('+sc.r+',0.5);font-size:6px;">'+cnt+'</span>'+
+            '</div>'+
+            '<div style="font-size:5.5px;color:rgba('+sc.r+',0.3);letter-spacing:.06em;margin-left:10px;">'+qAbbr+'</div>'+
           '</div>';
         }).join('');
         var ds=document.getElementById('brain-depth-stat');
@@ -42702,7 +42727,9 @@ var _BrainEngine = (function(){
     resize();buildRoots();
     cam.x=28;cam.y=-28;cam.zoom=0.78;
   cam.tx=28;cam.ty=-28;cam.tz=0.78;
-    ON=true;initialized=true;render();
+    ON=true;initialized=true;
+    window._brainStartTime=Date.now();
+    render();
     setTimeout(function(){var h=document.getElementById("brain-hint");if(h)h.classList.add("hide");},5000);
   /* Populate cluster legend */
   (function(){
@@ -47732,6 +47759,10 @@ function filterSIGINT(query){
       <div class="brain-stat">
         <span class="brain-stat-label">COGNITIVE LOAD</span>
         <span class="brain-stat-val" id="bstat-load" style="color:#ef4444;">--</span>
+      </div>
+      <div class="brain-stat">
+        <span class="brain-stat-label">SESSION</span>
+        <span class="brain-stat-val" id="bstat-uptime" style="color:#475569;">--</span>
       </div>
     </div>
   </div>
