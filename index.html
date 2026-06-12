@@ -7489,6 +7489,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: lat 30/60 grid highlighted */
 /* Brain: scan HUD signal count */
 
+
+/* v100 — MILESTONE */
+/* Brain: X key burst fire */
+/* Globe: CRITICAL arc pulsing width */
+/* Brain: FPS smooth gradient */
+/* Brain: selected node depth badge */
+/* Brain: key help updated */
+
 </style>
 </head>
 <body>
@@ -14467,7 +14475,8 @@ function drawArcs(){
  if(!p1.visible&&!p2.visible)continue;
  const sevC={critical:'rgba(239,68,68',high:'rgba(249,115,22',medium:'rgba(251,191,36',low:'rgba(34,197,94'};
  const base=sevC[arc.severity]||ARC_COLORS[arc.type]||'rgba(239,68,68';
- const _arcW=(arc.severity==='critical'?1.5:0.8)*(scale<150?1.8:scale<300?1.3:1);
+ const _arcPulse=arc.severity==='critical'?Math.sin(Date.now()*0.004)*0.4+0.4:0;
+ const _arcW=(arc.severity==='critical'?1.5+_arcPulse:0.8)*(scale<150?1.8:scale<300?1.3:1);
  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
  const dx=p2.px-p1.px,dy=p2.py-p1.py;
  const off=Math.sqrt(dx*dx+dy*dy)*0.35;
@@ -43726,6 +43735,12 @@ var _BrainEngine = (function(){
         ctx.beginPath();ctx.arc(v.sx,v.sy,spr,0,Math.PI*2);
         ctx.strokeStyle='rgba('+cl.r+','+(0.35+spf*0.2)+')';
         ctx.lineWidth=0.5;ctx.stroke();
+        /* Depth badge: small text on the outer ring */
+        if(r2>3&&v.node.depth>0){
+          ctx.save();ctx.font='bold 6px "Courier New"';ctx.textAlign='center';ctx.textBaseline='middle';
+          ctx.fillStyle=_sdColor;ctx.fillText('D'+v.node.depth,v.sx,v.sy+spr+5);
+          ctx.textBaseline='alphabetic';ctx.restore();
+        }
         /* Dashed line to parent node when selected */
         if(v.node.parent){
           var _par=null;
@@ -44098,7 +44113,12 @@ var _BrainEngine = (function(){
       ctx.fillStyle=_fv>=55?'rgba(34,197,94,0.35)':_fv>=30?'rgba(251,191,36,0.35)':'rgba(239,68,68,0.4)';
       ctx.fillRect(W-8-(window._fpsHist.length-_fi)*3,15-_fhh,2,_fhh);
     }
-    ctx.fillStyle=_fps>=55?'rgba(34,197,94,0.6)':_fps>=30?'rgba(251,191,36,0.6)':'rgba(239,68,68,0.7)';
+    /* FPS smooth gradient color */
+    var _fpsT=Math.max(0,Math.min(1,(_fps-15)/(60-15)));
+    var _fpsR=Math.round(239-(_fps>=30?(239-34)*Math.min(1,(_fps-30)/25):0));
+    var _fpsG=Math.round(68+(_fps>=30?(197-68)*Math.min(1,(_fps-30)/25):_fps>15?(130-68)*(_fps-15)/15:0));
+    var _fpsB=Math.round(_fps>=55?94:_fps>=30?36:68);
+    ctx.fillStyle='rgba('+_fpsR+','+_fpsG+','+_fpsB+',0.7)';
     ctx.textAlign='right';
     ctx.fillText(_fps+'fps',W-8,12);
     /* Low FPS warning banner */
@@ -44717,6 +44737,18 @@ document.addEventListener('keydown', function(e){
         else cam.zoom=Math.max(0.1,cam.zoom/1.5);
       }
       /* H = toggle stats bar */
+      /* X = explode (fire + burst flash) selected cluster */
+      if(e.key==='x'||e.key==='X'){
+        if(_sel&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
+          _BrainEngine.fireCluster(_sel.ci);
+          /* Also trigger nearby text bursts */
+          if(!window._brainTextFlashes)window._brainTextFlashes=[];
+          if(CL[_sel.ci])window._brainTextFlashes.push({txt:'BURST!',x:_sel.sx||W/2,y:(_sel.sy||H/2)-24,t:0,ci:_sel.ci});
+          var toastX=document.getElementById('brain-cluster-toast');
+          if(toastX&&CL[_sel.ci]){toastX.textContent='BURST: '+CL[_sel.ci].n;toastX.style.color='#f97316';toastX.style.display='block';toastX.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastX.style.opacity='0';setTimeout(function(){toastX.style.display='none';},400);},1400);}
+        }
+        return;
+      }
       /* T = toggle all node labels */
       if(e.key==='t'||e.key==='T'){
         window._brainHideLabels=!window._brainHideLabels;
@@ -49583,7 +49615,7 @@ function filterSIGINT(query){
     <span style="color:#06b6d4;">N</span><span>Focus nearest visible node</span>
     <span style="color:#ef4444;">F</span><span>Fire all clusters (burst mode)</span>
     <span style="color:#f97316;">A</span><span>Fire selected cluster only</span>
-    <span style="color:#06b6d4;">M</span><span>Toggle minimap visibility</span>
+    <span style="color:#06b6d4;">M</span><span>Toggle minimap visibility</span></div><div class="brain-key-hint"><span style="color:#f97316;">X</span><span>Burst-fire selected cluster</span></div><div class="brain-key-hint"><span style="color:#22c55e;">T</span><span>Toggle node labels</span></div><div class="brain-key-hint"><span style="color:#22c55e;">J/K</span><span>Navigate clusters</span>
     <span style="color:#475569;">H</span><span>Toggle stats bar</span>
     <span style="color:#e2e8f0;">SPACE</span><span>Pause / resume animation</span>
     <span style="color:#a855f7;">D/U</span><span>Drill deeper / back up (zoom x1.5)</span>
