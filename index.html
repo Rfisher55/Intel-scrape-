@@ -6874,6 +6874,45 @@ a:hover { color: #bfdbfe !important; }
 /* Brain panel breadcrumb */
 #brain-node-panel .node-breadcrumb { color: #334155; font-size: 6px; letter-spacing: .1em; margin-bottom: 4px; }
 
+
+/* v25 brain hover tip child badge */
+#brain-hover-tip span { display: inline-block; }
+/* Globe tooltip labels on layer buttons */
+.layer-btn[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 110%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(2,6,18,0.95);
+  border: 1px solid rgba(30,58,95,0.5);
+  color: #64748b;
+  font-size: 7px;
+  letter-spacing: .1em;
+  padding: 3px 7px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 200;
+}
+.layer-btn { position: relative; }
+/* Brain node panel header gradient */
+#brain-node-panel .node-panel-header {
+  background: linear-gradient(90deg, rgba(30,58,95,0.3) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(30,58,95,0.3);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+/* Globe GDELT article count badge */
+.hs-gdelt-badge {
+  background: rgba(30,58,95,0.6);
+  border: 1px solid rgba(59,130,246,0.3);
+  color: #64748b;
+  font-size: 6px;
+  padding: 1px 4px;
+  letter-spacing: .1em;
+  border-radius: 2px;
+}
+
 </style>
 </head>
 <body>
@@ -11945,6 +11984,17 @@ function project(lat,lng){
  return{px:cx-x1*scale, py:cy-y2*scale, z:z2, visible:z2>0};
 }
 
+function unproject(px,py){
+ var x1=(cx-px)/scale, y2=(cy-py)/scale;
+ var d2=x1*x1+y2*y2; if(d2>1) return null;
+ var z_f=Math.sqrt(1-d2);
+ var cosX=Math.cos(rotX),sinX=Math.sin(rotX);
+ var z1=-y2*sinX+z_f*cosX, y=y2*cosX+z_f*sinX;
+ var cosY=Math.cos(rotY),sinY=Math.sin(rotY);
+ var x=x1*cosY+z1*sinY, z=-x1*sinY+z1*cosY;
+ return{lat:Math.asin(Math.max(-1,Math.min(1,y)))*180/Math.PI, lng:Math.atan2(z,x)*180/Math.PI};
+}
+
 function drawPoly(poly,fill,stroke,doFill){
  let segs=[],cur=[];
  for(const[lat,lng]of poly){
@@ -13455,7 +13505,13 @@ function draw(){
  if(_energyPipeActive)drawEnergyPipelines();
  if(_migrationActive)drawMigrationRoutes();
  if(showHotspots)drawHotspots();
- /* Selected country name on canvas */
+ /* Selected country name on canvas (or cursor lat/lon on empty ocean) */
+ if(!selectedISO&&window._globeMouseLat!==undefined){
+  ctx.save();
+  ctx.font='7px "Courier New"';ctx.fillStyle='rgba(71,85,105,0.5)';ctx.textAlign='center';
+  ctx.fillText(window._globeMouseLat+'N  '+window._globeMouseLon+'E',(W||canvas.width)/2,18);
+  ctx.restore();
+ }
  if(selectedISO&&COUNTRIES[selectedISO]){
    const sc=COUNTRIES[selectedISO];
    ctx.save();
@@ -13795,6 +13851,10 @@ canvas.addEventListener('mousemove',e=>{
  }
  const hit=hitTest(e.clientX,e.clientY);
  if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit||layerHit)?'pointer':'grab';}
+ /* Track cursor lat/lon for HUD */
+ var _mll=unproject(e.clientX,e.clientY);
+ if(_mll){window._globeMouseLat=(_mll.lat>=0?'+':'')+_mll.lat.toFixed(1);window._globeMouseLon=(_mll.lng>=0?'+':'')+_mll.lng.toFixed(1);}
+ else window._globeMouseLat=undefined;
  const tt=document.getElementById('tooltip');
  if(hotHit){
  document.getElementById('tt-name').textContent=hotHit.label;
@@ -42985,6 +43045,9 @@ document.addEventListener('keydown', function(e){
     var cam=window._brain_cam;
     if(cam){
       if(e.key==='='||e.key==='+'){cam.zoom=Math.min(10000000,cam.zoom*1.25);}
+      /* Zoom keys */
+      if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
+      if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
       /* Arrow key pan */
       var panStep=30/cam.zoom;
       var _ptx=cam.tx!==undefined?cam.tx:cam.x;
