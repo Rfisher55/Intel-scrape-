@@ -7101,6 +7101,11 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: axon speed by zoom (canvas) */
 /* Brain: flash ring cluster color (canvas) */
 
+
+/* v47 */
+/* Globe: selected country coord badge (canvas) */
+/* Globe: Z key to zoom to selected country */
+
 </style>
 </head>
 <body>
@@ -13722,6 +13727,25 @@ function draw(){
      ctx.restore();
    }
  }
+ /* Selected country coordinate badge */
+ if(selectedISO&&COUNTRIES[selectedISO]){
+   const _scc=COUNTRIES[selectedISO];
+   const _scp=project(_scc.lat,_scc.lng);
+   if(_scp.visible){
+     var _scLatStr=(_scc.lat>=0?'+':'')+_scc.lat.toFixed(1);
+     var _scLngStr=(_scc.lng>=0?'+':'')+_scc.lng.toFixed(1);
+     ctx.save();
+     ctx.font='6px "Courier New"';
+     var _scTxt=_scLatStr+' '+_scLngStr;
+     var _scTw=ctx.measureText(_scTxt).width;
+     ctx.fillStyle='rgba(2,6,18,0.55)';
+     ctx.fillRect(_scp.px-_scTw/2-4,_scp.py+20,_scTw+8,9);
+     ctx.fillStyle='rgba(148,163,184,0.7)';
+     ctx.textAlign='center';
+     ctx.fillText(_scTxt,_scp.px,_scp.py+28);
+     ctx.restore();
+   }
+ }
  /* Selected country name on canvas (or cursor lat/lon on empty ocean) */
  if(!selectedISO&&window._globeMouseLat!==undefined){
   ctx.save();
@@ -17991,6 +18015,13 @@ function initSatMapEvents(){
  // Keyboard controls
  document.addEventListener('keydown',e=>{
  if(e.key==='Escape'&&satOpen){toggleSatPanel();return;}
+ /* Z = zoom globe to fit selected country */
+ if(e.key==='z'||e.key==='Z'){
+   if(selectedISO&&COUNTRIES[selectedISO]){
+     var _zc=COUNTRIES[selectedISO];
+     vipAnimTarget={fromX:rotX,fromY:rotY,toX:-_zc.lat*Math.PI/180,toY:-_zc.lng*Math.PI/180,startMs:Date.now(),dur:900};
+   }
+ }
  if(!satOpen||!satLocSelected)return;
  const panPx=60;
  const n=Math.pow(2,satZoom)*SAT_TS;
