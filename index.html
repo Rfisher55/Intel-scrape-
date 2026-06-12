@@ -7410,6 +7410,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: minimap zoom label */
 /* Globe: selected country label box */
 
+
+/* v89 */
+/* Globe: CRITICAL fill more opaque */
+/* Brain: burst particle trail */
+/* Brain: activity ring scales with clAct */
+/* Globe: arc flow tick animated */
+
 </style>
 </head>
 <body>
@@ -14364,6 +14371,15 @@ function drawArcs(){
  ctx.beginPath();ctx.setLineDash(_dashL);ctx.lineDashOffset=-t*60;
  ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
  ctx.strokeStyle=`${base},.85)`;ctx.lineWidth=_arcW;ctx.stroke();
+ /* Animated flow tick along arc (t advances with time) */
+ if(arc.severity!=='low'&&scale>180){
+   var _ftT=((Date.now()*0.00025)%1);
+   var _ftX=(1-_ftT)*(1-_ftT)*p1.px+2*(1-_ftT)*_ftT*cpX+_ftT*_ftT*p2.px;
+   var _ftY=(1-_ftT)*(1-_ftT)*p1.py+2*(1-_ftT)*_ftT*cpY+_ftT*_ftT*p2.py;
+   var _ftA=arc.severity==='critical'?0.9:0.6;
+   ctx.beginPath();ctx.arc(_ftX,_ftY,arc.severity==='critical'?2.5:1.5,0,Math.PI*2);
+   ctx.fillStyle=`${base},${_ftA})`;ctx.fill();
+ }
  ctx.setLineDash([]);
  // Equator crossing: bright spark with afterglow trail
  if((from.lat>0)!==(to.lat>0)){
@@ -43482,9 +43498,10 @@ var _BrainEngine = (function(){
 
       /* Pulsing ring on root cluster nodes */
       if(v.node.depth===0&&v.sr>8){
+        var _clAct=(clAct&&clAct[v.node.ci])||0;
         var pf=(Math.sin(frame*0.04+v.node.ci*0.7)*0.5+0.5);
-        var pr=v.sr*(1.5+pf*0.4);
-        var pa=0.15+pf*0.12;
+        var pr=v.sr*(1.5+pf*0.4+_clAct*0.3);
+        var pa=(0.15+pf*0.12)*(0.7+_clAct*0.5);
         /* Glow behind root nodes — scales with activation */
         if(v.sr>15){var _actLvl=v.node.act||0;ctx.shadowColor=cl.c;ctx.shadowBlur=Math.min(20,v.sr*0.4+_actLvl*8);}
         /* Danger zone for CRITICAL nodes (depth 0 of critical cluster) */
@@ -43768,6 +43785,18 @@ var _BrainEngine = (function(){
         ctx.strokeStyle='rgba('+_brcl.r+','+(_bra*0.25)+')';ctx.lineWidth=2;ctx.stroke();
         ctx.beginPath();ctx.arc(_br.sx,_br.sy,_br.t*Math.max(W,H)*0.3*(_brScale||1),0,Math.PI*2);
         ctx.strokeStyle='rgba('+_brcl.r+','+(_bra*0.4)+')';ctx.lineWidth=1;ctx.stroke();
+        /* Particle sparks at burst origin */
+        if(_br.t<0.35&&_brcl){
+          var _bpN=4;
+          for(var _bpi=0;_bpi<_bpN;_bpi++){
+            var _bpA=(_bpi/_bpN)*Math.PI*2+_br.t*8;
+            var _bpR=_br.t*18*(_brScale||1);
+            var _bpX=_br.sx+Math.cos(_bpA)*_bpR;
+            var _bpY=_br.sy+Math.sin(_bpA)*_bpR;
+            ctx.beginPath();ctx.arc(_bpX,_bpY,0.8,0,Math.PI*2);
+            ctx.fillStyle='rgba('+_brcl.r+','+((1-_br.t*2.5)*0.5)+')';ctx.fill();
+          }
+        }
       }
     }
     /* Cluster name text flashes from fireCluster */
