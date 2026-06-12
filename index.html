@@ -7725,6 +7725,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: solar position indicator */
 /* Brain: cluster boundary density */
 
+
+/* v130 */
+/* Brain: scan reverse DEFCON 1 */
+/* Brain: A key fire all clusters */
+/* Globe: refugee flow person icon */
+/* Brain: node depth brightness */
+/* Globe: DEFCON ring aggressive pulse */
+
 </style>
 </head>
 <body>
@@ -14547,7 +14555,9 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
  }
  var _defRingCol=_defN<=1?'rgba(239,68,68,.6)':_defN===2?'rgba(249,115,22,.45)':_defN===3?'rgba(251,191,36,.3)':_defN===4?'rgba(34,197,94,.2)':'rgba(59,130,246,.18)';
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
- var _defRW=_defN<=1?1.5+Math.sin(Date.now()*0.005)*0.9:_defN===2?1.5+Math.sin(Date.now()*0.003)*0.5:1.5;
+ var _defRWBase=_defN<=1?2.2:_defN===2?1.8:1.5;
+ var _defRWPulse=_defN<=1?Math.abs(Math.sin(Date.now()*0.008))*1.0:_defN===2?Math.sin(Date.now()*0.003)*0.5:0;
+ var _defRW=_defRWBase+_defRWPulse;
  ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW;ctx.stroke();
  /* Elapsed time since last DEFCON change */
  if(window._defconChangeT&&scale>80){
@@ -15217,6 +15227,13 @@ function drawRefugeeFlows(){
  const p1=project(r.fromLat,r.fromLng),p2=project(r.toLat,r.toLng);
  drawCurvedArc(p1,p2,'rgba(251,191,36',.05,6,null,null);
  drawCurvedArc(p1,p2,'rgba(251,191,36',.65,1.5,[5,7],-t*20);
+ /* Person icon at arc midpoint */
+ if(p1.visible||p2.visible){
+  var _rfMx=(p1.px+p2.px)/2,_rfMy=(p1.py+p2.py)/2-Math.abs(p2.px-p1.px)*0.18;
+  ctx.save();ctx.font='7px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.globalAlpha=0.3;ctx.fillText('○',_rfMx,_rfMy);
+  ctx.globalAlpha=1;ctx.textBaseline='alphabetic';ctx.restore();
+ }
  if(p2.visible){arrowHead(p2.px,p2.py,Math.atan2(p2.py-p1.py,p2.px-p1.px),7,'rgba(251,191,36,.85)');}
  drawArcMarker(p1,p2,0.32,'rgba(251,191,36,.9)',r.label);
  }
@@ -44033,7 +44050,10 @@ var _BrainEngine = (function(){
       /* Scan speed: base + brief boost after fire */
       if(window._scanSpeedBoost>0)window._scanSpeedBoost=Math.max(0,window._scanSpeedBoost-0.012);
       var _scanSpd=((_fps>=45?0.003:_fps>=25?0.002:0.0015))*(1+(window._scanSpeedBoost||0)*3);
-      var _scanAngle=(frame*_scanSpd)%(Math.PI*2);
+      var _scanDefRevEl=document.getElementById('defcon-num');
+      var _scanRevN=_scanDefRevEl?parseInt(_scanDefRevEl.textContent)||3:3;
+      var _scanDir=_scanRevN<=1?-1:1;
+      var _scanAngle=((_scanDir*frame*_scanSpd)%( Math.PI*2)+Math.PI*4)%(Math.PI*2);
       var _scanLen=Math.max(W,H)*0.7;
       /* Scan origin lerps toward screen center offset by camera pan */
       if(window._scanOx===undefined){window._scanOx=W/2;window._scanOy=H/2;}
@@ -44532,8 +44552,10 @@ var _BrainEngine = (function(){
           ctx.shadowColor='rgba('+cl.r+',0.8)';
         }
         /* depth shift: nodes get slightly dimmer at higher depth */
-        var depthFade=Math.max(0.5, 1-v.node.depth*0.03);
-        var effectiveAlpha=na*depthFade;
+        var depthFade=Math.max(0.45, 1-v.node.depth*0.032);
+        /* Shallow nodes slightly brighter */
+        var _depthBright=v.node.depth<3?1.15:v.node.depth<10?1.05:1;
+        var effectiveAlpha=Math.min(1,na*depthFade*_depthBright);
         ctx.beginPath();ctx.arc(v.sx,v.sy,ddr,0,Math.PI*2);
         /* Depth-scaled stroke ring: shallow=thicker, activation boosts width */
         var _actRingW2=clAct&&clAct[v.node.ci]>0.3?(1+clAct[v.node.ci]*0.8):1;
@@ -45701,6 +45723,13 @@ document.addEventListener('keydown', function(e){
             var _zSpan=Math.max(_zMaxX-_zMinX,_zMaxY-_zMinY,50);
             cam.tx=_zCx;cam.ty=_zCy;cam.tz=Math.min(500,Math.max(3,(Math.min(W,H)*0.7)/_zSpan));
           }
+        }
+        return;
+      }
+      /* A = fire all clusters simultaneously */
+      if(e.key==='a'||e.key==='A'){
+        for(var _aci=0;_aci<CL.length;_aci++){
+          (function(_ci){setTimeout(function(){fireCluster(_ci);},_ci*80);}(_aci));
         }
         return;
       }
