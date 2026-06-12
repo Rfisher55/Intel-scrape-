@@ -7117,6 +7117,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: edge count in HUD */
 /* Globe: critical threshold triggers threat badge border */
 
+
+/* v50 */
+/* Globe: tooltip coords */
+/* Globe: CRITICAL badge pulse */
+@keyframes critBadgePulse { 0%,100%{opacity:1} 50%{opacity:0.55} }
+/* Brain: FIRE button in node panel */
+
 </style>
 </head>
 <body>
@@ -7852,7 +7859,7 @@ a:hover { color: #bfdbfe !important; }
 </div>
 <div id="geo-loading" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(5,12,26,.88);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:6px 14px;font-size:10px;color:#94a3b8;letter-spacing:.1em;pointer-events:none">Loading real-world borders…</div>
 
-<div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div></div>
+<div id="tooltip"><div class="tt-name" id="tt-name"></div><div class="tt-alert" id="tt-alert"></div><div id="tt-coords" style="font-size:6px;color:#475569;letter-spacing:.06em;margin-top:2px;font-family:'Courier New',monospace"></div></div>
 
 <div id="legend">
  <div class="leg-title">ALERT LEVEL</div>
@@ -14133,6 +14140,7 @@ canvas.addEventListener('mousemove',e=>{
  const tt=document.getElementById('tooltip');
  if(hotHit){
  document.getElementById('tt-name').textContent=hotHit.label;
+ document.getElementById('tt-coords').textContent=(hotHit.lat>=0?'+':'')+hotHit.lat.toFixed(1)+' '+(hotHit.lng>=0?'+':'')+hotHit.lng.toFixed(1);
  const sev=hotHit.severity;
  document.getElementById('tt-alert').textContent=hotHit.type.replace(/_/g,' ').toUpperCase()+' · '+sev.toUpperCase();
  document.getElementById('tt-alert').style.color=ALERT_SEV[sev]||'#94a3b8';
@@ -16260,6 +16268,7 @@ function openCountry(iso){
  const badge=ALERT_BADGE[c.alertLevel]||ALERT_BADGE.LOW;
  const b=document.getElementById('p-badge');
  b.textContent=c.alertLevel;b.style.background=badge.bg;b.style.color=badge.color;b.style.borderColor=badge.border;
+ b.style.animation=(c.alertLevel==='CRITICAL')?'critBadgePulse 1.2s ease infinite':'none';
  /* Alert-level accent on panel left border */
  var _alertColors2={'CRITICAL':'#ef4444','HIGH':'#f97316','ELEVATED':'#fbbf24','MEDIUM':'#f59e0b','LOW':'#22c55e','MINIMAL':'#14b8a6','GUARDED':'#3b82f6'};
  var _panelEl=document.getElementById('panel');
@@ -43257,6 +43266,8 @@ var _BrainEngine = (function(){
         +'<div style="margin-top:10px;display:flex;gap:6px;">'
           +'<button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';" '
           +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">&#x2715; ESC</button>'
+          +'<button onclick="(function(){if(typeof _BrainEngine!==\'undefined\'&&_BrainEngine.fireCluster){_BrainEngine.fireCluster('+node.ci+');}})()" '
+          +'style="flex:1;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.35);color:#f97316;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">&#x25CF; FIRE</button>'
           +'<button onclick="(function(){var c=window._brain_cam;if(c){if(c.tx!==undefined){c.tx='+node.wx+';c.ty='+node.wy+';c.tz=Math.min(10000000,c.zoom*4.5);}else{c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}}})()" '
           +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE &#x25B6; '+Math.round(cam.zoom*4.5)+'x</button>'
         +'</div>'
