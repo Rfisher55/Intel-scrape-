@@ -7305,6 +7305,23 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: edge early-exit perf */
 /* Globe: hotspot age days */
 
+
+/* v76 */
+/* Globe: scale bar darkened */
+/* Brain: selected ring cluster color */
+/* Globe: CRITICAL arc outer glow */
+/* Brain: FPS sparkline warm/cool */
+/* Globe: atmosphere radius adaptive */
+
+
+/* v77 */
+/* Globe: equator spark CRITICAL brightness */
+/* Brain: neuron count flash on fire */
+/* Globe: tooltip arc count */
+/* Brain: scan sweep fill trail */
+/* Globe: selected hotspot type label */
+/* Brain: selected depth in zoom HUD */
+
 </style>
 </head>
 <body>
@@ -13813,7 +13830,8 @@ function draw(){
  g.addColorStop(.65,'#050f20');g.addColorStop(1,'#010408');
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
  // ── Atmosphere glow
- const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*1.12);
+ var _atmoOuter=1.12+Math.min(0.14,(scale-baseScale)/Math.max(1,baseScale)*0.2);
+ const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*_atmoOuter);
  var _aDefN=parseInt((document.getElementById('defcon-num')||{textContent:'3'}).textContent)||3;
  var _aR=_aDefN<=1?200:_aDefN===2?130:_aDefN===3?70:50;
  var _aG=_aDefN<=1?60:_aDefN===2?90:_aDefN===3?110:120;
@@ -14030,7 +14048,7 @@ function draw(){
    var _kmPx=40075/scale/2; /* circumference / full diameter in pixels */
    var _sbKm=_kmPx*50; /* 50px bar */
    var _sbLbl=_sbKm>1000?Math.round(_sbKm/100)*100+'km':Math.round(_sbKm/50)*50+'km';
-   ctx.save();ctx.globalAlpha=0.35;
+   ctx.save();ctx.globalAlpha=0.72;ctx.fillStyle='rgba(0,1,10,0.72)';ctx.fillRect(_sX-3,_sY-10,57,16);ctx.globalAlpha=0.35;
    ctx.strokeStyle='rgba(148,163,184,0.8)';ctx.lineWidth=1;
    ctx.beginPath();ctx.moveTo(_sX,_sY);ctx.lineTo(_sX+50,_sY);ctx.stroke();
    ctx.beginPath();ctx.moveTo(_sX,_sY-3);ctx.lineTo(_sX,_sY+3);ctx.stroke();
@@ -14136,7 +14154,9 @@ function drawHotspots(){
  ctx.beginPath();ctx.arc(p.px,p.py,r*0.42,0,Math.PI*2);
  ctx.fillStyle=`rgba(255,255,255,${0.6+p1*0.3})`;ctx.fill();
  /* Type abbreviation on core */
- if(r>=4){var _htL={'nuclear':'N','conflict':'C','cyber':'X','epidemic':'E','terrorism':'T','famine':'F','pollution':'P','migration':'M'}[h.type]||'+';ctx.font='bold '+(r>=5?'6':'5')+'px "Courier New"';ctx.fillStyle='rgba(0,0,0,0.65)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(_htL,p.px,p.py);ctx.textBaseline='alphabetic';}
+ if(r>=4){var _htL={'nuclear':'N','conflict':'C','cyber':'X','epidemic':'E','terrorism':'T','famine':'F','pollution':'P','migration':'M'}[h.type]||'+';
+ var _htSelected=(typeof selectedISO!=='undefined'&&h.country===selectedISO)||false;
+ if(_htSelected){ctx.font='5px "Courier New"';ctx.fillStyle='rgba(255,220,100,0.8)';ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText((h.type||'unknown').toUpperCase().slice(0,9),p.px,p.py+r+2);ctx.textBaseline='alphabetic';}ctx.font='bold '+(r>=5?'6':'5')+'px "Courier New"';ctx.fillStyle='rgba(0,0,0,0.65)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(_htL,p.px,p.py);ctx.textBaseline='alphabetic';}
  /* Ring count digit + age */
  if(r>=6&&h.count>1){ctx.font='bold 5px "Courier New"';ctx.fillStyle='rgba(255,220,100,0.85)';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(h.count>99?'99+':h.count,p.px+r-1,p.py-r+1);ctx.textBaseline='alphabetic';}
  if(r>=8&&h.created){var _hAge=Math.round((Date.now()-new Date(h.created).getTime())/(864e5));if(_hAge>0){ctx.font='4px "Courier New"';ctx.fillStyle='rgba(148,163,184,0.6)';ctx.textAlign='right';ctx.textBaseline='top';ctx.fillText(_hAge+'d',p.px+r,p.py-r+1);ctx.textBaseline='alphabetic';}}
@@ -14188,6 +14208,10 @@ function drawArcs(){
  // Glow
  ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
  ctx.strokeStyle=`${base},.15)`;ctx.lineWidth=5*_arcW;ctx.stroke();
+ if(arc.severity==='critical'){
+   ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
+   ctx.strokeStyle=`${base},.06)`;ctx.lineWidth=12;ctx.stroke();
+ }
  // Animated dash — tail length adapts to zoom
  var _dashL=scale<120?[16,5]:scale<300?[12,8]:[8,12];
  ctx.beginPath();ctx.setLineDash(_dashL);ctx.lineDashOffset=-t*60;
@@ -14197,8 +14221,9 @@ function drawArcs(){
  // Equator crossing: bright spark at bezier control point
  if((from.lat>0)!==(to.lat>0)){
   var _eqPf=Math.sin(Date.now()*0.005)*0.5+0.5;
-  ctx.shadowColor='rgba(255,255,255,0.8)';ctx.shadowBlur=4+_eqPf*3;
-  ctx.beginPath();ctx.arc(cpX,cpY,1.5+_eqPf*0.8,0,Math.PI*2);
+  var _eqR=arc.severity==='critical'?3+_eqPf*1.5:1.5+_eqPf*0.8;
+  ctx.shadowColor=arc.severity==='critical'?'rgba(255,80,80,0.9)':'rgba(255,255,255,0.8)';ctx.shadowBlur=(arc.severity==='critical'?8:4)+_eqPf*3;
+  ctx.beginPath();ctx.arc(cpX,cpY,_eqR,0,Math.PI*2);
   ctx.fillStyle=`${base},.9)`;ctx.fill();
   ctx.shadowBlur=0;
  }
@@ -14455,8 +14480,10 @@ canvas.addEventListener('mousemove',e=>{
  const c=COUNTRIES[hit];
  document.getElementById('tt-name').textContent=c.name;
  var _hsCnt=(typeof HOTSPOTS!=='undefined'?HOTSPOTS.filter(function(h){return h.country===hit;}).length:0)+(typeof liveHotspots!=='undefined'?liveHotspots.filter(function(h){return h.country===hit;}).length:0);
- var _hsStr=_hsCnt>0?' · '+_hsCnt+' hotspot'+(_hsCnt>1?'s':''):'';
- document.getElementById('tt-alert').textContent=(hit===lastClickISO&&Date.now()-lastClickTime<DBL_CLICK_MS)?'Double-click to open →':'Alert: '+c.alertLevel+_hsStr+' · Double-click to open';
+ var _arcCnt=(typeof CONFLICTS!=='undefined'?CONFLICTS.filter(function(ac){return ac.from===hit||ac.to===hit;}).length:0);
+ var _hsStr=_hsCnt>0?' · '+_hsCnt+'hs':'';
+ var _arcStr=_arcCnt>0?' · '+_arcCnt+'arc'+(_arcCnt>1?'s':''):'';
+ document.getElementById('tt-alert').textContent=(hit===lastClickISO&&Date.now()-lastClickTime<DBL_CLICK_MS)?'Double-click to open →':'Alert: '+c.alertLevel+_hsStr+_arcStr+' · Double-click to open';
  document.getElementById('tt-alert').style.color=ALERT_SEV[c.alertLevel.toLowerCase()]||'#94a3b8';
  tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
  }else tt.style.opacity='0';
@@ -43075,6 +43102,12 @@ var _BrainEngine = (function(){
       ctx.moveTo(_scx,_scy);
       var _scanArcW=cam.zoom<0.9?0.28:cam.zoom<5?0.18:cam.zoom<50?0.10:0.06;
       ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
+      ctx.lineTo(_scx,_scy);ctx.closePath();
+      /* Fading trail behind sweep */
+      var _scanTrailGrad=ctx.createConicalGradient?null:null; /* fallback */
+      ctx.fillStyle='rgba(34,197,94,0.03)';ctx.fill();
+      ctx.beginPath();
+      ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
       ctx.closePath();
       ctx.fillStyle=_scGrad;ctx.fill();
       ctx.restore();
@@ -43602,6 +43635,7 @@ var _BrainEngine = (function(){
     /* FPS sparkline */
     if(!window._fpsHist)window._fpsHist=[];
     if(frame%6===0){window._fpsHist.push(_fps);if(window._fpsHist.length>18)window._fpsHist.shift();}
+    /* Color-coded FPS sparkline: warm=low, cool=high */
     for(var _fi=0;_fi<window._fpsHist.length;_fi++){
       var _fv=window._fpsHist[_fi];
       var _fhh=Math.min(7,_fv/9);
@@ -43621,7 +43655,8 @@ var _BrainEngine = (function(){
     /* Zoom level + node count bottom-left */
     var _zstr2=cam.zoom>=1000?(cam.zoom/1000).toFixed(1)+'K':cam.zoom>=1?(cam.zoom).toFixed(1):(cam.zoom).toFixed(3);
     ctx.textAlign='left';
-    ctx.fillText(_zstr2+'x  '+_vn.length+'n/'+_ve.length+'e',8,H-8);
+    var _selDepStr=_sel&&_sel.node?' | D'+_sel.node.depth:'';
+    ctx.fillText(_zstr2+'x  '+_vn.length+'n/'+_ve.length+'e'+_selDepStr,8,H-8);
     ctx.restore();
 
     /* Current cluster name + milestone when zoomed deep */
@@ -44021,6 +44056,9 @@ var _BrainEngine = (function(){
       window._burstRings.push({x:_fp.sx,y:_fp.sy,t:0,ci:ci});
       if(!window._brainTextFlashes)window._brainTextFlashes=[];
       window._brainTextFlashes.push({txt:CL[ci].n,x:_fp.sx,y:_fp.sy,t:0,ci:ci});
+      /* Also show neuron count */
+      var _nFiCnt=0;for(var _nfi=0;_nfi<_vn.length;_nfi++){if(_vn[_nfi].node&&_vn[_nfi].node.ci===ci)_nFiCnt++;}
+      if(_nFiCnt>0)window._brainTextFlashes.push({txt:_nFiCnt+' NEURONS',x:_fp.sx,y:_fp.sy+14,t:0,ci:ci});
     }
   }
 
