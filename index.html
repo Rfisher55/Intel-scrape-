@@ -7438,6 +7438,13 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: sanctions flow animated head */
 /* Brain: scan arc width by DEFCON */
 
+
+/* v93 */
+/* Globe: star twinkle flash */
+/* Globe: R key reset globe rotation */
+/* Brain: node label brightness by activation */
+/* Brain: scan trailing arc */
+
 </style>
 </head>
 <body>
@@ -13944,9 +13951,14 @@ function draw(){
  const now=Date.now();
  for(const s of STARS){
  const twinkle=0.5+0.5*Math.sin(now/s.tw+s.ph);
+ /* Rare bright flash: high-frequency sin pushes above 0.96 for brief peak */
+ const _twFlash=Math.max(0,(Math.sin(now*0.0031+s.ph*17)-0.96)/0.04);
+ const _twR=s.r*(1+_twFlash*2.5);
+ if(_twFlash>0){ctx.shadowColor='rgba(200,220,255,'+_twFlash*0.8+')';ctx.shadowBlur=3+_twFlash*6;}
  ctx.beginPath();
- ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2);
- ctx.fillStyle=`rgba(180,210,255,${s.a*twinkle})`;ctx.fill();
+ ctx.arc(s.x*canvas.width,s.y*canvas.height,_twR,0,Math.PI*2);
+ ctx.fillStyle=`rgba(180,210,255,${Math.min(1,s.a*twinkle+_twFlash*0.5)})`;ctx.fill();
+ if(_twFlash>0)ctx.shadowBlur=0;
  }
  // ── Globe sphere — richer gradient
  const g=ctx.createRadialGradient(cx-scale*.22,cy-scale*.28,scale*.01,cx,cy,scale*1.02);
@@ -14342,7 +14354,12 @@ function drawHotspots(){
  var _hsAgeFade=_hsAge>0?Math.max(0.3,1-_hsAge/86400):1;
  if(h.severity==='critical'){ctx.shadowColor=base.replace(',1)',',.6)');ctx.shadowBlur=8;}
  ctx.globalAlpha=_hsAgeFade;
- ctx.beginPath();ctx.arc(p.px,p.py,r,0,Math.PI*2);
+ /* Occasional twinkle flash */
+ var _stT=Math.sin(Date.now()*0.002+s.x*7+s.y*3);
+ var _stFlash=_stT>0.97?(_stT-0.97)/0.03:0;
+ var _stR=r*(1+_stFlash*2);
+ if(_stFlash>0){ctx.shadowColor='rgba(255,255,255,'+(_stFlash*0.9)+')';ctx.shadowBlur=4+_stFlash*8;}
+ ctx.beginPath();ctx.arc(p.px,p.py,_stR,0,Math.PI*2);
  ctx.fillStyle=base;ctx.fill();
  ctx.globalAlpha=1;
  ctx.shadowBlur=0;
@@ -18643,6 +18660,13 @@ function initSatMapEvents(){
    }
  }
  /* G = cycle through CRITICAL-alert countries */
+ /* R = reset globe to default orientation */
+ if(e.key==='r'||e.key==='R'){
+   rotX=0.45;rotY=0;
+   if(typeof rotVx!=='undefined')rotVx=0;if(typeof rotVy!=='undefined')rotVy=0;
+   scale=baseScale;
+   return;
+ }
  if(e.key==='g'||e.key==='G'){
    var _critISOs=Object.keys(COUNTRIES).filter(function(k){return COUNTRIES[k].alertLevel==='CRITICAL';});
    if(_critISOs.length>0){
@@ -43361,6 +43385,17 @@ var _BrainEngine = (function(){
       var _scanArcW=(cam.zoom<0.9?0.28:cam.zoom<5?0.18:cam.zoom<50?0.10:0.06)*_defconWMult;
       ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
       ctx.lineTo(_scx,_scy);ctx.closePath();
+      /* Fading trail behind sweep — use wider arc at lower opacity */
+      {
+        var _stArcW=_scanArcW*2.5;
+        ctx.save();ctx.beginPath();
+        ctx.moveTo(_scx,_scy);
+        ctx.arc(_scx,_scy,_scanLen,_scanAngle-_stArcW,_scanAngle-_scanArcW,false);
+        ctx.lineTo(_scx,_scy);ctx.closePath();
+        var _stFillC=_scanDefN<=1?'239,68,68':_scanDefN===2?'249,115,22':_scanDefN===3?'34,197,94':'59,130,246';
+        ctx.fillStyle='rgba('+_stFillC+',0.008)';ctx.fill();
+        ctx.restore();
+      }
       /* Fading trail behind sweep */
       var _scanTrailGrad=ctx.createConicalGradient?null:null; /* fallback */
       /* Scan fill shifts by DEFCON level */
@@ -43707,7 +43742,9 @@ var _BrainEngine = (function(){
         if(_nl){
           ctx.textAlign='center';
           ctx.font='5px "Courier New"';
-          ctx.fillStyle='rgba('+cl.r+',0.45)';
+          /* Label alpha scales with activation factor */
+          var _laf=Math.min(0.75,0.3+v.af*0.45);
+          ctx.fillStyle='rgba('+cl.r+','+_laf+')';
           ctx.fillText(_nl,v.sx,v.sy-Math.max(r2,4)-3);
         }
       }
