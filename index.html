@@ -7655,6 +7655,13 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: limb darkening DEFCON */
 /* Brain: signal micro-burst arrival */
 
+
+/* v121 */
+/* Globe: hotspot breathing brightness */
+/* Brain: scan arc node hatch marks */
+/* Brain: ? key help overlay */
+/* Globe: troop arc shadow offset */
+
 </style>
 </head>
 <body>
@@ -14707,7 +14714,8 @@ function drawHotspots(){
   ctx.strokeStyle=base.replace(',1)',','+_swA+')');ctx.lineWidth=0.6;ctx.stroke();
  }
  if(h.severity==='critical'){ctx.shadowColor=base.replace(',1)',',.6)');ctx.shadowBlur=8;}
- ctx.globalAlpha=_hsAgeFade*_hsFlicker;
+ var _hsBreath=0.85+Math.sin(Date.now()*0.0012+h.lat*0.7+h.lng*0.4)*0.15;
+ ctx.globalAlpha=_hsAgeFade*_hsFlicker*_hsBreath;
  /* Occasional twinkle flash */
  var _stT=Math.sin(Date.now()*0.002+s.x*7+s.y*3);
  var _stFlash=_stT>0.97?(_stT-0.97)/0.03:0;
@@ -14928,6 +14936,8 @@ function drawTroopMovements(){
  const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(59,130,246',low:'rgba(34,197,94'}[m.severity]||'rgba(148,163,184';
  const alpha=selectedISO?1:1;
  drawCurvedArc(p1,p2,sev,.08*alpha,7,null,null);
+ /* Shadow arc for depth */
+ drawCurvedArc({px:p1.px+1.5,py:p1.py+1.5,visible:p1.visible,z:p1.z},{px:p2.px+1.5,py:p2.py+1.5,visible:p2.visible,z:p2.z},'rgba(0,0,0',0.15,2.2,null,null);
  var _tmDash=m.type==='air'?[10,6]:m.type==='naval'?[4,4]:[14,3];
  drawCurvedArc(p1,p2,sev,.75*alpha,1.5,_tmDash,-t*50);
  /* Animated head dot traveling along arc */
@@ -43903,6 +43913,24 @@ var _BrainEngine = (function(){
       ctx.fillStyle='rgba('+_scanFillC+',0.012)';ctx.fill();
       ctx.restore();
       ctx.restore();
+      /* Hatch marks on scan arc at visible node angles */
+      if(_vn.length>0&&_vn.length<800){
+        ctx.save();
+        for(var _hni=0;_hni<Math.min(_vn.length,120);_hni++){
+          var _hn=_vn[_hni];
+          var _hnDx=_hn.sx-_scx,_hnDy=_hn.sy-_scy;
+          var _hnDist=Math.sqrt(_hnDx*_hnDx+_hnDy*_hnDy);
+          if(Math.abs(_hnDist-_scanLen)<8){
+            var _hnA=Math.atan2(_hnDy,_hnDx);
+            var _hCl=CL[_hn.node.ci];
+            ctx.beginPath();
+            ctx.moveTo(_scx+Math.cos(_hnA)*(_scanLen-3),_scy+Math.sin(_hnA)*(_scanLen-3));
+            ctx.lineTo(_scx+Math.cos(_hnA)*(_scanLen+3),_scy+Math.sin(_hnA)*(_scanLen+3));
+            ctx.strokeStyle='rgba('+(_hCl?_hCl.r:'59,130,246')+',0.18)';ctx.lineWidth=0.5;ctx.stroke();
+          }
+        }
+        ctx.restore();
+      }
       /* Selected cluster name near scan origin */
       if(_sel&&CL[_sel.ci]){
         ctx.save();ctx.font='5px "Courier New"';ctx.fillStyle='rgba('+CL[_sel.ci].r+',0.35)';
@@ -44408,6 +44436,26 @@ var _BrainEngine = (function(){
       }
     }
 
+    /* Help overlay */
+    if(window._brainShowHelp){
+      ctx.save();ctx.fillStyle='rgba(2,6,18,0.88)';ctx.fillRect(W/2-110,H/2-140,220,230);
+      ctx.strokeStyle='rgba(59,130,246,0.4)';ctx.lineWidth=0.8;ctx.strokeRect(W/2-110,H/2-140,220,230);
+      ctx.font='bold 7px "Courier New"';ctx.textAlign='center';ctx.fillStyle='rgba(147,197,253,0.9)';
+      ctx.fillText('KEYBOARD SHORTCUTS',W/2,H/2-128);
+      var _helpKeys=[
+        ['G','Jump to next cluster'],['Z','Zoom to fit cluster'],['N','New random path'],
+        ['H','Toggle stealth mode'],['P','Pause signal flow'],['M','Toggle minimap'],
+        ['C','Toggle cross-edges'],['B','Toggle burst rings'],['L','Toggle node labels'],
+        ['T','Cycle threat overlay'],['V','Fire selected cluster'],['?','This help screen']
+      ];
+      ctx.font='5px "Courier New"';ctx.textAlign='left';
+      for(var _hki=0;_hki<_helpKeys.length;_hki++){
+        var _hky=H/2-112+_hki*16;
+        ctx.fillStyle='rgba(251,191,36,0.85)';ctx.fillText('['+_helpKeys[_hki][0]+']',W/2-100,_hky);
+        ctx.fillStyle='rgba(148,163,184,0.75)';ctx.fillText(_helpKeys[_hki][1],W/2-80,_hky);
+      }
+      ctx.restore();
+    }
     /* HUD */
 
     /* ── Axon signals: tiny dots traveling along visible edges ── */
@@ -45385,6 +45433,11 @@ document.addEventListener('keydown', function(e){
             cam.tx=_zCx;cam.ty=_zCy;cam.tz=Math.min(500,Math.max(3,(Math.min(W,H)*0.7)/_zSpan));
           }
         }
+        return;
+      }
+      /* ? = show keyboard shortcut help overlay */
+      if(e.key==='?'||e.key==='/'){
+        window._brainShowHelp=!window._brainShowHelp;
         return;
       }
       /* L = toggle node labels */
