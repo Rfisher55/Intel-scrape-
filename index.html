@@ -7252,6 +7252,15 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: M key minimap toggle */
 /* Brain: axon speed boost for selected cluster */
 
+
+/* v70 */
+/* Globe: atmosphere glow DEFCON tint */
+/* Brain: camera lerp boost during bursts */
+/* Brain: scan arc width varies with zoom */
+/* Brain: A key fires selected cluster */
+/* Brain: selected ring oscillates */
+/* Globe: country tooltip hotspot count */
+
 </style>
 </head>
 <body>
@@ -13756,7 +13765,14 @@ function draw(){
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
  // ── Atmosphere glow
  const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*1.12);
- a.addColorStop(0,'rgba(50,120,255,.28)');a.addColorStop(.4,'rgba(30,80,220,.10)');a.addColorStop(.8,'rgba(10,40,180,.04)');a.addColorStop(1,'transparent');
+ var _aDefN=parseInt((document.getElementById('defcon-num')||{textContent:'3'}).textContent)||3;
+ var _aR=_aDefN<=1?200:_aDefN===2?130:_aDefN===3?70:50;
+ var _aG=_aDefN<=1?60:_aDefN===2?90:_aDefN===3?110:120;
+ var _aB=_aDefN<=1?60:_aDefN===2?80:_aDefN===3?180:255;
+ var _aA=_aDefN<=1?.32:_aDefN===2?.28:.28;
+ a.addColorStop(0,'rgba('+_aR+','+_aG+','+_aB+','+_aA+')');
+ a.addColorStop(.4,'rgba('+Math.round(_aR*.6)+','+Math.round(_aG*.65)+','+Math.round(_aB*.85)+',.10)');
+ a.addColorStop(.8,'rgba(10,40,180,.04)');a.addColorStop(1,'transparent');
  ctx.beginPath();ctx.arc(cx,cy,scale*1.12,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
  /* Limb brightening — bright rim at the edge */
  const limb=ctx.createRadialGradient(cx,cy,scale*.92,cx,cy,scale*1.0);
@@ -14369,7 +14385,9 @@ canvas.addEventListener('mousemove',e=>{
  } else if(hit){
  const c=COUNTRIES[hit];
  document.getElementById('tt-name').textContent=c.name;
- document.getElementById('tt-alert').textContent=(hit===lastClickISO&&Date.now()-lastClickTime<DBL_CLICK_MS)?'Double-click to open →':'Alert: '+c.alertLevel+' · Double-click to open';
+ var _hsCnt=(typeof HOTSPOTS!=='undefined'?HOTSPOTS.filter(function(h){return h.country===hit;}).length:0)+(typeof liveHotspots!=='undefined'?liveHotspots.filter(function(h){return h.country===hit;}).length:0);
+ var _hsStr=_hsCnt>0?' · '+_hsCnt+' hotspot'+(_hsCnt>1?'s':''):'';
+ document.getElementById('tt-alert').textContent=(hit===lastClickISO&&Date.now()-lastClickTime<DBL_CLICK_MS)?'Double-click to open →':'Alert: '+c.alertLevel+_hsStr+' · Double-click to open';
  document.getElementById('tt-alert').style.color=ALERT_SEV[c.alertLevel.toLowerCase()]||'#94a3b8';
  tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
  }else tt.style.opacity='0';
@@ -42960,7 +42978,7 @@ var _BrainEngine = (function(){
     if(_fpsNow-_fpsLast>=800){_fps=Math.round(_fpsAcc*1000/(_fpsNow-_fpsLast));_fpsAcc=0;_fpsLast=_fpsNow;}
     /* Smooth camera lerp towards navigation targets */
     if(cam.tx!==undefined){
-      var lf=0.12;
+      var lf=window._brainBursts&&window._brainBursts.length>0?0.18:0.12;
       cam.x+=(cam.tx-cam.x)*lf; cam.y+=(cam.ty-cam.y)*lf; cam.zoom+=(cam.tz-cam.zoom)*lf;
       if(Math.abs(cam.x-cam.tx)<0.01) cam.x=cam.tx;
       if(Math.abs(cam.y-cam.ty)<0.01) cam.y=cam.ty;
@@ -42985,7 +43003,8 @@ var _BrainEngine = (function(){
       _scGrad.addColorStop(1,'rgba(59,130,246,0)');
       ctx.save();ctx.beginPath();
       ctx.moveTo(_scx,_scy);
-      ctx.arc(_scx,_scy,_scanLen,_scanAngle-0.18,_scanAngle,false);
+      var _scanArcW=cam.zoom<0.9?0.28:cam.zoom<5?0.18:cam.zoom<50?0.10:0.06;
+      ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
       ctx.closePath();
       ctx.fillStyle=_scGrad;ctx.fill();
       ctx.restore();
@@ -43198,7 +43217,8 @@ var _BrainEngine = (function(){
         /* Static selection ring with glow + depth color */
         var _sdColor=v.node.depth<5?'#22c55e':v.node.depth<20?'#fbbf24':v.node.depth<50?'#f97316':'#ef4444';
         ctx.shadowColor=_sdColor;ctx.shadowBlur=Math.min(18,r2*0.7+5);
-        ctx.beginPath();ctx.arc(v.sx,v.sy,r2*3.2,0,Math.PI*2);
+        var _selOsc=r2*3.2+Math.sin(frame*0.09)*r2*0.45;
+        ctx.beginPath();ctx.arc(v.sx,v.sy,_selOsc,0,Math.PI*2);
         ctx.strokeStyle=_sdColor;ctx.lineWidth=0.7;ctx.stroke();
         ctx.shadowBlur=0;
         /* Pulsing outer ring on selected node */
@@ -44012,6 +44032,16 @@ document.addEventListener('keydown', function(e){
           var toastF=document.getElementById('brain-cluster-toast');
           if(toastF){toastF.textContent='ALL CLUSTERS FIRED';toastF.style.color='#ef4444';toastF.style.display='block';toastF.style.opacity='1';
             clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastF.style.opacity='0';setTimeout(function(){toastF.style.display='none';},400);},2000);}
+        }
+      }
+      /* A = fire selected cluster only */
+      if(e.key==='a'||e.key==='A'){
+        if(_sel&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
+          _BrainEngine.fireCluster(_sel.ci);
+          var toastA=document.getElementById('brain-cluster-toast');
+          var _aClN=CL[_sel.ci]?CL[_sel.ci].n:'CLUSTER';
+          if(toastA){toastA.textContent='FIRED: '+_aClN;toastA.style.color='#f97316';toastA.style.display='block';toastA.style.opacity='1';
+            clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastA.style.opacity='0';setTimeout(function(){toastA.style.display='none';},400);},1800);}
         }
       }
       /* N = focus nearest visible node */
