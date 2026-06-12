@@ -17743,19 +17743,21 @@ async function refreshIntel(){
 }
 
 async function fetchLiveHotspots(){
- // Check cache — 10 minute TTL
- if(window._gdeltHotspotCache&&Date.now()-window._gdeltHotspotCache.ts<600000){
+ // Check cache — 5 minute TTL
+ if(window._gdeltHotspotCache&&Date.now()-window._gdeltHotspotCache.ts<300000){
  liveHotspots=window._gdeltHotspotCache.data;
  return;
  }
  try{
  const queries=[
- {q:'attack explosion bombing airstrike missile killed',type:'active_conflict',sev:'high'},
- {q:'nuclear ballistic troops military forces warship deploy',type:'military_movement',sev:'critical'},
- {q:'protest riot coup uprising unrest demonstration',type:'protest',sev:'medium'},
+ {q:'attack explosion bombing airstrike missile killed wounded',type:'active_conflict',sev:'high'},
+ {q:'nuclear ballistic missile warship troops military deploy offensive',type:'military_movement',sev:'critical'},
+ {q:'protest riot coup uprising unrest demonstration crackdown',type:'protest',sev:'medium'},
+ {q:'sanctions arrested detained imprisoned government shutdown',type:'political',sev:'medium'},
+ {q:'drone strike IED ambush artillery shelling casualties',type:'active_conflict',sev:'critical'},
  ];
  const reqs=queries.map(({q})=>
- fetch(`https://api.gdeltproject.org/api/v2/geo/geo?query=${encodeURIComponent(q)}&mode=pointdata&format=geojson&timespan=24h`,
+ fetch(`https://api.gdeltproject.org/api/v2/geo/geo?query=${encodeURIComponent(q)}&mode=pointdata&format=geojson&timespan=12h`,
  {signal:AbortSignal.timeout(10000)})
  .then(r=>r.ok?r.json():null).catch(()=>null)
  );
@@ -17775,18 +17777,34 @@ async function fetchLiveHotspots(){
  if(seen.has(key))continue;
  seen.add(key);
  const p=f.properties||{};
- fresh.push({
- lat,lng,type,severity:sev,live:true,
- label:(p.title||p.name||'GDELT Event').slice(0,80),
- country:'',source:'GDELT',
- url:p.url||'',
- });
+ // Track hit count for same-location events
+ const existIdx=fresh.findIndex(h=>Math.abs(h.lat-lat)<0.5&&Math.abs(h.lng-lng)<0.5);
+ if(existIdx>=0){
+   fresh[existIdx].count=(fresh[existIdx].count||1)+1;
+   if(sev==='critical')fresh[existIdx].severity='critical';
+ } else {
+   fresh.push({
+   lat,lng,type,severity:sev,live:true,
+   label:(p.title||p.name||'GDELT Event').slice(0,80),
+   country:'',source:'GDELT',count:1,
+   url:p.url||'',timestamp:Date.now(),
+   });
  }
  }
- // Shuffle for visual variety, cap at 60
- fresh.sort(()=>Math.random()-.5);
- liveHotspots=fresh.slice(0,60);
+ }
+ // Sort by severity then count — most relevant first
+ const sevOrder={critical:0,high:1,medium:2,low:3};
+ fresh.sort((a,b)=>(sevOrder[a.severity]||3)-(sevOrder[b.severity]||3)||(b.count||1)-(a.count||1));
+ liveHotspots=fresh.slice(0,80);
  window._gdeltHotspotCache={ts:Date.now(),data:liveHotspots};
+ /* Show live hotspot count in status bar */
+ var _hStatEl=document.getElementById('h-status');
+ if(_hStatEl){
+   var _hCritN=liveHotspots.filter(function(h){return h.severity==='critical';}).length;
+   var _hTS=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+   _hStatEl.textContent='GDELT LIVE: '+liveHotspots.length+' events ('+_hCritN+' critical) — '+_hTS;
+   setTimeout(function(){_hStatEl.textContent='Double-click country ◆ G/I/B views ◆ Brain: dbl-click zooms, Q/W clusters, arrows pan, R reset';},6000);
+ }
  }catch(e){
  // Fallback to GDELT doc API title matching
  try{
@@ -17807,7 +17825,8 @@ async function fetchLiveHotspots(){
  const scatter=()=>(Math.random()-.5)*2;
  fresh.push({lat:found.lat+scatter(),lng:found.lng+scatter(),
  country:found.iso,type:'active_conflict',
- label:(a.title||'').slice(0,60),severity:'medium',live:true});
+ label:(a.title||'').slice(0,60),severity:'medium',live:true,
+ timestamp:Date.now(),count:1});
  }
  }
  if(fresh.length)liveHotspots=fresh.slice(0,20);
@@ -38396,8 +38415,8 @@ if(watchlistItems.length){scheduleWatchlistPoll();}
 setTimeout(function(){
  const bell=document.getElementById('alert-bell');
  if(bell)bell.style.display='flex';
- // 10-minute GDELT globe refresh
- setInterval(fetchLiveHotspots,10*60*1000);
+ // 5-minute GDELT globe refresh
+ setInterval(fetchLiveHotspots,5*60*1000);
  // CISA KEV initial load + hourly refresh
  injectCisaKevToSIGINT();
  setInterval(injectCisaKevToSIGINT,60*60*1000);
