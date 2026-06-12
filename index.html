@@ -7459,6 +7459,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: lateral signal dot wider */
 /* Globe: hotspot country fill boost */
 
+
+/* v96 */
+/* Brain: scan speed boost on fire */
+/* Globe: label offset for hotspot overlap */
+/* Brain: world coords at very high zoom */
+/* Brain: depth bar fades with HUD idle */
+
 </style>
 </head>
 <body>
@@ -14070,7 +14077,7 @@ function draw(){
  var _hs_overlap=false;
  var _allHS=(typeof HOTSPOTS!=='undefined'?HOTSPOTS:[]).concat(typeof liveHotspots!=='undefined'?liveHotspots:[]);
  for(var _oli=0;_oli<_allHS.length;_oli++){if(_allHS[_oli].country===c.iso){var _ohp=project(_allHS[_oli].lat,_allHS[_oli].lng);if(_ohp.visible){var _odx=_ohp.px-ctr.px,_ody=_ohp.py-ctr.py;if(_odx*_odx+_ody*_ody<36){_hs_overlap=true;break;}}}}
- if(!_hs_overlap)ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
+ if(!_hs_overlap)ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py+(_hasHot?3:0));
  if(scale>520&&c.capital&&!isSel&&!isHov){ctx.font='6px "Courier New"';ctx.fillStyle='rgba(100,116,139,0.5)';ctx.fillText(c.capital.slice(0,16),ctr.px,ctr.py+_cLSz+1);}
  if(scale>500&&c.capital&&c.capitalLat&&c.capitalLng&&(!isSel&&!isHov?scale>800:true)){
    var _capP=project(c.capitalLat,c.capitalLng);
@@ -43384,7 +43391,9 @@ var _BrainEngine = (function(){
     ctx.fillStyle=_vig;ctx.fillRect(0,0,W,H);
     /* Radial scan sweep — very faint rotating line from screen center */
     if(frame%1===0){
-      var _scanSpd=_fps>=45?0.003:_fps>=25?0.002:0.0015;
+      /* Scan speed: base + brief boost after fire */
+      if(window._scanSpeedBoost>0)window._scanSpeedBoost=Math.max(0,window._scanSpeedBoost-0.012);
+      var _scanSpd=((_fps>=45?0.003:_fps>=25?0.002:0.0015))*(1+(window._scanSpeedBoost||0)*3);
       var _scanAngle=(frame*_scanSpd)%(Math.PI*2);
       var _scanLen=Math.max(W,H)*0.7;
       /* Scan origin lerps toward screen center offset by camera pan */
@@ -43769,6 +43778,14 @@ var _BrainEngine = (function(){
         }
       }
       /* Selected non-root: show label at lower threshold (sr > 10) */
+      /* At very high zoom, show world-space position below selected node */
+      if(isSel&&cam.zoom>200&&v.sx>0&&v.sy>0){
+        var _wcx=v.node.wx!==undefined?v.node.wx.toFixed(0):'-';
+        var _wcy=v.node.wy!==undefined?v.node.wy.toFixed(0):'-';
+        ctx.textAlign='center';ctx.font='4.5px "Courier New"';
+        ctx.fillStyle='rgba('+cl.r+',0.35)';
+        ctx.fillText('WX:'+_wcx+' WY:'+_wcy,v.sx,v.sy+Math.min(r2,8)+9);
+      }
       if(isSel&&v.node.depth>0&&v.sr>10&&v.sr<=22){
         var _snl=(v.node.label||v.node.n||'').slice(0,16);
         if(_snl){ctx.textAlign='center';ctx.font='6px "Courier New"';ctx.fillStyle='rgba('+cl.r+',0.8)';ctx.fillText(_snl,v.sx,v.sy-Math.max(r2,5)-3);}
@@ -44020,6 +44037,7 @@ var _BrainEngine = (function(){
       var _maxDCnt=_vn.filter(function(v){return v.node&&v.node.depth===_maxDepth;}).length;
       /* Depth label only shows when a deep node is selected */
       if(!_sel||(_sel.depth||0)>5)ctx.fillText('D',dpbX,dpbY-4);
+      ctx.restore(); /* depth bar opacity restore */
       ctx.fillText(_maxDepth+(_maxDCnt>0?':'+_maxDCnt:''),dpbX,dpbY+dpbH+9);
       ctx.restore();
     }
@@ -44491,6 +44509,8 @@ var _BrainEngine = (function(){
       /* Track last fire time per cluster */
       if(!window._lastFireTimes)window._lastFireTimes={};
       window._lastFireTimes[ci]=Date.now();
+      /* Briefly boost scan sweep speed on fire */
+      window._scanSpeedBoost=1.0;
       if(!window._brainTextFlashes)window._brainTextFlashes=[];
       window._brainTextFlashes.push({txt:CL[ci].n,x:_fp.sx,y:_fp.sy,t:0,ci:ci});
       /* Also show neuron count */
