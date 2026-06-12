@@ -7662,6 +7662,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: ? key help overlay */
 /* Globe: troop arc shadow offset */
 
+
+/* v122 */
+/* Globe: arc terminus diamond at DEFCON 1 */
+/* Globe: selected country double ring */
+/* Brain: cluster activation sparkline */
+/* Brain: F key node search */
+
 </style>
 </head>
 <body>
@@ -14421,6 +14428,10 @@ function draw(){
      ctx.strokeStyle=_ab.border;ctx.globalAlpha=0.18+_pf*0.12;ctx.lineWidth=1;ctx.stroke();
      ctx.beginPath();ctx.arc(_sp.px,_sp.py,28+_pf*10,0,Math.PI*2);
      ctx.globalAlpha=0.07+_pf*0.05;ctx.lineWidth=0.7;ctx.stroke();
+     /* Second pulsing ring offset by half period */
+     var _pf2=Math.sin(Date.now()*0.0025+Math.PI)*0.5+0.5;
+     ctx.beginPath();ctx.arc(_sp.px,_sp.py,22+_pf2*8,0,Math.PI*2);
+     ctx.globalAlpha=0.10+_pf2*0.08;ctx.lineWidth=0.5;ctx.stroke();
      ctx.restore();
    }
  }
@@ -14871,7 +14882,14 @@ function drawArcs(){
  if(p2.visible&&p2.z>0.1){
   var _tmSz=arc.severity==='critical'?2.5:1.6;
   ctx.save();ctx.fillStyle=`${base},.55)`;
-  ctx.fillRect(p2.px-_tmSz/2,p2.py-_tmSz/2,_tmSz,_tmSz);
+  var _tDefEl=document.getElementById('defcon-num');var _tDefN=_tDefEl?parseInt(_tDefEl.textContent)||3:3;
+  if(arc.severity==='critical'&&_tDefN<=1){
+   /* Diamond at DEFCON 1 */
+   ctx.beginPath();ctx.moveTo(p2.px,p2.py-_tmSz*1.5);ctx.lineTo(p2.px+_tmSz,p2.py);
+   ctx.lineTo(p2.px,p2.py+_tmSz*1.5);ctx.lineTo(p2.px-_tmSz,p2.py);ctx.closePath();ctx.fill();
+  } else {
+   ctx.fillRect(p2.px-_tmSz/2,p2.py-_tmSz/2,_tmSz,_tmSz);
+  }
   ctx.restore();
  }
  ctx.setLineDash([]);
@@ -44458,6 +44476,21 @@ var _BrainEngine = (function(){
     }
     /* HUD */
 
+    /* Cluster activation bars — compact sparkline near minimap */
+    if(cam.zoom>1.2&&!window._hideMinimap&&!window._brainStealth){
+      var _barX=12,_barY=H-MM-212,_barW=10,_barH=MM;
+      for(var _bci=0;_bci<Math.min(CL.length,8);_bci++){
+        var _bAct=clAct?clAct[_bci]||0:0;
+        var _bFillH=Math.max(1,_bAct*_barH);
+        var _bCl=CL[_bci];
+        ctx.fillStyle='rgba('+(_bCl?_bCl.r:'59,130,246')+',0.12)';
+        ctx.fillRect(_barX,_barY,_barW,_barH);
+        ctx.fillStyle='rgba('+(_bCl?_bCl.r:'59,130,246')+','+(0.35+_bAct*0.45)+')';
+        ctx.fillRect(_barX,_barY+_barH-_bFillH,_barW,_bFillH);
+        _barX+=_barW+1;
+      }
+    }
+
     /* ── Axon signals: tiny dots traveling along visible edges ── */
     if(!window._bsigs) window._bsigs=[];
     var SMAX=120;
@@ -45431,6 +45464,23 @@ document.addEventListener('keydown', function(e){
             var _zCx=(_zMinX+_zMaxX)/2,_zCy=(_zMinY+_zMaxY)/2;
             var _zSpan=Math.max(_zMaxX-_zMinX,_zMaxY-_zMinY,50);
             cam.tx=_zCx;cam.ty=_zCy;cam.tz=Math.min(500,Math.max(3,(Math.min(W,H)*0.7)/_zSpan));
+          }
+        }
+        return;
+      }
+      /* F = open node search (type to filter node labels) */
+      if(e.key==='f'||e.key==='F'){
+        var _fsQ=window.prompt('Search node label:','');
+        if(_fsQ&&_fsQ.length>0){
+          var _fsLow=_fsQ.toLowerCase();
+          for(var _fsI=0;_fsI<_vn.length;_fsI++){
+            var _fsN=_vn[_fsI].node;
+            if(_fsN&&_fsN.label&&_fsN.label.toLowerCase().indexOf(_fsLow)>=0){
+              _sel=_fsN;cam.tx=_fsN.wx||0;cam.ty=_fsN.wy||0;
+              cam.tz=Math.min(cam.zoom*2,50);
+              if(typeof showPanel==='function')showPanel(_fsN);
+              break;
+            }
           }
         }
         return;
