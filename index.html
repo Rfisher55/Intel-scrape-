@@ -6784,6 +6784,33 @@ a:hover { color: #bfdbfe !important; }
 /* Brain title subtle glow */
 .brain-title { text-shadow: 0 0 20px rgba(99,102,241,0.3); }
 
+
+/* ─── Overlay close buttons (universal) ─── */
+/* Overlays that have inline-styled close buttons via onclick="P*_close/close*/
+[id$="-overlay"] > div > button[onclick*="close"],
+[id$="-overlay"] > div > button[onclick*="Close"],
+[id$="-overlay"] button[onclick*="close"][style*="color:#475569"],
+[id$="-overlay"] button[onclick*="Close"][style*="color:#475569"] {
+  color: #ef4444 !important;
+  border-color: rgba(239,68,68,0.45) !important;
+}
+[id$="-overlay"] > div > button[onclick*="close"]:hover,
+[id$="-overlay"] > div > button[onclick*="Close"]:hover {
+  color: #f87171 !important;
+  border-color: rgba(239,68,68,0.75) !important;
+  background: rgba(239,68,68,0.08) !important;
+}
+
+/* Top colored accent stripe on full-screen overlays */
+[id$="-overlay"][style*="position:fixed"] {
+  border-top: 2px solid rgba(30,58,138,0.5) !important;
+}
+
+/* Arrow key hints in overlay headers */
+.ov-kbd-hint {
+  font-size: 6px; color: #334155; letter-spacing: .12em; margin-top: 4px;
+}
+
 </style>
 </head>
 <body>
@@ -42805,6 +42832,12 @@ document.addEventListener('keydown', function(e){
     var cam=window._brain_cam;
     if(cam){
       if(e.key==='='||e.key==='+'){cam.zoom=Math.min(10000000,cam.zoom*1.25);}
+      /* Arrow key pan */
+      var panStep=30/cam.zoom;
+      if(e.key==='ArrowLeft') {cam.x-=panStep;e.preventDefault();}
+      if(e.key==='ArrowRight'){cam.x+=panStep;e.preventDefault();}
+      if(e.key==='ArrowUp')   {cam.y-=panStep;e.preventDefault();}
+      if(e.key==='ArrowDown') {cam.y+=panStep;e.preventDefault();}
       if(e.key==='-'||e.key==='_'){cam.zoom=Math.max(0.04,cam.zoom/1.25);}
       if(e.key==='r'||e.key==='R'){cam.x=28;cam.y=-28;cam.zoom=0.78;var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
       if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}}
@@ -42815,6 +42848,9 @@ document.addEventListener('keydown', function(e){
           window._brainFocusIdx=(window._brainFocusIdx-1+_BrainEngine.CL.length)%_BrainEngine.CL.length;
           var cl=_BrainEngine.CL[window._brainFocusIdx];
           if(cam&&cl){cam.x=cl.wx;cam.y=cl.wy;cam.zoom=1.6;}
+          var toast=document.getElementById('brain-cluster-toast');
+          if(toast){toast.textContent='< '+cl.n;toast.style.display='block';toast.style.opacity='1';
+            clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toast.style.opacity='0';setTimeout(function(){toast.style.display='none';},400);},1800);}
         }
       }
       if(e.key==='w'||e.key==='W'){
@@ -42823,6 +42859,9 @@ document.addEventListener('keydown', function(e){
           window._brainFocusIdx=(window._brainFocusIdx+1)%_BrainEngine.CL.length;
           var cl=_BrainEngine.CL[window._brainFocusIdx];
           if(cam&&cl){cam.x=cl.wx;cam.y=cl.wy;cam.zoom=1.6;}
+          var toast2=document.getElementById('brain-cluster-toast');
+          if(toast2){toast2.textContent='> '+cl.n;toast2.style.display='block';toast2.style.opacity='1';
+            clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toast2.style.opacity='0';setTimeout(function(){toast2.style.display='none';},400);},1800);}
         }
       }
       /* 0 = overview zoom out */
@@ -47504,7 +47543,7 @@ function filterSIGINT(query){
   <div id="ai-engine-body">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
       <div>
-        <div style="font-size:7px;letter-spacing:.2em;color:#064e3b;margin-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:4px;">SIGNAL TRENDS</div>
+        <div style="font-size:7px;letter-spacing:.2em;color:#334155;margin-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:4px;">SIGNAL TRENDS</div>
         <div id="ai-trend-list"><div style="color:#334155;font-size:8px;">No data yet</div></div>
       </div>
       <div>
@@ -47520,10 +47559,11 @@ function filterSIGINT(query){
      BRAIN CENTER
      ════════════════════════════════════════════ -->
 <div id="brain-view">
-<div id="brain-hint" style="position:absolute;bottom:55px;left:50%;transform:translateX(-50%);
+<div id="brain-cluster-toast" style="position:absolute;top:40px;left:50%;transform:translateX(-50%);display:none;background:rgba(2,6,18,0.92);border:1px solid rgba(30,58,138,0.6);padding:5px 16px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.2em;color:#93c5fd;z-index:300;pointer-events:none;white-space:nowrap;transition:opacity .4s;"></div>
+<div id="brain-hint" style="position:absolute;bottom:55px;left:50%;transform:translateX(-50%);color:rgba(148,163,184,0.6);font-family:'Courier New',monospace;font-size:9px;letter-spacing:.2em;pointer-events:none;transition:opacity 1s;white-space:nowrap;"
   color:rgba(148,163,184,0.6);font-family:'Courier New',monospace;font-size:9px;
   letter-spacing:.2em;pointer-events:none;transition:opacity 1s;white-space:nowrap;">
-  SCROLL TO ZOOM &nbsp;&#x2022;&nbsp; DRAG TO PAN &nbsp;&#x2022;&nbsp; CLICK NEURON TO EXPLORE
+  SCROLL/+- ZOOM &#x2022; DRAG PAN &#x2022; CLICK NODE &#x2022; Q/W CLUSTER &#x2022; R RESET &#x2022; 0 OVERVIEW
 </div>
 <style>
 #brain-hint.hide{opacity:0;}
