@@ -7677,6 +7677,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: rotation speed arc indicator */
 /* Globe: financial flow $ symbol */
 
+
+/* v124 */
+/* Globe: great-circle grid dots */
+/* Brain: orbit ring activation speed */
+/* Globe: critical border marching ants */
+/* Brain: scan arc zoom transparency */
+/* Brain: edge endpoint glow on selected */
+
 </style>
 </head>
 <body>
@@ -14365,6 +14373,8 @@ function draw(){
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
  var _pSelFA=(0.88+Math.sin(Date.now()*0.002)*0.07).toFixed(2);var _pHovFA=(0.92+Math.sin(Date.now()*0.003)*0.05).toFixed(2);const fill=isSel?('rgba(200,220,255,'+_pSelFA+')'):isHov?('rgba(180,205,255,'+_pHovFA+')'):(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  const isCritF=c.alertLevel==='CRITICAL';const isHighF=c.alertLevel==='HIGH';
+ if(isCritF){ctx.setLineDash([4,3]);ctx.lineDashOffset=-(Date.now()*0.018)%14;}
+ else ctx.setLineDash([]);
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCritF?'rgba(239,68,68,.55)':isHighF?'rgba(249,115,22,.4)':'rgba(100,150,220,.3)';
  if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
  else if((isCritF||isHighF)&&!isSel){ctx.shadowColor=isCritF?'rgba(239,68,68,0.25)':'rgba(249,115,22,0.15)';ctx.shadowBlur=isCritF?4:2;}
@@ -14533,6 +14543,23 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
  // Outer atmospheric ring
  ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
  ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
+ /* Great-circle intersection dots at 30-degree grid */
+ if(scale>160){
+  var _gcAlpha=Math.min(0.06,(scale-160)/2000*0.08);
+  if(_gcAlpha>0.005){
+   ctx.save();
+   for(var _gLat=-60;_gLat<=60;_gLat+=30){
+    for(var _gLng=-150;_gLng<=180;_gLng+=30){
+     var _gPt=project(_gLat,_gLng);
+     if(_gPt.visible&&_gPt.z>0.12){
+      ctx.beginPath();ctx.arc(_gPt.px,_gPt.py,0.8,0,Math.PI*2);
+      ctx.fillStyle='rgba(100,160,255,'+_gcAlpha+')';ctx.fill();
+     }
+    }
+   }
+   ctx.restore();
+  }
+ }
  /* North and South pole markers */
  {
    var _npP=project(90,0),_spP=project(-90,0);
@@ -43906,7 +43933,8 @@ var _BrainEngine = (function(){
       ctx.fill();ctx.shadowBlur=0;ctx.restore();
       var _scGrad=ctx.createLinearGradient(_scx,_scy,
         _scx+Math.cos(_scanAngle)*_scanLen,_scy+Math.sin(_scanAngle)*_scanLen);
-      _scGrad.addColorStop(0,'rgba(59,130,246,0.04)');
+      var _scanAlphaZ=Math.min(0.08,Math.max(0.025,0.04/(cam.zoom*0.3+0.7)));
+      _scGrad.addColorStop(0,'rgba('+_scanFillC+','+_scanAlphaZ+')');
       _scGrad.addColorStop(0.6,'rgba(59,130,246,0.015)');
       _scGrad.addColorStop(1,'rgba(59,130,246,0)');
       ctx.save();ctx.beginPath();
@@ -44167,9 +44195,13 @@ var _BrainEngine = (function(){
       ctx.stroke();
       /* Tiny endpoint dots on high-alpha edges */
       if(a>0.3&&!e.cross){
-        ctx.beginPath();ctx.arc(e.x1,e.y1,0.7,0,Math.PI*2);
-        ctx.fillStyle='rgba('+er+','+eg+','+eb+','+(a*0.5)+')';ctx.fill();
-        ctx.beginPath();ctx.arc(e.x2,e.y2,0.7,0,Math.PI*2);ctx.fill();
+        var _epGlow=_selSX!==null&&((e.x1===_selSX&&e.y1===_selSY)||(e.x2===_selSX&&e.y2===_selSY));
+        var _epR=_epGlow?1.2:0.7;
+        if(_epGlow){ctx.shadowColor='rgba('+er+','+eg+','+eb+',0.6)';ctx.shadowBlur=3;}
+        ctx.beginPath();ctx.arc(e.x1,e.y1,_epR,0,Math.PI*2);
+        ctx.fillStyle='rgba('+er+','+eg+','+eb+','+(a*(_epGlow?0.8:0.5))+')';ctx.fill();
+        ctx.beginPath();ctx.arc(e.x2,e.y2,_epR,0,Math.PI*2);ctx.fill();
+        if(_epGlow)ctx.shadowBlur=0;
       }
       /* Directional arrowhead for cross-cluster edges */
       if(e.cross&&a>0.07){
@@ -44311,7 +44343,8 @@ var _BrainEngine = (function(){
           var _orbN=Math.min(v.node.children.length,8);
           var _orbR=spr+12;
           for(var _orbi=0;_orbi<_orbN;_orbi++){
-            var _orbA=(_orbi/_orbN)*Math.PI*2+(frame*0.008);
+            var _orbSpeed=0.008*(1+(clAct&&clAct[v.node.ci]?clAct[v.node.ci]*2:0));
+            var _orbA=(_orbi/_orbN)*Math.PI*2+(frame*_orbSpeed);
             var _orbX=v.sx+Math.cos(_orbA)*_orbR;
             var _orbY=v.sy+Math.sin(_orbA)*_orbR;
             ctx.beginPath();ctx.arc(_orbX,_orbY,1.5,0,Math.PI*2);
