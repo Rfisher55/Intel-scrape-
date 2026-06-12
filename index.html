@@ -7112,6 +7112,11 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: session timer in h-right */
 #globe-session-timer { font-family: 'Courier New', monospace; font-size: 7px; color: #334155; letter-spacing: .1em; }
 
+
+/* v49 */
+/* Brain: edge count in HUD */
+/* Globe: critical threshold triggers threat badge border */
+
 </style>
 </head>
 <body>
@@ -21774,6 +21779,9 @@ function _calcDEFCON(){
  const critHot=liveHotspots.filter(function(h){return h.severity==='critical';}).length;
  const highHot=liveHotspots.filter(function(h){return h.severity==='high';}).length;
  const nukeHot=liveHotspots.filter(function(h){return h.type==='nuclear'||h.type==='wmd'||h.type==='cbrn';}).length;
+ /* Update threat badge border based on critical count */
+ var _gtEl2=document.getElementById('global-threat');
+ if(_gtEl2)_gtEl2.style.borderColor=critHot>5?'rgba(239,68,68,0.8)':critHot>2?'rgba(249,115,22,0.6)':'rgba(30,58,95,0.5)';
  score+=critHot*3+highHot*1.5+nukeHot*5;
  if(typeof COUNTRIES!=='undefined'){
  Object.values(COUNTRIES).forEach(function(c){
@@ -42966,14 +42974,17 @@ var _BrainEngine = (function(){
     ctx.font='7.5px "Courier New"';
     ctx.textAlign='right';
     var zstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':cam.zoom<1000?Math.round(cam.zoom)+'x':'1e'+Math.floor(Math.log10(cam.zoom))+'x';
-    ctx.fillText('DEPTH: '+_maxDepth+'  NEURONS: '+_vn.length+'  ZOOM: '+zstr, W-10, H-8);
+    ctx.fillText('DEPTH: '+_maxDepth+'  NEURONS: '+_vn.length+'  EDGES: '+_ve.length+'  ZOOM: '+zstr, W-10, H-8);
     if(_maxDepth<100&&_maxDepth>1){ctx.font='5.5px "Courier New"';ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fillText('FILTER ACTIVE',W-10,H-17);}
     /* Bottom-left: cluster breadcrumb */
     if(_sel&&_sel.ci!==undefined){
       var bc=CL[_sel.ci];
+      var _selCh=_sel.children?_sel.children.length:0;
+      var _selIn=0,_selOut=0;
+      for(var _sei=0;_sei<_ve.length;_sei++){if(_ve[_sei].a===_sel)_selOut++;if(_ve[_sei].b===_sel)_selIn++;}
       ctx.textAlign='left';
       ctx.fillStyle='rgba('+bc.r+',0.6)';
-      ctx.fillText(bc.n+' / DEPTH '+_sel.depth+' / '+(_sel.label||_sel.n||''), 10, H-8);
+      ctx.fillText(bc.n+' / D'+_sel.depth+' / '+(_sel.label||_sel.n||'')+' / '+_selIn+'in '+_selOut+'out', 10, H-8);
     } else {
       /* Show current view cluster if any cluster focus active */
       if(typeof _brainFocusIdx!=='undefined'&&_brainFocusIdx>=0&&_brainFocusIdx<CL.length){
