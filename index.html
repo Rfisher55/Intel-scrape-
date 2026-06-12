@@ -7244,6 +7244,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: CRITICAL arc endpoint pulse */
 /* Brain: FPS sparkline */
 
+
+/* v69 */
+/* Globe: arc count in connect button */
+/* Globe: CRITICAL auto-threats tab */
+/* Globe: G key CRITICAL cycle */
+/* Brain: M key minimap toggle */
+/* Brain: axon speed boost for selected cluster */
+
 </style>
 </head>
 <body>
@@ -16552,6 +16560,8 @@ function openCountry(iso){
  panel.style.transform=''; // clear any drag offset
  panel.classList.add('open');
  showTab('summary');
+ /* CRITICAL country: auto-switch to threats tab after panel animates open */
+ if(c.alertLevel==='CRITICAL'){setTimeout(function(){showTab('threats');},380);}
  // Render new deep-dive tabs
  renderFactionsTab(iso);
  renderForeignTab(iso);
@@ -17571,7 +17581,8 @@ function updateConnBtn(){
  const btn=document.getElementById('connect-btn');
  btn.classList.toggle('active',showArcs);
  document.getElementById('conn-icon').textContent=showArcs?'◉':'◎';
- document.getElementById('conn-text').textContent=showArcs?'HIDE CONNECTIONS':'CONNECT — Show Relationships';
+ var _acCnt=typeof CONFLICTS!=='undefined'?CONFLICTS.length:0;
+ document.getElementById('conn-text').textContent=showArcs?'HIDE CONNECTIONS ('+_acCnt+' ACTIVE)':'CONNECT — Show Relationships';
 }
 function showTab(name){
  document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
@@ -18273,6 +18284,15 @@ function initSatMapEvents(){
    if(selectedISO&&COUNTRIES[selectedISO]){
      var _zc=COUNTRIES[selectedISO];
      vipAnimTarget={fromX:rotX,fromY:rotY,toX:-_zc.lat*Math.PI/180,toY:-_zc.lng*Math.PI/180,startMs:Date.now(),dur:900};
+   }
+ }
+ /* G = cycle through CRITICAL-alert countries */
+ if(e.key==='g'||e.key==='G'){
+   var _critISOs=Object.keys(COUNTRIES).filter(function(k){return COUNTRIES[k].alertLevel==='CRITICAL';});
+   if(_critISOs.length>0){
+     var _cIdx=_critISOs.indexOf(selectedISO);
+     var _nIdx=(_cIdx+1)%_critISOs.length;
+     if(typeof openCountry==='function') openCountry(_critISOs[_nIdx]);
    }
  }
  if(!satOpen||!satLocSelected)return;
@@ -43240,10 +43260,11 @@ var _BrainEngine = (function(){
           ctx.font='6px "Courier New"';
           ctx.fillText(cl.n.slice(0,3),v.sx,v.sy-Math.max(r2,4)-3);
         } else if(cam.zoom<1.1){
-          /* Overview: always show abbreviated cluster name */
+          /* Overview: always show abbreviated cluster name + child count */
           ctx.fillStyle='rgba('+cl.r+',0.45)';
           ctx.font='5px "Courier New"';
-          ctx.fillText(cl.n.slice(0,4),v.sx,v.sy-Math.max(r2,3)-2);
+          var _oc=v.node.children?v.node.children.length:0;
+          ctx.fillText(cl.n.slice(0,4)+(_oc?'·'+(_oc>99?'99':_oc):''),v.sx,v.sy-Math.max(r2,3)-2);
         }
       }
       /* Depth milestone badges at level 10, 20, 50 */
@@ -43282,7 +43303,7 @@ var _BrainEngine = (function(){
     }
     for(var si=window._bsigs.length-1;si>=0;si--){
       var sg=window._bsigs[si];
-      sg.t+=sg.sp;
+      sg.t+=sg.sp*(_sel&&sg.ci===_sel.ci?1.6:1);
       if(sg.t>=1){window._bsigs.splice(si,1);continue;}
       var sx2=sg.x1+(sg.x2-sg.x1)*sg.t;
       var sy2=sg.y1+(sg.y2-sg.y1)*sg.t;
@@ -43484,7 +43505,7 @@ var _BrainEngine = (function(){
     })();
 
     /* Mini-map: shown when not at overview (zoom > 1.2) */
-    if(cam.zoom>1.2){
+    if(cam.zoom>1.2&&!window._hideMinimap){
       var MM=80,MMx=12,MMy=H-MM-210;
       ctx.save();
       ctx.fillStyle='rgba(2,6,18,0.88)';
@@ -43938,6 +43959,14 @@ document.addEventListener('keydown', function(e){
       if(e.key==='b'||e.key==='B'){
         window._hideBgStars=!window._hideBgStars;
         window._bgStars=null; window._bgNebulae=null; /* Force reinit on next render */
+      }
+      /* M = toggle minimap visibility */
+      if(e.key==='m'||e.key==='M'){
+        window._hideMinimap=!window._hideMinimap;
+        var toastM=document.getElementById('brain-cluster-toast');
+        if(toastM){toastM.textContent=window._hideMinimap?'MINIMAP HIDDEN':'MINIMAP VISIBLE';
+          toastM.style.color=window._hideMinimap?'#f97316':'#22c55e';toastM.style.display='block';toastM.style.opacity='1';
+          clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastM.style.opacity='0';setTimeout(function(){toastM.style.display='none';},400);},1500);}
       }
       /* I = open panel for selected node */
       if(e.key==='i'||e.key==='I'){
