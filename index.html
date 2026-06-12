@@ -7431,6 +7431,13 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: pole N/S markers */
 /* Brain: bg tint shifts at DEFCON 1-2 */
 
+
+/* v92 */
+/* Globe: arms flow animated head dot */
+/* Brain: J/K cluster navigation */
+/* Globe: sanctions flow animated head */
+/* Brain: scan arc width by DEFCON */
+
 </style>
 </head>
 <body>
@@ -14508,6 +14515,17 @@ function drawArmsFlows(){
  var _afLw=a.amount?Math.min(3,0.8+Math.log10(a.amount+1)*0.4):1.2;
  drawCurvedArc(p1,p2,'rgba(245,158,11',.06,5,null,null);
  drawCurvedArc(p1,p2,'rgba(245,158,11',.8,_afLw,[6,5],-t*35);
+ /* Animated head dot along arms flow arc */
+ {
+   var _afCpX=(p1.px+p2.px)/2,_afCpY=(p1.py+p2.py)/2-Math.sqrt(Math.pow(p2.px-p1.px,2)+Math.pow(p2.py-p1.py,2))*0.18;
+   var _afHT=(t+0.5)%1;
+   var _afHX=(1-_afHT)*(1-_afHT)*p1.px+2*(1-_afHT)*_afHT*_afCpX+_afHT*_afHT*p2.px;
+   var _afHY=(1-_afHT)*(1-_afHT)*p1.py+2*(1-_afHT)*_afHT*_afCpY+_afHT*_afHT*p2.py;
+   if(p1.visible||p2.visible){
+     ctx.save();ctx.beginPath();ctx.arc(_afHX,_afHY,1.8,0,Math.PI*2);
+     ctx.fillStyle='rgba(245,158,11,0.9)';ctx.shadowColor='rgba(245,158,11,0.5)';ctx.shadowBlur=5;ctx.fill();ctx.restore();
+   }
+ }
  if(p2.visible){arrowHead(p2.px,p2.py,Math.atan2(p2.py-p1.py,p2.px-p1.px),8,'rgba(245,158,11,.9)');}
  drawArcMarker(p1,p2,0.32,'rgba(245,158,11,.9)',a.label);
  }
@@ -43337,7 +43355,10 @@ var _BrainEngine = (function(){
       _scGrad.addColorStop(1,'rgba(59,130,246,0)');
       ctx.save();ctx.beginPath();
       ctx.moveTo(_scx,_scy);
-      var _scanArcW=cam.zoom<0.9?0.28:cam.zoom<5?0.18:cam.zoom<50?0.10:0.06;
+      var _scanDefEl2=document.getElementById('defcon-num');
+      var _scanDefN2=_scanDefEl2?parseInt(_scanDefEl2.textContent)||3:3;
+      var _defconWMult=_scanDefN2<=1?2.0:_scanDefN2===2?1.5:_scanDefN2===3?1.0:0.75;
+      var _scanArcW=(cam.zoom<0.9?0.28:cam.zoom<5?0.18:cam.zoom<50?0.10:0.06)*_defconWMult;
       ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
       ctx.lineTo(_scx,_scy);ctx.closePath();
       /* Fading trail behind sweep */
@@ -44557,6 +44578,18 @@ document.addEventListener('keydown', function(e){
         else cam.zoom=Math.max(0.1,cam.zoom/1.5);
       }
       /* H = toggle stats bar */
+      /* J/K navigate clusters */
+      if(e.key==='j'||e.key==='J'||e.key==='k'||e.key==='K'){
+        var _jDir=(e.key==='k'||e.key==='K')?-1:1;
+        if(typeof window._brainFocusIdx!=='undefined'){
+          window._brainFocusIdx=(window._brainFocusIdx+_jDir+CL.length)%CL.length;
+          var _jCl=CL[window._brainFocusIdx];
+          var _jRoot=roots?roots[window._brainFocusIdx]:null;
+          if(_jCl&&_jRoot&&window._brain_cam){var _jC=window._brain_cam;if(_jC.tx!==undefined){_jC.tx=_jRoot.wx;_jC.ty=_jRoot.wy;}else{_jC.x=_jRoot.wx;_jC.y=_jRoot.wy;}}
+          var toastJ=document.getElementById('brain-cluster-toast');
+          if(toastJ&&_jCl){toastJ.textContent=(_jDir>0?'NEXT':'PREV')+': '+_jCl.n;toastJ.style.color='#22c55e';toastJ.style.display='block';toastJ.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastJ.style.opacity='0';setTimeout(function(){toastJ.style.display='none';},400);},1200);}
+        }
+      }
       if(e.key==='h'||e.key==='H'){
         var sb=document.getElementById('brain-stats-bar');
         var _sbVis=sb&&sb.style.display==='none';
