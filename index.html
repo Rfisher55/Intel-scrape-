@@ -7424,6 +7424,13 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: arc glow blur zoom scale */
 /* Brain: DEFCON ring 8-point compass ticks */
 
+
+/* v91 */
+/* Globe: troop arc animated head dot */
+/* Brain: F key fires + pans to cluster */
+/* Globe: pole N/S markers */
+/* Brain: bg tint shifts at DEFCON 1-2 */
+
 </style>
 </head>
 <body>
@@ -14179,6 +14186,24 @@ function draw(){
  // Outer atmospheric ring
  ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
  ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
+ /* North and South pole markers */
+ {
+   var _npP=project(90,0),_spP=project(-90,0);
+   if(_npP.visible){
+     ctx.save();ctx.font='bold 8px "Courier New"';ctx.textAlign='center';
+     ctx.fillStyle='rgba(147,197,253,0.65)';ctx.fillText('N',_npP.px,_npP.py+3);
+     ctx.beginPath();ctx.arc(_npP.px,_npP.py,3,0,Math.PI*2);
+     ctx.strokeStyle='rgba(147,197,253,0.4)';ctx.lineWidth=0.8;ctx.stroke();
+     ctx.restore();
+   }
+   if(_spP.visible){
+     ctx.save();ctx.font='bold 8px "Courier New"';ctx.textAlign='center';
+     ctx.fillStyle='rgba(147,197,253,0.5)';ctx.fillText('S',_spP.px,_spP.py+3);
+     ctx.beginPath();ctx.arc(_spP.px,_spP.py,3,0,Math.PI*2);
+     ctx.strokeStyle='rgba(147,197,253,0.35)';ctx.lineWidth=0.8;ctx.stroke();
+     ctx.restore();
+   }
+ }
  /* Night-side shadow — subtle dark gradient on left hemisphere */
  {
    var _nightGrad=ctx.createRadialGradient(cx-scale*0.28,cy+scale*0.1,scale*0.2,cx-scale*0.28,cy+scale*0.1,scale*1.2);
@@ -14454,6 +14479,17 @@ function drawTroopMovements(){
  drawCurvedArc(p1,p2,sev,.08*alpha,7,null,null);
  var _tmDash=m.type==='air'?[10,6]:m.type==='naval'?[4,4]:[14,3];
  drawCurvedArc(p1,p2,sev,.75*alpha,1.5,_tmDash,-t*50);
+ /* Animated head dot traveling along arc */
+ {
+   var _cpX=(p1.px+p2.px)/2,_cpY=(p1.py+p2.py)/2-Math.sqrt(Math.pow(p2.px-p1.px,2)+Math.pow(p2.py-p1.py,2))*0.2;
+   var _hT=(t+0.3)%1;
+   var _hX=(1-_hT)*(1-_hT)*p1.px+2*(1-_hT)*_hT*_cpX+_hT*_hT*p2.px;
+   var _hY=(1-_hT)*(1-_hT)*p1.py+2*(1-_hT)*_hT*_cpY+_hT*_hT*p2.py;
+   if(p1.visible||p2.visible){
+     ctx.save();ctx.beginPath();ctx.arc(_hX,_hY,m.type==='air'?2:1.8,0,Math.PI*2);
+     ctx.fillStyle=sev+',.9)';ctx.shadowColor=sev+',.5)';ctx.shadowBlur=5;ctx.fill();ctx.restore();
+   }
+ }
  if(p2.visible){
  const dx=p2.px-p1.px,dy=p2.py-p1.py;
  arrowHead(p2.px,p2.py,Math.atan2(dy,dx),9,`${sev},.9)`);
@@ -43274,7 +43310,10 @@ var _BrainEngine = (function(){
       if(Math.abs(cam.y-cam.ty)<0.01) cam.y=cam.ty;
       if(Math.abs(cam.zoom-cam.tz)<0.0001) cam.zoom=cam.tz;
     }
-    ctx.fillStyle='#000';
+    /* Background tint: shifts toward red at DEFCON 1-2 */
+    var _bgDefEl=document.getElementById('defcon-num');
+    var _bgDefN=_bgDefEl?parseInt(_bgDefEl.textContent)||3:3;
+    ctx.fillStyle=_bgDefN<=1?'#0f0000':_bgDefN===2?'#080000':'#000';
     ctx.fillRect(0,0,W,H);
     /* Vignette — dark edges, bright center */
     var _vig=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.28,W/2,H/2,Math.max(W,H)*0.65);
@@ -44528,6 +44567,16 @@ document.addEventListener('keydown', function(e){
       }
       /* F = fire all clusters (burst mode) */
       if(e.key==='f'||e.key==='F'){
+        /* Fire current focused cluster and pan to its root */
+        if(typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster&&window._brainFocusIdx>=0){
+          var _fci2=window._brainFocusIdx;
+          _BrainEngine.fireCluster(_fci2);
+          var _frCam=window._brain_cam;
+          var _frRoot=roots?roots[_fci2]:null;
+          if(_frCam&&_frRoot){if(_frCam.tx!==undefined){_frCam.tx=_frRoot.wx;_frCam.ty=_frRoot.wy;}else{_frCam.x=_frRoot.wx;_frCam.y=_frRoot.wy;}}
+          var toastF=document.getElementById('brain-cluster-toast');
+          if(toastF&&CL[_fci2]){toastF.textContent='FIRED: '+CL[_fci2].n;toastF.style.color='#f97316';toastF.style.display='block';toastF.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastF.style.opacity='0';setTimeout(function(){toastF.style.display='none';},400);},1600);}
+        }
         if(typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
           for(var _fi=0;_fi<CL.length;_fi++) _BrainEngine.fireCluster(_fi);
           var toastF=document.getElementById('brain-cluster-toast');
