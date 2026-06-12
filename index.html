@@ -7124,6 +7124,12 @@ a:hover { color: #bfdbfe !important; }
 @keyframes critBadgePulse { 0%,100%{opacity:1} 50%{opacity:0.55} }
 /* Brain: FIRE button in node panel */
 
+
+/* v51 */
+/* Globe: brighter hover fill */
+/* Brain: C key clipboard copy */
+/* Brain: nebula background patches */
+
 </style>
 </head>
 <body>
@@ -13668,7 +13674,7 @@ function draw(){
  if(!iso)continue;
  const c=COUNTRIES[iso];
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
- const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
+ const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(180,205,255,.92)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  var isCrit=c.alertLevel==='CRITICAL';
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.6)':'rgba(100,150,220,.5)';
  ctx.lineWidth=isSel?1.5:isCrit?.9:.8;
@@ -13691,7 +13697,7 @@ function draw(){
  for(const c of CONTINENT_HINTS)drawPoly(c,null,true,false);
  for(const[iso,c]of Object.entries(COUNTRIES)){
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
- const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
+ const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(180,205,255,.92)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  const isCritF=c.alertLevel==='CRITICAL';
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCritF?'rgba(239,68,68,.5)':'rgba(100,150,220,.3)';
  if(isCritF&&!isSel){ctx.shadowColor='rgba(239,68,68,0.25)';ctx.shadowBlur=4;}
@@ -42769,6 +42775,13 @@ var _BrainEngine = (function(){
     if(frame===0||(frame%300===0)){
       if(!window._bgStars){
         window._bgStars=[];
+        /* Nebula patches: subtle color blobs behind stars */
+        window._bgNebulae=[];
+        var _nbCols=['rgba(59,130,246','rgba(139,92,246','rgba(6,182,212','rgba(249,115,22'];
+        for(var ni=0;ni<8;ni++){
+          window._bgNebulae.push({x:Math.random()*3000-1500,y:Math.random()*3000-1500,
+            r:Math.random()*180+80,col:_nbCols[ni%_nbCols.length],a:Math.random()*0.025+0.008});
+        }
         for(var bi=0;bi<180;bi++){
           window._bgStars.push({x:Math.random()*4000-2000,y:Math.random()*4000-2000,
             r:Math.random()*0.6+0.1,a:Math.random()*0.12+0.02});
@@ -42777,6 +42790,17 @@ var _BrainEngine = (function(){
     }
     if(window._bgStars){
       ctx.save();
+      /* Nebula patches */
+      if(window._bgNebulae){
+        for(var nbi=0;nbi<window._bgNebulae.length;nbi++){
+          var nb=window._bgNebulae[nbi];
+          var nbp=w2s(nb.x,nb.y);
+          var nbg=ctx.createRadialGradient(nbp.sx,nbp.sy,0,nbp.sx,nbp.sy,nb.r*cam.zoom);
+          nbg.addColorStop(0,nb.col+','+nb.a+')');
+          nbg.addColorStop(1,nb.col+',0)');
+          ctx.fillStyle=nbg;ctx.beginPath();ctx.arc(nbp.sx,nbp.sy,nb.r*cam.zoom,0,Math.PI*2);ctx.fill();
+        }
+      }
       for(var bi=0;bi<window._bgStars.length;bi++){
         var bs=window._bgStars[bi];
         var bsp=w2s(bs.x,bs.y);
@@ -43520,6 +43544,16 @@ document.addEventListener('keydown', function(e){
       /* Zoom keys */
       if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
       if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
+      /* C = copy selected node label to clipboard */
+      if(e.key==='c'||e.key==='C'){
+        if(_sel){
+          var _cTxt=(_sel.label||_sel.n||'')+' [DEPTH '+_sel.depth+' / '+CL[_sel.ci].n+']';
+          if(navigator.clipboard){navigator.clipboard.writeText(_cTxt);}
+          var toastC=document.getElementById('brain-cluster-toast');
+          if(toastC){toastC.textContent='COPIED: '+_cTxt.slice(0,32);toastC.style.color='#22c55e';toastC.style.display='block';toastC.style.opacity='1';
+            clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastC.style.opacity='0';setTimeout(function(){toastC.style.display='none';},400);},1800);}
+        }
+      }
       /* D = drill deeper (zoom in 1.5x) */
       if(e.key==='d'||e.key==='D'){
         if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.5);
@@ -48344,6 +48378,7 @@ function filterSIGINT(query){
     <span style="color:#ef4444;">F</span><span>Fire all clusters (burst mode)</span>
     <span style="color:#475569;">H</span><span>Toggle stats bar</span>
     <span style="color:#a855f7;">D/U</span><span>Drill deeper / back up (zoom x1.5)</span>
+    <span style="color:#22c55e;">C</span><span>Copy selected node label to clipboard</span>
     <span style="color:#475569;">?</span><span>This help panel</span>
   </div>
   <div onclick="document.getElementById('brain-cheatsheet').style.display='none';" style="margin-top:12px;text-align:center;color:#ef4444;cursor:pointer;letter-spacing:.18em;">&#x2715; CLOSE</div>
