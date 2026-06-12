@@ -7083,6 +7083,24 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: D/U keys for depth */
 /* Brain: node label at zoom >14sr */
 
+
+/* v46 */
+/* Globe: live threat score scan line */
+@keyframes threatScan {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+#live-threat-score {
+  background: linear-gradient(180deg,
+    rgba(8,16,33,.7) 0%,
+    rgba(59,130,246,.04) 48%,
+    rgba(8,16,33,.7) 100%) !important;
+  background-size: 100% 200% !important;
+  animation: threatScan 4s linear infinite !important;
+}
+/* Brain: axon speed by zoom (canvas) */
+/* Brain: flash ring cluster color (canvas) */
+
 </style>
 </head>
 <body>
@@ -42876,8 +42894,10 @@ var _BrainEngine = (function(){
       var ei=Math.floor(Math.random()*_ve.length);
       var ev=_ve[ei];
       if(ev&&ev.af>0.15)
+        var _axSpd=0.012+Math.random()*0.018;
+        if(cam.zoom>2)_axSpd*=Math.min(3,cam.zoom*0.6);
         window._bsigs.push({x1:ev.x1,y1:ev.y1,x2:ev.x2,y2:ev.y2,
-          t:0,sp:0.012+Math.random()*0.018,ci:ev.ci,lat:ev.lat});
+          t:0,sp:_axSpd,ci:ev.ci,lat:ev.lat});
     }
     for(var si=window._bsigs.length-1;si>=0;si--){
       var sg=window._bsigs[si];
