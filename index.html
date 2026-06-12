@@ -6073,7 +6073,7 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
 .dash-cat-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 18px 12px;
-  border-bottom: 1px solid rgba(15,23,42,0.8);
+  border-bottom: 1px solid rgba(30,58,95,0.45);
   cursor: pointer;
 }
 .dash-cat-header:hover { background: rgba(255,255,255,0.01); }
@@ -6104,7 +6104,7 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
 .dash-mod {
   background: transparent;
   border: 1px solid rgba(15,23,42,0.9);
-  color: #1e3a5f;
+  color: #334155;
   font-family: 'Courier New', monospace;
   font-size: 8px; letter-spacing: .1em;
   padding: 8px 10px;
@@ -6926,7 +6926,7 @@ a:hover { color: #bfdbfe !important; }
         <span style="color:#475569;font-size:7px;margin-left:auto;font-family:Courier New,monospace;" id="ils-updated"></span>
       </div>
       <div id="ils-feed" style="columns:4 280px;column-gap:18px;max-height:180px;overflow:hidden;font-family:Courier New,monospace;font-size:7.5px;color:#94a3b8;line-height:1.75;">
-        <span style="color:#1e3a5f;font-size:8px;">Connecting to live intelligence feed...</span>
+        <span style="color:#334155;font-size:7.5px;letter-spacing:.08em;">CONNECTING TO LIVE INTELLIGENCE FEED...</span>
       </div>
     </div>
   </div>
@@ -34028,9 +34028,10 @@ async function _gdeltFetch(query, targetId, retries){
       var arts = (d&&d.articles)||[];
       if(arts.length){
         el.innerHTML = arts.map(function(a){
-          return '<div style="border-bottom:1px solid #0f2040;padding:4px 0;">'+
-            '<div><a href="'+a.url+'" target="_blank" style="color:#cbd5e1;font-size:8px;text-decoration:none;line-height:1.4;display:block;">'+a.title+'</a></div>'+
-            '<div style="color:#334155;font-size:7px;margin-top:1px;">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'+
+          var ageStr=a.seendate?a.seendate.slice(0,8):'';
+          return '<div style="border-bottom:1px solid rgba(30,58,95,0.35);padding:5px 0;">'+
+            '<a href="'+a.url+'" target="_blank" style="color:#cbd5e1;font-size:7.5px;text-decoration:none;line-height:1.5;display:block;margin-bottom:2px;">'+a.title+'</a>'+
+            '<div style="color:#475569;font-size:6.5px;letter-spacing:.06em;">'+a.domain+' &#x2014; '+ageStr+'</div>'+
           '</div>';
         }).join('');
         return;
@@ -34046,7 +34047,7 @@ async function _gdeltFetch(query, targetId, retries){
       }
     }
   }
-  el.innerHTML = '<div style="color:#1e3a5f;font-size:9px;padding:4px 0;">Live feed temporarily offline -- displaying curated intelligence above.</div>';
+  el.innerHTML = '<div style="color:#475569;font-size:8px;padding:4px 0;letter-spacing:.08em;">LIVE FEED OFFLINE &#x2014; CURATED INTELLIGENCE DISPLAYED ABOVE</div>';
 }
 // ===== END GDELT UTILITY =====
 
@@ -42384,8 +42385,15 @@ var _BrainEngine = (function(){
         }
         sl.innerHTML=sigs.map(function(ci){
           var sc=CL[ci];
-          return '<div style="color:'+sc.c+';font-size:7px;letter-spacing:.1em;margin-bottom:3px;opacity:0.7;">&#x25CF; '+sc.n+'</div>';
+          var cnt=0;for(var vi2=0;vi2<_vn.length;vi2++){if(_vn[vi2].node.ci===ci)cnt++;}
+          return '<div style="color:'+sc.c+';font-size:7px;letter-spacing:.1em;margin-bottom:3px;opacity:0.7;display:flex;justify-content:space-between;">'+
+            '<span>&#x25CF; '+sc.n+'</span>'+
+            '<span style="color:rgba('+sc.r+',0.5);font-size:6px;">'+cnt+'</span>'+
+          '</div>';
         }).join('');
+        var ds=document.getElementById('brain-depth-stat');
+        if(ds) ds.textContent='DEPTH '+_maxDepth+' &#x25C6; '+cam.zoom.toFixed(1)+'x ZOOM';
+        if(ds) ds.innerHTML='DEPTH '+_maxDepth+' &#x25C6; '+cam.zoom.toFixed(1)+'x ZOOM';
       }
     }
   }
@@ -42465,8 +42473,8 @@ var _BrainEngine = (function(){
       out+='<div style="cursor:pointer;padding:1px 0" '
         +'onclick="(function(){var c=window._brain_cam;if(c){c.x='+cl.wx+';c.y='+cl.wy+';c.zoom=1.6;}})()" '
         +'title="Click to zoom to '+cl.n+'">'
-        +'<span style="color:'+cl.c+';animation:brainLegPulse 2s ease-in-out infinite;animation-delay:'+(ci*0.25)+'s">&#x25CF;</span> '
-        +'<span style="color:#4a5568;">'+cl.n+'</span>'
+        +'<span style="color:'+cl.c+';animation:brainLegPulse 2s ease-in-out infinite;animation-delay:'+(i*0.25)+'s">&#x25CF;</span> '
+        +'<span style="color:#64748b;">'+cl.n+'</span>'
         +'</div>';
     }
     leg.innerHTML=out;
@@ -47397,6 +47405,7 @@ function filterSIGINT(query){
   <div id="brain-signals-panel">
       <div class="brain-signal-title">ACTIVE SIGNALS</div>
       <div id="brain-signal-list"></div>
+      <div id="brain-depth-stat" style="margin-top:8px;font-size:6px;letter-spacing:.14em;color:#334155;border-top:1px solid rgba(30,58,95,0.3);padding-top:5px;"></div>
     </div>
 
     <!-- Bottom stats -->
