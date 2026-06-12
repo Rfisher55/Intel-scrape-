@@ -7474,6 +7474,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: scan trail scales with node density */
 /* Globe: globe inertia slower decay */
 
+
+/* v98 */
+/* Brain: cross edge selected boost */
+/* Brain: cluster legend last fire delta */
+/* Brain: showPanel auto zoom */
+/* Globe: arc count badge */
+
 </style>
 </head>
 <body>
@@ -14128,7 +14135,10 @@ function draw(){
  }
  }
 
- if(showArcs||activeLayers.conflicts)drawArcs();
+ if(showArcs||activeLayers.conflicts){drawArcs();
+ var _arcTotal=(typeof CONFLICTS!=='undefined'?CONFLICTS.length:0)+(typeof liveConflicts!=='undefined'?liveConflicts.length:0);
+ if(_arcTotal>0&&scale>80){ctx.save();ctx.font='5px "Courier New"';ctx.fillStyle='rgba(239,68,68,0.55)';ctx.textAlign='right';ctx.fillText(_arcTotal+' CONFLICTS',canvas.width-8,canvas.height-28);ctx.restore();}
+ }
  if(activeLayers.troops) drawTroopMovements();
  if(activeLayers.arms) drawArmsFlows();
  if(activeLayers.naval) drawNavalAssets();
@@ -43569,7 +43579,9 @@ var _BrainEngine = (function(){
       var _depthFade=Math.max(0.15,1-Math.max(0,e.depth-_maxDepth+4)*0.12);
       var _sameClBoost=(_sel&&!e.cross&&e.ci===_sel.ci)?1.8:1;
       if(e.af!==undefined&&e.af<0.04)continue; /* skip invisible edges */
-      var _crossA=e.cross?Math.min(0.10*(cam.zoom>10?2.8:cam.zoom>5?1.5:1),0.28):e.lat?0.20:0.34;
+      /* Cross edges brighter when one or both endpoints are selected */
+      var _selBoostX=_sel&&e.cross&&(e.a===_sel||e.b===_sel)?2.5:1;
+      var _crossA=(e.cross?Math.min(0.10*(cam.zoom>10?2.8:cam.zoom>5?1.5:1),0.28)*_selBoostX:e.lat?0.20:0.34);
       var a=_crossA*(e.af===undefined?1:e.af)*_depthFade*_sameClBoost;
       if(a<=0.01) continue;
       /* edge color: blues shift cooler at depth */
@@ -44210,6 +44222,13 @@ var _BrainEngine = (function(){
       for(var _lci=0;_lci<CL.length;_lci++){
         var _lce=document.getElementById('cl-leg-cnt-'+_lci);
         if(_lce) _lce.textContent=_clCounts[_lci]?_clCounts[_lci]+'n':'';
+        /* Last fire time in legend */
+        var _llegF=document.getElementById('cl-leg-fire-'+_lci);
+        if(_llegF){
+          var _llegFT=window._lastFireTimes&&window._lastFireTimes[_lci];
+          if(_llegFT){var _llegFA=Math.round((Date.now()-_llegFT)/1000);_llegF.textContent=_llegFA<3600?_llegFA+'s':'--';}
+          else _llegF.textContent='';
+        }
       }
       se=document.getElementById('bstat-freq');
       if(se){
@@ -44289,6 +44308,11 @@ var _BrainEngine = (function(){
   function showPanel(node){
     window._selRingT=-0.01;
     _sel=node;
+    /* Zoom in slightly toward selected node on selection */
+    if(cam.zoom<5&&node.wx!==undefined&&node.wy!==undefined){
+      cam.tz=Math.min(10000000,cam.zoom*1.8);
+      if(cam.tx!==undefined){cam.tx=node.wx;cam.ty=node.wy;}
+    }
     var p=document.getElementById('brain-node-panel');
     if(!p) return;
     ensureChildren(node);
