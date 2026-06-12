@@ -7212,6 +7212,15 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: crosshair on hotspot hover */
 /* Brain: pure black background */
 
+
+/* v65 */
+/* Globe: panel scrollbar */
+#panel .p-content { scrollbar-width: thin; scrollbar-color: rgba(59,130,246,0.3) rgba(2,6,18,0.5); }
+#panel .p-content::-webkit-scrollbar { width: 4px; }
+#panel .p-content::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.3); border-radius: 2px; }
+/* Brain: PAUSED overlay (canvas) */
+/* Brain: root node cluster fill */
+
 </style>
 </head>
 <body>
@@ -43159,7 +43168,12 @@ var _BrainEngine = (function(){
         var depthFade=Math.max(0.5, 1-v.node.depth*0.03);
         var effectiveAlpha=na*depthFade;
         ctx.beginPath();ctx.arc(v.sx,v.sy,ddr,0,Math.PI*2);
-        ctx.fillStyle='rgba('+cl.r+','+effectiveAlpha+')';
+        /* Root nodes at high zoom get cluster color fill */
+        if(v.node.depth===0&&v.sr>15){
+          ctx.fillStyle=cl.c;
+        }else{
+          ctx.fillStyle='rgba('+cl.r+','+effectiveAlpha+')';
+        }
         ctx.fill();
         /* highlight: small bright core for visible depth-0 nodes */
         if(v.node.depth===0&&v.sr>12&&na>0.3){
@@ -43831,8 +43845,14 @@ document.addEventListener('keydown', function(e){
       /* SPACE = pause/resume animation */
       if(e.key===' '){
         e.preventDefault();
-        if(ON){ON=false;if(RAF)cancelAnimationFrame(RAF);}
-        else{ON=true;RAF=requestAnimationFrame(render);}
+        if(ON){ON=false;if(RAF)cancelAnimationFrame(RAF);window._brainPaused=true;
+          /* Draw static PAUSED overlay */
+          var cv2=document.getElementById('brain-canvas');
+          if(cv2){var ctx2=cv2.getContext('2d');ctx2.save();
+            ctx2.fillStyle='rgba(0,0,0,0.4)';ctx2.fillRect(0,0,cv2.width,cv2.height);
+            ctx2.font='bold 16px "Courier New"';ctx2.fillStyle='rgba(251,191,36,0.8)';ctx2.textAlign='center';
+            ctx2.fillText('[ PAUSED ]',cv2.width/2,cv2.height/2);ctx2.restore();}
+        }else{ON=true;RAF=requestAnimationFrame(render);window._brainPaused=false;}
         var toastSp=document.getElementById('brain-cluster-toast');
         if(toastSp){toastSp.textContent=ON?'ANIMATION RESUMED':'ANIMATION PAUSED';
           toastSp.style.color=ON?'#22c55e':'#f97316';toastSp.style.display='block';toastSp.style.opacity='1';
