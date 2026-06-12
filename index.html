@@ -7537,6 +7537,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: arc flow afterglow trail dots */
 /* Brain: N key spawn temp signal */
 
+
+/* v106 */
+/* Globe: country ring DEFCON speed */
+/* Brain: node radial gradient fill */
+/* Globe: CRITICAL arc crosshatch midpoint */
+/* Brain: FPS blink <20 fps */
+/* Brain: sel node connection arc segments */
+
 </style>
 </head>
 <body>
@@ -14135,7 +14143,10 @@ function draw(){
  /* Pulsing dot for countries with active hotspots */
  var _hasHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
  if(_hasHot&&!isSel){
-   var _hpf2=Math.sin(Date.now()*0.003+iso.charCodeAt(0))*0.5+0.5;
+   var _defconElD=document.getElementById('defcon-num');
+   var _defconND=_defconElD?parseInt(_defconElD.textContent)||3:3;
+   var _cPulseRate=_defconND<=1?0.006:_defconND===2?0.0045:0.003;
+   var _hpf2=Math.sin(Date.now()*_cPulseRate+iso.charCodeAt(0))*0.5+0.5;
    ctx.beginPath();ctx.arc(ctr.px,ctr.py,3+_hpf2*2,0,Math.PI*2);
    ctx.fillStyle='rgba(251,191,36,'+(0.3+_hpf2*0.25)+')';ctx.fill();
  }
@@ -14513,6 +14524,15 @@ function drawArcMarker(p1,p2,offFactor,color,label,sev){
  ctx.fillStyle=color;ctx.fill();
  // Short label
  if(label){
+ /* CRITICAL: crosshatch mark at arc midpoint */
+ if(arc.severity==='critical'&&scale>140){
+  ctx.save();
+  var _mkSz=3.5;ctx.translate(cpX,cpY);
+  ctx.strokeStyle=`${base},.7)`;ctx.lineWidth=0.7;
+  ctx.beginPath();ctx.moveTo(-_mkSz,-_mkSz);ctx.lineTo(_mkSz,_mkSz);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(_mkSz,-_mkSz);ctx.lineTo(-_mkSz,_mkSz);ctx.stroke();
+  ctx.restore();
+ }
  ctx.save();
  ctx.font=(sev==='critical'?'900 9px':'bold 8px')+' monospace';
  ctx.fillStyle='rgba(226,232,240,0.85)';
@@ -43852,6 +43872,19 @@ var _BrainEngine = (function(){
           ctx.fillStyle=_sdColor;ctx.fillText('D'+v.node.depth,v.sx,v.sy+spr+5);
           ctx.textBaseline='alphabetic';ctx.restore();
         }
+        /* Connection count arc segments */
+        var _connN=(v.node.children?v.node.children.length:0)+(v.node.parent?1:0);
+        if(_connN>0&&r2>4){
+          ctx.save();
+          var _segR=spr+4;var _segGap=0.15;
+          for(var _segi=0;_segi<Math.min(_connN,8);_segi++){
+            var _segA0=(_segi/Math.min(_connN,8))*Math.PI*2-Math.PI/2+_segGap/2;
+            var _segA1=(_segi/Math.min(_connN,8)+1/Math.min(_connN,8))*Math.PI*2-Math.PI/2-_segGap/2;
+            ctx.beginPath();ctx.arc(v.sx,v.sy,_segR,_segA0,_segA1);
+            ctx.strokeStyle='rgba('+cl.r+',0.22)';ctx.lineWidth=1.2;ctx.stroke();
+          }
+          ctx.restore();
+        }
         /* Dashed line to parent node when selected */
         if(v.node.parent){
           var _par=null;
@@ -43882,9 +43915,11 @@ var _BrainEngine = (function(){
         ctx.beginPath();ctx.arc(v.sx,v.sy,ddr,0,Math.PI*2);
         /* Depth-scaled stroke ring: shallow=thicker */
         ctx.lineWidth=v.node.depth<3?1.2:v.node.depth<10?0.7:0.4;
-        /* Root nodes at high zoom get cluster color fill */
+        /* Root nodes at high zoom get radial gradient fill */
         if(v.node.depth===0&&v.sr>15){
-          ctx.fillStyle=cl.c;
+          var _nfGrd=ctx.createRadialGradient(v.sx-ddr*0.3,v.sy-ddr*0.3,0,v.sx,v.sy,ddr);
+          _nfGrd.addColorStop(0,cl.c+'ff');_nfGrd.addColorStop(1,cl.c+'aa');
+          ctx.fillStyle=_nfGrd;
         }else{
           ctx.fillStyle='rgba('+cl.r+','+effectiveAlpha+')';
         }
@@ -43892,7 +43927,7 @@ var _BrainEngine = (function(){
         /* highlight: small bright core for visible depth-0 nodes */
         if(v.node.depth===0&&v.sr>12&&na>0.3){
           ctx.beginPath();ctx.arc(v.sx,v.sy,ddr*0.35,0,Math.PI*2);
-          ctx.fillStyle='rgba(255,255,255,0.25)';ctx.fill();
+          ctx.fillStyle='rgba(255,255,255,0.28)';ctx.fill();
         }
         if(isSel||v.node.depth===0) ctx.shadowBlur=0;
       }
@@ -44251,7 +44286,8 @@ var _BrainEngine = (function(){
     var _fpsR=Math.round(239-(_fps>=30?(239-34)*Math.min(1,(_fps-30)/25):0));
     var _fpsG=Math.round(68+(_fps>=30?(197-68)*Math.min(1,(_fps-30)/25):_fps>15?(130-68)*(_fps-15)/15:0));
     var _fpsB=Math.round(_fps>=55?94:_fps>=30?36:68);
-    ctx.fillStyle='rgba('+_fpsR+','+_fpsG+','+_fpsB+',0.7)';
+    var _fpsAlpha=(_fps<20&&(frame%40)<20)?0.3:0.7;
+    ctx.fillStyle='rgba('+_fpsR+','+_fpsG+','+_fpsB+','+_fpsAlpha+')';
     ctx.textAlign='right';
     ctx.fillText(_fps+'fps',W-8,12);
     /* Low FPS warning banner */
