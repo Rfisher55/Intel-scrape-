@@ -7162,6 +7162,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: radial scan sweep (canvas) */
 /* Brain: compact node count */
 
+
+/* v57 */
+/* Globe: tooltip screen bounds */
+/* Brain: I key opens node panel */
+/* Globe: panel name alert color */
+#p-name { transition: color 0.3s; }
+
 </style>
 </head>
 <body>
@@ -14210,7 +14217,11 @@ canvas.addEventListener('mousemove',e=>{
  const sev=hotHit.severity;
  document.getElementById('tt-alert').textContent=hotHit.type.replace(/_/g,' ').toUpperCase()+' · '+sev.toUpperCase();
  document.getElementById('tt-alert').style.color=ALERT_SEV[sev]||'#94a3b8';
- tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
+ var _ttW=180,_ttH=50;
+ var _ttX=Math.min(e.clientX+14,window.innerWidth-_ttW-8);
+ var _ttY=Math.max(e.clientY-10,8);
+ if(_ttY+_ttH>window.innerHeight-8) _ttY=e.clientY-_ttH-8;
+ tt.style.left=_ttX+'px';tt.style.top=_ttY+'px';tt.style.opacity='1';
  } else if(layerHit){
  document.getElementById('tt-name').textContent=layerHit.label;
  document.getElementById('tt-alert').textContent=layerHit.sub;
@@ -16328,6 +16339,9 @@ function openCountry(iso){
  document.getElementById('p-expand').textContent='⤢';
  const c=COUNTRIES[iso];
  document.getElementById('p-name').textContent=c.name;
+ var _pNameEl=document.getElementById('p-name');
+ var _alertHdrColors={'CRITICAL':'#fca5a5','HIGH':'#fdba74','ELEVATED':'#fcd34d','MEDIUM':'#fcd34d','LOW':'#86efac','MINIMAL':'#5eead4','GUARDED':'#93c5fd'};
+ if(_pNameEl)_pNameEl.style.color=_alertHdrColors[c.alertLevel]||'#e2e8f0';
  var _latStr=(c.lat>=0?'+':'')+c.lat.toFixed(1)+'N';
  var _lngStr=(c.lng>=0?'+':'')+c.lng.toFixed(1)+'E';
  document.getElementById('p-cap').innerHTML='Capital: '+c.capital+' <span style="color:#334155;font-size:7px;letter-spacing:.04em;">'+_latStr+' '+_lngStr+'</span>'+'<span class="p-sat-link" onclick="viewCountrySat(this.dataset.iso)" data-iso="'+iso+'" title="Open satellite view">SATELLITE</span>';
@@ -43666,6 +43680,10 @@ document.addEventListener('keydown', function(e){
       /* Zoom keys */
       if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
       if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
+      /* I = open panel for selected node */
+      if(e.key==='i'||e.key==='I'){
+        if(_sel&&typeof showPanel==='function') showPanel(_sel);
+      }
       /* L = toggle lateral edge visibility */
       if(e.key==='l'||e.key==='L'){
         window._hideLateral=!window._hideLateral;
@@ -48510,6 +48528,7 @@ function filterSIGINT(query){
     <span style="color:#a855f7;">D/U</span><span>Drill deeper / back up (zoom x1.5)</span>
     <span style="color:#22c55e;">C</span><span>Copy selected node label to clipboard</span>
     <span style="color:#0ea5e9;">L</span><span>Toggle lateral edge visibility</span>
+    <span style="color:#94a3b8;">I</span><span>Open panel for selected node</span>
     <span style="color:#475569;">?</span><span>This help panel</span>
   </div>
   <div onclick="document.getElementById('brain-cheatsheet').style.display='none';" style="margin-top:12px;text-align:center;color:#ef4444;cursor:pointer;letter-spacing:.18em;">&#x2715; CLOSE</div>
