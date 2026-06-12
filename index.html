@@ -7192,6 +7192,11 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: ESC deselects country */
 /* Brain: GDELT count badge in panel */
 
+
+/* v62 */
+/* Globe: pulsing hotspot centroid dot */
+/* Brain: edge count compact */
+
 </style>
 </head>
 <body>
@@ -13745,6 +13750,13 @@ function draw(){
  ctx.shadowBlur=0;
  const ctr=project(c.lat,c.lng);
  if(ctr.visible){
+ /* Pulsing dot for countries with active hotspots */
+ var _hasHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
+ if(_hasHot&&!isSel){
+   var _hpf2=Math.sin(Date.now()*0.003+iso.charCodeAt(0))*0.5+0.5;
+   ctx.beginPath();ctx.arc(ctr.px,ctr.py,3+_hpf2*2,0,Math.PI*2);
+   ctx.fillStyle='rgba(251,191,36,'+(0.3+_hpf2*0.25)+')';ctx.fill();
+ }
  ctx.font='bold 10px Courier New';
  ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
  ctx.textAlign='center';ctx.textBaseline='middle';
@@ -13767,6 +13779,12 @@ function draw(){
  drawPoly(c.poly,fill,true,true);
  const ctr=project(c.lat,c.lng);
  if(ctr.visible){
+ var _hasHot2=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
+ if(_hasHot2&&!isSel){
+   var _hpf3=Math.sin(Date.now()*0.003+iso.charCodeAt(0))*0.5+0.5;
+   ctx.beginPath();ctx.arc(ctr.px,ctr.py,3+_hpf3*2,0,Math.PI*2);
+   ctx.fillStyle='rgba(251,191,36,'+(0.3+_hpf3*0.25)+')';ctx.fill();
+ }
  ctx.font='bold 10px Courier New';
  ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
  ctx.textAlign='center';ctx.textBaseline='middle';
@@ -43418,7 +43436,7 @@ var _BrainEngine = (function(){
         var edgeHz=20+_ve.length*0.08+Math.sin(frame*0.04)*3;
         se.textContent=Math.min(99.9,edgeHz).toFixed(1)+' Hz';
       }
-      se=document.getElementById('bstat-syn'); if(se)se.textContent=_vn.length+'/'+_ve.length;
+      se=document.getElementById('bstat-syn'); if(se){var _ec3=_ve.length;se.textContent=_vn.length+'n/'+(_ec3>=1000?(_ec3/1000).toFixed(1)+'ke':_ec3+'e');}
       se=document.getElementById('bstat-sig'); if(se)se.textContent=(60+Math.log(cam.zoom+1)*9).toFixed(0)+' dB';
       se=document.getElementById('bstat-pat');
       if(se){
