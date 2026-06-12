@@ -6938,6 +6938,18 @@ a:hover { color: #bfdbfe !important; }
 /* Globe lat/lon HUD */
 /* (rendered as canvas, no additional CSS needed) */
 
+
+/* v28 */
+/* Depth-colored depth label in node panel */
+/* (handled in JS via IIFE) */
+/* Root cluster label canvas text */
+/* DIVE button smooth animation indicator */
+#brain-node-panel button:last-child { transition: opacity 0.2s; }
+#brain-node-panel button:last-child:hover { opacity: 0.85; }
+/* Node panel GDELT feed links */
+#bnp-feed a { color: inherit; }
+#bnp-feed a:hover { opacity: 0.8; text-decoration: underline !important; }
+
 </style>
 </head>
 <body>
@@ -42429,6 +42441,20 @@ var _BrainEngine = (function(){
 
     _vn=[]; _ve=[]; _maxDepth=0;
 
+    /* Draw cluster name labels at root nodes (very faint, only at low zoom) */
+    if(cam.zoom<2){
+      for(var rli=0;rli<roots.length;rli++){
+        var rl=roots[rli], rp=w2s(rl.wx,rl.wy);
+        var rlcl=CL[rl.ci];
+        var rlAlpha=Math.min(0.35,(2-cam.zoom)*0.25);
+        ctx.save();ctx.globalAlpha=rlAlpha;
+        ctx.font='6px "Courier New"';ctx.fillStyle=rlcl.c;
+        ctx.textAlign='center';
+        ctx.fillText(rlcl.n.slice(0,8).toUpperCase(),rp.sx,rp.sy+14);
+        ctx.restore();
+      }
+    }
+
     /* Cross-cluster root edges */
     for(var i=0;i<roots.length;i++){
       var j=(i+3)%8;
@@ -42465,7 +42491,8 @@ var _BrainEngine = (function(){
     ctx.save();
     for(var i=0;i<_ve.length;i++){
       var e=_ve[i];
-      var a=(e.cross?0.10:(e.lat?0.20:0.34))*(e.af===undefined?1:e.af);
+      var _depthFade=Math.max(0.15,1-Math.max(0,e.depth-_maxDepth+4)*0.12);
+      var a=(e.cross?0.10:(e.lat?0.20:0.34))*(e.af===undefined?1:e.af)*_depthFade;
       if(a<=0.01) continue;
       /* edge color: blues shift cooler at depth */
       var er=Math.max(50,110-e.depth*3);
@@ -42830,7 +42857,7 @@ var _BrainEngine = (function(){
     p.innerHTML=
       '<div style="background:rgba('+cl.r+',0.12);border-bottom:1px solid rgba('+cl.r+',0.3);padding:10px 14px 8px;">'
         +'<div style="color:'+cl.c+';font-size:9px;letter-spacing:.2em;font-weight:700;">'+cl.n+'</div>'
-        +'<div style="color:rgba('+cl.r+',0.55);font-size:7px;letter-spacing:.12em;margin-top:2px;">NEURAL CLUSTER &#x25CF; DEPTH '+node.depth+'</div>'
+        +(function(){var dc=node.depth<5?'#22c55e':node.depth<20?'#fbbf24':node.depth<50?'#f97316':'#ef4444';return '<div style="color:'+dc+';font-size:7px;letter-spacing:.12em;margin-top:2px;">NEURAL CLUSTER &#x25CF; DEPTH '+node.depth+'</div>';}())
       +'</div>'
       +'<div style="padding:10px 14px;">'
         +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">'
@@ -42848,7 +42875,7 @@ var _BrainEngine = (function(){
         +'<div style="margin-top:10px;display:flex;gap:6px;">'
           +'<button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';" '
           +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">CLOSE</button>'
-          +'<button onclick="(function(){var c=window._brain_cam;if(c){c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}})()" '
+          +'<button onclick="(function(){var c=window._brain_cam;if(c){if(c.tx!==undefined){c.tx='+node.wx+';c.ty='+node.wy+';c.tz=Math.min(10000000,c.zoom*4.5);}else{c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}}})()" '
           +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE &#x25B6; '+Math.round(cam.zoom*4.5)+'x</button>'
         +'</div>'
       +'</div>';
