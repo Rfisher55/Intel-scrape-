@@ -7685,6 +7685,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: scan arc zoom transparency */
 /* Brain: edge endpoint glow on selected */
 
+
+/* v125 */
+/* Globe: critical arc dot sparkle */
+/* Globe: hotspot core gradient fill */
+/* Brain: selection history ghost rings */
+/* Brain: edge zoom width boost */
+/* Brain: W key console dump */
+
 </style>
 </head>
 <body>
@@ -14783,7 +14791,12 @@ function drawHotspots(){
  ctx.beginPath();ctx.arc(p.px,p.py,r*0.75,0,Math.PI*2);
  ctx.strokeStyle=base.replace(',1)',','+(0.3+p1*0.15)+')');ctx.lineWidth=0.7;ctx.stroke();
  ctx.beginPath();ctx.arc(p.px,p.py,r*0.42,0,Math.PI*2);
- ctx.fillStyle=`rgba(255,255,255,${0.6+p1*0.3})`;ctx.fill();
+ /* Inner gradient: dark center, bright rim */
+ var _hsCoreGrd=ctx.createRadialGradient(p.px-r*0.12,p.py-r*0.12,0,p.px,p.py,r*0.42);
+ _hsCoreGrd.addColorStop(0,'rgba(255,255,255,'+(0.3+p1*0.2)+')');
+ _hsCoreGrd.addColorStop(0.5,base.replace(',1)',','+(0.4+p1*0.15)+')'));
+ _hsCoreGrd.addColorStop(1,'rgba(255,255,255,'+(0.7+p1*0.3)+')');
+ ctx.fillStyle=_hsCoreGrd;ctx.fill();
  /* Severity letter badge in core */
  if(r>3.5){
   var _sevLtr=h.severity==='critical'?'C':h.severity==='high'?'H':h.severity==='medium'?'M':'L';
@@ -14903,6 +14916,13 @@ function drawArcs(){
    var _ftA=arc.severity==='critical'?0.9:0.6;
    ctx.beginPath();ctx.arc(_ftX,_ftY,arc.severity==='critical'?2.5:1.5,0,Math.PI*2);
    ctx.fillStyle=`${base},${_ftA})`;ctx.fill();
+   /* Sparkle at head of critical arc dot */
+   if(arc.severity==='critical'){
+    ctx.save();ctx.beginPath();ctx.arc(_ftX,_ftY,0.8,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,'+(_ftA*0.6)+')';
+    ctx.shadowColor='rgba(255,255,255,0.8)';ctx.shadowBlur=3;ctx.fill();ctx.shadowBlur=0;
+    ctx.restore();
+   }
    /* Afterglow: two trailing dots */
    var _ftT2=(_ftT+0.06)%1;var _ftT3=(_ftT+0.12)%1;
    var _ftX2=(1-_ftT2)*(1-_ftT2)*p1.px+2*(1-_ftT2)*_ftT2*cpX+_ftT2*_ftT2*p2.px;
@@ -44179,7 +44199,9 @@ var _BrainEngine = (function(){
       /* Edge width: same cluster as selected node + active cluster focus */
       var _edgeSelFocus=_sel&&!e.cross&&e.ci===_sel.ci?1.4:1;
       var _edgeActFocus=(clAct&&clAct[e.ci]&&clAct[e.ci]>0.5)?1+clAct[e.ci]*0.3:1;
-      ctx.lineWidth=(e.cross?0.35:(e.lat?0.4:0.6))*_edgeSelFocus*_edgeActFocus;
+      /* High-zoom boost: thicker edges when zoomed close */
+      var _edgeZoomBoost=cam.zoom>20?Math.min(1.8,1+Math.log10(cam.zoom)*0.3):1;
+      ctx.lineWidth=(e.cross?0.35:(e.lat?0.4:0.6))*_edgeSelFocus*_edgeActFocus*_edgeZoomBoost;
       ctx.beginPath();ctx.moveTo(e.x1,e.y1);
       if(!e.cross&&!e.lat){
         /* slight perpendicular offset for non-cross, non-lateral edges */
@@ -44317,6 +44339,19 @@ var _BrainEngine = (function(){
         ctx.beginPath();ctx.arc(v.sx,v.sy,spr,0,Math.PI*2);
         ctx.strokeStyle='rgba('+cl.r+','+(0.35+spf*0.2)+')';
         ctx.lineWidth=0.5;ctx.stroke();
+        /* Selection history ghost rings */
+        if(window._selHistory&&window._selHistory.length>0){
+          for(var _shI=0;_shI<Math.min(window._selHistory.length,3);_shI++){
+            var _shN=window._selHistory[_shI];
+            var _shVn=null;
+            for(var _shJ=0;_shJ<_vn.length;_shJ++){if(_vn[_shJ].node===_shN){_shVn=_vn[_shJ];break;}}
+            if(_shVn&&_shN!==_sel){
+              var _shA=0.08-_shI*0.025;
+              ctx.beginPath();ctx.arc(_shVn.sx,_shVn.sy,_shVn.sr*3,0,Math.PI*2);
+              ctx.strokeStyle='rgba('+cl.r+','+_shA+')';ctx.lineWidth=0.5;ctx.stroke();
+            }
+          }
+        }
         /* Rotating tick mark on the pulsing ring */
         var _tickA=(frame*0.04)%(Math.PI*2);
         ctx.beginPath();
@@ -45526,6 +45561,11 @@ document.addEventListener('keydown', function(e){
             cam.tx=_zCx;cam.ty=_zCy;cam.tz=Math.min(500,Math.max(3,(Math.min(W,H)*0.7)/_zSpan));
           }
         }
+        return;
+      }
+      /* W = print view state to console */
+      if(e.key==='w'||e.key==='W'){
+        console.log('Brain view state:',{zoom:cam.zoom.toFixed(2),tx:cam.tx.toFixed(1),ty:cam.ty.toFixed(1),sel:_sel?(_sel.label||_sel.depth):'none',nodes:_vn.length,edges:_ve.length,clAct:clAct?clAct.map(function(v){return v.toFixed(2)}):'n/a'});
         return;
       }
       /* I = toggle cluster isolation (hide other clusters) */
