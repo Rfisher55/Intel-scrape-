@@ -7512,6 +7512,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: bg stars density DEFCON scaling */
 /* Globe: hotspot CRITICAL double-speed rings */
 
+
+/* v103 */
+/* Brain: activity ring hue shift at high activation */
+/* Globe: arc terminus square marker */
+/* Brain: minimap DEFCON strip */
+/* Globe: CRITICAL hotspot flicker */
+/* Brain: scan mirror echo arc */
+
 </style>
 </head>
 <body>
@@ -14436,8 +14444,10 @@ function drawHotspots(){
  // Core dot — age fade (newer = full brightness, older = dimmer)
  var _hsAge=h.timestamp?(Date.now()-h.timestamp)/1000:0;
  var _hsAgeFade=_hsAge>0?Math.max(0.3,1-_hsAge/86400):1;
+ /* CRITICAL flicker: brief drop every ~2.3s */
+ var _hsFlicker=h.severity==='critical'?(Math.sin(Date.now()*0.0027+h.lat*0.3)>0.92?0.55:1):1;
  if(h.severity==='critical'){ctx.shadowColor=base.replace(',1)',',.6)');ctx.shadowBlur=8;}
- ctx.globalAlpha=_hsAgeFade;
+ ctx.globalAlpha=_hsAgeFade*_hsFlicker;
  /* Occasional twinkle flash */
  var _stT=Math.sin(Date.now()*0.002+s.x*7+s.y*3);
  var _stFlash=_stT>0.97?(_stT-0.97)/0.03:0;
@@ -14534,6 +14544,13 @@ function drawArcs(){
    var _ftA=arc.severity==='critical'?0.9:0.6;
    ctx.beginPath();ctx.arc(_ftX,_ftY,arc.severity==='critical'?2.5:1.5,0,Math.PI*2);
    ctx.fillStyle=`${base},${_ftA})`;ctx.fill();
+ }
+ /* Terminus square marker at destination */
+ if(p2.visible&&p2.z>0.1){
+  var _tmSz=arc.severity==='critical'?2.5:1.6;
+  ctx.save();ctx.fillStyle=`${base},.55)`;
+  ctx.fillRect(p2.px-_tmSz/2,p2.py-_tmSz/2,_tmSz,_tmSz);
+  ctx.restore();
  }
  ctx.setLineDash([]);
  // Equator crossing: bright spark with afterglow trail
@@ -43509,6 +43526,13 @@ var _BrainEngine = (function(){
       ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
       ctx.closePath();
       ctx.fillStyle=_scGrad;ctx.fill();
+      /* Mirror echo arc at 180 deg opposite */
+      ctx.save();ctx.beginPath();ctx.moveTo(_scx,_scy);
+      var _scanMirrorA=_scanAngle+Math.PI;
+      ctx.arc(_scx,_scy,_scanLen,_scanMirrorA-_scanArcW*0.5,_scanMirrorA+_scanArcW*0.5,false);
+      ctx.lineTo(_scx,_scy);ctx.closePath();
+      ctx.fillStyle='rgba('+_scanFillC+',0.012)';ctx.fill();
+      ctx.restore();
       ctx.restore();
       /* Selected cluster name near scan origin */
       if(_sel&&CL[_sel.ci]){
@@ -43735,6 +43759,8 @@ var _BrainEngine = (function(){
         var pf=(Math.sin(frame*0.04+v.node.ci*0.7)*0.5+0.5);
         var pr=v.sr*(1.5+pf*0.4+_clAct*0.3);
         var pa=(0.15+pf*0.12)*(0.7+_clAct*0.5);
+        /* Hue shift ring toward red when cluster is hot */
+        var _actRingC=_clAct>0.7?'239,'+(Math.round(68*(1-(_clAct-0.7)/0.3)))+',68':cl.r;
         /* Glow behind root nodes — scales with activation */
         var _clActLvl=(clAct&&clAct[v.node.ci])||0;
         if(v.sr>15){ctx.shadowColor=cl.c;ctx.shadowBlur=Math.min(28,v.sr*0.4+_clActLvl*12);}
@@ -43746,7 +43772,7 @@ var _BrainEngine = (function(){
           ctx.strokeStyle='rgba(239,68,68,'+(0.06+_dzf*0.05)+')';ctx.lineWidth=1.5;ctx.stroke();
         }
         ctx.beginPath();ctx.arc(v.sx,v.sy,pr,0,Math.PI*2);
-        ctx.strokeStyle='rgba('+cl.r+','+pa+')';
+        ctx.strokeStyle='rgba('+_actRingC+','+pa+')';
         ctx.lineWidth=v.sr>20?1.5:0.8;ctx.stroke();
         ctx.shadowBlur=0;
       }
@@ -44232,6 +44258,14 @@ var _BrainEngine = (function(){
       ctx.lineWidth=0.8;
       ctx.fillRect(MMx,MMy,MM,MM);
       ctx.strokeRect(MMx,MMy,MM,MM);
+      /* DEFCON strip at bottom of minimap */
+      var _mmDefEl=document.getElementById('defcon-num');
+      var _mmDefN=_mmDefEl?parseInt(_mmDefEl.textContent)||3:3;
+      var _mmDefC=_mmDefN<=1?'#ef4444':_mmDefN===2?'#f97316':_mmDefN===3?'#eab308':'#22c55e';
+      var _mmDefW=MM*(6-_mmDefN)/5;
+      ctx.fillStyle=_mmDefC;ctx.globalAlpha=0.55;
+      ctx.fillRect(MMx,MMy+MM-2,_mmDefW,2);
+      ctx.globalAlpha=1;
       /* OVERVIEW label */
       ctx.font='5px "Courier New"';ctx.fillStyle='rgba(71,85,105,0.8)';
       ctx.textAlign='center';ctx.fillText('OVERVIEW',MMx+MM/2,MMy+8);
