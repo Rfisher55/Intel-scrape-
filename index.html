@@ -7027,6 +7027,30 @@ a:hover { color: #bfdbfe !important; }
 /* Brain cluster legend node count badge */
 #brain-cluster-legend .cl-count { color: #334155; font-size: 5.5px; margin-left: 3px; }
 
+
+/* v38 */
+/* Panel alert-level left border */
+#panel { border-left: 3px solid #3b82f6 !important; transition: border-left-color 0.5s; }
+/* Brain root node bloom (handled in canvas) */
+/* Stats bar hidden state */
+#brain-stats-bar { transition: opacity 0.3s; }
+/* H key toggle hint in cheatsheet */
+
+
+/* v39 */
+/* Globe: cubic-ease vipAnim */
+/* Brain: ESC to reset camera */
+/* Brain: depth filter active label */
+/* Globe: CRITICAL hotspot pulse ring */
+
+
+/* v40 */
+/* Brain: selected node glow ring (canvas) */
+/* Brain: FPS color-coded */
+/* Panel minimize transition */
+#panel { transition: border-left-color 0.5s, height 0.25s; }
+/* Minimap VP thickness scaled by zoom (canvas) */
+
 </style>
 </head>
 <body>
@@ -16126,6 +16150,10 @@ function openCountry(iso){
  const badge=ALERT_BADGE[c.alertLevel]||ALERT_BADGE.LOW;
  const b=document.getElementById('p-badge');
  b.textContent=c.alertLevel;b.style.background=badge.bg;b.style.color=badge.color;b.style.borderColor=badge.border;
+ /* Alert-level accent on panel left border */
+ var _alertColors2={'CRITICAL':'#ef4444','HIGH':'#f97316','ELEVATED':'#fbbf24','MEDIUM':'#f59e0b','LOW':'#22c55e','MINIMAL':'#14b8a6','GUARDED':'#3b82f6'};
+ var _panelEl=document.getElementById('panel');
+ if(_panelEl) _panelEl.style.borderLeftColor=(_alertColors2[c.alertLevel]||'#3b82f6');
  // Summary — CIA briefing format
  const ex=INTEL_EX[iso]||{};
  const rptId='OSINT-REPT-'+iso+'-'+new Date().toISOString().slice(0,10).replace(/-/g,'');
@@ -42691,14 +42719,19 @@ var _BrainEngine = (function(){
         var pf=(Math.sin(frame*0.04+v.node.ci*0.7)*0.5+0.5);
         var pr=v.sr*(1.5+pf*0.4);
         var pa=0.15+pf*0.12;
+        /* Glow behind root nodes */
+        if(v.sr>15){ctx.shadowColor=cl.c;ctx.shadowBlur=Math.min(12,v.sr*0.4);}
         ctx.beginPath();ctx.arc(v.sx,v.sy,pr,0,Math.PI*2);
         ctx.strokeStyle='rgba('+cl.r+','+pa+')';
         ctx.lineWidth=0.8;ctx.stroke();
+        ctx.shadowBlur=0;
       }
       if(isSel){
-        /* Static selection ring */
+        /* Static selection ring with glow */
+        ctx.shadowColor=cl.c;ctx.shadowBlur=Math.min(18,r2*0.7+5);
         ctx.beginPath();ctx.arc(v.sx,v.sy,r2*3.2,0,Math.PI*2);
         ctx.strokeStyle=cl.c;ctx.lineWidth=0.7;ctx.stroke();
+        ctx.shadowBlur=0;
         /* Pulsing outer ring on selected node */
         var spf=(Math.sin(frame*0.06)*0.5+0.5);
         var spr=r2*(3.8+spf*1.8);
@@ -42803,6 +42836,7 @@ var _BrainEngine = (function(){
     ctx.textAlign='right';
     var zstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':cam.zoom<1000?Math.round(cam.zoom)+'x':'1e'+Math.floor(Math.log10(cam.zoom))+'x';
     ctx.fillText('DEPTH: '+_maxDepth+'  NEURONS: '+_vn.length+'  ZOOM: '+zstr, W-10, H-8);
+    if(_maxDepth<100&&_maxDepth>1){ctx.font='5.5px "Courier New"';ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fillText('FILTER ACTIVE',W-10,H-17);}
     /* Bottom-left: cluster breadcrumb */
     if(_sel&&_sel.ci!==undefined){
       var bc=CL[_sel.ci];
@@ -42878,7 +42912,7 @@ var _BrainEngine = (function(){
     /* FPS counter top-right + zoom level bottom-left */
     ctx.save();
     ctx.font='6px "Courier New"';
-    ctx.fillStyle='rgba(71,85,105,0.5)';
+    ctx.fillStyle=_fps>=55?'rgba(34,197,94,0.6)':_fps>=30?'rgba(251,191,36,0.6)':'rgba(239,68,68,0.7)';
     ctx.textAlign='right';
     ctx.fillText(_fps+'fps',W-8,12);
     /* Zoom level + node count bottom-left */
@@ -42951,7 +42985,7 @@ var _BrainEngine = (function(){
       var vr=cam.x+W/(2*cam.zoom),vb=cam.y+H/(2*cam.zoom);
       var vmx=MMx+((vl-wx0)/wW)*MM,vmy=MMy+((vt-wy0)/wH)*MM;
       var vmw=((vr-vl)/wW)*MM,vmh=((vb-vt)/wH)*MM;
-      ctx.strokeStyle='rgba(147,197,253,0.5)';ctx.lineWidth=0.8;
+      ctx.strokeStyle='rgba(147,197,253,0.5)';ctx.lineWidth=cam.zoom>4?1.8:cam.zoom>2?1.2:0.8;
       ctx.strokeRect(vmx,vmy,vmw,vmh);
       /* Corner ticks on viewport rect */
       var tk=Math.min(5,vmw*0.3,vmh*0.3);
@@ -43322,6 +43356,11 @@ document.addEventListener('keydown', function(e){
       /* Zoom keys */
       if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
       if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
+      /* H = toggle stats bar */
+      if(e.key==='h'||e.key==='H'){
+        var sb=document.getElementById('brain-stats-bar');
+        if(sb) sb.style.display=(sb.style.display==='none'?'':'none');
+      }
       /* F = fire all clusters (burst mode) */
       if(e.key==='f'||e.key==='F'){
         if(typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
@@ -43358,7 +43397,7 @@ document.addEventListener('keydown', function(e){
       if(e.key==='ArrowDown') {if(cam.tx!==undefined)cam.ty+=panStep;else cam.y+=panStep;e.preventDefault();}
       if(e.key==='-'||e.key==='_'){cam.zoom=Math.max(0.04,cam.zoom/1.25);}
       if(e.key==='r'||e.key==='R'){cam.x=28;cam.y=-28;cam.zoom=0.78;if(cam.tx!==undefined){cam.tx=28;cam.ty=-28;cam.tz=0.78;}var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
-      if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}if(cam&&cam.tx!==undefined){cam.tx=cam.x;cam.ty=cam.y;cam.tz=cam.zoom;}}
+      if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}if(cam&&cam.tx!==undefined){if(cam.tz>2){cam.tx=0;cam.ty=0;cam.tz=0.78;}else{cam.tx=cam.x;cam.ty=cam.y;cam.tz=cam.zoom;}}}
       if(e.key==='?'||e.key==='/'){var cs=document.getElementById('brain-cheatsheet');if(cs)cs.style.display=(cs.style.display==='none'?'block':'none');}
       /* Q/W = cycle through clusters */
       if(e.key==='q'||e.key==='Q'){
@@ -48125,9 +48164,10 @@ function filterSIGINT(query){
     <span style="color:#fbbf24;">0</span><span>Overview zoom out</span>
     <span style="color:#ef4444;">Click</span><span>Open node panel</span>
     <span style="color:#ef4444;">Dbl-click</span><span>Zoom into node</span>
-    <span style="color:#f97316;">ESC</span><span>Close panel / stop animation</span>
+    <span style="color:#f97316;">ESC</span><span>Close panel · zoom out to overview</span>
     <span style="color:#06b6d4;">N</span><span>Focus nearest visible node</span>
     <span style="color:#ef4444;">F</span><span>Fire all clusters (burst mode)</span>
+    <span style="color:#475569;">H</span><span>Toggle stats bar</span>
     <span style="color:#475569;">?</span><span>This help panel</span>
   </div>
   <div onclick="document.getElementById('brain-cheatsheet').style.display='none';" style="margin-top:12px;text-align:center;color:#ef4444;cursor:pointer;letter-spacing:.18em;">&#x2715; CLOSE</div>
