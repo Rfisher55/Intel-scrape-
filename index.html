@@ -7417,6 +7417,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: activity ring scales with clAct */
 /* Globe: arc flow tick animated */
 
+
+/* v90 */
+/* Globe: grid alpha rotation pulse */
+/* Brain: axon speed scales with activation */
+/* Globe: arc glow blur zoom scale */
+/* Brain: DEFCON ring 8-point compass ticks */
+
 </style>
 </head>
 <body>
@@ -13955,12 +13962,15 @@ function draw(){
  const term=ctx.createRadialGradient(cx+scale*.3,cy-scale*.2,scale*.4,cx,cy,scale);
  term.addColorStop(0,'rgba(255,220,100,.04)');term.addColorStop(.7,'rgba(0,0,0,0)');
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=term;ctx.fill();
- // ── Grid (opacity dims when multiple layers active)
+ // ── Grid (opacity dims when multiple layers active, pulses with rotation)
  var _gAlpha=0.06;
  var _actLC=Object.values(activeLayers).filter(Boolean).length;
  if(_actLC>=3) _gAlpha=0.025;
  else if(_actLC>=1) _gAlpha=0.04;
- ctx.strokeStyle='rgba(59,130,246,'+_gAlpha+')';ctx.lineWidth=.5;
+ /* Pulse grid brightness with rotation velocity */
+ var _rotSpd=Math.abs(typeof rotVx!=='undefined'?rotVx:0)+Math.abs(typeof rotVy!=='undefined'?rotVy:0);
+ _gAlpha=Math.min(0.18,_gAlpha+_rotSpd*12+Math.sin(Date.now()*0.0004)*0.008);
+ ctx.strokeStyle='rgba(59,130,246,'+_gAlpha.toFixed(3)+')';ctx.lineWidth=.5;
  /* Standard parallels */
  for(let lat=-80;lat<=80;lat+=20){
    if(lat===0){ctx.save();ctx.strokeStyle='rgba(59,130,246,'+Math.min(_gAlpha*3.5,0.18)+')';ctx.lineWidth=0.8;drawParallel(lat);ctx.restore();}
@@ -14156,13 +14166,15 @@ function draw(){
  var _defRW=_defN<=1?1.5+Math.sin(Date.now()*0.005)*0.9:_defN===2?1.5+Math.sin(Date.now()*0.003)*0.5:1.5;
  ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW;ctx.stroke();
  /* Tick marks at N/S/E/W */
- var _defTicks=[0,Math.PI/2,Math.PI,Math.PI*3/2];
+ var _defTicks=[0,Math.PI/4,Math.PI/2,Math.PI*3/4,Math.PI,Math.PI*5/4,Math.PI*3/2,Math.PI*7/4];
  for(var _dti=0;_dti<_defTicks.length;_dti++){
    var _dtA=_defTicks[_dti];
+   var _dtDiag=(_dti%2===1);
+   var _dtLen=_dtDiag?2:4;
    var _dtX1=cx+Math.cos(_dtA)*scale,_dtY1=cy+Math.sin(_dtA)*scale;
-   var _dtX2=cx+Math.cos(_dtA)*(scale-4),_dtY2=cy+Math.sin(_dtA)*(scale-4);
+   var _dtX2=cx+Math.cos(_dtA)*(scale-_dtLen),_dtY2=cy+Math.sin(_dtA)*(scale-_dtLen);
    ctx.beginPath();ctx.moveTo(_dtX1,_dtY1);ctx.lineTo(_dtX2,_dtY2);
-   ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW*1.5;ctx.stroke();
+   ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW*(_dtDiag?0.8:1.5);ctx.stroke();
  }
  // Outer atmospheric ring
  ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
@@ -14363,8 +14375,11 @@ function drawArcs(){
  ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
  ctx.strokeStyle=`${base},.15)`;ctx.lineWidth=5*_arcW;ctx.stroke();
  if(arc.severity==='critical'){
+   var _agBlur=scale<200?3:scale<500?5:8;
+   ctx.save();ctx.shadowColor=`${base},.5)`;ctx.shadowBlur=_agBlur;
    ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
    ctx.strokeStyle=`${base},.06)`;ctx.lineWidth=12;ctx.stroke();
+   ctx.restore();
  }
  // Animated dash — tail length adapts to zoom
  var _dashL=scale<120?[16,5]:scale<300?[12,8]:[8,12];
@@ -43653,6 +43668,9 @@ var _BrainEngine = (function(){
       var ev=_ve[ei];
       if(ev&&ev.af>0.15)
         var _axSpd=0.012+Math.random()*0.018;
+        /* Speed up signals for active clusters */
+        var _axActBoost=(clAct&&clAct[ev.ci])?1+clAct[ev.ci]*1.4:1;
+        _axSpd*=_axActBoost;
         if(cam.zoom>2)_axSpd*=Math.min(3,cam.zoom*0.6);
         window._bsigs.push({x1:ev.x1,y1:ev.y1,x2:ev.x2,y2:ev.y2,
           t:0,sp:_axSpd,ci:ev.ci,lat:ev.lat});
