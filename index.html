@@ -7078,6 +7078,11 @@ a:hover { color: #bfdbfe !important; }
 .h-status-flash { animation: hstatusFlash 0.5s ease 2; }
 /* Brain: cluster ring node count label (canvas) */
 
+
+/* v45 */
+/* Brain: D/U keys for depth */
+/* Brain: node label at zoom >14sr */
+
 </style>
 </head>
 <body>
@@ -42850,6 +42855,16 @@ var _BrainEngine = (function(){
           ctx.fillText('L'+v.node.depth,v.sx,v.sy+Math.min(r2,5)+7);
         }
       }
+      /* Individual node label at high zoom */
+      if(v.node.depth>0&&v.sr>22&&v.af>0.5){
+        var _nl=(v.node.label||v.node.n||'').slice(0,28);
+        if(_nl){
+          ctx.textAlign='center';
+          ctx.font='5px "Courier New"';
+          ctx.fillStyle='rgba('+cl.r+',0.45)';
+          ctx.fillText(_nl,v.sx,v.sy-Math.max(r2,4)-3);
+        }
+      }
     }
 
     /* HUD */
@@ -43422,6 +43437,16 @@ document.addEventListener('keydown', function(e){
       /* Zoom keys */
       if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
       if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
+      /* D = drill deeper (zoom in 1.5x) */
+      if(e.key==='d'||e.key==='D'){
+        if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.5);
+        else cam.zoom=Math.min(10000000,cam.zoom*1.5);
+      }
+      /* U = back up (zoom out 1.5x) */
+      if(e.key==='u'||e.key==='U'){
+        if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.5);
+        else cam.zoom=Math.max(0.1,cam.zoom/1.5);
+      }
       /* H = toggle stats bar */
       if(e.key==='h'||e.key==='H'){
         var sb=document.getElementById('brain-stats-bar');
@@ -48234,6 +48259,7 @@ function filterSIGINT(query){
     <span style="color:#06b6d4;">N</span><span>Focus nearest visible node</span>
     <span style="color:#ef4444;">F</span><span>Fire all clusters (burst mode)</span>
     <span style="color:#475569;">H</span><span>Toggle stats bar</span>
+    <span style="color:#a855f7;">D/U</span><span>Drill deeper / back up (zoom x1.5)</span>
     <span style="color:#475569;">?</span><span>This help panel</span>
   </div>
   <div onclick="document.getElementById('brain-cheatsheet').style.display='none';" style="margin-top:12px;text-align:center;color:#ef4444;cursor:pointer;letter-spacing:.18em;">&#x2715; CLOSE</div>
