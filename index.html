@@ -7205,6 +7205,13 @@ a:hover { color: #bfdbfe !important; }
 @keyframes critThreatPulse { 0%,100%{color:#ef4444;text-shadow:0 0 8px rgba(239,68,68,0.6)} 50%{color:#fca5a5;text-shadow:0 0 12px rgba(239,68,68,0.9)} }
 .h-threat-level.critical-anim { animation: critThreatPulse 1.5s ease infinite; }
 
+
+/* v64 */
+/* Globe: ISO badge in panel header */
+#p-iso-badge { display: inline-block; }
+/* Globe: crosshair on hotspot hover */
+/* Brain: pure black background */
+
 </style>
 </head>
 <body>
@@ -7981,7 +7988,7 @@ a:hover { color: #bfdbfe !important; }
  <div class="p-head">
  <div class="p-row">
  <div>
- <div class="p-name" id="p-name">—</div>
+ <span id="p-iso-badge" style="font-size:7px;color:#475569;background:rgba(30,58,95,.4);border:1px solid rgba(59,130,246,.25);padding:1px 5px;border-radius:2px;margin-right:6px;letter-spacing:.1em;vertical-align:middle;display:none;"></span><div class="p-name" id="p-name">—</div>
  <div class="p-cap" id="p-cap">Capital: —</div>
  </div>
  <div class="p-controls">
@@ -14284,7 +14291,8 @@ canvas.addEventListener('mousemove',e=>{
  if(!layerHit&&activeLayers.netdisrupt){const nd=netDisruptAt(e.clientX,e.clientY);if(nd)layerHit={label:nd.label,sub:(NET_TYPE_LABEL[nd.type]||nd.type)+' · click for intel',color:NET_TYPE_DOT[nd.type]||'#f59e0b'};}
  }
  const hit=hitTest(e.clientX,e.clientY);
- if(hit!==hoveredISO){hoveredISO=hit;canvas.style.cursor=(hit||hotHit||layerHit)?'pointer':'grab';}
+ if(hit!==hoveredISO){hoveredISO=hit;}
+ canvas.style.cursor=hotHit?'crosshair':hit||layerHit?'pointer':'grab';
  /* Track cursor lat/lon for HUD */
  var _mll=unproject(e.clientX,e.clientY);
  if(_mll){window._globeMouseLat=(_mll.lat>=0?'+':'')+_mll.lat.toFixed(1);window._globeMouseLon=(_mll.lng>=0?'+':'')+_mll.lng.toFixed(1);}
@@ -16423,6 +16431,9 @@ function openCountry(iso){
  var _pNameEl=document.getElementById('p-name');
  var _alertHdrColors={'CRITICAL':'#fca5a5','HIGH':'#fdba74','ELEVATED':'#fcd34d','MEDIUM':'#fcd34d','LOW':'#86efac','MINIMAL':'#5eead4','GUARDED':'#93c5fd'};
  if(_pNameEl)_pNameEl.style.color=_alertHdrColors[c.alertLevel]||'#e2e8f0';
+ /* ISO badge in header */
+ var _isoEl=document.getElementById('p-iso-badge');
+ if(_isoEl){_isoEl.textContent=iso;_isoEl.style.display='inline-block';}
  var _latStr=(c.lat>=0?'+':'')+c.lat.toFixed(1)+'N';
  var _lngStr=(c.lng>=0?'+':'')+c.lng.toFixed(1)+'E';
  document.getElementById('p-cap').innerHTML='Capital: '+c.capital+' <span style="color:#334155;font-size:7px;letter-spacing:.04em;">'+_latStr+' '+_lngStr+'</span>'+'<span class="p-sat-link" onclick="viewCountrySat(this.dataset.iso)" data-iso="'+iso+'" title="Open satellite view">SATELLITE</span>';
@@ -42891,7 +42902,7 @@ var _BrainEngine = (function(){
       if(Math.abs(cam.y-cam.ty)<0.01) cam.y=cam.ty;
       if(Math.abs(cam.zoom-cam.tz)<0.0001) cam.zoom=cam.tz;
     }
-    ctx.fillStyle='rgb(0,0,8)';
+    ctx.fillStyle='#000';
     ctx.fillRect(0,0,W,H);
     /* Vignette — dark edges, bright center */
     var _vig=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.28,W/2,H/2,Math.max(W,H)*0.65);
