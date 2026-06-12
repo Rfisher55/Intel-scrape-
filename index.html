@@ -7632,6 +7632,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: minimap cluster initial */
 /* Globe: hotspot glow screen blend */
 
+
+/* v118 */
+/* Globe: scale bar sub-ticks */
+/* Brain: text flash cluster color */
+/* Globe: arc smear trailing dot */
+/* Globe: equatorial brightness band */
+/* Brain: parent breadcrumb chain */
+
 </style>
 </head>
 <body>
@@ -14179,6 +14187,18 @@ function draw(){
  const limb=ctx.createRadialGradient(cx,cy,scale*.92,cx,cy,scale*1.0);
  limb.addColorStop(0,'transparent');limb.addColorStop(.85,'rgba(80,160,255,.06)');limb.addColorStop(1,'rgba(100,180,255,.12)');
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=limb;ctx.fill();
+ // ── Equatorial band — faint brightness at equator
+ {
+  var _eqP=project(0,rotY*180/Math.PI);
+  if(_eqP.visible&&_eqP.z>0.2){
+   var _eqGrd=ctx.createRadialGradient(_eqP.px,_eqP.py,0,_eqP.px,_eqP.py,scale*0.25);
+   _eqGrd.addColorStop(0,'rgba(100,180,255,0.025)');_eqGrd.addColorStop(1,'rgba(100,180,255,0)');
+   ctx.save();ctx.globalCompositeOperation='screen';
+   ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.clip();
+   ctx.fillStyle=_eqGrd;ctx.fillRect(0,0,canvas.width,canvas.height);
+   ctx.restore();
+  }
+ }
  // ── Terminator ring (subtle day/night)
  const term=ctx.createRadialGradient(cx+scale*.3,cy-scale*.2,scale*.4,cx,cy,scale);
  term.addColorStop(0,'rgba(255,220,100,.04)');term.addColorStop(.7,'rgba(0,0,0,0)');
@@ -14528,6 +14548,12 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
    ctx.strokeStyle='rgba(148,163,184,0.4)';ctx.lineWidth=1;
    ctx.beginPath();ctx.moveTo(_sX,_sY-3);ctx.lineTo(_sX,_sY+3);ctx.stroke();
    ctx.beginPath();ctx.moveTo(_sX+50,_sY-3);ctx.lineTo(_sX+50,_sY+3);ctx.stroke();
+   /* Sub-tick marks at 25% intervals */
+   for(var _stk=1;_stk<4;_stk++){
+     var _stkX=_sX+_stk*12.5;var _stkH=_stk===2?3:2;
+     ctx.beginPath();ctx.moveTo(_stkX,_sY-_stkH);ctx.lineTo(_stkX,_sY+_stkH);
+     ctx.strokeStyle='rgba(148,163,184,0.35)';ctx.lineWidth=0.5;ctx.stroke();
+   }
    ctx.font='5px "Courier New"';ctx.fillStyle='rgba(148,163,184,0.8)';ctx.textAlign='center';
    ctx.fillText(_sbLbl,_sX+25,_sY-5);
    ctx.textAlign='right';
@@ -14789,6 +14815,12 @@ function drawArcs(){
    var _ftY3=(1-_ftT3)*(1-_ftT3)*p1.py+2*(1-_ftT3)*_ftT3*cpY+_ftT3*_ftT3*p2.py;
    ctx.beginPath();ctx.arc(_ftX3,_ftY3,arc.severity==='critical'?0.9:0.6,0,Math.PI*2);
    ctx.fillStyle=`${base},${_ftA*0.2})`;ctx.fill();
+   /* Fourth trailing dot — close smear for persistence */
+   var _ftT4=(_ftT+0.04)%1;
+   var _ftX4=(1-_ftT4)*(1-_ftT4)*p1.px+2*(1-_ftT4)*_ftT4*cpX+_ftT4*_ftT4*p2.px;
+   var _ftY4=(1-_ftT4)*(1-_ftT4)*p1.py+2*(1-_ftT4)*_ftT4*cpY+_ftT4*_ftT4*p2.py;
+   ctx.beginPath();ctx.arc(_ftX4,_ftY4,arc.severity==='critical'?1.8:1.1,0,Math.PI*2);
+   ctx.fillStyle=`${base},${_ftA*0.32})`;ctx.fill();
  }
  /* Terminus square marker at destination */
  if(p2.visible&&p2.z>0.1){
@@ -44274,6 +44306,24 @@ var _BrainEngine = (function(){
         }
       }
       /* Individual node label at high zoom */
+      /* Parent breadcrumb chain on hover — faint dots toward root */
+      if(v.node===window._hovNode&&v.node.parent&&v.sr>10){
+        var _bcNode=v.node.parent;var _bcDepth=0;
+        while(_bcNode&&_bcDepth<5){
+          var _bcVn=null;
+          for(var _bcI=0;_bcI<_vn.length;_bcI++){if(_vn[_bcI].node===_bcNode){_bcVn=_vn[_bcI];break;}}
+          if(_bcVn){
+            var _bcA=0.12-_bcDepth*0.018;
+            ctx.beginPath();ctx.arc(_bcVn.sx,_bcVn.sy,Math.max(1.5,_bcVn.sr*0.4),0,Math.PI*2);
+            ctx.strokeStyle='rgba('+cl.r+','+_bcA+')';ctx.lineWidth=0.6;ctx.stroke();
+            /* Line to parent */
+            ctx.beginPath();ctx.moveTo(v.sx,v.sy);ctx.lineTo(_bcVn.sx,_bcVn.sy);
+            ctx.strokeStyle='rgba('+cl.r+','+(_bcA*0.6)+')';ctx.lineWidth=0.3;ctx.setLineDash([2,4]);ctx.stroke();
+            ctx.setLineDash([]);
+          }
+          _bcNode=_bcNode.parent;_bcDepth++;
+        }
+      }
       /* Hover activation % label */
       if(v.node===window._hovNode&&_clAct>0.05&&v.sr>8){
         ctx.save();ctx.font='5px "Courier New"';ctx.textAlign='center';
