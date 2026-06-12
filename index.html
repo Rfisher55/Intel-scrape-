@@ -7009,6 +7009,16 @@ a:hover { color: #bfdbfe !important; }
 #h-status strong { font-size: inherit; }
 /* Brain keyboard shortcut N in cheatsheet */
 
+
+/* v36 ALERT_COLORS fix */
+/* ELEVATED = amber/yellow */
+.alert-elevated { color: #fcd34d; border-color: rgba(202,138,4,0.5); }
+/* GUARDED = blue */
+.alert-guarded { color: #93c5fd; border-color: rgba(37,99,235,0.4); }
+/* MINIMAL = teal */
+.alert-minimal { color: #5eead4; border-color: rgba(15,118,110,0.4); }
+/* Globe legend: equator line description */
+
 </style>
 </head>
 <body>
@@ -11869,13 +11879,16 @@ const ARC_COLORS = {
  border:'rgba(107,114,128',
 };
 
-const ALERT_COLORS={CRITICAL:'rgba(185,28,28,.9)',HIGH:'rgba(220,38,38,.82)',MEDIUM:'rgba(234,88,12,.78)',LOW:'rgba(22,163,74,.72)'};
+const ALERT_COLORS={CRITICAL:'rgba(185,28,28,.9)',HIGH:'rgba(220,38,38,.82)',ELEVATED:'rgba(202,138,4,.80)',MEDIUM:'rgba(234,88,12,.78)',GUARDED:'rgba(37,99,235,.72)',LOW:'rgba(22,163,74,.72)',MINIMAL:'rgba(15,118,110,.65)'};
 const ALERT_SEV={critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'};
 const ALERT_BADGE={
  CRITICAL:{bg:'#7f1d1d',color:'#fca5a5',border:'#ef4444'},
- HIGH: {bg:'#7c2d12',color:'#fdba74',border:'#f97316'},
- MEDIUM: {bg:'#78350f',color:'#fcd34d',border:'#f59e0b'},
- LOW: {bg:'#14532d',color:'#86efac',border:'#22c55e'},
+ HIGH:    {bg:'#7c2d12',color:'#fdba74',border:'#f97316'},
+ ELEVATED:{bg:'#78350f',color:'#fcd34d',border:'#ca8a04'},
+ MEDIUM:  {bg:'#78350f',color:'#fcd34d',border:'#f59e0b'},
+ GUARDED: {bg:'#1e3a5f',color:'#93c5fd',border:'#3b82f6'},
+ LOW:     {bg:'#14532d',color:'#86efac',border:'#22c55e'},
+ MINIMAL: {bg:'#134e4a',color:'#5eead4',border:'#14b8a6'},
 };
 
 /* ════════════════════════════════════════════════════
@@ -13524,8 +13537,16 @@ function draw(){
  if(_actLC>=3) _gAlpha=0.025;
  else if(_actLC>=1) _gAlpha=0.04;
  ctx.strokeStyle='rgba(59,130,246,'+_gAlpha+')';ctx.lineWidth=.5;
- for(let lat=-80;lat<=80;lat+=20)drawParallel(lat);
- for(let lng=-180;lng<=180;lng+=20)drawMeridian(lng);
+ /* Standard parallels */
+ for(let lat=-80;lat<=80;lat+=20){
+   if(lat===0){ctx.save();ctx.strokeStyle='rgba(59,130,246,'+Math.min(_gAlpha*3.5,0.18)+')';ctx.lineWidth=0.8;drawParallel(lat);ctx.restore();}
+   else drawParallel(lat);
+ }
+ /* Meridians */
+ for(let lng=-180;lng<=180;lng+=20){
+   if(lng===0){ctx.save();ctx.strokeStyle='rgba(59,130,246,'+Math.min(_gAlpha*3.5,0.18)+')';ctx.lineWidth=0.8;drawMeridian(lng);ctx.restore();}
+   else drawMeridian(lng);
+ }
 
  if(geoReady){
  // Pass 1: all non-ME world countries (dim land)
@@ -13540,7 +13561,7 @@ function draw(){
  if(!iso)continue;
  const c=COUNTRIES[iso];
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
- const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
+ const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  var isCrit=c.alertLevel==='CRITICAL';
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.6)':'rgba(100,150,220,.5)';
  ctx.lineWidth=isSel?1.5:isCrit?.9:.8;
@@ -13563,7 +13584,7 @@ function draw(){
  for(const c of CONTINENT_HINTS)drawPoly(c,null,true,false);
  for(const[iso,c]of Object.entries(COUNTRIES)){
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
- const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
+ const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  const isCritF=c.alertLevel==='CRITICAL';
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCritF?'rgba(239,68,68,.5)':'rgba(100,150,220,.3)';
  if(isCritF&&!isSel){ctx.shadowColor='rgba(239,68,68,0.25)';ctx.shadowBlur=4;}
