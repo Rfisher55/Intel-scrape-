@@ -6984,6 +6984,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain root label pill */
 /* Brain cluster boundary circles */
 
+
+/* v33 AI engine text visibility */
+.dash-ai-section { color: #22c55e !important; }
+#dash-ai-trends, #dash-ai-log { color: #4ade80 !important; }
+/* DEEP SCAN badge in brain canvas */
+/* Hotspot CRITICAL shadow handled in canvas */
+/* Child ring highlight */
+
 </style>
 </head>
 <body>
@@ -7217,7 +7225,7 @@ a:hover { color: #bfdbfe !important; }
       <div class="dash-ai-grid">
         <div>
           <div class="dash-ai-col-title">SIGNAL TRENDS</div>
-          <div id="dash-ai-trends"><div style="color:#064e3b;font-size:8px;">Open modules to begin learning</div></div>
+          <div id="dash-ai-trends"><div style="color:#22c55e;font-size:8px;letter-spacing:.08em;opacity:0.6;">OPEN MODULES TO BEGIN LEARNING</div></div>
         </div>
         <div>
           <div class="dash-ai-col-title">ENGINE LOG</div>
@@ -13658,8 +13666,10 @@ function drawHotspots(){
  ctx.beginPath();ctx.arc(p.px,p.py,r+2+p1*3,0,Math.PI*2);
  ctx.fillStyle=base.replace(',1)',',.12)');ctx.fill();
  // Core dot
+ if(h.severity==='critical'){ctx.shadowColor=base.replace(',1)',',.6)');ctx.shadowBlur=8;}
  ctx.beginPath();ctx.arc(p.px,p.py,r,0,Math.PI*2);
  ctx.fillStyle=base;ctx.fill();
+ ctx.shadowBlur=0;
  // Bright center flash
  ctx.beginPath();ctx.arc(p.px,p.py,r*0.42,0,Math.PI*2);
  ctx.fillStyle=`rgba(255,255,255,${0.6+p1*0.3})`;ctx.fill();
@@ -40828,17 +40838,17 @@ function _updateDashAI() {
     var sorted = Object.entries(_AIEngine.trendScores)
       .sort(function(a,b){return b[1]-a[1];}).slice(0,8);
     if(sorted.length === 0) {
-      trendsEl.innerHTML = '<div style="color:#064e3b;font-size:8px;">Open modules to begin learning</div>';
+      trendsEl.innerHTML = '<div style="color:#22c55e;font-size:8px;letter-spacing:.08em;opacity:0.6;">OPEN MODULES TO BEGIN LEARNING</div>';
     } else {
       var max = sorted[0][1]||1;
       trendsEl.innerHTML = sorted.map(function(e) {
         var pct = Math.round(e[1]/max*100);
         return '<div style="margin-bottom:6px;">'
           +'<div style="display:flex;justify-content:space-between;font-size:7px;letter-spacing:.08em;margin-bottom:2px;">'
-          +'<span style="color:#134e4a;">'+e[0].toUpperCase()+'</span>'
-          +'<span style="color:#064e3b;">'+e[1]+'</span></div>'
-          +'<div style="height:2px;background:rgba(20,83,45,0.2);">'
-          +'<div style="height:100%;width:'+pct+'%;background:rgba(34,197,94,0.35);"></div>'
+          +'<span style="color:#4ade80;">'+e[0].toUpperCase()+'</span>'
+          +'<span style="color:#86efac;">'+e[1]+'</span></div>'
+          +'<div style="height:2px;background:rgba(20,83,45,0.3);">'
+          +'<div style="height:100%;width:'+pct+'%;background:rgba(34,197,94,0.55);"></div>'
           +'</div></div>';
       }).join('');
     }
@@ -40847,9 +40857,9 @@ function _updateDashAI() {
   var logEl = document.getElementById('dash-ai-log');
   if(logEl && _AIEngine.eventLog) {
     logEl.innerHTML = _AIEngine.eventLog.slice(0,8).map(function(e) {
-      return '<div style="font-size:7px;letter-spacing:.05em;color:#064e3b;padding:3px 0;'
-        +'border-bottom:1px solid rgba(20,83,45,0.15);line-height:1.5;">'
-        +'<span style="color:#052e16;margin-right:6px;">['+e.ts+']</span>'+e.msg+'</div>';
+      return '<div style="font-size:7px;letter-spacing:.05em;color:#4ade80;padding:3px 0;'
+        +'border-bottom:1px solid rgba(20,83,45,0.2);line-height:1.5;">'
+        +'<span style="color:#22c55e;margin-right:6px;">['+e.ts+']</span>'+e.msg+'</div>';
     }).join('');
   }
 }
@@ -42615,9 +42625,14 @@ var _BrainEngine = (function(){
       if(_sel&&v.node!==_sel){
         var isChild=false;
         if(_sel.children) for(var ci2=0;ci2<_sel.children.length;ci2++){if(_sel.children[ci2]===v.node){isChild=true;break;}}
-        if(isChild&&v.sr>3){
-          ctx.beginPath();ctx.arc(v.sx,v.sy,r2*2.5,0,Math.PI*2);
-          ctx.strokeStyle='rgba('+cl.r+',0.22)';ctx.lineWidth=0.6;ctx.stroke();
+        if(isChild){
+          ctx.beginPath();ctx.arc(v.sx,v.sy,r2*2.8,0,Math.PI*2);
+          ctx.strokeStyle='rgba('+cl.r+',0.38)';ctx.lineWidth=0.7;ctx.stroke();
+          /* Small connecting glow dot */
+          if(v.sr>1.5){
+            ctx.beginPath();ctx.arc(v.sx,v.sy,Math.min(r2,4)+1,0,Math.PI*2);
+            ctx.fillStyle='rgba('+cl.r+',0.12)';ctx.fill();
+          }
         }
       }
 
@@ -42819,6 +42834,11 @@ var _BrainEngine = (function(){
       ctx.textAlign='left';
       ctx.fillText(fCl.n+' * D'+_sel.depth,14,18);
       /* Deep milestone: show special badge */
+      if(_maxDepth>=20&&_maxDepth<100){
+        ctx.font='7px "Courier New"';
+        ctx.fillStyle='rgba(249,115,22,0.45)';
+        ctx.fillText('DEEP SCAN ACTIVE &#x25C6; D'+_maxDepth,14,30);
+      }
       if(_maxDepth>=100){
         ctx.font='bold 9px "Courier New"';
         ctx.fillStyle='rgba(255,200,50,0.5)';
