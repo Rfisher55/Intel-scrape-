@@ -7402,6 +7402,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: atmosphere DEFCON pulse */
 /* Brain: depth bar D label conditional */
 
+
+/* v88 */
+/* Globe: hotspot age ring fade */
+/* Brain: root label larger at very high zoom */
+/* Brain: lateral signal dot color shift */
+/* Brain: minimap zoom label */
+/* Globe: selected country label box */
+
 </style>
 </head>
 <body>
@@ -13992,6 +14000,12 @@ function draw(){
  var _cLSz=Math.max(8,Math.min(16,Math.round(scale/40)));
  var _cLWt=isSel?'900':(c.alertLevel==='CRITICAL'?'bold':(c.alertLevel==='HIGH'?'bold':'normal'));
  ctx.font=_cLWt+' '+_cLSz+'px "Courier New"';
+ /* Selected country label gets filled box background */
+ if(isSel){
+   var _lbW=ctx.measureText(c.name.length>8?c.iso:c.name).width+6;
+   ctx.fillStyle='rgba(200,220,255,0.85)';
+   ctx.fillRect(ctr.px-_lbW/2,ctr.py-_cLSz+1,_lbW,_cLSz+2);
+ }
  ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
  ctx.textAlign='center';ctx.textBaseline='middle';
  if(!isSel&&!isHov){ctx.shadowColor='rgba(0,0,16,0.8)';ctx.shadowBlur=3;}
@@ -14272,10 +14286,14 @@ function drawHotspots(){
  // Glow fill
  ctx.beginPath();ctx.arc(p.px,p.py,r+2+p1*3,0,Math.PI*2);
  ctx.fillStyle=base.replace(',1)',',.12)');ctx.fill();
- // Core dot
+ // Core dot — age fade (newer = full brightness, older = dimmer)
+ var _hsAge=h.timestamp?(Date.now()-h.timestamp)/1000:0;
+ var _hsAgeFade=_hsAge>0?Math.max(0.3,1-_hsAge/86400):1;
  if(h.severity==='critical'){ctx.shadowColor=base.replace(',1)',',.6)');ctx.shadowBlur=8;}
+ ctx.globalAlpha=_hsAgeFade;
  ctx.beginPath();ctx.arc(p.px,p.py,r,0,Math.PI*2);
  ctx.fillStyle=base;ctx.fill();
+ ctx.globalAlpha=1;
  ctx.shadowBlur=0;
  // Bright center flash
  ctx.beginPath();ctx.arc(p.px,p.py,r*0.42,0,Math.PI*2);
@@ -43566,7 +43584,7 @@ var _BrainEngine = (function(){
       ctx.textAlign='center';
       if(v.node.depth===0){
         if(v.sr>14){
-          var lsz=Math.max(7,Math.min(11,v.sr*0.5));
+          var lsz=cam.zoom>500?Math.max(7,Math.min(18,v.sr*0.6)):Math.max(7,Math.min(11,v.sr*0.5));
           var _clActA=Math.min(1,(v.af||0.7)+(Math.sin(frame*0.04+v.node.ci*0.9)*0.12));
           ctx.fillStyle='rgba('+cl.r+','+Math.min(1,_clActA)+')';
           ctx.font=lsz+'px "Courier New"';
@@ -43652,11 +43670,11 @@ var _BrainEngine = (function(){
         ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+(sa*0.3)+')';
         ctx.fill();
       }
-      if(scl){ctx.shadowColor=scl.c;ctx.shadowBlur=3;}
+      if(scl){ctx.shadowColor=sg.lat?'rgba(200,210,255,0.8)':scl.c;ctx.shadowBlur=3;}
       ctx.beginPath();
       var _sigDotR=(sg.lat?1.0:1.5)*(0.6+sg.t*0.7);
       ctx.arc(sx2,sy2,_sigDotR,0,Math.PI*2);
-      ctx.fillStyle=scl?scl.c:'rgba(255,255,255,'+sa*0.9+')';
+      ctx.fillStyle=sg.lat?'rgba(180,200,255,'+sa*0.75+')':scl?scl.c:'rgba(255,255,255,'+sa*0.9+')';
       ctx.fill();
       ctx.shadowBlur=0;
     }
@@ -43964,7 +43982,8 @@ var _BrainEngine = (function(){
       /* mini-map label */
       ctx.fillStyle='rgba(71,85,105,0.8)';
       ctx.font='6px "Courier New"';ctx.textAlign='center';
-      ctx.fillText('OVERVIEW',MMx+MM/2,MMy-3);
+      var _mmZstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':Math.round(cam.zoom)+'x';
+      ctx.fillText('OVERVIEW  '+_mmZstr,MMx+MM/2,MMy-3);
       /* Fire rings on minimap */
       if(window._lastFireTimes){
         for(var _mmfi=0;_mmfi<CL.length;_mmfi++){
