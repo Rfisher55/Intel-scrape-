@@ -6678,6 +6678,40 @@ a:hover { color: #bfdbfe !important; }
 .report-meta { color: #334155 !important; border-color: rgba(30,58,95,0.3) !important; }
 .report-meta span { color: #3d5066 !important; }
 
+
+/* ─── Attribute-selector dark-color lift (v14) ─── */
+/* All inline color:#4a5470 -> #475569 */
+[style*="color:#4a5470"] { color: #475569 !important; }
+/* All inline color:#2a3548 -> #334155 */
+[style*="color:#2a3548"] { color: #334155 !important; }
+/* Remaining #1e3a5f instances */
+[style*="color:#1e3a5f"] { color: #334155 !important; }
+/* Remaining #1e293b instances */
+[style*="color:#1e293b"] { color: #334155 !important; }
+/* classif bar pseudo */
+#classif-bar::before { color: #334155 !important; }
+/* sys-stat sublabels */
+.sys-stat-item span:last-child { color: #475569 !important; }
+/* search input placeholder */
+#search-input::placeholder { color: #475569 !important; }
+#search-input { color: #94a3b8 !important; }
+/* camera thumbnail placeholder icon */
+.cam-thumb-ph { color: #334155 !important; }
+/* intel tab badge count */
+#tab-intel span { color: #475569 !important; }
+/* ai-log-timestamp was #0f172a */
+.ai-log-timestamp { color: #475569 !important; }
+/* intel panel body scrollbar track */
+#intel-panel-body { scrollbar-color: rgba(30,58,95,0.5) transparent !important; }
+/* country panel footer */
+.p-foot { color: #475569 !important; }
+/* country panel footer span */
+.p-foot span { color: #334155 !important; }
+/* p-updated */
+#p-updated { color: #475569 !important; }
+/* Overlay GDELT source-lines */
+[class*="-gdelt-item"] { border-bottom-color: rgba(30,58,95,0.25) !important; }
+
 </style>
 </head>
 <body>
@@ -7202,7 +7236,7 @@ a:hover { color: #bfdbfe !important; }
  </div>
  <div style="font-size:7px;color:#4a5470;letter-spacing:.1em;padding:5px 10px;border-bottom:1px solid var(--border);flex-shrink:0">COMPOSITE: ALERT LEVEL · HOTSPOTS · UN CRISES · OSINT</div>
  <div style="overflow-y:auto;flex:1" id="rankings-list"><div style="color:#4a5470;font-size:9px;text-align:center;padding:20px">COMPUTING…</div></div>
- <div style="font-size:7px;color:#2a3548;padding:5px 10px;border-top:1px solid var(--border);flex-shrink:0;letter-spacing:.08em">GDELT · UN OCHA · OSINT // UNCLASSIFIED</div>
+ <div style="font-size:7px;color:#334155;padding:5px 10px;border-top:1px solid var(--border);flex-shrink:0;letter-spacing:.08em">GDELT &#x25C6; UN OCHA &#x25C6; OSINT // UNCLASSIFIED</div>
 </div>
 <div id="icc-overlay">
  <div id="icc-header">
@@ -7253,7 +7287,7 @@ a:hover { color: #bfdbfe !important; }
  <div class="search-results" id="search-results">
  <div style="color:#4a5470;font-size:9px;text-align:center;padding:30px;letter-spacing:.12em">
  ENTER QUERY TO SEARCH ACROSS GDELT, REDDIT, AND WIKIPEDIA<br>
- <span style="color:#2a3548;font-size:8px;margin-top:6px;display:block">Examples: "Russia military", "DPRK nuclear", "cyber attack infrastructure"</span>
+ <span style="color:#334155;font-size:8px;margin-top:6px;display:block">Examples: "Russia military", "DPRK nuclear", "cyber attack infrastructure"</span>
  </div>
  </div>
 </div>
@@ -7304,7 +7338,7 @@ a:hover { color: #bfdbfe !important; }
  <div class="sigint-body">
  <input id="sigint-filter" type="text" placeholder="Filter signals..." oninput="filterSIGINT(this.value)" style="width:calc(100% - 16px);background:var(--panel2);border:1px solid var(--border-hi);border-radius:0;color:var(--text);font-family:var(--mono);font-size:9px;padding:4px 8px;margin:5px 8px;box-sizing:border-box;outline:none;letter-spacing:.05em;display:block;" />
  <div class="sigint-feed" id="sigint-feed">
- <div class="sigint-loading">&#x25CC; INITIALIZING SIGINT FEED&#8230;<br><br><span style="color:#2a3548">GDELT PROJECT &middot; MULTI-SOURCE INTELLIGENCE AGGREGATION</span></div>
+ <div class="sigint-loading">&#x25CC; INITIALIZING SIGINT FEED&#8230;<br><br><span style="color:#334155;letter-spacing:.08em;">GDELT &#x25C6; MULTI-SOURCE INTELLIGENCE AGGREGATION</span></div>
  </div>
  <div class="sigint-sidebar" id="sigint-sidebar">
  <div>
@@ -19082,7 +19116,7 @@ async function renderLiveIntelTab(iso){
  const c=COUNTRIES[iso];
  tab.innerHTML=`<div style="font-size:8px;color:#4a5470;letter-spacing:.15em;text-align:center;padding:24px">
  ◌ FETCHING LIVE INTELLIGENCE FOR ${countryName.toUpperCase()}…<br>
- <span style="color:#2a3548;font-size:7px;margin-top:6px;display:block">GDELT · WORLD BANK · UN · USGS · REDDIT</span>
+ <span style="color:#334155;font-size:7px;margin-top:6px;display:block;letter-spacing:.08em">GDELT &#x25C6; WORLD BANK &#x25C6; UN &#x25C6; USGS &#x25C6; REDDIT</span>
  </div>`;
  // Parallel fetch
  const [gdeltRes,wbGdp,wbMil,wbPop,rwCrises,redditRes]=await Promise.allSettled([
@@ -19127,9 +19161,9 @@ async function renderLiveIntelTab(iso){
  const ts=new Date().toISOString().slice(0,19).replace('T',' ')+' UTC';
  tab.innerHTML=`
  <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0 10px;margin-bottom:10px;border-bottom:1px solid var(--border)">
- <div style="font-size:7px;color:#4a5470;letter-spacing:.2em;text-transform:uppercase">LIVE INTELLIGENCE — ${countryName.toUpperCase()}</div>
+ <div style="font-size:7px;color:#475569;letter-spacing:.2em;text-transform:uppercase">LIVE INTELLIGENCE — ${countryName.toUpperCase()}</div>
  <div style="display:flex;align-items:center;gap:8px">
- <span style="font-size:7px;color:#2a3548;letter-spacing:.06em">${ts}</span>
+ <span style="font-size:7px;color:#475569;letter-spacing:.06em">${ts}</span>
  <button onclick="renderLiveIntelTab('${iso}')" style="background:none;border:1px solid var(--border);color:#4a5470;cursor:pointer;padding:2px 7px;border-radius:2px;font-size:7px;font-family:var(--mono);letter-spacing:.1em">↻</button>
  </div>
  </div>
@@ -42321,6 +42355,18 @@ var _BrainEngine = (function(){
       ctx.fillStyle='rgba(147,197,253,0.6)';
       ctx.fillRect(dpbX-2,dpbY+dpbH*(1-depthFrac),5,dpbH*depthFrac);
       ctx.globalAlpha=1;
+      ctx.restore();
+    }
+
+    /* Current cluster name when zoomed deep */
+    if(cam.zoom>5&&_sel){
+      var fCl=CL[_sel.ci];
+      ctx.save();
+      ctx.globalAlpha=0.38;
+      ctx.font='7px "Courier New"';
+      ctx.fillStyle=fCl.c;
+      ctx.textAlign='left';
+      ctx.fillText('CLUSTER: '+fCl.n+' * D'+_sel.depth,14,18);
       ctx.restore();
     }
 
