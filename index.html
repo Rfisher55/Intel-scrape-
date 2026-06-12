@@ -6712,6 +6712,55 @@ a:hover { color: #bfdbfe !important; }
 /* Overlay GDELT source-lines */
 [class*="-gdelt-item"] { border-bottom-color: rgba(30,58,95,0.25) !important; }
 
+
+/* ─── v15: extend dark-color lift ─── */
+[style*="color:#4a5878"] { color: #475569 !important; }
+[style*="color:#4a5470"] { color: #475569 !important; }
+
+/* SIGINT panel text — direct class overrides */
+.sigint-subtitle       { color: #475569 !important; }
+.sigint-filter-btn     { color: #64748b !important; }
+.sigint-filter-btn.active { color: #00d97e !important; }
+.sigint-event-time     { color: #475569 !important; }
+.sigint-event-country  { color: #475569 !important; }
+.sigint-loading        { color: #475569 !important; }
+.sigint-section-label  { color: #475569 !important; }
+.sigint-stat-label     { color: #475569 !important; }
+.sigint-refresh-ts     { color: #475569 !important; }
+.sigint-country-name   { color: #64748b !important; }
+
+/* Brain cluster legend: add background panel */
+#brain-cluster-legend {
+  background: rgba(2,6,18,0.75) !important;
+  border: 1px solid rgba(30,58,95,0.3) !important;
+  padding: 6px 10px !important;
+  border-radius: 2px !important;
+  backdrop-filter: blur(4px) !important;
+}
+#brain-cluster-legend div:hover {
+  background: rgba(30,58,95,0.3) !important;
+  border-radius: 2px !important;
+}
+
+/* Brain stats bar values: larger on wide viewport */
+@media (min-width: 1200px) {
+  .brain-stat-val { font-size: 13px !important; }
+  .brain-stat-label { font-size: 7px !important; }
+}
+
+/* Brain depth stat always visible */
+#brain-depth-stat { color: #475569 !important; }
+
+/* Brain subtitle: make it slightly brighter */
+.brain-subtitle {
+  color: #475569 !important;
+  font-size: 7px !important;
+  letter-spacing: .12em !important;
+}
+
+/* Brain node panel scrollbar */
+#brain-node-panel { scrollbar-width: thin !important; scrollbar-color: rgba(30,58,138,0.4) transparent !important; }
+
 </style>
 </head>
 <body>
@@ -7343,7 +7392,7 @@ a:hover { color: #bfdbfe !important; }
  <div class="sigint-sidebar" id="sigint-sidebar">
  <div>
  <div class="sigint-section-label">SYSTEM STATUS</div>
- <div class="sigint-stat-row"><span class="sigint-stat-label">GDELT FEED</span><span class="sigint-stat-val" id="sstat-gdelt" style="color:#4a5878">STANDBY</span></div>
+ <div class="sigint-stat-row"><span class="sigint-stat-label">GDELT FEED</span><span class="sigint-stat-val" id="sstat-gdelt" style="color:#475569">STANDBY</span></div>
  <div class="sigint-stat-row"><span class="sigint-stat-label">EVENTS LOADED</span><span class="sigint-stat-val" id="sstat-count">0</span></div>
  <div class="sigint-stat-row"><span class="sigint-stat-label">LAST UPDATE</span><span class="sigint-stat-val" id="sstat-ts" style="font-size:8px">&#8212;</span></div>
  <div class="sigint-stat-row"><span class="sigint-stat-label">SOURCES ACTIVE</span><span class="sigint-stat-val">100+</span></div>
@@ -13280,6 +13329,18 @@ function draw(){
  if(_energyPipeActive)drawEnergyPipelines();
  if(_migrationActive)drawMigrationRoutes();
  if(showHotspots)drawHotspots();
+ /* Selected country name on canvas */
+ if(selectedISO&&COUNTRIES[selectedISO]){
+   const sc=COUNTRIES[selectedISO];
+   ctx.save();
+   ctx.font='bold 9px "Courier New"';
+   ctx.textAlign='center';
+   const alertC={CRITICAL:'#fca5a5',HIGH:'#fdba74',MEDIUM:'#fcd34d',LOW:'#86efac'}[sc.alertLevel]||'#94a3b8';
+   ctx.fillStyle=alertC;
+   ctx.globalAlpha=0.7;
+   ctx.fillText('◆ '+sc.name.toUpperCase()+' — '+sc.alertLevel,canvas.width/2,22);
+   ctx.restore();
+ }
  // Globe border ring
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
  ctx.strokeStyle='rgba(59,130,246,.25)';ctx.lineWidth=1.5;ctx.stroke();
@@ -47439,7 +47500,7 @@ function filterSIGINT(query){
     <!-- Title -->
     <div id="brain-title-block">
       <div class="brain-title">&#x25C6; NEURAL COMMAND</div>
-      <div class="brain-subtitle">LIVE COGNITIVE ARCHITECTURE &nbsp;//&nbsp; AI PATTERN ENGINE v4.0 &nbsp;//&nbsp; GDELT SIGNAL PROCESSING</div>
+      <div class="brain-subtitle">LIVE COGNITIVE ARCHITECTURE &#x25C6; AI PATTERN ENGINE v5.0 &#x25C6; GDELT SIGNAL FUSION &#x25C6; INFINITE DEPTH</div>
     </div>
 
         <!-- Cluster labels injected by JS -->
