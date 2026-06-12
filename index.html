@@ -7585,6 +7585,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: scan speed dot */
 /* Brain: hover activation pct label */
 
+
+/* v112 */
+/* Globe: ocean + sphere DEFCON color shift */
+/* Brain: sel node orbit ghost blobs */
+/* Globe: hotspot relative time badge */
+/* Brain: lateral edge phase jitter */
+
 </style>
 </head>
 <body>
@@ -14100,9 +14107,12 @@ function draw(){
  ctx.fillStyle=`rgba(180,210,255,${Math.min(1,s.a*twinkle+_twFlash*0.5)})`;ctx.fill();
  if(_twFlash>0)ctx.shadowBlur=0;
  }
- // ── Globe sphere — richer gradient
+ // ── Globe sphere — richer gradient, DEFCON-tinted
+ var _sgDefEl=document.getElementById('defcon-num');
+ var _sgDefN=_sgDefEl?parseInt(_sgDefEl.textContent)||3:3;
  const g=ctx.createRadialGradient(cx-scale*.22,cy-scale*.28,scale*.01,cx,cy,scale*1.02);
- g.addColorStop(0,'#182e5a');g.addColorStop(.25,'#0c1e3d');
+ g.addColorStop(0,_sgDefN<=1?'#2a1020':_sgDefN===2?'#1e1030':'#182e5a');
+ g.addColorStop(.25,_sgDefN<=1?'#180c18':_sgDefN===2?'#110c22':'#0c1e3d');
  g.addColorStop(.65,'#050f20');g.addColorStop(1,'#010408');
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
  // ── Atmosphere glow
@@ -14578,11 +14588,14 @@ function drawHotspots(){
   ctx.fillStyle='rgba(0,0,0,0.55)';ctx.fillText(_sevLtr,p.px,p.py);
   ctx.textBaseline='alphabetic';ctx.restore();
  }
- /* Count badge above hotspot at high zoom */
- if(h.count&&h.count>1&&scale>350&&r>4){
+ /* Count badge + time above hotspot at high zoom */
+ if(scale>350&&r>4){
   ctx.save();ctx.font='bold '+(Math.round(r*0.55))+'px "Courier New"';
   ctx.textAlign='center';ctx.fillStyle=base.replace(',1)',',.7)');
-  ctx.fillText(h.count,p.px,p.py-r-2);ctx.restore();
+  var _hsBadge='';
+  if(h.count&&h.count>1)_hsBadge+=h.count+'x ';
+  if(h.timestamp){var _hsMin=Math.round((Date.now()-h.timestamp)/60000);_hsBadge+=_hsMin<60?_hsMin+'m':Math.round(_hsMin/60)+'h';}
+  if(_hsBadge)ctx.fillText(_hsBadge.trim(),p.px,p.py-r-2);ctx.restore();
  }
  /* Type abbreviation on core */
  if(r>=4){var _htL={'nuclear':'N','conflict':'C','cyber':'X','epidemic':'E','terrorism':'T','famine':'F','pollution':'P','migration':'M'}[h.type]||'+';
@@ -43891,7 +43904,12 @@ var _BrainEngine = (function(){
       }
       /* Edge glow on high-af non-cross edges */
       if(a>0.45&&!e.cross&&!e.lat){var _egI=e.af!==undefined?e.af:1;ctx.shadowColor='rgba('+er+','+eg+','+eb+','+Math.min(0.35,0.2*_egI)+')';ctx.shadowBlur=_egI>0.8?2.5:1.5;}else{ctx.shadowBlur=0;}
-      if(e.lat){if(window._hideLateral){ctx.shadowBlur=0;ctx.setLineDash([]);continue;}ctx.setLineDash([2,3]);}else{ctx.setLineDash([]);}
+      if(e.lat){
+        if(window._hideLateral){ctx.shadowBlur=0;ctx.setLineDash([]);continue;}
+        /* Organic dash pattern: slight phase shift per edge */
+        var _latPhase=(e.ci*7+e.depth*3)%6;
+        ctx.setLineDash([2,3]);ctx.lineDashOffset=-_latPhase;
+      }else{ctx.setLineDash([]);}
       /* Edge width: same cluster as selected node + active cluster focus */
       var _edgeSelFocus=_sel&&!e.cross&&e.ci===_sel.ci?1.4:1;
       var _edgeActFocus=(clAct&&clAct[e.ci]&&clAct[e.ci]>0.5)?1+clAct[e.ci]*0.3:1;
@@ -44018,6 +44036,18 @@ var _BrainEngine = (function(){
           ctx.save();ctx.font='bold 6px "Courier New"';ctx.textAlign='center';ctx.textBaseline='middle';
           ctx.fillStyle=_sdColor;ctx.fillText('D'+v.node.depth,v.sx,v.sy+spr+5);
           ctx.textBaseline='alphabetic';ctx.restore();
+        }
+        /* Ghost orbit blobs for selected node children */
+        if(_sel===v.node&&v.node.children&&v.node.children.length>0){
+          var _orbN=Math.min(v.node.children.length,8);
+          var _orbR=spr+12;
+          for(var _orbi=0;_orbi<_orbN;_orbi++){
+            var _orbA=(_orbi/_orbN)*Math.PI*2+(frame*0.008);
+            var _orbX=v.sx+Math.cos(_orbA)*_orbR;
+            var _orbY=v.sy+Math.sin(_orbA)*_orbR;
+            ctx.beginPath();ctx.arc(_orbX,_orbY,1.5,0,Math.PI*2);
+            ctx.fillStyle='rgba('+cl.r+',0.22)';ctx.fill();
+          }
         }
         /* Connection count arc segments */
         var _connN=(v.node.children?v.node.children.length:0)+(v.node.parent?1:0);
