@@ -7553,6 +7553,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: cross-edge color interpolation */
 /* Globe: DEFCON change timestamp tracked */
 
+
+/* v108 */
+/* Globe: atmo DEFCON color shift */
+/* Brain: selection history ghost rings */
+/* Globe: hotspot count badge at zoom */
+/* Brain: P key pause signals */
+
 </style>
 </head>
 <body>
@@ -14080,9 +14087,9 @@ function draw(){
  var _atmoPulse=Math.sin(Date.now()*0.0008*(4-_defconNA))*0.5+0.5;
  const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*_atmoOuter);
  var _aDefN=parseInt((document.getElementById('defcon-num')||{textContent:'3'}).textContent)||3;
- var _aR=_aDefN<=1?200:_aDefN===2?130:_aDefN===3?70:50;
- var _aG=_aDefN<=1?60:_aDefN===2?90:_aDefN===3?110:120;
- var _aB=_aDefN<=1?60:_aDefN===2?80:_aDefN===3?180:255;
+ var _aR=_aDefN<=1?230:_aDefN===2?155:_aDefN===3?80:50;
+ var _aG=_aDefN<=1?50:_aDefN===2?80:_aDefN===3?105:120;
+ var _aB=_aDefN<=1?40:_aDefN===2?60:_aDefN===3?195:255;
  var _aA=(_aDefN<=1?.32:_aDefN===2?.28:.28)*(0.85+(_atmoPulse||0.5)*0.15);
  a.addColorStop(0,'rgba('+_aR+','+_aG+','+_aB+','+_aA.toFixed(3)+')');
  a.addColorStop(.4,'rgba('+Math.round(_aR*.6)+','+Math.round(_aG*.65)+','+Math.round(_aB*.85)+',.10)');
@@ -14519,6 +14526,12 @@ function drawHotspots(){
   ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillStyle='rgba(0,0,0,0.55)';ctx.fillText(_sevLtr,p.px,p.py);
   ctx.textBaseline='alphabetic';ctx.restore();
+ }
+ /* Count badge above hotspot at high zoom */
+ if(h.count&&h.count>1&&scale>350&&r>4){
+  ctx.save();ctx.font='bold '+(Math.round(r*0.55))+'px "Courier New"';
+  ctx.textAlign='center';ctx.fillStyle=base.replace(',1)',',.7)');
+  ctx.fillText(h.count,p.px,p.py-r-2);ctx.restore();
  }
  /* Type abbreviation on core */
  if(r>=4){var _htL={'nuclear':'N','conflict':'C','cyber':'X','epidemic':'E','terrorism':'T','famine':'F','pollution':'P','migration':'M'}[h.type]||'+';
@@ -43867,6 +43880,16 @@ var _BrainEngine = (function(){
         ctx.lineWidth=v.sr>20?1.5:0.8;ctx.stroke();
         ctx.shadowBlur=0;
       }
+      /* Selection history ghost rings */
+      if(window._selHistory&&!isSel){
+        for(var _shi=0;_shi<window._selHistory.length;_shi++){
+          if(window._selHistory[_shi]===v.node){
+            var _shFade=(_shi+1)/window._selHistory.length*0.15;
+            ctx.beginPath();ctx.arc(v.sx,v.sy,r2*3.5,0,Math.PI*2);
+            ctx.strokeStyle='rgba('+cl.r+','+_shFade+')';ctx.lineWidth=0.5;ctx.stroke();
+          }
+        }
+      }
       /* Adjacent (1-hop) node highlight */
       if(_sel&&!isSel){
         var _isAdj=false;
@@ -44030,7 +44053,7 @@ var _BrainEngine = (function(){
     /* ── Axon signals: tiny dots traveling along visible edges ── */
     if(!window._bsigs) window._bsigs=[];
     var SMAX=120;
-    if(frame%5===0&&window._bsigs.length<SMAX&&_ve.length>0){
+    if(frame%5===0&&window._bsigs.length<SMAX&&_ve.length>0&&!window._brainPauseSignals){
       var ei=Math.floor(Math.random()*_ve.length);
       var ev=_ve[ei];
       if(ev&&ev.af>0.15)
@@ -44570,6 +44593,12 @@ var _BrainEngine = (function(){
 
   function showPanel(node){
     window._selRingT=-0.01;
+    /* Selection history: keep last 3 */
+    if(!window._selHistory)window._selHistory=[];
+    if(window._selHistory[window._selHistory.length-1]!==node){
+      window._selHistory.push(node);
+      if(window._selHistory.length>3)window._selHistory.shift();
+    }
     _sel=node;
     /* Zoom in slightly toward selected node on selection */
     if(cam.zoom<5&&node.wx!==undefined&&node.wy!==undefined){
@@ -44960,6 +44989,13 @@ document.addEventListener('keydown', function(e){
         else cam.zoom=Math.max(0.1,cam.zoom/1.5);
       }
       /* H = toggle stats bar */
+      /* P = pause signal generation */
+      if(e.key==='p'||e.key==='P'){
+        window._brainPauseSignals=!window._brainPauseSignals;
+        var toastP=document.getElementById('brain-cluster-toast');
+        if(toastP){toastP.textContent=window._brainPauseSignals?'SIGNALS PAUSED':'SIGNALS LIVE';toastP.style.color=window._brainPauseSignals?'#ef4444':'#22c55e';toastP.style.display='block';toastP.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastP.style.opacity='0';setTimeout(function(){toastP.style.display='none';},400);},1200);}
+        return;
+      }
       /* N = spawn temporary extra signal on selected cluster */
       if(e.key==='n'||e.key==='N'){
         if(_sel&&window._bsigs&&CL[_sel.ci]){
