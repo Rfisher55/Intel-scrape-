@@ -7001,6 +7001,14 @@ a:hover { color: #bfdbfe !important; }
 #brain-node-panel button:first-of-type { letter-spacing: .18em !important; }
 /* Brain cheatsheet close button */
 
+
+/* v35 */
+/* Brain uptime HH:MM:SS */
+/* N key nearest node shortcut */
+/* Globe h-status hover ISO badge */
+#h-status strong { font-size: inherit; }
+/* Brain keyboard shortcut N in cheatsheet */
+
 </style>
 </head>
 <body>
@@ -42944,11 +42952,14 @@ var _BrainEngine = (function(){
         se.style.color=_maxDepth<5?'#22c55e':_maxDepth<20?'#fbbf24':_maxDepth<50?'#f97316':'#ef4444';
       }
       se=document.getElementById('bstat-load');if(se)se.textContent=Math.round(_vn.length/_nodeLimit*100)+'%';
-      /* Uptime display */
+      /* Uptime display HH:MM:SS */
       if(window._brainStartTime){
         var elap=Math.floor((Date.now()-window._brainStartTime)/1000);
         var uptEl=document.getElementById('bstat-uptime');
-        if(uptEl){var m=Math.floor(elap/60),s=elap%60;uptEl.textContent=(m>0?m+'m ':'')+s+'s';}
+        if(uptEl){
+          var uh=Math.floor(elap/3600),um=Math.floor((elap%3600)/60),us=elap%60;
+          uptEl.textContent=(uh>0?uh+':':'')+(uh>0?String(um).padStart(2,'0'):um)+':'+String(us).padStart(2,'0');
+        }
       }
       /* Update signal list */
       var sl=document.getElementById('brain-signal-list');
@@ -43267,6 +43278,23 @@ document.addEventListener('keydown', function(e){
       /* Zoom keys */
       if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
       if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
+      /* N = focus nearest visible node */
+      if(e.key==='n'||e.key==='N'){
+        if(_vn.length>0&&typeof showPanel==='function'){
+          var _nc=null,_nd=Infinity;
+          for(var _ni=0;_ni<_vn.length;_ni++){
+            var _nv=_vn[_ni];
+            var _dx=_nv.sx-W/2,_dy=_nv.sy-H/2;
+            var _ndd=_dx*_dx+_dy*_dy;
+            if(_ndd<_nd){_nd=_ndd;_nc=_nv.node;}
+          }
+          if(_nc){
+            showPanel(_nc);
+            if(cam.tx!==undefined){cam.tx=_nc.wx;cam.ty=_nc.wy;}
+            window._brainFlash={node:_nc,t:0};
+          }
+        }
+      }
       /* Arrow key pan */
       var panStep=30/cam.zoom;
       var _ptx=cam.tx!==undefined?cam.tx:cam.x;
@@ -48045,6 +48073,7 @@ function filterSIGINT(query){
     <span style="color:#ef4444;">Click</span><span>Open node panel</span>
     <span style="color:#ef4444;">Dbl-click</span><span>Zoom into node</span>
     <span style="color:#f97316;">ESC</span><span>Close panel / stop animation</span>
+    <span style="color:#06b6d4;">N</span><span>Focus nearest visible node</span>
     <span style="color:#475569;">?</span><span>This help panel</span>
   </div>
   <div onclick="document.getElementById('brain-cheatsheet').style.display='none';" style="margin-top:12px;text-align:center;color:#ef4444;cursor:pointer;letter-spacing:.18em;">&#x2715; CLOSE</div>
