@@ -6811,6 +6811,11 @@ a:hover { color: #bfdbfe !important; }
   font-size: 6px; color: #334155; letter-spacing: .12em; margin-top: 4px;
 }
 
+
+/* Rankings panel */
+.rank-num { color: #475569 !important; }
+.rank-name { color: #94a3b8 !important; }
+
 </style>
 </head>
 <body>
@@ -7073,7 +7078,7 @@ a:hover { color: #bfdbfe !important; }
  <span class="h-title">INTEL GLOBE</span>
  <span class="h-region">OSINT Platform v3.1</span>
  </div>
- <div class="h-middle" id="h-status">Double-click country · Dots are hotspots · G / I / B to switch · Brain: dbl-click zooms · R resets</div>
+ <div class="h-middle" id="h-status">Click country &#x25C6; G/I/B views &#x25C6; Brain: dbl-click zooms, Q/W clusters, arrows pan, R reset</div>
  <div class="h-right">
  <div id="sys-stats">
  <div class="sys-stat-item"><span class="sys-stat-val" id="stat-countries">125</span><span>COUNTRIES</span></div>
@@ -7089,7 +7094,7 @@ a:hover { color: #bfdbfe !important; }
 </div>
 
 <div id="globe-wrap"><canvas id="globe"></canvas></div>
-<div id="zoom-hint">Scroll to zoom · Drag to pan · ESC = close panels · / = search · R = rankings · M = matrix</div>
+<div id="zoom-hint">Scroll to zoom &#x25C6; Drag to pan &#x25C6; ESC = close &#x25C6; G/I/B = views &#x25C6; M = matrix &#x25C6; / = search</div>
 <div id="hud-corners"></div>
 
 <!-- Data layer controls -->
@@ -42251,6 +42256,14 @@ var _BrainEngine = (function(){
     if(!ON) return;
     RAF=requestAnimationFrame(render);
     frame++;
+    /* Smooth camera lerp towards navigation targets */
+    if(cam.tx!==undefined){
+      var lf=0.12;
+      cam.x+=(cam.tx-cam.x)*lf; cam.y+=(cam.ty-cam.y)*lf; cam.zoom+=(cam.tz-cam.zoom)*lf;
+      if(Math.abs(cam.x-cam.tx)<0.01) cam.x=cam.tx;
+      if(Math.abs(cam.y-cam.ty)<0.01) cam.y=cam.ty;
+      if(Math.abs(cam.zoom-cam.tz)<0.0001) cam.zoom=cam.tz;
+    }
     ctx.fillStyle='rgb(0,0,8)';
     ctx.fillRect(0,0,W,H);
 
@@ -42482,6 +42495,14 @@ var _BrainEngine = (function(){
       ctx.restore();
     }
 
+    /* Vignette effect — darken edges of canvas */
+    (function(){
+      var vg=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.35,W/2,H/2,Math.max(W,H)*0.72);
+      vg.addColorStop(0,'rgba(0,0,0,0)');
+      vg.addColorStop(1,'rgba(0,1,8,0.55)');
+      ctx.save();ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);ctx.restore();
+    })();
+
     /* Mini-map: shown when not at overview (zoom > 1.2) */
     if(cam.zoom>1.2){
       var MM=80,MMx=12,MMy=H-MM-210;
@@ -42550,8 +42571,7 @@ var _BrainEngine = (function(){
           '</div>';
         }).join('');
         var ds=document.getElementById('brain-depth-stat');
-        if(ds) ds.textContent='DEPTH '+_maxDepth+' &#x25C6; '+cam.zoom.toFixed(1)+'x ZOOM';
-        if(ds) ds.innerHTML='DEPTH '+_maxDepth+' &#x25C6; '+cam.zoom.toFixed(1)+'x ZOOM';
+        if(ds) ds.innerHTML='DEPTH '+(Math.max(_maxDepth,0))+' &#x25C6; '+(cam.zoom>=1000?(cam.zoom/1000).toFixed(0)+'K':cam.zoom.toFixed(1))+'x ZOOM';
       }
     }
   }
@@ -42619,6 +42639,7 @@ var _BrainEngine = (function(){
     ctx=cv.getContext('2d');
     resize();buildRoots();
     cam.x=28;cam.y=-28;cam.zoom=0.78;
+  cam.tx=28;cam.ty=-28;cam.tz=0.78;
     ON=true;initialized=true;render();
     setTimeout(function(){var h=document.getElementById("brain-hint");if(h)h.classList.add("hide");},5000);
   /* Populate cluster legend */
@@ -42649,6 +42670,7 @@ var _BrainEngine = (function(){
       cam.zoom=Math.max(0.04,Math.min(10000000,cam.zoom*(e.deltaY<0?1.13:0.885)));
       var wa=s2w(mx,my);
       cam.x+=wb.wx-wa.wx;cam.y+=wb.wy-wa.wy;
+      if(cam.tx!==undefined){cam.tx=cam.x;cam.ty=cam.y;cam.tz=cam.zoom;}
       /* guided dive: when zooming in, pull the nearest neuron toward the
          cursor faster than the zoom pushes it away — you always land
          inside the network, never in empty space */
@@ -42681,6 +42703,7 @@ var _BrainEngine = (function(){
         if(Math.abs(e.clientX-drag.sx)+Math.abs(e.clientY-drag.sy)>3) drag.moved=true;
         cam.x=drag.cx-(e.clientX-drag.sx)/cam.zoom;
         cam.y=drag.cy-(e.clientY-drag.sy)/cam.zoom;
+        if(cam.tx!==undefined){cam.tx=cam.x;cam.ty=cam.y;}
       }
       var rect=cv.getBoundingClientRect();
       var mx=e.clientX-rect.left,my=e.clientY-rect.top;
@@ -42847,7 +42870,7 @@ document.addEventListener('keydown', function(e){
           if(!window._brainFocusIdx) window._brainFocusIdx=0;
           window._brainFocusIdx=(window._brainFocusIdx-1+_BrainEngine.CL.length)%_BrainEngine.CL.length;
           var cl=_BrainEngine.CL[window._brainFocusIdx];
-          if(cam&&cl){cam.x=cl.wx;cam.y=cl.wy;cam.zoom=1.6;}
+          if(cam&&cl){cam.tx=cl.wx;cam.ty=cl.wy;cam.tz=1.6;}
           var toast=document.getElementById('brain-cluster-toast');
           if(toast){toast.textContent='< '+cl.n;toast.style.display='block';toast.style.opacity='1';
             clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toast.style.opacity='0';setTimeout(function(){toast.style.display='none';},400);},1800);}
@@ -42858,7 +42881,7 @@ document.addEventListener('keydown', function(e){
           if(!window._brainFocusIdx) window._brainFocusIdx=0;
           window._brainFocusIdx=(window._brainFocusIdx+1)%_BrainEngine.CL.length;
           var cl=_BrainEngine.CL[window._brainFocusIdx];
-          if(cam&&cl){cam.x=cl.wx;cam.y=cl.wy;cam.zoom=1.6;}
+          if(cam&&cl){cam.tx=cl.wx;cam.ty=cl.wy;cam.tz=1.6;}
           var toast2=document.getElementById('brain-cluster-toast');
           if(toast2){toast2.textContent='> '+cl.n;toast2.style.display='block';toast2.style.opacity='1';
             clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toast2.style.opacity='0';setTimeout(function(){toast2.style.display='none';},400);},1800);}
