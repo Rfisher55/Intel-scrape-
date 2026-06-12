@@ -6960,6 +6960,21 @@ a:hover { color: #bfdbfe !important; }
 /* Brain zoom chain text */
 #brain-canvas { font-smooth: always; -webkit-font-smoothing: antialiased; }
 
+
+/* v31 */
+/* Zoom level / FPS text in brain canvas */
+/* Vignette handled in canvas */
+/* Grid dim with active layers */
+/* h-time clock */
+#h-time { font-variant-numeric: tabular-nums; letter-spacing: .04em !important; }
+/* Brain canvas hint bar */
+#brain-hint { letter-spacing: .09em !important; }
+/* Brain stat label smaller on very narrow screens */
+@media (max-width: 500px) {
+  .brain-stat-label { display: none !important; }
+  .brain-stat-val { font-size: 9px !important; }
+}
+
 </style>
 </head>
 <body>
@@ -13469,8 +13484,12 @@ function draw(){
  const term=ctx.createRadialGradient(cx+scale*.3,cy-scale*.2,scale*.4,cx,cy,scale);
  term.addColorStop(0,'rgba(255,220,100,.04)');term.addColorStop(.7,'rgba(0,0,0,0)');
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=term;ctx.fill();
- // ── Grid
- ctx.strokeStyle='rgba(59,130,246,.06)';ctx.lineWidth=.5;
+ // ── Grid (opacity dims when multiple layers active)
+ var _gAlpha=0.06;
+ var _actLC=Object.values(activeLayers).filter(Boolean).length;
+ if(_actLC>=3) _gAlpha=0.025;
+ else if(_actLC>=1) _gAlpha=0.04;
+ ctx.strokeStyle='rgba(59,130,246,'+_gAlpha+')';ctx.lineWidth=.5;
  for(let lat=-80;lat<=80;lat+=20)drawParallel(lat);
  for(let lng=-180;lng<=180;lng+=20)drawMeridian(lng);
 
@@ -42460,6 +42479,11 @@ var _BrainEngine = (function(){
     }
     ctx.fillStyle='rgb(0,0,8)';
     ctx.fillRect(0,0,W,H);
+    /* Vignette — dark edges, bright center */
+    var _vig=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.28,W/2,H/2,Math.max(W,H)*0.65);
+    _vig.addColorStop(0,'transparent');
+    _vig.addColorStop(1,'rgba(0,0,6,0.45)');
+    ctx.fillStyle=_vig;ctx.fillRect(0,0,W,H);
 
     _vn=[]; _ve=[]; _maxDepth=0;
 
@@ -42738,12 +42762,16 @@ var _BrainEngine = (function(){
       ctx.restore();
     }
 
-    /* FPS counter top-right */
+    /* FPS counter top-right + zoom level bottom-left */
     ctx.save();
     ctx.font='6px "Courier New"';
     ctx.fillStyle='rgba(71,85,105,0.5)';
     ctx.textAlign='right';
     ctx.fillText(_fps+'fps',W-8,12);
+    /* Zoom level bottom-left */
+    var _zstr2=cam.zoom>=1000?(cam.zoom/1000).toFixed(1)+'K':cam.zoom>=1?(cam.zoom).toFixed(1):(cam.zoom).toFixed(3);
+    ctx.textAlign='left';
+    ctx.fillText(_zstr2+'x',8,H-8);
     ctx.restore();
 
     /* Current cluster name + milestone when zoomed deep */
