@@ -6831,6 +6831,15 @@ a:hover { color: #bfdbfe !important; }
 /* Overlay body — better scrollbar */
 [id$="-overlay"] { scrollbar-width: thin !important; scrollbar-color: rgba(30,58,95,0.4) transparent !important; }
 
+
+/* GDELT section headers in overlays */
+[id$="-gdelt"] { font-size: 8px; line-height: 1.6; }
+[id*="gdelt"] ~ div, [id*="gdelt"] + div { color: #475569 !important; }
+/* ILS feed updated timestamp */
+#ils-updated { color: #475569 !important; }
+/* ILS title line */
+#intel-live-stream > div > span:first-child { letter-spacing: .18em !important; }
+
 </style>
 </head>
 <body>
@@ -13317,9 +13326,13 @@ function draw(){
  g.addColorStop(.65,'#050f20');g.addColorStop(1,'#010408');
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
  // ── Atmosphere glow
- const a=ctx.createRadialGradient(cx,cy,scale*.96,cx,cy,scale*1.10);
- a.addColorStop(0,'rgba(40,100,255,.22)');a.addColorStop(.5,'rgba(20,60,200,.06)');a.addColorStop(1,'transparent');
- ctx.beginPath();ctx.arc(cx,cy,scale*1.10,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
+ const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*1.12);
+ a.addColorStop(0,'rgba(50,120,255,.28)');a.addColorStop(.4,'rgba(30,80,220,.10)');a.addColorStop(.8,'rgba(10,40,180,.04)');a.addColorStop(1,'transparent');
+ ctx.beginPath();ctx.arc(cx,cy,scale*1.12,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
+ /* Limb brightening — bright rim at the edge */
+ const limb=ctx.createRadialGradient(cx,cy,scale*.92,cx,cy,scale*1.0);
+ limb.addColorStop(0,'transparent');limb.addColorStop(.85,'rgba(80,160,255,.06)');limb.addColorStop(1,'rgba(100,180,255,.12)');
+ ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=limb;ctx.fill();
  // ── Terminator ring (subtle day/night)
  const term=ctx.createRadialGradient(cx+scale*.3,cy-scale*.2,scale*.4,cx,cy,scale);
  term.addColorStop(0,'rgba(255,220,100,.04)');term.addColorStop(.7,'rgba(0,0,0,0)');
@@ -13343,9 +13356,12 @@ function draw(){
  const c=COUNTRIES[iso];
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
  const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(160,190,240,.88)':ALERT_COLORS[c.alertLevel];
- ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':'rgba(100,150,220,.5)';
- ctx.lineWidth=isSel?1.5:.9;
+ var isCrit=c.alertLevel==='CRITICAL';
+ ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.6)':'rgba(100,150,220,.5)';
+ ctx.lineWidth=isSel?1.5:isCrit?.9:.8;
+ if(isCrit&&!isSel){ctx.shadowColor='rgba(239,68,68,0.28)';ctx.shadowBlur=5;}
  drawGeoFeature(feature,fill,true,true);
+ ctx.shadowBlur=0;
  const ctr=project(c.lat,c.lng);
  if(ctr.visible){
  ctx.font='bold 10px Courier New';
@@ -42917,6 +42933,7 @@ document.addEventListener('keydown', function(e){
       if(e.key==='-'||e.key==='_'){cam.zoom=Math.max(0.04,cam.zoom/1.25);}
       if(e.key==='r'||e.key==='R'){cam.x=28;cam.y=-28;cam.zoom=0.78;if(cam.tx!==undefined){cam.tx=28;cam.ty=-28;cam.tz=0.78;}var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
       if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}if(cam&&cam.tx!==undefined){cam.tx=cam.x;cam.ty=cam.y;cam.tz=cam.zoom;}}
+      if(e.key==='?'||e.key==='/'){var cs=document.getElementById('brain-cheatsheet');if(cs)cs.style.display=(cs.style.display==='none'?'block':'none');}
       /* Q/W = cycle through clusters */
       if(e.key==='q'||e.key==='Q'){
         if(typeof _BrainEngine!=='undefined'&&_BrainEngine.CL){
@@ -47670,6 +47687,23 @@ function filterSIGINT(query){
     <!-- Right: active signals -->
     
 <button id="brain-close-btn" onclick="switchToGlobe()">&#x2715; CLOSE BRAIN</button>
+<div id="brain-cheatsheet" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(2,6,18,0.97);border:1px solid rgba(30,58,138,0.6);padding:18px 24px;font-family:'Courier New',monospace;font-size:7.5px;letter-spacing:.12em;z-index:300;min-width:260px;">
+  <div style="color:#93c5fd;font-size:9px;letter-spacing:.25em;margin-bottom:12px;border-bottom:1px solid rgba(30,58,95,0.5);padding-bottom:6px;">&#x25C6; KEYBOARD SHORTCUTS</div>
+  <div style="display:grid;grid-template-columns:80px 1fr;gap:5px 12px;color:#64748b;">
+    <span style="color:#8b5cf6;">G / I / B</span><span>Globe / Intel / Brain views</span>
+    <span style="color:#06b6d4;">Q / W</span><span>Prev / Next cluster</span>
+    <span style="color:#06b6d4;">&#x2190;&#x2192;&#x2191;&#x2193;</span><span>Pan camera</span>
+    <span style="color:#22c55e;">+ / -</span><span>Zoom in / out</span>
+    <span style="color:#22c55e;">Scroll</span><span>Zoom to cursor</span>
+    <span style="color:#fbbf24;">R</span><span>Reset view (same as 0)</span>
+    <span style="color:#fbbf24;">0</span><span>Overview zoom out</span>
+    <span style="color:#ef4444;">Click</span><span>Open node panel</span>
+    <span style="color:#ef4444;">Dbl-click</span><span>Zoom into node</span>
+    <span style="color:#f97316;">ESC</span><span>Close panel / stop animation</span>
+    <span style="color:#475569;">?</span><span>This help panel</span>
+  </div>
+  <div onclick="document.getElementById('brain-cheatsheet').style.display='none';" style="margin-top:12px;text-align:center;color:#ef4444;cursor:pointer;letter-spacing:.18em;">&#x2715; CLOSE</div>
+</div>
 <div id="brain-hover-tip"></div>
   <div id="brain-signals-panel">
       <div class="brain-signal-title">ACTIVE SIGNALS</div>
