@@ -7175,6 +7175,11 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: cluster fire burst rings */
 /* Globe: panel scroll to top */
 
+
+/* v59 */
+/* Globe: scale bar (canvas) */
+/* Brain: coordinate grid at overview */
+
 </style>
 </head>
 <body>
@@ -13844,6 +13849,22 @@ function draw(){
  // Outer atmospheric ring
  ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
  ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
+ // Scale bar in bottom-right of globe canvas
+ {
+   var _sX=canvas.width-80,_sY=canvas.height-14;
+   /* Estimate km per pixel at equator */
+   var _kmPx=40075/scale/2; /* circumference / full diameter in pixels */
+   var _sbKm=_kmPx*50; /* 50px bar */
+   var _sbLbl=_sbKm>1000?Math.round(_sbKm/100)*100+'km':Math.round(_sbKm/50)*50+'km';
+   ctx.save();ctx.globalAlpha=0.35;
+   ctx.strokeStyle='rgba(148,163,184,0.8)';ctx.lineWidth=1;
+   ctx.beginPath();ctx.moveTo(_sX,_sY);ctx.lineTo(_sX+50,_sY);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(_sX,_sY-3);ctx.lineTo(_sX,_sY+3);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(_sX+50,_sY-3);ctx.lineTo(_sX+50,_sY+3);ctx.stroke();
+   ctx.font='5px "Courier New"';ctx.fillStyle='rgba(148,163,184,0.8)';ctx.textAlign='center';
+   ctx.fillText(_sbLbl,_sX+25,_sY-5);
+   ctx.restore();
+ }
  // Compass rose in bottom-left of globe canvas
  {
    var _crx=18,_cry=canvas.height-18,_crr=8;
@@ -42873,6 +42894,20 @@ var _BrainEngine = (function(){
       }
     }
 
+    /* Coordinate grid lines at overview zoom */
+    if(cam.zoom<0.9){
+      ctx.save();ctx.strokeStyle='rgba(30,58,138,0.15)';ctx.lineWidth=0.4;
+      /* Horizontal grid lines every 100 world units */
+      for(var _gx=-600;_gx<=700;_gx+=200){
+        var _gp1=w2s(_gx,-600),_gp2=w2s(_gx,600);
+        ctx.beginPath();ctx.moveTo(_gp1.sx,_gp1.sy);ctx.lineTo(_gp2.sx,_gp2.sy);ctx.stroke();
+      }
+      for(var _gy=-500;_gy<=500;_gy+=200){
+        var _gp3=w2s(-600,_gy),_gp4=w2s(700,_gy);
+        ctx.beginPath();ctx.moveTo(_gp3.sx,_gp3.sy);ctx.lineTo(_gp4.sx,_gp4.sy);ctx.stroke();
+      }
+      ctx.restore();
+    }
     /* Cluster boundary circles at overview zoom */
     if(cam.zoom<0.95){
       for(var cbi=0;cbi<roots.length;cbi++){
