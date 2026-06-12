@@ -7261,6 +7261,15 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: selected ring oscillates */
 /* Globe: country tooltip hotspot count */
 
+
+/* v71 */
+/* Brain: cheatsheet A/M shortcuts */
+/* Globe: country label size adaptive */
+/* Globe: selected border oscillates */
+/* Brain: selected parent dashed line */
+/* Brain: scan speed FPS-adaptive */
+/* Globe: capital label at high zoom */
+
 </style>
 </head>
 <body>
@@ -13815,7 +13824,7 @@ function draw(){
  const fill=isSel?'rgba(200,220,255,.95)':isHov?'rgba(180,205,255,.92)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  var isCrit=c.alertLevel==='CRITICAL';var isHigh=c.alertLevel==='HIGH';
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.65)':isHigh?'rgba(249,115,22,.45)':'rgba(100,150,220,.5)';
- ctx.lineWidth=isSel?1.5:isCrit?1.1:isHigh?.85:.8;
+ ctx.lineWidth=isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCrit?1.1:isHigh?.85:.8;
  if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
  else if((isCrit||isHigh)&&!isSel){ctx.shadowColor=isCrit?'rgba(239,68,68,0.28)':'rgba(249,115,22,0.2)';ctx.shadowBlur=isCrit?5:3;}
  drawGeoFeature(feature,fill,true,true);
@@ -13829,11 +13838,13 @@ function draw(){
    ctx.beginPath();ctx.arc(ctr.px,ctr.py,3+_hpf2*2,0,Math.PI*2);
    ctx.fillStyle='rgba(251,191,36,'+(0.3+_hpf2*0.25)+')';ctx.fill();
  }
- ctx.font='bold 10px Courier New';
+ var _cLSz=Math.max(8,Math.min(16,Math.round(scale/40)));
+ ctx.font='bold '+_cLSz+'px "Courier New"';
  ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
  ctx.textAlign='center';ctx.textBaseline='middle';
  if(!isSel&&!isHov){ctx.shadowColor='rgba(0,0,16,0.8)';ctx.shadowBlur=3;}
  ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
+ if(scale>520&&c.capital&&!isSel&&!isHov){ctx.font='6px "Courier New"';ctx.fillStyle='rgba(100,116,139,0.5)';ctx.fillText(c.capital.slice(0,16),ctr.px,ctr.py+_cLSz+1);}
  ctx.shadowBlur=0;
  }
  }
@@ -13848,7 +13859,7 @@ function draw(){
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCritF?'rgba(239,68,68,.55)':isHighF?'rgba(249,115,22,.4)':'rgba(100,150,220,.3)';
  if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
  else if((isCritF||isHighF)&&!isSel){ctx.shadowColor=isCritF?'rgba(239,68,68,0.25)':'rgba(249,115,22,0.15)';ctx.shadowBlur=isCritF?4:2;}
- ctx.lineWidth=isSel?1.5:isCritF?1.0:isHighF?.85:.8;
+ ctx.lineWidth=isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCritF?1.0:isHighF?.85:.8;
  drawPoly(c.poly,fill,true,true);
  const ctr=project(c.lat,c.lng);
  if(ctr.visible){
@@ -42993,7 +43004,8 @@ var _BrainEngine = (function(){
     ctx.fillStyle=_vig;ctx.fillRect(0,0,W,H);
     /* Radial scan sweep — very faint rotating line from screen center */
     if(frame%1===0){
-      var _scanAngle=(frame*0.003)%(Math.PI*2);
+      var _scanSpd=_fps>=45?0.003:_fps>=25?0.002:0.0015;
+      var _scanAngle=(frame*_scanSpd)%(Math.PI*2);
       var _scanLen=Math.max(W,H)*0.7;
       var _scx=W/2,_scy=H/2;
       var _scGrad=ctx.createLinearGradient(_scx,_scy,
@@ -43227,6 +43239,17 @@ var _BrainEngine = (function(){
         ctx.beginPath();ctx.arc(v.sx,v.sy,spr,0,Math.PI*2);
         ctx.strokeStyle='rgba('+cl.r+','+(0.35+spf*0.2)+')';
         ctx.lineWidth=0.5;ctx.stroke();
+        /* Dashed line to parent node when selected */
+        if(v.node.parent){
+          var _par=null;
+          for(var _pi=0;_pi<_vn.length;_pi++){if(_vn[_pi].node===v.node.parent){_par=_vn[_pi];break;}}
+          if(_par){
+            ctx.save();ctx.setLineDash([3,4]);ctx.lineWidth=0.4;
+            ctx.strokeStyle='rgba('+cl.r+',0.28)';
+            ctx.beginPath();ctx.moveTo(v.sx,v.sy);ctx.lineTo(_par.sx,_par.sy);ctx.stroke();
+            ctx.setLineDash([]);ctx.restore();
+          }
+        }
       }
 
       /* dots stay dots at every zoom level — cap the visual size so the
@@ -48842,6 +48865,8 @@ function filterSIGINT(query){
     <span style="color:#f97316;">ESC</span><span>Close panel · zoom out to overview</span>
     <span style="color:#06b6d4;">N</span><span>Focus nearest visible node</span>
     <span style="color:#ef4444;">F</span><span>Fire all clusters (burst mode)</span>
+    <span style="color:#f97316;">A</span><span>Fire selected cluster only</span>
+    <span style="color:#06b6d4;">M</span><span>Toggle minimap visibility</span>
     <span style="color:#475569;">H</span><span>Toggle stats bar</span>
     <span style="color:#e2e8f0;">SPACE</span><span>Pause / resume animation</span>
     <span style="color:#a855f7;">D/U</span><span>Drill deeper / back up (zoom x1.5)</span>
