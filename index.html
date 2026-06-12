@@ -7339,6 +7339,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: I key parent line */
 /* Brain: burst ring scales with node count */
 
+
+/* v80 */
+/* Globe: variable star sizes */
+/* Brain: edge glow scales with af */
+/* Globe: DEFCON ring tick marks */
+/* Brain: selected cluster name in scan HUD */
+/* Globe: hotspot tooltip type tag */
+
 </style>
 </head>
 <body>
@@ -14056,6 +14064,15 @@ function draw(){
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
  var _defRW=_defN<=1?1.5+Math.sin(Date.now()*0.005)*0.9:_defN===2?1.5+Math.sin(Date.now()*0.003)*0.5:1.5;
  ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW;ctx.stroke();
+ /* Tick marks at N/S/E/W */
+ var _defTicks=[0,Math.PI/2,Math.PI,Math.PI*3/2];
+ for(var _dti=0;_dti<_defTicks.length;_dti++){
+   var _dtA=_defTicks[_dti];
+   var _dtX1=cx+Math.cos(_dtA)*scale,_dtY1=cy+Math.sin(_dtA)*scale;
+   var _dtX2=cx+Math.cos(_dtA)*(scale-4),_dtY2=cy+Math.sin(_dtA)*(scale-4);
+   ctx.beginPath();ctx.moveTo(_dtX1,_dtY1);ctx.lineTo(_dtX2,_dtY2);
+   ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW*1.5;ctx.stroke();
+ }
  // Outer atmospheric ring
  ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
  ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
@@ -14544,8 +14561,9 @@ canvas.addEventListener('mouseup',e=>{
  if(isDbl){openHotspot(hs);}
  else{
  const tt=document.getElementById('tooltip');
- document.getElementById('tt-name').textContent=hs.label;
- document.getElementById('tt-alert').textContent='Double-click to open';
+ var _hsTNlbl=hs.label+(hs.type?' ['+hs.type.toUpperCase()+']':'');
+ document.getElementById('tt-name').textContent=_hsTNlbl;
+ document.getElementById('tt-alert').textContent=(hs.severity?hs.severity.toUpperCase()+' ':'')+'Double-click to open';
  document.getElementById('tt-alert').style.color='#f59e0b';
  tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
  setTimeout(()=>{tt.style.opacity='0';},1400);
@@ -42119,6 +42137,12 @@ var _BrainEngine = (function(){
       ctx.shadowColor=t.col;ctx.shadowBlur=12*t.op;
       ctx.fillText(t.text,t.x-ctx.measureText(t.text).width/2,t.y);
       ctx.restore();
+      /* Selected cluster name overlay near scan origin */
+      if(_sel&&CL[_sel.ci]){
+        ctx.save();ctx.font='5px "Courier New"';ctx.fillStyle='rgba('+CL[_sel.ci].r+',0.35)';
+        ctx.textAlign='center';ctx.fillText(CL[_sel.ci].n.toUpperCase().slice(0,14),_scx,_scy-_scanLen*0.08-5);
+        ctx.restore();
+      }
     });
 
     /* auto-fire */
@@ -43281,7 +43305,9 @@ var _BrainEngine = (function(){
         er=Math.max(50,110-e.depth*3); eg=Math.max(80,150-e.depth*3); eb=Math.min(255,235+e.depth*3);
       }
       ctx.strokeStyle='rgba('+er+','+eg+','+eb+','+a+')';
-      if(e.lat){if(window._hideLateral){ctx.setLineDash([]);continue;}ctx.setLineDash([2,3]);}else{ctx.setLineDash([]);}
+      /* Edge glow on high-af non-cross edges */
+      if(a>0.45&&!e.cross&&!e.lat){var _egI=e.af!==undefined?e.af:1;ctx.shadowColor='rgba('+er+','+eg+','+eb+','+Math.min(0.35,0.2*_egI)+')';ctx.shadowBlur=_egI>0.8?2.5:1.5;}else{ctx.shadowBlur=0;}
+      if(e.lat){if(window._hideLateral){ctx.shadowBlur=0;ctx.setLineDash([]);continue;}ctx.setLineDash([2,3]);}else{ctx.setLineDash([]);}
       ctx.lineWidth=(e.cross?0.35:(e.lat?0.4:0.6))*(_sel&&!e.cross&&e.ci===_sel.ci?1.4:1);
       ctx.beginPath();ctx.moveTo(e.x1,e.y1);
       if(!e.cross&&!e.lat){
