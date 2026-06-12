@@ -7504,6 +7504,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: root glow scales with clAct */
 /* Brain: L key cam lock */
 
+
+/* v102 */
+/* Brain: signal trail second ghost dot */
+/* Globe: arc label bolder for critical */
+/* Globe: DEFCON 1 panic fire all clusters */
+/* Brain: bg stars density DEFCON scaling */
+/* Globe: hotspot CRITICAL double-speed rings */
+
 </style>
 </head>
 <body>
@@ -14250,7 +14258,11 @@ function draw(){
  var _defN=_defEl?parseInt(_defEl.textContent)||3:3;
  /* Flash canvas border on DEFCON change */
  if(window._lastDefN===undefined)window._lastDefN=_defN;
- if(_defN!==window._lastDefN){window._defConFlash=14;window._lastDefN=_defN;}
+ if(_defN!==window._lastDefN){window._defConFlash=14;window._lastDefN=_defN;
+/* DEFCON 1: panic fire all clusters */
+if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
+  for(var _pci=0;_pci<CL.length;_pci++){setTimeout((function(ci){return function(){_BrainEngine.fireCluster(ci);};}(_pci)),_pci*120);}
+}}
  if(window._defConFlash>0){
    window._defConFlash--;
    var _dfa=window._defConFlash/14;
@@ -14401,8 +14413,9 @@ function drawHotspots(){
  const r=(h.severity==='critical'?5.5:h.severity==='high'?4:2.8)*_hsCountBoost;
  // Each hotspot pulses on its own phase for organic feel
  const phase=(h.lat*7+h.lng*3)%1000;
- const t1=((now+phase)%2200)/2200;
- const t2=((now+phase+700)%2200)/2200;
+ const _hsPeriod=h.severity==='critical'?1400:2200;
+ const t1=((now+phase)%_hsPeriod)/_hsPeriod;
+ const t2=((now+phase+700)%_hsPeriod)/_hsPeriod;
  const p1=Math.sin(t1*Math.PI*2)*0.5+0.5;
  const p2=Math.sin(t2*Math.PI*2)*0.5+0.5;
  // Double expanding ring (staggered)
@@ -14466,7 +14479,7 @@ function drawArcMarker(p1,p2,offFactor,color,label,sev){
  // Short label
  if(label){
  ctx.save();
- ctx.font='bold 8px monospace';
+ ctx.font=(sev==='critical'?'900 9px':'bold 8px')+' monospace';
  ctx.fillStyle='rgba(226,232,240,0.85)';
  ctx.textAlign='center';
  const maxW=60;
@@ -43583,6 +43596,9 @@ var _BrainEngine = (function(){
     for(var i=0;i<roots.length;i++) collect(roots[i]);
 
     /* Background: very faint "neural space" star field */
+    var _bgDefEl=document.getElementById('defcon-num');
+    var _bgDefN=_bgDefEl?parseInt(_bgDefEl.textContent)||3:3;
+    var _bgStarLimit=_bgDefN<=1?160:_bgDefN===2?110:80;
     if(frame===0||(frame%300===0)){
       if(!window._bgStars){
         window._bgStars=[];
@@ -43593,11 +43609,16 @@ var _BrainEngine = (function(){
           window._bgNebulae.push({x:Math.random()*3000-1500,y:Math.random()*3000-1500,
             r:Math.random()*180+80,col:_nbCols[ni%_nbCols.length],a:Math.random()*0.025+0.008});
         }
-        for(var bi=0;bi<180;bi++){
+        for(var bi=0;bi<80;bi++){
           window._bgStars.push({x:Math.random()*4000-2000,y:Math.random()*4000-2000,
             r:Math.random()*0.6+0.1,a:Math.random()*0.12+0.02});
         }
       }
+      while(window._bgStars.length<_bgStarLimit){
+        window._bgStars.push({x:Math.random()*4000-2000,y:Math.random()*4000-2000,
+          r:Math.random()*0.6+0.1,a:Math.random()*0.12+0.02});
+      }
+      if(window._bgStars.length>_bgStarLimit) window._bgStars.length=_bgStarLimit;
     }
     if(window._bgStars&&!window._hideBgStars){
       ctx.save();
@@ -43911,13 +43932,19 @@ var _BrainEngine = (function(){
         ctx.beginPath();ctx.moveTo(_tSx,_tSy);ctx.lineTo(sx2,sy2);
         ctx.strokeStyle=_tGrd;ctx.lineWidth=0.8;ctx.stroke();
       }
-      /* trail: slightly larger faded dot behind */
+      /* trail: two ghost dots behind signal */
       var tr=sg.t-sg.sp*3;
       if(tr>0){
         var tsx=sg.x1+(sg.x2-sg.x1)*tr,tsy=sg.y1+(sg.y2-sg.y1)*tr;
         ctx.beginPath();ctx.arc(tsx,tsy,sg.lat?1.2:1.8,0,Math.PI*2);
         ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+(sa*0.3)+')';
         ctx.fill();
+        var tr2=sg.t-sg.sp*7;
+        if(tr2>0){
+          var tsx2=sg.x1+(sg.x2-sg.x1)*tr2,tsy2=sg.y1+(sg.y2-sg.y1)*tr2;
+          ctx.beginPath();ctx.arc(tsx2,tsy2,sg.lat?0.8:1.1,0,Math.PI*2);
+          ctx.fillStyle='rgba('+(scl?scl.r:'255,255,255')+','+(sa*0.12)+')';ctx.fill();
+        }
       }
       if(scl){ctx.shadowColor=sg.lat?'rgba(200,210,255,0.8)':scl.c;ctx.shadowBlur=3;}
       ctx.beginPath();
