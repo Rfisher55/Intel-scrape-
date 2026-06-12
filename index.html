@@ -7693,6 +7693,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: edge zoom width boost */
 /* Brain: W key console dump */
 
+
+/* v126 */
+/* Globe: arc DEFCON 1 blink */
+/* Brain: signal trail activation length */
+/* Globe: energy pipeline bolt symbol */
+/* Brain: recently fired root glow */
+/* Brain: minimap scan sweep indicator */
+
 </style>
 </head>
 <body>
@@ -14876,6 +14884,10 @@ function drawArcs(){
  const sevC={critical:'rgba(239,68,68',high:'rgba(249,115,22',medium:'rgba(251,191,36',low:'rgba(34,197,94'};
  const base=sevC[arc.severity]||ARC_COLORS[arc.type]||'rgba(239,68,68';
  const _bothVisible=(p1.visible&&p1.z>0.15&&p2.visible&&p2.z>0.15);
+ var _arcDefEl2=document.getElementById('defcon-num');
+ var _arcDefN2=_arcDefEl2?parseInt(_arcDefEl2.textContent)||3:3;
+ /* At DEFCON 1, critical arcs blink between red and orange */
+ var _arcBlink=(_arcDefN2<=1&&arc.severity==='critical')?(Math.sin(Date.now()*0.012)>0?1:0):1;
  const _arcPulse=arc.severity==='critical'?Math.sin(Date.now()*0.004)*0.4+0.4:0;
  const _arcW=(arc.severity==='critical'?1.5+_arcPulse:0.8)*(scale<150?1.8:scale<300?1.3:1);
  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
@@ -14900,7 +14912,7 @@ function drawArcs(){
  var _dashL=scale<120?[16,5]:scale<300?[12,8]:[8,12];
  ctx.beginPath();ctx.setLineDash(_dashL);ctx.lineDashOffset=-t*60;
  ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
- ctx.strokeStyle=`${base},.85)`;ctx.lineWidth=_arcW;ctx.stroke();
+ ctx.strokeStyle=_arcDefN2<=1&&arc.severity==='critical'&&_arcBlink===0?'rgba(249,115,22,.85)':`${base},.85)`;ctx.lineWidth=_arcW;ctx.stroke();
  /* Double-rule inner line for critical */
  if(arc.severity==='critical'){
   ctx.save();ctx.setLineDash(_dashL);ctx.lineDashOffset=-t*60;
@@ -30532,6 +30544,12 @@ function drawEnergyPipelines(){
  ctx.globalAlpha=0.75;
  ctx.fill();
  ctx.globalAlpha=1;
+ /* Bolt symbol inside chokepoint */
+ if(scale>80){
+  ctx.save();ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillText('⚡',p.x,p.y);
+  ctx.textBaseline='alphabetic';ctx.restore();
+ }
  ctx.strokeStyle=cp.color;
  ctx.lineWidth=1.5;
  ctx.stroke();
@@ -42767,6 +42785,8 @@ var _BrainEngine = (function(){
 
   function fireCluster(ci) {
     if(ci<0||ci>7) return;
+    if(!window._lastFireTime)window._lastFireTime={};
+    window._lastFireTime[ci]=Date.now();
     clAct[ci]=Math.min(1, clAct[ci]+0.9);
     var cl=CL[ci];
     for(var i=0;i<nodes.length;i++){
@@ -44468,6 +44488,14 @@ var _BrainEngine = (function(){
       /* Cluster label when zoomed in on root nodes */
       ctx.textAlign='center';
       if(v.node.depth===0){
+        /* Post-fire glow disk on recently fired roots */
+        var _rfLastFire=window._lastFireTime&&window._lastFireTime[v.node.ci];
+        if(_rfLastFire&&(Date.now()-_rfLastFire)<2000){
+          var _rfAge=(Date.now()-_rfLastFire)/2000;
+          var _rfA=(1-_rfAge)*0.12;
+          ctx.save();ctx.beginPath();ctx.arc(v.sx,v.sy,r2*3.5*(1-_rfAge*0.5),0,Math.PI*2);
+          ctx.fillStyle='rgba('+cl.r+','+_rfA+')';ctx.fill();ctx.restore();
+        }
         if(v.sr>14){
           var lsz=cam.zoom>500?Math.max(7,Math.min(18,v.sr*0.6)):Math.max(7,Math.min(11,v.sr*0.5));
           var _clActA=Math.min(1,(v.af||0.7)+(Math.sin(frame*0.04+v.node.ci*0.9)*0.12));
@@ -44641,7 +44669,8 @@ var _BrainEngine = (function(){
         ctx.strokeStyle=_tGrd;ctx.lineWidth=0.8;ctx.stroke();
       }
       /* trail: two ghost dots behind signal */
-      var tr=sg.t-sg.sp*3;
+      var _trActMult=clAct&&clAct[sg.ci]>0.2?(1+clAct[sg.ci]*2.5):1;
+      var tr=sg.t-sg.sp*3*_trActMult;
       if(tr>0){
         var tsx=sg.x1+(sg.x2-sg.x1)*tr,tsy=sg.y1+(sg.y2-sg.y1)*tr;
         ctx.beginPath();ctx.arc(tsx,tsy,sg.lat?1.2:1.8,0,Math.PI*2);
@@ -45028,6 +45057,13 @@ var _BrainEngine = (function(){
       ctx.fillStyle='rgba(71,85,105,0.8)';
       ctx.font='6px "Courier New"';ctx.textAlign='center';
       var _mmZstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':Math.round(cam.zoom)+'x';
+      /* Scan sweep indicator line on minimap */
+      if(typeof _scanAngle!=='undefined'){
+        var _mmScanX=MMx+MM/2+Math.cos(_scanAngle)*MM*0.35;
+        var _mmScanY=MMy+MM/2+Math.sin(_scanAngle)*MM*0.35;
+        ctx.beginPath();ctx.moveTo(MMx+MM/2,MMy+MM/2);ctx.lineTo(_mmScanX,_mmScanY);
+        ctx.strokeStyle='rgba('+_sdFCStr+',0.25)';ctx.lineWidth=0.6;ctx.stroke();
+      }
       ctx.fillText('OVERVIEW  '+_mmZstr,MMx+MM/2,MMy-3);
       /* Fire rings on minimap */
       if(window._lastFireTimes){
