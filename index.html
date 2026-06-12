@@ -7180,6 +7180,12 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: scale bar (canvas) */
 /* Brain: coordinate grid at overview */
 
+
+/* v60 */
+/* Brain: SPACE pause/resume */
+/* Globe: arc endpoint dots */
+/* Brain: root pulse ring thickness by zoom */
+
 </style>
 </head>
 <body>
@@ -14013,6 +14019,9 @@ function drawArcs(){
  ctx.setLineDash([]);
  // Clickable midpoint marker
  drawArcMarker(p1,p2,0.35,`${base},.9)`,arc.label);
+ /* Endpoint dots */
+ ctx.beginPath();ctx.arc(p1.px,p1.py,2,0,Math.PI*2);ctx.fillStyle=`${base},.6)`;ctx.fill();
+ ctx.beginPath();ctx.arc(p2.px,p2.py,2,0,Math.PI*2);ctx.fill();
  }
 }
 
@@ -43039,7 +43048,7 @@ var _BrainEngine = (function(){
         if(v.sr>15){ctx.shadowColor=cl.c;ctx.shadowBlur=Math.min(12,v.sr*0.4);}
         ctx.beginPath();ctx.arc(v.sx,v.sy,pr,0,Math.PI*2);
         ctx.strokeStyle='rgba('+cl.r+','+pa+')';
-        ctx.lineWidth=0.8;ctx.stroke();
+        ctx.lineWidth=v.sr>20?1.5:0.8;ctx.stroke();
         ctx.shadowBlur=0;
       }
       /* Adjacent (1-hop) node highlight */
@@ -43744,6 +43753,16 @@ document.addEventListener('keydown', function(e){
       /* Zoom keys */
       if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
       if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
+      /* SPACE = pause/resume animation */
+      if(e.key===' '){
+        e.preventDefault();
+        if(ON){ON=false;if(RAF)cancelAnimationFrame(RAF);}
+        else{ON=true;RAF=requestAnimationFrame(render);}
+        var toastSp=document.getElementById('brain-cluster-toast');
+        if(toastSp){toastSp.textContent=ON?'ANIMATION RESUMED':'ANIMATION PAUSED';
+          toastSp.style.color=ON?'#22c55e':'#f97316';toastSp.style.display='block';toastSp.style.opacity='1';
+          clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastSp.style.opacity='0';setTimeout(function(){toastSp.style.display='none';},400);},1500);}
+      }
       /* B = toggle background star field */
       if(e.key==='b'||e.key==='B'){
         window._hideBgStars=!window._hideBgStars;
@@ -48594,6 +48613,7 @@ function filterSIGINT(query){
     <span style="color:#06b6d4;">N</span><span>Focus nearest visible node</span>
     <span style="color:#ef4444;">F</span><span>Fire all clusters (burst mode)</span>
     <span style="color:#475569;">H</span><span>Toggle stats bar</span>
+    <span style="color:#e2e8f0;">SPACE</span><span>Pause / resume animation</span>
     <span style="color:#a855f7;">D/U</span><span>Drill deeper / back up (zoom x1.5)</span>
     <span style="color:#22c55e;">C</span><span>Copy selected node label to clipboard</span>
     <span style="color:#0ea5e9;">L</span><span>Toggle lateral edge visibility</span>
