@@ -7569,6 +7569,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: hotspot ring critical boost */
 /* Brain: G key cluster jump */
 
+
+/* v110 */
+/* Globe: sphere specular highlight */
+/* Globe: DEFCON ring text size urgency */
+/* Brain: minimap selected cluster */
+/* Globe: troop type letter at midpoint */
+/* Brain: clAct decay DEFCON rate */
+
 </style>
 </head>
 <body>
@@ -14104,6 +14112,10 @@ function draw(){
  a.addColorStop(.4,'rgba('+Math.round(_aR*.6)+','+Math.round(_aG*.65)+','+Math.round(_aB*.85)+',.10)');
  a.addColorStop(.8,'rgba(10,40,180,.04)');a.addColorStop(1,'transparent');
  ctx.beginPath();ctx.arc(cx,cy,scale*1.12,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
+ /* Specular highlight */
+ var _specGrd=ctx.createRadialGradient(cx-scale*0.38,cy-scale*0.38,0,cx-scale*0.2,cy-scale*0.2,scale*0.45);
+ _specGrd.addColorStop(0,'rgba(255,255,255,0.07)');_specGrd.addColorStop(1,'rgba(255,255,255,0)');
+ ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_specGrd;ctx.fill();
  /* Limb brightening — bright rim at the edge */
  const limb=ctx.createRadialGradient(cx,cy,scale*.92,cx,cy,scale*1.0);
  limb.addColorStop(0,'transparent');limb.addColorStop(.85,'rgba(80,160,255,.06)');limb.addColorStop(1,'rgba(100,180,255,.12)');
@@ -14248,7 +14260,17 @@ function draw(){
 
  if(showArcs||activeLayers.conflicts){drawArcs();
  var _arcTotal=(typeof CONFLICTS!=='undefined'?CONFLICTS.length:0)+(typeof liveConflicts!=='undefined'?liveConflicts.length:0);
- if(_arcTotal>0&&scale>80){ctx.save();ctx.font='5px "Courier New"';ctx.fillStyle='rgba(239,68,68,0.55)';ctx.textAlign='right';ctx.fillText(_arcTotal+' CONFLICTS',canvas.width-8,canvas.height-28);ctx.restore();}
+ if(_arcTotal>0&&scale>80){
+  ctx.save();ctx.font='5px "Courier New"';ctx.fillStyle='rgba(239,68,68,0.55)';ctx.textAlign='right';
+  ctx.fillText(_arcTotal+' CONFLICTS',canvas.width-8,canvas.height-28);
+  /* DEFCON canvas badge — size scales with urgency */
+  var _defEl2=document.getElementById('defcon-num');var _defN2=_defEl2?parseInt(_defEl2.textContent)||3:3;
+  var _badgeSz=7+(5-_defN2)*1.2;
+  var _badgeC=_defN2<=1?'rgba(239,68,68':_defN2===2?'rgba(249,115,22':_defN2===3?'rgba(251,191,36':'rgba(34,197,94';
+  ctx.font='bold '+Math.round(_badgeSz)+'px "Courier New"';ctx.fillStyle=_badgeC+',.65)';
+  ctx.fillText('D'+_defN2,canvas.width-8,canvas.height-38);
+  ctx.restore();
+ }
  }
  if(activeLayers.troops) drawTroopMovements();
  if(activeLayers.arms) drawArmsFlows();
@@ -14733,6 +14755,13 @@ function drawTroopMovements(){
    if(p1.visible||p2.visible){
      ctx.save();ctx.beginPath();ctx.arc(_hX,_hY,m.type==='air'?2:1.8,0,Math.PI*2);
      ctx.fillStyle=sev+',.9)';ctx.shadowColor=sev+',.5)';ctx.shadowBlur=5;ctx.fill();ctx.restore();
+     /* Type letter at arc midpoint */
+     if(scale>130){
+       var _typeLtr=m.type==='air'?'A':m.type==='naval'?'N':m.type==='missile'?'M':'G';
+       ctx.save();ctx.font='bold 6px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+       ctx.fillStyle=sev+',.65)';ctx.fillText(_typeLtr,_cpX,_cpY);
+       ctx.textBaseline='alphabetic';ctx.restore();
+     }
    }
  }
  if(p2.visible){
@@ -43042,8 +43071,11 @@ var _BrainEngine = (function(){
     var scanZ=drawWave();
     _driftNodes();
 
-    /* decay cluster activity */
-    for(var i=0;i<8;i++) clAct[i]*=0.988;
+    /* decay cluster activity — faster at high DEFCON (less false urgency) */
+    var _defConActEl=document.getElementById('defcon-num');
+    var _defConActN=_defConActEl?parseInt(_defConActEl.textContent)||3:3;
+    var _clActDecayRate=_defConActN>3?0.986:0.988;
+    for(var i=0;i<8;i++) clAct[i]*=_clActDecayRate;
 
     /* build projected node cache */
     var pnCache=new Array(nodes.length);
@@ -44457,8 +44489,11 @@ var _BrainEngine = (function(){
         var mx2=MMx+((r.wx-wx0)/wW)*MM;
         var my2=MMy+((r.wy-wy0)/wH)*MM;
         /* Colored cluster root dot */
-        ctx.beginPath();ctx.arc(mx2,my2,3,0,Math.PI*2);
-        ctx.fillStyle=cl.c;ctx.fill();
+        var _mmIsSelCl=_sel&&_sel.ci===r.ci;
+        ctx.beginPath();ctx.arc(mx2,my2,_mmIsSelCl?4:3,0,Math.PI*2);
+        if(_mmIsSelCl){ctx.shadowColor='rgba(255,255,255,0.8)';ctx.shadowBlur=6;}
+        ctx.fillStyle=_mmIsSelCl?'rgba(255,255,255,0.95)':cl.c;ctx.fill();
+        ctx.shadowBlur=0;
         /* Selected cluster pulse ring on minimap */
         if(_sel&&_sel.ci===r.ci){
           var _mpf=Math.sin(frame*0.07)*0.5+0.5;
