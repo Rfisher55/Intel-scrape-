@@ -7640,6 +7640,13 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: equatorial brightness band */
 /* Brain: parent breadcrumb chain */
 
+
+/* v119 */
+/* Globe: compass rose letters */
+/* Globe: hotspot badge type color */
+/* Brain: scan leading edge ramp */
+/* Brain: T key threat tier overlay */
+
 </style>
 </head>
 <body>
@@ -14701,7 +14708,9 @@ function drawHotspots(){
  /* Count badge + time above hotspot at high zoom */
  if(scale>350&&r>4){
   ctx.save();ctx.font='bold '+(Math.round(r*0.55))+'px "Courier New"';
-  ctx.textAlign='center';ctx.fillStyle=base.replace(',1)',',.7)');
+  ctx.textAlign='center';
+  var _hsTypeC={'nuclear':'rgba(239,68,68,0.75)','conflict':'rgba(249,115,22,0.75)','cyber':'rgba(139,92,246,0.75)','epidemic':'rgba(34,197,94,0.75)','terrorism':'rgba(251,191,36,0.75)'}[h.type]||base.replace(',1)',',.7)');
+  ctx.fillStyle=_hsTypeC;
   var _hsBadge='';
   if(h.count&&h.count>1)_hsBadge+=h.count+'x ';
   if(h.timestamp){var _hsMin=Math.round((Date.now()-h.timestamp)/60000);_hsBadge+=_hsMin<60?_hsMin+'m':Math.round(_hsMin/60)+'h';}
@@ -43852,6 +43861,12 @@ var _BrainEngine = (function(){
       ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW,_scanAngle,false);
       ctx.closePath();
       ctx.fillStyle=_scGrad;ctx.fill();
+      /* Leading edge intensity ramp */
+      ctx.save();ctx.beginPath();ctx.moveTo(_scx,_scy);
+      ctx.arc(_scx,_scy,_scanLen,_scanAngle-_scanArcW*0.12,_scanAngle,false);
+      ctx.lineTo(_scx,_scy);ctx.closePath();
+      ctx.fillStyle='rgba('+_scanFillC+',0.055)';ctx.fill();
+      ctx.restore();
       /* Mirror echo arc at 180 deg opposite */
       ctx.save();ctx.beginPath();ctx.moveTo(_scx,_scy);
       var _scanMirrorA=_scanAngle+Math.PI;
@@ -44182,7 +44197,15 @@ var _BrainEngine = (function(){
         if(r2>3&&v.node.depth>0){
           ctx.save();ctx.font='bold 6px "Courier New"';ctx.textAlign='center';ctx.textBaseline='middle';
           var _dBadgeC=v.node.depth<5?'#22c55e':v.node.depth<15?'#fbbf24':v.node.depth<30?'#f97316':'#ef4444';
-          ctx.fillStyle=_dBadgeC;ctx.fillText('D'+v.node.depth,v.sx,v.sy+spr+5);
+          if(window._threatOverlay===1){
+            ctx.fillStyle=_dBadgeC;ctx.fillText('D'+v.node.depth,v.sx,v.sy+spr+5);
+          } else if(window._threatOverlay===2){
+            /* Show cluster activation as % */
+            var _taStr=clAct&&clAct[v.node.ci]?Math.round(clAct[v.node.ci]*100)+'%':'0%';
+            ctx.fillStyle='rgba('+cl.r+',0.8)';ctx.fillText(_taStr,v.sx,v.sy+spr+5);
+          } else {
+            ctx.fillStyle=_dBadgeC;ctx.fillText('D'+v.node.depth,v.sx,v.sy+spr+5);
+          }
           ctx.textBaseline='alphabetic';ctx.restore();
         }
         /* Ghost orbit blobs for selected node children */
@@ -45331,6 +45354,12 @@ document.addEventListener('keydown', function(e){
             cam.tx=_zCx;cam.ty=_zCy;cam.tz=Math.min(500,Math.max(3,(Math.min(W,H)*0.7)/_zSpan));
           }
         }
+        return;
+      }
+      /* T = cycle threat tier overlay */
+      if(e.key==='t'||e.key==='T'){
+        window._threatOverlay=(window._threatOverlay||0)+1;
+        if(window._threatOverlay>2)window._threatOverlay=0;
         return;
       }
       /* B = toggle burst ring animation */
