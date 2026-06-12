@@ -7577,6 +7577,14 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: troop type letter at midpoint */
 /* Brain: clAct decay DEFCON rate */
 
+
+/* v111 */
+/* Globe: country border alert tint */
+/* Globe: arc source endpoint pulse */
+/* Globe: scale bar center coords */
+/* Brain: scan speed dot */
+/* Brain: hover activation pct label */
+
 </style>
 </head>
 <body>
@@ -14443,6 +14451,11 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
    ctx.fillText(_sbLbl,_sX+25,_sY-5);
    ctx.textAlign='right';
    ctx.fillText((scale/baseScale).toFixed(1)+'x',_sX+50,_sY+8);
+   /* Center lat/lng below scale bar */
+   var _cLat=(-rotX*180/Math.PI);var _cLng=(rotY*180/Math.PI)%360;
+   ctx.textAlign='center';ctx.fillStyle='rgba(100,116,139,0.55)';
+   ctx.font='4px "Courier New"';
+   ctx.fillText((_cLat>=0?'+':'')+_cLat.toFixed(1)+'° '+(_cLng>=0?'+':'')+_cLng.toFixed(1)+'°',_sX+25,_sY+13);
    ctx.restore();
  }
  // Compass rose in bottom-left of globe canvas
@@ -14768,7 +14781,13 @@ function drawTroopMovements(){
  const dx=p2.px-p1.px,dy=p2.py-p1.py;
  arrowHead(p2.px,p2.py,Math.atan2(dy,dx),9,`${sev},.9)`);
  }
- if(p1.visible){ctx.beginPath();ctx.arc(p1.px,p1.py,3.5,0,Math.PI*2);ctx.fillStyle=`${sev},.85)`;ctx.fill();}
+ if(p1.visible){
+  var _epf1=Math.sin(Date.now()*0.006+p1.px)*0.5+0.5;
+  ctx.beginPath();ctx.arc(p1.px,p1.py,2.5+_epf1*1.5,0,Math.PI*2);
+  ctx.fillStyle=`${sev},.85)`;ctx.fill();
+  ctx.beginPath();ctx.arc(p1.px,p1.py,4+_epf1*3,0,Math.PI*2);
+  ctx.strokeStyle=`${sev},.${Math.round(20+_epf1*15)})`;ctx.lineWidth=0.6;ctx.stroke();
+ }
  drawArcMarker(p1,p2,0.32,`${sev},.9)`,m.label);
  }
 }
@@ -43655,6 +43674,14 @@ var _BrainEngine = (function(){
       window._scanOx+=(W/2-window._scanOx)*0.04;
       window._scanOy+=(H/2-window._scanOy)*0.04;
       var _scx=window._scanOx,_scy=window._scanOy;
+      /* Speed dot on scan arc circumference */
+      var _sdDefEl2=document.getElementById('defcon-num');
+      var _sdDefN=_sdDefEl2?parseInt(_sdDefEl2.textContent)||3:3;
+      var _sdFCStr=_sdDefN<=1?'239,68,68':_sdDefN===2?'249,115,22':_sdDefN===3?'34,197,94':'59,130,246';
+      ctx.save();ctx.beginPath();
+      ctx.arc(_scx+Math.cos(_scanAngle)*_scanLen*0.92,_scy+Math.sin(_scanAngle)*_scanLen*0.92,2.2,0,Math.PI*2);
+      ctx.fillStyle='rgba('+_sdFCStr+',0.6)';ctx.shadowColor='rgba('+_sdFCStr+',0.4)';ctx.shadowBlur=4;
+      ctx.fill();ctx.shadowBlur=0;ctx.restore();
       var _scGrad=ctx.createLinearGradient(_scx,_scy,
         _scx+Math.cos(_scanAngle)*_scanLen,_scy+Math.sin(_scanAngle)*_scanLen);
       _scGrad.addColorStop(0,'rgba(59,130,246,0.04)');
@@ -44090,6 +44117,13 @@ var _BrainEngine = (function(){
         }
       }
       /* Individual node label at high zoom */
+      /* Hover activation % label */
+      if(v.node===window._hovNode&&_clAct>0.05&&v.sr>8){
+        ctx.save();ctx.font='5px "Courier New"';ctx.textAlign='center';
+        ctx.fillStyle='rgba('+_actRingC+',0.65)';
+        ctx.fillText(Math.round(_clAct*100)+'%',v.sx,v.sy-Math.max(r2,4)-8);
+        ctx.restore();
+      }
       if(!window._brainHideLabels&&v.node.depth>0&&v.sr>22&&v.af>0.5){
         var _nl=(v.node.label||v.node.n||'').slice(0,28);
         if(_nl){
