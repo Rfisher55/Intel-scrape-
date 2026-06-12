@@ -7019,6 +7019,14 @@ a:hover { color: #bfdbfe !important; }
 .alert-minimal { color: #5eead4; border-color: rgba(15,118,110,0.4); }
 /* Globe legend: equator line description */
 
+
+/* v37 */
+/* F key fires all clusters */
+/* Minimap cluster dots colored */
+/* Cluster legend node count */
+/* Brain cluster legend node count badge */
+#brain-cluster-legend .cl-count { color: #334155; font-size: 5.5px; margin-left: 3px; }
+
 </style>
 </head>
 <body>
@@ -7764,10 +7772,10 @@ a:hover { color: #bfdbfe !important; }
  <div class="leg-div" id="leg-div"></div>
  <div class="leg-arc-section" id="leg-arc-section">
  <div class="leg-title">CONFLICT ARCS</div>
- <div class="leg-item"><span class="leg-dot" style="background:#ef4444"></span>War/Conflict</div>
- <div class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Proxy/Support</div>
- <div class="leg-item"><span class="leg-dot" style="background:#a855f7"></span>Influence</div>
- <div class="leg-item"><span class="leg-dot" style="background:#3b82f6"></span>Diplomatic</div>
+ <div class="leg-item"><span class="leg-dot" style="background:#ef4444"></span>Critical</div>
+ <div class="leg-item"><span class="leg-dot" style="background:#f97316"></span>High</div>
+ <div class="leg-item"><span class="leg-dot" style="background:#fbbf24"></span>Medium</div>
+ <div class="leg-item"><span class="leg-dot" style="background:#22c55e"></span>Low</div>
  </div>
 </div>
 
@@ -42931,8 +42939,12 @@ var _BrainEngine = (function(){
         var cl=CL[r.ci];
         var mx2=MMx+((r.wx-wx0)/wW)*MM;
         var my2=MMy+((r.wy-wy0)/wH)*MM;
+        /* Colored cluster root dot */
         ctx.beginPath();ctx.arc(mx2,my2,3,0,Math.PI*2);
-        ctx.fillStyle='rgba('+cl.r+',0.7)';ctx.fill();
+        ctx.fillStyle=cl.c;ctx.fill();
+        /* Subtle glow ring */
+        ctx.beginPath();ctx.arc(mx2,my2,4.5,0,Math.PI*2);
+        ctx.strokeStyle='rgba('+cl.r+',0.25)';ctx.lineWidth=0.6;ctx.stroke();
       }
       /* draw current viewport rect */
       var vl=cam.x-W/(2*cam.zoom),vt=cam.y-H/(2*cam.zoom);
@@ -42958,7 +42970,17 @@ var _BrainEngine = (function(){
       var se;
       /* Count active clusters: clusters that have visible nodes */
       var _activeClusters=new Set();
-      for(var _aci=0;_aci<_vn.length;_aci++) _activeClusters.add(_vn[_aci].node.ci);
+      var _clCounts={};
+      for(var _aci=0;_aci<_vn.length;_aci++){
+        var _aciCI=_vn[_aci].node.ci;
+        _activeClusters.add(_aciCI);
+        _clCounts[_aciCI]=(_clCounts[_aciCI]||0)+1;
+      }
+      /* Update cluster legend node counts */
+      for(var _lci=0;_lci<CL.length;_lci++){
+        var _lce=document.getElementById('cl-leg-cnt-'+_lci);
+        if(_lce) _lce.textContent=_clCounts[_lci]?_clCounts[_lci]+'n':'';
+      }
       se=document.getElementById('bstat-freq');
       if(se){
         var edgeHz=20+_ve.length*0.08+Math.sin(frame*0.04)*3;
@@ -43086,11 +43108,12 @@ var _BrainEngine = (function(){
     for(var i=0;i<CL.length;i++){
       var cl=CL[i];
       var idx=i;
-      out+='<div style="cursor:pointer;padding:1px 0" '
-        +'onclick="(function(){var c=window._brain_cam;if(c){c.x='+cl.wx+';c.y='+cl.wy+';c.zoom=1.6;}})()" '
+      out+='<div id="cl-leg-'+i+'" style="cursor:pointer;padding:1px 0;display:flex;justify-content:space-between;align-items:center;" '
+        +'onclick="(function(){var c=window._brain_cam;if(c){if(c.tx!==undefined){c.tx='+cl.wx+';c.ty='+cl.wy+';c.tz=1.6;}else{c.x='+cl.wx+';c.y='+cl.wy+';c.zoom=1.6;}}})()" '
         +'title="Click to zoom to '+cl.n+'">'
-        +'<span style="color:'+cl.c+';animation:brainLegPulse 2s ease-in-out infinite;animation-delay:'+(i*0.25)+'s">&#x25CF;</span> '
-        +'<span style="color:#64748b;">'+cl.n+'</span>'
+        +'<span><span style="color:'+cl.c+';animation:brainLegPulse 2s ease-in-out infinite;animation-delay:'+(i*0.25)+'s">&#x25CF;</span> '
+        +'<span style="color:#64748b;">'+cl.n+'</span></span>'
+        +'<span id="cl-leg-cnt-'+i+'" style="color:#334155;font-size:5.5px;letter-spacing:.04em;"></span>'
         +'</div>';
     }
     leg.innerHTML=out;
@@ -43299,6 +43322,15 @@ document.addEventListener('keydown', function(e){
       /* Zoom keys */
       if(e.key==='+'||e.key==='='){ if(cam.tx!==undefined)cam.tz=Math.min(10000000,cam.tz*1.4); else cam.zoom=Math.min(10000000,cam.zoom*1.4);e.preventDefault();}
       if(e.key==='-'||e.key==='_'){ if(cam.tx!==undefined)cam.tz=Math.max(0.1,cam.tz/1.4); else cam.zoom=Math.max(0.1,cam.zoom/1.4);e.preventDefault();}
+      /* F = fire all clusters (burst mode) */
+      if(e.key==='f'||e.key==='F'){
+        if(typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
+          for(var _fi=0;_fi<CL.length;_fi++) _BrainEngine.fireCluster(_fi);
+          var toastF=document.getElementById('brain-cluster-toast');
+          if(toastF){toastF.textContent='ALL CLUSTERS FIRED';toastF.style.color='#ef4444';toastF.style.display='block';toastF.style.opacity='1';
+            clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastF.style.opacity='0';setTimeout(function(){toastF.style.display='none';},400);},2000);}
+        }
+      }
       /* N = focus nearest visible node */
       if(e.key==='n'||e.key==='N'){
         if(_vn.length>0&&typeof showPanel==='function'){
@@ -48095,6 +48127,7 @@ function filterSIGINT(query){
     <span style="color:#ef4444;">Dbl-click</span><span>Zoom into node</span>
     <span style="color:#f97316;">ESC</span><span>Close panel / stop animation</span>
     <span style="color:#06b6d4;">N</span><span>Focus nearest visible node</span>
+    <span style="color:#ef4444;">F</span><span>Fire all clusters (burst mode)</span>
     <span style="color:#475569;">?</span><span>This help panel</span>
   </div>
   <div onclick="document.getElementById('brain-cheatsheet').style.display='none';" style="margin-top:12px;text-align:center;color:#ef4444;cursor:pointer;letter-spacing:.18em;">&#x2715; CLOSE</div>
