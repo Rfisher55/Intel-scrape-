@@ -7545,6 +7545,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: FPS blink <20 fps */
 /* Brain: sel node connection arc segments */
 
+
+/* v107 */
+/* Globe: sunlit hemisphere warm tint */
+/* Brain: signal source node flash */
+/* Globe: country alert ring */
+/* Brain: cross-edge color interpolation */
+/* Globe: DEFCON change timestamp tracked */
+
 </style>
 </head>
 <body>
@@ -14134,6 +14142,13 @@ function draw(){
  drawGeoFeature(feature,fill,true,true);
  ctx.shadowBlur=0;
  if(ctr.visible){
+ /* Alert level indicator ring */
+ if(!isSel&&c.alertLevel&&c.alertLevel!=='NORMAL'&&ctr.z>0.15){
+  var _alC=c.alertLevel==='CRITICAL'?'rgba(239,68,68':c.alertLevel==='HIGH'?'rgba(249,115,22':c.alertLevel==='ELEVATED'?'rgba(251,191,36':'rgba(59,130,246';
+  var _alPf=Math.sin(Date.now()*0.002+ctr.px)*0.5+0.5;
+  ctx.beginPath();ctx.arc(ctr.px,ctr.py,_cLSz+3+_alPf,0,Math.PI*2);
+  ctx.strokeStyle=_alC+','+(0.18+_alPf*0.1)+')';ctx.lineWidth=0.6;ctx.stroke();
+ }
  /* Country lat/lng badge at very high zoom */
  if(isSel&&scale>600){
    ctx.save();ctx.font='4.5px "Courier New"';ctx.fillStyle='rgba(200,220,255,0.4)';ctx.textAlign='center';
@@ -14294,7 +14309,7 @@ function draw(){
  var _defN=_defEl?parseInt(_defEl.textContent)||3:3;
  /* Flash canvas border on DEFCON change */
  if(window._lastDefN===undefined)window._lastDefN=_defN;
- if(_defN!==window._lastDefN){window._defConFlash=14;window._lastDefN=_defN;
+ if(_defN!==window._lastDefN){window._defConFlash=14;window._lastDefN=_defN;window._defconChangeT=Date.now();
 /* DEFCON 1: panic fire all clusters */
 if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
   for(var _pci=0;_pci<CL.length;_pci++){setTimeout((function(ci){return function(){_BrainEngine.fireCluster(ci);};}(_pci)),_pci*120);}
@@ -14355,6 +14370,12 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
      ctx.fillStyle='rgba(15,15,30,1)';ctx.fillRect(cx-scale,cy-scale,scale*2,scale*2);
      ctx.restore();
    }
+   /* Sunlit hemisphere warm tint */
+   ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=0.04;
+   var _sunGrd=ctx.createRadialGradient(cx-scale*0.3,cy-scale*0.3,0,cx,cy,scale);
+   _sunGrd.addColorStop(0,'rgba(255,220,160,1)');_sunGrd.addColorStop(1,'rgba(255,220,160,0)');
+   ctx.fillStyle=_sunGrd;ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fill();
+   ctx.restore();
    ctx.restore();
  }
  // Scale bar in bottom-right of globe canvas
@@ -43744,14 +43765,22 @@ var _BrainEngine = (function(){
       /* edge color: blues shift cooler at depth */
       var er,eg,eb;
       if(e.lat){
-        /* Lateral edges: teal hue */
         er=Math.max(10,50-e.depth*2); eg=Math.max(130,190-e.depth*3); eb=Math.min(255,200+e.depth*2);
       } else {
         er=Math.max(50,110-e.depth*3); eg=Math.max(80,150-e.depth*3); eb=Math.min(255,235+e.depth*3);
       }
-      /* Edge alpha taper: fade at both ends via progress estimate */
-      var _eTaper=Math.min(1,Math.min(1,1-Math.abs(0.5-0.5)*2)); /* placeholder: full alpha */
-      ctx.strokeStyle='rgba('+er+','+eg+','+eb+','+a+')';
+      var _eTaper=Math.min(1,Math.min(1,1-Math.abs(0.5-0.5)*2));
+      /* Cross-cluster edge: gradient between two cluster colors */
+      if(e.cross&&e.a&&e.b&&CL[e.a.ci]&&CL[e.b.ci]){
+        var _avx=e.a.vx!==undefined?e.a.vx:0,_avy=e.a.vy!==undefined?e.a.vy:0;
+        var _bvx=e.b.vx!==undefined?e.b.vx:0,_bvy=e.b.vy!==undefined?e.b.vy:0;
+        var _egGrd=ctx.createLinearGradient(_avx,_avy,_bvx,_bvy);
+        _egGrd.addColorStop(0,'rgba('+CL[e.a.ci].r+','+a+')');
+        _egGrd.addColorStop(1,'rgba('+CL[e.b.ci].r+','+a+')');
+        ctx.strokeStyle=_egGrd;
+      } else {
+        ctx.strokeStyle='rgba('+er+','+eg+','+eb+','+a+')';
+      }
       /* Edge glow on high-af non-cross edges */
       if(a>0.45&&!e.cross&&!e.lat){var _egI=e.af!==undefined?e.af:1;ctx.shadowColor='rgba('+er+','+eg+','+eb+','+Math.min(0.35,0.2*_egI)+')';ctx.shadowBlur=_egI>0.8?2.5:1.5;}else{ctx.shadowBlur=0;}
       if(e.lat){if(window._hideLateral){ctx.shadowBlur=0;ctx.setLineDash([]);continue;}ctx.setLineDash([2,3]);}else{ctx.setLineDash([]);}
@@ -44020,6 +44049,20 @@ var _BrainEngine = (function(){
         if(!window._sigFlashes)window._sigFlashes=[];
         if(CL[sg.ci])window._sigFlashes.push({x:sg.x2,y:sg.y2,t:0,ci:sg.ci});
         window._bsigs.splice(si,1);continue;
+      }
+      /* Source node flash on signal departure */
+      if(sg.t<0.08){
+        for(var _sfvi=0;_sfvi<_vn.length;_sfvi++){
+          var _sfv=_vn[_sfvi];if(_sfv.node.ci!==sg.ci)continue;
+          var _sfdx=(_sfv.node.wx||0)-sg.x1,_sfdy=(_sfv.node.wy||0)-sg.y1;
+          if(_sfdx*_sfdx+_sfdy*_sfdy<64){
+            var _sfcl=CL[sg.ci];
+            ctx.save();ctx.beginPath();ctx.arc(_sfv.sx,_sfv.sy,_sfv.sr*2.5*(1-sg.t*10),0,Math.PI*2);
+            ctx.strokeStyle=_sfcl?'rgba('+_sfcl.r+','+(0.6*(1-sg.t*10))+')':'rgba(255,255,255,0.4)';
+            ctx.lineWidth=0.8;ctx.stroke();ctx.restore();
+            break;
+          }
+        }
       }
       var sx2=sg.x1+(sg.x2-sg.x1)*sg.t;
       var sy2=sg.y1+(sg.y2-sg.y1)*sg.t;
