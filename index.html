@@ -7186,6 +7186,12 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: arc endpoint dots */
 /* Brain: root pulse ring thickness by zoom */
 
+
+/* v61 */
+/* Brain: double-click zoom capped */
+/* Globe: ESC deselects country */
+/* Brain: GDELT count badge in panel */
+
 </style>
 </head>
 <body>
@@ -18157,6 +18163,12 @@ function initSatMapEvents(){
  // Keyboard controls
  document.addEventListener('keydown',e=>{
  if(e.key==='Escape'&&satOpen){toggleSatPanel();return;}
+ if(e.key==='Escape'&&selectedISO){
+   selectedISO=null;
+   var _panelEsc=document.getElementById('panel');
+   if(_panelEsc){_panelEsc.classList.remove('open');_panelEsc.style.display='none';}
+   document.getElementById('h-status').innerHTML='Double-click country &#x25C6; Dots are hotspots &#x25C6; Scroll to zoom';
+ }
  /* T = open threat assessment tab */
  if(e.key==='t'||e.key==='T'){
    if(selectedISO){
@@ -43487,7 +43499,7 @@ var _BrainEngine = (function(){
             +'<div style="color:#94a3b8;font-size:11px;font-weight:bold;">'+lat+'</div>'
           +'</div>'
         +'</div>'
-        +'<div style="color:rgba('+cl.r+',0.7);font-size:7px;letter-spacing:.14em;margin-bottom:5px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:5px;">&#x25A0; LIVE INTEL: '+cl.q.toUpperCase().slice(0,30)+'...</div>'
+        +'<div style="color:rgba('+cl.r+',0.7);font-size:7px;letter-spacing:.14em;margin-bottom:5px;border-bottom:1px solid rgba(30,41,59,0.6);padding-bottom:5px;">&#x25A0; LIVE INTEL: '+cl.q.toUpperCase().slice(0,30)+'... <span id="bnp-cnt" style="color:#475569;font-size:6px;"></span></div>'
         +'<div id="bnp-feed" style="max-height:160px;overflow-y:auto;font-size:7px;color:#64748b;line-height:1.6;"></div>'
         +'<div style="margin-top:10px;display:flex;gap:6px;">'
           +'<button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';" '
@@ -43500,6 +43512,13 @@ var _BrainEngine = (function(){
       +'</div>';
     p.style.display='block';
     if(typeof _gdeltFetch==='function') _gdeltFetch(cl.q, 'bnp-feed', 2);
+    /* Update article count badge after fetch */
+    setTimeout(function(){
+      var _fc=document.getElementById('bnp-feed');
+      var _fItems=_fc?_fc.querySelectorAll('.gdelt-item, a, div').length:0;
+      var _fBadge=document.getElementById('bnp-cnt');
+      if(_fBadge&&_fItems>0)_fBadge.textContent=_fItems+' INTEL REPORTS';
+    },3000);
   }
 
   /* Expose camera and cluster list for external access */
