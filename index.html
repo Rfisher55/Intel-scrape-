@@ -7387,6 +7387,15 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: scan fill shifts by DEFCON */
 /* Brain: last fire timer in stats bar */
 
+
+/* v86 */
+/* Globe: arc equator spark trail */
+/* Brain: sel ring pop animation */
+/* Globe: border alpha limb fade */
+/* Brain: flash text shadow */
+/* Globe: nightside desaturation */
+/* Brain: minimap fire rings */
+
 </style>
 </head>
 <body>
@@ -13954,13 +13963,15 @@ function draw(){
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
  var _selFA=(0.88+Math.sin(Date.now()*0.002)*0.07).toFixed(2);var _hovFA=(0.92+Math.sin(Date.now()*0.003)*0.05).toFixed(2);const fill=isSel?('rgba(200,220,255,'+_selFA+')'):isHov?('rgba(180,205,255,'+_hovFA+')'):(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  var isCrit=c.alertLevel==='CRITICAL';var isHigh=c.alertLevel==='HIGH';
+ const ctr=project(c.lat,c.lng);
+ /* Border fades near globe limb — ctr.z=1 at center, 0 at edge */
+ var _limbFade=ctr.z!==undefined?Math.max(0.3,0.3+ctr.z*0.7):1;
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.65)':isHigh?'rgba(249,115,22,.45)':'rgba(100,150,220,.5)';
- ctx.lineWidth=isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCrit?(1.0+Math.sin(Date.now()*0.008)*0.55):isHigh?(0.75+Math.sin(Date.now()*0.004)*0.2):.8;
+ ctx.lineWidth=(isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCrit?(1.0+Math.sin(Date.now()*0.008)*0.55):isHigh?(0.75+Math.sin(Date.now()*0.004)*0.2):.8)*_limbFade;
  if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
  else if((isCrit||isHigh)&&!isSel){ctx.shadowColor=isCrit?'rgba(239,68,68,0.28)':'rgba(249,115,22,0.2)';ctx.shadowBlur=isCrit?5:3;}
  drawGeoFeature(feature,fill,true,true);
  ctx.shadowBlur=0;
- const ctr=project(c.lat,c.lng);
  if(ctr.visible){
  /* Pulsing dot for countries with active hotspots */
  var _hasHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
@@ -14135,6 +14146,12 @@ function draw(){
    ctx.save();
    ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.clip();
    ctx.fillStyle=_nightGrad;ctx.fillRect(cx-scale,cy-scale,scale*2,scale*2);
+   /* Subtle desaturation overlay on night hemisphere */
+   if(ctx.globalCompositeOperation!==undefined){
+     ctx.save();ctx.globalCompositeOperation='color';ctx.globalAlpha=0.1;
+     ctx.fillStyle='rgba(15,15,30,1)';ctx.fillRect(cx-scale,cy-scale,scale*2,scale*2);
+     ctx.restore();
+   }
    ctx.restore();
  }
  // Scale bar in bottom-right of globe canvas
@@ -14321,10 +14338,16 @@ function drawArcs(){
  ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
  ctx.strokeStyle=`${base},.85)`;ctx.lineWidth=_arcW;ctx.stroke();
  ctx.setLineDash([]);
- // Equator crossing: bright spark at bezier control point
+ // Equator crossing: bright spark with afterglow trail
  if((from.lat>0)!==(to.lat>0)){
   var _eqPf=Math.sin(Date.now()*0.005)*0.5+0.5;
   var _eqR=arc.severity==='critical'?3+_eqPf*1.5:1.5+_eqPf*0.8;
+  /* Afterglow: fading dot slightly offset toward source */
+  var _eqDx=p1.px-cpX,_eqDy=p1.py-cpY,_eqDl=Math.sqrt(_eqDx*_eqDx+_eqDy*_eqDy)||1;
+  var _eqTA=(0.15+_eqPf*0.08)*(arc.severity==='critical'?1.3:1);
+  ctx.beginPath();ctx.arc(cpX+(_eqDx/_eqDl)*5,cpY+(_eqDy/_eqDl)*5,1.1,0,Math.PI*2);
+  ctx.fillStyle=arc.severity==='critical'?('rgba(239,68,68,'+_eqTA+')'):'rgba(255,255,255,'+_eqTA+')';
+  ctx.fill();
   ctx.shadowColor=arc.severity==='critical'?'rgba(255,80,80,0.9)':'rgba(255,255,255,0.8)';ctx.shadowBlur=(arc.severity==='critical'?8:4)+_eqPf*3;
   ctx.beginPath();ctx.arc(cpX,cpY,_eqR,0,Math.PI*2);
   ctx.fillStyle=`${base},.9)`;ctx.fill();
@@ -43463,7 +43486,11 @@ var _BrainEngine = (function(){
         /* Static selection ring with glow + depth color */
         var _sdColor=v.node.depth<5?'#22c55e':v.node.depth<20?'#fbbf24':v.node.depth<50?'#f97316':'#ef4444';
         ctx.shadowColor=_sdColor;ctx.shadowBlur=Math.min(18,r2*0.7+5);
-        var _selOsc=r2*3.2+Math.sin(frame*0.09)*r2*0.45;
+        /* Pop scale animation: springs in on selection change */
+        if(window._selRingT===undefined)window._selRingT=1;
+        window._selRingT=Math.min(1,window._selRingT+0.055);
+        var _srPop=window._selRingT<0.5?(1+Math.sin(window._selRingT*Math.PI)*0.22):(1+Math.sin((1-window._selRingT)*Math.PI*0.4)*0.08);
+        var _selOsc=(r2*3.2+Math.sin(frame*0.09)*r2*0.45)*_srPop;
         ctx.beginPath();ctx.arc(v.sx,v.sy,_selOsc,0,Math.PI*2);
         ctx.strokeStyle=_sdColor;ctx.lineWidth=0.7;ctx.stroke();
         ctx.shadowBlur=0;
@@ -43728,7 +43755,11 @@ var _BrainEngine = (function(){
         ctx.font='bold '+(9+_tf.t*3)+'px "Courier New"';
         ctx.textAlign='center';
         ctx.globalAlpha=_tfa*0.85;
-        ctx.shadowColor=_tfcl?_tfcl.c:'#fff';ctx.shadowBlur=4;
+        /* Drop shadow for readability */
+        ctx.shadowColor='rgba(0,0,0,0.7)';ctx.shadowBlur=5;
+        ctx.fillStyle='rgba(0,0,0,0.5)';
+        ctx.fillText((_tf.txt||'').toUpperCase(),_tf.x+1,_tfy+1);
+        ctx.shadowColor=_tfcl?_tfcl.c:'#fff';ctx.shadowBlur=6;
         ctx.fillStyle=_tfcl?_tfcl.c:'#fff';
         ctx.fillText((_tf.txt||'').toUpperCase(),_tf.x,_tfy);
         ctx.restore();
@@ -43923,6 +43954,24 @@ var _BrainEngine = (function(){
       ctx.fillStyle='rgba(71,85,105,0.8)';
       ctx.font='6px "Courier New"';ctx.textAlign='center';
       ctx.fillText('OVERVIEW',MMx+MM/2,MMy-3);
+      /* Fire rings on minimap */
+      if(window._lastFireTimes){
+        for(var _mmfi=0;_mmfi<CL.length;_mmfi++){
+          var _mmft=window._lastFireTimes[_mmfi];
+          if(!_mmft)continue;
+          var _mmAge=(Date.now()-_mmft)/1000;
+          if(_mmAge>2.5)continue;
+          var _mmFR=null;for(var _mmv=0;_mmv<roots.length;_mmv++){if(roots[_mmv]&&roots[_mmv].ci===_mmfi){_mmFR=roots[_mmv];break;}}
+          if(!_mmFR)continue;
+          var _mfx=MMx+((_mmFR.wx-wx0)/wW)*MM;
+          var _mfy=MMy+((_mmFR.wy-wy0)/wH)*MM;
+          if(_mfx<MMx||_mfx>MMx+MM||_mfy<MMy||_mfy>MMy+MM)continue;
+          var _mfA=Math.max(0,0.6-_mmAge*0.25);
+          ctx.beginPath();ctx.arc(_mfx,_mfy,_mmAge*14,0,Math.PI*2);
+          ctx.strokeStyle=CL[_mmfi]?'rgba('+CL[_mmfi].r+','+_mfA+')':'rgba(255,255,255,'+_mfA+')';
+          ctx.lineWidth=0.8;ctx.stroke();
+        }
+      }
       ctx.restore();
     }
 
@@ -44017,6 +44066,7 @@ var _BrainEngine = (function(){
   }
 
   function showPanel(node){
+    window._selRingT=-0.01;
     _sel=node;
     var p=document.getElementById('brain-node-panel');
     if(!p) return;
