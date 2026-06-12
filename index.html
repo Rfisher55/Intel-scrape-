@@ -7396,6 +7396,12 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: nightside desaturation */
 /* Brain: minimap fire rings */
 
+
+/* v87 */
+/* Brain: zoom HUD cluster count */
+/* Globe: atmosphere DEFCON pulse */
+/* Brain: depth bar D label conditional */
+
 </style>
 </head>
 <body>
@@ -13913,13 +13919,16 @@ function draw(){
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
  // ── Atmosphere glow
  var _atmoOuter=1.12+Math.min(0.14,(scale-baseScale)/Math.max(1,baseScale)*0.2);
+ var _defconElA=document.getElementById('defcon-num');
+ var _defconNA=_defconElA?parseInt(_defconElA.textContent)||3:3;
+ var _atmoPulse=Math.sin(Date.now()*0.0008*(4-_defconNA))*0.5+0.5;
  const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*_atmoOuter);
  var _aDefN=parseInt((document.getElementById('defcon-num')||{textContent:'3'}).textContent)||3;
  var _aR=_aDefN<=1?200:_aDefN===2?130:_aDefN===3?70:50;
  var _aG=_aDefN<=1?60:_aDefN===2?90:_aDefN===3?110:120;
  var _aB=_aDefN<=1?60:_aDefN===2?80:_aDefN===3?180:255;
- var _aA=_aDefN<=1?.32:_aDefN===2?.28:.28;
- a.addColorStop(0,'rgba('+_aR+','+_aG+','+_aB+','+_aA+')');
+ var _aA=(_aDefN<=1?.32:_aDefN===2?.28:.28)*(0.85+(_atmoPulse||0.5)*0.15);
+ a.addColorStop(0,'rgba('+_aR+','+_aG+','+_aB+','+_aA.toFixed(3)+')');
  a.addColorStop(.4,'rgba('+Math.round(_aR*.6)+','+Math.round(_aG*.65)+','+Math.round(_aB*.85)+',.10)');
  a.addColorStop(.8,'rgba(10,40,180,.04)');a.addColorStop(1,'transparent');
  ctx.beginPath();ctx.arc(cx,cy,scale*1.12,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
@@ -43705,7 +43714,8 @@ var _BrainEngine = (function(){
     ctx.font='7.5px "Courier New"';
     ctx.textAlign='right';
     var zstr=cam.zoom<1?cam.zoom.toFixed(2)+'x':cam.zoom<10?cam.zoom.toFixed(1)+'x':cam.zoom<1000?Math.round(cam.zoom)+'x':'1e'+Math.floor(Math.log10(cam.zoom))+'x';
-    ctx.fillText('DEPTH: '+_maxDepth+'  NEURONS: '+_vn.length+'  EDGES: '+_ve.length+'  ZOOM: '+zstr, W-10, H-8);
+    var _clVisible=new Set();for(var _clVi=0;_clVi<_vn.length;_clVi++)_clVisible.add(_vn[_clVi].node.ci);
+    ctx.fillText('DEPTH: '+_maxDepth+'  NEURONS: '+_vn.length+'  EDGES: '+_ve.length+'  CL: '+_clVisible.size+'  ZOOM: '+zstr, W-10, H-8);
     if(_maxDepth<100&&_maxDepth>1){ctx.font='5.5px "Courier New"';ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fillText('FILTER ACTIVE',W-10,H-17);}
     /* Bottom-left: cluster breadcrumb */
     if(_sel&&_sel.ci!==undefined){
@@ -43825,7 +43835,8 @@ var _BrainEngine = (function(){
       ctx.font='5px "Courier New"';ctx.fillStyle='#64748b';
       ctx.textAlign='center';
       var _maxDCnt=_vn.filter(function(v){return v.node&&v.node.depth===_maxDepth;}).length;
-      ctx.fillText('D',dpbX,dpbY-4);
+      /* Depth label only shows when a deep node is selected */
+      if(!_sel||(_sel.depth||0)>5)ctx.fillText('D',dpbX,dpbY-4);
       ctx.fillText(_maxDepth+(_maxDCnt>0?':'+_maxDCnt:''),dpbX,dpbY+dpbH+9);
       ctx.restore();
     }
@@ -44077,7 +44088,7 @@ var _BrainEngine = (function(){
     p.innerHTML=
       '<div style="background:rgba('+cl.r+',0.12);border-bottom:1px solid rgba('+cl.r+',0.3);padding:10px 14px 8px;">'
         +'<div style="color:'+cl.c+';font-size:9px;letter-spacing:.2em;font-weight:700;">'+cl.n+(conn>0?'<span style="font-size:6px;background:rgba('+cl.r+',0.2);padding:1px 4px;border-radius:2px;margin-left:4px;color:'+cl.c+';">'+conn+' CHILDREN</span>':'')+'</div>'
-        +(function(){var dc=node.depth<5?'#22c55e':node.depth<20?'#fbbf24':node.depth<50?'#f97316':'#ef4444';var parN=node.parent?(node.parent.label||node.parent.n||'ROOT'):'ROOT';return '<div style="color:'+dc+';font-size:7px;letter-spacing:.12em;margin-top:2px;">NEURAL CLUSTER &#x25CF; DEPTH '+node.depth+'</div><div style="color:#475569;font-size:6px;letter-spacing:.08em;margin-top:1px;">PARENT: '+(node.depth>0?parN:'[ROOT NODE]')+'</div>';}())
+        +(function(){var dc=node.depth<5?'#22c55e':node.depth<20?'#fbbf24':node.depth<50?'#f97316':'#ef4444';var parN=node.parent?(node.parent.label||node.parent.n||'ROOT'):'ROOT';var _xClSet=new Set();for(var _xei=0;_xei<_ve.length;_xei++){var _xe=_ve[_xei];if((_xe.a===node||_xe.b===node)&&_xe.cross&&_xe.ci!==node.ci){_xClSet.add(_xe.ci);}}var _xClStr=_xClSet.size>0?' &#x2022; '+_xClSet.size+' CROSS-CLUSTER':'';return '<div style="color:'+dc+';font-size:7px;letter-spacing:.12em;margin-top:2px;">NEURAL CLUSTER &#x25CF; DEPTH '+node.depth+_xClStr+'</div><div style="color:#475569;font-size:6px;letter-spacing:.08em;margin-top:1px;">PARENT: '+(node.depth>0?parN:'[ROOT NODE]')+'</div>';}())
       +'</div>'
       +'<div style="padding:10px 14px;">'
         +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">'
