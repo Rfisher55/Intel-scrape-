@@ -6913,6 +6913,17 @@ a:hover { color: #bfdbfe !important; }
   border-radius: 2px;
 }
 
+
+/* v26 */
+/* Arc colors now from JS */
+/* Brain minimap corner ticks */
+/* Neural freq from edge velocity */
+/* Depth badge glow */
+#bstat-pat[style*="color:#ef4444"] { text-shadow: 0 0 4px rgba(239,68,68,0.3); }
+#bstat-pat[style*="color:#f97316"] { text-shadow: 0 0 4px rgba(249,115,22,0.2); }
+/* Slightly brighter GDELT article text in overlays */
+.gdelt-article-line, [class*="gdelt-title"] { opacity: 0.85 !important; }
+
 </style>
 </head>
 <body>
@@ -13619,7 +13630,8 @@ function drawArcs(){
  if(!from||!to)continue;
  const p1=project(from.lat,from.lng),p2=project(to.lat,to.lng);
  if(!p1.visible&&!p2.visible)continue;
- const base=ARC_COLORS[arc.type]||'rgba(239,68,68';
+ const sevC={critical:'rgba(239,68,68',high:'rgba(249,115,22',medium:'rgba(251,191,36',low:'rgba(34,197,94'};
+ const base=sevC[arc.severity]||ARC_COLORS[arc.type]||'rgba(239,68,68';
  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
  const dx=p2.px-p1.px,dy=p2.py-p1.py;
  const off=Math.sqrt(dx*dx+dy*dy)*0.35;
@@ -42621,6 +42633,21 @@ var _BrainEngine = (function(){
       if(bf.t>=1) window._brainFlash=null;
     }
 
+    /* Depth horizon — horizontal dashed line at current max depth y */
+    if(_maxDepth>3&&_vn.length>0){
+      var maxDepY=null;
+      for(var dhi=0;dhi<_vn.length;dhi++){
+        if(_vn[dhi].node.depth===_maxDepth){if(maxDepY===null||_vn[dhi].sy<maxDepY)maxDepY=_vn[dhi].sy;}
+      }
+      if(maxDepY!==null){
+        ctx.save();
+        ctx.beginPath();ctx.setLineDash([4,8]);
+        ctx.moveTo(0,maxDepY);ctx.lineTo(W,maxDepY);
+        ctx.strokeStyle='rgba(71,85,105,0.15)';ctx.lineWidth=0.8;ctx.stroke();
+        ctx.setLineDash([]);ctx.restore();
+      }
+    }
+
     /* Depth progress bar — right edge */
     if(cam.zoom>1.5){
       var dpbH=Math.min(H-120,400);
@@ -42702,6 +42729,12 @@ var _BrainEngine = (function(){
       var vmw=((vr-vl)/wW)*MM,vmh=((vb-vt)/wH)*MM;
       ctx.strokeStyle='rgba(147,197,253,0.5)';ctx.lineWidth=0.8;
       ctx.strokeRect(vmx,vmy,vmw,vmh);
+      /* Corner ticks on viewport rect */
+      var tk=Math.min(5,vmw*0.3,vmh*0.3);
+      ctx.strokeStyle='rgba(147,197,253,0.75)';ctx.lineWidth=1;
+      [[vmx,vmy,1,1],[vmx+vmw,vmy,-1,1],[vmx,vmy+vmh,1,-1],[vmx+vmw,vmy+vmh,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0]+c[2]*tk,c[1]);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0],c[1]+c[3]*tk);ctx.stroke();
+      });
       /* mini-map label */
       ctx.fillStyle='rgba(71,85,105,0.8)';
       ctx.font='6px "Courier New"';ctx.textAlign='center';
@@ -42715,7 +42748,10 @@ var _BrainEngine = (function(){
       var _activeClusters=new Set();
       for(var _aci=0;_aci<_vn.length;_aci++) _activeClusters.add(_vn[_aci].node.ci);
       se=document.getElementById('bstat-freq');
-      if(se)se.textContent=(38+_vn.length*0.012+Math.sin(frame*0.05)*4).toFixed(1)+' Hz';
+      if(se){
+        var edgeHz=20+_ve.length*0.08+Math.sin(frame*0.04)*3;
+        se.textContent=Math.min(99.9,edgeHz).toFixed(1)+' Hz';
+      }
       se=document.getElementById('bstat-syn'); if(se)se.textContent=_vn.length+'/'+_ve.length;
       se=document.getElementById('bstat-sig'); if(se)se.textContent=(60+Math.log(cam.zoom+1)*9).toFixed(0)+' dB';
       se=document.getElementById('bstat-pat');
