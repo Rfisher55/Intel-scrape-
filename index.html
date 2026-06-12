@@ -7497,6 +7497,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: selected node depth badge */
 /* Brain: key help updated */
 
+
+/* v101 */
+/* Globe: arc shadow offset line */
+/* Globe: country lat/lng at high zoom */
+/* Brain: root glow scales with clAct */
+/* Brain: L key cam lock */
+
 </style>
 </head>
 <body>
@@ -14086,6 +14093,12 @@ function draw(){
  drawGeoFeature(feature,fill,true,true);
  ctx.shadowBlur=0;
  if(ctr.visible){
+ /* Country lat/lng badge at very high zoom */
+ if(isSel&&scale>600){
+   ctx.save();ctx.font='4.5px "Courier New"';ctx.fillStyle='rgba(200,220,255,0.4)';ctx.textAlign='center';
+   var _latStr=(c.lat>=0?'+':'')+c.lat.toFixed(1)+'° '+(c.lng>=0?'+':'')+c.lng.toFixed(1)+'°';
+   ctx.fillText(_latStr,ctr.px,ctr.py+_cLSz+10);ctx.restore();
+ }
  /* Pulsing dot for countries with active hotspots */
  var _hasHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
  if(_hasHot&&!isSel){
@@ -14487,6 +14500,9 @@ function drawArcs(){
  ctx.strokeStyle=`${base},.15)`;ctx.lineWidth=5*_arcW;ctx.stroke();
  if(arc.severity==='critical'){
    var _agBlur=scale<200?3:scale<500?5:8;
+   /* Secondary offset line for depth */
+   ctx.save();ctx.beginPath();ctx.moveTo(p1.px+0.5,p1.py+0.5);ctx.quadraticCurveTo(cpX+0.5,cpY+0.5,p2.px+0.5,p2.py+0.5);
+   ctx.strokeStyle=`${base},.03)`;ctx.lineWidth=14;ctx.stroke();ctx.restore();
    ctx.save();ctx.shadowColor=`${base},.5)`;ctx.shadowBlur=_agBlur;
    ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
    ctx.strokeStyle=`${base},.06)`;ctx.lineWidth=12;ctx.stroke();
@@ -43408,6 +43424,11 @@ var _BrainEngine = (function(){
     if(_fpsNow-_fpsLast>=800){_fps=Math.round(_fpsAcc*1000/(_fpsNow-_fpsLast));_fpsAcc=0;_fpsLast=_fpsNow;}
     /* Smooth camera lerp towards navigation targets */
     if(cam.tx!==undefined){
+      /* Camera lock: follow locked node */
+      if(window._brainCamLock&&cam.tx!==undefined){
+        var _clkN=window._brainCamLock;
+        if(_clkN.wx!==undefined&&_clkN.wy!==undefined){cam.tx=_clkN.wx;cam.ty=_clkN.wy;}
+      }
       var lf=window._brainBursts&&window._brainBursts.length>0?0.18:0.12;
       cam.x+=(cam.tx-cam.x)*lf; cam.y+=(cam.ty-cam.y)*lf; cam.zoom+=(cam.tz-cam.zoom)*lf;
       if(Math.abs(cam.x-cam.tx)<0.01) cam.x=cam.tx;
@@ -43694,7 +43715,8 @@ var _BrainEngine = (function(){
         var pr=v.sr*(1.5+pf*0.4+_clAct*0.3);
         var pa=(0.15+pf*0.12)*(0.7+_clAct*0.5);
         /* Glow behind root nodes — scales with activation */
-        if(v.sr>15){var _actLvl=v.node.act||0;ctx.shadowColor=cl.c;ctx.shadowBlur=Math.min(20,v.sr*0.4+_actLvl*8);}
+        var _clActLvl=(clAct&&clAct[v.node.ci])||0;
+        if(v.sr>15){ctx.shadowColor=cl.c;ctx.shadowBlur=Math.min(28,v.sr*0.4+_clActLvl*12);}
         /* Danger zone for CRITICAL nodes (depth 0 of critical cluster) */
         var _clName=(cl.n||'').toLowerCase();
         if(_clName.indexOf('nuclear')>=0||_clName.indexOf('wmd')>=0||_clName.indexOf('terror')>=0){
@@ -44737,6 +44759,13 @@ document.addEventListener('keydown', function(e){
         else cam.zoom=Math.max(0.1,cam.zoom/1.5);
       }
       /* H = toggle stats bar */
+      /* L = lock camera to selected node (follows it) */
+      if(e.key==='l'||e.key==='L'){
+        window._brainCamLock=window._brainCamLock?null:(_sel?_sel:null);
+        var toastL=document.getElementById('brain-cluster-toast');
+        if(toastL){toastL.textContent=window._brainCamLock?'CAM LOCKED':'CAM UNLOCKED';toastL.style.color=window._brainCamLock?'#ef4444':'#22c55e';toastL.style.display='block';toastL.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastL.style.opacity='0';setTimeout(function(){toastL.style.display='none';},400);},1200);}
+        return;
+      }
       /* X = explode (fire + burst flash) selected cluster */
       if(e.key==='x'||e.key==='X'){
         if(_sel&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
