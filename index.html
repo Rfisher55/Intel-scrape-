@@ -7156,6 +7156,12 @@ a:hover { color: #bfdbfe !important; }
 /* Globe: compass rose (canvas) */
 /* Brain: heartbeat line at bottom */
 
+
+/* v56 */
+/* Brain: skip render when tab hidden */
+/* Brain: radial scan sweep (canvas) */
+/* Brain: compact node count */
+
 </style>
 </head>
 <body>
@@ -42769,6 +42775,8 @@ var _BrainEngine = (function(){
   function render(){
     if(!ON) return;
     RAF=requestAnimationFrame(render);
+    /* Skip rendering when tab is hidden to save CPU */
+    if(document.hidden){frame++;return;}
     frame++;
     var _fpsNow=performance.now();
     _fpsAcc++;
@@ -42788,6 +42796,23 @@ var _BrainEngine = (function(){
     _vig.addColorStop(0,'transparent');
     _vig.addColorStop(1,'rgba(0,0,6,0.45)');
     ctx.fillStyle=_vig;ctx.fillRect(0,0,W,H);
+    /* Radial scan sweep — very faint rotating line from screen center */
+    if(frame%1===0){
+      var _scanAngle=(frame*0.003)%(Math.PI*2);
+      var _scanLen=Math.max(W,H)*0.7;
+      var _scx=W/2,_scy=H/2;
+      var _scGrad=ctx.createLinearGradient(_scx,_scy,
+        _scx+Math.cos(_scanAngle)*_scanLen,_scy+Math.sin(_scanAngle)*_scanLen);
+      _scGrad.addColorStop(0,'rgba(59,130,246,0.04)');
+      _scGrad.addColorStop(0.6,'rgba(59,130,246,0.015)');
+      _scGrad.addColorStop(1,'rgba(59,130,246,0)');
+      ctx.save();ctx.beginPath();
+      ctx.moveTo(_scx,_scy);
+      ctx.arc(_scx,_scy,_scanLen,_scanAngle-0.18,_scanAngle,false);
+      ctx.closePath();
+      ctx.fillStyle=_scGrad;ctx.fill();
+      ctx.restore();
+    }
     /* Heartbeat line at canvas bottom */
     if(!window._hbPts){window._hbPts=[];for(var _hbi=0;_hbi<W;_hbi+=2)window._hbPts.push(0);}
     /* Shift left and add new sample */
@@ -43310,6 +43335,7 @@ var _BrainEngine = (function(){
         se.style.color=_maxDepth<5?'#22c55e':_maxDepth<20?'#fbbf24':_maxDepth<50?'#f97316':'#ef4444';
       }
       se=document.getElementById('bstat-load');if(se)se.textContent=Math.round(_vn.length/_nodeLimit*100)+'%';
+      se=document.getElementById('bstat-nodes');if(se){var _nc2=_vn.length;se.textContent=_nc2>=1000?(_nc2/1000).toFixed(1)+'k':_nc2+'n';}
       /* Uptime display HH:MM:SS */
       if(window._brainStartTime){
         var elap=Math.floor((Date.now()-window._brainStartTime)/1000);
@@ -48516,6 +48542,10 @@ function filterSIGINT(query){
       <div class="brain-stat">
         <span class="brain-stat-label">COGNITIVE LOAD</span>
         <span class="brain-stat-val" id="bstat-load" style="color:#ef4444;">--</span>
+      </div>
+      <div class="brain-stat">
+        <span class="brain-stat-label">NEURONS</span>
+        <span class="brain-stat-val" id="bstat-nodes" style="color:#94a3b8;">--</span>
       </div>
       <div class="brain-stat">
         <span class="brain-stat-label">SESSION</span>
