@@ -6975,6 +6975,15 @@ a:hover { color: #bfdbfe !important; }
   .brain-stat-val { font-size: 9px !important; }
 }
 
+
+/* v32 */
+/* Hotspot CRITICAL glow */
+/* Cluster boundary dashed circles */
+/* Country lat/lon in panel */
+.p-cap-coords { color: #334155 !important; font-size: 7px; letter-spacing: .04em; }
+/* Brain root label pill */
+/* Brain cluster boundary circles */
+
 </style>
 </head>
 <body>
@@ -13626,7 +13635,7 @@ function drawHotspots(){
  for(const h of spots){
  const p=project(h.lat,h.lng);if(!p.visible)continue;
  const base=HOTSPOT_COLORS[h.type]||'rgba(239,68,68,1)';
- const r=h.severity==='critical'?4.5:h.severity==='high'?3.5:2.5;
+ const r=h.severity==='critical'?5.5:h.severity==='high'?4:2.8;
  // Each hotspot pulses on its own phase for organic feel
  const phase=(h.lat*7+h.lng*3)%1000;
  const t1=((now+phase)%2200)/2200;
@@ -13634,11 +13643,16 @@ function drawHotspots(){
  const p1=Math.sin(t1*Math.PI*2)*0.5+0.5;
  const p2=Math.sin(t2*Math.PI*2)*0.5+0.5;
  // Double expanding ring (staggered)
+ if(h.severity==='critical'){
+ /* Third outermost ring for critical */
+ ctx.beginPath();ctx.arc(p.px,p.py,r+6+p2*14,0,Math.PI*2);
+ ctx.strokeStyle=base.replace(',1)',',.08)');ctx.lineWidth=1;ctx.stroke();
+ }
  if(h.severity==='critical'||h.severity==='high'){
- ctx.beginPath();ctx.arc(p.px,p.py,r+3+p1*9,0,Math.PI*2);
- ctx.strokeStyle=base.replace(',1)',',.3)');ctx.lineWidth=1;ctx.stroke();
+ ctx.beginPath();ctx.arc(p.px,p.py,r+4+p1*10,0,Math.PI*2);
+ ctx.strokeStyle=base.replace(',1)',',.28)');ctx.lineWidth=1;ctx.stroke();
  ctx.beginPath();ctx.arc(p.px,p.py,r+2+p2*6,0,Math.PI*2);
- ctx.strokeStyle=base.replace(',1)',',.18)');ctx.lineWidth=1;ctx.stroke();
+ ctx.strokeStyle=base.replace(',1)',',.16)');ctx.lineWidth=1;ctx.stroke();
  }
  // Glow fill
  ctx.beginPath();ctx.arc(p.px,p.py,r+2+p1*3,0,Math.PI*2);
@@ -16044,7 +16058,9 @@ function openCountry(iso){
  document.getElementById('p-expand').textContent='⤢';
  const c=COUNTRIES[iso];
  document.getElementById('p-name').textContent=c.name;
- document.getElementById('p-cap').innerHTML='Capital: '+c.capital+'<span class="p-sat-link" onclick="viewCountrySat(this.dataset.iso)" data-iso="'+iso+'" title="Open satellite view">SATELLITE</span>';
+ var _latStr=(c.lat>=0?'+':'')+c.lat.toFixed(1)+'N';
+ var _lngStr=(c.lng>=0?'+':'')+c.lng.toFixed(1)+'E';
+ document.getElementById('p-cap').innerHTML='Capital: '+c.capital+' <span style="color:#334155;font-size:7px;letter-spacing:.04em;">'+_latStr+' '+_lngStr+'</span>'+'<span class="p-sat-link" onclick="viewCountrySat(this.dataset.iso)" data-iso="'+iso+'" title="Open satellite view">SATELLITE</span>';
  document.getElementById('h-status').innerHTML='VIEWING: <strong style="color:#93c5fd">'+c.name.toUpperCase()+'</strong>';
  const intel=INTEL[iso]||{};
  const badge=ALERT_BADGE[c.alertLevel]||ALERT_BADGE.LOW;
@@ -42493,11 +42509,30 @@ var _BrainEngine = (function(){
         var rl=roots[rli], rp=w2s(rl.wx,rl.wy);
         var rlcl=CL[rl.ci];
         var rlAlpha=Math.min(0.35,(2-cam.zoom)*0.25);
+        var rlText=rlcl.n.slice(0,8).toUpperCase();
+        var rlTw=ctx.measureText(rlText).width;
         ctx.save();ctx.globalAlpha=rlAlpha;
+        /* Pill background */
+        ctx.fillStyle='rgba(2,6,18,0.55)';
+        ctx.fillRect(rp.sx-rlTw/2-3,rp.sy+7,rlTw+6,9);
         ctx.font='6px "Courier New"';ctx.fillStyle=rlcl.c;
         ctx.textAlign='center';
-        ctx.fillText(rlcl.n.slice(0,8).toUpperCase(),rp.sx,rp.sy+14);
+        ctx.fillText(rlText,rp.sx,rp.sy+14);
         ctx.restore();
+      }
+    }
+
+    /* Cluster boundary circles at overview zoom */
+    if(cam.zoom<0.95){
+      for(var cbi=0;cbi<roots.length;cbi++){
+        var cbr=roots[cbi];
+        var cbp=w2s(cbr.wx,cbr.wy);
+        var cbcl=CL[cbr.ci];
+        var cbAlpha=Math.min(0.12,(0.95-cam.zoom)*0.25);
+        ctx.save();ctx.globalAlpha=cbAlpha;
+        ctx.beginPath();ctx.arc(cbp.sx,cbp.sy,32,0,Math.PI*2);
+        ctx.strokeStyle=cbcl.c;ctx.lineWidth=0.6;ctx.setLineDash([3,6]);ctx.stroke();
+        ctx.setLineDash([]);ctx.restore();
       }
     }
 
