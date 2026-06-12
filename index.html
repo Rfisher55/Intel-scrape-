@@ -7701,6 +7701,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: recently fired root glow */
 /* Brain: minimap scan sweep indicator */
 
+
+/* v127 */
+/* Globe: arc dash spin slowdown */
+/* Globe: hotspot domain label */
+/* Brain: R key camera reset */
+/* Brain: selection parent/child HUD */
+/* Globe: terminator dot line */
+
 </style>
 </head>
 <body>
@@ -14603,6 +14611,23 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
   ctx.beginPath();ctx.moveTo(cx,cy-_chSz);ctx.lineTo(cx,cy+_chSz);ctx.stroke();
   ctx.restore();
  }
+ /* Day/night terminator dots — points where sun altitude = 0 */
+ if(scale>150){
+  var _termAlpha=Math.min(0.05,(scale-150)/3000*0.06);
+  if(_termAlpha>0.005){
+   ctx.save();
+   /* Terminator is a great circle perpendicular to sun direction */
+   for(var _tLat=-85;_tLat<=85;_tLat+=10){
+    var _tLng=-rotY*180/Math.PI-90; /* approximate sun subpoint */
+    var _tp=project(_tLat,(_tLng+360)%360-180);
+    if(_tp.visible&&_tp.z>0.08){
+     ctx.beginPath();ctx.arc(_tp.px,_tp.py,0.7,0,Math.PI*2);
+     ctx.fillStyle='rgba(255,220,140,'+_termAlpha+')';ctx.fill();
+    }
+   }
+   ctx.restore();
+  }
+ }
  /* Night-side shadow — subtle dark gradient on left hemisphere */
  {
    var _nightGrad=ctx.createRadialGradient(cx-scale*0.28,cy+scale*0.1,scale*0.2,cx-scale*0.28,cy+scale*0.1,scale*1.2);
@@ -14823,7 +14848,13 @@ function drawHotspots(){
   var _hsBadge='';
   if(h.count&&h.count>1)_hsBadge+=h.count+'x ';
   if(h.timestamp){var _hsMin=Math.round((Date.now()-h.timestamp)/60000);_hsBadge+=_hsMin<60?_hsMin+'m':Math.round(_hsMin/60)+'h';}
-  if(_hsBadge)ctx.fillText(_hsBadge.trim(),p.px,p.py-r-2);ctx.restore();
+  if(_hsBadge)ctx.fillText(_hsBadge.trim(),p.px,p.py-r-2);
+  /* Domain label */
+  if(h.domain&&scale>500&&r>5){
+   ctx.font='4px "Courier New"';ctx.fillStyle='rgba(148,163,184,0.55)';
+   ctx.fillText(h.domain.slice(0,20),p.px,p.py-r-8);
+  }
+  ctx.restore();
  }
  /* Type abbreviation on core */
  if(r>=4){var _htL={'nuclear':'N','conflict':'C','cyber':'X','epidemic':'E','terrorism':'T','famine':'F','pollution':'P','migration':'M'}[h.type]||'+';
@@ -14875,7 +14906,8 @@ function drawArcs(){
  const arcs=selectedISO
  ?CONFLICTS.filter(c=>c.from===selectedISO||c.to===selectedISO)
  :CONFLICTS;
- const t=(Date.now()%3000)/3000;
+ var _arcRotSlowdown=Math.max(0.1,1-_rotSpd*40);
+ const t=((Date.now()*_arcRotSlowdown)%3000)/3000;
  for(const arc of arcs){
  const from=COUNTRIES[arc.from],to=COUNTRIES[arc.to];
  if(!from||!to)continue;
@@ -44393,6 +44425,15 @@ var _BrainEngine = (function(){
           }
           ctx.textBaseline='alphabetic';ctx.restore();
         }
+        /* Selection HUD: parent/child relationship count */
+        if(isSel&&v.sr>15){
+          var _relChildren=v.node.children?v.node.children.length:0;
+          var _relStr=(v.node.parent?'P:1 ':'')+'C:'+_relChildren;
+          ctx.save();ctx.font='4px "Courier New"';ctx.textAlign='center';ctx.textBaseline='top';
+          ctx.fillStyle='rgba('+cl.r+',0.45)';
+          ctx.fillText(_relStr,v.sx,v.sy+Math.max(r2,4)+8);
+          ctx.textBaseline='alphabetic';ctx.restore();
+        }
         /* Ghost orbit blobs for selected node children */
         if(_sel===v.node&&v.node.children&&v.node.children.length>0){
           var _orbN=Math.min(v.node.children.length,8);
@@ -45597,6 +45638,11 @@ document.addEventListener('keydown', function(e){
             cam.tx=_zCx;cam.ty=_zCy;cam.tz=Math.min(500,Math.max(3,(Math.min(W,H)*0.7)/_zSpan));
           }
         }
+        return;
+      }
+      /* R = reset camera to default */
+      if(e.key==='r'||e.key==='R'){
+        cam.tx=0;cam.ty=0;cam.tz=1.0;cam.zoom=1.0;
         return;
       }
       /* W = print view state to console */
