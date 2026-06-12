@@ -6816,6 +6816,21 @@ a:hover { color: #bfdbfe !important; }
 .rank-num { color: #475569 !important; }
 .rank-name { color: #94a3b8 !important; }
 
+
+/* Connect button state */
+#connect-btn.active, #connect-btn[style*="color:#22c55e"] {
+  animation: connectPulse 2s ease-in-out infinite;
+}
+@keyframes connectPulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(34,197,94,0.2); }
+  50% { box-shadow: 0 0 14px rgba(34,197,94,0.45); }
+}
+/* Layer buttons */
+.layer-btn.active { text-shadow: 0 0 6px currentColor; }
+
+/* Overlay body — better scrollbar */
+[id$="-overlay"] { scrollbar-width: thin !important; scrollbar-color: rgba(30,58,95,0.4) transparent !important; }
+
 </style>
 </head>
 <body>
@@ -42505,15 +42520,21 @@ var _BrainEngine = (function(){
       ctx.restore();
     }
 
-    /* Current cluster name when zoomed deep */
+    /* Current cluster name + milestone when zoomed deep */
     if(cam.zoom>5&&_sel){
       var fCl=CL[_sel.ci];
       ctx.save();
-      ctx.globalAlpha=0.38;
+      ctx.globalAlpha=0.45;
       ctx.font='7px "Courier New"';
       ctx.fillStyle=fCl.c;
       ctx.textAlign='left';
-      ctx.fillText('CLUSTER: '+fCl.n+' * D'+_sel.depth,14,18);
+      ctx.fillText(fCl.n+' * D'+_sel.depth,14,18);
+      /* Deep milestone: show special badge */
+      if(_maxDepth>=100){
+        ctx.font='bold 9px "Courier New"';
+        ctx.fillStyle='rgba(255,200,50,0.5)';
+        ctx.fillText('DEPTH '+_maxDepth+' ACHIEVED',14,30);
+      }
       ctx.restore();
     }
 
@@ -42641,7 +42662,7 @@ var _BrainEngine = (function(){
           +'<button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';" '
           +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">CLOSE</button>'
           +'<button onclick="(function(){var c=window._brain_cam;if(c){c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}})()" '
-          +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE INTO NODE &#x25B6;</button>'
+          +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE &#x25B6; '+Math.round(cam.zoom*4.5)+'x</button>'
         +'</div>'
       +'</div>';
     p.style.display='block';
@@ -42770,12 +42791,13 @@ var _BrainEngine = (function(){
       var node=findAt(mx,my);
       if(node){
         ensureChildren(node);
-        cam.x=node.wx;cam.y=node.wy;
-        cam.zoom=Math.min(10000000,cam.zoom*4.5);
+        if(cam.tx!==undefined){cam.tx=node.wx;cam.ty=node.wy;cam.tz=Math.min(10000000,cam.zoom*4.5);}
+        else{cam.x=node.wx;cam.y=node.wy;cam.zoom=Math.min(10000000,cam.zoom*4.5);}
         showPanel(node);
       } else {
         var wb=s2w(mx,my);
-        cam.zoom=Math.min(10000000,cam.zoom*2.5);
+        if(cam.tx!==undefined){cam.tx=wb.wx;cam.ty=wb.wy;cam.tz=Math.min(10000000,cam.zoom*2.5);}
+        else cam.zoom=Math.min(10000000,cam.zoom*2.5);
         var wa=s2w(mx,my);
         cam.x+=wb.wx-wa.wx;cam.y+=wb.wy-wa.wy;
       }
@@ -42894,7 +42916,7 @@ document.addEventListener('keydown', function(e){
       if(e.key==='ArrowDown') {if(cam.tx!==undefined)cam.ty+=panStep;else cam.y+=panStep;e.preventDefault();}
       if(e.key==='-'||e.key==='_'){cam.zoom=Math.max(0.04,cam.zoom/1.25);}
       if(e.key==='r'||e.key==='R'){cam.x=28;cam.y=-28;cam.zoom=0.78;if(cam.tx!==undefined){cam.tx=28;cam.ty=-28;cam.tz=0.78;}var p=document.getElementById('brain-node-panel');if(p)p.style.display='none';}
-      if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}}
+      if(e.key==='Escape'){var p=document.getElementById('brain-node-panel');if(p&&p.style.display!=='none'){p.style.display='none';e.stopPropagation();}if(cam&&cam.tx!==undefined){cam.tx=cam.x;cam.ty=cam.y;cam.tz=cam.zoom;}}
       /* Q/W = cycle through clusters */
       if(e.key==='q'||e.key==='Q'){
         if(typeof _BrainEngine!=='undefined'&&_BrainEngine.CL){
