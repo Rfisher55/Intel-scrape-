@@ -6992,6 +6992,15 @@ a:hover { color: #bfdbfe !important; }
 /* Hotspot CRITICAL shadow handled in canvas */
 /* Child ring highlight */
 
+
+/* v34 */
+/* Depth bar gradient (handled in canvas) */
+/* Globe zoom factor HUD */
+/* Brain bottom-left stats */
+/* Node panel ESC close hint */
+#brain-node-panel button:first-of-type { letter-spacing: .18em !important; }
+/* Brain cheatsheet close button */
+
 </style>
 </head>
 <body>
@@ -13842,6 +13851,10 @@ function drawHUD(){
  if(zoomFactor>1.2){
  ctx.fillStyle='rgba(59,130,246,.55)';ctx.font='9px Courier New';ctx.textAlign='right';
  ctx.fillText(`ZOOM ${zoomFactor.toFixed(1)}x`,canvas.width-m-8,canvas.height-m-8);
+ }
+ if(zoomFactor>1.0){
+ ctx.fillStyle='rgba(71,85,105,0.4)';ctx.font='7px Courier New';ctx.textAlign='left';
+ ctx.fillText('z:'+zoomFactor.toFixed(2)+'x',m+8,canvas.height-m-8);
  }
  ctx.textAlign='left';
 }
@@ -42799,16 +42812,29 @@ var _BrainEngine = (function(){
     /* Depth progress bar — right edge */
     if(cam.zoom>1.5){
       var dpbH=Math.min(H-120,400);
-      var dpbX=W-8,dpbY=(H-dpbH)/2;
+      var dpbX=W-10,dpbY=(H-dpbH)/2;
       var maxPossibleDepth=Math.floor(Math.log(cam.zoom+1)*3.5)+1;
       var depthFrac=Math.min(1,_maxDepth/Math.max(1,maxPossibleDepth));
       ctx.save();
-      ctx.globalAlpha=0.35;
-      ctx.fillStyle='rgba(30,41,59,0.8)';
-      ctx.fillRect(dpbX-2,dpbY,5,dpbH);
-      ctx.fillStyle='rgba(147,197,253,0.6)';
-      ctx.fillRect(dpbX-2,dpbY+dpbH*(1-depthFrac),5,dpbH*depthFrac);
-      ctx.globalAlpha=1;
+      ctx.globalAlpha=0.4;
+      /* Track */
+      ctx.fillStyle='rgba(15,23,42,0.7)';
+      ctx.fillRect(dpbX-2,dpbY,4,dpbH);
+      /* Fill gradient: green at bottom (shallow) -> red at top (deep) */
+      var dpbGrad=ctx.createLinearGradient(0,dpbY,0,dpbY+dpbH);
+      dpbGrad.addColorStop(0,'rgba(239,68,68,0.8)');
+      dpbGrad.addColorStop(0.4,'rgba(249,115,22,0.7)');
+      dpbGrad.addColorStop(0.7,'rgba(251,191,36,0.6)');
+      dpbGrad.addColorStop(1,'rgba(34,197,94,0.7)');
+      ctx.fillStyle=dpbGrad;
+      var fillY=dpbY+dpbH*(1-depthFrac);
+      ctx.fillRect(dpbX-2,fillY,4,dpbH*depthFrac);
+      /* Label */
+      ctx.globalAlpha=0.45;
+      ctx.font='5px "Courier New"';ctx.fillStyle='#64748b';
+      ctx.textAlign='center';
+      ctx.fillText('D',dpbX,dpbY-4);
+      ctx.fillText(_maxDepth,dpbX,dpbY+dpbH+9);
       ctx.restore();
     }
 
@@ -42818,10 +42844,10 @@ var _BrainEngine = (function(){
     ctx.fillStyle='rgba(71,85,105,0.5)';
     ctx.textAlign='right';
     ctx.fillText(_fps+'fps',W-8,12);
-    /* Zoom level bottom-left */
+    /* Zoom level + node count bottom-left */
     var _zstr2=cam.zoom>=1000?(cam.zoom/1000).toFixed(1)+'K':cam.zoom>=1?(cam.zoom).toFixed(1):(cam.zoom).toFixed(3);
     ctx.textAlign='left';
-    ctx.fillText(_zstr2+'x',8,H-8);
+    ctx.fillText(_zstr2+'x  '+_vn.length+'n/'+_ve.length+'e',8,H-8);
     ctx.restore();
 
     /* Current cluster name + milestone when zoomed deep */
