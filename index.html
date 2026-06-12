@@ -6924,6 +6924,20 @@ a:hover { color: #bfdbfe !important; }
 /* Slightly brighter GDELT article text in overlays */
 .gdelt-article-line, [class*="gdelt-title"] { opacity: 0.85 !important; }
 
+
+/* v27 section headers left accent bar */
+.dash-cat-title, .dash-section-title, [class*="section-title"], [class*="cat-title"] {
+  border-left: 2px solid rgba(59,130,246,0.4) !important;
+  padding-left: 6px !important;
+}
+/* Node panel GDELT feed */
+#bnode-gdelt { scrollbar-width: thin; scrollbar-color: rgba(30,58,95,0.3) transparent; }
+#bnode-gdelt a:hover { text-decoration: underline !important; opacity: 0.9; }
+/* Brain cluster toast with index */
+#brain-cluster-toast { min-width: 100px !important; text-align: center !important; }
+/* Globe lat/lon HUD */
+/* (rendered as canvas, no additional CSS needed) */
+
 </style>
 </head>
 <body>
@@ -43104,7 +43118,7 @@ document.addEventListener('keydown', function(e){
           var cl=_BrainEngine.CL[window._brainFocusIdx];
           if(cam&&cl){cam.tx=cl.wx;cam.ty=cl.wy;cam.tz=1.6;}
           var toast=document.getElementById('brain-cluster-toast');
-          if(toast){toast.textContent='< '+cl.n;toast.style.display='block';toast.style.opacity='1';
+          if(toast){toast.textContent='< '+cl.n+' ['+(window._brainFocusIdx+1)+'/'+_BrainEngine.CL.length+']';toast.style.display='block';toast.style.opacity='1';
             clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toast.style.opacity='0';setTimeout(function(){toast.style.display='none';},400);},1800);}
         }
       }
@@ -43115,7 +43129,7 @@ document.addEventListener('keydown', function(e){
           var cl=_BrainEngine.CL[window._brainFocusIdx];
           if(cam&&cl){cam.tx=cl.wx;cam.ty=cl.wy;cam.tz=1.6;}
           var toast2=document.getElementById('brain-cluster-toast');
-          if(toast2){toast2.textContent='> '+cl.n;toast2.style.display='block';toast2.style.opacity='1';
+          if(toast2){toast2.textContent='> '+cl.n+' ['+(window._brainFocusIdx+1)+'/'+_BrainEngine.CL.length+']';toast2.style.display='block';toast2.style.opacity='1';
             clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toast2.style.opacity='0';setTimeout(function(){toast2.style.display='none';},400);},1800);}
         }
       }
