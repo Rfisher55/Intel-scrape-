@@ -7445,6 +7445,13 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: node label brightness by activation */
 /* Brain: scan trailing arc */
 
+
+/* v94 */
+/* Globe: arc endpoint HIGH pulsing */
+/* Brain: Q/W cluster toast */
+/* Brain: HUD children count */
+/* Globe: scale bar ZOOMED label */
+
 </style>
 </head>
 <body>
@@ -14246,7 +14253,7 @@ function draw(){
    /* Estimate km per pixel at equator */
    var _kmPx=40075/scale/2; /* circumference / full diameter in pixels */
    var _sbKm=_kmPx*50; /* 50px bar */
-   var _sbLbl=Math.abs(scale-baseScale)<baseScale*0.02?'GLOBAL':(_sbKm>1000?Math.round(_sbKm/100)*100+'km':Math.round(_sbKm/50)*50+'km');
+   var _sbLbl=scale>baseScale*25?'ZOOMED':Math.abs(scale-baseScale)<baseScale*0.02?'GLOBAL':(_sbKm>1000?Math.round(_sbKm/100)*100+'km':Math.round(_sbKm/50)*50+'km');
    ctx.save();ctx.globalAlpha=0.72;ctx.fillStyle='rgba(0,1,10,0.72)';ctx.fillRect(_sX-3,_sY-10,57,16);ctx.globalAlpha=0.35;
    /* Bar gradient: green->red */
    var _sbGrad=ctx.createLinearGradient(_sX,0,_sX+50,0);
@@ -14463,8 +14470,8 @@ function drawArcs(){
  // Clickable midpoint marker
  drawArcMarker(p1,p2,0.35,`${base},.9)`,arc.label,arc.severity);
  /* Endpoint dots */
- var _epR1=arc.severity==='critical'?2+Math.sin(Date.now()*0.006)*0.9:2;
- var _epR2=arc.severity==='critical'?2+Math.sin(Date.now()*0.006+Math.PI)*0.9:2;
+ var _epR1=arc.severity==='critical'?2+Math.sin(Date.now()*0.006)*0.9:arc.severity==='high'?1.8+Math.sin(Date.now()*0.004)*0.5:2;
+ var _epR2=arc.severity==='critical'?2+Math.sin(Date.now()*0.006+Math.PI)*0.9:arc.severity==='high'?1.8+Math.sin(Date.now()*0.004+Math.PI)*0.5:2;
  ctx.beginPath();ctx.arc(p1.px,p1.py,_epR1,0,Math.PI*2);ctx.fillStyle=`${base},.6)`;ctx.fill();
  ctx.beginPath();ctx.arc(p2.px,p2.py,_epR2,0,Math.PI*2);ctx.fill();
  }
@@ -43875,7 +43882,8 @@ var _BrainEngine = (function(){
       for(var _sei=0;_sei<_ve.length;_sei++){if(_ve[_sei].a===_sel)_selOut++;if(_ve[_sei].b===_sel)_selIn++;}
       ctx.textAlign='left';
       ctx.fillStyle='rgba('+bc.r+',0.6)';
-      ctx.fillText(bc.n+' / D'+_sel.depth+' / '+(_sel.label||_sel.n||'')+' / '+_selIn+'in '+_selOut+'out', 10, H-8);
+      var _selCh2=_sel.children?_sel.children.length:0;
+      ctx.fillText(bc.n+' / D'+_sel.depth+' / '+(_sel.label||_sel.n||'')+' / '+_selIn+'in '+_selOut+'out'+(_selCh2>0?' / '+_selCh2+'ch':''), 10, H-8);
     } else {
       /* Show current view cluster if any cluster focus active */
       if(typeof _brainFocusIdx!=='undefined'&&_brainFocusIdx>=0&&_brainFocusIdx<CL.length){
@@ -44697,6 +44705,10 @@ document.addEventListener('keydown', function(e){
       if(e.key==='?'||e.key==='/'){var cs=document.getElementById('brain-cheatsheet');if(cs)cs.style.display=(cs.style.display==='none'?'block':'none');}
       /* Q/W = cycle through clusters */
       if(e.key==='q'||e.key==='Q'){
+        /* Show cluster name toast */
+        var _qToastCl=CL[window._brainFocusIdx];
+        var toastQ=document.getElementById('brain-cluster-toast');
+        if(toastQ&&_qToastCl){toastQ.textContent='CLUSTER: '+_qToastCl.n;toastQ.style.color='rgba('+_qToastCl.r+',0.9)';toastQ.style.display='block';toastQ.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastQ.style.opacity='0';setTimeout(function(){toastQ.style.display='none';},400);},1500);}
         if(typeof _BrainEngine!=='undefined'&&_BrainEngine.CL){
           if(!window._brainFocusIdx) window._brainFocusIdx=0;
           window._brainFocusIdx=(window._brainFocusIdx-1+_BrainEngine.CL.length)%_BrainEngine.CL.length;
@@ -44709,6 +44721,10 @@ document.addEventListener('keydown', function(e){
         }
       }
       if(e.key==='w'||e.key==='W'){
+        /* Show cluster name toast */
+        var _wToastCl=CL[window._brainFocusIdx];
+        var toastW=document.getElementById('brain-cluster-toast');
+        if(toastW&&_wToastCl){toastW.textContent='CLUSTER: '+_wToastCl.n;toastW.style.color='rgba('+_wToastCl.r+',0.9)';toastW.style.display='block';toastW.style.opacity='1';clearTimeout(window._toastTO);window._toastTO=setTimeout(function(){toastW.style.opacity='0';setTimeout(function(){toastW.style.display='none';},400);},1500);}
         if(typeof _BrainEngine!=='undefined'&&_BrainEngine.CL){
           if(!window._brainFocusIdx) window._brainFocusIdx=0;
           window._brainFocusIdx=(window._brainFocusIdx+1)%_BrainEngine.CL.length;
