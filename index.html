@@ -7235,6 +7235,15 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: cluster fire text flash */
 /* Brain: minimap selected cluster pulse */
 
+
+/* v68 */
+/* Globe: HUD cardinal N/S/E/W lat/lon */
+/* Globe: DEFCON ring pulse at low DEFCON */
+/* Brain: DIVE fires cluster burst */
+/* Brain: same-cluster edge highlight */
+/* Globe: CRITICAL arc endpoint pulse */
+/* Brain: FPS sparkline */
+
 </style>
 </head>
 <body>
@@ -13896,7 +13905,7 @@ function draw(){
  if(!selectedISO&&window._globeMouseLat!==undefined){
   ctx.save();
   ctx.font='7px "Courier New"';ctx.fillStyle='rgba(71,85,105,0.5)';ctx.textAlign='center';
-  ctx.fillText(window._globeMouseLat+'N  '+window._globeMouseLon+'E',(W||canvas.width)/2,18);
+  ctx.fillText(Math.abs(window._globeMouseLat).toFixed(1)+'\u00b0'+(window._globeMouseLat>=0?'N':'S')+'  '+Math.abs(window._globeMouseLon).toFixed(1)+'\u00b0'+(window._globeMouseLon>=0?'E':'W'),(W||canvas.width)/2,18);
   ctx.restore();
  }
  if(selectedISO&&COUNTRIES[selectedISO]){
@@ -13915,7 +13924,8 @@ function draw(){
  var _defN=_defEl?parseInt(_defEl.textContent)||3:3;
  var _defRingCol=_defN<=1?'rgba(239,68,68,.6)':_defN===2?'rgba(249,115,22,.45)':_defN===3?'rgba(251,191,36,.3)':_defN===4?'rgba(34,197,94,.2)':'rgba(59,130,246,.18)';
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
- ctx.strokeStyle=_defRingCol;ctx.lineWidth=1.5;ctx.stroke();
+ var _defRW=_defN<=1?1.5+Math.sin(Date.now()*0.005)*0.9:_defN===2?1.5+Math.sin(Date.now()*0.003)*0.5:1.5;
+ ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW;ctx.stroke();
  // Outer atmospheric ring
  ctx.beginPath();ctx.arc(cx,cy,scale*1.005,0,Math.PI*2);
  ctx.strokeStyle='rgba(59,130,246,.08)';ctx.lineWidth=3;ctx.stroke();
@@ -14103,8 +14113,9 @@ function drawArcs(){
  // Clickable midpoint marker
  drawArcMarker(p1,p2,0.35,`${base},.9)`,arc.label);
  /* Endpoint dots */
- ctx.beginPath();ctx.arc(p1.px,p1.py,2,0,Math.PI*2);ctx.fillStyle=`${base},.6)`;ctx.fill();
- ctx.beginPath();ctx.arc(p2.px,p2.py,2,0,Math.PI*2);ctx.fill();
+ var _epR=arc.severity==='critical'?2+Math.sin(Date.now()*0.006)*0.9:2;
+ ctx.beginPath();ctx.arc(p1.px,p1.py,_epR,0,Math.PI*2);ctx.fillStyle=`${base},.6)`;ctx.fill();
+ ctx.beginPath();ctx.arc(p2.px,p2.py,_epR,0,Math.PI*2);ctx.fill();
  }
 }
 
@@ -14328,7 +14339,7 @@ canvas.addEventListener('mousemove',e=>{
  canvas.style.cursor=hotHit?'crosshair':hit||layerHit?'pointer':'grab';
  /* Track cursor lat/lon for HUD */
  var _mll=unproject(e.clientX,e.clientY);
- if(_mll){window._globeMouseLat=(_mll.lat>=0?'+':'')+_mll.lat.toFixed(1);window._globeMouseLon=(_mll.lng>=0?'+':'')+_mll.lng.toFixed(1);}
+ if(_mll){window._globeMouseLat=_mll.lat;window._globeMouseLon=_mll.lng;}
  else window._globeMouseLat=undefined;
  const tt=document.getElementById('tooltip');
  if(hotHit){
@@ -43080,7 +43091,8 @@ var _BrainEngine = (function(){
     for(var i=0;i<_ve.length;i++){
       var e=_ve[i];
       var _depthFade=Math.max(0.15,1-Math.max(0,e.depth-_maxDepth+4)*0.12);
-      var a=(e.cross?0.10:(e.lat?0.20:0.34))*(e.af===undefined?1:e.af)*_depthFade;
+      var _sameClBoost=(_sel&&!e.cross&&e.ci===_sel.ci)?1.8:1;
+      var a=(e.cross?0.10:(e.lat?0.20:0.34))*(e.af===undefined?1:e.af)*_depthFade*_sameClBoost;
       if(a<=0.01) continue;
       /* edge color: blues shift cooler at depth */
       var er,eg,eb;
@@ -43092,7 +43104,7 @@ var _BrainEngine = (function(){
       }
       ctx.strokeStyle='rgba('+er+','+eg+','+eb+','+a+')';
       if(e.lat){if(window._hideLateral){ctx.setLineDash([]);continue;}ctx.setLineDash([2,3]);}else{ctx.setLineDash([]);}
-      ctx.lineWidth=e.cross?0.35:(e.lat?0.4:0.6);
+      ctx.lineWidth=(e.cross?0.35:(e.lat?0.4:0.6))*(_sel&&!e.cross&&e.ci===_sel.ci?1.4:1);
       ctx.beginPath();ctx.moveTo(e.x1,e.y1);
       if(!e.cross&&!e.lat){
         /* slight perpendicular offset for non-cross, non-lateral edges */
@@ -43416,6 +43428,15 @@ var _BrainEngine = (function(){
     /* FPS counter top-right + zoom level bottom-left */
     ctx.save();
     ctx.font='6px "Courier New"';
+    /* FPS sparkline */
+    if(!window._fpsHist)window._fpsHist=[];
+    if(frame%6===0){window._fpsHist.push(_fps);if(window._fpsHist.length>18)window._fpsHist.shift();}
+    for(var _fi=0;_fi<window._fpsHist.length;_fi++){
+      var _fv=window._fpsHist[_fi];
+      var _fhh=Math.min(7,_fv/9);
+      ctx.fillStyle=_fv>=55?'rgba(34,197,94,0.35)':_fv>=30?'rgba(251,191,36,0.35)':'rgba(239,68,68,0.4)';
+      ctx.fillRect(W-8-(window._fpsHist.length-_fi)*3,15-_fhh,2,_fhh);
+    }
     ctx.fillStyle=_fps>=55?'rgba(34,197,94,0.6)':_fps>=30?'rgba(251,191,36,0.6)':'rgba(239,68,68,0.7)';
     ctx.textAlign='right';
     ctx.fillText(_fps+'fps',W-8,12);
@@ -43627,7 +43648,7 @@ var _BrainEngine = (function(){
           +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">&#x2715; ESC</button>'
           +'<button onclick="(function(){if(typeof _BrainEngine!==\'undefined\'&&_BrainEngine.fireCluster){_BrainEngine.fireCluster('+node.ci+');}})()" '
           +'style="flex:1;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.35);color:#f97316;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">&#x25CF; FIRE</button>'
-          +'<button onclick="(function(){var c=window._brain_cam;if(c){if(c.tx!==undefined){c.tx='+node.wx+';c.ty='+node.wy+';c.tz=Math.min(10000000,c.zoom*4.5);}else{c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}}})()" '
+          +'<button onclick="(function(){var c=window._brain_cam;if(c){if(c.tx!==undefined){c.tx='+node.wx+';c.ty='+node.wy+';c.tz=Math.min(10000000,c.zoom*4.5);}else{c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}if(typeof _BrainEngine!==\'undefined\'&&_BrainEngine.fireCluster)_BrainEngine.fireCluster('+node.ci+');}})();" '
           +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE &#x25B6; '+Math.round(cam.zoom*4.5)+'x</button>'
         +'</div>'
       +'</div>';
