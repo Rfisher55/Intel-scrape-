@@ -7616,6 +7616,14 @@ a:hover { color: #bfdbfe !important; }
 /* Brain: selection ring rotating tick */
 /* Globe: arc apex ghost dot */
 
+
+/* v116 */
+/* Globe: star zoom brightness */
+/* Brain: B key burst toggle */
+/* Brain: signal activation speed */
+/* Globe: sev letter pulse */
+/* Globe: DEFCON N/S/E/W labels */
+
 </style>
 </head>
 <body>
@@ -14128,7 +14136,8 @@ function draw(){
  if(_twFlash>0){ctx.shadowColor='rgba(200,220,255,'+_twFlash*0.8+')';ctx.shadowBlur=3+_twFlash*6;}
  ctx.beginPath();
  ctx.arc(s.x*canvas.width,s.y*canvas.height,_twR,0,Math.PI*2);
- ctx.fillStyle=`rgba(180,210,255,${Math.min(1,s.a*twinkle+_twFlash*0.5)})`;ctx.fill();
+ var _starZoomDim=Math.max(0.15,Math.min(1,(baseScale*2.2)/(scale+0.001)));
+ ctx.fillStyle=`rgba(180,210,255,${Math.min(1,(s.a*twinkle+_twFlash*0.5)*_starZoomDim)})`;ctx.fill();
  if(_twFlash>0)ctx.shadowBlur=0;
  }
  // ── Globe sphere — richer gradient, DEFCON-tinted
@@ -14418,6 +14427,18 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
    ctx.fillStyle=_defRingCol.replace('.6)','.5)').replace('.45)','.4)').replace('.3)','.25)').replace('.2)','.18)').replace('.18)','.15)');
    ctx.fillText(_dElStr,cx,cy-scale-8);ctx.restore();
  }
+ /* N/S/E/W text labels on DEFCON ring */
+ if(scale>100){
+  var _cardDir=[['N',0],['E',Math.PI/2],['S',Math.PI],['W',-Math.PI/2]];
+  ctx.save();ctx.font='bold 5px "Courier New"';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle=_defRingCol.replace('.6)','.4)').replace('.45)','.3)').replace('.3)','.22)').replace('.2)','.15)');
+  for(var _cdi=0;_cdi<4;_cdi++){
+   var _cdA=_cardDir[_cdi][1];
+   var _cdX=cx+Math.cos(_cdA)*(scale+_defRW+6);var _cdY=cy+Math.sin(_cdA)*(scale+_defRW+6);
+   ctx.fillText(_cardDir[_cdi][0],_cdX,_cdY);
+  }
+  ctx.restore();
+ }
  /* Tick marks at N/S/E/W */
  var _defTicks=[0,Math.PI/4,Math.PI/2,Math.PI*3/4,Math.PI,Math.PI*5/4,Math.PI*3/2,Math.PI*7/4];
  for(var _dti=0;_dti<_defTicks.length;_dti++){
@@ -14626,7 +14647,8 @@ function drawHotspots(){
  /* Severity letter badge in core */
  if(r>3.5){
   var _sevLtr=h.severity==='critical'?'C':h.severity==='high'?'H':h.severity==='medium'?'M':'L';
-  ctx.save();ctx.font='bold '+(Math.round(r*0.62))+'px monospace';
+ var _sevLtrPulse=h.severity==='critical'?(1+Math.sin(Date.now()*0.005+h.lat)*0.2):h.severity==='high'?(1+Math.sin(Date.now()*0.003+h.lat)*0.12):1;
+  ctx.save();ctx.font='bold '+Math.round(r*0.62*_sevLtrPulse)+'px monospace';
   ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillStyle='rgba(0,0,0,0.55)';ctx.fillText(_sevLtr,p.px,p.py);
   ctx.textBaseline='alphabetic';ctx.restore();
@@ -44283,7 +44305,8 @@ var _BrainEngine = (function(){
     }
     for(var si=window._bsigs.length-1;si>=0;si--){
       var sg=window._bsigs[si];
-      sg.t+=sg.sp*(_sel&&sg.ci===_sel.ci?1.6:1);
+      var _sgActBoost=(clAct&&clAct[sg.ci]&&clAct[sg.ci]>0.1)?(1+clAct[sg.ci]*1.2):1;
+      sg.t+=sg.sp*(_sel&&sg.ci===_sel.ci?1.6:1)*_sgActBoost;
       if(sg.t>=1){
         if(!window._sigFlashes)window._sigFlashes=[];
         if(CL[sg.ci])window._sigFlashes.push({x:sg.x2,y:sg.y2,t:0,ci:sg.ci});
@@ -44340,7 +44363,7 @@ var _BrainEngine = (function(){
       ctx.shadowBlur=0;
     }
     /* Burst origin rings */
-    if(window._burstRings&&window._burstRings.length>0){
+    if(!window._hideBursts&&window._burstRings&&window._burstRings.length>0){
       for(var _bri=window._burstRings.length-1;_bri>=0;_bri--){
         var _br=window._burstRings[_bri];
         _br.t+=0.055;
@@ -45232,6 +45255,11 @@ document.addEventListener('keydown', function(e){
             cam.tx=_zCx;cam.ty=_zCy;cam.tz=Math.min(500,Math.max(3,(Math.min(W,H)*0.7)/_zSpan));
           }
         }
+        return;
+      }
+      /* B = toggle burst ring animation */
+      if(e.key==='b'||e.key==='B'){
+        window._hideBursts=!window._hideBursts;
         return;
       }
       /* C = toggle cross-cluster edge visibility */
