@@ -13340,16 +13340,15 @@ function drawSIGINTLayer(){
  const p=project(node.lat,node.lng);if(!p.visible)continue;
  const px=p.px+dx,py=p.py+dy;
  const col=SIGINT_TYPE_COLOR[node.type]||'rgba(148,163,184';
- const pulse=Math.sin(now/600+node.intensity*0.4)*0.5+0.5;
  const r=8+node.intensity*1.4;
  if(node.anomaly){
- ctx.beginPath();ctx.arc(px,py,r+12+pulse*8,0,Math.PI*2);
- ctx.strokeStyle=`${col},${0.06+pulse*0.1})`;ctx.lineWidth=1;ctx.stroke();
+ ctx.beginPath();ctx.arc(px,py,r+14,0,Math.PI*2);
+ ctx.strokeStyle=`${col},0.10)`;ctx.lineWidth=1;ctx.stroke();
  ctx.beginPath();ctx.arc(px,py,r+5,0,Math.PI*2);
  ctx.strokeStyle=`${col},0.2)`;ctx.lineWidth=1;ctx.stroke();
  }
  ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);
- ctx.strokeStyle=`${col},${0.35+pulse*0.45})`;ctx.lineWidth=1.5;ctx.stroke();
+ ctx.strokeStyle=`${col},0.65)`;ctx.lineWidth=1.5;ctx.stroke();
  ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);
  ctx.fillStyle=`${col},0.92)`;ctx.fill();
  ctx.save();ctx.font='bold 7px monospace';ctx.fillStyle=`${col},0.95)`;ctx.textAlign='center';
@@ -13548,11 +13547,10 @@ function drawNetDisruptLayer(){
  const p=project(nd.lat,nd.lng);if(!p.visible)continue;
  const px=p.px+dx,py=p.py+dy;
  const col=NET_TYPE_COLOR[nd.type]||'rgba(148,163,184';
- const pulse=Math.sin(now/750+nd.lat*0.3)*0.5+0.5;
- ctx.beginPath();ctx.arc(px,py,22+pulse*7,0,Math.PI*2);
- ctx.strokeStyle=`${col},${0.07+pulse*0.1})`;ctx.lineWidth=1;ctx.stroke();
+ ctx.beginPath();ctx.arc(px,py,22,0,Math.PI*2);
+ ctx.strokeStyle=`${col},0.12)`;ctx.lineWidth=1;ctx.stroke();
  ctx.beginPath();ctx.arc(px,py,14,0,Math.PI*2);
- ctx.strokeStyle=`${col},${0.4+pulse*0.35})`;ctx.lineWidth=2;ctx.stroke();
+ ctx.strokeStyle=`${col},0.55)`;ctx.lineWidth=2;ctx.stroke();
  ctx.save();ctx.translate(px,py);
  const sc=`${col},0.9)`;
  if(nd.type==='shutdown'||nd.type==='throttle'){
@@ -15066,10 +15064,9 @@ function drawNavalAssets(){
  for(const n of list){
  const p=project(n.lat,n.lng);if(!p.visible)continue;
  const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(34,197,94',low:'rgba(59,130,246'}[n.severity]||'rgba(34,197,94';
- const pulse=Math.sin(now/1200+n.lat)*0.5+0.5;
- ctx.beginPath();ctx.arc(p.px,p.py,8+pulse*5,0,Math.PI*2);
- ctx.strokeStyle=`${sev},.25)`;ctx.lineWidth=1;ctx.stroke();
- ctx.beginPath();ctx.arc(p.px,p.py,4+pulse*2,0,Math.PI*2);
+ ctx.beginPath();ctx.arc(p.px,p.py,11,0,Math.PI*2);
+ ctx.strokeStyle=`${sev},.22)`;ctx.lineWidth=1;ctx.stroke();
+ ctx.beginPath();ctx.arc(p.px,p.py,5,0,Math.PI*2);
  ctx.strokeStyle=`${sev},.5)`;ctx.lineWidth=1;ctx.stroke();
  ctx.save();ctx.translate(p.px,p.py);
  ctx.beginPath();ctx.moveTo(0,-5);ctx.lineTo(3.5,4);ctx.lineTo(-3.5,4);ctx.closePath();
