@@ -14349,6 +14349,7 @@ function draw(){
  drawGeoFeature(feature,fill,true,true);
  ctx.shadowBlur=0;
  if(ctr.visible){
+ var _cLSz=Math.max(8,Math.min(16,Math.round(scale/40)));
  /* Alert level indicator ring */
  if(!isSel&&c.alertLevel&&c.alertLevel!=='NORMAL'&&ctr.z>0.15){
   var _alC=c.alertLevel==='CRITICAL'?'rgba(239,68,68':c.alertLevel==='HIGH'?'rgba(249,115,22':c.alertLevel==='ELEVATED'?'rgba(251,191,36':'rgba(59,130,246';
@@ -14367,7 +14368,6 @@ function draw(){
    ctx.beginPath();ctx.arc(ctr.px,ctr.py,3.5,0,Math.PI*2);
    ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fill();
  }
- var _cLSz=Math.max(8,Math.min(16,Math.round(scale/40)));
  var _cLWt=isSel?'900':(c.alertLevel==='CRITICAL'?'bold':(c.alertLevel==='HIGH'?'bold':'normal'));
  ctx.font=_cLWt+' '+_cLSz+'px "Courier New"';
  /* Selected country label gets filled box background */
