@@ -14324,6 +14324,9 @@ function draw(){
    else drawMeridian(lng);
  }
 
+ // Precompute live-hotspot ISO set once per frame to avoid O(n²) .some() calls
+ var _liveHotISOs=new Set();
+ if(typeof liveHotspots!=='undefined')liveHotspots.forEach(function(h){if(h.country)_liveHotISOs.add(h.country);});
  if(geoReady){
  // Pass 1: all non-ME world countries (dim land)
  ctx.strokeStyle='rgba(25,50,90,.55)';ctx.lineWidth=.5;
@@ -14337,7 +14340,7 @@ function draw(){
  if(!iso)continue;
  const c=COUNTRIES[iso];
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
- var _hasLiveHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});var _baseAlert=ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)';var _fillAlert=_hasLiveHot&&!isSel&&!isHov?_baseAlert.replace(/[\d.]+\)$/,'0.78)'):_baseAlert;const fill=isSel?'rgba(200,220,255,0.88)':isHov?'rgba(180,205,255,0.92)':_fillAlert;
+ var _hasLiveHot=_liveHotISOs.has(iso);var _baseAlert=ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)';var _fillAlert=_hasLiveHot&&!isSel&&!isHov?_baseAlert.replace(/[\d.]+\)$/,'0.78)'):_baseAlert;const fill=isSel?'rgba(200,220,255,0.88)':isHov?'rgba(180,205,255,0.92)':_fillAlert;
  var isCrit=c.alertLevel==='CRITICAL';var isHigh=c.alertLevel==='HIGH';
  const ctr=project(c.lat,c.lng);
  /* Border fades near globe limb — ctr.z=1 at center, 0 at edge */
@@ -14363,8 +14366,7 @@ function draw(){
    ctx.fillText(_latStr,ctr.px,ctr.py+_cLSz+10);ctx.restore();
  }
  /* Static dot for countries with active live hotspots */
- var _hasHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
- if(_hasHot&&!isSel){
+ if(_hasLiveHot&&!isSel){
    ctx.beginPath();ctx.arc(ctr.px,ctr.py,3.5,0,Math.PI*2);
    ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fill();
  }
@@ -14383,7 +14385,7 @@ function draw(){
  var _hs_overlap=false;
  var _allHS=(typeof HOTSPOTS!=='undefined'?HOTSPOTS:[]).concat(typeof liveHotspots!=='undefined'?liveHotspots:[]);
  for(var _oli=0;_oli<_allHS.length;_oli++){if(_allHS[_oli].country===c.iso){var _ohp=project(_allHS[_oli].lat,_allHS[_oli].lng);if(_ohp.visible){var _odx=_ohp.px-ctr.px,_ody=_ohp.py-ctr.py;if(_odx*_odx+_ody*_ody<36){_hs_overlap=true;break;}}}}
- if(!_hs_overlap)ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py+(_hasHot?3:0));
+ if(!_hs_overlap)ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py+(_hasLiveHot?3:0));
  if(scale>520&&c.capital&&!isSel&&!isHov){ctx.font='6px "Courier New"';ctx.fillStyle='rgba(100,116,139,0.5)';ctx.fillText(c.capital.slice(0,16),ctr.px,ctr.py+_cLSz+1);}
  if(scale>500&&c.capital&&c.capitalLat&&c.capitalLng&&(!isSel&&!isHov?scale>800:true)){
    var _capP=project(c.capitalLat,c.capitalLng);
@@ -14415,8 +14417,7 @@ function draw(){
  ctx.shadowBlur=0;
  const ctr=project(c.lat,c.lng);
  if(ctr.visible){
- var _hasHot2=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
- if(_hasHot2&&!isSel){
+ if(_liveHotISOs.has(iso)&&!isSel){
    ctx.beginPath();ctx.arc(ctr.px,ctr.py,3.5,0,Math.PI*2);
    ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fill();
  }
