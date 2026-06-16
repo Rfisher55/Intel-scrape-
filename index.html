@@ -14324,9 +14324,10 @@ function draw(){
    else drawMeridian(lng);
  }
 
- // Precompute live-hotspot ISO set once per frame to avoid O(n²) .some() calls
+ // Precompute per-frame caches to avoid repeated O(n) work in country loop
  var _liveHotISOs=new Set();
  if(typeof liveHotspots!=='undefined')liveHotspots.forEach(function(h){if(h.country)_liveHotISOs.add(h.country);});
+ var _allHSCache=(typeof HOTSPOTS!=='undefined'?HOTSPOTS:[]).concat(typeof liveHotspots!=='undefined'?liveHotspots:[]);
  if(geoReady){
  // Pass 1: all non-ME world countries (dim land)
  ctx.strokeStyle='rgba(25,50,90,.55)';ctx.lineWidth=.5;
@@ -14383,8 +14384,7 @@ function draw(){
  if(!isSel&&!isHov){ctx.shadowColor='rgba(0,0,16,0.8)';ctx.shadowBlur=3;}
  /* Skip label if a hotspot core is very near the centroid */
  var _hs_overlap=false;
- var _allHS=(typeof HOTSPOTS!=='undefined'?HOTSPOTS:[]).concat(typeof liveHotspots!=='undefined'?liveHotspots:[]);
- for(var _oli=0;_oli<_allHS.length;_oli++){if(_allHS[_oli].country===c.iso){var _ohp=project(_allHS[_oli].lat,_allHS[_oli].lng);if(_ohp.visible){var _odx=_ohp.px-ctr.px,_ody=_ohp.py-ctr.py;if(_odx*_odx+_ody*_ody<36){_hs_overlap=true;break;}}}}
+ for(var _oli=0;_oli<_allHSCache.length;_oli++){if(_allHSCache[_oli].country===c.iso){var _ohp=project(_allHSCache[_oli].lat,_allHSCache[_oli].lng);if(_ohp.visible){var _odx=_ohp.px-ctr.px,_ody=_ohp.py-ctr.py;if(_odx*_odx+_ody*_ody<36){_hs_overlap=true;break;}}}}
  if(!_hs_overlap)ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py+(_hasLiveHot?3:0));
  if(scale>520&&c.capital&&!isSel&&!isHov){ctx.font='6px "Courier New"';ctx.fillStyle='rgba(100,116,139,0.5)';ctx.fillText(c.capital.slice(0,16),ctr.px,ctr.py+_cLSz+1);}
  if(scale>500&&c.capital&&c.capitalLat&&c.capitalLng&&(!isSel&&!isHov?scale>800:true)){
