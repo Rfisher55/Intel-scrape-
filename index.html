@@ -8025,6 +8025,7 @@ a:hover { color: #bfdbfe !important; }
  <button class="layer-btn" id="lb-money" onclick="toggleLayer('money')" title="Financial flows and sanctions evasion — documented OSINT intelligence database"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-refugees" onclick="toggleLayer('refugees')" title="Refugee and displacement flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-flights" onclick="toggleLayer('flights')" title="Live military flights — ADS-B Exchange real-time feed (adsb.lol)"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span><span class="lb-src live">● LIVE</span></button>
+ <button class="layer-btn" id="lb-liveonly" onclick="toggleLiveOnly()" title="Show only live GDELT hotspots — hides static OSINT baseline data"><span class="lb-dot" style="background:#22c55e"></span>LIVE ONLY<span class="lb-src live">● GDELT</span></button>
  <button class="layer-btn" id="lb-seismic" onclick="toggleSeismicLayer()" title="USGS earthquake data — live seismic monitoring"><span class="lb-dot" style="background:#fbbf24"></span>SEISMIC<span class="lb-src">USGS</span></button>
  <button class="layer-btn" id="lb-airdom" onclick="toggleAirDomain()" title="Real aircraft positions over conflict zones (OpenSky Network)"><span class="lb-dot" style="background:#38bdf8"></span>AIR DOMAIN<span class="lb-src live">LIVE</span></button>
  <button class="layer-btn" id="lb-maritime" onclick="toggleMaritimeLayer()" title="Live maritime incidents — Houthi Red Sea, South China Sea, chokepoints (GDELT + OSINT)"><span class="lb-dot" style="background:#22d3ee"></span>&#x25C6; MARITIME<span class="lb-count" id="lbc-maritime">&#x2014;</span><span class="lb-src live">LIVE</span></button>
@@ -14784,7 +14785,7 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
 
 function drawHotspots(){
  const now=Date.now();
- const allSpots=[...HOTSPOTS,...liveHotspots];
+ const allSpots=_liveOnlyMode?[...liveHotspots]:[...HOTSPOTS,...liveHotspots];
  const spots=selectedISO?allSpots.filter(h=>h.country===selectedISO||!h.country):allSpots;
  for(const h of spots){
  const p=project(h.lat,h.lng);if(!p.visible)continue;
@@ -18156,6 +18157,17 @@ function toggleLayer(name){
  }
  if(name==='unverified'&&activeLayers[name])fetchUnverifiedSignals();
  updateLayerFilterHint();
+}
+
+var _liveOnlyMode=false;
+function toggleLiveOnly(){
+ _liveOnlyMode=!_liveOnlyMode;
+ const btn=document.getElementById('lb-liveonly');
+ if(btn)btn.classList.toggle('active',_liveOnlyMode);
+ if(_liveOnlyMode&&!window._gdeltHotspotCache){fetchLiveHotspots();}
+ const st=document.getElementById('h-status');
+ if(st)st.textContent=_liveOnlyMode?'LIVE ONLY: showing GDELT 12h events only — static OSINT baseline hidden':'Static + live hotspots active';
+ setTimeout(function(){const s=document.getElementById('h-status');if(s)s.textContent='Double-click country ◆ Dots are hotspots ◆ Scroll to zoom';},4000);
 }
 
 function toggleLayersPanel(){
