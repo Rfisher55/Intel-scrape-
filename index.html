@@ -13715,22 +13715,18 @@ function drawFlights(){
  const p=project(f.lat,f.lng);
  if(!p.visible)continue;
  const col=FLIGHT_CAT_COLOR[f.cat]||FLIGHT_CAT_COLOR.default;
- const pulse=Math.sin(now/900+f.lat)*0.4+0.6;
  const sz=f.cat==='drone'?3.5:f.cat==='bomber'?6:4.5;
- // Heading trail
  const radH=(f.heading-90)*Math.PI/180;
  ctx.save();
  ctx.translate(p.px,p.py);
  ctx.rotate(radH);
  // Body
  ctx.beginPath();ctx.moveTo(0,-sz*1.4);ctx.lineTo(sz*.8,sz);ctx.lineTo(0,sz*.4);ctx.lineTo(-sz*.8,sz);ctx.closePath();
- ctx.fillStyle=col.replace(')',`,${0.7+pulse*.25})`).replace('rgb','rgba');
- if(!col.includes('rgba'))ctx.fillStyle=col;
+ ctx.fillStyle=col;
  ctx.fill();
  // Wing glow
  ctx.beginPath();ctx.arc(0,0,sz*2,0,Math.PI*2);
- ctx.strokeStyle=col.replace(')',', .2)').replace('#',col)+'22';
- ctx.strokeStyle=`rgba(163,230,53,.15)`;
+ ctx.strokeStyle=col.includes('rgba')?col.replace(/[\d.]+\)$/,'0.2)'):col;
  ctx.lineWidth=1;ctx.stroke();
  ctx.restore();
  // Callsign label (only when zoomed in or few flights visible)
@@ -14349,7 +14345,7 @@ function draw(){
  /* Border fades near globe limb — ctr.z=1 at center, 0 at edge */
  var _limbFade=ctr.z!==undefined?Math.max(0.3,0.3+ctr.z*0.7):1;
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.65)':isHigh?'rgba(249,115,22,.45)':'rgba(100,150,220,.5)';
- ctx.lineWidth=(isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCrit?(1.0+Math.sin(Date.now()*0.008)*0.55):isHigh?(0.75+Math.sin(Date.now()*0.004)*0.2):.8)*_limbFade;
+ ctx.lineWidth=(isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCrit?1.1:isHigh?.85:.8)*_limbFade;
  if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
  else if((isCrit||isHigh)&&!isSel){ctx.shadowColor=isCrit?'rgba(239,68,68,0.28)':'rgba(249,115,22,0.2)';ctx.shadowBlur=isCrit?5:3;}
  drawGeoFeature(feature,fill,true,true);
@@ -14861,7 +14857,7 @@ function drawArcMarker(p1,p2,offFactor,color,label,sev){
  if(!p1.visible&&!p2.visible)return;
  const mid=arcMid(p1,p2,offFactor);
  // Outer ring
- var _amR=sev==='critical'?7+Math.sin(Date.now()*0.005)*2:7;
+ var _amR=7;
  ctx.beginPath();ctx.arc(mid.px,mid.py,_amR,0,Math.PI*2);
  ctx.strokeStyle=color.replace(/[\d.]+\)$/,'0.35)');ctx.lineWidth=1;ctx.stroke();
  // Inner dot
@@ -15030,11 +15026,10 @@ function drawTroopMovements(){
  arrowHead(p2.px,p2.py,Math.atan2(dy,dx),9,`${sev},.9)`);
  }
  if(p1.visible){
-  var _epf1=Math.sin(Date.now()*0.006+p1.px)*0.5+0.5;
-  ctx.beginPath();ctx.arc(p1.px,p1.py,2.5+_epf1*1.5,0,Math.PI*2);
+  ctx.beginPath();ctx.arc(p1.px,p1.py,3,0,Math.PI*2);
   ctx.fillStyle=`${sev},.85)`;ctx.fill();
-  ctx.beginPath();ctx.arc(p1.px,p1.py,4+_epf1*3,0,Math.PI*2);
-  ctx.strokeStyle=`${sev},.${Math.round(20+_epf1*15)})`;ctx.lineWidth=0.6;ctx.stroke();
+  ctx.beginPath();ctx.arc(p1.px,p1.py,5,0,Math.PI*2);
+  ctx.strokeStyle=`${sev},.25)`;ctx.lineWidth=0.6;ctx.stroke();
  }
  drawArcMarker(p1,p2,0.32,`${sev},.9)`,m.label);
  }
