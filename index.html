@@ -29622,20 +29622,19 @@ function drawConfMinRoutes(){
  ctx.lineWidth=1.5;
  var started=false;
  for(var i=0;i<pts.length;i++){
- var proj=latLngToXY(pts[i].lat,pts[i].lng);
- if(!proj)continue;
- if(!started){ctx.moveTo(proj.x,proj.y);started=true;}
- else{ctx.lineTo(proj.x,proj.y);}
+ var proj=project(pts[i].lat,pts[i].lng);
+ if(!proj||!proj.visible)continue;
+ if(!started){ctx.moveTo(proj.px,proj.py);started=true;}
+ else{ctx.lineTo(proj.px,proj.py);}
  }
  ctx.stroke();
  ctx.setLineDash([]);
- // Draw arrowhead at last visible point
  if(pts.length>=2){
- var p1=latLngToXY(pts[pts.length-2].lat,pts[pts.length-2].lng);
- var p2=latLngToXY(pts[pts.length-1].lat,pts[pts.length-1].lng);
- if(p1&&p2){
- var ang=Math.atan2(p2.y-p1.y,p2.x-p1.x);
- ctx.save();ctx.translate(p2.x,p2.y);ctx.rotate(ang);
+ var p1=project(pts[pts.length-2].lat,pts[pts.length-2].lng);
+ var p2=project(pts[pts.length-1].lat,pts[pts.length-1].lng);
+ if(p1&&p2&&p1.visible&&p2.visible){
+ var ang=Math.atan2(p2.py-p1.py,p2.px-p1.px);
+ ctx.save();ctx.translate(p2.px,p2.py);ctx.rotate(ang);
  ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-8,-4);ctx.lineTo(-8,4);ctx.closePath();
  ctx.fillStyle=route.color;ctx.fill();ctx.restore();
  }
