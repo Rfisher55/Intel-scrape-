@@ -14854,7 +14854,7 @@ function drawHotspots(){
  var _hsBreath=0.92+Math.sin(Date.now()*0.0012+h.lat*0.7+h.lng*0.4)*0.08;
  ctx.globalAlpha=Math.max(0.5,_hsAgeFade*_hsFlicker*_hsBreath);
  /* Occasional twinkle flash */
- var _stT=Math.sin(Date.now()*0.002+s.x*7+s.y*3);
+ var _stT=Math.sin(Date.now()*0.002+p.px*7+p.py*3);
  var _stFlash=_stT>0.97?(_stT-0.97)/0.03:0;
  var _stR=r*(1+_stFlash*2);
  if(_stFlash>0){ctx.shadowColor='rgba(255,255,255,'+(_stFlash*0.9)+')';ctx.shadowBlur=4+_stFlash*8;}
