@@ -8133,7 +8133,7 @@ a:hover { color: #bfdbfe !important; }
 <div id="intel-search-btn" onclick="openIntelSearch()">INTEL SEARCH</div>
 <div id="icc-btn" onclick="openICC()">⬡ COMMAND CTR</div>
 <div id="export-btn" onclick="exportIntelBrief()">⬇ EXPORT BRIEF</div>
-<button id="iss-btn" onclick="toggleISS()">&#x1F6F0; ISS TRACKER<span id="iss-status" style="color:var(--muted)">OFF</span></button>
+<button id="iss-btn" onclick="toggleISS()">◈ ISS TRACKER<span id="iss-status" style="color:var(--muted)">OFF</span></button>
 <div id="iss-indicator">
  <div>LAT <span class="iss-val" id="iss-lat">—</span> &nbsp; LON <span class="iss-val" id="iss-lon">—</span></div>
  <div>ALT <span class="iss-val">~408 km</span> &nbsp; SPD <span class="iss-val">~27,600 km/h</span></div>
@@ -14229,13 +14229,11 @@ function globe_focusVIP(lat,lng,name,status){
 function draw(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
  // ── Star field
- const now=Date.now();
  for(const s of STARS){
- const twinkle=0.7+0.3*Math.sin(now/s.tw+s.ph);
  ctx.beginPath();
  ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2);
  var _starZoomDim=Math.max(0.15,Math.min(1,(baseScale*2.2)/(scale+0.001)));
- ctx.fillStyle=`rgba(180,210,255,${Math.min(1,s.a*twinkle*_starZoomDim)})`;ctx.fill();
+ ctx.fillStyle=`rgba(180,210,255,${Math.min(1,s.a*_starZoomDim)})`;ctx.fill();
  }
  // ── Globe sphere — richer gradient, DEFCON-tinted
  var _sgDefEl=document.getElementById('defcon-num');
@@ -14249,13 +14247,12 @@ function draw(){
  var _atmoOuter=1.12+Math.min(0.22,(scale-baseScale)/Math.max(1,baseScale)*0.28);
  var _defconElA=document.getElementById('defcon-num');
  var _defconNA=_defconElA?parseInt(_defconElA.textContent)||3:3;
- var _atmoPulse=Math.sin(Date.now()*0.0008*(4-_defconNA))*0.5+0.5;
  const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*_atmoOuter);
  var _aDefN=parseInt((document.getElementById('defcon-num')||{textContent:'3'}).textContent)||3;
  var _aR=_aDefN<=1?230:_aDefN===2?155:_aDefN===3?80:50;
  var _aG=_aDefN<=1?50:_aDefN===2?80:_aDefN===3?105:120;
  var _aB=_aDefN<=1?40:_aDefN===2?60:_aDefN===3?195:255;
- var _aA=(_aDefN<=1?.32:_aDefN===2?.28:.28)*(0.85+(_atmoPulse||0.5)*0.15);
+ var _aA=_aDefN<=1?.30:_aDefN===2?.26:.26;
  a.addColorStop(0,'rgba('+_aR+','+_aG+','+_aB+','+_aA.toFixed(3)+')');
  a.addColorStop(.4,'rgba('+Math.round(_aR*.6)+','+Math.round(_aG*.65)+','+Math.round(_aB*.85)+',.10)');
  a.addColorStop(.8,'rgba(10,40,180,.04)');a.addColorStop(1,'transparent');
@@ -14303,7 +14300,7 @@ function draw(){
  /* Pulse grid brightness with rotation velocity, fade at high zoom */
  var _rotSpd=Math.abs(typeof rotVx!=='undefined'?rotVx:0)+Math.abs(typeof rotVy!=='undefined'?rotVy:0);
  var _gridZoomFade=scale>800?Math.max(0,1-(scale-800)/1200):1;
- _gAlpha=Math.min(0.18,_gAlpha+_rotSpd*12+Math.sin(Date.now()*0.0004)*0.008)*_gridZoomFade;
+ _gAlpha=Math.min(0.18,_gAlpha+_rotSpd*12)*_gridZoomFade;
  ctx.strokeStyle='rgba(59,130,246,'+_gAlpha.toFixed(3)+')';ctx.lineWidth=.5;
  /* Standard parallels */
  for(let lat=-80;lat<=80;lat+=20){
@@ -14473,16 +14470,13 @@ function draw(){
    const _sc=COUNTRIES[selectedISO];const _sp=project(_sc.lat,_sc.lng);
    if(_sp.visible){
      const _ab=ALERT_BADGE[_sc.alertLevel]||ALERT_BADGE.LOW;
-     const _pf=Math.sin(Date.now()*0.0025)*0.5+0.5;
      ctx.save();
-     ctx.beginPath();ctx.arc(_sp.px,_sp.py,18+_pf*6,0,Math.PI*2);
-     ctx.strokeStyle=_ab.border;ctx.globalAlpha=0.18+_pf*0.12;ctx.lineWidth=1;ctx.stroke();
-     ctx.beginPath();ctx.arc(_sp.px,_sp.py,28+_pf*10,0,Math.PI*2);
-     ctx.globalAlpha=0.07+_pf*0.05;ctx.lineWidth=0.7;ctx.stroke();
-     /* Second pulsing ring offset by half period */
-     var _pf2=Math.sin(Date.now()*0.0025+Math.PI)*0.5+0.5;
-     ctx.beginPath();ctx.arc(_sp.px,_sp.py,22+_pf2*8,0,Math.PI*2);
-     ctx.globalAlpha=0.10+_pf2*0.08;ctx.lineWidth=0.5;ctx.stroke();
+     ctx.beginPath();ctx.arc(_sp.px,_sp.py,21,0,Math.PI*2);
+     ctx.strokeStyle=_ab.border;ctx.globalAlpha=0.24;ctx.lineWidth=1;ctx.stroke();
+     ctx.beginPath();ctx.arc(_sp.px,_sp.py,33,0,Math.PI*2);
+     ctx.globalAlpha=0.10;ctx.lineWidth=0.7;ctx.stroke();
+     ctx.beginPath();ctx.arc(_sp.px,_sp.py,26,0,Math.PI*2);
+     ctx.globalAlpha=0.14;ctx.lineWidth=0.5;ctx.stroke();
      ctx.restore();
    }
  }
@@ -14540,9 +14534,7 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
  }
  var _defRingCol=_defN<=1?'rgba(239,68,68,.6)':_defN===2?'rgba(249,115,22,.45)':_defN===3?'rgba(251,191,36,.3)':_defN===4?'rgba(34,197,94,.2)':'rgba(59,130,246,.18)';
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);
- var _defRWBase=_defN<=1?2.2:_defN===2?1.8:1.5;
- var _defRWPulse=_defN<=1?Math.abs(Math.sin(Date.now()*0.008))*1.0:_defN===2?Math.sin(Date.now()*0.003)*0.5:0;
- var _defRW=_defRWBase+_defRWPulse;
+ var _defRW=_defN<=1?2.2:_defN===2?1.8:1.5;
  ctx.strokeStyle=_defRingCol;ctx.lineWidth=_defRW;ctx.stroke();
  /* Elapsed time since last DEFCON change */
  if(window._defconChangeT&&scale>80){
@@ -24414,7 +24406,7 @@ function _renderPsychProfiles() {
  }).join('');
  const profile = PSYCH_PROFILES[_psychActiveIdx];
  const detail = '<div class="psych-detail-section">' +
- '<div class="psych-detail-title">&#x1F9E0; DEEP PROFILE: ' + profile.name.toUpperCase() + '</div>' +
+ '<div class="psych-detail-title">◉ DEEP PROFILE: ' + profile.name.toUpperCase() + '</div>' +
  '<div class="psych-row"><div class="psych-label">DECISION STYLE</div><div class="psych-value">' + profile.decisionStyle + '</div></div>' +
  '<div class="psych-row"><div class="psych-label">COG. BIASES</div><div class="psych-value">' + profile.cogBiases.map(function(b){return '<span class="psych-tag">' + b + '</span>';}).join('') + '</div></div>' +
  '<div class="psych-row"><div class="psych-label">TRIGGER EVENTS</div><div class="psych-value">' + profile.triggers.map(function(t){return '<span class="psych-tag-red">' + t + '</span>';}).join('') + '</div></div>' +
@@ -24501,7 +24493,7 @@ async function _renderLeakMonitor() {
  }).join('');
  ov.innerHTML = '<div class="lm-hdr"><div>' +
  '<div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">LEAK & WHISTLEBLOWER MONITOR // GDELT LIVE FEED // CLASSIFIED RELEASE TRACKING</div>' +
- '<h2>&#x1F512; LEAK & WHISTLEBLOWER MONITOR</h2></div>' +
+ '<h2>■ LEAK & WHISTLEBLOWER MONITOR</h2></div>' +
  '<button onclick="closeLeakMonitor()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>' +
  '</div>' +
  '<div class="lm-body">' +
@@ -24614,7 +24606,7 @@ async function _renderClimateSec() {
  '</div>' +
  '<div class="cs-driver">' + t.driver + '</div>' +
  '<div class="cs-conflict">' + t.conflict + '</div>' +
- '<div class="cs-displaced">&#x1F6BA; ' + t.displaced + '</div>' +
+ '<div class="cs-displaced">▸ ' + t.displaced + '</div>' +
  '<div class="cs-trend">TREND: ' + t.trend + '</div>' +
  '</div>';
  }).join('');
@@ -24626,14 +24618,14 @@ async function _renderClimateSec() {
  '</div>';
  ov.innerHTML = '<div class="cs-hdr"><div>' +
  '<div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CLIMATE & ENVIRONMENTAL SECURITY INTELLIGENCE // RESOURCE COMPETITION // CONFLICT NEXUS</div>' +
- '<h2>&#x1F331; CLIMATE SECURITY INTEL</h2></div>' +
+ '<h2>◆ CLIMATE SECURITY INTEL</h2></div>' +
  '<button onclick="closeClimateSec()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>' +
  '</div>' +
  '<div class="cs-body">' +
  '<div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">CLIMATE-LINKED SECURITY RISKS &middot; RESOURCE COMPETITION &middot; DISPLACEMENT &middot; CONFLICT NEXUS &middot; GLOBE HOTSPOTS ACTIVE</div>' +
  '<div style="font-size:9px;letter-spacing:.15em;color:#4ade80;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(34,197,94,.2);">&#x26A0; ACTIVE CLIMATE SECURITY HOTSPOTS</div>' +
  '<div class="cs-grid">' + threatCards + '</div>' +
- '<div style="font-size:9px;letter-spacing:.15em;color:#4ade80;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(34,197,94,.2);">&#x1F4CA; RESOURCE COMPETITION INDEX</div>' +
+ '<div style="font-size:9px;letter-spacing:.15em;color:#4ade80;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(34,197,94,.2);">▪ RESOURCE COMPETITION INDEX</div>' +
  indexHTML +
  '<div style="font-size:9px;letter-spacing:.15em;color:#4ade80;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(34,197,94,.2);">&#x25CF; LIVE CLIMATE SECURITY NEWS (GDELT)</div>' +
  '<div id="climatesec-news"><div style="color:var(--dim);font-size:9px;">Loading...</div></div>' +
@@ -25710,7 +25702,7 @@ function _renderDisplacementCrises(){
  +'<span class="rf-trend '+_rfTrendClass(c.trend)+'">'+c.trend+'</span>'
  +'</div>'
  +'<div class="rf-split-bar"><div class="rf-split-int" style="width:'+intPct+'%;"></div><div class="rf-split-ext" style="width:'+extPct+'%;"></div></div>'
- +'<div class="rf-split-labels"><span>&#x1F3E0; Internal: '+_rfFormatNum(c.internal)+'</span><span>&#x2708; External: '+_rfFormatNum(c.external)+'</span></div>'
+ +'<div class="rf-split-labels"><span>▸ Internal: '+_rfFormatNum(c.internal)+'</span><span>&#x2708; External: '+_rfFormatNum(c.external)+'</span></div>'
  +'<div class="rf-meta"><span style="color:var(--text);">Status:</span> '+c.status+'</div>'
  +'<div class="rf-meta">Destinations: '+dests+'</div>'
  +'<div class="rf-driver">DRIVER: '+c.driver+'</div>'
@@ -45883,12 +45875,12 @@ function filterSIGINT(query){
  </div>
 </div>
 
-<button id="foreignsig-btn" onclick="openForeignSIG()">&#x1F310; FOREIGN SIG</button>
+<button id="foreignsig-btn" onclick="openForeignSIG()">◉ FOREIGN SIG</button>
 <div id="foreignsig-overlay">
  <div class="fs-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CLASSIFICATION: TS/SCI // NOFORN // ORCON</div>
- <h2>&#x1F310; FOREIGN LANGUAGE SIGINT COLLECTION</h2>
+ <h2>◉ FOREIGN LANGUAGE SIGINT COLLECTION</h2>
  </div>
  <button onclick="closeForeignSIG()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -45904,13 +45896,13 @@ function filterSIGINT(query){
  <div id="foreignsig-content"><div style="color:var(--dim);font-size:9px;padding:20px;">Initializing collection...</div></div>
  </div>
 </div>
-<button id="agency-btn" onclick="toggleAgencyNet()">&#x1F575; AGENCY NET</button>
-<button id="unsc-btn" onclick="openUNSC()">&#x1F1FA;&#x1F1F3; UNSC</button>
+<button id="agency-btn" onclick="toggleAgencyNet()">◈ AGENCY NET</button>
+<button id="unsc-btn" onclick="openUNSC()">[UN] UNSC</button>
 <div id="unsc-overlay">
  <div class="unsc-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">UN SECURITY COUNCIL // LIVE MONITORING // P5+10</div>
- <h2>&#x1F1FA;&#x1F1F3; UN SECURITY COUNCIL INTELLIGENCE MONITOR</h2>
+ <h2>[UN] UN SECURITY COUNCIL INTELLIGENCE MONITOR</h2>
  </div>
  <button onclick="closeUNSC()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -45936,7 +45928,7 @@ function filterSIGINT(query){
  <div id="ticker-label">&#x25BA; LIVE INTEL</div>
  <div id="ticker-track"><div id="ticker-inner"><div class="tki"><span class="tki-src">SYSTEM</span>Initializing live intelligence feed collection...</div></div></div>
 </div>
-<button id="alliance-btn" onclick="toggleAllianceLayer()">&#x1F5FA; ALLIANCES</button>
+<button id="alliance-btn" onclick="toggleAllianceLayer()">◆ ALLIANCES</button>
 <div class="alliance-legend" id="alliance-legend">
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:6px;">ALLIANCE BLOCS</div>
  <div class="al-row"><div class="al-dot" style="background:#3b82f6;"></div>NATO (32)</div>
@@ -45946,12 +45938,12 @@ function filterSIGINT(query){
  <div class="al-row"><div class="al-dot" style="background:#22d3ee;"></div>QUAD (4)</div>
  <div class="al-row"><div class="al-dot" style="background:#818cf8;"></div>AUKUS (3)</div>
 </div>
-<button id="sanctions-btn" onclick="openSanctions()">&#x1F6AB; SANCTIONS</button>
+<button id="sanctions-btn" onclick="openSanctions()">⊗ SANCTIONS</button>
 <div id="sanctions-overlay">
  <div class="sanc-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ECONOMIC COERCION INTELLIGENCE // LIVE GDELT COLLECTION</div>
- <h2>&#x1F6AB; GLOBAL ECONOMIC SANCTIONS TRACKER</h2>
+ <h2>⊗ GLOBAL ECONOMIC SANCTIONS TRACKER</h2>
  </div>
  <button onclick="closeSanctions()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -45987,12 +45979,12 @@ function filterSIGINT(query){
  <div id="defcon-level-num" class="defcon-3">3</div>
  <div id="defcon-desc-text">ELEVATED READINESS</div>
 </div>
-<button id="kleader-btn" onclick="openKLeader()">&#x1F451; KEY LEADERS</button>
+<button id="kleader-btn" onclick="openKLeader()">◆ KEY LEADERS</button>
 <div id="kleader-overlay">
  <div class="kl-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">LEADERSHIP INTELLIGENCE // KEY DECISION MAKER TRACKING // GDELT COLLECTION</div>
- <h2>&#x1F451; KEY LEADER INTELLIGENCE PROFILES</h2>
+ <h2>◆ KEY LEADER INTELLIGENCE PROFILES</h2>
  </div>
  <button onclick="closeKLeader()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46005,12 +45997,12 @@ function filterSIGINT(query){
 </div>
 <button id="infra-btn" onclick="toggleInfraSites()">&#x26A1; CRITICAL INFRA</button>
 <button id="threadvec-btn" onclick="toggleThreatVectors()">&#x2194; THREAT VECTORS</button>
-<button id="inflops-btn" onclick="openInflOps()">&#x1F9E0; INFLUENCE OPS</button>
+<button id="inflops-btn" onclick="openInflOps()">◉ INFLUENCE OPS</button>
 <div id="inflops-overlay">
  <div class="io-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">INFLUENCE OPERATIONS INTELLIGENCE // DISINFORMATION MONITORING // IO/PSYOP COLLECTION</div>
- <h2>&#x1F9E0; GLOBAL INFLUENCE OPERATIONS MONITOR</h2>
+ <h2>◉ GLOBAL INFLUENCE OPERATIONS MONITOR</h2>
  </div>
  <button onclick="closeInflOps()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46067,13 +46059,13 @@ function filterSIGINT(query){
  <div class="nb-grid" id="nukoob-grid"></div>
  </div>
 </div>
-<button id="armstrade-btn" onclick="toggleArmsTradeNet()">&#x1F4E6; ARMS TRADE</button>
-<button id="geotimeline-btn" onclick="openGeoTimeline()">&#x1F4C8; GEO TIMELINE</button>
+<button id="armstrade-btn" onclick="toggleArmsTradeNet()">▪ ARMS TRADE</button>
+<button id="geotimeline-btn" onclick="openGeoTimeline()">▲ GEO TIMELINE</button>
 <div id="geotimeline-overlay">
  <div class="gt-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">GEOPOLITICAL INTELLIGENCE TIMELINE // GDELT MEDIA VOLUME ANALYSIS</div>
- <h2>&#x1F4C8; GEOPOLITICAL EVENT TIMELINE BROWSER</h2>
+ <h2>▲ GEOPOLITICAL EVENT TIMELINE BROWSER</h2>
  </div>
  <button onclick="closeGeoTimeline()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46118,12 +46110,12 @@ function filterSIGINT(query){
  <div id="gt-status" style="color:var(--dim);font-size:9px;padding:20px 0;">Select a country to load timeline data.</div>
  </div>
 </div>
-<button id="refugee-btn" onclick="openRefugeeTracker()">&#x1F6F6; DISPLACEMENT</button>
+<button id="refugee-btn" onclick="openRefugeeTracker()">▸ DISPLACEMENT</button>
 <div id="refugee-overlay">
  <div class="rf-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">HUMANITARIAN INTELLIGENCE // UNHCR OPEN DATA // FORCED DISPLACEMENT TRACKING</div>
- <h2>&#x1F6F6; GLOBAL REFUGEE &amp; DISPLACEMENT INTELLIGENCE</h2>
+ <h2>▸ GLOBAL REFUGEE &amp; DISPLACEMENT INTELLIGENCE</h2>
  </div>
  <button onclick="closeRefugeeTracker()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46142,12 +46134,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="econintel-btn" onclick="openEconIntel()">&#x1F4B9; ECON INTEL</button>
+<button id="econintel-btn" onclick="openEconIntel()">▲ ECON INTEL</button>
 <div id="econintel-overlay">
  <div class="ei-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ECONOMIC INTELLIGENCE // FX RATES // COMMODITY MARKETS // ECONOMIC WARFARE INDICATORS</div>
- <h2>&#x1F4B9; ECONOMIC INTELLIGENCE DASHBOARD</h2>
+ <h2>▲ ECONOMIC INTELLIGENCE DASHBOARD</h2>
  </div>
  <button onclick="closeEconIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46169,12 +46161,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="apt-btn" onclick="openAPT()">&#x1F4BB; APT GROUPS</button>
+<button id="apt-btn" onclick="openAPT()">◈ APT GROUPS</button>
 <div id="apt-overlay">
  <div class="apt-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CYBER THREAT INTELLIGENCE // APT GROUP DATABASE // STATE-SPONSORED THREAT ACTORS</div>
- <h2>&#x1F4BB; ADVANCED PERSISTENT THREAT (APT) DATABASE</h2>
+ <h2>◈ ADVANCED PERSISTENT THREAT (APT) DATABASE</h2>
  </div>
  <button onclick="closeAPT()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46187,26 +46179,26 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="drone-btn" onclick="openDroneOps()">&#x1F6F0; DRONE OPS</button>
+<button id="drone-btn" onclick="openDroneOps()">◈ DRONE OPS</button>
 <div id="drone-overlay">
  <div class="dr-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">UAS/DRONE OPERATIONS INTELLIGENCE // GLOBAL STRIKE TRACKING // UAV WARFARE MONITOR</div>
- <h2>&#x1F6F0; GLOBAL DRONE &amp; UAS OPERATIONS TRACKER</h2>
+ <h2>◈ GLOBAL DRONE &amp; UAS OPERATIONS TRACKER</h2>
  </div>
  <button onclick="closeDroneOps()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
  <div class="dr-body">
  <div style="font-size:8px;color:var(--dim);margin-bottom:12px;letter-spacing:.08em;">GLOBAL DRONE STRIKE INTELLIGENCE &middot; KNOWN UAS PLATFORMS &middot; GDELT COLLECTION &middot; REAL-TIME OPERATIONAL TRACKING</div>
  <div class="dr-platforms">
- <div class="dr-plat"><div class="dr-plat-name">Shahed-136/131</div><div class="dr-plat-nation">&#x1F1EE;&#x1F1F7; Iran / Russia</div><div class="dr-plat-detail">Loitering munition. 2,500km range. Used extensively in Ukraine. ~$20K unit cost. Geranium-2 (Russian designation).</div></div>
- <div class="dr-plat"><div class="dr-plat-name">TB2 Bayraktar</div><div class="dr-plat-nation">&#x1F1F9;&#x1F1F7; Turkey</div><div class="dr-plat-detail">Armed MALE UAV. 27hr endurance. MAM-L smart micro munitions. Operated in Ukraine, Libya, Azerbaijan, Somalia.</div></div>
- <div class="dr-plat"><div class="dr-plat-name">MQ-9 Reaper</div><div class="dr-plat-nation">&#x1F1FA;&#x1F1F8; USA</div><div class="dr-plat-detail">MALE hunter-killer. Hellfire missiles. Active in Somalia, Syria, Iraq, Yemen. 27hr endurance, 50,000ft ceiling.</div></div>
- <div class="dr-plat"><div class="dr-plat-name">Wing Loong II</div><div class="dr-plat-nation">&#x1F1E8;&#x1F1F3; China</div><div class="dr-plat-detail">MALE armed UAV. Exported to UAE, Saudi Arabia, Iraq, Nigeria, Ethiopia. 20hr endurance. AR-1 missiles.</div></div>
- <div class="dr-plat"><div class="dr-plat-name">Hermes 900</div><div class="dr-plat-nation">&#x1F1EE;&#x1F1F1; Israel</div><div class="dr-plat-detail">Multi-mission MALE UAV. Operated by IDF, Colombia, Azerbaijan, Philippines. Spike NLOS guided missiles.</div></div>
- <div class="dr-plat"><div class="dr-plat-name">Mohajer-6</div><div class="dr-plat-nation">&#x1F1EE;&#x1F1F7; Iran / Houthis</div><div class="dr-plat-detail">MALE drone. Used by Houthis in Yemen Red Sea operations. Satellite dish targeting, Qaem-5 munitions.</div></div>
- <div class="dr-plat"><div class="dr-plat-name">Lancet-3</div><div class="dr-plat-nation">&#x1F1F7;&#x1F1FA; Russia</div><div class="dr-plat-detail">Loitering munition. Used in Ukraine vs armor/artillery. TV-guided. 40km range. Paired with Zala ZALA recon drone.</div></div>
- <div class="dr-plat"><div class="dr-plat-name">Switchblade 600</div><div class="dr-plat-nation">&#x1F1FA;&#x1F1F8; USA/Ukraine</div><div class="dr-plat-detail">Anti-armor loitering munition. 40km range. Shaped charge warhead for tanks. Backpack portable.</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">Shahed-136/131</div><div class="dr-plat-nation">[IR] Iran / Russia</div><div class="dr-plat-detail">Loitering munition. 2,500km range. Used extensively in Ukraine. ~$20K unit cost. Geranium-2 (Russian designation).</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">TB2 Bayraktar</div><div class="dr-plat-nation">[TR] Turkey</div><div class="dr-plat-detail">Armed MALE UAV. 27hr endurance. MAM-L smart micro munitions. Operated in Ukraine, Libya, Azerbaijan, Somalia.</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">MQ-9 Reaper</div><div class="dr-plat-nation">[US] USA</div><div class="dr-plat-detail">MALE hunter-killer. Hellfire missiles. Active in Somalia, Syria, Iraq, Yemen. 27hr endurance, 50,000ft ceiling.</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">Wing Loong II</div><div class="dr-plat-nation">[CN] China</div><div class="dr-plat-detail">MALE armed UAV. Exported to UAE, Saudi Arabia, Iraq, Nigeria, Ethiopia. 20hr endurance. AR-1 missiles.</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">Hermes 900</div><div class="dr-plat-nation">[IL] Israel</div><div class="dr-plat-detail">Multi-mission MALE UAV. Operated by IDF, Colombia, Azerbaijan, Philippines. Spike NLOS guided missiles.</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">Mohajer-6</div><div class="dr-plat-nation">[IR] Iran / Houthis</div><div class="dr-plat-detail">MALE drone. Used by Houthis in Yemen Red Sea operations. Satellite dish targeting, Qaem-5 munitions.</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">Lancet-3</div><div class="dr-plat-nation">[RU] Russia</div><div class="dr-plat-detail">Loitering munition. Used in Ukraine vs armor/artillery. TV-guided. 40km range. Paired with Zala ZALA recon drone.</div></div>
+ <div class="dr-plat"><div class="dr-plat-name">Switchblade 600</div><div class="dr-plat-nation">[US] USA/Ukraine</div><div class="dr-plat-detail">Anti-armor loitering munition. 40km range. Shaped charge warhead for tanks. Backpack portable.</div></div>
  </div>
  <div class="dr-feed">
  <div class="dr-feed-hdr">LIVE DRONE STRIKE INTELLIGENCE FEED (GDELT)</div>
@@ -46263,12 +46255,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="navaloop-btn" onclick="openNavalOOB()">&#x1F6A2; NAVAL OOB</button>
+<button id="navaloop-btn" onclick="openNavalOOB()">◆ NAVAL OOB</button>
 <div id="navaloop-overlay">
  <div class="nv-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">NAVAL ORDER OF BATTLE // CARRIER STRIKE GROUPS // SUBMARINE DEPLOYMENTS // OSINT-DERIVED</div>
- <h2>&#x1F6A2; GLOBAL NAVAL ORDER OF BATTLE</h2>
+ <h2>◆ GLOBAL NAVAL ORDER OF BATTLE</h2>
  </div>
  <button onclick="closeNavalOOB()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46281,12 +46273,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="milexercise-btn" onclick="openMilExercise()">&#x1F3AF; MIL EXERCISES</button>
+<button id="milexercise-btn" onclick="openMilExercise()">⊕ MIL EXERCISES</button>
 <div id="milexercise-overlay">
  <div class="me-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">MILITARY EXERCISE INTELLIGENCE // GLOBAL WAR GAMES MONITOR // GDELT COLLECTION</div>
- <h2>&#x1F3AF; GLOBAL MILITARY EXERCISE MONITOR</h2>
+ <h2>⊕ GLOBAL MILITARY EXERCISE MONITOR</h2>
  </div>
  <button onclick="closeMilExercise()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46317,12 +46309,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="bio-btn" onclick="openBioIntel()">&#x1F9EC; BIOSURVEILLANCE</button>
+<button id="bio-btn" onclick="openBioIntel()">◉ BIOSURVEILLANCE</button>
 <div id="bio-overlay">
  <div class="bio-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">BIOSURVEILLANCE // PANDEMIC INTELLIGENCE // BIOLOGICAL THREAT ASSESSMENT // BSL-4 MONITORING</div>
- <h2>&#x1F9EC; BIOSURVEILLANCE &amp; EPIDEMIC INTELLIGENCE</h2>
+ <h2>◉ BIOSURVEILLANCE &amp; EPIDEMIC INTELLIGENCE</h2>
  </div>
  <button onclick="closeBioIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46411,12 +46403,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="finint-btn" onclick="openFININT()">&#x1F4B0; FININT</button>
+<button id="finint-btn" onclick="openFININT()">▪ FININT</button>
 <div id="finint-overlay">
  <div class="fi-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">FINANCIAL INTELLIGENCE // ILLICIT FINANCE // SANCTIONS EVASION // DARK MONEY TRACKING</div>
- <h2>&#x1F4B0; FINANCIAL INTELLIGENCE (FININT)</h2>
+ <h2>▪ FINANCIAL INTELLIGENCE (FININT)</h2>
  </div>
  <button onclick="closeFININT()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46500,12 +46492,12 @@ function filterSIGINT(query){
  </div>
 </div>
 <button id="intelbriefexport-btn" onclick="exportIntelBrief()">EXPORT BRIEF</button>
-<button id="diplo-btn" onclick="openDiploIntel()">&#x1F54A; DIPLOMACY</button>
+<button id="diplo-btn" onclick="openDiploIntel()">◆ DIPLOMACY</button>
 <div id="diplo-overlay">
  <div class="di-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">DIPLOMATIC INTELLIGENCE // PEACE TALKS // CEASEFIRE NEGOTIATIONS // SUMMIT MONITORING</div>
- <h2>&#x1F54A; DIPLOMATIC INTELLIGENCE MONITOR</h2>
+ <h2>◆ DIPLOMATIC INTELLIGENCE MONITOR</h2>
  </div>
  <button onclick="closeDiploIntel()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46580,12 +46572,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="unrest-btn" onclick="openUnrestMapper()">&#x1F525; CIVIL UNREST</button>
+<button id="unrest-btn" onclick="openUnrestMapper()">▲ CIVIL UNREST</button>
 <div id="unrest-overlay">
  <div class="ur-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CIVIL UNREST INTELLIGENCE // PROTEST MONITORING // REGIME STABILITY INDICATORS // GDELT COLLECTION</div>
- <h2>&#x1F525; CIVIL UNREST &amp; PROTEST INTELLIGENCE MAPPER</h2>
+ <h2>▲ CIVIL UNREST &amp; PROTEST INTELLIGENCE MAPPER</h2>
  </div>
  <button onclick="closeUnrestMapper()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46650,12 +46642,12 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="cyberbreach-btn" onclick="openCyberBreach()">&#x1F512; BREACHES</button>
+<button id="cyberbreach-btn" onclick="openCyberBreach()">■ BREACHES</button>
 <div id="cyberbreach-overlay">
  <div class="cb-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">CYBER BREACH INTELLIGENCE // RANSOMWARE TRACKING // DATA EXFILTRATION // INCIDENT DATABASE</div>
- <h2>&#x1F512; CYBER BREACH &amp; RANSOMWARE INTELLIGENCE</h2>
+ <h2>■ CYBER BREACH &amp; RANSOMWARE INTELLIGENCE</h2>
  </div>
  <button onclick="closeCyberBreach()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46668,10 +46660,10 @@ function filterSIGINT(query){
  </div>
  </div>
 </div>
-<button id="regstab-btn" onclick="openRegionalStab()">&#x1F30D; REG STABILITY</button>
+<button id="regstab-btn" onclick="openRegionalStab()">◉ REG STABILITY</button>
 <button id="psych-btn" onclick="openPsychIntel()">PSYCH INTEL</button>
-<button id="leakmon-btn" onclick="openLeakMonitor()">&#x1F512; LEAK MONITOR</button>
-<button id="climatesec-btn" onclick="openClimateSec()">&#x1F331; CLIMATE SEC</button>
+<button id="leakmon-btn" onclick="openLeakMonitor()">■ LEAK MONITOR</button>
+<button id="climatesec-btn" onclick="openClimateSec()">◆ CLIMATE SEC</button>
 <div id="psych-overlay"></div>
 <div id="leakmon-overlay"></div>
 <div id="climatesec-overlay"></div>
@@ -46679,7 +46671,7 @@ function filterSIGINT(query){
  <div class="rs-hdr">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">REGIONAL STABILITY INDEX // COMPOSITE THREAT ASSESSMENT // LIVE CALCULATION</div>
- <h2>&#x1F30D; GLOBAL REGIONAL STABILITY INDEX</h2>
+ <h2>◉ GLOBAL REGIONAL STABILITY INDEX</h2>
  </div>
  <button onclick="closeRegionalStab()" style="background:transparent;border:1px solid var(--border);color:var(--dim);cursor:pointer;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;">&#x2715; CLOSE</button>
  </div>
@@ -46705,7 +46697,7 @@ function filterSIGINT(query){
  <div class="col5-hdr" style="border-bottom-color:#ef4444;">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">DISEASE OUTBREAK INTELLIGENCE // WHO / CDC / ECDC // GDELT LIVE FEED</div>
- <h2 style="color:#fca5a5;">&#x1F9A0; PANDEMIC &amp; OUTBREAK WATCH</h2>
+ <h2 style="color:#fca5a5;">◉ PANDEMIC &amp; OUTBREAK WATCH</h2>
  </div>
  <div style="display:flex;gap:10px;align-items:center;">
  <button onclick="fetchPandemicGDELT()" style="background:none;border:1px solid rgba(239,68,68,.4);color:#fca5a5;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
@@ -46733,7 +46725,7 @@ function filterSIGINT(query){
  <div class="col5-hdr" style="border-bottom-color:#facc15;">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ELECTION INTEGRITY &amp; INTERFERENCE // GDELT // OPEN SOURCE</div>
- <h2 style="color:#fde68a;">&#x1F5F3; ELECTION INTEGRITY &amp; INTERFERENCE WATCH</h2>
+ <h2 style="color:#fde68a;">◆ ELECTION INTEGRITY &amp; INTERFERENCE WATCH</h2>
  </div>
  <div style="display:flex;gap:10px;align-items:center;">
  <button onclick="fetchElecGDELT()" style="background:none;border:1px solid rgba(250,204,21,.4);color:#fde68a;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
@@ -46813,7 +46805,7 @@ function filterSIGINT(query){
  <div class="col5-hdr" style="border-bottom-color:#8b5cf6;">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">ILLICIT FINANCE &amp; MONEY LAUNDERING // FATF / FinCEN / GDELT LIVE FEED</div>
- <h2 style="color:#c4b5fd;">&#x1F4B8; ILLICIT FINANCE &amp; MONEY LAUNDERING INTELLIGENCE</h2>
+ <h2 style="color:#c4b5fd;">▪ ILLICIT FINANCE &amp; MONEY LAUNDERING INTELLIGENCE</h2>
  </div>
  <div style="display:flex;gap:10px;align-items:center;">
  <button onclick="fetchIllicitFinGDELT()" style="background:none;border:1px solid rgba(139,92,246,.4);color:#c4b5fd;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
@@ -46867,7 +46859,7 @@ function filterSIGINT(query){
  <div class="col5-hdr" style="border-bottom-color:#8b5cf6;">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">INFORMATION OPERATIONS &amp; COGNITIVE WARFARE // EU DISINFO LAB / META / OPENAI / STANFORD INTERNET OBSERVATORY</div>
- <h2 style="color:#c4b5fd;">&#x1F9E0; INFORMATION OPERATIONS &amp; COGNITIVE WARFARE MONITOR</h2>
+ <h2 style="color:#c4b5fd;">◉ INFORMATION OPERATIONS &amp; COGNITIVE WARFARE MONITOR</h2>
  </div>
  <div style="display:flex;gap:10px;align-items:center;">
  <button onclick="fetchInfoOpsGDELT()" style="background:none;border:1px solid rgba(139,92,246,.4);color:#c4b5fd;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
@@ -46897,7 +46889,7 @@ function filterSIGINT(query){
  <div class="col5-hdr" style="border-bottom-color:#f97316;">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">DISPLACEMENT CRISIS INTELLIGENCE // UNHCR / IOM / ACAPS // GDELT LIVE FEED</div>
- <h2 style="color:#fdba74;">&#x1F6F6; REFUGEE &amp; DISPLACEMENT CRISIS MONITOR</h2>
+ <h2 style="color:#fdba74;">▸ REFUGEE &amp; DISPLACEMENT CRISIS MONITOR</h2>
  </div>
  <div style="display:flex;gap:10px;align-items:center;">
  <button onclick="fetchDisplacementGDELT()" style="background:none;border:1px solid rgba(249,115,22,.4);color:#fdba74;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
@@ -47053,7 +47045,7 @@ function filterSIGINT(query){
  <div class="col5-hdr" style="border-bottom-color:#3b82f6;">
  <div>
  <div style="font-size:7px;letter-spacing:.18em;color:var(--dim);margin-bottom:2px;">UNDERSEA CABLE &amp; CRITICAL INFRASTRUCTURE // NATO BACS / GDELT LIVE FEED</div>
- <h2 style="color:#93c5fd;">&#x1F5FA; UNDERSEA CABLE &amp; CRITICAL INFRASTRUCTURE WATCH</h2>
+ <h2 style="color:#93c5fd;">◆ UNDERSEA CABLE &amp; CRITICAL INFRASTRUCTURE WATCH</h2>
  </div>
  <div style="display:flex;gap:10px;align-items:center;">
  <button onclick="fetchCableGDELT()" style="background:none;border:1px solid rgba(59,130,246,.4);color:#93c5fd;cursor:pointer;padding:3px 10px;font-family:'Courier New',monospace;font-size:8px;letter-spacing:.12em;">&#x21BA; REFRESH</button>
