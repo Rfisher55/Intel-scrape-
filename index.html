@@ -67,8 +67,8 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:9999;
 .h-middle{flex:1;text-align:center;font-size:9px;color:#64748b;letter-spacing:.18em;text-transform:uppercase}
 .h-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .h-live{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--live);letter-spacing:.14em;text-transform:uppercase}
-.h-dot{width:4px;height:4px;border-radius:50%;background:var(--live);animation:blink 1.6s step-start infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.h-dot{width:4px;height:4px;border-radius:50%;background:var(--live);animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
 .h-time{font-size:9px;color:var(--dim);font-family:var(--mono);letter-spacing:.12em}
 
 /* ── Globe canvas ── */
@@ -402,11 +402,10 @@ canvas.dragging{cursor:grabbing}
  background:linear-gradient(90deg,rgba(10,110,245,.12),rgba(10,110,245,.05));
  border-left:2px solid var(--accent);
 }
-.layer-btn.active .lb-dot{animation:blink 1s step-start infinite}
 .lb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.5}
 .layer-btn.active .lb-dot{opacity:1;box-shadow:0 0 4px currentColor}
 .lb-src{font-size:8px;letter-spacing:.06em;opacity:.75;margin-left:auto;padding-left:4px;white-space:nowrap}
-.lb-src.live{color:#22c55e;opacity:.9;animation:blink 2s step-start infinite}
+.lb-src.live{color:#22c55e;opacity:.9}
 @media(max-width:600px){#layers-panel{left:8px;min-width:130px;padding:7px 6px}}
 
 /* ── Tracking arc colors ── */
@@ -600,7 +599,7 @@ canvas.dragging{cursor:grabbing}
  flex-shrink:0;
 }
 .tm-category{font-size:8px;letter-spacing:.25em;font-weight:bold;color:#60a5fa;display:flex;align-items:center;gap:6px}
-.tm-category-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;animation:blink 1s step-start infinite}
+.tm-category-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;animation:blink 1s ease-in-out infinite}
 .tm-close{background:none;border:1px solid rgba(59,130,246,.3);color:var(--dim);cursor:pointer;
  padding:4px 10px;border-radius:3px;font-size:10px;font-family:var(--mono);transition:all .15s;letter-spacing:.1em}
 .tm-close:hover{border-color:#ef4444;color:#ef4444}
@@ -884,7 +883,7 @@ canvas.dragging{cursor:grabbing}
 .op-status.active{background:rgba(0,217,126,.08);border-color:rgba(0,217,126,.3);color:var(--live)}
 .op-status.standby{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);color:var(--warn)}
 .op-status.offline{background:rgba(232,64,64,.08);border-color:rgba(232,64,64,.3);color:var(--danger)}
-.op-status-dot{width:4px;height:4px;border-radius:50%;background:currentColor;animation:blink 1.6s step-start infinite}
+.op-status-dot{width:4px;height:4px;border-radius:50%;background:currentColor;animation:blink 1.6s ease-in-out infinite}
 
 /* Data row pattern */
 .data-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border2);font-size:10px}
@@ -1030,7 +1029,7 @@ button{border-radius:2px!important}
 /* Seismic Intel */
 #seismic-indicator{position:fixed;bottom:30px;left:180px;z-index:150;display:none;background:rgba(4,8,18,.92);border:1px solid rgba(251,191,36,.35);border-radius:2px;padding:5px 10px;font-size:8px;letter-spacing:.14em;color:#fbbf24;font-family:var(--mono);backdrop-filter:blur(8px);cursor:pointer}
 #seismic-indicator:hover{background:rgba(251,191,36,.1)}
-.seismic-alert-dot{width:5px;height:5px;border-radius:50%;background:#fbbf24;display:inline-block;margin-right:5px;animation:blink 1s step-start infinite}
+.seismic-alert-dot{width:5px;height:5px;border-radius:50%;background:#fbbf24;display:inline-block;margin-right:5px;animation:blink 2s ease-in-out infinite}
 
 /* Intel Search Terminal */
 #intel-search-btn{position:fixed;bottom:182px;right:20px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(10,110,245,.4);border-radius:2px;color:#a8c4ff;cursor:pointer;padding:7px 12px;font-size:9px;font-family:var(--mono);letter-spacing:.18em;transition:all .2s;font-weight:700;display:flex;align-items:center;gap:6px;backdrop-filter:blur(10px);white-space:nowrap}
@@ -1056,7 +1055,7 @@ button{border-radius:2px!important}
 /* Alert/Watchlist System */
 #alert-bell{position:fixed;top:28px;right:180px;z-index:110;display:none;align-items:center;justify-content:center;width:28px;height:28px;background:none;border:none;cursor:pointer;color:#4a5470;font-size:14px;transition:color .2s}
 #alert-bell:hover{color:#fbbf24}
-#alert-bell.has-alerts{color:#fbbf24;animation:blink 1.2s step-start infinite}
+#alert-bell.has-alerts{color:#fbbf24;animation:blink 2s ease-in-out infinite}
 #alert-bell .alert-count{position:absolute;top:-2px;right:-4px;background:#ef4444;color:#fff;font-size:6px;border-radius:50%;width:12px;height:12px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700}
 #alert-modal{display:none;position:fixed;top:55px;right:20px;z-index:350;width:340px;max-height:70vh;background:rgba(4,7,16,.99);border:1px solid rgba(251,191,36,.3);border-top:2px solid rgba(251,191,36,.5);border-radius:2px;font-family:var(--mono);flex-direction:column;overflow:hidden}
 #alert-modal.open{display:flex}
@@ -1099,9 +1098,9 @@ button{border-radius:2px!important}
 #space-wx-ind{position:fixed;bottom:30px;left:250px;z-index:150;display:none;background:rgba(4,8,18,.92);border:1px solid rgba(56,189,248,.35);border-radius:2px;padding:5px 10px;font-size:8px;letter-spacing:.14em;color:#38bdf8;font-family:var(--mono);backdrop-filter:blur(8px);cursor:pointer;transition:background .2s}
 #space-wx-ind:hover{background:rgba(56,189,248,.08)}
 #space-wx-ind.kp-warn{border-color:rgba(249,115,22,.5);color:#fb923c}
-#space-wx-ind.kp-danger{border-color:rgba(239,68,68,.5);color:#ef4444;animation:blink 1.2s step-start infinite}
+#space-wx-ind.kp-danger{border-color:rgba(239,68,68,.5);color:#ef4444;animation:blink 1.2s ease-in-out infinite}
 /* Maritime */
-#space-wx-ind.kp-storm{border-color:rgba(239,68,68,.5);color:#ef4444;animation:blink 1.2s step-start infinite}
+#space-wx-ind.kp-storm{border-color:rgba(239,68,68,.5);color:#ef4444;animation:blink 1.2s ease-in-out infinite}
 /* Global Risk Rankings */
 #rankings-btn{position:fixed;top:55px;right:220px;z-index:200;background:rgba(4,8,18,.95);border:1px solid rgba(249,115,22,.35);border-radius:2px;color:#fb923c;cursor:pointer;padding:5px 10px;font-size:8px;font-family:var(--mono);letter-spacing:.18em;font-weight:700;backdrop-filter:blur(10px);display:flex;align-items:center;gap:5px}
 #rankings-btn:hover{background:rgba(249,115,22,.12);border-color:#f97316}
@@ -7757,7 +7756,7 @@ a:hover { color: #bfdbfe !important; }
   <div class="mode-right">
     <div class="mode-stat"><span class="mode-stat-val" id="mbar-hotspots">102</span><span>HOTSPOTS</span></div>
     <div class="mode-stat"><span class="mode-stat-val" id="mbar-conflicts">98</span><span>CONFLICTS</span></div>
-    <div class="mode-stat" style="margin-left:8px;border-left:1px solid rgba(30,58,95,0.4);padding-left:10px;"><span style="color:#ef4444;animation:blink 1.8s step-start infinite;font-size:8px;">&#x25CF;</span><span style="color:#475569;font-size:6.5px;letter-spacing:.12em;margin-left:4px;">LIVE</span></div>
+    <div class="mode-stat" style="margin-left:8px;border-left:1px solid rgba(30,58,95,0.4);padding-left:10px;"><span style="color:#ef4444;animation:blink 1.8s ease-in-out infinite;font-size:8px;">&#x25CF;</span><span style="color:#475569;font-size:6.5px;letter-spacing:.12em;margin-left:4px;">LIVE</span></div>
     <div class="mode-threat">&#x2691; ELEVATED</div>
     <div class="mode-live"><div class="mode-live-dot"></div>LIVE</div>
     <div class="mode-time" id="mbar-time"></div>
@@ -8053,7 +8052,7 @@ a:hover { color: #bfdbfe !important; }
  <div id="social-header">
  <div style="display:flex;align-items:center;gap:8px">
  <span style="color:#f59e0b;font-size:9px;letter-spacing:.2em">◈ SOCIAL INTELLIGENCE FEED</span>
- <span id="social-live-dot" style="width:5px;height:5px;border-radius:50%;background:#22c55e;display:inline-block;animation:blink 1.2s step-start infinite"></span>
+ <span id="social-live-dot" style="width:5px;height:5px;border-radius:50%;background:#22c55e;display:inline-block;animation:blink 1.2s ease-in-out infinite"></span>
  </div>
  <div style="display:flex;gap:8px;align-items:center">
  <span id="social-updated" style="font-size:8px;color:var(--muted)"></span>
@@ -8404,7 +8403,7 @@ a:hover { color: #bfdbfe !important; }
  <div id="sat-header-bar">
  <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1">
  <span id="sat-mode-label" style="color:#34d399;font-size:10px;letter-spacing:.2em;font-family:var(--mono);white-space:nowrap">SATELLITE INTELLIGENCE VIEWER</span>
- <span style="width:5px;height:5px;border-radius:50%;background:#34d399;flex-shrink:0;display:inline-block;animation:blink 2s step-start infinite"></span>
+ <span style="width:5px;height:5px;border-radius:50%;background:#34d399;flex-shrink:0;display:inline-block;animation:blink 2s ease-in-out infinite"></span>
  <span id="sat-title-label" style="font-size:10px;color:#fbbf24;font-family:var(--mono);font-weight:bold;letter-spacing:.08em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:4px"></span>
  </div>
  <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
@@ -17815,7 +17814,7 @@ const liveCache={};
 function renderNewsTab(iso,items,isLive){
  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
  const label=isLive
- ?`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>LIVE INTELLIGENCE FEED</span><span style="color:#22c55e;font-size:10px;animation:blink 1.2s step-start infinite">● LIVE ${ts}</span></div>`
+ ?`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>LIVE INTELLIGENCE FEED</span><span style="color:#22c55e;font-size:10px;animation:blink 1.2s ease-in-out infinite">● LIVE ${ts}</span></div>`
  :`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>INTELLIGENCE ITEMS</span><span style="color:#64748b;font-size:10px">● OSINT BASE</span></div>`;
  const refreshBtn=`<button onclick="fetchLiveNews(selectedISO,true)" style="width:100%;margin-bottom:10px;padding:7px;background:rgba(30,58,95,.3);border:1px solid #1e3a5f;border-radius:4px;color:#7dd3fc;font-family:'Courier New',monospace;font-size:10px;cursor:pointer;letter-spacing:.1em">↻ REFRESH LIVE FEED</button>`;
  if(!items||items.length===0){
