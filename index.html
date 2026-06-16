@@ -14337,13 +14337,13 @@ function draw(){
  if(!iso)continue;
  const c=COUNTRIES[iso];
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
- var _selFA=(0.88+Math.sin(Date.now()*0.002)*0.07).toFixed(2);var _hovFA=(0.92+Math.sin(Date.now()*0.003)*0.05).toFixed(2);var _hasLiveHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});var _baseAlert=ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)';var _fillAlert=_hasLiveHot&&!isSel&&!isHov?_baseAlert.replace(/[\d.]+\)$/,'0.78)'):_baseAlert;const fill=isSel?('rgba(200,220,255,'+_selFA+')'):isHov?('rgba(180,205,255,'+_hovFA+')'):_fillAlert;
+ var _hasLiveHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});var _baseAlert=ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)';var _fillAlert=_hasLiveHot&&!isSel&&!isHov?_baseAlert.replace(/[\d.]+\)$/,'0.78)'):_baseAlert;const fill=isSel?'rgba(200,220,255,0.88)':isHov?'rgba(180,205,255,0.92)':_fillAlert;
  var isCrit=c.alertLevel==='CRITICAL';var isHigh=c.alertLevel==='HIGH';
  const ctr=project(c.lat,c.lng);
  /* Border fades near globe limb — ctr.z=1 at center, 0 at edge */
  var _limbFade=ctr.z!==undefined?Math.max(0.3,0.3+ctr.z*0.7):1;
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCrit?'rgba(239,68,68,.65)':isHigh?'rgba(249,115,22,.45)':'rgba(100,150,220,.5)';
- ctx.lineWidth=(isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCrit?1.1:isHigh?.85:.8)*_limbFade;
+ ctx.lineWidth=(isSel?1.4:isCrit?1.1:isHigh?.85:.8)*_limbFade;
  if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
  else if((isCrit||isHigh)&&!isSel){ctx.shadowColor=isCrit?'rgba(239,68,68,0.28)':'rgba(249,115,22,0.2)';ctx.shadowBlur=isCrit?5:3;}
  drawGeoFeature(feature,fill,true,true);
@@ -14352,9 +14352,8 @@ function draw(){
  /* Alert level indicator ring */
  if(!isSel&&c.alertLevel&&c.alertLevel!=='NORMAL'&&ctr.z>0.15){
   var _alC=c.alertLevel==='CRITICAL'?'rgba(239,68,68':c.alertLevel==='HIGH'?'rgba(249,115,22':c.alertLevel==='ELEVATED'?'rgba(251,191,36':'rgba(59,130,246';
-  var _alPf=Math.sin(Date.now()*0.002+ctr.px)*0.5+0.5;
-  ctx.beginPath();ctx.arc(ctr.px,ctr.py,_cLSz+3+_alPf,0,Math.PI*2);
-  ctx.strokeStyle=_alC+','+(0.18+_alPf*0.1)+')';ctx.lineWidth=0.6;ctx.stroke();
+  ctx.beginPath();ctx.arc(ctr.px,ctr.py,_cLSz+3.5,0,Math.PI*2);
+  ctx.strokeStyle=_alC+',0.22)';ctx.lineWidth=0.6;ctx.stroke();
  }
  /* Country lat/lng badge at very high zoom */
  if(isSel&&scale>600){
@@ -14362,15 +14361,11 @@ function draw(){
    var _latStr=(c.lat>=0?'+':'')+c.lat.toFixed(1)+'° '+(c.lng>=0?'+':'')+c.lng.toFixed(1)+'°';
    ctx.fillText(_latStr,ctr.px,ctr.py+_cLSz+10);ctx.restore();
  }
- /* Pulsing dot for countries with active hotspots */
+ /* Static dot for countries with active live hotspots */
  var _hasHot=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
  if(_hasHot&&!isSel){
-   var _defconElD=document.getElementById('defcon-num');
-   var _defconND=_defconElD?parseInt(_defconElD.textContent)||3:3;
-   var _cPulseRate=_defconND<=1?0.006:_defconND===2?0.0045:0.003;
-   var _hpf2=Math.sin(Date.now()*_cPulseRate+iso.charCodeAt(0))*0.5+0.5;
-   ctx.beginPath();ctx.arc(ctr.px,ctr.py,3+_hpf2*2,0,Math.PI*2);
-   ctx.fillStyle='rgba(251,191,36,'+(0.3+_hpf2*0.25)+')';ctx.fill();
+   ctx.beginPath();ctx.arc(ctr.px,ctr.py,3.5,0,Math.PI*2);
+   ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fill();
  }
  var _cLSz=Math.max(8,Math.min(16,Math.round(scale/40)));
  var _cLWt=isSel?'900':(c.alertLevel==='CRITICAL'?'bold':(c.alertLevel==='HIGH'?'bold':'normal'));
@@ -14408,22 +14403,22 @@ function draw(){
  for(const c of CONTINENT_HINTS)drawPoly(c,null,true,false);
  for(const[iso,c]of Object.entries(COUNTRIES)){
  const isSel=iso===selectedISO,isHov=iso===hoveredISO;
- var _pSelFA=(0.88+Math.sin(Date.now()*0.002)*0.07).toFixed(2);var _pHovFA=(0.92+Math.sin(Date.now()*0.003)*0.05).toFixed(2);const fill=isSel?('rgba(200,220,255,'+_pSelFA+')'):isHov?('rgba(180,205,255,'+_pHovFA+')'):(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
+ const fill=isSel?'rgba(200,220,255,0.88)':isHov?'rgba(180,205,255,0.92)':(ALERT_COLORS[c.alertLevel]||'rgba(30,58,100,.65)');
  const isCritF=c.alertLevel==='CRITICAL';const isHighF=c.alertLevel==='HIGH';
- if(isCritF){ctx.setLineDash([4,3]);ctx.lineDashOffset=-(Date.now()*0.018)%14;}
+ if(isCritF){ctx.setLineDash([4,3]);ctx.lineDashOffset=0;}
  else ctx.setLineDash([]);
  ctx.strokeStyle=isSel?'rgba(255,255,255,.9)':isHov?'rgba(150,200,255,.7)':isCritF?'rgba(239,68,68,.55)':isHighF?'rgba(249,115,22,.4)':'rgba(100,150,220,.3)';
  if(isSel){ctx.shadowColor='rgba(200,220,255,0.6)';ctx.shadowBlur=12;}
  else if((isCritF||isHighF)&&!isSel){ctx.shadowColor=isCritF?'rgba(239,68,68,0.25)':'rgba(249,115,22,0.15)';ctx.shadowBlur=isCritF?4:2;}
- ctx.lineWidth=isSel?(1.1+Math.sin(Date.now()*0.0035)*0.55):isCritF?1.0:isHighF?.85:.8;
+ ctx.lineWidth=isSel?1.4:isCritF?1.0:isHighF?.85:.8;
  drawPoly(c.poly,fill,true,true);
+ ctx.shadowBlur=0;
  const ctr=project(c.lat,c.lng);
  if(ctr.visible){
  var _hasHot2=typeof liveHotspots!=='undefined'&&liveHotspots.some(function(h){return h.country===iso;});
  if(_hasHot2&&!isSel){
-   var _hpf3=Math.sin(Date.now()*0.003+iso.charCodeAt(0))*0.5+0.5;
-   ctx.beginPath();ctx.arc(ctr.px,ctr.py,3+_hpf3*2,0,Math.PI*2);
-   ctx.fillStyle='rgba(251,191,36,'+(0.3+_hpf3*0.25)+')';ctx.fill();
+   ctx.beginPath();ctx.arc(ctr.px,ctr.py,3.5,0,Math.PI*2);
+   ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fill();
  }
  ctx.font='bold 10px Courier New';
  ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
@@ -22843,21 +22838,19 @@ function toggleAllianceLayer(){
  }
 }
 function drawAllianceLayer(){
- const t=(Date.now()%2000)/2000;
  for(const bloc of ALLIANCE_BLOCS){
  for(const iso of bloc.iso){
  const coord=_ISO_COORDS[iso];
  if(!coord)continue;
  const p=project(coord.lat,coord.lng);
  if(!p||!p.visible)continue;
- const pulse=Math.sin(t*Math.PI*2+bloc.iso.indexOf(iso))*0.3+0.7;
  ctx.save();
- ctx.globalAlpha=pulse*0.7;
+ ctx.globalAlpha=0.7;
  ctx.beginPath();
  ctx.arc(p.px,p.py,5,0,Math.PI*2);
  ctx.fillStyle=bloc.color;
  ctx.fill();
- ctx.globalAlpha=pulse*0.25;
+ ctx.globalAlpha=0.2;
  ctx.beginPath();
  ctx.arc(p.px,p.py,9,0,Math.PI*2);
  ctx.fillStyle=bloc.color;
