@@ -13211,11 +13211,10 @@ function drawUnverifiedLayer(){
  const c=COUNTRIES[sig.iso];if(!c)continue;
  const p=project(c.lat,c.lng);if(!p.visible)continue;
  const px=p.px+dx,py=p.py+dy;
- const pulse=Math.sin(now/700+sig.count*0.7)*0.5+0.5;
  const urgency=Math.min(sig.count/10,1);
  const col=urgency>.65?'rgba(239,68,68':urgency>.3?'rgba(251,146,60':'rgba(251,191,36';
- ctx.beginPath();ctx.arc(px,py,16+pulse*6,0,Math.PI*2);
- ctx.strokeStyle=`${col},${0.12+pulse*0.18})`;ctx.lineWidth=1.5;ctx.stroke();
+ ctx.beginPath();ctx.arc(px,py,20,0,Math.PI*2);
+ ctx.strokeStyle=`${col},0.20)`;ctx.lineWidth=1.5;ctx.stroke();
  ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);
  ctx.strokeStyle=`${col},0.55)`;ctx.lineWidth=1;ctx.stroke();
  ctx.save();ctx.translate(px,py);ctx.rotate(Math.PI/4);
@@ -23081,13 +23080,12 @@ function toggleInfraSites(){
  }
 }
 function drawInfraLayer(){
- const pulse=(Math.sin(Date.now()/600)*0.3+0.7);
  for(const site of CRITICAL_INFRA){
  const p=project(site.lat,site.lng);
  if(!p||!p.visible)continue;
  const color=INFRA_COLORS[site.type]||'rgba(255,255,255,0.8)';
  ctx.save();
- ctx.globalAlpha=pulse;
+ ctx.globalAlpha=0.88;
  ctx.fillStyle=color;
  ctx.strokeStyle=color;
  ctx.lineWidth=1;
@@ -30513,28 +30511,22 @@ function drawEnergyPipelines(){
  if(!p.visible)return;
  var r=7;
  ctx.beginPath();
- ctx.arc(p.x,p.y,r,0,Math.PI*2);
+ ctx.arc(p.px,p.py,r,0,Math.PI*2);
  ctx.fillStyle=cp.color;
  ctx.globalAlpha=0.75;
  ctx.fill();
  ctx.globalAlpha=1;
- /* Bolt symbol inside chokepoint */
  if(scale>80){
   ctx.save();ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillText('⚡',p.x,p.y);
+  ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillText('E',p.px,p.py);
   ctx.textBaseline='alphabetic';ctx.restore();
  }
- ctx.strokeStyle=cp.color;
- ctx.lineWidth=1.5;
- ctx.stroke();
+ ctx.beginPath();ctx.arc(p.px,p.py,r,0,Math.PI*2);
+ ctx.strokeStyle=cp.color;ctx.lineWidth=1.5;ctx.stroke();
  if(cp.risk==='CRITICAL'){
- ctx.beginPath();
- ctx.arc(p.x,p.y,r+4+Math.sin(Date.now()/400)*3,0,Math.PI*2);
- ctx.strokeStyle=cp.color;
- ctx.globalAlpha=0.35;
- ctx.lineWidth=1;
- ctx.stroke();
- ctx.globalAlpha=1;
+  ctx.beginPath();ctx.arc(p.px,p.py,r+6,0,Math.PI*2);
+  ctx.strokeStyle=cp.color;ctx.globalAlpha=0.3;ctx.lineWidth=1;ctx.stroke();
+  ctx.globalAlpha=1;
  }
  });
 }
@@ -30696,8 +30688,8 @@ function drawMigrationRoutes(){
  wps.forEach(function(wp){
  var p=project(wp.lat,wp.lng);
  if(!p.visible){started=false;return;}
- if(!started){ctx.moveTo(p.x,p.y);started=true;}
- else{ctx.lineTo(p.x,p.y);}
+ if(!started){ctx.moveTo(p.px,p.py);started=true;}
+ else{ctx.lineTo(p.px,p.py);}
  });
  ctx.stroke();
  ctx.setLineDash([]);
@@ -30706,7 +30698,7 @@ function drawMigrationRoutes(){
  var lp=project(last.lat,last.lng);
  if(lp.visible){
  ctx.beginPath();
- ctx.arc(lp.x,lp.y,4,0,Math.PI*2);
+ ctx.arc(lp.px,lp.py,4,0,Math.PI*2);
  ctx.fillStyle=cor.color_marker||'#ef4444';
  ctx.globalAlpha=0.85;
  ctx.fill();
