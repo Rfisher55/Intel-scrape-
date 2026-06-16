@@ -8017,11 +8017,11 @@ a:hover { color: #bfdbfe !important; }
 <!-- Data layer controls -->
 <div id="layers-panel">
  <div class="layers-title" onclick="toggleLayersPanel()" title="Collapse / expand panel">DATA LAYERS <span id="layers-count-badge" style="background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.4);color:#93c5fd;font-size:6px;padding:1px 4px;margin-left:4px;letter-spacing:.1em;display:none;"></span><span class="layers-chevron" id="panel-chevron">▲</span></div>
- <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')" title="Real documented active conflicts — OSINT verified open-source intelligence database"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS<span class="lb-count">98</span><span class="lb-src">OSINT</span></button>
- <button class="layer-btn" id="lb-troops" onclick="toggleLayer('troops')" title="Troop deployments and movements — documented OSINT intelligence database"><span class="lb-dot" style="background:#ef4444"></span>TROOPS<span class="lb-count">30</span><span class="lb-src">OSINT</span></button>
- <button class="layer-btn" id="lb-arms" onclick="toggleLayer('arms')" title="Arms transfers and weapons flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS<span class="lb-count">29</span><span class="lb-src">OSINT</span></button>
+ <button class="layer-btn" id="lb-conflicts" onclick="toggleLayer('conflicts')" title="Real documented active conflicts — OSINT verified open-source intelligence database"><span class="lb-dot" style="background:#ef4444"></span>CONFLICTS<span class="lb-count">56</span><span class="lb-src">OSINT</span></button>
+ <button class="layer-btn" id="lb-troops" onclick="toggleLayer('troops')" title="Troop deployments and movements — documented OSINT intelligence database"><span class="lb-dot" style="background:#ef4444"></span>TROOPS<span class="lb-count">16</span><span class="lb-src">OSINT</span></button>
+ <button class="layer-btn" id="lb-arms" onclick="toggleLayer('arms')" title="Arms transfers and weapons flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#f59e0b"></span>ARMS FLOWS<span class="lb-count">21</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-naval" onclick="toggleLayer('naval')" title="Naval assets and operations — documented OSINT intelligence database"><span class="lb-dot" style="background:#22c55e"></span>NAVAL OPS<span class="lb-count">10</span><span class="lb-src">OSINT</span></button>
- <button class="layer-btn" id="lb-money" onclick="toggleLayer('money')" title="Financial flows and sanctions evasion — documented OSINT intelligence database"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">22</span><span class="lb-src">OSINT</span></button>
+ <button class="layer-btn" id="lb-money" onclick="toggleLayer('money')" title="Financial flows and sanctions evasion — documented OSINT intelligence database"><span class="lb-dot" style="background:#a855f7"></span>FINANCE<span class="lb-count">21</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-refugees" onclick="toggleLayer('refugees')" title="Refugee and displacement flows — documented OSINT intelligence database"><span class="lb-dot" style="background:#fbbf24"></span>MIGRATION<span class="lb-count">15</span><span class="lb-src">OSINT</span></button>
  <button class="layer-btn" id="lb-flights" onclick="toggleLayer('flights')" title="Live military flights — ADS-B Exchange real-time feed (adsb.lol)"><span class="lb-dot" style="background:#a3e635"></span>FLIGHTS<span class="lb-count" id="lbc-flights">—</span><span class="lb-src live">● LIVE</span></button>
  <button class="layer-btn" id="lb-liveonly" onclick="toggleLiveOnly()" title="Show only live GDELT hotspots — hides static OSINT baseline data"><span class="lb-dot" style="background:#22c55e"></span>LIVE ONLY<span class="lb-src live">● GDELT</span></button>
@@ -18054,22 +18054,30 @@ async function fetchLiveHotspots(){
  // Sort by severity then count — most relevant first
  const sevOrder={critical:0,high:1,medium:2,low:3};
  fresh.sort((a,b)=>(sevOrder[a.severity]||3)-(sevOrder[b.severity]||3)||(b.count||1)-(a.count||1));
- liveHotspots=fresh.slice(0,80);
- window._gdeltHotspotCache={ts:Date.now(),data:liveHotspots};
- /* Show live hotspot count in status bar */
- var _hStatEl=document.getElementById('h-status');
- if(_hStatEl){
-   var _hCritN=liveHotspots.filter(function(h){return h.severity==='critical';}).length;
-   var _hTS=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-   _hStatEl.textContent='GDELT LIVE: '+liveHotspots.length+' events ('+_hCritN+' critical) — '+_hTS;
-   setTimeout(function(){_hStatEl.textContent='Double-click country ◆ G/I/B views ◆ Brain: dbl-click zooms, Q/W clusters, arrows pan, R reset';},6000);
+ if(fresh.length>0){
+   liveHotspots=fresh.slice(0,80);
+   window._gdeltHotspotCache={ts:Date.now(),data:liveHotspots};
+   var _hStatEl=document.getElementById('h-status');
+   if(_hStatEl){
+     var _hCritN=liveHotspots.filter(function(h){return h.severity==='critical';}).length;
+     var _hTS=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+     _hStatEl.textContent='GDELT LIVE: '+liveHotspots.length+' events ('+_hCritN+' critical) — '+_hTS;
+     setTimeout(function(){_hStatEl.textContent='Double-click country ◆ G/I/B views ◆ Brain: dbl-click zooms, Q/W clusters, arrows pan, R reset';},6000);
+   }
+ } else {
+   // Geo API returned nothing — fall back to doc API with country name matching
+   await _fetchGDELTDocFallback();
  }
  }catch(e){
- // Fallback to GDELT doc API title matching
+   await _fetchGDELTDocFallback();
+ }
+}
+
+async function _fetchGDELTDocFallback(){
  try{
- const q=encodeURIComponent('explosion bombing airstrike attack missile killed war');
- const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=25&format=json&timespan=1day`;
- const res=await fetch(url,{signal:AbortSignal.timeout(7000)});
+ const q=encodeURIComponent('explosion bombing airstrike attack missile killed war troops military');
+ const url=`https://api.gdeltproject.org/api/v2/doc/doc?query=${q}&mode=artlist&maxrecords=40&format=json&timespan=1day`;
+ const res=await fetch(url,{signal:AbortSignal.timeout(8000)});
  if(!res.ok)return;
  const data=await res.json();
  if(!data.articles)return;
@@ -18085,12 +18093,19 @@ async function fetchLiveHotspots(){
  fresh.push({lat:found.lat+scatter(),lng:found.lng+scatter(),
  country:found.iso,type:'active_conflict',
  label:(a.title||'').slice(0,60),severity:'medium',live:true,
- timestamp:Date.now(),count:1});
+ timestamp:Date.now(),count:1,source:'GDELT-DOC'});
  }
  }
- if(fresh.length)liveHotspots=fresh.slice(0,20);
+ if(fresh.length){
+   liveHotspots=fresh.slice(0,30);
+   window._gdeltHotspotCache={ts:Date.now()-240000,data:liveHotspots};
+   var _el=document.getElementById('h-status');
+   if(_el){
+     _el.textContent='GDELT DOC: '+liveHotspots.length+' events matched — '+new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+     setTimeout(function(){_el.textContent='Double-click country ◆ G/I/B views ◆ Brain: dbl-click zooms, Q/W clusters, arrows pan, R reset';},5000);
+   }
+ }
  }catch{}
- }
 }
 
 function refreshGDELTLayer(){
