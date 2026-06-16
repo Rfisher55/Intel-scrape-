@@ -14238,16 +14238,11 @@ function draw(){
  // ── Star field
  const now=Date.now();
  for(const s of STARS){
- const twinkle=0.5+0.5*Math.sin(now/s.tw+s.ph);
- /* Rare bright flash: high-frequency sin pushes above 0.96 for brief peak */
- const _twFlash=Math.max(0,(Math.sin(now*(0.0028+s.ph*0.0006)+s.ph*17)-0.96)/0.04);
- const _twR=s.r*(1+_twFlash*2.5);
- if(_twFlash>0){ctx.shadowColor='rgba(200,220,255,'+_twFlash*0.8+')';ctx.shadowBlur=3+_twFlash*6;}
+ const twinkle=0.7+0.3*Math.sin(now/s.tw+s.ph);
  ctx.beginPath();
- ctx.arc(s.x*canvas.width,s.y*canvas.height,_twR,0,Math.PI*2);
+ ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2);
  var _starZoomDim=Math.max(0.15,Math.min(1,(baseScale*2.2)/(scale+0.001)));
- ctx.fillStyle=`rgba(180,210,255,${Math.min(1,(s.a*twinkle+_twFlash*0.5)*_starZoomDim)})`;ctx.fill();
- if(_twFlash>0)ctx.shadowBlur=0;
+ ctx.fillStyle=`rgba(180,210,255,${Math.min(1,s.a*twinkle*_starZoomDim)})`;ctx.fill();
  }
  // ── Globe sphere — richer gradient, DEFCON-tinted
  var _sgDefEl=document.getElementById('defcon-num');
@@ -14874,11 +14869,10 @@ function drawArcMarker(p1,p2,offFactor,color,label,sev){
  ctx.fillStyle=color;ctx.fill();
  // Short label
  if(label){
- /* CRITICAL: crosshatch mark at arc midpoint */
- if(arc.severity==='critical'&&scale>140){
+ if(sev==='critical'&&scale>140){
   ctx.save();
-  var _mkSz=3.5;ctx.translate(cpX,cpY);
-  ctx.strokeStyle=`${base},.7)`;ctx.lineWidth=0.7;
+  var _mkSz=3.5;ctx.translate(mid.px,mid.py);
+  ctx.strokeStyle=color.replace(/[\d.]+\)$/,'0.7)');ctx.lineWidth=0.7;
   ctx.beginPath();ctx.moveTo(-_mkSz,-_mkSz);ctx.lineTo(_mkSz,_mkSz);ctx.stroke();
   ctx.beginPath();ctx.moveTo(_mkSz,-_mkSz);ctx.lineTo(-_mkSz,_mkSz);ctx.stroke();
   ctx.restore();
@@ -14889,8 +14883,7 @@ function drawArcMarker(p1,p2,offFactor,color,label,sev){
  ctx.textAlign='center';
  const maxW=60;
  const short=label.length>22?label.slice(0,21)+'…':label;
- const _lblYear=arc.year?' ('+arc.year+')':'';
- ctx.fillText(short+_lblYear,mid.px,mid.py-11);
+ ctx.fillText(short,mid.px,mid.py-11);
  ctx.restore();
  }
 }
