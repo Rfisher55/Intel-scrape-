@@ -14442,6 +14442,7 @@ function draw(){
  ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
  }
  }
+ ctx.setLineDash([]);ctx.lineDashOffset=0;
  }
 
  if(showArcs||activeLayers.conflicts){drawArcs();
@@ -14833,11 +14834,9 @@ function drawHotspots(){
   ctx.strokeStyle=base.replace(',1)',',.06)');ctx.lineWidth=0.4;ctx.stroke();
  }
  }
- // Glow fill — screen blend for additive brightness
- ctx.save();ctx.globalCompositeOperation='screen';
+ // Glow fill
  ctx.beginPath();ctx.arc(p.px,p.py,r+2+p1*3,0,Math.PI*2);
  ctx.fillStyle=base.replace(',1)',',.12)');ctx.fill();
- ctx.restore();
  // Core dot — age fade (newer = full brightness, older = dimmer)
  var _hsAge=h.timestamp?(Date.now()-h.timestamp)/1000:0;
  var _hsAgeFade=_hsAge>0?Math.max(0.3,1-_hsAge/86400):1;
@@ -14852,8 +14851,8 @@ function drawHotspots(){
   ctx.strokeStyle=base.replace(',1)',','+_swA+')');ctx.lineWidth=0.6;ctx.stroke();
  }
  if(h.severity==='critical'){ctx.shadowColor=base.replace(',1)',',.6)');ctx.shadowBlur=8;}
- var _hsBreath=0.85+Math.sin(Date.now()*0.0012+h.lat*0.7+h.lng*0.4)*0.15;
- ctx.globalAlpha=_hsAgeFade*_hsFlicker*_hsBreath;
+ var _hsBreath=0.92+Math.sin(Date.now()*0.0012+h.lat*0.7+h.lng*0.4)*0.08;
+ ctx.globalAlpha=Math.max(0.5,_hsAgeFade*_hsFlicker*_hsBreath);
  /* Occasional twinkle flash */
  var _stT=Math.sin(Date.now()*0.002+s.x*7+s.y*3);
  var _stFlash=_stT>0.97?(_stT-0.97)/0.03:0;
@@ -14962,8 +14961,7 @@ function drawArcs(){
  const _bothVisible=(p1.visible&&p1.z>0.15&&p2.visible&&p2.z>0.15);
  var _arcDefEl2=document.getElementById('defcon-num');
  var _arcDefN2=_arcDefEl2?parseInt(_arcDefEl2.textContent)||3:3;
- /* At DEFCON 1, critical arcs blink between red and orange */
- var _arcBlink=(_arcDefN2<=1&&arc.severity==='critical')?(Math.sin(Date.now()*0.012)>0?1:0):1;
+ var _arcBlink=1;
  const _arcPulse=arc.severity==='critical'?Math.sin(Date.now()*0.004)*0.4+0.4:0;
  const _arcW=(arc.severity==='critical'?1.5+_arcPulse:0.8)*(scale<150?1.8:scale<300?1.3:1);
  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
@@ -14990,7 +14988,7 @@ function drawArcs(){
  var _dashL=scale<120?[16,5]:scale<300?[12,8]:[8,12];
  ctx.beginPath();ctx.setLineDash(_dashL);ctx.lineDashOffset=-t*60;
  ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
- ctx.strokeStyle=_arcDefN2<=1&&arc.severity==='critical'&&_arcBlink===0?'rgba(249,115,22,.85)':`${base},.85)`;ctx.lineWidth=_arcW;ctx.stroke();
+ ctx.strokeStyle=`${base},.85)`;ctx.lineWidth=_arcW;ctx.stroke();
  /* Double-rule inner line for critical */
  if(arc.severity==='critical'){
   ctx.save();ctx.setLineDash(_dashL);ctx.lineDashOffset=-t*60;
