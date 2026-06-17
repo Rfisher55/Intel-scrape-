@@ -12811,20 +12811,33 @@ function drawPoly(poly,fill,stroke,doFill){
 }
 
 function drawParallel(lat){
+ const phi=lat*Math.PI/180;
+ const cosPhi=Math.cos(phi),sinPhi=Math.sin(phi);
  ctx.beginPath();let first=true;
  for(let lng=-180;lng<=180;lng+=3){
- const p=project(lat,lng);
- if(!p.visible){first=true;continue;}
- first?ctx.moveTo(p.px,p.py):ctx.lineTo(p.px,p.py);first=false;
+  const lam=lng*Math.PI/180;
+  const x=cosPhi*Math.cos(lam),z=cosPhi*Math.sin(lam);
+  const x1=x*_cosRotY-z*_sinRotY,z1=x*_sinRotY+z*_cosRotY;
+  const y2=sinPhi*_cosRotX-z1*_sinRotX,z2=sinPhi*_sinRotX+z1*_cosRotX;
+  if(z2<=0){first=true;continue;}
+  const px=cx-x1*scale,py=cy-y2*scale;
+  first?ctx.moveTo(px,py):ctx.lineTo(px,py);first=false;
  }
  ctx.stroke();
 }
 function drawMeridian(lng){
+ const lam=lng*Math.PI/180;
+ const cosLam=Math.cos(lam),sinLam=Math.sin(lam);
  ctx.beginPath();let first=true;
  for(let lat=-90;lat<=90;lat+=3){
- const p=project(lat,lng);
- if(!p.visible){first=true;continue;}
- first?ctx.moveTo(p.px,p.py):ctx.lineTo(p.px,p.py);first=false;
+  const phi=lat*Math.PI/180;
+  const cosPhi=Math.cos(phi),sinPhi=Math.sin(phi);
+  const x=cosPhi*cosLam,z=cosPhi*sinLam;
+  const x1=x*_cosRotY-z*_sinRotY,z1=x*_sinRotY+z*_cosRotY;
+  const y2=sinPhi*_cosRotX-z1*_sinRotX,z2=sinPhi*_sinRotX+z1*_cosRotX;
+  if(z2<=0){first=true;continue;}
+  const px=cx-x1*scale,py=cy-y2*scale;
+  first?ctx.moveTo(px,py):ctx.lineTo(px,py);first=false;
  }
  ctx.stroke();
 }
@@ -21352,7 +21365,7 @@ function _iccRenderGdelt(data){
  '<div style="font-size:9px;color:#c8d8ff;line-height:1.3;margin-bottom:2px">'+(_esc((a.title||'').slice(0,88)))+'</div>'+
  '<div style="display:flex;gap:6px;font-size:7.5px">'+
  '<span style="color:'+col+'">'+et.toUpperCase()+'</span>'+
- '<span style="color:#4a5470">'+((a.domain||'').slice(0,22))+'</span>'+
+ '<span style="color:#4a5470">'+_esc((a.domain||'').slice(0,22))+'</span>'+
  (typeof a.tone==='number'?'<span style="color:'+(typeof _sigintToneColor==='function'?_sigintToneColor(a.tone):'#8896b3')+'">'+a.tone.toFixed(1)+'</span>':'')+
  '</div>'+
  '</div>';
@@ -22995,8 +23008,8 @@ async function _refreshWeatherIntel(){
  const c=data.current;
  const temp=c.temperature_2m!==undefined?Math.round(c.temperature_2m)+'°F':'N/A';
  const wind=c.wind_speed_10m!==undefined?Math.round(c.wind_speed_10m)+' mph':'N/A';
- const wdir=c.wind_direction_10m!==undefined?c.wind_direction_10m+'°':'N/A';
- const precip=c.precipitation!==undefined?c.precipitation+' mm':'N/A';
+ const wdir=c.wind_direction_10m!==undefined?_esc(String(c.wind_direction_10m))+'°':'N/A';
+ const precip=c.precipitation!==undefined?_esc(String(c.precipitation))+' mm':'N/A';
  const wcode=c.weather_code||0;
  const wxdesc=WX_CODES[wcode]||('Code '+wcode);
  const isSevere=wcode>=80||precip!=='0 mm';
@@ -39037,27 +39050,27 @@ async function renderCamerasTab(iso){
  const camId='CAM-'+(String(i+1).padStart(3,'0'));
  return '<div class="cam-card" onclick="'+onclick+'">'
  +(cam.isSnapshot&&cam.thumb
- ?'<img class="cam-thumb" src="'+cam.thumb+'?t='+Date.now()+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>NO SIGNAL</div>\'">'
+ ?'<img class="cam-thumb" src="'+(_safeUrl(cam.thumb)||'')+'?t='+Date.now()+'" loading="lazy" alt="" onerror="this.outerHTML=\'<div class=cam-thumb-ph>NO SIGNAL</div>\'">'
  :cam.isSnapshot
  ?'<div class="cam-thumb-ph">NO SIGNAL</div>'
  :'<div class="cam-thumb-live"><span class="clr"></span>LIVE STREAM</div>')
  +'<div class="cam-live-dot">&#11044; REC</div>'
  +'<div class="cam-id-tag">'+camId+'</div>'
  +'<div class="cam-play-icon">&#9654;</div>'
- +'<div class="cam-info"><div class="cam-name">'+cam.name+'</div>'
- +(cam.city?'<div class="cam-city">'+cam.city+'</div>':'')
+ +'<div class="cam-info"><div class="cam-name">'+_esc(cam.name||'')+'</div>'
+ +(cam.city?'<div class="cam-city">'+_esc(cam.city)+'</div>':'')
  +'</div></div>';
  }).join('');
  el.appendChild(grid);
  el.insertAdjacentHTML('beforeend',
  '<div class="drill-row" style="justify-content:center;margin-top:12px">'
- +'<button class="drill-btn green" onclick="viewCountrySat(\''+iso+'\')">SATELLITE VIEW</button>'
- +'<button class="drill-btn blue" onclick="camTabISO=\'\';renderCamerasTab(\''+iso+'\')">REFRESH</button>'
+ +'<button class="drill-btn green" onclick="viewCountrySat(\''+_esc(iso)+'\')">SATELLITE VIEW</button>'
+ +'<button class="drill-btn blue" onclick="camTabISO=\'\';renderCamerasTab(\''+_esc(iso)+'\')">REFRESH</button>'
  +'</div>');
  }else{
  statusEl.outerHTML=
  '<div style="font-size:10px;color:var(--dim);line-height:2;padding:12px;border:1px solid rgba(30,58,95,.3);border-radius:4px;margin-bottom:10px">'
- +'No public street cameras found for <b style="color:var(--text)">'+countryName+'</b>.<br>'
+ +'No public street cameras found for <b style="color:var(--text)">'+_esc(countryName)+'</b>.<br>'
  +'Live local cameras are available via open government APIs:<br>'
  +'<span style="color:#60a5fa">&#9679;</span> <b style="color:#94a3b8">UK</b> — TfL JamCam (London traffic CCTV)<br>'
  +'<span style="color:#60a5fa">&#9679;</span> <b style="color:#94a3b8">USA</b> — NYC DOT (New York traffic cameras)<br>'
