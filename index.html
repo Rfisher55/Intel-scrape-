@@ -24923,8 +24923,8 @@ async function fetchPandemicGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -24998,8 +24998,8 @@ async function fetchElecGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fde68a;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fde68a;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25069,8 +25069,8 @@ async function fetchNarcoGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25205,8 +25205,8 @@ async function fetchTrafficGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25324,8 +25324,8 @@ async function fetchIllicitFinGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25449,8 +25449,8 @@ async function fetchCableGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25558,8 +25558,8 @@ async function fetchMilitiaGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25665,8 +25665,8 @@ async function fetchInfoOpsGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25778,8 +25778,8 @@ async function fetchDisplacementGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cn-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="cn-gdelt-item"><div class="cn-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cn-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25884,8 +25884,8 @@ async function _fetchTechWarGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="tw-gdelt-item"><div class="tw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="tw-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="tw-gdelt-item"><div class="tw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="tw-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -25991,8 +25991,8 @@ async function _fetchCovertOpsGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="co-gdelt-item"><div class="co-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="co-gdelt-meta">'+a.domain+' &middot; '+ts+'</div></div>';
+ return '<div class="co-gdelt-item"><div class="co-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="co-gdelt-meta">'+_esc(a.domain)+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -26218,8 +26218,8 @@ async function _fetchShadowFleetGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="sf-gdelt-item"><div class="sf-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="sf-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+ return '<div class="sf-gdelt-item"><div class="sf-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="sf-gdelt-meta">'+_esc(a.domain)+' · '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -26305,8 +26305,8 @@ async function _fetchFFGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="ff-gdelt-item"><div class="ff-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="ff-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+ return '<div class="ff-gdelt-item"><div class="ff-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="ff-gdelt-meta">'+_esc(a.domain)+' · '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -26412,8 +26412,8 @@ async function _fetchEconWarGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="ew-gdelt-item"><div class="ew-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="ew-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+ return '<div class="ew-gdelt-item"><div class="ew-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="ew-gdelt-meta">'+_esc(a.domain)+' · '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -26598,8 +26598,8 @@ async function _fetchInsiderThreatGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="it-gdelt-item"><div class="it-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="it-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+ return '<div class="it-gdelt-item"><div class="it-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="it-gdelt-meta">'+_esc(a.domain)+' · '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -26684,8 +26684,8 @@ async function _fetchNukeDocGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="nd-gdelt-item"><div class="nd-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="nd-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+ return '<div class="nd-gdelt-item"><div class="nd-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="nd-gdelt-meta">'+_esc(a.domain)+' · '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -26740,8 +26740,8 @@ async function _fetchMaritimeGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  const ts=a.seendate?a.seendate.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3 $4:$5Z'):'';
- return '<div class="mar-gdelt-item"><div class="mar-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="mar-gdelt-meta">'+a.domain+' · '+ts+'</div></div>';
+ return '<div class="mar-gdelt-item"><div class="mar-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="mar-gdelt-meta">'+_esc(a.domain)+' · '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -26956,8 +26956,8 @@ async function fetchLAWSGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="laws-gdelt-item"><div class="laws-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="laws-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="laws-gdelt-item"><div class="laws-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="laws-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27045,8 +27045,8 @@ async function fetchBioGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="bio-gdelt-item"><div class="bio-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#86efac;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="bio-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="bio-gdelt-item"><div class="bio-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#86efac;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="bio-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27109,8 +27109,8 @@ async function fetchCloseCallsGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="cc-gdelt-item"><div class="cc-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cc-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="cc-gdelt-item"><div class="cc-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cc-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27271,8 +27271,8 @@ async function _fetchCoupGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="coup-gdelt-item"><div class="coup-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="coup-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="coup-gdelt-item"><div class="coup-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="coup-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27382,8 +27382,8 @@ async function _fetchGPCGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="gpc-gdelt-item"><div class="gpc-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#67e8f9;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="gpc-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="gpc-gdelt-item"><div class="gpc-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#67e8f9;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="gpc-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27519,8 +27519,8 @@ async function _fetchIntelFailGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="ifail-gdelt-item"><div class="ifail-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="ifail-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="ifail-gdelt-item"><div class="ifail-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="ifail-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27661,8 +27661,8 @@ async function fetchHybridGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="hwar-gdelt-item"><div class="hwar-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="hwar-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="hwar-gdelt-item"><div class="hwar-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="hwar-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27737,8 +27737,8 @@ async function fetchMilExerGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="mex-gdelt-item"><div class="mex-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="mex-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="mex-gdelt-item"><div class="mex-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="mex-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -27822,8 +27822,8 @@ async function fetchChokepointsGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="choke-gdelt-item"><div class="choke-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="choke-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="choke-gdelt-item"><div class="choke-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="choke-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28049,8 +28049,8 @@ async function fetchICStructGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="ics-gdelt-item"><div class="ics-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="ics-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="ics-gdelt-item"><div class="ics-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="ics-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28158,8 +28158,8 @@ async function fetchTerrorGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="terror-gdelt-item"><div class="terror-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="terror-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="terror-gdelt-item"><div class="terror-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="terror-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28230,8 +28230,8 @@ async function fetchGeoCalGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="geocal-gdelt-item"><div class="geocal-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fde047;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="geocal-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="geocal-gdelt-item"><div class="geocal-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fde047;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="geocal-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28358,8 +28358,8 @@ async function _fetchCWGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="cw-gdelt-item"><div class="cw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="cw-gdelt-item"><div class="cw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cw-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28488,8 +28488,8 @@ async function _fetchSpaceWarGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="sw-gdelt-item"><div class="sw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="sw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="sw-gdelt-item"><div class="sw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="sw-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28596,8 +28596,8 @@ async function _fetchSOFGdelt(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="sof-gdelt-item"><div class="sof-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#86efac;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="sof-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="sof-gdelt-item"><div class="sof-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#86efac;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="sof-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28812,8 +28812,8 @@ async function _fetchFoodSecGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="fs-gdelt-item"><div class="fs-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="fs-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="fs-gdelt-item"><div class="fs-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="fs-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28890,8 +28890,8 @@ async function _fetchDroneWarGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="dw-gdelt-item"><div class="dw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="dw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="dw-gdelt-item"><div class="dw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="dw-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -28949,8 +28949,8 @@ async function _fetchKleptocGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="kl-gdelt-item"><div class="kl-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fde047;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="kl-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="kl-gdelt-item"><div class="kl-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fde047;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="kl-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -29178,8 +29178,8 @@ async function fetchEmergTechGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="et-gdelt-item"><div class="et-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="et-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="et-gdelt-item"><div class="et-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="et-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -29259,8 +29259,8 @@ async function fetchPiracyGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="py-gdelt-item"><div class="py-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="py-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="py-gdelt-item"><div class="py-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="py-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -29357,8 +29357,8 @@ async function fetchArmsEmbGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="ae-gdelt-item"><div class="ae-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="ae-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="ae-gdelt-item"><div class="ae-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="ae-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -29595,8 +29595,8 @@ async function fetchPolPrisGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="pp-gdelt-item"><div class="pp-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="pp-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="pp-gdelt-item"><div class="pp-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="pp-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -29659,8 +29659,8 @@ async function fetchWaterSecGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="ws-gdelt-item"><div class="ws-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="ws-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="ws-gdelt-item"><div class="ws-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="ws-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -29746,8 +29746,8 @@ async function fetchConfMinGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="cm-gdelt-item"><div class="cm-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="cm-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="cm-gdelt-item"><div class="cm-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="cm-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -29933,8 +29933,8 @@ async function _fetchProtestsGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="pw-gdelt-item"><div class="pw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="pw-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="pw-gdelt-item"><div class="pw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="pw-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -30011,8 +30011,8 @@ async function _fetchStratInvGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="si-gdelt-item"><div class="si-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="si-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="si-gdelt-item"><div class="si-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="si-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -30097,8 +30097,8 @@ async function _fetchIntLawGDELT(){
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  el.innerHTML=arts.map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
- return '<div class="il-gdelt-item"><div class="il-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+a.title+'</a></div>'
- +'<div class="il-gdelt-meta">'+a.domain+' \xb7 '+ts+'</div></div>';
+ return '<div class="il-gdelt-item"><div class="il-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#d8b4fe;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+ +'<div class="il-gdelt-meta">'+_esc(a.domain)+' \xb7 '+ts+'</div></div>';
  }).join('');
  }catch(e){el.innerHTML='<div style="color:#475569;font-size:9px;">Feed unavailable.</div>';}
 }
@@ -31205,8 +31205,8 @@ async function _fetchHsGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="hs-gdelt-item">'+
- '<div class="hs-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="hs-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="hs-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="hs-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){
@@ -31279,8 +31279,8 @@ async function _fetchMmGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="mm-gdelt-item">'+
- '<div class="mm-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="mm-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="mm-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="mm-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){
@@ -31381,8 +31381,8 @@ async function _fetchCorruptGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="co-gdelt-item">'+
- '<div class="co-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="co-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="co-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="co-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){
@@ -31630,8 +31630,8 @@ async function _fetchFsGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
  feed.innerHTML=arts.map(function(a){
  return '<div class="fs-gdelt-item">'+
- '<div class="fs-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="fs-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="fs-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="fs-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){
@@ -31716,8 +31716,8 @@ async function _fetchMiGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
  feed.innerHTML=arts.map(function(a){
  return '<div class="mi-gdelt-item">'+
- '<div class="mi-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="mi-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="mi-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="mi-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){
@@ -31799,8 +31799,8 @@ async function _fetchReGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles found.</div>';return;}
  feed.innerHTML=arts.map(function(a){
  return '<div class="re-gdelt-item">'+
- '<div class="re-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="re-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="re-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="re-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){
@@ -31920,8 +31920,8 @@ async function _fetchPiGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="pi-gdelt-item">'+
- '<div class="pi-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="pi-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="pi-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="pi-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -32039,8 +32039,8 @@ async function _fetchEcGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="ec-gdelt-item">'+
- '<div class="ec-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="ec-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="ec-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="ec-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -32232,8 +32232,8 @@ async function _fetchDoGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="do-gdelt-item">'+
- '<div class="do-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="do-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="do-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="do-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -32351,8 +32351,8 @@ async function _fetchAwGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="aw-gdelt-item">'+
- '<div class="aw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="aw-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="aw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="aw-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -32482,8 +32482,8 @@ async function _fetchReGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="re2-gdelt-item">'+
- '<div class="re2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="re2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="re2-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="re2-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -32590,8 +32590,8 @@ async function _fetchGzGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="gz-gdelt-item">'+
- '<div class="gz-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="gz-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="gz-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="gz-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -32711,8 +32711,8 @@ async function _fetchQrGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="qr-gdelt-item">'+
- '<div class="qr-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="qr-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="qr-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="qr-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -32814,8 +32814,8 @@ async function _fetchPsGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="ps-gdelt-item">'+
- '<div class="ps-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="ps-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="ps-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="ps-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33043,8 +33043,8 @@ async function _fetchFpGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="fp-gdelt-item">'+
- '<div class="fp-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="fp-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="fp-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="fp-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33112,8 +33112,8 @@ async function _fetchSiGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="si-gdelt-item">'+
- '<div class="si-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="si-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="si-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="si-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33197,8 +33197,8 @@ async function _fetchSrGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="sr-gdelt-item">'+
- '<div class="sr-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="sr-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="sr-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="sr-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33330,8 +33330,8 @@ async function _fetchDaGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="da-gdelt-item">'+
- '<div class="da-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="da-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="da-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="da-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33457,8 +33457,8 @@ async function _fetchFpoGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="fpo-gdelt-item">'+
- '<div class="fpo-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="fpo-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="fpo-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="fpo-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33585,8 +33585,8 @@ async function _fetchSvGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="sv-gdelt-item">'+
- '<div class="sv-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="sv-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="sv-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="sv-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33722,8 +33722,8 @@ async function _fetchRwGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="rw-gdelt-item">'+
- '<div class="rw-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="rw-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="rw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="rw-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33850,8 +33850,8 @@ async function _fetchTfGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="tf-gdelt-item">'+
- '<div class="tf-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="tf-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="tf-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="tf-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -33982,8 +33982,8 @@ async function _fetchBdGdelt(){
  if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
  feed.innerHTML = arts.map(function(a){
  return '<div class="bd-gdelt-item">'+
- '<div class="bd-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
- '<div class="bd-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+ '<div class="bd-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+ '<div class="bd-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
  '</div>';
  }).join('');
  }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -34105,8 +34105,8 @@ async function _fetchEc2Gdelt(){
     if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
     feed.innerHTML = arts.map(function(a){
       return '<div class="ec2-gdelt-item">'+
-        '<div class="ec2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
-        '<div class="ec2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+        '<div class="ec2-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+        '<div class="ec2-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
       '</div>';
     }).join('');
   }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -34241,8 +34241,8 @@ async function _fetchAc2Gdelt(){
     if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
     feed.innerHTML = arts.map(function(a){
       return '<div class="ac2-gdelt-item">'+
-        '<div class="ac2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
-        '<div class="ac2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+        '<div class="ac2-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+        '<div class="ac2-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
       '</div>';
     }).join('');
   }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -34372,8 +34372,8 @@ async function _fetchSa2Gdelt(){
     if(!arts.length){feed.innerHTML='<div style="color:#475569;font-size:9px;">No recent articles.</div>';return;}
     feed.innerHTML = arts.map(function(a){
       return '<div class="sa2-gdelt-item">'+
-        '<div class="sa2-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'+
-        '<div class="sa2-gdelt-meta">'+a.domain+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
+        '<div class="sa2-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'+
+        '<div class="sa2-gdelt-meta">'+_esc(a.domain)+' &nbsp;&#47;&#47;&nbsp; '+a.seendate+'</div>'+
       '</div>';
     }).join('');
   }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">GDELT feed unavailable.</div>';}
@@ -35064,8 +35064,8 @@ async function _fetchEnergySecurityGDELT(){
     feed.innerHTML='';
     d.articles.slice(0,10).forEach(function(a){
       feed.innerHTML+='<div class="es-gdelt-item">'
-        +'<div class="es-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="es-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'<div class="es-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+        +'<div class="es-gdelt-meta">'+_esc(a.domain)+' &nbsp;|&nbsp; '+a.seendate+'</div>'
         +'</div>';
     });
   }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
@@ -35355,8 +35355,8 @@ async function _fetchRefugeeGDELT(){
     feed.innerHTML='';
     d.articles.slice(0,10).forEach(function(a){
       feed.innerHTML+='<div class="p52ref-gdelt-item">'
-        +'<div class="p52ref-gdelt-title"><a href="'+a.url+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+a.title+'</a></div>'
-        +'<div class="p52ref-gdelt-meta">'+a.domain+' &nbsp;|&nbsp; '+a.seendate+'</div>'
+        +'<div class="p52ref-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#e2e8f0;text-decoration:none;">'+_esc(a.title)+'</a></div>'
+        +'<div class="p52ref-gdelt-meta">'+_esc(a.domain)+' &nbsp;|&nbsp; '+a.seendate+'</div>'
         +'</div>';
     });
   }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
@@ -35858,8 +35858,8 @@ async function _gdeltFetch(query, targetId, retries){
         var _html = arts.map(function(a){
           var ageStr=a.seendate?a.seendate.slice(0,8):'';
           return '<div style="border-bottom:1px solid rgba(30,58,95,0.35);padding:5px 0;">'+
-            '<a href="'+a.url+'" target="_blank" style="color:#cbd5e1;font-size:7.5px;text-decoration:none;line-height:1.5;display:block;margin-bottom:2px;">'+a.title+'</a>'+
-            '<div style="color:#475569;font-size:6.5px;letter-spacing:.06em;">'+a.domain+' &#x2014; '+ageStr+'</div>'+
+            '<a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#cbd5e1;font-size:7.5px;text-decoration:none;line-height:1.5;display:block;margin-bottom:2px;">'+_esc(a.title)+'</a>'+
+            '<div style="color:#475569;font-size:6.5px;letter-spacing:.06em;">'+_esc(a.domain)+' &#x2014; '+ageStr+'</div>'+
           '</div>';
         }).join('');
         el.innerHTML=_html;
@@ -38685,8 +38685,8 @@ async function _ulfRefreshFeed(overlay) {
     feedEl.innerHTML = arts.map(function(a){
       var dt = (a.seendate||'').slice(0,10);
       return '<div class="ulf-item">'+
-        '<a href="'+a.url+'" target="_blank" class="ulf-headline">'+a.title+'</a>'+
-        '<div class="ulf-meta">'+a.domain+' &nbsp;|&nbsp; '+dt+'</div>'+
+        '<a href="'+_safeUrl(a.url)+'" target="_blank" class="ulf-headline">'+_esc(a.title)+'</a>'+
+        '<div class="ulf-meta">'+_esc(a.domain)+' &nbsp;|&nbsp; '+dt+'</div>'+
       '</div>';
     }).join('');
   } catch(e) {
@@ -43763,8 +43763,8 @@ var _BrainEngine = (function(){
           if(_controllers[targetId] !== ctrl) return; /* superseded */
           el.innerHTML = arts.map(function(a){
             return '<div style="border-bottom:1px solid #0f1e38;padding:5px 0;">'
-              +'<a href="'+a.url+'" target="_blank" style="color:#94a3b8;font-size:8px;text-decoration:none;line-height:1.5;display:block;">'+a.title+'</a>'
-              +'<div style="color:#1e3a5f;font-size:7px;margin-top:2px;">'+a.domain+' &nbsp;//&nbsp; '+a.seendate+'</div>'
+              +'<a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#94a3b8;font-size:8px;text-decoration:none;line-height:1.5;display:block;">'+_esc(a.title)+'</a>'
+              +'<div style="color:#1e3a5f;font-size:7px;margin-top:2px;">'+_esc(a.domain)+' &nbsp;//&nbsp; '+a.seendate+'</div>'
               +'</div>';
           }).join('');
           return;
