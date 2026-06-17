@@ -14764,7 +14764,7 @@ function drawHotspots(){
   ctx.strokeStyle=base.replace(',1)',',.15)');ctx.lineWidth=0.7;ctx.stroke();
  }
  // Core dot — age fade (newer = full brightness, older = dimmer)
- var _hsAge=h.timestamp?(Date.now()-h.timestamp)/1000:0;
+ var _hsAge=h.timestamp?(now-h.timestamp)/1000:0;
  var _hsAgeFade=_hsAge>0?Math.max(0.3,1-_hsAge/86400):1;
  // Core dot — age fade only
  ctx.globalAlpha=_hsAgeFade;
@@ -14787,7 +14787,7 @@ function drawHotspots(){
   ctx.fillStyle=_hsTypeC;
   var _hsBadge='';
   if(h.count&&h.count>1)_hsBadge+=h.count+'x ';
-  if(h.timestamp){var _hsMin=Math.round((Date.now()-h.timestamp)/60000);_hsBadge+=_hsMin<60?_hsMin+'m':Math.round(_hsMin/60)+'h';}
+  if(h.timestamp){var _hsMin=Math.round((now-h.timestamp)/60000);_hsBadge+=_hsMin<60?_hsMin+'m':Math.round(_hsMin/60)+'h';}
   if(_hsBadge)ctx.fillText(_hsBadge.trim(),p.px,p.py-r-2);
   /* Domain label */
   if(h.domain&&scale>500&&r>5){
@@ -14845,7 +14845,8 @@ function drawArcs(){
  ?CONFLICTS.filter(c=>c.from===selectedISO||c.to===selectedISO)
  :CONFLICTS;
  var _arcRotSlowdown=Math.max(0.1,1-_rotSpd*40);
- const t=((Date.now()*_arcRotSlowdown)%3000)/3000;
+ const _arcNow=Date.now();
+ const t=((_arcNow*_arcRotSlowdown)%3000)/3000;
  for(const arc of arcs){
  const from=COUNTRIES[arc.from],to=COUNTRIES[arc.to];
  if(!from||!to)continue;
@@ -14877,7 +14878,7 @@ function drawArcs(){
  /* Animated flow tick along arc (t advances with time) */
  if(arc.severity!=='low'&&scale>180){
    var _ftSpeed=arc.severity==='critical'?0.00040:arc.severity==='high'?0.00030:0.00022;
-   var _ftT=((Date.now()*_ftSpeed)%1);
+   var _ftT=((_arcNow*_ftSpeed)%1);
    var _ftX=(1-_ftT)*(1-_ftT)*p1.px+2*(1-_ftT)*_ftT*cpX+_ftT*_ftT*p2.px;
    var _ftY=(1-_ftT)*(1-_ftT)*p1.py+2*(1-_ftT)*_ftT*cpY+_ftT*_ftT*p2.py;
    var _ftA=arc.severity==='critical'?0.9:0.6;
@@ -15158,6 +15159,14 @@ function hitTest(sx,sy){
 /* ════════════════════════════════════════════════════
  MOUSE / TOUCH
 ════════════════════════════════════════════════════ */
+/* Cached tooltip element refs — avoid per-event getElementById */
+var _ttEl=null,_ttNameEl=null,_ttCoordsEl=null,_ttAlertEl=null;
+function _initTTRefs(){
+ if(!_ttEl)_ttEl=document.getElementById('tooltip');
+ if(!_ttNameEl)_ttNameEl=document.getElementById('tt-name');
+ if(!_ttCoordsEl)_ttCoordsEl=document.getElementById('tt-coords');
+ if(!_ttAlertEl)_ttAlertEl=document.getElementById('tt-alert');
+}
 canvas.addEventListener('mousemove',e=>{
  if(isDragging){
  const dx=e.clientX-lastX,dy=e.clientY-lastY;
@@ -15194,34 +15203,34 @@ canvas.addEventListener('mousemove',e=>{
  var _mll=unproject(e.clientX,e.clientY);
  if(_mll){window._globeMouseLat=_mll.lat;window._globeMouseLon=_mll.lng;}
  else window._globeMouseLat=undefined;
- const tt=document.getElementById('tooltip');
- if(hotHit){
- document.getElementById('tt-name').textContent=hotHit.label;
- document.getElementById('tt-coords').textContent=Math.abs(hotHit.lat).toFixed(1)+'\u00b0'+(hotHit.lat>=0?'N':'S')+'  '+Math.abs(hotHit.lng).toFixed(1)+'\u00b0'+(hotHit.lng>=0?'E':'W');
- const sev=hotHit.severity;
- document.getElementById('tt-alert').textContent=hotHit.type.replace(/_/g,' ').toUpperCase()+' · '+sev.toUpperCase();
- document.getElementById('tt-alert').style.color=ALERT_SEV[sev]||'#94a3b8';
- var _ttW=180,_ttH=50;
- var _ttX=Math.min(e.clientX+14,window.innerWidth-_ttW-8);
- var _ttY=Math.max(e.clientY-10,8);
- if(_ttY+_ttH>window.innerHeight-8) _ttY=e.clientY-_ttH-8;
- tt.style.left=_ttX+'px';tt.style.top=_ttY+'px';tt.style.opacity='1';
- } else if(layerHit){
- document.getElementById('tt-name').textContent=layerHit.label;
- document.getElementById('tt-alert').textContent=layerHit.sub;
- document.getElementById('tt-alert').style.color=layerHit.color;
- tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
- } else if(hit){
- const c=COUNTRIES[hit];
- document.getElementById('tt-name').textContent=c.name;
- var _hsCnt=(typeof HOTSPOTS!=='undefined'?HOTSPOTS.filter(function(h){return h.country===hit;}).length:0)+(typeof liveHotspots!=='undefined'?liveHotspots.filter(function(h){return h.country===hit;}).length:0);
- var _arcCnt=(typeof CONFLICTS!=='undefined'?CONFLICTS.filter(function(ac){return ac.from===hit||ac.to===hit;}).length:0);
- var _hsStr=_hsCnt>0?' · '+_hsCnt+'hs':'';
- var _arcStr=_arcCnt>0?' · '+_arcCnt+'arc'+(_arcCnt>1?'s':''):'';
- document.getElementById('tt-alert').textContent=(hit===lastClickISO&&Date.now()-lastClickTime<DBL_CLICK_MS)?'Double-click to open →':'Alert: '+c.alertLevel+_hsStr+_arcStr+' · Double-click to open';
- document.getElementById('tt-alert').style.color=ALERT_SEV[c.alertLevel.toLowerCase()]||'#94a3b8';
- tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
- }else tt.style.opacity='0';
+  _initTTRefs();
+  if(hotHit){
+  _ttNameEl.textContent=hotHit.label;
+  _ttCoordsEl.textContent=Math.abs(hotHit.lat).toFixed(1)+'°'+(hotHit.lat>=0?'N':'S')+'  '+Math.abs(hotHit.lng).toFixed(1)+'°'+(hotHit.lng>=0?'E':'W');
+  const sev=hotHit.severity;
+  _ttAlertEl.textContent=hotHit.type.replace(/_/g,' ').toUpperCase()+' · '+sev.toUpperCase();
+  _ttAlertEl.style.color=ALERT_SEV[sev]||'#94a3b8';
+  var _ttW=180,_ttH=50;
+  var _ttX=Math.min(e.clientX+14,window.innerWidth-_ttW-8);
+  var _ttY=Math.max(e.clientY-10,8);
+  if(_ttY+_ttH>window.innerHeight-8) _ttY=e.clientY-_ttH-8;
+  _ttEl.style.left=_ttX+'px';_ttEl.style.top=_ttY+'px';_ttEl.style.opacity='1';
+  } else if(layerHit){
+  _ttNameEl.textContent=layerHit.label;
+  _ttAlertEl.textContent=layerHit.sub;
+  _ttAlertEl.style.color=layerHit.color;
+  _ttEl.style.left=(e.clientX+14)+'px';_ttEl.style.top=(e.clientY-10)+'px';_ttEl.style.opacity='1';
+  } else if(hit){
+  const c=COUNTRIES[hit];
+  _ttNameEl.textContent=c.name;
+  var _hsCnt=(typeof HOTSPOTS!=='undefined'?HOTSPOTS.filter(function(h){return h.country===hit;}).length:0)+(typeof liveHotspots!=='undefined'?liveHotspots.filter(function(h){return h.country===hit;}).length:0);
+  var _arcCnt=(typeof CONFLICTS!=='undefined'?CONFLICTS.filter(function(ac){return ac.from===hit||ac.to===hit;}).length:0);
+  var _hsStr=_hsCnt>0?' · '+_hsCnt+'hs':'';
+  var _arcStr=_arcCnt>0?' · '+_arcCnt+'arc'+(_arcCnt>1?'s':''):'';
+  _ttAlertEl.textContent=(hit===lastClickISO&&Date.now()-lastClickTime<DBL_CLICK_MS)?'Double-click to open →':'Alert: '+c.alertLevel+_hsStr+_arcStr+' · Double-click to open';
+  _ttAlertEl.style.color=ALERT_SEV[c.alertLevel.toLowerCase()]||'#94a3b8';
+  _ttEl.style.left=(e.clientX+14)+'px';_ttEl.style.top=(e.clientY-10)+'px';_ttEl.style.opacity='1';
+  }else _ttEl.style.opacity='0';
 });
 canvas.addEventListener('mousedown',e=>{isDragging=true;canvas.classList.add('dragging');lastX=e.clientX;lastY=e.clientY;dragVelX=0;dragVelY=0;vipAnimTarget=null;});
 canvas.addEventListener('mouseup',e=>{
