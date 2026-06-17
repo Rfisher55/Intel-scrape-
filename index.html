@@ -23296,13 +23296,13 @@ async function _refreshTerrorWatch(){
  try{
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(org.q)+'&mode=artlist&maxrecords=5&format=json&timespan=168H';
  const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
- const d=await r.json();
- count=(d.articles||[]).length;
+ const d=r.ok?await r.json():null;
+ count=(d&&d.articles||[]).length;
  if(!count){
  const url2='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(org.name.split('/')[0].trim())+'&mode=artlist&maxrecords=5&format=json&timespan=168H';
  const r2=await fetch(url2,{signal:AbortSignal.timeout(10000)});
- const d2=await r2.json();
- count=(d2.articles||[]).length;
+ const d2=r2.ok?await r2.json():null;
+ count=(d2&&d2.articles||[]).length;
  }
  }catch(e){}
  return {org:org,events:count};
@@ -35874,6 +35874,7 @@ async function _gdeltFetch(query, targetId, retries){
   for(var attempt=0; attempt<=retries; attempt++){
     try{
       var r = await fetch(url, {signal:AbortSignal.timeout(12000)});
+      if(!r.ok)throw new Error('HTTP '+r.status);
       var d = await r.json();
       var arts = (d&&d.articles)||[];
       if(arts.length){
