@@ -12586,12 +12586,12 @@ function layerDbl(label,sx,sy){
  return ok;
 }
 function layerHint(label,sx,sy){
- const tt=document.getElementById('tooltip');
- document.getElementById('tt-name').textContent=label;
- document.getElementById('tt-alert').textContent='Double-click to open intel brief';
- document.getElementById('tt-alert').style.color='#60a5fa';
- tt.style.left=(sx+14)+'px';tt.style.top=(sy-10)+'px';tt.style.opacity='1';
- setTimeout(()=>{tt.style.opacity='0';},1400);
+ _initTTRefs();
+ _ttNameEl.textContent=label;
+ _ttAlertEl.textContent='Double-click to open intel brief';
+ _ttAlertEl.style.color='#60a5fa';
+ _ttEl.style.left=(sx+14)+'px';_ttEl.style.top=(sy-10)+'px';_ttEl.style.opacity='1';
+ setTimeout(()=>{_ttEl.style.opacity='0';},1400);
 }
 // Physics — separated auto-spin from drag momentum for buttery feel
 const AUTO_SPIN=0;
@@ -13164,7 +13164,7 @@ async function fetchUnverifiedSignals(){
 }
 
 function drawUnverifiedLayer(){
- const now=Date.now();
+ const now=_drawNow;
  if(now-unverifiedFetchTime>UNVERIFIED_REFRESH_MS)fetchUnverifiedSignals();
  const list=selectedISO?unverifiedSignals.filter(s=>s.iso===selectedISO):unverifiedSignals;
  const {dx,dy}=getNodeOffset('unverified');
@@ -13293,7 +13293,7 @@ const SIGINT_NODES=[
 ];
 
 function drawSIGINTLayer(){
- const now=Date.now();
+ const now=_drawNow;
  const nodes=selectedISO?SIGINT_NODES.filter(n=>n.iso===selectedISO):SIGINT_NODES;
  const {dx,dy}=getNodeOffset('sigint');
  for(const node of nodes){
@@ -13400,7 +13400,7 @@ const CYBER_OPS=[
 ];
 
 function drawCyberLayer(){
- const now=Date.now();
+ const now=_drawNow;
  const ops=selectedISO?CYBER_OPS.filter(op=>op.from===selectedISO||op.to===selectedISO):CYBER_OPS;
  for(const op of ops){
  const f=COUNTRIES[op.from],t=COUNTRIES[op.to];if(!f||!t)continue;
@@ -13499,7 +13499,7 @@ const NET_DISRUPTIONS=[
 ];
 
 function drawNetDisruptLayer(){
- const now=Date.now();
+ const now=_drawNow;
  const list=selectedISO?NET_DISRUPTIONS.filter(n=>n.iso===selectedISO):NET_DISRUPTIONS;
  const {dx,dy}=getNodeOffset('netdisrupt');
  for(const nd of list){
@@ -13668,7 +13668,7 @@ function getActiveFlights(){
 function drawFlights(){
  const flights=getActiveFlights();
  const filtered=selectedISO?flights.filter(f=>f.country===selectedISO||!selectedISO):flights;
- const now=Date.now();
+ const now=_drawNow;
  for(const f of filtered){
  const p=project(f.lat,f.lng);
  if(!p.visible)continue;
@@ -14743,7 +14743,7 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
 }
 
 function drawHotspots(){
- const now=Date.now();
+ const now=_drawNow;
  const allSpots=_liveOnlyMode?[...liveHotspots]:[...HOTSPOTS,...liveHotspots];
  const spots=selectedISO?allSpots.filter(h=>h.country===selectedISO||!h.country):allSpots;
  for(const h of spots){
@@ -14846,7 +14846,7 @@ function drawArcs(){
  ?CONFLICTS.filter(c=>c.from===selectedISO||c.to===selectedISO)
  :CONFLICTS;
  var _arcRotSlowdown=Math.max(0.1,1-_rotSpd*40);
- const _arcNow=Date.now();
+ const _arcNow=_drawNow;
  const t=((_arcNow*_arcRotSlowdown)%3000)/3000;
  for(const arc of arcs){
  const from=COUNTRIES[arc.from],to=COUNTRIES[arc.to];
@@ -14859,9 +14859,10 @@ function drawArcs(){
  const _arcW=(arc.severity==='critical'?1.8:0.8)*(scale<150?1.8:scale<300?1.3:1);
  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
  const dx=p2.px-p1.px,dy=p2.py-p1.py;
- const off=Math.sqrt(dx*dx+dy*dy)*0.35;
- const cpX=mx-dy/Math.sqrt(dx*dx+dy*dy)*off;
- const cpY=my+dx/Math.sqrt(dx*dx+dy*dy)*off;
+ const _arcDist=Math.sqrt(dx*dx+dy*dy);
+ const off=_arcDist*0.35;
+ const cpX=mx-dy/_arcDist*off;
+ const cpY=my+dx/_arcDist*off;
  // Glow halo
  ctx.beginPath();ctx.moveTo(p1.px,p1.py);ctx.quadraticCurveTo(cpX,cpY,p2.px,p2.py);
  ctx.strokeStyle=`${base},${_bothVisible?.18:.1})`;ctx.lineWidth=3*_arcW;ctx.stroke();
@@ -14960,7 +14961,7 @@ function drawTroopMovements(){
  drawCurvedArc(p1,p2,sev,.75,1.5,_tmDash,-t*50);
  /* Animated head dot traveling along arc */
  {
-   var _cpX=(p1.px+p2.px)/2,_cpY=(p1.py+p2.py)/2-Math.sqrt(Math.pow(p2.px-p1.px,2)+Math.pow(p2.py-p1.py,2))*0.2;
+   var _cpX=(p1.px+p2.px)/2,_cpY=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.2;
    var _hT=(t+0.3)%1;
    var _hX=(1-_hT)*(1-_hT)*p1.px+2*(1-_hT)*_hT*_cpX+_hT*_hT*p2.px;
    var _hY=(1-_hT)*(1-_hT)*p1.py+2*(1-_hT)*_hT*_cpY+_hT*_hT*p2.py;
@@ -15001,7 +15002,7 @@ function drawArmsFlows(){
  drawCurvedArc(p1,p2,'rgba(245,158,11',.8,_afLw,[6,5],-t*35);
  /* Animated head dot along arms flow arc */
  {
-   var _afCpX=(p1.px+p2.px)/2,_afCpY=(p1.py+p2.py)/2-Math.sqrt(Math.pow(p2.px-p1.px,2)+Math.pow(p2.py-p1.py,2))*0.18;
+   var _afCpX=(p1.px+p2.px)/2,_afCpY=(p1.py+p2.py)/2-Math.hypot(p2.px-p1.px,p2.py-p1.py)*0.18;
    var _afHT=(t+0.5)%1;
    var _afHX=(1-_afHT)*(1-_afHT)*p1.px+2*(1-_afHT)*_afHT*_afCpX+_afHT*_afHT*p2.px;
    var _afHY=(1-_afHT)*(1-_afHT)*p1.py+2*(1-_afHT)*_afHT*_afCpY+_afHT*_afHT*p2.py;
@@ -21286,6 +21287,7 @@ function toggleAirDomain(){
  if(btn)btn.classList.toggle('active',airDomainActive);
  if(airDomainActive){
  refreshAirDomain();
+ clearInterval(airDomainTimer);
  airDomainTimer=setInterval(refreshAirDomain,30000);
  } else {
  clearInterval(airDomainTimer);airDomainTimer=null;
@@ -21303,6 +21305,7 @@ function openICC(){
  if(ov)ov.classList.add('open');
  document.body.style.overflow='hidden';
  _refreshICC();
+ clearInterval(_iccTimer);
  _iccTimer=setInterval(_refreshICC,60000);
  _iccTickTime();
 }
@@ -21738,6 +21741,7 @@ function toggleISS(){
  st.style.color='var(--live)';
  ind.style.display='block';
  _fetchISSPos();
+ clearInterval(_issTimer);
  _issTimer=setInterval(_fetchISSPos,5000);
  }else{
  btn.classList.remove('active');
@@ -21933,6 +21937,7 @@ async function toggleBiointLayer(){
  if(cnt)cnt.textContent=pts.length;
  _pushAlert('BIOINT: '+pts.length+' bio/disease events detected in 72h window',false);
  }
+ clearInterval(_biointTimer);
  _biointTimer=setInterval(async function(){
  if(!_biointActive)return;
  _biointCacheTs=0;
@@ -21979,6 +21984,7 @@ async function toggleInfraLayer(){
  if(cnt)cnt.textContent=pts.length;
  _pushAlert('INFRACON: '+pts.length+' infrastructure attack/incident events in 48h',false);
  }
+ clearInterval(_infraTimer);
  _infraTimer=setInterval(async function(){
  if(!_infraActive)return;
  _infraCacheTs=0;
@@ -22025,6 +22031,7 @@ async function toggleWeaponsLayer(){
  if(cnt)cnt.textContent=pts.length;
  _pushAlert('WEAPONS: '+pts.length+' missile/weapons events detected in 7d window',false);
  }
+ clearInterval(_weaponsTimer);
  _weaponsTimer=setInterval(async function(){
  if(!_weaponsActive)return;
  _weaponsCacheTs=0;
@@ -22098,7 +22105,7 @@ function _renderProxyArcs(){
 }
 
 function drawProxyArcs(){
- const t=(Date.now()%3000)/3000;
+ const t=(_drawNow%3000)/3000;
  for(const arc of PROXY_ARCS){
  const src=_ISO_COORDS[arc.s];const dst=_ISO_COORDS[arc.c];
  if(!src||!dst)continue;
@@ -22385,6 +22392,7 @@ async function toggleCbrnLayer(){
  if(cnt)cnt.textContent=pts.length;
  if(pts.length)_pushAlert('CBRN ALERT: '+pts.length+' chemical/biological/radiological/nuclear events in 72h',true);
  }
+ clearInterval(_cbrnTimer);
  _cbrnTimer=setInterval(async function(){
  if(!_cbrnActive)return;
  _cbrnCacheTs=0;
@@ -22510,6 +22518,7 @@ async function toggleCoupRiskLayer(){
  liveHotspots=[...liveHotspots.filter(function(h){return!h.couprisk;}),...all];
  if(cnt)cnt.textContent=all.length;
  _pushAlert('COUP RISK: '+all.length+' regime-change/instability signals active',false);
+ clearInterval(_coupTimer);
  _coupTimer=setInterval(async function(){
  if(!_coupActive)return;
  _coupCacheTs=0;
