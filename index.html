@@ -14803,7 +14803,7 @@ function drawHotspots(){
  if(_htSelected){ctx.font='5px "IBM Plex Mono"';ctx.fillStyle='rgba(255,220,100,0.8)';ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText((h.type||'unknown').toUpperCase().slice(0,9),p.px,p.py+r+2);ctx.textBaseline='alphabetic';}ctx.font='bold '+(r>=5?'6':'5')+'px "IBM Plex Mono"';ctx.fillStyle='rgba(0,0,0,0.65)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(_htL,p.px,p.py);ctx.textBaseline='alphabetic';}
  /* Ring count digit + age */
  if(r>=6&&h.count>1){ctx.font='bold 5px "IBM Plex Mono"';ctx.fillStyle='rgba(255,220,100,0.85)';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(h.count>99?'99+':h.count,p.px+r-1,p.py-r+1);ctx.textBaseline='alphabetic';}
- if(r>=8&&h.created){var _hAge=Math.round((_drawNow-new Date(h.created).getTime())/(864e5));if(_hAge>0){ctx.font='4px "IBM Plex Mono"';ctx.fillStyle='rgba(148,163,184,0.6)';ctx.textAlign='right';ctx.textBaseline='top';ctx.fillText(_hAge+'d',p.px+r,p.py-r+1);ctx.textBaseline='alphabetic';}}
+ if(r>=8&&h.created){var _hCreatedMs=typeof h.created==='number'?h.created:new Date(h.created).getTime();var _hAge=Math.round((_drawNow-_hCreatedMs)/(864e5));if(_hAge>0){ctx.font='4px "IBM Plex Mono"';ctx.fillStyle='rgba(148,163,184,0.6)';ctx.textAlign='right';ctx.textBaseline='top';ctx.fillText(_hAge+'d',p.px+r,p.py-r+1);ctx.textBaseline='alphabetic';}}
  /* Label text above hotspot at high zoom */
  if(scale>180&&h.label){ctx.save();ctx.font='5.5px "IBM Plex Mono"';ctx.fillStyle='rgba(255,255,255,0.65)';ctx.shadowColor='rgba(0,0,0,0.7)';ctx.shadowBlur=2;ctx.textAlign='center';ctx.fillText(h.label.slice(0,22),p.px,p.py-r-3);ctx.shadowBlur=0;ctx.restore();}
  }
@@ -17349,8 +17349,8 @@ function openCountry(iso){
  if(_isoEl){_isoEl.textContent=iso;_isoEl.style.display='inline-block';}
  var _latStr=(c.lat>=0?'+':'')+c.lat.toFixed(1)+'N';
  var _lngStr=(c.lng>=0?'+':'')+c.lng.toFixed(1)+'E';
- document.getElementById('p-cap').innerHTML='Capital: '+c.capital+' <span style="color:#334155;font-size:7px;letter-spacing:.04em;">'+_latStr+' '+_lngStr+'</span>'+'<span class="p-sat-link" onclick="viewCountrySat(this.dataset.iso)" data-iso="'+iso+'" title="Open satellite view">SATELLITE</span>';
- document.getElementById('h-status').innerHTML='VIEWING: <strong style="color:#93c5fd">'+c.name.toUpperCase()+'</strong>';
+ document.getElementById('p-cap').innerHTML='Capital: '+_esc(c.capital)+' <span style="color:#334155;font-size:7px;letter-spacing:.04em;">'+_latStr+' '+_lngStr+'</span>'+'<span class="p-sat-link" onclick="viewCountrySat(this.dataset.iso)" data-iso="'+_esc(iso)+'" title="Open satellite view">SATELLITE</span>';
+ document.getElementById('h-status').innerHTML='VIEWING: <strong style="color:#93c5fd">'+_esc(c.name).toUpperCase()+'</strong>';
  const intel=INTEL[iso]||{};
  const badge=ALERT_BADGE[c.alertLevel]||ALERT_BADGE.LOW;
  const b=document.getElementById('p-badge');
@@ -20554,7 +20554,7 @@ function renderSIGINTFeed(){
  const et=SIGINT_EVENT_TYPES[ev.eventType]||SIGINT_EVENT_TYPES.other;
  const tColor=_sigintToneColor(ev.tone);
  const tStr=typeof ev.tone==='number'?(ev.tone>0?'+':'')+ev.tone.toFixed(1):'';
- const safeUrl=ev.url.replace(/'/g,'%27');
+ const safeUrl=_safeUrl(ev.url);
  const safeTitle=_esc(ev.title);
  const safeDomain=(ev.domain||'').slice(0,16);
  const safeSource=ev.source||'';
@@ -20991,9 +20991,9 @@ async function renderLiveIntelTab(iso){
  const pd=p.data||{};
  const score=pd.score||0;
  const comments=pd.num_comments||0;
- return`<div style="padding:5px 8px;background:rgba(8,14,28,.6);border-left:2px solid rgba(26,107,219,.25);border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="window.open('https://reddit.com${(pd.permalink||'').replace(/'/g,'%27')}','_blank')">
+ return`<div style="padding:5px 8px;background:rgba(8,14,28,.6);border-left:2px solid rgba(26,107,219,.25);border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="window.open('https://reddit.com${_esc((pd.permalink||''))}','_blank')">
  <div style="font-size:9px;color:#c8d8ff;line-height:1.35;margin-bottom:2px">${_esc((pd.title||'').slice(0,90))}</div>
- <div style="font-size:7.5px;color:#4a5470">▲ ${score} &nbsp;·&nbsp; ${comments} comments &nbsp;·&nbsp; r/${pd.subreddit||'worldnews'}</div>
+ <div style="font-size:7.5px;color:#4a5470">▲ ${score} &nbsp;·&nbsp; ${comments} comments &nbsp;·&nbsp; r/${_esc(pd.subreddit||'worldnews')}</div>
  </div>`;
  }).join('')
  }
@@ -21342,7 +21342,7 @@ function _iccRenderGdelt(data){
  el.innerHTML=arts.slice(0,25).map(a=>{
  const et=typeof _classifyEvent==='function'?_classifyEvent(a.title):'other';
  const col=et==='conflict'?'#ef4444':et==='military'?'#f97316':et==='nuclear'?'#00d97e':et==='cyber'?'#60a5fa':et==='protest'?'#fbbf24':'#4a5470';
- const safeUrl=(a.url||'').replace(/'/g,'%27');
+ const safeUrl=_safeUrl(a.url);
  return'<div class="icc-row" onclick="window.open(\''+safeUrl+'\',\'_blank\')">'+
  '<div style="font-size:9px;color:#c8d8ff;line-height:1.3;margin-bottom:2px">'+(_esc((a.title||'').slice(0,88)))+'</div>'+
  '<div style="display:flex;gap:6px;font-size:7.5px">'+
@@ -43531,6 +43531,8 @@ var _BrainEngine = (function(){
       /* Depth label only shows when a deep node is selected */
       if(!_sel||(_sel.depth||0)>5)ctx.fillText('D',dpbX,dpbY-4);
       ctx.restore(); /* depth bar opacity restore */
+      ctx.save();
+      ctx.globalAlpha=0.45;ctx.font='6px "IBM Plex Mono"';ctx.fillStyle='#64748b';ctx.textAlign='center';
       ctx.fillText(_maxDepth+(_maxDCnt>0?':'+_maxDCnt:''),dpbX,dpbY+dpbH+9);
       ctx.restore();
     }
