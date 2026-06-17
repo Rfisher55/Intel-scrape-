@@ -14095,10 +14095,10 @@ function renderSocialFeed(){
  return;
  }
  feed.innerHTML=cachedRedditPosts.map(p=>`
- <div class="sf-item" onclick="window.open('https://reddit.com${p.permalink}','_blank')">
- <div class="sf-title">${p.title}</div>
+ <div class="sf-item" onclick="window.open('https://reddit.com${_esc(p.permalink)}','_blank')">
+ <div class="sf-title">${_esc(p.title)}</div>
  <div class="sf-meta">
- <span class="sf-sub">r/${p.subreddit}</span>
+ <span class="sf-sub">r/${_esc(p.subreddit)}</span>
  <span class="sf-score">▲ ${p.score?.toLocaleString()||'?'} · ${Math.round((Date.now()/1000-p.created_utc)/3600)}h ago</span>
  </div>
  </div>`).join('');
@@ -14111,12 +14111,12 @@ function renderSocialFeed(){
  feed.innerHTML=cachedXPosts.map(p=>{
  const ageMin=Math.round((Date.now()-p.date.getTime())/60000);
  const age=ageMin<60?ageMin+'m ago':Math.round(ageMin/60)+'h ago';
- const safeUrl=p.url.replace(/"/g,'%22');
- return`<div class="sf-item" onclick="window.open('${safeUrl}','_blank')">
- <div class="sf-title">${p.text.slice(0,240)}${p.text.length>240?'…':''}</div>
+ const safeUrl=_safeUrl(p.url);
+ return`<div class="sf-item" onclick="window.open('${_esc(safeUrl)}','_blank')">
+ <div class="sf-title">${_esc(p.text.slice(0,240))}${p.text.length>240?'…':''}</div>
  <div class="sf-meta">
- <span class="sf-sub">${p.author}</span>
- <span class="sf-score">${srcBadge[p.source]||p.source} · ${age}</span>
+ <span class="sf-sub">${_esc(p.author)}</span>
+ <span class="sf-score">${srcBadge[p.source]||_esc(p.source)} · ${age}</span>
  </div>
  </div>`;
  }).join('');
@@ -14149,11 +14149,11 @@ function renderSocialFeed(){
  <span class="sf-callsign" style="color:${nameColor}">${isKIA?' ':' ♦ '}${v.name}</span>
  <span style="font-size:8px;color:${confColor};letter-spacing:.08em">${confLabel}</span>
  </div>
- <div style="font-size:9px;color:${roleColor};letter-spacing:.1em;margin-bottom:5px">${v.role} · ${v.country}</div>
- <div style="font-size:11px;font-weight:600;color:${locColor};margin-bottom:5px;letter-spacing:.04em">${v.status}</div>
- ${(!isKIA&&v.headline)?`<div style="font-size:9px;color:var(--dim);line-height:1.45;margin-bottom:4px;border-left:2px solid rgba(168,85,247,.45);padding-left:6px;cursor:pointer" onclick="event.stopPropagation();window.open('${v.sourceUrl}','_blank')">${v.headline.slice(0,130)}${v.headline.length>130?'…':''}</div>`:''}
+ <div style="font-size:9px;color:${roleColor};letter-spacing:.1em;margin-bottom:5px">${_esc(v.role)} · ${_esc(v.country)}</div>
+ <div style="font-size:11px;font-weight:600;color:${locColor};margin-bottom:5px;letter-spacing:.04em">${_esc(v.status)}</div>
+ ${(!isKIA&&v.headline)?`<div style="font-size:9px;color:var(--dim);line-height:1.45;margin-bottom:4px;border-left:2px solid rgba(168,85,247,.45);padding-left:6px;cursor:pointer" onclick="event.stopPropagation();window.open('${_esc(_safeUrl(v.sourceUrl))}','_blank')">${_esc(v.headline.slice(0,130))}${v.headline.length>130?'…':''}</div>`:''}
  <div class="sf-meta">
- <span style="color:var(--muted);font-size:8px">${v.sourceDomain||'GDELT/OSINT'}</span>
+ <span style="color:var(--muted);font-size:8px">${_esc(v.sourceDomain||'GDELT/OSINT')}</span>
  <span style="color:var(--muted);font-size:8px">${isKIA?'LAST KNOWN LOCATION':v.updated?'UPDATED '+v.updated:'DEFAULT INTEL'}</span>
  </div>
  </div>`);
@@ -17783,7 +17783,7 @@ const liveCache={};
 function renderNewsTab(iso,items,isLive){
  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
  const label=isLive
- ?`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>LIVE INTELLIGENCE FEED</span><span style="color:#22c55e;font-size:10px;{ts}</span></div>`
+ ?`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>LIVE INTELLIGENCE FEED</span><span style="color:#22c55e;font-size:10px">${ts}</span></div>`
  :`<div class="sec-label" style="display:flex;justify-content:space-between;align-items:center"><span>INTELLIGENCE ITEMS</span><span style="color:#64748b;font-size:10px">● OSINT BASE</span></div>`;
  const refreshBtn=`<button onclick="fetchLiveNews(selectedISO,true)" style="width:100%;margin-bottom:10px;padding:7px;background:rgba(30,58,95,.3);border:1px solid #1e3a5f;border-radius:4px;color:#7dd3fc;font-family:var(--mono);font-size:10px;cursor:pointer;letter-spacing:.1em">↻ REFRESH LIVE FEED</button>`;
  if(!items||items.length===0){
@@ -17798,11 +17798,11 @@ function renderNewsTab(iso,items,isLive){
  const catBadge=cat?`<span style="font-size:8px;padding:1px 5px;border-radius:2px;background:rgba(30,58,95,.5);color:${catColor[cat]||'#94a3b8'};letter-spacing:.1em;margin-left:6px">${cat}</span>`:'';
  return`<div class="news-item" style="border-left-color:${catColor[cat]||'#1d4ed8'}">
  <div class="news-meta">
- <span class="news-src">${n.source||'FEED'}${catBadge}</span>
+ <span class="news-src">${_esc(n.source||'FEED')}${catBadge}</span>
  <span class="news-time">${age}</span>
  </div>
- ${n.url?`<a href="${n.url}" target="_blank" rel="noopener" class="news-title" style="text-decoration:none;cursor:pointer" title="Click to read full report">${n.title}</a>`
- :`<p class="news-title">${n.title}</p>`}
+ ${n.url?`<a href="${_safeUrl(n.url)}" target="_blank" rel="noopener" class="news-title" style="text-decoration:none;cursor:pointer" title="Click to read full report">${_esc(n.title)}</a>`
+ :`<p class="news-title">${_esc(n.title)}</p>`}
  <div class="drill-row" style="margin-top:7px;padding-top:6px">
  <button class="drill-btn green" onclick="viewCountrySat('${iso}')">SATELLITE</button>
  <button class="drill-btn blue" onclick="showTab('summary')">SUMMARY</button>
@@ -17899,6 +17899,15 @@ async function fetchLiveNews(iso, force=false){
  refreshTimer=setTimeout(()=>{if(selectedISO===iso)fetchLiveNews(iso,true);},300000);
 }
 
+function _esc(s){
+ if(s==null)return'';
+ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function _safeUrl(u){
+ if(!u||typeof u!=='string')return'#';
+ const t=u.trim();
+ return(/^https?:\/\//i.test(t))?t:'#';
+}
 function timeAgo(dateStr){
  if(!dateStr)return'';
  const d=Date.now()-new Date(dateStr).getTime();
@@ -20915,11 +20924,11 @@ async function renderLiveIntelTab(iso){
  gdeltArticles.slice(0,12).map(a=>{
  const et=_classifyEvent&&_classifyEvent(a.title)||'other';
  const col=et==='conflict'?'#ef4444':et==='military'?'#f97316':et==='nuclear'?'#00d97e':et==='cyber'?'#60a5fa':et==='protest'?'#fbbf24':'#4a5470';
- return`<div style="padding:5px 8px;background:rgba(8,14,28,.6);border-left:2px solid ${col}30;border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="window.open('${(a.url||'').replace(/'/g,'%27')}','_blank')">
- <div style="font-size:9px;color:#c8d8ff;line-height:1.35;margin-bottom:2px">${(a.title||'').replace(/</g,'&lt;').slice(0,90)}</div>
+ return`<div style="padding:5px 8px;background:rgba(8,14,28,.6);border-left:2px solid ${col}30;border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="window.open('${_esc(_safeUrl(a.url))}','_blank')">
+ <div style="font-size:9px;color:#c8d8ff;line-height:1.35;margin-bottom:2px">${_esc((a.title||'').slice(0,90))}</div>
  <div style="display:flex;gap:6px;font-size:7.5px;color:#4a5470">
  <span style="color:${col}">${et.toUpperCase()}</span>
- <span>${(a.domain||'').slice(0,20)}</span>
+ <span>${_esc((a.domain||'').slice(0,20))}</span>
  ${typeof a.tone==='number'?'<span style="color:'+_sigintToneColor(a.tone)+'">'+a.tone.toFixed(1)+'</span>':''}
  </div>
  </div>`;
@@ -21055,9 +21064,9 @@ async function executeIntelSearch(){
  html+=gdeltArticles.slice(0,12).map(a=>{
  const et=_classifyEvent&&_classifyEvent(a.title)||'other';
  const col=et==='conflict'?'#ef4444':et==='military'?'#f97316':et==='nuclear'?'#00d97e':et==='cyber'?'#60a5fa':'#4a5470';
- return`<div class="search-result-item" onclick="window.open('${(a.url||'').replace(/'/g,'%27')}','_blank')">
- <div class="search-result-title">${(a.title||'').replace(/</g,'&lt;').slice(0,100)}</div>
- <div class="search-result-meta"><span style="color:${col}">${et.toUpperCase()}</span> &nbsp;·&nbsp; ${a.domain||''} &nbsp;${typeof a.tone==='number'?'&nbsp;·&nbsp; TONE: <span style="color:'+_sigintToneColor(a.tone)+'">'+a.tone.toFixed(1)+'</span>':''}</div>
+ return`<div class="search-result-item" onclick="window.open('${_esc(_safeUrl(a.url))}','_blank')">
+ <div class="search-result-title">${_esc((a.title||'').slice(0,100))}</div>
+ <div class="search-result-meta"><span style="color:${col}">${et.toUpperCase()}</span> &nbsp;·&nbsp; ${_esc(a.domain||'')} &nbsp;${typeof a.tone==='number'?'&nbsp;·&nbsp; TONE: <span style="color:'+_sigintToneColor(a.tone)+'">'+a.tone.toFixed(1)+'</span>':''}</div>
  </div>`;
  }).join('');
  }
@@ -21069,9 +21078,9 @@ async function executeIntelSearch(){
  html+=`<div class="search-source-label">◈ SOCIAL MEDIA OSINT (REDDIT)</div>`;
  html+=redditAll.map(p=>{
  const pd=p.data||{};
- return`<div class="search-result-item" onclick="window.open('https://reddit.com${(pd.permalink||'').replace(/'/g,'%27')}','_blank')">
- <div class="search-result-title">${(pd.title||'').replace(/</g,'&lt;').slice(0,100)}</div>
- <div class="search-result-meta">▲ ${pd.score||0} &nbsp;·&nbsp; r/${pd.subreddit||'worldnews'} &nbsp;·&nbsp; ${pd.num_comments||0} comments</div>
+ return`<div class="search-result-item" onclick="window.open('https://reddit.com${_esc((pd.permalink||'').replace(/'/g,'%27'))}','_blank')">
+ <div class="search-result-title">${_esc((pd.title||'').slice(0,100))}</div>
+ <div class="search-result-meta">▲ ${pd.score||0} &nbsp;·&nbsp; r/${_esc(pd.subreddit||'worldnews')} &nbsp;·&nbsp; ${pd.num_comments||0} comments</div>
  </div>`;
  }).join('');
  }
@@ -21826,9 +21835,9 @@ async function renderDiploTab(iso){
  incidentsHtml=arts.map(function(a){
  const ts=a.seendate?a.seendate.slice(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return`<div class="diplo-incident">
- <div class="diplo-incident-title">${(a.title||'').slice(0,100)}</div>
- <span style="color:var(--muted)">${ts}</span> &nbsp;
- <a href="${a.url}" target="_blank" style="color:var(--accent);font-size:8px;">SOURCE ↗</a>
+ <div class="diplo-incident-title">${_esc((a.title||'').slice(0,100))}</div>
+ <span style="color:var(--muted)">${_esc(ts)}</span> &nbsp;
+ <a href="${_safeUrl(a.url)}" target="_blank" style="color:var(--accent);font-size:8px;">SOURCE ↗</a>
  </div>`;
  }).join('');
  }else{
@@ -24039,7 +24048,7 @@ async function exportIntelBrief(){
  return '<tr><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#edf0f8;font-weight:700;">'+(c.name||'')+'</td><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#f87171;">'+(c.alertLevel||'UNKNOWN')+'</td><td style="padding:4px 8px;border-bottom:1px solid #1e2d42;color:#8896b3;">'+(c.primary_concern||'').substring(0,60)+'</td></tr>';
  }).join('');
  const headlinesHtml=headlines.map(function(a,i){
- return '<div style="padding:6px 0;border-bottom:1px solid #182030;font-size:11px;"><span style="color:#0a6ef5;margin-right:8px;">'+(i+1)+'.</span><span style="color:#edf0f8;">'+(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,140)+'</span><span style="color:#4a5470;font-size:10px;margin-left:8px;">&mdash; '+(a.domain||'')+'</span></div>';
+ return '<div style="padding:6px 0;border-bottom:1px solid #182030;font-size:11px;"><span style="color:#0a6ef5;margin-right:8px;">'+(i+1)+'.</span><span style="color:#edf0f8;">'+_esc((a.title||'').substring(0,140))+'</span><span style="color:#4a5470;font-size:10px;margin-left:8px;">&mdash; '+_esc(a.domain||'')+'</span></div>';
  }).join('');
  const briefHTML='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>INTELLIGENCE BRIEF — '+dateStr+'</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#05080f;color:#edf0f8;font-family:\'IBM Plex Mono\',\'Courier New\',monospace;padding:40px;max-width:1000px;margin:0 auto;}h1{font-size:20px;letter-spacing:.3em;margin-bottom:4px;}h2{font-size:12px;letter-spacing:.2em;color:#8896b3;border-bottom:1px solid #182030;padding-bottom:8px;margin:20px 0 10px;}.header{border:2px solid #ef4444;padding:12px 20px;margin-bottom:24px;text-align:center;}.class-banner{background:#ef4444;color:#fff;font-size:10px;letter-spacing:.3em;padding:4px;text-align:center;margin-bottom:16px;}.meta{font-size:9px;color:#4a5470;margin-bottom:4px;}.defcon-box{border:2px solid '+defconColor+';padding:12px;display:inline-block;margin:12px 0;}.defcon-num{font-size:32px;font-weight:900;color:'+defconColor+';}.defcon-desc{font-size:10px;color:#8896b3;letter-spacing:.15em;}table{width:100%;border-collapse:collapse;font-size:11px;}th{text-align:left;padding:6px 8px;background:#090c18;color:#4a5470;font-size:9px;letter-spacing:.12em;border-bottom:2px solid #182030;}.footer{margin-top:30px;padding-top:16px;border-top:2px solid #182030;font-size:9px;color:#4a5470;text-align:center;}.stat{display:inline-block;margin-right:24px;}.stat-num{font-size:24px;font-weight:900;}.stat-label{font-size:8px;color:#4a5470;letter-spacing:.15em;}</style></head><body>'+
  '<div class="class-banner">TOP SECRET // NOFORN // ORCON // NOT FOR DISTRIBUTION</div>'+
@@ -24493,8 +24502,8 @@ async function _fetchPsychNews(name) {
  el.innerHTML = arts.map(function(a) {
  const domain = a.domain || (a.url ? a.url.replace(/^https?:\/\//,'').split('/')[0] : '');
  const date = a.seendate ? a.seendate.substring(0,8) : '';
- return '<div class="psych-news-item"><div class="psych-news-title"><a href="' + (a.url||'#') + '" target="_blank" style="color:var(--text);text-decoration:none;">' + (a.title||'').replace(/</g,'&lt;') + '</a></div>' +
- '<div class="psych-news-meta">' + domain + ' &nbsp;&middot;&nbsp; ' + date + '</div></div>';
+ return '<div class="psych-news-item"><div class="psych-news-title"><a href="' + _safeUrl(a.url) + '" target="_blank" style="color:var(--text);text-decoration:none;">' + _esc(a.title||'') + '</a></div>' +
+ '<div class="psych-news-meta">' + _esc(domain) + ' &nbsp;&middot;&nbsp; ' + _esc(date) + '</div></div>';
  }).join('');
  } catch(e) {
  if (el) el.innerHTML = '<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';
@@ -24579,8 +24588,8 @@ async function _fetchLeakNews() {
  el.innerHTML = all.slice(0, 30).map(function(a) {
  const domain = a.domain || (a.url ? a.url.replace(/^https?:\/\//,'').split('/')[0] : '');
  const date = a.seendate ? a.seendate.substring(0,8) : '';
- return '<div class="lm-live-item"><div class="lm-live-title"><a href="' + (a.url||'#') + '" target="_blank" style="color:var(--text);text-decoration:none;">' + (a.title||'').replace(/</g,'&lt;') + '</a></div>' +
- '<div class="lm-live-meta">' + domain + ' &nbsp;&middot;&nbsp; ' + date + '</div></div>';
+ return '<div class="lm-live-item"><div class="lm-live-title"><a href="' + _safeUrl(a.url) + '" target="_blank" style="color:var(--text);text-decoration:none;">' + _esc(a.title||'') + '</a></div>' +
+ '<div class="lm-live-meta">' + _esc(domain) + ' &nbsp;&middot;&nbsp; ' + _esc(date) + '</div></div>';
  }).join('');
  } catch(e) {
  if (el) el.innerHTML = '<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';
@@ -24691,8 +24700,8 @@ async function _fetchClimateNews() {
  el.innerHTML = arts.map(function(a) {
  const domain = a.domain || (a.url ? a.url.replace(/^https?:\/\//,'').split('/')[0] : '');
  const date = a.seendate ? a.seendate.substring(0,8) : '';
- return '<div class="cs-news-item"><div class="cs-news-title"><a href="' + (a.url||'#') + '" target="_blank" style="color:var(--text);text-decoration:none;">' + (a.title||'').replace(/</g,'&lt;') + '</a></div>' +
- '<div class="cs-news-meta">' + domain + ' &nbsp;&middot;&nbsp; ' + date + '</div></div>';
+ return '<div class="cs-news-item"><div class="cs-news-title"><a href="' + _safeUrl(a.url) + '" target="_blank" style="color:var(--text);text-decoration:none;">' + _esc(a.title||'') + '</a></div>' +
+ '<div class="cs-news-meta">' + _esc(domain) + ' &nbsp;&middot;&nbsp; ' + _esc(date) + '</div></div>';
  }).join('');
  } catch(e) {
  if (el) el.innerHTML = '<div style="color:var(--dim);font-size:9px;">Feed unavailable.</div>';
