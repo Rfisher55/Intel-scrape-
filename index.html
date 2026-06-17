@@ -13687,7 +13687,7 @@ function drawFlights(){
  ctx.restore();
  // Callsign label (only when zoomed in or few flights visible)
  if(zoomFactor>1.8||filtered.length<20){
- ctx.font=`bold 8px ${getComputedStyle(document.body).getPropertyValue('--mono')||'Courier New'}`;
+ ctx.font='bold 8px "IBM Plex Mono"';
  ctx.fillStyle=col;
  ctx.fillText(f.callsign,p.px+sz*2+2,p.py-2);
  }
@@ -15068,7 +15068,7 @@ function drawRefugeeFlows(){
  /* Person icon at arc midpoint */
  if(p1.visible||p2.visible){
   var _rfMx=(p1.px+p2.px)/2,_rfMy=(p1.py+p2.py)/2-Math.abs(p2.px-p1.px)*0.18;
-  ctx.save();ctx.font='7px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.save();ctx.font='7px "IBM Plex Mono"';ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.globalAlpha=0.3;ctx.fillText('○',_rfMx,_rfMy);
   ctx.globalAlpha=1;ctx.textBaseline='alphabetic';ctx.restore();
  }
