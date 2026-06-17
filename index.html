@@ -14206,6 +14206,8 @@ var _cosRotX=1,_sinRotX=0,_cosRotY=1,_sinRotY=0;
 var _rotSpd=0;
 /* Gradient cache — gradients that only change with scale/cx/cy/defcon are reused across frames */
 var _grdC={k:'',sphere:null,atmo:null,spec:null,limb:null,limbDark:null,term:null,eqK:'',eq:null,sunGK:'',sunG:null,nightK:'',night:null,sunK:'',sun:null,sbK:'',sb:null};
+/* Hotspot index cache — rebuilt only when total hotspot count changes (saves 3 allocs/frame at rest) */
+var _hsCacheLen=-1,_hsLiveHotISOs=new Set(),_hsCachedAll=[],_hsByISOc=Object.create(null);
 function draw(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
  // ── Star field
@@ -14301,13 +14303,21 @@ function draw(){
    else drawMeridian(lng);
  }
 
- // Precompute per-frame caches to avoid repeated O(n) work in country loop
- var _liveHotISOs=new Set();
- if(typeof liveHotspots!=='undefined')liveHotspots.forEach(function(h){if(h.country)_liveHotISOs.add(h.country);});
- var _allHSCache=(typeof HOTSPOTS!=='undefined'?HOTSPOTS:[]).concat(typeof liveHotspots!=='undefined'?liveHotspots:[]);
- // Index hotspots by country for O(1) per-country overlap lookup
- var _hsByISO=Object.create(null);
- for(var _hbi=0;_hbi<_allHSCache.length;_hbi++){var _hbh=_allHSCache[_hbi];if(_hbh.country){if(!_hsByISO[_hbh.country])_hsByISO[_hbh.country]=[];_hsByISO[_hbh.country].push(_hbh);}}
+ // Hotspot index — rebuild only when total count changes (most frames: free alias)
+ var _hsTotal=(typeof HOTSPOTS!=='undefined'?HOTSPOTS.length:0)+(typeof liveHotspots!=='undefined'?liveHotspots.length:0);
+ if(_hsTotal!==_hsCacheLen){
+  _hsCacheLen=_hsTotal;
+  var _hsSrc=typeof HOTSPOTS!=='undefined'?HOTSPOTS:[];
+  var _hsLv=typeof liveHotspots!=='undefined'?liveHotspots:[];
+  _hsCachedAll=_hsSrc.concat(_hsLv);
+  _hsByISOc=Object.create(null);
+  for(var _hbi=0;_hbi<_hsCachedAll.length;_hbi++){var _hbh=_hsCachedAll[_hbi];if(_hbh.country){if(!_hsByISOc[_hbh.country])_hsByISOc[_hbh.country]=[];_hsByISOc[_hbh.country].push(_hbh);}}
+  _hsLiveHotISOs=new Set();
+  for(var _hsi=0;_hsi<_hsCachedAll.length;_hsi++){if(_hsCachedAll[_hsi].country)_hsLiveHotISOs.add(_hsCachedAll[_hsi].country);}
+ }
+ var _liveHotISOs=_hsLiveHotISOs;
+ var _allHSCache=_hsCachedAll;
+ var _hsByISO=_hsByISOc;
  if(geoReady){
  // Pass 1: all non-ME world countries (dim land)
  ctx.strokeStyle='rgba(22,40,70,.50)';ctx.lineWidth=.5;
@@ -14769,7 +14779,7 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
 
 function drawHotspots(){
  const now=_drawNow;
- const allSpots=_liveOnlyMode?[...liveHotspots]:[...HOTSPOTS,...liveHotspots];
+ const allSpots=_liveOnlyMode?liveHotspots:_hsCachedAll;
  const spots=selectedISO?allSpots.filter(h=>h.country===selectedISO||!h.country):allSpots;
  for(const h of spots){
  const p=project(h.lat,h.lng);if(!p.visible)continue;
@@ -15075,8 +15085,12 @@ function drawFinancialFlows(){
  }
  if(p1.visible&&p2.visible){
  const mt=(_drawNow%4000)/4000;
- const mx=p1.px+(p2.px-p1.px)*mt,my=p1.py+(p2.py-p1.py)*mt;
- ctx.beginPath();ctx.arc(mx,my,2.5,0,Math.PI*2);
+ /* Use same Bezier control point as drawCurvedArc (off=len*0.32 perpendicular) */
+ const _ffDx=p2.px-p1.px,_ffDy=p2.py-p1.py;
+ const _ffCpX=(p1.px+p2.px)/2-_ffDy*0.32,_ffCpY=(p1.py+p2.py)/2+_ffDx*0.32;
+ const _ffS=(1-mt)*(1-mt),_ffM=2*(1-mt)*mt,_ffE=mt*mt;
+ const _ffX=_ffS*p1.px+_ffM*_ffCpX+_ffE*p2.px,_ffY=_ffS*p1.py+_ffM*_ffCpY+_ffE*p2.py;
+ ctx.beginPath();ctx.arc(_ffX,_ffY,2.5,0,Math.PI*2);
  ctx.fillStyle=(f.color||'rgba(168,85,247')+', .9)';ctx.fill();
  }
  drawArcMarker(p1,p2,0.32,(f.color||'rgba(168,85,247')+', .9)',f.label);
