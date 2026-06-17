@@ -21636,8 +21636,8 @@ async function injectCisaKevToSIGINT(){
 
 // ISS Real-Time Tracker
 let _issActive=false,_issTimer=null,_issMarker=null;
-const ISS_API='http://api.open-notify.org/iss-now.json';
-const ISS_CREW_API='http://api.open-notify.org/astros.json';
+const ISS_API='https://api.open-notify.org/iss-now.json';
+const ISS_CREW_API='https://api.open-notify.org/astros.json';
 
 async function _fetchISSPos(){
  try{
@@ -42150,12 +42150,13 @@ function switchToGlobe() {
   document.getElementById('tab-intel').classList.remove('active');
   var _tlTab=document.getElementById('tab-layers');if(_tlTab)_tlTab.classList.remove('active');
 }
-var _ilsLoaded=false;
+var _ilsLoadedAt=0;
 function _loadIntelStream(){
-  if(_ilsLoaded) return;
+  var now=Date.now();
+  if(_ilsLoadedAt&&now-_ilsLoadedAt<30*60*1000) return; /* refresh at most every 30 min */
   var el=document.getElementById('ils-feed');
   if(!el) return;
-  _ilsLoaded=true;
+  _ilsLoadedAt=now;
   var ue=document.getElementById('ils-updated');
   if(ue) ue.textContent=new Date().toISOString().slice(11,19)+' UTC';
   if(typeof _gdeltFetch==='function')
