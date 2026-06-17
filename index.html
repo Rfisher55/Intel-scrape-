@@ -14373,7 +14373,7 @@ function draw(){
    ctx.beginPath();ctx.arc(ctr.px,ctr.py,3.5,0,Math.PI*2);
    ctx.fillStyle='rgba(251,191,36,0.45)';ctx.fill();
  }
- ctx.font='bold 10px IBM Plex Mono';
+ ctx.font='bold 10px "IBM Plex Mono"';
  ctx.fillStyle=isSel?'#050c1a':isHov?'#050c1a':'#93c5fd';
  ctx.textAlign='center';ctx.textBaseline='middle';
  ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py);
@@ -14733,7 +14733,7 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
  ctx.beginPath();ctx.arc(vp.px,vp.py,r2,0,Math.PI*2);
  ctx.strokeStyle=`rgba(168,85,247,${0.3+pulse*.2})`;ctx.lineWidth=1;ctx.stroke();
  ctx.fillStyle='#a855f7';ctx.beginPath();ctx.arc(vp.px,vp.py,4,0,Math.PI*2);ctx.fill();
- ctx.fillStyle='rgba(168,85,247,.9)';ctx.font='bold 9px IBM Plex Mono';ctx.textAlign='center';
+ ctx.fillStyle='rgba(168,85,247,.9)';ctx.font='bold 9px "IBM Plex Mono"';ctx.textAlign='center';
  ctx.fillText('♦ '+vm.name.split(' ').pop().toUpperCase(),vp.px,vp.py-r1-4);
  ctx.textAlign='left';
  ctx.restore();
@@ -14775,7 +14775,7 @@ function drawHotspots(){
  // Severity letter in core
  if(r>3.5){
   var _sevLtr=h.severity==='critical'?'C':h.severity==='high'?'H':h.severity==='medium'?'M':'L';
-  ctx.save();ctx.font='bold '+Math.round(r*0.62)+"px IBM Plex Mono";
+  ctx.save();ctx.font='bold '+Math.round(r*0.62)+'px "IBM Plex Mono"';
   ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillText(_sevLtr,p.px,p.py);
   ctx.textBaseline='alphabetic';ctx.restore();
@@ -15084,11 +15084,11 @@ function drawHUD(){
  });
  // Zoom indicator (bottom-right inner)
  if(zoomFactor>1.2){
- ctx.fillStyle='rgba(59,130,246,.55)';ctx.font='9px IBM Plex Mono';ctx.textAlign='right';
+ ctx.fillStyle='rgba(59,130,246,.55)';ctx.font='9px "IBM Plex Mono"';ctx.textAlign='right';
  ctx.fillText(`ZOOM ${zoomFactor.toFixed(1)}x`,canvas.width-m-8,canvas.height-m-8);
  }
  if(zoomFactor>1.0){
- ctx.fillStyle='rgba(71,85,105,0.4)';ctx.font='7px IBM Plex Mono';ctx.textAlign='left';
+ ctx.fillStyle='rgba(71,85,105,0.4)';ctx.font='7px "IBM Plex Mono"';ctx.textAlign='left';
  ctx.fillText('z:'+zoomFactor.toFixed(2)+'x',m+8,canvas.height-m-8);
  }
  ctx.textAlign='left';
@@ -38720,7 +38720,8 @@ async function _fetchWorldBankIndicator(countryCode, indicator, targetId) {
 
 resize();tick();animate();loadWorldData();fetchLiveHotspots();initSatMapEvents();initNewsTicker();_updateDEFCON();setInterval(_updateDEFCON,30000);
 /* Session timer */
-setInterval(function(){var _ge=Math.floor((Date.now()-window._globeStartTime)/1000);var _gm=Math.floor(_ge/60),_gs=_ge%60;var _gEl=document.getElementById('globe-session-timer');if(_gEl)_gEl.textContent=_gm+':'+String(_gs).padStart(2,'0');},1000);
+var _sessTimerEl=null;
+setInterval(function(){if(!_sessTimerEl)_sessTimerEl=document.getElementById('globe-session-timer');if(!_sessTimerEl)return;var _ge=Math.floor((Date.now()-window._globeStartTime)/1000);var _gm=Math.floor(_ge/60),_gs=_ge%60;_sessTimerEl.textContent=_gm+':'+String(_gs).padStart(2,'0');},1000);
 // Initialize watchlist system if items exist
 if(watchlistItems.length){scheduleWatchlistPoll();}
 // Show alert bell if header has h-right div (it does)
@@ -42263,9 +42264,10 @@ function filterDashModules(q) {
 }
 
 // ── Mode bar clock ──
+var _mbarTimeEl=null;
 function _updateModeBarTime() {
-  var el = document.getElementById('mbar-time');
-  if(el) el.textContent = new Date().toUTCString().split(' ')[4] + ' UTC';
+  if(!_mbarTimeEl)_mbarTimeEl=document.getElementById('mbar-time');
+  if(_mbarTimeEl)_mbarTimeEl.textContent=new Date().toUTCString().split(' ')[4]+' UTC';
 }
 setInterval(_updateModeBarTime, 1000);
 _updateModeBarTime();
@@ -42273,15 +42275,16 @@ _updateModeBarTime();
 // ── GDELT refresh countdown ──
 window._lastHotspotFetchT = Date.now();
 var _HOTSPOT_INTERVAL_MS = 5 * 60 * 1000;
+var _mbarCdEl=null;
 setInterval(function(){
-  var cd = document.getElementById('mbar-refresh-cd');
-  if(!cd) return;
+  if(!_mbarCdEl)_mbarCdEl=document.getElementById('mbar-refresh-cd');
+  if(!_mbarCdEl)return;
   var elapsed = Date.now() - (window._lastHotspotFetchT || Date.now());
   var rem = Math.max(0, _HOTSPOT_INTERVAL_MS - elapsed);
   var m = Math.floor(rem / 60000);
   var s = Math.floor((rem % 60000) / 1000);
-  cd.textContent = m + ':' + String(s).padStart(2, '0');
-  cd.style.color = rem < 30000 ? '#22c55e' : '#334155';
+  _mbarCdEl.textContent = m + ':' + String(s).padStart(2, '0');
+  _mbarCdEl.style.color = rem < 30000 ? '#22c55e' : '#334155';
 }, 1000);
 
 // ── Sync AI data to dashboard ──
