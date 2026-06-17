@@ -15218,9 +15218,9 @@ canvas.addEventListener('mousemove',e=>{
  dragVelX=dx*sens*0.18;dragVelY=dy*sens*0.18;
  lastX=e.clientX;lastY=e.clientY;return;
  }
- // Check hotspot proximity first
+ // Check hotspot proximity first (use module-level cache — no alloc per event)
  let hotHit=null;
- for(const h of [...HOTSPOTS,...liveHotspots]){
+ for(const h of _hsCachedAll){
  const p=project(h.lat,h.lng);
  if(!p.visible)continue;
  if(Math.hypot(e.clientX-p.px,e.clientY-p.py)<16){hotHit=h;break;}
@@ -15266,7 +15266,7 @@ canvas.addEventListener('mousemove',e=>{
   } else if(hit){
   const c=COUNTRIES[hit];
   _ttNameEl.textContent=c.name;
-  var _hsCnt=(typeof HOTSPOTS!=='undefined'?HOTSPOTS.filter(function(h){return h.country===hit;}).length:0)+(typeof liveHotspots!=='undefined'?liveHotspots.filter(function(h){return h.country===hit;}).length:0);
+  var _hsCnt=(_hsByISOc&&_hsByISOc[hit])?_hsByISOc[hit].length:0;
   var _arcCnt=(typeof CONFLICTS!=='undefined'?CONFLICTS.filter(function(ac){return ac.from===hit||ac.to===hit;}).length:0);
   var _hsStr=_hsCnt>0?' · '+_hsCnt+'hs':'';
   var _arcStr=_arcCnt>0?' · '+_arcCnt+'arc'+(_arcCnt>1?'s':''):'';
@@ -15301,13 +15301,11 @@ canvas.addEventListener('mouseup',e=>{
  lastClickHS=hs.label;lastClickHSTime=now;lastClickHSPX=e.clientX;lastClickHSPY=e.clientY;
  if(isDbl){openHotspot(hs);}
  else{
- const tt=document.getElementById('tooltip');
+ _initTTRefs();
  var _hsTNlbl=hs.label+(hs.type?' ['+hs.type.toUpperCase()+']':'');
- document.getElementById('tt-name').textContent=_hsTNlbl;
- document.getElementById('tt-alert').textContent=(hs.severity?hs.severity.toUpperCase()+' ':'')+'Double-click to open';
- document.getElementById('tt-alert').style.color='#f59e0b';
- tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
- setTimeout(()=>{tt.style.opacity='0';},1400);
+ if(_ttNameEl)_ttNameEl.textContent=_hsTNlbl;
+ if(_ttAlertEl){_ttAlertEl.textContent=(hs.severity?hs.severity.toUpperCase()+' ':'')+'Double-click to open';_ttAlertEl.style.color='#f59e0b';}
+ if(_ttEl){_ttEl.style.left=(e.clientX+14)+'px';_ttEl.style.top=(e.clientY-10)+'px';_ttEl.style.opacity='1';setTimeout(()=>{if(_ttEl)_ttEl.style.opacity='0';},1400);}
  }
  return;
  }
@@ -15323,17 +15321,15 @@ canvas.addEventListener('mouseup',e=>{
  openCountry(h);
  } else {
  // First click — show a subtle "double-click to open" hint on tooltip
- const tt=document.getElementById('tooltip');
- document.getElementById('tt-name').textContent=COUNTRIES[h]?.name||h;
- document.getElementById('tt-alert').textContent='Double-click to open intel panel';
- document.getElementById('tt-alert').style.color='#60a5fa';
- tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-10)+'px';tt.style.opacity='1';
- setTimeout(()=>{tt.style.opacity='0';},1400);
+ _initTTRefs();
+ if(_ttNameEl)_ttNameEl.textContent=COUNTRIES[h]?.name||h;
+ if(_ttAlertEl){_ttAlertEl.textContent='Double-click to open intel panel';_ttAlertEl.style.color='#60a5fa';}
+ if(_ttEl){_ttEl.style.left=(e.clientX+14)+'px';_ttEl.style.top=(e.clientY-10)+'px';_ttEl.style.opacity='1';setTimeout(()=>{if(_ttEl)_ttEl.style.opacity='0';},1400);}
  }
  }
  }
 });
-canvas.addEventListener('mouseleave',()=>{isDragging=false;canvas.classList.remove('dragging');document.getElementById('tooltip').style.opacity='0';hoveredISO=null;});
+canvas.addEventListener('mouseleave',()=>{isDragging=false;canvas.classList.remove('dragging');_initTTRefs();if(_ttEl)_ttEl.style.opacity='0';hoveredISO=null;});
 
 // Scroll-wheel zoom — smooth animated toward cursor
 canvas.addEventListener('wheel',e=>{
@@ -17792,8 +17788,7 @@ const HS_DETAIL={
 let currentHotspot=null;
 
 function hotspotAt(sx,sy){
- const allSpots=[...HOTSPOTS,...liveHotspots];
- for(const h of allSpots){
+ for(const h of _hsCachedAll){
  const p=project(h.lat,h.lng);
  if(p.visible&&Math.hypot(sx-p.px,sy-p.py)<20)return h;
  }
