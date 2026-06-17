@@ -13663,13 +13663,14 @@ async function fetchMilitaryFlights(){
  if(result.length>0){
  liveFlights=result;
  flightsFetched=true;
- document.getElementById('lbc-flights').textContent=liveFlights.length;
+ var _flEl=document.getElementById('lbc-flights');if(_flEl)_flEl.textContent=liveFlights.length;
  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
- document.getElementById('h-status').textContent=' LIVE: '+liveFlights.length+' military aircraft — updated '+ts;
- setTimeout(()=>{document.getElementById('h-status').textContent='Double-click country · Dots are hotspots · Scroll to zoom';},5000);
+ var _hsEl=document.getElementById('h-status');
+ if(_hsEl){_hsEl.textContent=' LIVE: '+liveFlights.length+' military aircraft — updated '+ts;
+ setTimeout(()=>{var _h=document.getElementById('h-status');if(_h)_h.textContent='Double-click country · Dots are hotspots · Scroll to zoom';},5000);}
  } else {
  if(!flightsFetched){liveFlights=FALLBACK_FLIGHTS;flightsFetched=true;}
- document.getElementById('lbc-flights').textContent=(liveFlights.length||FALLBACK_FLIGHTS.length)+'*';
+ var _flEl2=document.getElementById('lbc-flights');if(_flEl2)_flEl2.textContent=(liveFlights.length||FALLBACK_FLIGHTS.length)+'*';
  }
 }
 
