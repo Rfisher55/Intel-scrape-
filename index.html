@@ -14582,26 +14582,40 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
   ctx.beginPath();ctx.moveTo(cx,cy-_chSz);ctx.lineTo(cx,cy+_chSz);ctx.stroke();
   ctx.restore();
  }
- /* Day/night terminator dots — points where sun altitude = 0 */
+ /* Day/night terminator — real solar position via window._solarSubLat/Lng */
  if(scale>150){
   var _termAlpha=Math.min(0.05,(scale-150)/3000*0.06);
   if(_termAlpha>0.005){
+   var _sunLatD=window._solarSubLat||0;
+   var _sunLngD=window._solarSubLng||0;
+   var _sunLatR=_sunLatD*Math.PI/180;
    ctx.save();
-   /* Terminator is a great circle perpendicular to sun direction */
-   for(var _tLat=-85;_tLat<=85;_tLat+=10){
-    var _tLng=-rotY*180/Math.PI-90; /* approximate sun subpoint */
-    var _tp=project(_tLat,(_tLng+360)%360-180);
-    if(_tp.visible&&_tp.z>0.08){
-     ctx.beginPath();ctx.arc(_tp.px,_tp.py,0.7,0,Math.PI*2);
-     ctx.fillStyle='rgba(255,220,140,'+_termAlpha+')';ctx.fill();
-    }
+   for(var _tLat=-80;_tLat<=80;_tLat+=5){
+    var _tLatR=_tLat*Math.PI/180;
+    var _cosH=-Math.tan(_tLatR)*Math.tan(_sunLatR);
+    if(Math.abs(_cosH)>1)continue; /* polar day or night — no terminator here */
+    var _Hdeg=Math.acos(_cosH)*180/Math.PI;
+    /* Dawn and dusk terminator points at this latitude */
+    [_sunLngD+_Hdeg,_sunLngD-_Hdeg].forEach(function(_tLng){
+     _tLng=(_tLng%360+540)%360-180;
+     var _tp=project(_tLat,_tLng);
+     if(_tp.visible&&_tp.z>0.05){
+      ctx.beginPath();ctx.arc(_tp.px,_tp.py,0.8,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,200,100,'+_termAlpha+')';ctx.fill();
+     }
+    });
    }
    ctx.restore();
   }
  }
- /* Night-side shadow — subtle dark gradient on left hemisphere */
+ /* Night-side shadow — dark gradient toward anti-solar point */
  {
-   var _nightGrad=ctx.createRadialGradient(cx-scale*0.28,cy+scale*0.1,scale*0.2,cx-scale*0.28,cy+scale*0.1,scale*1.2);
+   var _aLat=-(window._solarSubLat||0);
+   var _aLng=((window._solarSubLng||0)+180+360)%360-180;
+   var _aProj=project(_aLat,_aLng);
+   var _nsCx=_aProj.visible?_aProj.px:cx-scale*0.28;
+   var _nsCy=_aProj.visible?_aProj.py:cy+scale*0.1;
+   var _nightGrad=ctx.createRadialGradient(_nsCx,_nsCy,scale*0.15,cx,cy,scale);
    _nightGrad.addColorStop(0,'rgba(0,0,10,0.04)');
    _nightGrad.addColorStop(0.6,'rgba(0,0,12,0.05)');
    _nightGrad.addColorStop(1,'rgba(0,0,12,0.35)');
@@ -14614,9 +14628,12 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
      ctx.fillStyle='rgba(15,15,30,1)';ctx.fillRect(cx-scale,cy-scale,scale*2,scale*2);
      ctx.restore();
    }
-   /* Sunlit hemisphere warm tint */
+   /* Sunlit hemisphere warm tint from solar sub-point */
+   var _sProj=project(window._solarSubLat||0,window._solarSubLng||0);
+   var _sCx=_sProj.visible?_sProj.px:cx-scale*0.3;
+   var _sCy=_sProj.visible?_sProj.py:cy-scale*0.3;
    ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=0.04;
-   var _sunGrd=ctx.createRadialGradient(cx-scale*0.3,cy-scale*0.3,0,cx,cy,scale);
+   var _sunGrd=ctx.createRadialGradient(_sCx,_sCy,0,cx,cy,scale);
    _sunGrd.addColorStop(0,'rgba(255,220,160,1)');_sunGrd.addColorStop(1,'rgba(255,220,160,0)');
    ctx.fillStyle=_sunGrd;ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fill();
    ctx.restore();
@@ -21107,7 +21124,13 @@ function renderAlertList(){
  </div>`).join('');
 }
 
+const _alertDedup={};
 function _pushAlert(text,critical){
+ /* Deduplicate: same text within 30 minutes = skip */
+ const _now=Date.now();
+ const _key=text.slice(0,60);
+ if(_alertDedup[_key]&&_now-_alertDedup[_key]<30*60*1000)return;
+ _alertDedup[_key]=_now;
  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' UTC';
  alertQueue.push({text,critical:!!critical,time:ts,read:alertModalOpen});
  if(!alertModalOpen){
@@ -21139,7 +21162,10 @@ async function pollWatchlistItem(item){
  const avgTone=tones.length?tones.reduce((s,t)=>s+t,0)/tones.length:0;
  const isCritical=avgTone<-5||arts.length>=3;
  if(arts.length>=2||avgTone<-4){
+ const _wlKey=item+'|'+(arts[0].url||arts[0].title||'');
+ if(!_alertDedup[_wlKey.slice(0,60)]){
  _pushAlert('['+item.toUpperCase()+'] '+arts[0].title,isCritical);
+ }
  }
  }
  watchlistLastCheck[item]=Date.now();
@@ -22082,6 +22108,7 @@ const LEADER_MONITOR=[
  {name:'Modi',country:'IND',iso:'IND'},
 ];
 let _leaderMonitorActive=false,_leaderLastCheck=0;
+const _leaderAlertSeen={}; /* dedup: key = leader+url, value = timestamp */
 async function runLeaderMonitor(){
  const now=Date.now();
  if(now-_leaderLastCheck<15*60*1000)return;
@@ -22093,11 +22120,18 @@ async function runLeaderMonitor(){
  const d=await r.json();
  return{leader:l,articles:(d.articles||[])};
  }));
+ /* Expire dedup cache entries older than 4 hours */
+ const _expiry=now-4*60*60*1000;
+ Object.keys(_leaderAlertSeen).forEach(function(k){if(_leaderAlertSeen[k]<_expiry)delete _leaderAlertSeen[k];});
  results.forEach(function(res){
  if(res.status!=='fulfilled'||!res.value||!res.value.articles.length)return;
  const{leader,articles}=res.value;
  if(articles.length>=2){
- const title=articles[0].title||'';
+ const art=articles[0];
+ const dedupKey=leader.name+'|'+(art.url||art.title||'');
+ if(_leaderAlertSeen[dedupKey])return; /* already alerted for this article */
+ _leaderAlertSeen[dedupKey]=now;
+ const title=art.title||'';
  _pushAlert('[LEADER MONITOR] '+leader.name+' — '+title.slice(0,80),false);
  }
  });
@@ -38691,6 +38725,18 @@ setTimeout(function(){
  detectNewsSurges();
  setInterval(detectNewsSurges,20*60*1000);
 },2000);
+/* Solar sub-point: recomputed every minute; drives terminator + night shadow */
+(function _initSolar(){
+ function _calcSolar(){
+  var n=new Date();
+  var doy=Math.round((n-new Date(n.getFullYear(),0,0))/86400000);
+  window._solarSubLat=-23.45*Math.cos(2*Math.PI*(doy+10)/365);
+  var utcH=n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600;
+  window._solarSubLng=(180-utcH*15+540)%360-180;
+ }
+ _calcSolar();
+ setInterval(_calcSolar,60000);
+})();
 fetchSpaceWeather();
 // Live ticker update every 10 minutes
 async function fetchTickerLive(){
