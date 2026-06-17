@@ -14202,6 +14202,8 @@ function globe_focusVIP(lat,lng,name,status){
 var _drawNow=0; /* frame timestamp — set once per RAF tick, shared across animate()+draw() */
 /* Pre-computed rotation trig — updated once per RAF tick before draw(), reused by every project() call */
 var _cosRotX=1,_sinRotX=0,_cosRotY=1,_sinRotY=0;
+/* Drag velocity magnitude — module-level so drawArcs() and other draw fns can read it */
+var _rotSpd=0;
 /* Gradient cache — gradients that only change with scale/cx/cy/defcon are reused across frames */
 var _grdC={k:'',sphere:null,atmo:null,spec:null,limb:null,limbDark:null,term:null};
 function draw(){
@@ -14278,8 +14280,7 @@ function draw(){
  var _actLC=0;for(var _alK in activeLayers)if(activeLayers[_alK])_actLC++;
  if(_actLC>=3) _gAlpha=0.025;
  else if(_actLC>=1) _gAlpha=0.04;
- /* Pulse grid brightness with rotation velocity, fade at high zoom */
- var _rotSpd=Math.abs(dragVelX)+Math.abs(dragVelY);
+ /* Pulse grid brightness with rotation velocity (_rotSpd updated in animate() before draw()) */
  var _gridZoomFade=scale>800?Math.max(0,1-(scale-800)/1200):1;
  _gAlpha=Math.min(0.18,_gAlpha+_rotSpd*12)*_gridZoomFade;
  ctx.strokeStyle='rgba(90,110,150,'+_gAlpha.toFixed(3)+')';ctx.lineWidth=.5;
@@ -15147,6 +15148,7 @@ function animate(){
  }
  }
  _cosRotX=Math.cos(rotX);_sinRotX=Math.sin(rotX);_cosRotY=Math.cos(rotY);_sinRotY=Math.sin(rotY);
+ _rotSpd=Math.abs(dragVelX)+Math.abs(dragVelY);
  try{draw();}catch(e){console.error('draw:',e);}
  requestAnimationFrame(animate);
 }
