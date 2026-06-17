@@ -12556,7 +12556,7 @@ const ARC_COLORS = {
 };
 
 const ALERT_COLORS={CRITICAL:'rgba(185,28,28,.9)',HIGH:'rgba(220,38,38,.82)',ELEVATED:'rgba(202,138,4,.80)',MEDIUM:'rgba(234,88,12,.78)',GUARDED:'rgba(37,99,235,.72)',LOW:'rgba(22,163,74,.72)',MINIMAL:'rgba(15,118,110,.65)'};
-const ALERT_SEV={critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'};
+const ALERT_SEV={critical:'#ef4444',high:'#f97316',medium:'#fbbf24',low:'#22c55e'};
 const ALERT_BADGE={
  CRITICAL:{bg:'#7f1d1d',color:'#fca5a5',border:'#ef4444'},
  HIGH:    {bg:'#7c2d12',color:'#fdba74',border:'#f97316'},
@@ -15019,7 +15019,7 @@ function drawNavalAssets(){
  const list=selectedISO?NAVAL_ASSETS.filter(n=>n.country===selectedISO||n.country==='NATO'):NAVAL_ASSETS;
  for(const n of list){
  const p=project(n.lat,n.lng);if(!p.visible)continue;
- const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(34,197,94',low:'rgba(59,130,246'}[n.severity]||'rgba(34,197,94';
+ const sev={critical:'rgba(239,68,68',high:'rgba(249,115,22',medium:'rgba(251,191,36',low:'rgba(34,197,94'}[n.severity]||'rgba(34,197,94';
  ctx.beginPath();ctx.arc(p.px,p.py,11,0,Math.PI*2);
  ctx.strokeStyle=`${sev},.22)`;ctx.lineWidth=1;ctx.stroke();
  ctx.beginPath();ctx.arc(p.px,p.py,5,0,Math.PI*2);
@@ -17347,7 +17347,7 @@ function openCountry(iso){
  b.textContent=c.alertLevel;b.style.background=badge.bg;b.style.color=badge.color;b.style.borderColor=badge.border;
  b.style.animation='none';
  /* Alert-level accent on panel left border */
- var _alertColors2={'CRITICAL':'#ef4444','HIGH':'#f97316','ELEVATED':'#fbbf24','MEDIUM':'#f59e0b','LOW':'#22c55e','MINIMAL':'#14b8a6','GUARDED':'#3b82f6'};
+ var _alertColors2={'CRITICAL':'#ef4444','HIGH':'#f97316','ELEVATED':'#fbbf24','MEDIUM':'#fbbf24','LOW':'#22c55e','MINIMAL':'#14b8a6','GUARDED':'#3b82f6'};
  var _panelEl=document.getElementById('panel');
  if(_panelEl) _panelEl.style.borderLeftColor=(_alertColors2[c.alertLevel]||'#3b82f6');
  // Summary — CIA briefing format
@@ -17742,7 +17742,7 @@ function hotspotAt(sx,sy){
 
 function openHotspot(h){
  currentHotspot=h;
- const sevColor={critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'};
+ const sevColor={critical:'#ef4444',high:'#f97316',medium:'#fbbf24',low:'#22c55e'};
  const sevBg={critical:'rgba(127,29,29,.5)',high:'rgba(124,45,18,.5)',medium:'rgba(120,53,15,.5)',low:'rgba(20,83,45,.5)'};
  document.getElementById('hs-type').textContent=HS_TYPE_LABELS[h.type]||h.type.replace(/_/g,' ').toUpperCase();
  document.getElementById('hs-type').style.color=sevColor[h.severity]||'#94a3b8';
@@ -18274,7 +18274,7 @@ function buildIntelBrief(data){
 function openConflictBrief(cf){
  const fromC=COUNTRIES[cf.from],toC=COUNTRIES[cf.to];
  const fromIntel=INTEL[cf.from]||{}, toIntel=INTEL[cf.to]||{};
- const sevColor={critical:'#ef4444',high:'#f97316',medium:'#f59e0b',low:'#22c55e'}[cf.severity]||'#60a5fa';
+ const sevColor={critical:'#ef4444',high:'#f97316',medium:'#fbbf24',low:'#22c55e'}[cf.severity]||'#60a5fa';
  const news=[];
  if(fromIntel.news) news.push(...fromIntel.news.slice(0,2));
  if(toIntel.news) news.push(...toIntel.news.slice(0,2));
