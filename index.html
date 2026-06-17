@@ -17948,8 +17948,10 @@ async function refreshIntel(){
  const btn=document.getElementById('refresh-btn');
  btn.textContent='↻ …';btn.style.color='#22c55e';btn.disabled=true;
  document.getElementById('h-status').textContent='◌ MASTER REFRESH — syncing all intelligence feeds…';
- /* Force-bust GDELT hotspot cache so master refresh always fetches fresh data */
+ /* Force-bust all GDELT caches so master refresh always fetches fresh data */
  window._gdeltHotspotCache=null;
+ if(typeof _gdeltFetchCache!=='undefined')Object.keys(_gdeltFetchCache).forEach(function(k){delete _gdeltFetchCache[k];});
+ _rwCrisisCache=null;
  const tasks=[
  fetchLiveHotspots(),
  fetchMilitaryFlights(),
@@ -20760,15 +20762,18 @@ async function renderCISACyberPanel(container){
 }
 
 // ── RELIEFWEB CRISIS INTELLIGENCE ────────────────────────────────────────────
+let _rwCrisisCache=null,_rwCrisisCacheTs=0;
 async function fetchReliefWebCrises(){
+ const now=Date.now();
+ if(_rwCrisisCache&&now-_rwCrisisCacheTs<10*60*1000)return _rwCrisisCache;
  try{
  const r=await fetch(
  'https://api.reliefweb.int/v1/disasters?appname=intelglobe&limit=20&sort[]=date:desc&fields[include][]=name&fields[include][]=status&fields[include][]=country&fields[include][]=date&fields[include][]=glide&fields[include][]=type',
  {signal:AbortSignal.timeout(10000)}
  );
- if(!r.ok)return[];
+ if(!r.ok)return _rwCrisisCache||[];
  const d=await r.json();
- return(d.data||[]).map(function(item){
+ _rwCrisisCache=(d.data||[]).map(function(item){
  const f=item.fields||{};
  const country=(f.country&&f.country[0]&&f.country[0].name)||'Unknown';
  const iso3=(f.country&&f.country[0]&&f.country[0].iso3)||'';
@@ -20777,7 +20782,9 @@ async function fetchReliefWebCrises(){
  const date=(f.date&&f.date.created)||'';
  return{name:f.name||'Unknown',country,iso3,type,status,date,glide:f.glide||'',id:item.id};
  });
- }catch{return[];}
+ _rwCrisisCacheTs=now;
+ return _rwCrisisCache;
+ }catch{return _rwCrisisCache||[];}
 }
 
 async function fetchReliefWebReports(iso3){
@@ -35808,10 +35815,15 @@ document.addEventListener('DOMContentLoaded',function(){
 // ===== END PHASE 53 =====
 
 // ===== GDELT FETCH UTILITY =====
+var _gdeltFetchCache={};
 async function _gdeltFetch(query, targetId, retries){
   retries = retries||2;
   var el = document.getElementById(targetId);
   if(!el) return;
+  /* Serve cached HTML if fresh (5 min TTL) */
+  var _cacheKey=query.slice(0,80);
+  var _cached=_gdeltFetchCache[_cacheKey];
+  if(_cached&&Date.now()-_cached.ts<5*60*1000){el.innerHTML=_cached.html;return;}
   el.innerHTML = '<div style="color:#334155;font-size:9px;padding:4px 0;">Fetching live intelligence...</div>';
   var q = encodeURIComponent(query);
   var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=72H&format=json';
@@ -35821,16 +35833,18 @@ async function _gdeltFetch(query, targetId, retries){
       var d = await r.json();
       var arts = (d&&d.articles)||[];
       if(arts.length){
-        el.innerHTML = arts.map(function(a){
+        var _html = arts.map(function(a){
           var ageStr=a.seendate?a.seendate.slice(0,8):'';
           return '<div style="border-bottom:1px solid rgba(30,58,95,0.35);padding:5px 0;">'+
             '<a href="'+a.url+'" target="_blank" style="color:#cbd5e1;font-size:7.5px;text-decoration:none;line-height:1.5;display:block;margin-bottom:2px;">'+a.title+'</a>'+
             '<div style="color:#475569;font-size:6.5px;letter-spacing:.06em;">'+a.domain+' &#x2014; '+ageStr+'</div>'+
           '</div>';
         }).join('');
+        el.innerHTML=_html;
+        _gdeltFetchCache[_cacheKey]={html:_html,ts:Date.now()};
         return;
       }
-      // Empty result -- try broader query on retry
+      /* Empty result — try broader query on retry */
       if(attempt < retries){
         q = encodeURIComponent(query.split(' ').slice(0,3).join(' '));
         url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&timespan=168H&format=json';
