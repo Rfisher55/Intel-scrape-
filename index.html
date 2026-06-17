@@ -14146,7 +14146,7 @@ function renderSocialFeed(){
  const locColor=isKIA?'#6b7280':'#e2e8f0';
  parts.push(`<div class="sf-item vip" onclick="globe_focusVIP(${v.lat},${v.lng},'${safeN}','${safeS}')" style="${cardBg?'background:'+cardBg+';':''}" title="${isKIA?'Last known location — ELIMINATED':'Click: globe rotates + satellite opens at exact location'}">
  <div class="sf-flight-row">
- <span class="sf-callsign" style="color:${nameColor}">${isKIA?' ':' ♦ '}${v.name}</span>
+ <span class="sf-callsign" style="color:${nameColor}">${isKIA?' ':' ♦ '}${_esc(v.name)}</span>
  <span style="font-size:8px;color:${confColor};letter-spacing:.08em">${confLabel}</span>
  </div>
  <div style="font-size:9px;color:${roleColor};letter-spacing:.1em;margin-bottom:5px">${_esc(v.role)} · ${_esc(v.country)}</div>
@@ -17804,7 +17804,7 @@ function renderNewsTab(iso,items,isLive){
  }
  const catColor={'MILITARY':'#ef4444','GENERAL':'#60a5fa','OSINT':'#22c55e'};
  const html=items.map(n=>{
- if(typeof n==='string')return`<div class="news-item"><p class="news-title">${n}</p></div>`;
+ if(typeof n==='string')return`<div class="news-item"><p class="news-title">${_esc(n)}</p></div>`;
  const age=n.published?timeAgo(n.published):'';
  const cat=n.category||'';
  const catBadge=cat?`<span style="font-size:8px;padding:1px 5px;border-radius:2px;background:rgba(30,58,95,.5);color:${catColor[cat]||'#94a3b8'};letter-spacing:.1em;margin-left:6px">${cat}</span>`:'';
@@ -34757,7 +34757,7 @@ async function _checkLiveFeeds(){
   }catch(e){var el4=document.getElementById('lfs-firms');el4.textContent='FIRMS OFFLINE';el4.style.color='#ef4444';}
   // Vessel track indicator
   var el5=document.getElementById('lfs-vessel');
-  el5.textContent='AIS RELAY ACTIVE';el5.style.color='#22c55e';
+  if(el5){el5.textContent='AIS RELAY ACTIVE';el5.style.color='#22c55e';}
 }
 _checkLiveFeeds();
 setInterval(_checkLiveFeeds,120000);
