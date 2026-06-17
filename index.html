@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Intel Globe"/>
-<title>Intel Globe — Middle East</title>
+<title>Intel Globe — Global OSINT Platform</title>
 <!-- TopoJSON loaded dynamically only after globe is running -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -5312,7 +5312,7 @@ button{border-radius:2px!important}
 .p60scs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
 .p60scs-title{font-size:18px;font-weight:900;letter-spacing:.3em;color:#ef4444;}
 .p60scs-subtitle{font-size:9px;color:#64748b;letter-spacing:.15em;margin-top:2px;}
-.p60scs-close{cursor:pointer;font-size:10px;color:#ef4444;border:1px solid rgba(239,68,68,0.6);padding:6px 16px;letter-spacing:.18em;font-family:"Courier New",monospace;background:rgba(10,15,35,0.95);}
+.p60scs-close{cursor:pointer;font-size:10px;color:#ef4444;border:1px solid rgba(239,68,68,0.6);padding:6px 16px;letter-spacing:.18em;font-family:var(--mono);background:rgba(10,15,35,0.95);}
 .p60scs-close:hover{color:#ef4444;border-color:#ef4444;}
 .p60scs-section-title{font-size:10px;font-weight:700;letter-spacing:.2em;color:#94a3b8;margin-bottom:10px;margin-top:18px;border-bottom:1px solid #1e293b;padding-bottom:6px;}
 .p60scs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:14px;margin-bottom:10px;}
@@ -5982,7 +5982,7 @@ div[id$="-overlay"].open, div[id$="-module"].open { display: flex; }
   background: #22c55e; box-shadow: 0 0 6px #22c55e;
 }
 .mode-time {
-  font-size: 10px; color: #1e3a5f; letter-spacing: .1em;
+  font-size: 10px; color: #334155; letter-spacing: .1em;
   min-width: 75px; text-align: right;
 }
 
@@ -7718,6 +7718,7 @@ a:hover { color: #bfdbfe !important; }
     <div class="mode-stat" style="margin-left:8px;border-left:1px solid rgba(30,58,95,0.4);padding-left:10px;"><span style="color:#ef4444;font-size:8px;">&#x25CF;</span><span style="color:#475569;font-size:6.5px;letter-spacing:.12em;margin-left:4px;">LIVE</span></div>
     <div class="mode-threat" id="mbar-threat">&#x2691; ELEVATED</div>
     <div class="mode-live"><div class="mode-live-dot"></div>LIVE</div>
+    <div id="mbar-refresh" style="font-size:7px;color:#1e3a5f;letter-spacing:.1em;text-align:right;min-width:48px;line-height:1.3;">GDELT<br><span id="mbar-refresh-cd" style="color:#334155;font-size:8px;">--:--</span></div>
     <div class="mode-time" id="mbar-time"></div>
   </div>
 </div>
@@ -7940,10 +7941,10 @@ a:hover { color: #bfdbfe !important; }
     <div id="intel-live-stream" style="margin:14px 10px 12px;border:1px solid rgba(30,58,138,0.35);background:rgba(2,6,18,0.7);padding:14px 18px 12px;flex-shrink:0;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
         <span style="color:#ef4444;font-size:7px;letter-spacing:.15em;">&#x25CF; LIVE</span>
-        <span style="color:#e2e8f0;font-size:9px;letter-spacing:.22em;font-family:Courier New,monospace;">GLOBAL INTELLIGENCE STREAM</span>
-        <span style="color:#475569;font-size:7px;margin-left:auto;font-family:Courier New,monospace;" id="ils-updated"></span>
+        <span style="color:#e2e8f0;font-size:9px;letter-spacing:.22em;font-family:var(--mono);">GLOBAL INTELLIGENCE STREAM</span>
+        <span style="color:#475569;font-size:7px;margin-left:auto;font-family:var(--mono);" id="ils-updated"></span>
       </div>
-      <div id="ils-feed" style="columns:4 280px;column-gap:18px;max-height:180px;overflow:hidden;font-family:Courier New,monospace;font-size:7.5px;color:#94a3b8;line-height:1.75;">
+      <div id="ils-feed" style="columns:4 280px;column-gap:18px;max-height:180px;overflow:hidden;font-family:var(--mono);font-size:7.5px;color:#94a3b8;line-height:1.75;">
         <span style="color:#334155;font-size:7.5px;letter-spacing:.08em;">CONNECTING TO LIVE INTELLIGENCE FEED...</span>
       </div>
     </div>
@@ -18017,6 +18018,7 @@ async function fetchLiveHotspots(){
  if(fresh.length>0){
    liveHotspots=fresh.slice(0,80);
    window._gdeltHotspotCache={ts:Date.now(),data:liveHotspots};
+   window._lastHotspotFetchT=Date.now();
    var _mbH=document.getElementById('mbar-hotspots');if(_mbH)_mbH.textContent=liveHotspots.length;
    var _mbC=document.getElementById('mbar-conflicts');if(_mbC&&typeof CONFLICTS!=='undefined')_mbC.textContent=CONFLICTS.length+liveHotspots.filter(function(h){return h.type==='active_conflict';}).length;
    var _hStatEl=document.getElementById('h-status');
@@ -18061,6 +18063,7 @@ async function _fetchGDELTDocFallback(){
  if(fresh.length){
    liveHotspots=fresh.slice(0,30);
    window._gdeltHotspotCache={ts:Date.now()-240000,data:liveHotspots};
+   window._lastHotspotFetchT=Date.now();
    var _mbH2=document.getElementById('mbar-hotspots');if(_mbH2)_mbH2.textContent=liveHotspots.length+'*';
    var _el=document.getElementById('h-status');
    if(_el){
@@ -39447,7 +39450,7 @@ function P62_renderGeoRiskAnalysis(){
     var col=r.tier==='CRITICAL'?'#ef4444':r.tier==='VERY HIGH'?'#f97316':'#eab308';
     return '<tr><td style="color:#e2e8f0;font-weight:700;">'+r.c+'</td><td style="text-align:center;"><span style="color:'+col+';font-weight:900;">'+r.score+'</span></td><td style="color:'+col+';font-weight:700;">'+r.tier+'</td><td style="color:#94a3b8;font-size:7.5px;">'+r.note+'</td></tr>';
   }).join('');
-  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;margin-bottom:20px;">'+
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:8px;margin-bottom:20px;">'+
     '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">COUNTRY/ZONE</th><th style="color:#475569;padding:6px 8px;">RISK SCORE</th><th style="text-align:left;color:#475569;padding:6px 8px;">TIER</th><th style="text-align:left;color:#475569;padding:6px 8px;">INTELLIGENCE NOTE</th></tr></thead>'+
     '<tbody>'+rows+'</tbody></table>'+
     '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #0ea5e9;border-radius:6px;padding:14px;margin-bottom:14px;">'+
@@ -39805,7 +39808,7 @@ function P64_renderRefugeeAnalysis(){
       '<td style="color:#94a3b8;font-size:7.5px;padding:5px;">'+r.note+'</td></tr>';
   }).join('');
   el.innerHTML='<div style="font-size:9px;color:#475569;margin-bottom:12px;">SOURCE: UNHCR / IOM / OCHA — data current as of 2024-2025</div>'+
-    '<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;margin-bottom:20px;">'+
+    '<table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:8px;margin-bottom:20px;">'+
     '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">CRISIS ZONE</th><th style="color:#475569;padding:6px;">TOTAL DISP</th><th style="color:#475569;padding:6px;">REFUGEES</th><th style="color:#475569;padding:6px;">IDPs</th><th style="color:#475569;padding:6px;">TREND</th><th style="text-align:left;color:#475569;padding:6px;">NOTE</th></tr></thead>'+
     '<tbody>'+rows+'</tbody></table>'+
     '<div style="background:rgba(15,23,42,0.75);border:1px solid #1e293b;border-top:3px solid #0ea5e9;border-radius:6px;padding:14px;">'+
@@ -40749,7 +40752,7 @@ function P66_renderSOFAnalysis(){
       '<td style="color:#94a3b8;font-size:7px;padding:5px;">'+r.mission+'</td>'+
       '<td style="color:#94a3b8;font-size:7.5px;padding:5px;">'+r.note+'</td></tr>';
   }).join('');
-  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;margin-bottom:20px;">'+
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:8px;margin-bottom:20px;">'+
     '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">NATION</th><th style="text-align:left;color:#475569;padding:6px;">UNIT</th><th style="text-align:left;color:#475569;padding:6px;">MISSION PROFILE</th><th style="text-align:left;color:#475569;padding:6px;">NOTES</th></tr></thead>'+
     '<tbody>'+rows+'</tbody></table>'+
     '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;">'+
@@ -40801,7 +40804,7 @@ function P66_renderICMapAnalysis(){
       '<td style="text-align:center;color:#94a3b8;padding:5px;">'+r.personnel+'</td>'+
       '<td style="text-align:center;color:#94a3b8;padding:5px;">'+r.budget+'</td></tr>';
   }).join('');
-  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;margin-bottom:20px;">'+
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:8px;margin-bottom:20px;">'+
     '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">AGENCY</th><th style="text-align:left;color:#475569;padding:6px;">PRIMARY FOCUS</th><th style="color:#475569;padding:6px;">PERSONNEL</th><th style="color:#475569;padding:6px;">BUDGET</th></tr></thead>'+
     '<tbody>'+rows+'</tbody></table>'+
     '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;">'+
@@ -40852,7 +40855,7 @@ function P66_renderArmsTreatiesAnalysis(){
       '<td style="padding:5px;"><span style="color:'+col+';font-weight:700;">'+t.status+'</span></td>'+
       '<td style="color:#94a3b8;font-size:7.5px;padding:5px;">'+t.detail+'</td></tr>';
   }).join('');
-  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;">'+
+  el.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:8px;">'+
     '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="text-align:left;color:#475569;padding:6px 8px;">TREATY</th><th style="text-align:left;color:#475569;padding:6px;">PARTIES</th><th style="text-align:left;color:#475569;padding:6px;">STATUS</th><th style="text-align:left;color:#475569;padding:6px;">DETAIL</th></tr></thead>'+
     '<tbody>'+rows+'</tbody></table>';
 }
@@ -40979,7 +40982,7 @@ function P66_renderPowerIdxAnalysis(){
       '<td style="color:#94a3b8;font-size:7.5px;padding:5px;">'+p.note+'</td></tr>';
   }).join('');
   el.innerHTML='<div style="font-size:9px;color:#475569;margin-bottom:12px;">COMPOSITE NATIONAL POWER INDEX (0-100) -- Military + Economic + Diplomatic + Soft Power weighted composite</div>'+
-    '<table style="width:100%;border-collapse:collapse;font-family:\'Courier New\',monospace;font-size:8px;">'+
+    '<table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:8px;">'+
     '<thead><tr style="border-bottom:1px solid #1e293b;"><th style="color:#475569;padding:6px;">RK</th><th style="text-align:left;color:#475569;padding:6px 8px;">COUNTRY</th><th style="color:#ef4444;padding:6px;">MIL</th><th style="color:#22c55e;padding:6px;">ECON</th><th style="color:#3b82f6;padding:6px;">DIPLO</th><th style="color:#f59e0b;padding:6px;">SOFT</th><th style="color:#7dd3fc;padding:6px;">SCORE</th><th style="text-align:left;color:#475569;padding:6px;">NOTES</th></tr></thead>'+
     '<tbody>'+rows+'</tbody></table>';
 }
@@ -42202,6 +42205,20 @@ function _updateModeBarTime() {
 }
 setInterval(_updateModeBarTime, 1000);
 _updateModeBarTime();
+
+// ── GDELT refresh countdown ──
+window._lastHotspotFetchT = Date.now();
+var _HOTSPOT_INTERVAL_MS = 5 * 60 * 1000;
+setInterval(function(){
+  var cd = document.getElementById('mbar-refresh-cd');
+  if(!cd) return;
+  var elapsed = Date.now() - (window._lastHotspotFetchT || Date.now());
+  var rem = Math.max(0, _HOTSPOT_INTERVAL_MS - elapsed);
+  var m = Math.floor(rem / 60000);
+  var s = Math.floor((rem % 60000) / 1000);
+  cd.textContent = m + ':' + String(s).padStart(2, '0');
+  cd.style.color = rem < 30000 ? '#22c55e' : '#334155';
+}, 1000);
 
 // ── Sync AI data to dashboard ──
 function _updateDashAI() {
@@ -45217,11 +45234,11 @@ var _panSigStr=_panSigCnt>0?' &#x2022; '+_panSigCnt+'sig':'';return '<div style=
         +'<div id="bnp-feed" style="max-height:160px;overflow-y:auto;font-size:7px;color:#64748b;line-height:1.6;"></div>'
         +'<div style="margin-top:10px;display:flex;gap:6px;">'
           +'<button onclick="document.getElementById(\'brain-node-panel\').style.display=\'none\';" '
-          +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">&#x2715; ESC</button>'
+          +'style="flex:1;background:none;border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:var(--mono);">&#x2715; ESC</button>'
           +'<button onclick="(function(){if(typeof _BrainEngine!==\'undefined\'&&_BrainEngine.fireCluster){_BrainEngine.fireCluster('+node.ci+');}})()" '
-          +'style="flex:1;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.35);color:#f97316;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">&#x25CF; FIRE</button>'
+          +'style="flex:1;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.35);color:#f97316;font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:var(--mono);">&#x25CF; FIRE</button>'
           +'<button onclick="(function(){var c=window._brain_cam;if(c){if(c.tx!==undefined){c.tx='+node.wx+';c.ty='+node.wy+';c.tz=Math.min(10000000,c.zoom*4.5);}else{c.x='+node.wx+';c.y='+node.wy+';c.zoom=Math.min(10000000,c.zoom*4.5);}if(typeof _BrainEngine!==\'undefined\'&&_BrainEngine.fireCluster)_BrainEngine.fireCluster('+node.ci+');}})();" '
-          +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:\'Courier New\';">DIVE &#x25B6; '+Math.round(cam.zoom*4.5)+'x</button>'
+          +'style="flex:2;background:rgba('+cl.r+',0.08);border:1px solid rgba('+cl.r+',0.3);color:'+cl.c+';font-size:7px;letter-spacing:.1em;padding:4px 0;cursor:pointer;font-family:var(--mono);">DIVE &#x25B6; '+Math.round(cam.zoom*4.5)+'x</button>'
         +'</div>'
       +'</div>';
     p.style.display='block';
@@ -45921,7 +45938,7 @@ function filterSIGINT(query){
 </div>
 <div id="newsticker">
  <div id="ticker-label">&#x25BA; LIVE INTEL</div>
- <div id="ticker-track"><div id="ticker-inner"><div class="tki"><span class="tki-src">SYSTEM</span>Initializing live intelligence feed collection...</div></div></div>
+ <div id="bt-ticker-track"><div id="ticker-inner"><div class="tki"><span class="tki-src">SYSTEM</span>Initializing live intelligence feed collection...</div></div></div>
 </div>
 <button id="alliance-btn" onclick="toggleAllianceLayer()">◆ ALLIANCES</button>
 <div class="alliance-legend" id="alliance-legend">
