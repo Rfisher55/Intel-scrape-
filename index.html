@@ -14143,7 +14143,6 @@ function renderSocialFeed(){
  const cardBg=isKIA?'rgba(30,15,15,.5)':'';
  const nameColor=isKIA?'#6b7280':'#e2e8f0';
  const roleColor=isKIA?'#4b5563':'#a855f7';
- const locIcon=isKIA?'':'';
  const locColor=isKIA?'#6b7280':'#e2e8f0';
  parts.push(`<div class="sf-item vip" onclick="globe_focusVIP(${v.lat},${v.lng},'${safeN}','${safeS}')" style="${cardBg?'background:'+cardBg+';':''}" title="${isKIA?'Last known location — ELIMINATED':'Click: globe rotates + satellite opens at exact location'}">
  <div class="sf-flight-row">
@@ -14151,7 +14150,7 @@ function renderSocialFeed(){
  <span style="font-size:8px;color:${confColor};letter-spacing:.08em">${confLabel}</span>
  </div>
  <div style="font-size:9px;color:${roleColor};letter-spacing:.1em;margin-bottom:5px">${v.role} · ${v.country}</div>
- <div style="font-size:11px;font-weight:600;color:${locColor};margin-bottom:5px;letter-spacing:.04em">${locIcon} ${v.status}</div>
+ <div style="font-size:11px;font-weight:600;color:${locColor};margin-bottom:5px;letter-spacing:.04em">${v.status}</div>
  ${(!isKIA&&v.headline)?`<div style="font-size:9px;color:var(--dim);line-height:1.45;margin-bottom:4px;border-left:2px solid rgba(168,85,247,.45);padding-left:6px;cursor:pointer" onclick="event.stopPropagation();window.open('${v.sourceUrl}','_blank')">${v.headline.slice(0,130)}${v.headline.length>130?'…':''}</div>`:''}
  <div class="sf-meta">
  <span style="color:var(--muted);font-size:8px">${v.sourceDomain||'GDELT/OSINT'}</span>
@@ -17460,9 +17459,16 @@ async function fetchCountryLiveThreat(iso){
  const nearby=seismicData.filter(e=>typeof _haversineKm==='function'?_haversineKm(e.lat,e.lng,c.lat,c.lng)<500:false);
  if(nearby.length>0){
  const maxMag=Math.max(...nearby.map(e=>e.mag));
- if(maxMag>=6.0){score=Math.min(score+8,83);factors.push('M'+maxMag.toFixed(1)+' earthquake in region');}
+ const magBoost=maxMag>=7.5?15:maxMag>=7.0?12:maxMag>=6.5?10:maxMag>=6.0?8:maxMag>=5.0?4:2;
+ score=Math.min(score+magBoost,83);
+ factors.push('M'+maxMag.toFixed(1)+' earthquake in region');
  const susp=nearby.filter(e=>e.suspicious);
- if(susp.length){score=Math.min(score+15,95);factors.push('SUSPICIOUS SEISMIC — POSSIBLE NUCLEAR TEST');}
+ if(susp.length){
+ const suspMag=Math.max(...susp.map(e=>e.mag));
+ const suspBonus=Math.max(0,7-magBoost);
+ score=Math.min(score+suspBonus,95);
+ factors.push('SUSPICIOUS SEISMIC — POSSIBLE NUCLEAR TEST (M'+suspMag.toFixed(1)+')');
+ }
  sources.push('USGS');
  }
  }
@@ -17503,7 +17509,9 @@ function intelPop(title, category, detail, badges, contextISO){
  badges: (badges||[]).map(b=>({text:b,style:'amber'})),
  detail: detail||'No additional data.'
  });
- document.getElementById('track-modal').style.display='flex';
+ const _tm=document.getElementById('track-modal');
+ if(!_tm)return;
+ _tm.style.display='flex';
  // ── Drill-down action buttons ──────────────────────────────────────────────
  const btns=document.getElementById('tm-intel-btns');
  if(btns){
@@ -18268,7 +18276,8 @@ function buildIntelBrief(data){
  }).join('');
  } else { btnsEl.innerHTML=''; }
 
- document.getElementById('track-modal').style.display='flex';
+ const _tm2=document.getElementById('track-modal');
+ if(_tm2)_tm2.style.display='flex';
 }
 
 function openConflictBrief(cf){
@@ -22163,7 +22172,7 @@ function _renderICBrief(){
  const tier=c.intel_priority==='TIER 1'?'<span class="icb-tier t1">TIER 1</span>':'<span class="icb-tier t2">TIER 2</span>';
  const gaps=(c.intel_gaps||[]).map(function(g){return'<div class="icb-gap-item">&#x25B8; '+g+'</div>';}).join('');
  const concern=c.primary_concern?'<div class="icb-concern">&#x26A0; '+c.primary_concern+'</div>':'';
- const note=c.cia_note?'<div class="icb-note">'+c.cia_note.slice(0,300)+(c.cia_note.length>300?'...':'')+'</div>':'';
+ const note=c.cia_note?'<div class="icb-note">'+c.cia_note.slice(0,300)+(c.cia_note.length>300?'…':'')+'</div>':'';
  return`<div class="icb-item">
  <div class="icb-item-hdr">${tier}<span class="icb-cname">${(c.name||iso).toUpperCase()}</span></div>
  ${concern}${note}
@@ -27177,6 +27186,7 @@ function openCoupWatch(){
  _coupHotspots.push({lat:c.lat,lng:c.lng,label:c.country+' RISK:'+c.risk,color:col,_coup:true,size:5});
  });
  if(typeof liveHotspots!=='undefined'){
+ liveHotspots=liveHotspots.filter(function(h){return!h._coup;});
  _coupHotspots.forEach(function(h){liveHotspots.push(h);});
  }
 }
@@ -30631,6 +30641,7 @@ function _openEnergySec(){
  _fetchEnergyGdelt();
  _energyPipeActive=true;
  _energyHotspots=[];
+ liveHotspots=liveHotspots.filter(function(h){return!h._energy;});
  ENERGY_CHOKEPOINTS.forEach(function(c,i){
  var hp={id:'_energy_'+i,lat:c.lat,lng:c.lng,color:c.color,size:7,label:c.name+' — '+c.risk,_energy:true};
  _energyHotspots.push(hp);
@@ -30796,6 +30807,7 @@ function _openMigration(){
  _fetchMigrationGdelt();
  _migrationActive=true;
  _migrationHotspots=[];
+ liveHotspots=liveHotspots.filter(function(h){return!h._migration;});
  MIGRATION_CORRIDORS.forEach(function(c,i){
  var hp={id:'_migration_'+i,lat:c.lat,lng:c.lng,color:c.color_marker||'#3b82f6',size:6,label:c.name,_migration:true};
  _migrationHotspots.push(hp);
@@ -30936,6 +30948,7 @@ function _openArctic(){
  _renderArctic();
  _fetchArcticGdelt();
  _arcticHotspots=[];
+ liveHotspots=liveHotspots.filter(function(h){return!h._arctic;});
  ARCTIC_CLAIMS.forEach(function(c,i){
  var hp={id:'_arctic_'+i,lat:c.lat,lng:c.lng,color:c.color,size:7,label:c.country+' Arctic — '+c.posture.substring(0,30),_arctic:true};
  _arcticHotspots.push(hp);
