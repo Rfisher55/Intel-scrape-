@@ -14200,6 +14200,8 @@ function globe_focusVIP(lat,lng,name,status){
 var _drawNow=0; /* frame timestamp — set once per RAF tick, shared across animate()+draw() */
 /* Pre-computed rotation trig — updated once per RAF tick before draw(), reused by every project() call */
 var _cosRotX=1,_sinRotX=0,_cosRotY=1,_sinRotY=0;
+/* Gradient cache — gradients that only change with scale/cx/cy/defcon are reused across frames */
+var _grdC={k:'',sphere:null,atmo:null,spec:null,limb:null,limbDark:null,term:null};
 function draw(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
  // ── Star field
@@ -14211,41 +14213,50 @@ function draw(){
  }
  // ── Globe sphere — richer gradient, DEFCON-tinted
  var _sgDefN=window._defconN||3;
- const g=ctx.createRadialGradient(cx-scale*.22,cy-scale*.28,scale*.01,cx,cy,scale*1.02);
- g.addColorStop(0,_sgDefN<=1?'#1e0c14':_sgDefN===2?'#160c24':'#0f1828');
- g.addColorStop(.25,_sgDefN<=1?'#12080f':_sgDefN===2?'#0c0918':'#080e1c');
- g.addColorStop(.65,'#040810');g.addColorStop(1,'#010305');
- ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
- // ── Atmosphere glow
- var _atmoOuter=1.12+Math.min(0.22,(scale-baseScale)/Math.max(1,baseScale)*0.28);
- const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*_atmoOuter);
- var _aDefN=window._defconN||3;
- var _aR=_aDefN<=1?210:_aDefN===2?130:_aDefN===3?55:35;
- var _aG=_aDefN<=1?35:_aDefN===2?60:_aDefN===3?80:95;
- var _aB=_aDefN<=1?30:_aDefN===2?50:_aDefN===3?160:210;
- var _aA=_aDefN<=1?.22:_aDefN===2?.18:.18;
- a.addColorStop(0,'rgba('+_aR+','+_aG+','+_aB+','+_aA.toFixed(3)+')');
- a.addColorStop(.4,'rgba('+Math.round(_aR*.5)+','+Math.round(_aG*.55)+','+Math.round(_aB*.75)+',.07)');
- a.addColorStop(.8,'rgba(8,30,130,.03)');a.addColorStop(1,'transparent');
- ctx.beginPath();ctx.arc(cx,cy,scale*1.12,0,Math.PI*2);ctx.fillStyle=a;ctx.fill();
- /* Specular highlight */
- var _specGrd=ctx.createRadialGradient(cx-scale*0.38,cy-scale*0.38,0,cx-scale*0.2,cy-scale*0.2,scale*0.45);
- _specGrd.addColorStop(0,'rgba(255,255,255,0.07)');_specGrd.addColorStop(1,'rgba(255,255,255,0)');
- ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_specGrd;ctx.fill();
- /* Limb brightening — bright rim at the edge */
- var _lDefN=window._defconN||3;
- var _limbDark=_lDefN<=1?0.45:_lDefN===2?0.32:0.18;
- const limb=ctx.createRadialGradient(cx,cy,scale*.92,cx,cy,scale*1.0);
- limb.addColorStop(0,'transparent');limb.addColorStop(.85,'rgba(70,130,200,.05)');limb.addColorStop(1,'rgba(90,150,220,.09)');
- /* Darkening overlay on limb at high DEFCON */
- if(_lDefN<=2){
-  const limbDark=ctx.createRadialGradient(cx,cy,scale*.75,cx,cy,scale*1.0);
-  limbDark.addColorStop(0,'transparent');
-  limbDark.addColorStop(0.7,'rgba(0,0,0,0)');
-  limbDark.addColorStop(1,'rgba(0,0,0,'+_limbDark+')');
-  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=limbDark;ctx.fill();
+ var _grdKey=Math.round(scale)+'|'+cx+'|'+cy+'|'+_sgDefN;
+ if(_grdC.k!==_grdKey){
+  _grdC.k=_grdKey;
+  var _gS=ctx.createRadialGradient(cx-scale*.22,cy-scale*.28,scale*.01,cx,cy,scale*1.02);
+  _gS.addColorStop(0,_sgDefN<=1?'#1e0c14':_sgDefN===2?'#160c24':'#0f1828');
+  _gS.addColorStop(.25,_sgDefN<=1?'#12080f':_sgDefN===2?'#0c0918':'#080e1c');
+  _gS.addColorStop(.65,'#040810');_gS.addColorStop(1,'#010305');
+  _grdC.sphere=_gS;
+  var _atmoOuter=1.12+Math.min(0.22,(scale-baseScale)/Math.max(1,baseScale)*0.28);
+  var _gA=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*_atmoOuter);
+  var _aR=_sgDefN<=1?210:_sgDefN===2?130:_sgDefN===3?55:35;
+  var _aG=_sgDefN<=1?35:_sgDefN===2?60:_sgDefN===3?80:95;
+  var _aB=_sgDefN<=1?30:_sgDefN===2?50:_sgDefN===3?160:210;
+  var _aA=_sgDefN<=1?.22:_sgDefN===2?.18:.18;
+  _gA.addColorStop(0,'rgba('+_aR+','+_aG+','+_aB+','+_aA.toFixed(3)+')');
+  _gA.addColorStop(.4,'rgba('+Math.round(_aR*.5)+','+Math.round(_aG*.55)+','+Math.round(_aB*.75)+',.07)');
+  _gA.addColorStop(.8,'rgba(8,30,130,.03)');_gA.addColorStop(1,'transparent');
+  _grdC.atmo=_gA;
+  var _gSp=ctx.createRadialGradient(cx-scale*0.38,cy-scale*0.38,0,cx-scale*0.2,cy-scale*0.2,scale*0.45);
+  _gSp.addColorStop(0,'rgba(255,255,255,0.07)');_gSp.addColorStop(1,'rgba(255,255,255,0)');
+  _grdC.spec=_gSp;
+  var _gL=ctx.createRadialGradient(cx,cy,scale*.92,cx,cy,scale*1.0);
+  _gL.addColorStop(0,'transparent');_gL.addColorStop(.85,'rgba(70,130,200,.05)');_gL.addColorStop(1,'rgba(90,150,220,.09)');
+  _grdC.limb=_gL;
+  var _limbDk=_sgDefN<=1?0.45:_sgDefN===2?0.32:0.18;
+  if(_sgDefN<=2){
+   var _gLD=ctx.createRadialGradient(cx,cy,scale*.75,cx,cy,scale*1.0);
+   _gLD.addColorStop(0,'transparent');_gLD.addColorStop(0.7,'rgba(0,0,0,0)');_gLD.addColorStop(1,'rgba(0,0,0,'+_limbDk+')');
+   _grdC.limbDark=_gLD;
+  } else {_grdC.limbDark=null;}
+  var _gT=ctx.createRadialGradient(cx+scale*.3,cy-scale*.2,scale*.4,cx,cy,scale);
+  _gT.addColorStop(0,'rgba(255,220,100,.04)');_gT.addColorStop(.7,'rgba(0,0,0,0)');
+  _grdC.term=_gT;
  }
- ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=limb;ctx.fill();
+ ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_grdC.sphere;ctx.fill();
+ // ── Atmosphere glow
+ ctx.beginPath();ctx.arc(cx,cy,scale*1.12,0,Math.PI*2);ctx.fillStyle=_grdC.atmo;ctx.fill();
+ /* Specular highlight */
+ ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_grdC.spec;ctx.fill();
+ /* Limb brightening — bright rim at the edge */
+ if(_grdC.limbDark){
+  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_grdC.limbDark;ctx.fill();
+ }
+ ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_grdC.limb;ctx.fill();
  // ── Equatorial band — faint brightness at equator
  {
   var _eqP=project(0,rotY*180/Math.PI);
@@ -14259,9 +14270,7 @@ function draw(){
   }
  }
  // ── Terminator ring (subtle day/night)
- const term=ctx.createRadialGradient(cx+scale*.3,cy-scale*.2,scale*.4,cx,cy,scale);
- term.addColorStop(0,'rgba(255,220,100,.04)');term.addColorStop(.7,'rgba(0,0,0,0)');
- ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=term;ctx.fill();
+ ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_grdC.term;ctx.fill();
  // ── Grid (opacity dims when multiple layers active, pulses with rotation)
  var _gAlpha=0.06;
  var _actLC=Object.values(activeLayers).filter(Boolean).length;
