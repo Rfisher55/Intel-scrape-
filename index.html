@@ -14205,7 +14205,7 @@ var _cosRotX=1,_sinRotX=0,_cosRotY=1,_sinRotY=0;
 /* Drag velocity magnitude — module-level so drawArcs() and other draw fns can read it */
 var _rotSpd=0;
 /* Gradient cache — gradients that only change with scale/cx/cy/defcon are reused across frames */
-var _grdC={k:'',sphere:null,atmo:null,spec:null,limb:null,limbDark:null,term:null};
+var _grdC={k:'',sphere:null,atmo:null,spec:null,limb:null,limbDark:null,term:null,eqK:'',eq:null,sunGK:'',sunG:null,nightK:'',night:null,sunK:'',sun:null,sbK:'',sb:null};
 function draw(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
  // ── Star field
@@ -14265,11 +14265,11 @@ function draw(){
  {
   var _eqP=project(0,rotY*180/Math.PI);
   if(_eqP.visible&&_eqP.z>0.2){
-   var _eqGrd=ctx.createRadialGradient(_eqP.px,_eqP.py,0,_eqP.px,_eqP.py,scale*0.25);
-   _eqGrd.addColorStop(0,'rgba(100,180,255,0.025)');_eqGrd.addColorStop(1,'rgba(100,180,255,0)');
+   var _eqK=(Math.round(_eqP.px/3)*3)+'|'+(Math.round(_eqP.py/3)*3)+'|'+Math.round(scale);
+   if(_grdC.eqK!==_eqK){_grdC.eqK=_eqK;var _eqG=ctx.createRadialGradient(_eqP.px,_eqP.py,0,_eqP.px,_eqP.py,scale*0.25);_eqG.addColorStop(0,'rgba(100,180,255,0.025)');_eqG.addColorStop(1,'rgba(100,180,255,0)');_grdC.eq=_eqG;}
    ctx.save();ctx.globalCompositeOperation='screen';
    ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.clip();
-   ctx.fillStyle=_eqGrd;ctx.fillRect(0,0,canvas.width,canvas.height);
+   ctx.fillStyle=_grdC.eq;ctx.fillRect(0,0,canvas.width,canvas.height);
    ctx.restore();
   }
  }
@@ -14596,9 +14596,9 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
   var _sunP=project(_sunLat,_sunLng);
   if(_sunP.visible&&_sunP.z>0.3){
    ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=0.12;
-   var _sunGrd2=ctx.createRadialGradient(_sunP.px,_sunP.py,0,_sunP.px,_sunP.py,scale*0.18);
-   _sunGrd2.addColorStop(0,'rgba(255,240,180,1)');_sunGrd2.addColorStop(1,'rgba(255,200,100,0)');
-   ctx.fillStyle=_sunGrd2;ctx.fillRect(0,0,canvas.width,canvas.height);
+   var _sunGK=(Math.round(_sunP.px/3)*3)+'|'+(Math.round(_sunP.py/3)*3)+'|'+Math.round(scale);
+   if(_grdC.sunGK!==_sunGK){_grdC.sunGK=_sunGK;var _sg2=ctx.createRadialGradient(_sunP.px,_sunP.py,0,_sunP.px,_sunP.py,scale*0.18);_sg2.addColorStop(0,'rgba(255,240,180,1)');_sg2.addColorStop(1,'rgba(255,200,100,0)');_grdC.sunG=_sg2;}
+   ctx.fillStyle=_grdC.sunG;ctx.fillRect(0,0,canvas.width,canvas.height);
    ctx.restore();
   }
  }
@@ -14644,13 +14644,11 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
    var _aProj=project(_aLat,_aLng);
    var _nsCx=_aProj.visible?_aProj.px:cx-scale*0.28;
    var _nsCy=_aProj.visible?_aProj.py:cy+scale*0.1;
-   var _nightGrad=ctx.createRadialGradient(_nsCx,_nsCy,scale*0.15,cx,cy,scale);
-   _nightGrad.addColorStop(0,'rgba(0,0,10,0.04)');
-   _nightGrad.addColorStop(0.6,'rgba(0,0,12,0.05)');
-   _nightGrad.addColorStop(1,'rgba(0,0,12,0.35)');
+   var _nightK=(Math.round(_nsCx/3)*3)+'|'+(Math.round(_nsCy/3)*3)+'|'+Math.round(scale);
+   if(_grdC.nightK!==_nightK){_grdC.nightK=_nightK;var _ng=ctx.createRadialGradient(_nsCx,_nsCy,scale*0.15,cx,cy,scale);_ng.addColorStop(0,'rgba(0,0,10,0.04)');_ng.addColorStop(0.6,'rgba(0,0,12,0.05)');_ng.addColorStop(1,'rgba(0,0,12,0.35)');_grdC.night=_ng;}
    ctx.save();
    ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.clip();
-   ctx.fillStyle=_nightGrad;ctx.fillRect(cx-scale,cy-scale,scale*2,scale*2);
+   ctx.fillStyle=_grdC.night;ctx.fillRect(cx-scale,cy-scale,scale*2,scale*2);
    /* Subtle desaturation overlay on night hemisphere */
    if(ctx.globalCompositeOperation!==undefined){
      ctx.save();ctx.globalCompositeOperation='color';ctx.globalAlpha=0.1;
@@ -14662,9 +14660,9 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
    var _sCx=_sProj.visible?_sProj.px:cx-scale*0.3;
    var _sCy=_sProj.visible?_sProj.py:cy-scale*0.3;
    ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=0.04;
-   var _sunGrd=ctx.createRadialGradient(_sCx,_sCy,0,cx,cy,scale);
-   _sunGrd.addColorStop(0,'rgba(255,220,160,1)');_sunGrd.addColorStop(1,'rgba(255,220,160,0)');
-   ctx.fillStyle=_sunGrd;ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fill();
+   var _sunK=(Math.round(_sCx/3)*3)+'|'+(Math.round(_sCy/3)*3)+'|'+Math.round(scale);
+   if(_grdC.sunK!==_sunK){_grdC.sunK=_sunK;var _sg=ctx.createRadialGradient(_sCx,_sCy,0,cx,cy,scale);_sg.addColorStop(0,'rgba(255,220,160,1)');_sg.addColorStop(1,'rgba(255,220,160,0)');_grdC.sun=_sg;}
+   ctx.fillStyle=_grdC.sun;ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fill();
    ctx.restore();
    ctx.restore();
  }
@@ -14676,11 +14674,9 @@ if(_defN===1&&typeof _BrainEngine!=='undefined'&&_BrainEngine.fireCluster){
    var _sbKm=_kmPx*50; /* 50px bar */
    var _sbLbl=scale>baseScale*25?'ZOOMED':Math.abs(scale-baseScale)<baseScale*0.02?'GLOBAL':(_sbKm>1000?Math.round(_sbKm/100)*100+'km':Math.round(_sbKm/50)*50+'km');
    ctx.save();ctx.globalAlpha=0.72;ctx.fillStyle='rgba(0,1,10,0.72)';ctx.fillRect(_sX-3,_sY-10,57,16);ctx.globalAlpha=0.35;
-   /* Bar gradient: green->red */
-   var _sbGrad=ctx.createLinearGradient(_sX,0,_sX+50,0);
-   _sbGrad.addColorStop(0,'rgba(34,197,94,0.7)');
-   _sbGrad.addColorStop(1,'rgba(239,68,68,0.5)');
-   ctx.strokeStyle=_sbGrad;ctx.lineWidth=2;
+   /* Bar gradient: green->red — cached by position (changes only on resize) */
+   if(_grdC.sbK!==_sX){_grdC.sbK=_sX;var _sbG=ctx.createLinearGradient(_sX,0,_sX+50,0);_sbG.addColorStop(0,'rgba(34,197,94,0.7)');_sbG.addColorStop(1,'rgba(239,68,68,0.5)');_grdC.sb=_sbG;}
+   ctx.strokeStyle=_grdC.sb;ctx.lineWidth=2;
    ctx.beginPath();ctx.moveTo(_sX,_sY);ctx.lineTo(_sX+50,_sY);ctx.stroke();
    ctx.strokeStyle='rgba(148,163,184,0.4)';ctx.lineWidth=1;
    ctx.beginPath();ctx.moveTo(_sX,_sY-3);ctx.lineTo(_sX,_sY+3);ctx.stroke();
@@ -22745,7 +22741,7 @@ function toggleAgencyNet(){
  }
 }
 function drawAgencyArcs(){
- const t=(Date.now()%5000)/5000;
+ const t=(_drawNow%5000)/5000;
  for(const ag of AGENCY_ARCS){
  const sp=project(ag.src.lat,ag.src.lng);
  if(!sp||!sp.visible)continue;
@@ -23243,7 +23239,7 @@ function toggleThreatVectors(){
  }
 }
 function drawThreatVectors(){
- const t=(Date.now()%3500)/3500;
+ const t=(_drawNow%3500)/3500;
  ctx.save();
  ctx.strokeStyle='rgba(239,68,68,0.35)';
  ctx.lineWidth=0.6;
@@ -23436,7 +23432,7 @@ function toggleArmsTradeNet(){
  }
 }
 function drawArmsTradeNet(){
- const t=(Date.now()%4000)/4000;
+ const t=(_drawNow%4000)/4000;
  for(const supplier of ARMS_TRADE_DATA){
  const srcCoord=_ISO_COORDS[supplier.supplier];
  if(!srcCoord)continue;
@@ -23503,6 +23499,7 @@ async function loadGeoTimeline(country){
  const q2=encodeURIComponent(country+' war OR military OR attack OR conflict');
  const url2='https://api.gdeltproject.org/api/v2/doc/doc?query='+q2+'&mode=artlist&maxrecords=10&format=json';
  const r2=await fetch(url2,{signal:AbortSignal.timeout(10000)});
+ if(!r2.ok)throw new Error('HTTP '+r2.status);
  const d2=await r2.json();
  const arts=(d2.articles||[]).slice(0,8);
  const evEl=document.getElementById('gt-events');
@@ -24892,7 +24889,7 @@ const CARTEL_DB = [
 let _narcoActive = false;
 
 function drawNarcoRoutes(){
- const t=(Date.now()%3000)/3000;
+ const t=(_drawNow%3000)/3000;
  for(const route of NARCO_ROUTES){
  ctx.save();
  ctx.strokeStyle=route.color;
@@ -24972,7 +24969,7 @@ async function fetchPandemicGDELT(){
  try{
  const q=encodeURIComponent('disease outbreak pandemic epidemic');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25047,7 +25044,7 @@ async function fetchElecGDELT(){
  try{
  const q=encodeURIComponent('election interference disinformation foreign influence');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25118,7 +25115,7 @@ async function fetchNarcoGDELT(){
  try{
  const q=encodeURIComponent('drug trafficking cartel narcotics seizure');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25175,7 +25172,7 @@ const TRAFFICKING_HOTSPOTS = [
 let _trafficActive = false;
 
 function drawTrafficRoutes(){
- const t=(Date.now()%3000)/3000;
+ const t=(_drawNow%3000)/3000;
  for(const route of TRAFFICKING_ROUTES){
  ctx.save();
  ctx.strokeStyle=route.color;
@@ -25254,7 +25251,7 @@ async function fetchTrafficGDELT(){
  try{
  const q=encodeURIComponent('human trafficking modern slavery forced labor');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25373,7 +25370,7 @@ async function fetchIllicitFinGDELT(){
  try{
  const q=encodeURIComponent('money laundering sanctions evasion financial crime');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25498,7 +25495,7 @@ async function fetchCableGDELT(){
  try{
  const q=encodeURIComponent('undersea cable cut sabotage submarine infrastructure');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25607,7 +25604,7 @@ async function fetchMilitiaGDELT(){
  try{
  const q=encodeURIComponent('militia armed group rebel insurgent non-state actor');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25714,7 +25711,7 @@ async function fetchInfoOpsGDELT(){
  try{
  const q=encodeURIComponent('disinformation influence operation propaganda fake news cognitive warfare');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25827,7 +25824,7 @@ async function fetchDisplacementGDELT(){
  try{
  const q=encodeURIComponent('refugee displacement humanitarian crisis internally displaced');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -25933,7 +25930,7 @@ async function _fetchTechWarGDELT(){
  try{
  const q=encodeURIComponent('semiconductor chip technology war China export controls ASML TSMC NVIDIA');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26040,7 +26037,7 @@ async function _fetchCovertOpsGDELT(){
  try{
  const q=encodeURIComponent('covert operation intelligence CIA Mossad special operations clandestine');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26168,7 +26165,7 @@ const SHADOW_FLEET_ROUTES = [
 ];
 let _shadowActive=false;
 function drawShadowRoutes(){
- const t=(Date.now()%3000)/3000;
+ const t=(_drawNow%3000)/3000;
  for(const route of SHADOW_FLEET_ROUTES){
  ctx.save();
  ctx.strokeStyle=route.color;
@@ -26267,7 +26264,7 @@ async function _fetchShadowFleetGDELT(){
  try{
  const q=encodeURIComponent('shadow fleet sanctions evasion tanker oil Russia Iran');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26354,7 +26351,7 @@ async function _fetchFFGDELT(){
  try{
  const q=encodeURIComponent('foreign fighters ISIS Ukraine Syria mercenary');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26461,7 +26458,7 @@ async function _fetchEconWarGDELT(){
  try{
  const q=encodeURIComponent('sanctions economic warfare export controls de-dollarization');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26647,7 +26644,7 @@ async function _fetchInsiderThreatGDELT(){
  try{
  const q=encodeURIComponent('espionage spy counterintelligence FBI arrested');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26733,7 +26730,7 @@ async function _fetchNukeDocGDELT(){
  try{
  const q=encodeURIComponent('nuclear weapons doctrine deterrence escalation');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -26789,7 +26786,7 @@ async function _fetchMaritimeGDELT(){
  try{
  const q=encodeURIComponent('maritime dispute South China Sea Taiwan Strait Hormuz shipping');
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&timespan=72h&sort=DateDesc';
- const r=await fetch(url,{signal:AbortSignal.timeout(12000)});const d=await r.json();
+ const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();
  const arts=(d.articles||[]);
  if(!arts.length){el.innerHTML='<div style="color:#475569;font-size:9px;text-align:center;padding:10px;">No recent articles found.</div>';return;}
  el.innerHTML=arts.map(function(a){
@@ -29323,7 +29320,7 @@ async function fetchPiracyGDELT(){
 let _armsEmbActive=false;
 
 function drawArmsEmbRoutes(){
- var t=(Date.now()%3000)/3000;
+ var t=(_drawNow%3000)/3000;
  for(var i=0;i<ARMS_SMUGGLING_ROUTES.length;i++){
  var route=ARMS_SMUGGLING_ROUTES[i];
  ctx.save();
