@@ -22979,7 +22979,7 @@ async function _refreshWeatherIntel(){
  if(!grid)return;
  const ops=zones.map(function(z){
  return fetch('https://api.open-meteo.com/v1/forecast?latitude='+z.lat+'&longitude='+z.lng+'&current=temperature_2m,wind_speed_10m,wind_direction_10m,precipitation,weather_code&wind_speed_unit=mph&temperature_unit=fahrenheit',{signal:AbortSignal.timeout(8000)})
- .then(function(r){return r.json();})
+ .then(function(r){return r.ok?r.json():null;})
  .then(function(d){return{zone:z,data:d};})
  .catch(function(){return{zone:z,data:null};});
  });
@@ -23254,9 +23254,9 @@ async function _refreshInflOps(){
  grid.appendChild(div);
  const itemsEl=div.querySelector('.io-col-items');
  fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(col.q)+'&mode=artlist&maxrecords=12&format=json',{signal:AbortSignal.timeout(10000)})
- .then(function(r){return r.json();})
+ .then(function(r){return r.ok?r.json():null;})
  .then(function(d){
- const arts=(d.articles||[]).slice(0,10);
+ const arts=(d&&d.articles||[]).slice(0,10);
  if(!arts.length){itemsEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No current collection.</div>';return;}
  itemsEl.innerHTML=arts.map(function(a){
  const title=_esc((a.title||'').substring(0,120));
@@ -23812,9 +23812,9 @@ function _renderNavalOOB(){
  if(newsEl){
  const q='carrier "strike group" OR naval deployment OR warship OR submarine patrol fleet';
  fetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=artlist&maxrecords=10&format=json',{signal:AbortSignal.timeout(10000)})
- .then(function(r){return r.json();})
+ .then(function(r){return r.ok?r.json():null;})
  .then(function(d){
- const arts=(d.articles||[]).slice(0,8);
+ const arts=(d&&d.articles||[]).slice(0,8);
  if(!arts.length){newsEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No current naval intelligence.</div>';return;}
  newsEl.innerHTML=arts.map(function(a){
  const title=_esc((a.title||'').substring(0,130));
@@ -24597,13 +24597,13 @@ async function _fetchLeakNews() {
  try {
  const results = await Promise.all(queries.map(function(q) {
  return fetch('https://api.gdeltproject.org/api/v2/doc/doc?query=' + encodeURIComponent(q) + '&mode=artlist&maxrecords=10&format=json')
- .then(function(r){return r.json();})
+ .then(function(r){return r.ok?r.json():null;})
  .catch(function(){return {articles:[]};});
  }));
  const seen = new Set();
  const all = [];
  results.forEach(function(r) {
- (r.articles || []).forEach(function(a) {
+ (r&&r.articles || []).forEach(function(a) {
  if (a.url && !seen.has(a.url)) { seen.add(a.url); all.push(a); }
  });
  });
@@ -30322,8 +30322,8 @@ function _fetchDarkWebGdelt(){
  if(!el)return;
  var q=encodeURIComponent('ransomware cyberattack dark web hacker data breach');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
- fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.json();}).then(function(d){
- if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+ fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+ if(!d||!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
  el.innerHTML=d.articles.slice(0,10).map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
  return '<div class="dw-gdelt-item"><div class="dw-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fca5a5;text-decoration:none;">'+_esc(a.title)+'</a></div>'
@@ -30407,8 +30407,8 @@ function _fetchDebtGdelt(){
  if(!el)return;
  var q=encodeURIComponent('sovereign debt default IMF restructuring financial crisis');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
- fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.json();}).then(function(d){
- if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+ fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+ if(!d||!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
  el.innerHTML=d.articles.slice(0,10).map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
  return '<div class="dc-gdelt-item"><div class="dc-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
@@ -30479,8 +30479,8 @@ function _fetchOrgCrimeGdelt(){
  if(!el)return;
  var q=encodeURIComponent('organized crime mafia cartel gang trafficking criminal network');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
- fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.json();}).then(function(d){
- if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+ fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+ if(!d||!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
  el.innerHTML=d.articles.slice(0,10).map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
  return '<div class="oc-gdelt-item"><div class="oc-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#c4b5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
@@ -30655,8 +30655,8 @@ function _fetchEnergyGdelt(){
  if(!el)return;
  var q=encodeURIComponent('energy security pipeline gas oil LNG chokepoint disruption');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
- fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.json();}).then(function(d){
- if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+ fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+ if(!d||!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
  el.innerHTML=d.articles.slice(0,10).map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
  return '<div class="es-gdelt-item"><div class="es-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#fdba74;text-decoration:none;">'+_esc(a.title)+'</a></div>'
@@ -30821,8 +30821,8 @@ function _fetchMigrationGdelt(){
  if(!el)return;
  var q=encodeURIComponent('migration border crisis refugee crossing asylum');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
- fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.json();}).then(function(d){
- if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+ fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+ if(!d||!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
  el.innerHTML=d.articles.slice(0,10).map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
  return '<div class="mg-gdelt-item"><div class="mg-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#93c5fd;text-decoration:none;">'+_esc(a.title)+'</a></div>'
@@ -30963,8 +30963,8 @@ function _fetchArcticGdelt(){
  if(!el)return;
  var q=encodeURIComponent('Arctic Russia China NATO sovereignty military icebreaker Northern Sea Route');
  var url='https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=10&format=json&sort=DateDesc';
- fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.json();}).then(function(d){
- if(!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
+ fetch(url,{signal:AbortSignal.timeout(10000)}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+ if(!d||!d.articles||!d.articles.length){el.innerHTML='<div style="color:#475569;font-size:9px;">No feed data.</div>';return;}
  el.innerHTML=d.articles.slice(0,10).map(function(a){
  var ts=a.seendate?a.seendate.substring(0,8):'';
  return '<div class="ac-gdelt-item"><div class="ac-gdelt-title"><a href="'+_safeUrl(a.url)+'" target="_blank" style="color:#67e8f9;text-decoration:none;">'+_esc(a.title)+'</a></div>'
