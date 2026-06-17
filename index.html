@@ -17531,8 +17531,8 @@ function intelPop(title, category, detail, badges, contextISO){
  const cn=COUNTRIES[tiso].name;
  btns.style.display='flex';
  btns.innerHTML=
- `<button class="tm-intel-btn" onclick="closeTrackModal();openCountry('${tiso}')">${cn.toUpperCase()} INTEL</button>`+
- `<button class="tm-intel-btn" style="border-color:rgba(52,211,153,.5);color:#34d399;background:rgba(52,211,153,.06)" onclick="closeTrackModal();viewCountrySat('${tiso}')">SATELLITE VIEW</button>`+
+ `<button class="tm-intel-btn" onclick="closeTrackModal();openCountry('${_esc(tiso)}')">${_esc(cn).toUpperCase()} INTEL</button>`+
+ `<button class="tm-intel-btn" style="border-color:rgba(52,211,153,.5);color:#34d399;background:rgba(52,211,153,.06)" onclick="closeTrackModal();viewCountrySat('${_esc(tiso)}')">SATELLITE VIEW</button>`+
  `<button class="tm-intel-btn" style="border-color:rgba(249,115,22,.4);color:#fb923c;background:rgba(249,115,22,.06)" onclick="closeTrackModal();showTab('factions')">FACTIONS</button>`+
  `<button class="tm-intel-btn" style="border-color:rgba(239,68,68,.4);color:#fca5a5;background:rgba(239,68,68,.06)" onclick="closeTrackModal();showTab('foreign')">FOREIGN INTEL</button>`;
  }else{
@@ -18229,10 +18229,10 @@ function countryBriefHTML(iso){
  const alertColor={CRITICAL:'#fca5a5',HIGH:'#fdba74',MEDIUM:'#fcd34d',LOW:'#86efac'}[c.alertLevel]||'#94a3b8';
  const summary=intel?.summary||'No intelligence summary available.';
  const shortSummary=summary.length>200?summary.slice(0,200)+'…':summary;
- return `<div class="tm-country-box" onclick="closeTrackModal();openCountry('${iso}');showTab('summary')" style="cursor:pointer" title="Click to open ${c.name} intel report">
- <div class="tm-country-name">${c.name} <span style="color:#60a5fa;font-size:9px;letter-spacing:.1em">▶ VIEW REPORT</span></div>
- <div class="tm-country-alert" style="color:${alertColor}">● ${c.alertLevel||'UNKNOWN'} ALERT · ${c.capital}</div>
- <div class="tm-country-summary">${shortSummary}</div>
+ return `<div class="tm-country-box" onclick="closeTrackModal();openCountry('${_esc(iso)}');showTab('summary')" style="cursor:pointer" title="Click to open ${_esc(c.name)} intel report">
+ <div class="tm-country-name">${_esc(c.name)} <span style="color:#60a5fa;font-size:9px;letter-spacing:.1em">▶ VIEW REPORT</span></div>
+ <div class="tm-country-alert" style="color:${alertColor}">● ${_esc(c.alertLevel||'UNKNOWN')} ALERT · ${_esc(c.capital)}</div>
+ <div class="tm-country-summary">${_esc(shortSummary)}</div>
  </div>`;
 }
 
@@ -18279,7 +18279,7 @@ function buildIntelBrief(data){
  const news=data.news||[];
  if(news.length){
  newsSec.innerHTML=`<div class="tm-section-label">RELATED INTELLIGENCE</div>`+
- news.map(n=>`<div class="tm-news-item">${n}</div>`).join('');
+ news.map(n=>`<div class="tm-news-item">${_esc(n)}</div>`).join('');
  } else { newsSec.innerHTML=''; }
 
  // View Intel buttons — one per involved country
@@ -18846,8 +18846,8 @@ function showSatLocList(){
  list.style.display='grid';
  list.innerHTML=`<div style="grid-column:1/-1;font-size:8px;letter-spacing:.2em;color:var(--muted);padding:2px 0 10px;font-family:var(--mono)">▸ ${filtered.length} LOCATIONS FOR <span style="color:#34d399">${layerLabel}</span> · DRAG TO PAN · SCROLL TO ZOOM</div>`+
  filtered.map(loc=>`
- <div class="sat-loc-item" onclick="satJumpToLocation('${loc.name.replace(/'/g,"\\'")}')">
- <div class="sat-loc-name">${loc.name}</div>
+ <div class="sat-loc-item" onclick="satJumpToLocation('${_esc(loc.name).replace(/'/g,"&#39;")}')">
+ <div class="sat-loc-name">${_esc(loc.name)}</div>
  <div class="sat-loc-cat" style="color:${catColors[loc.cat]||'#94a3b8'}">${loc.cat}</div>
  </div>`).join('');
 }
@@ -20383,7 +20383,7 @@ function renderThreatMatrix(){
  <div class="threat-domain-extra">
  ${d.indicators.length>4?`<div class="threat-extra-label">ADDITIONAL INDICATORS</div><div class="threat-indicators">${d.indicators.slice(4).map((ind,ii)=>{const src=dx&&dx.indicatorSrc&&dx.indicatorSrc[ii+4]?dx.indicatorSrc[ii+4]:'OSINT';const sc=srcMap[src]||'osint';return`<div class="threat-ind"><span class="threat-ind-dot" style="background:${col}"></span><span class="threat-source-badge threat-src-${sc}">${src}</span><span>${ind}</span></div>`;}).join('')}</div>`:''}
  ${dx&&dx.history?`<div class="threat-extra-label">HISTORICAL CONTEXT</div><div class="threat-history">${dx.history}</div>`:''}
- ${d.actors?`<div class="threat-extra-label">KEY THREAT ACTORS</div><div class="threat-actors">${d.actors.map(a=>`<span class="threat-actor-tag" onclick="event.stopPropagation();openActorProfile('${a.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${a}</span>`).join('')}</div>`:''}
+ ${d.actors?`<div class="threat-extra-label">KEY THREAT ACTORS</div><div class="threat-actors">${d.actors.map(a=>`<span class="threat-actor-tag" onclick="event.stopPropagation();openActorProfile('${_esc(a).replace(/'/g,"&#39;")}')">${_esc(a)}</span>`).join('')}</div>`:''}
  ${d.analyst?`<div class="threat-extra-label">ANALYST ASSESSMENT</div><div class="threat-analyst">${d.analyst}</div>`:''}
  ${d.tripwires?`<div class="threat-extra-label">ESCALATION TRIPWIRES</div><div class="threat-tripwires">${d.tripwires.map(t=>`<div class="threat-tripwire">${t}</div>`).join('')}</div>`:''}
  ${dx&&dx.connected&&dx.connected.length?`<div class="threat-extra-label">CONNECTED DOMAINS</div><div class="threat-connected-chips">${dx.connected.map(cid=>{const cd=threatData.find(x=>x.id===cid);return cd?`<span class="threat-connected-chip" onclick="event.stopPropagation();toggleThreatDomain('${cid}')">${cd.icon} ${cd.label}</span>`:''}).join('')}</div>`:''}
@@ -20576,7 +20576,7 @@ function renderSIGINTFeed(){
  sigintData.forEach(e=>{if(e.source)countryCounts[e.source]=(countryCounts[e.source]||0)+1;});
  const topCountries=Object.entries(countryCounts).sort((a,b)=>b[1]-a[1]).slice(0,10);
  const cDiv=document.getElementById('sigint-countries');
- if(cDiv)cDiv.innerHTML=topCountries.map(([c,n])=>'<div class="sigint-country-item"><span class="sigint-country-name">'+c+'</span><span class="sigint-country-count">'+n+'</span></div>').join('');
+ if(cDiv)cDiv.innerHTML=topCountries.map(([c,n])=>'<div class="sigint-country-item"><span class="sigint-country-name">'+_esc(c)+'</span><span class="sigint-country-count">'+n+'</span></div>').join('');
  // Event distribution
  const typeCounts={};
  sigintData.forEach(e=>{typeCounts[e.eventType]=(typeCounts[e.eventType]||0)+1;});
@@ -20604,7 +20604,7 @@ async function refreshSIGINT(){
  renderSIGINTFeed();
  sigintFetched=true;
  }catch(e){
- if(feedEl)feedEl.innerHTML='<div class="sigint-loading" style="color:#ef4444">⚠ FEED ERROR — RETRY IN 60S<br><br><span style="color:#4a5878">'+(e&&e.message?e.message:'')+'</span></div>';
+ if(feedEl)feedEl.innerHTML='<div class="sigint-loading" style="color:#ef4444">⚠ FEED ERROR — RETRY IN 60S<br><br><span style="color:#4a5878">'+_esc(e.message||'')+'</span></div>';
  }
  if(btn)btn.textContent='↻ REFRESH';
 }
@@ -21145,7 +21145,7 @@ function removeWatchlistItem(val){
 function renderWatchlistChips(){
  const c=document.getElementById('watchlist-chips');
  if(!c)return;
- c.innerHTML=watchlistItems.map(w=>`<span class="watchlist-chip" onclick="removeWatchlistItem('${w.replace(/'/g,'\\'+'\'')}')" title="Click to remove">${w} </span>`).join('');
+ c.innerHTML=watchlistItems.map(w=>`<span class="watchlist-chip" onclick="removeWatchlistItem('${_esc(w).replace(/'/g,'&#39;')}')" title="Click to remove">${_esc(w)} </span>`).join('');
 }
 
 function renderAlertList(){
@@ -22771,8 +22771,8 @@ async function loadForeignSIG(lang,code){
  cols.forEach(function(col,ci){
  html+='<div class="fs-col"><div class="fs-col-hdr" style="color:#a3e635;">'+labels[ci]+' ('+col.length+')</div>';
  col.forEach(function(a){
- const title=_esc(const title=(a.title||'').substring(0,140));
- const src=(a.domain||a.url||'').substring(0,35);
+ const title=_esc((a.title||'').substring(0,140));
+ const src=_esc((a.domain||a.url||'').substring(0,35));
  const seendate=a.seendate||'';
  const ts=seendate?seendate.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  html+='<div class="fs-item"><div class="fs-item-title">'+title+'</div><div class="fs-item-meta">'+src+' &middot; '+ts+'</div></div>';
@@ -22782,7 +22782,7 @@ async function loadForeignSIG(lang,code){
  html+='</div>';
  el.innerHTML=html;
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;padding:20px 0;">Collection error: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;padding:20px 0;">Collection error: '+_esc(e.message||'')+'</div>';
  }
 }
 function openUNSC(){
@@ -22811,14 +22811,14 @@ async function _refreshUNSC(){
  continue;
  }
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'');
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc(a.domain||'');
  const seendate=a.seendate||'';
  const ts=seendate?seendate.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="unsc-item"><div class="unsc-item-title">'+title+'</div><div class="unsc-item-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
  }
 }
@@ -22845,8 +22845,8 @@ async function initNewsTicker(){
  const inner=document.getElementById('ticker-inner');
  if(inner&&arts.length){
  inner.innerHTML=arts.map(function(a){
- const src=((a.domain||'').toUpperCase()).substring(0,25);
- const title=_esc(const title=(a.title||'').substring(0,110));
+ const src=_esc((a.domain||'').toUpperCase().substring(0,25));
+ const title=_esc((a.title||'').substring(0,110));
  return '<div class="tki"><span class="tki-src">'+src+'</span>'+title+'</div>';
  }).join('');
  }
@@ -22926,14 +22926,14 @@ async function loadSanctions(query){
  const arts=(d.articles||[]).slice(0,8);
  if(!arts.length){html+='<div style="color:var(--dim);font-size:9px;">No current activity.</div>';html+='</div>';continue;}
  arts.forEach(function(a){
- const title=_esc(const title=(a.title||'').substring(0,120));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,120));
+ const src=_esc((a.domain||'').substring(0,30));
  const seendate=a.seendate||'';
  const ts=seendate?seendate.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  html+='<div class="sanc-item"><div class="sanc-item-title">'+title+'</div><div class="sanc-item-meta">'+src+' &middot; '+ts+'</div></div>';
  });
  }catch(e){
- html+='<div style="color:var(--danger);font-size:9px;">Collection error: '+e.message+'</div>';
+ html+='<div style="color:var(--danger);font-size:9px;">Collection error: '+_esc(e.message||'')+'</div>';
  }
  html+='</div>';
  }
@@ -23248,14 +23248,14 @@ async function _refreshInflOps(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){itemsEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No current collection.</div>';return;}
  itemsEl.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,120));
- const src=(a.domain||'').substring(0,28);
+ const title=_esc((a.title||'').substring(0,120));
+ const src=_esc((a.domain||'').substring(0,28));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="io-item"><div class="io-item-title">'+title+'</div><div class="io-item-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  })
- .catch(function(e){itemsEl.innerHTML='<div style="color:var(--danger);font-size:9px;">Error: '+e.message+'</div>';});
+ .catch(function(e){itemsEl.innerHTML='<div style="color:var(--danger);font-size:9px;">Error: '+_esc(e.message||'')+'</div>';});
  }
 }
 const TERROR_ORGS=[
@@ -23466,8 +23466,8 @@ async function loadGeoTimeline(country){
  if(evEl){
  if(!arts.length){evEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent events found.</div>';return;}
  evEl.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="gt-event-item"><div class="gt-event-title">'+title+'</div><div class="gt-event-meta">'+src+' &middot; '+ts+'</div></div>';
@@ -23567,14 +23567,14 @@ async function _fetchRefugeeNews(){
  const arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent events.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,120));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,120));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="rf-news-item"><div class="rf-news-title">'+title+'</div><div class="rf-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openEconIntel(){
@@ -23610,7 +23610,7 @@ async function _fetchFXRates(){
  return '<div class="ei-fx-item"><div class="ei-fx-pair">'+p.label+'</div><div class="ei-fx-rate">'+display+'</div><div style="font-size:7px;color:var(--dim);margin-top:2px;">'+(intel[p.code]||'')+'</div></div>';
  }).join('');
  }catch(e){
- fxEl.innerHTML='<div style="color:var(--dim);font-size:9px;">FX data unavailable: '+e.message+'</div>';
+ fxEl.innerHTML='<div style="color:var(--dim);font-size:9px;">FX data unavailable: '+_esc(e.message||'')+'</div>';
  }
 }
 async function _fetchCommodityNews(){
@@ -23623,14 +23623,14 @@ async function _fetchCommodityNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No economic intelligence available.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="ei-news-item"><div class="ei-news-title">'+title+'</div><div class="ei-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection error: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection error: '+_esc(e.message||'')+'</div>';
  }
 }
 const APT_DB=[
@@ -23720,8 +23720,8 @@ async function _refreshDroneOps(){
  const arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent drone operations found.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  const isStrike=/(strike|attack|hit|destroy)/i.test(a.title||'');
@@ -23729,7 +23729,7 @@ async function _refreshDroneOps(){
  return '<div class="dr-item"><div class="dr-item-title"><span style="color:'+dotColor+';margin-right:5px;">&#x25CF;</span>'+title+'</div><div class="dr-item-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openSpaceDom(){
@@ -23750,14 +23750,14 @@ async function _fetchSpaceNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current space intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="sd-news-item"><div class="sd-news-title">'+title+'</div><div class="sd-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 const NAVAL_OOB=[
@@ -23806,8 +23806,8 @@ function _renderNavalOOB(){
  const arts=(d.articles||[]).slice(0,8);
  if(!arts.length){newsEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No current naval intelligence.</div>';return;}
  newsEl.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="sd-news-item"><div class="sd-news-title">'+title+'</div><div class="sd-news-meta">'+src+' &middot; '+ts+'</div></div>';
@@ -23835,14 +23835,14 @@ async function _fetchExerciseFeed(){
  const arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current exercise intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="me-news-item"><div class="me-news-title">'+title+'</div><div class="me-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openBioIntel(){
@@ -23863,14 +23863,14 @@ async function _fetchBioNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current biosurveillance intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="bio-news-item"><div class="bio-news-title">'+title+'</div><div class="bio-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 const ICC_WARRANTS=[
@@ -23940,14 +23940,14 @@ async function _fetchICCNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current ICC intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="icc-news-item"><div class="icc-news-title">'+title+'</div><div class="icc-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openArcticIntel(){
@@ -23968,14 +23968,14 @@ async function _fetchArcticNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current Arctic intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="ar-news-item"><div class="ar-news-title">'+title+'</div><div class="ar-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openFININT(){
@@ -23996,14 +23996,14 @@ async function _fetchFININTNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current FININT available.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="fi-news-item"><div class="fi-news-title">'+title+'</div><div class="fi-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openEWMonitor(){
@@ -24024,14 +24024,14 @@ async function _fetchEWNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current EW intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="ew-news-item"><div class="ew-news-title">'+title+'</div><div class="ew-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 async function exportIntelBrief(){
@@ -24105,14 +24105,14 @@ async function _fetchDiploNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current diplomatic intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="di-news-item"><div class="di-news-title">'+title+'</div><div class="di-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openEnergySec(){
@@ -24133,14 +24133,14 @@ async function _fetchEnergySecNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current energy security intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="en-news-item"><div class="en-news-title">'+title+'</div><div class="en-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 const STATIC_UNREST_ZONES=[
@@ -24193,14 +24193,14 @@ async function _fetchUnrestNews(){
  const arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current unrest intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="ur-news-item"><div class="ur-news-title">'+title+'</div><div class="ur-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 function openSupplyChain(){
@@ -24221,14 +24221,14 @@ async function _fetchSupplyChainNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current supply chain intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="sc-news-item"><div class="sc-news-title">'+title+'</div><div class="sc-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 const MAJOR_BREACHES=[
@@ -24278,14 +24278,14 @@ async function _fetchCyberBreachNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current cyber breach intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=_esc(const title=(a.title||'').substring(0,130));
- const src=(a.domain||'').substring(0,30);
+ const title=_esc((a.title||'').substring(0,130));
+ const src=_esc((a.domain||'').substring(0,30));
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
  return '<div class="cb-news-item"><div class="cb-news-title">'+title+'</div><div class="cb-news-meta">'+src+' &middot; '+ts+'</div></div>';
  }).join('');
  }catch(e){
- el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+e.message+'</div>';
+ el.innerHTML='<div style="color:var(--danger);font-size:9px;">Collection failed: '+_esc(e.message||'')+'</div>';
  }
 }
 const STABILITY_REGIONS=[
@@ -35079,7 +35079,7 @@ async function _fetchEnergySecurityGDELT(){
         +'<div class="es-gdelt-meta">'+_esc(a.domain)+' &nbsp;|&nbsp; '+a.seendate+'</div>'
         +'</div>';
     });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+_esc(e.message||'')+'</div>';}
 }
 
 function _openEnergySecurityModule(){
@@ -35370,7 +35370,7 @@ async function _fetchRefugeeGDELT(){
         +'<div class="p52ref-gdelt-meta">'+_esc(a.domain)+' &nbsp;|&nbsp; '+a.seendate+'</div>'
         +'</div>';
     });
-  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+e.message+'</div>';}
+  }catch(e){feed.innerHTML='<div style="color:#ef4444;font-size:9px;">GDELT fetch error: '+_esc(e.message||'')+'</div>';}
 }
 
 function _openRefugeeModule(){
