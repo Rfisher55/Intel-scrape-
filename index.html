@@ -21101,7 +21101,7 @@ async function executeIntelSearch(){
  <div style="background:rgba(8,14,28,.7);border:1px solid var(--border);border-radius:2px;padding:10px 12px;margin-bottom:8px">
  <div style="font-size:10px;color:#c8d8ff;font-weight:600;margin-bottom:5px">${_esc(w.title||'')}</div>
  <div style="font-size:9.5px;color:#8896b3;line-height:1.55">${_esc((w.extract||'').slice(0,400))}${w.extract.length>400?'…':''}</div>
- ${w.content_urls&&w.content_urls.desktop?`<a href="${w.content_urls.desktop.page}" target="_blank" style="font-size:8px;color:rgba(26,107,219,.7);letter-spacing:.1em;margin-top:6px;display:inline-block">VIEW FULL ARTICLE →</a>`:''}
+ ${w.content_urls&&w.content_urls.desktop?`<a href="${_safeUrl(w.content_urls.desktop.page)||''}" target="_blank" style="font-size:8px;color:rgba(26,107,219,.7);letter-spacing:.1em;margin-top:6px;display:inline-block">VIEW FULL ARTICLE →</a>`:''}
  </div>`;
  }
  // GDELT articles
@@ -34766,27 +34766,27 @@ async function _checkLiveFeeds(){
   // GDELT check
   try{
     var r=await fetch('https://api.gdeltproject.org/api/v2/doc/doc?query=conflict&mode=artlist&maxrecords=1&timespan=168H&format=json',{signal:AbortSignal.timeout(8000)});
-    var d=await r.json();
+    var d=r.ok?await r.json():null;
     var el=document.getElementById('lfs-gdelt');
-    if(d&&d.articles&&d.articles.length){el.textContent='GDELT LIVE';el.style.color='#22c55e';}
-    else{el.textContent='GDELT OK';el.style.color='#eab308';}
-  }catch(e){var el=document.getElementById('lfs-gdelt');el.textContent='GDELT OFFLINE';el.style.color='#ef4444';}
+    if(el){if(d&&d.articles&&d.articles.length){el.textContent='GDELT LIVE';el.style.color='#22c55e';}
+    else{el.textContent='GDELT OK';el.style.color='#eab308';}}
+  }catch(e){var el=document.getElementById('lfs-gdelt');if(el){el.textContent='GDELT OFFLINE';el.style.color='#ef4444';}}
   // ReliefWeb check
   try{
     var r2=await fetch('https://api.reliefweb.int/v1/reports?appname=intelplatform&limit=1&fields[include][]=title',{signal:AbortSignal.timeout(8000)});
-    var d2=await r2.json();
+    var d2=r2.ok?await r2.json():null;
     var el2=document.getElementById('lfs-reliefweb');
-    if(d2&&d2.data&&d2.data.length){el2.textContent='RELIEFWEB LIVE';el2.style.color='#22c55e';}
-    else{el2.textContent='RELIEFWEB OK';el2.style.color='#eab308';}
-  }catch(e){var el2=document.getElementById('lfs-reliefweb');el2.textContent='RELIEFWEB OFFLINE';el2.style.color='#ef4444';}
+    if(el2){if(d2&&d2.data&&d2.data.length){el2.textContent='RELIEFWEB LIVE';el2.style.color='#22c55e';}
+    else{el2.textContent='RELIEFWEB OK';el2.style.color='#eab308';}}
+  }catch(e){var el2=document.getElementById('lfs-reliefweb');if(el2){el2.textContent='RELIEFWEB OFFLINE';el2.style.color='#ef4444';}}
   // USGS check
   try{
     var r3=await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson',{signal:AbortSignal.timeout(8000)});
-    var d3=await r3.json();
+    var d3=r3.ok?await r3.json():null;
     var el3=document.getElementById('lfs-usgs');
-    if(d3&&d3.features){el3.textContent='USGS SEISMIC LIVE ('+d3.features.length+')';el3.style.color='#22c55e';}
-    else{el3.textContent='USGS OK';el3.style.color='#eab308';}
-  }catch(e){var el3=document.getElementById('lfs-usgs');el3.textContent='USGS OFFLINE';el3.style.color='#ef4444';}
+    if(el3){if(d3&&d3.features){el3.textContent='USGS SEISMIC LIVE ('+d3.features.length+')';el3.style.color='#22c55e';}
+    else{el3.textContent='USGS OK';el3.style.color='#eab308';}}
+  }catch(e){var el3=document.getElementById('lfs-usgs');if(el3){el3.textContent='USGS OFFLINE';el3.style.color='#ef4444';}}
   // NASA FIRMS check
   try{
     var r4=await fetch('https://firms.modaps.eosdis.nasa.gov/api/country/csv/fbf206e65f2b59e35a38ca8c6cf32428/VIIRS_SNPP_NRT/BLZ/1',{signal:AbortSignal.timeout(8000)});
