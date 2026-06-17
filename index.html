@@ -13679,7 +13679,7 @@ function getActiveFlights(){
 
 function drawFlights(){
  const flights=getActiveFlights();
- const filtered=selectedISO?flights.filter(f=>f.country===selectedISO||!selectedISO):flights;
+ const filtered=selectedISO?flights.filter(f=>f.country===selectedISO||!f.country):flights;
  const now=_drawNow;
  for(const f of filtered){
  const p=project(f.lat,f.lng);
@@ -13710,7 +13710,7 @@ function drawFlights(){
 
 function flightAt(sx,sy){
  const flights=getActiveFlights();
- const filtered=selectedISO?flights.filter(f=>f.country===selectedISO||!selectedISO):flights;
+ const filtered=selectedISO?flights.filter(f=>f.country===selectedISO||!f.country):flights;
  for(const f of filtered){
  const p=project(f.lat,f.lng);
  if(!p.visible)continue;
@@ -17928,7 +17928,7 @@ async function fetchLiveNews(iso, force=false){
  if(unique.length>0){
  liveCache[iso]={items:unique,ts:Date.now()};
  renderNewsTab(iso,unique,true);
- document.getElementById('p-updated').textContent='Live: '+new Date().toLocaleTimeString();
+ var _puEl=document.getElementById('p-updated');if(_puEl)_puEl.textContent='Live: '+new Date().toLocaleTimeString();
  } else {
  // Fallback to embedded
  renderNewsTab(iso,(INTEL[iso]?.news||[]).map(n=>({title:n,source:'Intel Base',url:''})),false);
@@ -23040,6 +23040,7 @@ const DEFCON_LEVELS=[
  {level:4,label:'DOUBLE TAKE',color:'defcon-4',desc:'INCREASED MONITORING'},
  {level:5,label:'FADE OUT',color:'defcon-5',desc:'LOWEST READINESS'}
 ];
+const _DEFCON_TIER1=new Set(['USA','RUS','CHN','PRK','IRN','ISR','IND','PAK','GBR','FRA']);
 function _calcDEFCON(){
  let score=0;
  const critHot=liveHotspots.filter(function(h){return h.severity==='critical';}).length;
@@ -23052,7 +23053,7 @@ function _calcDEFCON(){
  score+=critHot*1.2+highHot*0.6+nukeHot*3;
  if(typeof COUNTRIES!=='undefined'){
  /* Strategic tier-1 nations have higher weight on global threat score */
- const TIER1=new Set(['USA','RUS','CHN','PRK','IRN','ISR','IND','PAK','GBR','FRA']);
+ const TIER1=_DEFCON_TIER1;
  Object.values(COUNTRIES).forEach(function(c){
  const intelRec=typeof INTEL!=='undefined'?INTEL[c.iso]:null;
  const isTier1=TIER1.has(c.iso)||(intelRec&&intelRec.intel_priority==='TIER 1');
