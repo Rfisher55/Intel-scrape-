@@ -7707,7 +7707,7 @@ a:hover { color: #bfdbfe !important; }
 
   <div class="mode-tabs">
     <button class="mode-tab active" id="tab-globe" onclick="switchToGlobe()">&#x25CB; GLOBE</button>
-    <button class="mode-tab" id="tab-intel" onclick="switchToIntel()">&#x25A6; INTEL &nbsp;<span style="color:#1e3a5f;font-size:7px;">91</span></button>
+    <button class="mode-tab" id="tab-intel" onclick="switchToIntel()">&#x25A6; INTEL &nbsp;<span style="color:#1e3a5f;font-size:7px;">95</span></button>
     <button class="mode-tab" id="tab-layers" onclick="toggleLayersDock()">&#x2261; LAYERS</button>
     <button class="mode-tab" id="tab-brain" onclick="switchToBrain()">&#x25C6; BRAIN</button>
   </div>
@@ -7716,7 +7716,7 @@ a:hover { color: #bfdbfe !important; }
     <div class="mode-stat"><span class="mode-stat-val" id="mbar-hotspots">102</span><span>HOTSPOTS</span></div>
     <div class="mode-stat"><span class="mode-stat-val" id="mbar-conflicts">98</span><span>CONFLICTS</span></div>
     <div class="mode-stat" style="margin-left:8px;border-left:1px solid rgba(30,58,95,0.4);padding-left:10px;"><span style="color:#ef4444;font-size:8px;">&#x25CF;</span><span style="color:#475569;font-size:6.5px;letter-spacing:.12em;margin-left:4px;">LIVE</span></div>
-    <div class="mode-threat">&#x2691; ELEVATED</div>
+    <div class="mode-threat" id="mbar-threat">&#x2691; ELEVATED</div>
     <div class="mode-live"><div class="mode-live-dot"></div>LIVE</div>
     <div class="mode-time" id="mbar-time"></div>
   </div>
@@ -7731,11 +7731,11 @@ a:hover { color: #bfdbfe !important; }
   <div class="dash-header">
     <div>
       <div class="dash-title">&#x25A6; INTELLIGENCE COMMAND</div>
-      <div class="dash-subtitle">SELECT A MODULE TO OPEN // ALL DATA IS LIVE GDELT // 91 MODULES ACROSS 8 CATEGORIES</div>
+      <div class="dash-subtitle">SELECT A MODULE TO OPEN // ALL DATA IS LIVE GDELT // 95 MODULES ACROSS 8 CATEGORIES</div>
     </div>
     <div class="dash-search-wrap">
       <input id="dash-search" type="text" placeholder="Search modules..." oninput="filterDashModules(this.value)">
-      <span class="dash-module-count" id="dash-mod-count">91 modules</span>
+      <span class="dash-module-count" id="dash-mod-count">95 modules</span>
     </div>
   </div>
   <div class="dash-body" id="dash-body">
@@ -7784,7 +7784,7 @@ a:hover { color: #bfdbfe !important; }
   <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
     <span class="dash-cat-name">&#x25C9; INTELLIGENCE</span>
     <span class="dash-cat-meta">
-      <span class="dash-cat-count">10 MODULES</span>
+      <span class="dash-cat-count">11 MODULES</span>
       <span class="dash-cat-toggle">&#x25B6;</span>
     </span>
   </div>
@@ -7799,6 +7799,7 @@ a:hover { color: #bfdbfe !important; }
 <button class="dash-mod" onclick="openTerrorTrack();switchToGlobe();">TERROR TRACK</button>
 <button class="dash-mod" onclick="openGeoCal();switchToGlobe();">GEO CALENDAR</button>
 <button class="dash-mod" onclick="_openCyberIntel();switchToGlobe();">IC COMMUNITY</button>
+<button class="dash-mod" onclick="openKLeader();switchToGlobe();">KEY LEADERS</button>
   </div>
 </div>
 <div class="dash-cat" data-cat="cyber">
@@ -7828,7 +7829,7 @@ a:hover { color: #bfdbfe !important; }
   <div class="dash-cat-header" onclick="toggleDashCat(this.parentElement)">
     <span class="dash-cat-name">&#x25B2; THREATS</span>
     <span class="dash-cat-meta">
-      <span class="dash-cat-count">12 MODULES</span>
+      <span class="dash-cat-count">15 MODULES</span>
       <span class="dash-cat-toggle">&#x25B6;</span>
     </span>
   </div>
@@ -7845,6 +7846,9 @@ a:hover { color: #bfdbfe !important; }
 <button class="dash-mod" onclick="openPolPris();switchToGlobe();">POL PRISONERS</button>
 <button class="dash-mod" onclick="openProtests();switchToGlobe();">PROTESTS</button>
 <button class="dash-mod" onclick="_openLawfareModule();switchToGlobe();">LAWFARE</button>
+<button class="dash-mod" onclick="openBioIntel();switchToGlobe();">BIOSURVEILLANCE</button>
+<button class="dash-mod" onclick="openWeatherIntel();switchToGlobe();">WEATHER INTEL</button>
+<button class="dash-mod" onclick="openNavalOOB();switchToGlobe();">NAVAL OOB</button>
   </div>
 </div>
 <div class="dash-cat" data-cat="regional">
@@ -18013,6 +18017,8 @@ async function fetchLiveHotspots(){
  if(fresh.length>0){
    liveHotspots=fresh.slice(0,80);
    window._gdeltHotspotCache={ts:Date.now(),data:liveHotspots};
+   var _mbH=document.getElementById('mbar-hotspots');if(_mbH)_mbH.textContent=liveHotspots.length;
+   var _mbC=document.getElementById('mbar-conflicts');if(_mbC&&typeof CONFLICTS!=='undefined')_mbC.textContent=CONFLICTS.length+liveHotspots.filter(function(h){return h.type==='active_conflict';}).length;
    var _hStatEl=document.getElementById('h-status');
    if(_hStatEl){
      var _hCritN=liveHotspots.filter(function(h){return h.severity==='critical';}).length;
@@ -18055,6 +18061,7 @@ async function _fetchGDELTDocFallback(){
  if(fresh.length){
    liveHotspots=fresh.slice(0,30);
    window._gdeltHotspotCache={ts:Date.now()-240000,data:liveHotspots};
+   var _mbH2=document.getElementById('mbar-hotspots');if(_mbH2)_mbH2.textContent=liveHotspots.length+'*';
    var _el=document.getElementById('h-status');
    if(_el){
      _el.textContent='GDELT DOC: '+liveHotspots.length+' events matched — '+new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
@@ -22964,6 +22971,18 @@ function _updateDEFCON(){
  num.textContent=String(level);
  }
  if(desc)desc.textContent=d.desc;
+ /* Sync mode bar threat badge with DEFCON level */
+ var _mbT=document.getElementById('mbar-threat');
+ if(_mbT){
+ var _tbLabels={1:'DEFCON 1',2:'DEFCON 2',3:'ELEVATED',4:'GUARDED',5:'NORMAL'};
+ var _tbColors={1:'rgba(239,68,68',2:'rgba(249,115,22',3:'rgba(217,119,6',4:'rgba(34,197,94',5:'rgba(100,116,139'};
+ var _tbL=_tbLabels[level]||'ELEVATED';
+ var _tbC=_tbColors[level]||'rgba(217,119,6';
+ _mbT.textContent='⚑ '+_tbL;
+ _mbT.style.color=_tbC+',.95)';
+ _mbT.style.borderColor=_tbC+',0.35)';
+ _mbT.style.background=_tbC+',.12)';
+ }
 }
 const KEY_LEADERS=[
  {name:'Vladimir Putin',country:'Russia',role:'President / C-in-C',threat:'CRITICAL',iso:'RU',gdelt_q:'Putin'},
@@ -42173,7 +42192,7 @@ function filterDashModules(q) {
     }
   });
   var el = document.getElementById('dash-mod-count');
-  if(el) el.textContent = (q ? visible : 91) + ' modules';
+  if(el) el.textContent = (q ? visible : 95) + ' modules';
 }
 
 // ── Mode bar clock ──
