@@ -15145,10 +15145,9 @@ function spherePoint(sx,sy){
  return{x:-dx,y:dy,z:Math.sqrt(1-r2)}; // negate x to match flipped projection
 }
 function unrotate(pt){
- const cosX=Math.cos(-rotX),sinX=Math.sin(-rotX);
- let y2=pt.y*cosX-pt.z*sinX, z2=pt.y*sinX+pt.z*cosX;
- const cosY=Math.cos(-rotY),sinY=Math.sin(-rotY);
- let x2=pt.x*cosY-z2*sinY, z3=pt.x*sinY+z2*cosY;
+ // cos(-a)=cos(a), sin(-a)=-sin(a) — reuse per-frame cache
+ let y2=pt.y*_cosRotX+pt.z*_sinRotX, z2=-pt.y*_sinRotX+pt.z*_cosRotX;
+ let x2=pt.x*_cosRotY+z2*_sinRotY, z3=-pt.x*_sinRotY+z2*_cosRotY;
  return{lat:Math.asin(Math.max(-1,Math.min(1,y2)))*180/Math.PI, lng:Math.atan2(z3,x2)*180/Math.PI};
 }
 function pip(lat,lng,poly){
@@ -18065,7 +18064,7 @@ async function fetchLiveHotspots(){
    lat,lng,type,severity:sev,live:true,
    label:(p.title||p.name||'GDELT Event').slice(0,80),
    country:'',source:'GDELT',count:1,
-   url:p.url||'',domain:p.url?(new URL(p.url)).hostname.replace('www.','').slice(0,25):'GDELT',
+   url:p.url||'',domain:p.url?(()=>{try{return new URL(p.url).hostname.replace('www.','').slice(0,25);}catch(_){return'GDELT';}})():'GDELT',
    timestamp:Date.now(),
    });
  }
@@ -22850,13 +22849,15 @@ let _tickerX=0;
 let _tickerRAF=null;
 const _TICKER_SPEED=0.4;
 function _animTicker(){
- const inner=document.getElementById('ticker-inner');
- if(inner){
- _tickerX-=_TICKER_SPEED;
- const totalW=inner.scrollWidth;
- const trackW=inner.parentElement?inner.parentElement.offsetWidth:900;
- if(_tickerX<-totalW)_tickerX=trackW;
- inner.style.transform='translateX('+_tickerX+'px)';
+ if(!document.hidden){
+  const inner=document.getElementById('ticker-inner');
+  if(inner){
+   _tickerX-=_TICKER_SPEED;
+   const totalW=inner.scrollWidth;
+   const trackW=inner.parentElement?inner.parentElement.offsetWidth:900;
+   if(_tickerX<-totalW)_tickerX=trackW;
+   inner.style.transform='translateX('+_tickerX+'px)';
+  }
  }
  _tickerRAF=requestAnimationFrame(_animTicker);
 }
@@ -22864,8 +22865,8 @@ async function initNewsTicker(){
  try{
  const url='https://api.gdeltproject.org/api/v2/doc/doc?query=military+OR+war+OR+conflict+OR+nuclear+OR+attack+OR+sanctions&mode=artlist&maxrecords=35&timespan=168H&format=json';
  const r=await fetch(url,{signal:AbortSignal.timeout(14000)});
- const d=await r.json();
- const arts=(d.articles||[]);
+ const d=r.ok?await r.json():null;
+ const arts=(d&&d.articles||[]);
  const inner=document.getElementById('ticker-inner');
  if(inner&&arts.length){
  inner.innerHTML=arts.map(function(a){
