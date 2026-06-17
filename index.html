@@ -14197,8 +14197,7 @@ function draw(){
  ctx.fillStyle=`rgba(180,210,255,${Math.min(1,s.a*_starZoomDim)})`;ctx.fill();
  }
  // ── Globe sphere — richer gradient, DEFCON-tinted
- var _sgDefEl=document.getElementById('defcon-level-num');
- var _sgDefN=_sgDefEl?parseInt(_sgDefEl.textContent)||3:3;
+ var _sgDefN=window._defconN||3;
  const g=ctx.createRadialGradient(cx-scale*.22,cy-scale*.28,scale*.01,cx,cy,scale*1.02);
  g.addColorStop(0,_sgDefN<=1?'#1e0c14':_sgDefN===2?'#160c24':'#0f1828');
  g.addColorStop(.25,_sgDefN<=1?'#12080f':_sgDefN===2?'#0c0918':'#080e1c');
@@ -14207,7 +14206,7 @@ function draw(){
  // ── Atmosphere glow
  var _atmoOuter=1.12+Math.min(0.22,(scale-baseScale)/Math.max(1,baseScale)*0.28);
  const a=ctx.createRadialGradient(cx,cy,scale*.94,cx,cy,scale*_atmoOuter);
- var _aDefN=parseInt((document.getElementById('defcon-level-num')||{textContent:'3'}).textContent)||3;
+ var _aDefN=window._defconN||3;
  var _aR=_aDefN<=1?210:_aDefN===2?130:_aDefN===3?55:35;
  var _aG=_aDefN<=1?35:_aDefN===2?60:_aDefN===3?80:95;
  var _aB=_aDefN<=1?30:_aDefN===2?50:_aDefN===3?160:210;
@@ -14221,8 +14220,7 @@ function draw(){
  _specGrd.addColorStop(0,'rgba(255,255,255,0.07)');_specGrd.addColorStop(1,'rgba(255,255,255,0)');
  ctx.beginPath();ctx.arc(cx,cy,scale,0,Math.PI*2);ctx.fillStyle=_specGrd;ctx.fill();
  /* Limb brightening — bright rim at the edge */
- var _lDefEl=document.getElementById('defcon-level-num');
- var _lDefN=_lDefEl?parseInt(_lDefEl.textContent)||3:3;
+ var _lDefN=window._defconN||3;
  var _limbDark=_lDefN<=1?0.45:_lDefN===2?0.32:0.18;
  const limb=ctx.createRadialGradient(cx,cy,scale*.92,cx,cy,scale*1.0);
  limb.addColorStop(0,'transparent');limb.addColorStop(.85,'rgba(70,130,200,.05)');limb.addColorStop(1,'rgba(90,150,220,.09)');
@@ -14266,8 +14264,7 @@ function draw(){
    if(lat===0){ctx.save();ctx.strokeStyle='rgba(100,125,175,'+Math.min(_gAlpha*3.2,0.16)+')';ctx.lineWidth=0.8;drawParallel(lat);ctx.restore();}
    else if(lat===30||lat===-30||lat===60||lat===-60){ctx.save();ctx.strokeStyle='rgba(90,110,155,'+Math.min(_gAlpha*1.8,0.10)+')';ctx.lineWidth=0.5;drawParallel(lat);ctx.restore();}
    else if((lat===80||lat===-80)){
-     var _polDefEl=document.getElementById('defcon-level-num');
-     var _polDefN=_polDefEl?parseInt(_polDefEl.textContent)||3:3;
+     var _polDefN=window._defconN||3;
      if(_polDefN<=1){ctx.save();ctx.strokeStyle='rgba(239,68,68,'+Math.min(_gAlpha*3.0,0.20)+')';ctx.lineWidth=0.7;drawParallel(lat);ctx.restore();}
      else drawParallel(lat);
    }
@@ -14391,7 +14388,7 @@ function draw(){
   ctx.save();ctx.font='5px "Courier New"';ctx.fillStyle='rgba(239,68,68,0.55)';ctx.textAlign='right';
   ctx.fillText(_arcTotal+' CONFLICTS',canvas.width-8,canvas.height-28);
   /* DEFCON canvas badge — size scales with urgency */
-  var _defEl2=document.getElementById('defcon-level-num');var _defN2=_defEl2?parseInt(_defEl2.textContent)||3:3;
+  var _defN2=window._defconN||3;
   var _badgeSz=7+(5-_defN2)*1.2;
   var _badgeC=_defN2<=1?'rgba(239,68,68':_defN2===2?'rgba(249,115,22':_defN2===3?'rgba(251,191,36':'rgba(34,197,94';
   ctx.font='bold '+Math.round(_badgeSz)+'px "Courier New"';ctx.fillStyle=_badgeC+',.65)';
@@ -14477,8 +14474,7 @@ function draw(){
    ctx.restore();
  }
  // Globe border ring — DEFCON-colored
- var _defEl=document.getElementById('defcon-level-num');
- var _defN=_defEl?parseInt(_defEl.textContent)||3:3;
+ var _defN=window._defconN||3;
  /* Flash canvas border on DEFCON change */
  if(window._lastDefN===undefined)window._lastDefN=_defN;
  if(_defN!==window._lastDefN){window._defConFlash=14;window._lastDefN=_defN;window._defconChangeT=Date.now();
@@ -14842,8 +14838,7 @@ function drawArcs(){
  const sevC={critical:'rgba(239,68,68',high:'rgba(249,115,22',medium:'rgba(251,191,36',low:'rgba(34,197,94'};
  const base=sevC[arc.severity]||ARC_COLORS[arc.type]||'rgba(239,68,68';
  const _bothVisible=(p1.visible&&p1.z>0.15&&p2.visible&&p2.z>0.15);
- var _arcDefEl2=document.getElementById('defcon-level-num');
- var _arcDefN2=_arcDefEl2?parseInt(_arcDefEl2.textContent)||3:3;
+ var _arcDefN2=window._defconN||3;
  const _arcW=(arc.severity==='critical'?1.8:0.8)*(scale<150?1.8:scale<300?1.3:1);
  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
  const dx=p2.px-p1.px,dy=p2.py-p1.py;
@@ -14878,7 +14873,7 @@ function drawArcs(){
  if(p2.visible&&p2.z>0.1){
   var _tmSz=arc.severity==='critical'?2.5:1.6;
   ctx.save();ctx.fillStyle=`${base},.55)`;
-  var _tDefEl=document.getElementById('defcon-level-num');var _tDefN=_tDefEl?parseInt(_tDefEl.textContent)||3:3;
+  var _tDefN=window._defconN||3;
   if(arc.severity==='critical'&&_tDefN<=1){
    /* Diamond at DEFCON 1 */
    ctx.beginPath();ctx.moveTo(p2.px,p2.py-_tmSz*1.5);ctx.lineTo(p2.px+_tmSz,p2.py);
@@ -17936,6 +17931,8 @@ async function refreshIntel(){
  const btn=document.getElementById('refresh-btn');
  btn.textContent='↻ …';btn.style.color='#22c55e';btn.disabled=true;
  document.getElementById('h-status').textContent='◌ MASTER REFRESH — syncing all intelligence feeds…';
+ /* Force-bust GDELT hotspot cache so master refresh always fetches fresh data */
+ window._gdeltHotspotCache=null;
  const tasks=[
  fetchLiveHotspots(),
  fetchMilitaryFlights(),
@@ -17954,6 +17951,8 @@ async function refreshIntel(){
  await Promise.allSettled(tasks);
  // Also refresh live ticker
  fetchTickerLive&&fetchTickerLive();
+ /* Reset countdown after successful master refresh */
+ window._lastHotspotFetchT=Date.now();
  btn.textContent='↻ MASTER REFRESH';btn.style.color='';btn.disabled=false;
  const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
  document.getElementById('h-status').textContent=' ALL FEEDS UPDATED — '+ts;
@@ -22966,6 +22965,7 @@ function _calcDEFCON(){
 }
 function _updateDEFCON(){
  const level=_calcDEFCON();
+ window._defconN=level; /* cache for draw() to avoid per-frame DOM lookups */
  const d=DEFCON_LEVELS.find(function(x){return x.level===level;})||DEFCON_LEVELS[2];
  const num=document.getElementById('defcon-level-num');
  const desc=document.getElementById('defcon-desc-text');
@@ -42148,6 +42148,7 @@ function switchToGlobe() {
   document.getElementById('intel-dashboard').classList.remove('open');
   document.getElementById('tab-globe').classList.add('active');
   document.getElementById('tab-intel').classList.remove('active');
+  var _tlTab=document.getElementById('tab-layers');if(_tlTab)_tlTab.classList.remove('active');
 }
 var _ilsLoaded=false;
 function _loadIntelStream(){
@@ -42169,7 +42170,11 @@ function switchToIntel() {
 }
 function toggleLayersDock() {
   var lp = document.getElementById('layers-panel');
-  if(lp) lp.classList.toggle('expanded');
+  if(!lp) return;
+  var wasExpanded = lp.classList.contains('expanded');
+  lp.classList.toggle('expanded');
+  var tabBtn = document.getElementById('tab-layers');
+  if(tabBtn) tabBtn.classList.toggle('active', !wasExpanded);
 }
 function toggleDashCat(el) {
   // Close others, open this one
