@@ -12744,6 +12744,7 @@ function resize(){
  baseScale=Math.min(canvas.width,canvas.height)*0.42;
  scale=baseScale*zoomFactor;
  cx=canvas.width/2; cy=canvas.height/2;
+ for(const s of STARS){s.px=s.x*canvas.width;s.py=s.y*canvas.height;}
 }
 
 function applyZoom(factor, originX, originY){
@@ -14208,7 +14209,7 @@ function draw(){
  var _starZoomDim=Math.max(0.15,Math.min(1,(baseScale*2.2)/(scale+0.001)));
  for(const s of STARS){
  ctx.beginPath();
- ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2);
+ ctx.arc(s.px,s.py,s.r,0,Math.PI*2);
  ctx.fillStyle='rgba(180,210,255,'+Math.min(1,s.a*_starZoomDim)+')';ctx.fill();
  }
  // ── Globe sphere — richer gradient, DEFCON-tinted
