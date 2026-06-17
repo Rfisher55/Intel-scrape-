@@ -18234,12 +18234,12 @@ function buildIntelBrief(data){
 
  // Badges
  const badgesEl=document.getElementById('tm-badges');
- badgesEl.innerHTML=(data.badges||[]).map(b=>`<span class="tm-badge ${b.style||'blue'}">${b.text}</span>`).join('');
+ badgesEl.innerHTML=(data.badges||[]).map(b=>`<span class="tm-badge ${_esc(b.style||'blue')}">${_esc(b.text)}</span>`).join('');
 
  // Stats row
  const statsEl=document.getElementById('tm-stat-row');
  statsEl.innerHTML=(data.stats||[]).map(s=>
- `<div class="tm-stat"><div class="tm-stat-val">${s.val}</div><div class="tm-stat-key">${s.key}</div></div>`
+ `<div class="tm-stat"><div class="tm-stat-val">${_esc(s.val)}</div><div class="tm-stat-key">${_esc(s.key)}</div></div>`
  ).join('');
 
  // Countries
@@ -20544,7 +20544,7 @@ function renderSIGINTFeed(){
  const tColor=_sigintToneColor(ev.tone);
  const tStr=typeof ev.tone==='number'?(ev.tone>0?'+':'')+ev.tone.toFixed(1):'';
  const safeUrl=ev.url.replace(/'/g,'%27');
- const safeTitle=ev.title.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const safeTitle=_esc(ev.title);
  const safeDomain=(ev.domain||'').slice(0,16);
  const safeSource=ev.source||'';
  return'<div class="sigint-event" style="border-left-color:'+et.color+'40;background:'+et.bg+'" onclick="window.open(\''+safeUrl+'\',\'_blank\')">'+
@@ -20768,9 +20768,9 @@ async function renderCISACyberPanel(container){
  '<span style="font-size:9px;color:#60a5fa;font-weight:700;letter-spacing:.05em">'+v.cveID+'</span>'+
  (isNew?'<span style="font-size:7px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#fca5a5;padding:1px 5px;border-radius:1px;letter-spacing:.1em">NEW</span>':'<span style="font-size:7px;color:#4a5878">'+v.dateAdded+'</span>')+
  '</div>'+
- '<div style="font-size:9px;color:#e8edf8;margin-bottom:3px;line-height:1.4">'+(v.vulnerabilityName||'').replace(/</g,'&lt;')+'</div>'+
+ '<div style="font-size:9px;color:#e8edf8;margin-bottom:3px;line-height:1.4">'+_esc(v.vulnerabilityName||'')+'</div>'+
  '<div style="font-size:8px;color:#8896b3;margin-bottom:3px">'+v.vendorProject+' — '+v.product+'</div>'+
- '<div style="font-size:8px;color:#64748b;line-height:1.4">'+(v.shortDescription||'').slice(0,120).replace(/</g,'&lt;')+'…</div>'+
+ '<div style="font-size:8px;color:#64748b;line-height:1.4">'+_esc((v.shortDescription||'').slice(0,120))+'…</div>'+
  (v.knownRansomwareCampaignUse==='Known'?'<div style="margin-top:4px;font-size:7px;color:#fbbf24;letter-spacing:.1em">⚠ ACTIVE RANSOMWARE CAMPAIGN</div>':'')+
  '</div>';
  }).join('')+
@@ -20834,7 +20834,7 @@ function renderReliefWebCrises(container,crises){
  '<div style="font-size:8px;color:#4a5878;letter-spacing:.18em;margin-bottom:8px;text-transform:uppercase">ACTIVE DISASTERS & CRISES — UN RELIEFWEB</div>'+
  crises.map(function(c){
  const sc=statusColors[c.status]||'#4a5878';
- const safeName=c.name.replace(/</g,'&lt;').slice(0,70);
+ const safeName=_esc(c.name).slice(0,70);
  const safeIso=c.iso3;
  return'<div style="background:rgba(8,16,33,.7);border:1px solid var(--border);border-left:2px solid '+sc+';border-radius:2px;padding:8px 10px;margin-bottom:6px;cursor:pointer" onclick="openCountry(\''+safeIso+'\')">'+
  '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">'+
@@ -20951,7 +20951,7 @@ async function renderLiveIntelTab(iso){
  ${countryCrises.length===0?
  '<div style="color:#4a5470;font-size:9px;padding:6px 0;letter-spacing:.08em">NO ACTIVE UN CRISIS DECLARATIONS FOR THIS COUNTRY</div>':
  countryCrises.map(cr=>`<div style="padding:5px 8px;background:rgba(239,68,68,.06);border-left:2px solid #ef444440;border-radius:0 2px 2px 0;margin-bottom:4px">
- <div style="font-size:9px;color:#fca5a5;margin-bottom:2px">${(cr.name||'').replace(/</g,'&lt;').slice(0,80)}</div>
+ <div style="font-size:9px;color:#fca5a5;margin-bottom:2px">${_esc((cr.name||'').slice(0,80))}</div>
  <div style="font-size:7.5px;color:#4a5470">${cr.country} · ${cr.type} · <span style="color:${cr.status==='current'?'#ef4444':'#f97316'}">${(cr.status||'').toUpperCase()}</span></div>
  </div>`).join('')
  }
@@ -20966,7 +20966,7 @@ async function renderLiveIntelTab(iso){
  <span style="font-size:10px;color:${eq.mag>=6?'#ef4444':eq.mag>=5?'#f97316':'#fbbf24'};font-weight:700">M${eq.mag}</span>
  <span style="font-size:7px;color:#4a5470">${eq.depth}km depth</span>
  </div>
- <div style="font-size:8.5px;color:#8896b3;margin-top:1px">${(eq.place||'').replace(/</g,'&lt;')}</div>
+ <div style="font-size:8.5px;color:#8896b3;margin-top:1px">${_esc(eq.place||'')}</div>
  ${eq.suspicious?'<div style="font-size:7px;color:#ef4444;letter-spacing:.1em;margin-top:2px">⚠ NEAR KNOWN NUCLEAR TEST SITE</div>':''}
  </div>`).join('')
  }
@@ -20981,7 +20981,7 @@ async function renderLiveIntelTab(iso){
  const score=pd.score||0;
  const comments=pd.num_comments||0;
  return`<div style="padding:5px 8px;background:rgba(8,14,28,.6);border-left:2px solid rgba(26,107,219,.25);border-radius:0 2px 2px 0;margin-bottom:3px;cursor:pointer" onclick="window.open('https://reddit.com${(pd.permalink||'').replace(/'/g,'%27')}','_blank')">
- <div style="font-size:9px;color:#c8d8ff;line-height:1.35;margin-bottom:2px">${(pd.title||'').replace(/</g,'&lt;').slice(0,90)}</div>
+ <div style="font-size:9px;color:#c8d8ff;line-height:1.35;margin-bottom:2px">${_esc((pd.title||'').slice(0,90))}</div>
  <div style="font-size:7.5px;color:#4a5470">▲ ${score} &nbsp;·&nbsp; ${comments} comments &nbsp;·&nbsp; r/${pd.subreddit||'worldnews'}</div>
  </div>`;
  }).join('')
@@ -21052,8 +21052,8 @@ async function executeIntelSearch(){
  const w=wikiR.value;
  html+=`<div class="search-source-label">◉ WIKIPEDIA INTELLIGENCE SUMMARY</div>
  <div style="background:rgba(8,14,28,.7);border:1px solid var(--border);border-radius:2px;padding:10px 12px;margin-bottom:8px">
- <div style="font-size:10px;color:#c8d8ff;font-weight:600;margin-bottom:5px">${(w.title||'').replace(/</g,'&lt;')}</div>
- <div style="font-size:9.5px;color:#8896b3;line-height:1.55">${(w.extract||'').slice(0,400).replace(/</g,'&lt;')}${w.extract.length>400?'…':''}</div>
+ <div style="font-size:10px;color:#c8d8ff;font-weight:600;margin-bottom:5px">${_esc(w.title||'')}</div>
+ <div style="font-size:9.5px;color:#8896b3;line-height:1.55">${_esc((w.extract||'').slice(0,400))}${w.extract.length>400?'…':''}</div>
  ${w.content_urls&&w.content_urls.desktop?`<a href="${w.content_urls.desktop.page}" target="_blank" style="font-size:8px;color:rgba(26,107,219,.7);letter-spacing:.1em;margin-top:6px;display:inline-block">VIEW FULL ARTICLE →</a>`:''}
  </div>`;
  }
@@ -21143,7 +21143,7 @@ function renderAlertList(){
  if(!alertQueue.length){l.innerHTML='<div style="color:#4a5470;font-size:9px;text-align:center;padding:16px;letter-spacing:.1em">NO ALERTS — ADD WATCHLIST ITEMS BELOW</div>';return;}
  l.innerHTML=alertQueue.slice().reverse().slice(0,20).map(a=>`<div class="alert-item${a.critical?' critical':''}">
  <div class="alert-time">${a.time}</div>
- <div class="alert-text">${(a.text||'').replace(/</g,'&lt;').slice(0,120)}</div>
+ <div class="alert-text">${_esc((a.text||'').slice(0,120))}</div>
  </div>`).join('');
 }
 
@@ -21333,7 +21333,7 @@ function _iccRenderGdelt(data){
  const col=et==='conflict'?'#ef4444':et==='military'?'#f97316':et==='nuclear'?'#00d97e':et==='cyber'?'#60a5fa':et==='protest'?'#fbbf24':'#4a5470';
  const safeUrl=(a.url||'').replace(/'/g,'%27');
  return'<div class="icc-row" onclick="window.open(\''+safeUrl+'\',\'_blank\')">'+
- '<div style="font-size:9px;color:#c8d8ff;line-height:1.3;margin-bottom:2px">'+((a.title||'').replace(/</g,'&lt;').slice(0,88))+'</div>'+
+ '<div style="font-size:9px;color:#c8d8ff;line-height:1.3;margin-bottom:2px">'+(_esc((a.title||'').slice(0,88)))+'</div>'+
  '<div style="display:flex;gap:6px;font-size:7.5px">'+
  '<span style="color:'+col+'">'+et.toUpperCase()+'</span>'+
  '<span style="color:#4a5470">'+((a.domain||'').slice(0,22))+'</span>'+
@@ -21355,7 +21355,7 @@ function _iccRenderHotspots(){
  const safeIso=(h.country||'').replace(/'/g,'');
  return'<div class="icc-row"'+(safeIso?' onclick="openCountry&&openCountry(\''+safeIso+'\')"':'')+'>'+
  '<div style="display:flex;align-items:center;justify-content:space-between">'+
- '<span style="font-size:9px;color:'+c+';font-weight:600">'+((h.label||'').replace(/</g,'&lt;').slice(0,52))+'</span>'+
+ '<span style="font-size:9px;color:'+c+';font-weight:600">'+(_esc((h.label||'').slice(0,52)))+'</span>'+
  '<span style="font-size:7px;background:'+c+'22;border:1px solid '+c+'44;color:'+c+';padding:1px 5px;border-radius:1px;white-space:nowrap;margin-left:6px">'+((h.severity||'').toUpperCase())+'</span>'+
  '</div>'+
  '<div style="font-size:7.5px;color:#4a5470;margin-top:1px">'+(h.type||'')+' &nbsp;\xb7&nbsp; '+(h.lat?h.lat.toFixed(1)+'\xb0':'')+' '+(h.lng?h.lng.toFixed(1)+'\xb0':'')+'</div>'+
@@ -21389,7 +21389,7 @@ function _iccRenderSeismic(kpData){
  '<div style="display:flex;align-items:center;gap:8px">'+
  '<span style="font-size:12px;color:'+c+';font-weight:700;min-width:32px">M'+q.mag+'</span>'+
  '<div>'+
- '<div style="font-size:9px;color:#8896b3">'+((q.place||'').replace(/</g,'&lt;').slice(0,52))+'</div>'+
+ '<div style="font-size:9px;color:#8896b3">'+(_esc((q.place||'').slice(0,52)))+'</div>'+
  '<div style="font-size:7.5px;color:#4a5470">'+q.depth+'km depth'+(q.suspicious?' &nbsp;\xb7&nbsp; ⚠ NEAR NUCLEAR TEST SITE':'')+'</div>'+
  '</div>'+
  '</div>'+
@@ -21408,7 +21408,7 @@ function _iccRenderCrises(crises){
  const safeIso=(c.iso3||'').replace(/'/g,'');
  return'<div class="icc-row"'+(safeIso?' onclick="openCountry&&openCountry(\''+safeIso+'\')"':'')+'>'+
  '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px">'+
- '<span style="font-size:9px;color:#fca5a5;font-weight:600">'+((c.name||'').replace(/</g,'&lt;').slice(0,58))+'</span>'+
+ '<span style="font-size:9px;color:#fca5a5;font-weight:600">'+(_esc((c.name||'').slice(0,58)))+'</span>'+
  '<span style="font-size:7px;color:'+col+';white-space:nowrap;margin-left:6px">'+((c.status||'').toUpperCase())+'</span>'+
  '</div>'+
  '<div style="font-size:8px;color:#4a5470">'+c.country+' &nbsp;\xb7&nbsp; '+(c.type||'')+'</div>'+
@@ -21562,7 +21562,7 @@ async function fetchMaritimeIncidents(){
  if(seen.has(key))return;
  seen.add(key);
  const props=f.properties||{};
- pins.push({lat:lat,lng:lng,type:'maritime',severity:'high',label:((props.name||props.title||queries[i]).replace(/</g,'&lt;').slice(0,60)),live:true,maritime:true,country:''});
+ pins.push({lat:lat,lng:lng,type:'maritime',severity:'high',label:(_esc(props.name||props.title||queries[i]).slice(0,60)),live:true,maritime:true,country:''});
  });
  });
  MARITIME_CHOKEPOINTS.forEach(function(cp){
@@ -21632,7 +21632,7 @@ async function _renderRankings(){
  const pct=Math.round(c.score/maxScore*100);
  return'<div class="rank-row" onclick="openCountry&&openCountry(\''+c.iso.replace(/'/g,'')+'\')">'
  +'<span class="rank-num">'+(i+1)+'</span>'
- +'<span class="rank-name">'+c.name.replace(/</g,'&lt;')+'</span>'
+ +'<span class="rank-name">'+_esc(c.name)+'</span>'
  +'<div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+pct+'%;background:'+col+'"></div></div>'
  +'<span class="rank-level" style="color:'+col+'">'+c.alertLevel+'</span>'
  +'</div>';
@@ -22760,7 +22760,7 @@ async function loadForeignSIG(lang,code){
  cols.forEach(function(col,ci){
  html+='<div class="fs-col"><div class="fs-col-hdr" style="color:#a3e635;">'+labels[ci]+' ('+col.length+')</div>';
  col.forEach(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,140);
+ const title=_esc(const title=(a.title||'').substring(0,140));
  const src=(a.domain||a.url||'').substring(0,35);
  const seendate=a.seendate||'';
  const ts=seendate?seendate.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -22800,7 +22800,7 @@ async function _refreshUNSC(){
  continue;
  }
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'');
  const seendate=a.seendate||'';
  const ts=seendate?seendate.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -22835,7 +22835,7 @@ async function initNewsTicker(){
  if(inner&&arts.length){
  inner.innerHTML=arts.map(function(a){
  const src=((a.domain||'').toUpperCase()).substring(0,25);
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,110);
+ const title=_esc(const title=(a.title||'').substring(0,110));
  return '<div class="tki"><span class="tki-src">'+src+'</span>'+title+'</div>';
  }).join('');
  }
@@ -22915,7 +22915,7 @@ async function loadSanctions(query){
  const arts=(d.articles||[]).slice(0,8);
  if(!arts.length){html+='<div style="color:var(--dim);font-size:9px;">No current activity.</div>';html+='</div>';continue;}
  arts.forEach(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,120);
+ const title=_esc(const title=(a.title||'').substring(0,120));
  const src=(a.domain||'').substring(0,30);
  const seendate=a.seendate||'';
  const ts=seendate?seendate.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -22967,7 +22967,7 @@ async function _refreshWeatherIntel(){
  if(res.status!=='fulfilled'){return;}
  const {zone,data}=res.value;
  if(!data||!data.current){
- grid.innerHTML+='<div class="wx-card"><div class="wx-card-label">'+zone.label.replace(/</g,'&lt;')+'</div><div style="color:var(--dim);font-size:9px;">No data</div></div>';
+ grid.innerHTML+='<div class="wx-card"><div class="wx-card-label">'+_esc(zone.label)+'</div><div style="color:var(--dim);font-size:9px;">No data</div></div>';
  return;
  }
  const c=data.current;
@@ -22980,7 +22980,7 @@ async function _refreshWeatherIntel(){
  const isSevere=wcode>=80||precip!=='0 mm';
  const threatColor=isSevere?'var(--warn)':'var(--live)';
  const threatLabel=isSevere?'ADVERSE':'CLEAR';
- grid.innerHTML+='<div class="wx-card"><div class="wx-threat" style="background:'+threatColor+';color:#000;">'+threatLabel+'</div><div class="wx-card-loc">'+z.lat.toFixed(1)+'N / '+z.lng.toFixed(1)+'E</div><div class="wx-card-label">'+zone.label.replace(/</g,'&lt;')+'</div><div class="wx-stat"><span class="wx-stat-label">CONDITION</span><span class="wx-stat-value">'+wxdesc+'</span></div><div class="wx-stat"><span class="wx-stat-label">TEMPERATURE</span><span class="wx-stat-value">'+temp+'</span></div><div class="wx-stat"><span class="wx-stat-label">WIND</span><span class="wx-stat-value">'+wind+' @ '+wdir+'</span></div><div class="wx-stat"><span class="wx-stat-label">PRECIPITATION</span><span class="wx-stat-value">'+precip+'</span></div></div>';
+ grid.innerHTML+='<div class="wx-card"><div class="wx-threat" style="background:'+threatColor+';color:#000;">'+threatLabel+'</div><div class="wx-card-loc">'+z.lat.toFixed(1)+'N / '+z.lng.toFixed(1)+'E</div><div class="wx-card-label">'+_esc(zone.label)+'</div><div class="wx-stat"><span class="wx-stat-label">CONDITION</span><span class="wx-stat-value">'+wxdesc+'</span></div><div class="wx-stat"><span class="wx-stat-label">TEMPERATURE</span><span class="wx-stat-value">'+temp+'</span></div><div class="wx-stat"><span class="wx-stat-label">WIND</span><span class="wx-stat-value">'+wind+' @ '+wdir+'</span></div><div class="wx-stat"><span class="wx-stat-label">PRECIPITATION</span><span class="wx-stat-value">'+precip+'</span></div></div>';
  });
 }
 const DEFCON_LEVELS=[
@@ -23092,9 +23092,9 @@ async function _loadKLeaderProfiles(){
  const hotInRegion=coord?liveHotspots.filter(function(h){return Math.abs(h.lat-coord.lat)<15&&Math.abs(h.lng-coord.lng)<20;}).length:0;
  return '<div class="kl-card">'+
  '<div class="kl-threat" style="background:'+tc+';color:#000;">'+l.threat+'</div>'+
- '<div class="kl-name">'+l.name.replace(/</g,'&lt;')+'</div>'+
- '<div class="kl-role">'+l.role.replace(/</g,'&lt;')+'</div>'+
- '<div class="kl-country">'+l.country.replace(/</g,'&lt;')+'</div>'+
+ '<div class="kl-name">'+_esc(l.name)+'</div>'+
+ '<div class="kl-role">'+_esc(l.role)+'</div>'+
+ '<div class="kl-country">'+_esc(l.country)+'</div>'+
  '<div class="kl-stat"><span class="kl-stat-label">MEDIA ACTIVITY</span><span class="kl-stat-value">'+item.mentions+'/10 articles</span></div>'+
  '<div class="kl-stat"><span class="kl-stat-label">REGIONAL EVENTS</span><span class="kl-stat-value">'+hotInRegion+' hotspots</span></div>'+
  '<div class="kl-bar"><div class="kl-bar-fill" style="width:'+activityPct+'%;background:'+tc+';"></div></div>'+
@@ -23237,7 +23237,7 @@ async function _refreshInflOps(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){itemsEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No current collection.</div>';return;}
  itemsEl.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,120);
+ const title=_esc(const title=(a.title||'').substring(0,120));
  const src=(a.domain||'').substring(0,28);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23291,7 +23291,7 @@ async function _refreshTerrorWatch(){
  const actBar=Math.min(100,events*20);
  return '<div class="tw-org">'+
  '<div class="tw-org-hdr">'+
- '<span class="tw-org-name">'+org.name.replace(/</g,'&lt;')+'</span>'+
+ '<span class="tw-org-name">'+_esc(org.name)+'</span>'+
  '<span class="tw-org-status" style="background:'+tc+';color:#000;">'+org.threat+'</span>'+
  '</div>'+
  '<div class="tw-org-detail">'+
@@ -23299,7 +23299,7 @@ async function _refreshTerrorWatch(){
  '<span style="color:var(--dim);">STATUS: </span><span style="color:'+tc+';">'+org.status+'</span> &nbsp;|&nbsp; '+
  '<span style="color:var(--dim);">RECENT EVENTS: </span><span style="color:var(--text);">'+events+'/5</span>'+
  '</div>'+
- '<div style="font-size:9px;color:var(--dim);line-height:1.5;margin-bottom:6px;">'+org.detail.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'+
+ '<div style="font-size:9px;color:var(--dim);line-height:1.5;margin-bottom:6px;">'+_esc(org.detail)+'</div>'+
  '<div style="height:3px;background:var(--panel);border-radius:1px;overflow:hidden;">'+
  '<div style="height:100%;width:'+actBar+'%;background:'+tc+';border-radius:1px;"></div>'+
  '</div>'+
@@ -23455,7 +23455,7 @@ async function loadGeoTimeline(country){
  if(evEl){
  if(!arts.length){evEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent events found.</div>';return;}
  evEl.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23539,7 +23539,7 @@ function _renderRefugeeTracker(){
  '<div class="rf-card-detail">'+
  '<span style="color:var(--dim);">REFUGEES: </span><span style="color:#c084fc;">'+refM+'</span> &nbsp; '+
  '<span style="color:var(--dim);">IDPs: </span><span style="color:#c084fc;">'+idpM+'</span><br>'+
- '<span style="color:var(--dim);">CAUSE: </span>'+c.cause.replace(/</g,'&lt;')+'<br>'+
+ '<span style="color:var(--dim);">CAUSE: </span>'+_esc(c.cause)+'<br>'+
  '<span style="color:var(--dim);">TREND: </span><span style="color:'+tc+';">'+c.trend+'</span>'+
  '</div>'+
  '<div class="rf-bar"><div class="rf-bar-fill" style="width:'+pct+'%;"></div></div>'+
@@ -23556,7 +23556,7 @@ async function _fetchRefugeeNews(){
  const arts=(d.articles||[]).slice(0,8);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent events.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,120);
+ const title=_esc(const title=(a.title||'').substring(0,120));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23612,7 +23612,7 @@ async function _fetchCommodityNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No economic intelligence available.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23676,15 +23676,15 @@ function _renderAPT(){
  const grid=document.getElementById('apt-grid');
  if(!grid)return;
  grid.innerHTML=APT_DB.map(function(apt){
- const ttpsHtml=apt.ttps.map(function(t){return '<span class="apt-ttp">'+t.replace(/</g,'&lt;')+'</span>';}).join('');
+ const ttpsHtml=apt.ttps.map(function(t){return '<span class="apt-ttp">'+_esc(t)+'</span>';}).join('');
  return '<div class="apt-card" style="border-left-color:'+apt.color+';">'+
  '<div class="apt-card-hdr">'+
- '<div><div class="apt-name" style="color:'+apt.color+';">'+apt.name.replace(/</g,'&lt;')+'</div>'+
- '<div class="apt-sponsor">'+apt.sponsor.replace(/</g,'&lt;')+'</div></div>'+
+ '<div><div class="apt-name" style="color:'+apt.color+';">'+_esc(apt.name)+'</div>'+
+ '<div class="apt-sponsor">'+_esc(apt.sponsor)+'</div></div>'+
  '<span class="apt-nation" style="background:'+apt.color+';color:#000;">'+apt.nation+'</span>'+
  '</div>'+
- '<div class="apt-row"><span class="apt-row-label">TARGETS: </span>'+apt.targets.replace(/</g,'&lt;')+'</div>'+
- '<div class="apt-row"><span class="apt-row-label">RECENT: </span>'+apt.recent.replace(/</g,'&lt;')+'</div>'+
+ '<div class="apt-row"><span class="apt-row-label">TARGETS: </span>'+_esc(apt.targets)+'</div>'+
+ '<div class="apt-row"><span class="apt-row-label">RECENT: </span>'+_esc(apt.recent)+'</div>'+
  '<div class="apt-ttps">'+ttpsHtml+'</div>'+
  '<div class="apt-activity-bar"><div class="apt-activity-fill" style="width:'+({CRITICAL:95,HIGH:70,MEDIUM:45}[apt.threat]||40)+'%;background:'+apt.color+';"></div></div>'+
  '</div>';
@@ -23709,7 +23709,7 @@ async function _refreshDroneOps(){
  const arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No recent drone operations found.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23739,7 +23739,7 @@ async function _fetchSpaceNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current space intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23777,7 +23777,7 @@ function _renderNavalOOB(){
  if(grid){
  grid.innerHTML=NAVAL_OOB.map(function(g){
  return '<div class="nv-card" style="border-top-color:'+g.color+';">'+
- '<div class="nv-ship" style="color:'+g.color+';">'+g.ship.replace(/</g,'&lt;')+'</div>'+
+ '<div class="nv-ship" style="color:'+g.color+';">'+_esc(g.ship)+'</div>'+
  '<div class="nv-class">'+g.hull+' &middot; '+g.nation+'</div>'+
  '<div class="nv-row"><span class="nv-label">TYPE</span><span class="nv-val">'+g.type+'</span></div>'+
  '<div class="nv-row"><span class="nv-label">AREA</span><span class="nv-val" style="color:'+g.color+';">'+g.area+'</span></div>'+
@@ -23795,7 +23795,7 @@ function _renderNavalOOB(){
  const arts=(d.articles||[]).slice(0,8);
  if(!arts.length){newsEl.innerHTML='<div style="color:var(--dim);font-size:9px;">No current naval intelligence.</div>';return;}
  newsEl.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23824,7 +23824,7 @@ async function _fetchExerciseFeed(){
  const arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current exercise intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23852,7 +23852,7 @@ async function _fetchBioNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current biosurveillance intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23904,16 +23904,16 @@ function _renderICCWarrants(){
  };
  el.innerHTML=ICC_WARRANTS.map(function(w){
  const sc=statusColors[w.status]||'#8896b3';
- const chargesHtml=w.charges.map(function(c){return '<span class="icc-charge">'+c.replace(/</g,'&lt;')+'</span>';}).join('');
+ const chargesHtml=w.charges.map(function(c){return '<span class="icc-charge">'+_esc(c)+'</span>';}).join('');
  return '<div class="icc-warrant">'+
  '<div class="icc-warrant-hdr">'+
- '<div><div class="icc-suspect">'+w.suspect.replace(/</g,'&lt;')+'</div>'+
- '<div style="font-size:8px;color:#60a5fa;margin-top:1px;">'+w.role.replace(/</g,'&lt;')+' &middot; '+w.country.replace(/</g,'&lt;')+'</div></div>'+
+ '<div><div class="icc-suspect">'+_esc(w.suspect)+'</div>'+
+ '<div style="font-size:8px;color:#60a5fa;margin-top:1px;">'+_esc(w.role)+' &middot; '+_esc(w.country)+'</div></div>'+
  '<div style="text-align:right;">'+
  '<span class="icc-status-badge" style="background:'+sc+';color:'+(w.status==='DETAINED (Sudan)'?'#000':'#fff')+';">'+w.status+'</span>'+
  '<div style="font-size:7px;color:var(--dim);margin-top:3px;">ISSUED: '+w.issued+'</div>'+
  '</div></div>'+
- '<div class="icc-detail">'+w.detail.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'+
+ '<div class="icc-detail">'+_esc(w.detail)+'</div>'+
  '<div class="icc-charges">'+chargesHtml+'</div>'+
  '</div>';
  }).join('');
@@ -23929,7 +23929,7 @@ async function _fetchICCNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current ICC intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23957,7 +23957,7 @@ async function _fetchArcticNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current Arctic intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -23985,7 +23985,7 @@ async function _fetchFININTNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current FININT available.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -24013,7 +24013,7 @@ async function _fetchEWNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current EW intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -24094,7 +24094,7 @@ async function _fetchDiploNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current diplomatic intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -24122,7 +24122,7 @@ async function _fetchEnergySecNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current energy security intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -24158,10 +24158,10 @@ function _renderStaticUnrest(){
  const sc=scaleColors[z.scale]||'#8896b3';
  return '<div class="ur-event">'+
  '<div class="ur-event-hdr">'+
- '<span class="ur-event-name">'+z.name.replace(/</g,'&lt;')+'</span>'+
+ '<span class="ur-event-name">'+_esc(z.name)+'</span>'+
  '<span class="ur-event-scale" style="background:'+sc+';color:'+(z.scale==='MODERATE'||z.scale==='RECURRING'?'#000':'#fff')+';">'+z.scale+'</span>'+
  '</div>'+
- '<div class="ur-event-detail">'+z.detail.replace(/</g,'&lt;')+'</div>'+
+ '<div class="ur-event-detail">'+_esc(z.detail)+'</div>'+
  '</div>';
  }).join('');
  liveHotspots=[...liveHotspots.filter(function(h){return!h._unrest;}),
@@ -24182,7 +24182,7 @@ async function _fetchUnrestNews(){
  const arts=(d.articles||[]).slice(0,15);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current unrest intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -24210,7 +24210,7 @@ async function _fetchSupplyChainNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current supply chain intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -24247,12 +24247,12 @@ function _renderBreaches(){
  const ac=BREACH_ACTOR_COLORS[b.actor]||'#8896b3';
  return '<div class="cb-breach">'+
  '<div class="cb-breach-hdr">'+
- '<div><div class="cb-breach-name">'+b.name.replace(/</g,'&lt;')+'</div>'+
+ '<div><div class="cb-breach-name">'+_esc(b.name)+'</div>'+
  '<div style="font-size:8px;color:#60a5fa;margin-top:1px;">'+b.records+' &middot; '+b.date+'</div></div>'+
  '<div style="text-align:right;"><span style="font-size:7px;padding:2px 5px;background:'+tc+';color:#fff;">'+b.type+'</span></div>'+
  '</div>'+
- '<div class="cb-breach-detail">'+b.detail.replace(/</g,'&lt;')+'</div>'+
- '<div class="cb-actor" style="background:'+ac+';color:#fff;">'+b.actor.replace(/</g,'&lt;')+'</div>'+
+ '<div class="cb-breach-detail">'+_esc(b.detail)+'</div>'+
+ '<div class="cb-actor" style="background:'+ac+';color:#fff;">'+_esc(b.actor)+'</div>'+
  '</div>';
  }).join('');
 }
@@ -24267,7 +24267,7 @@ async function _fetchCyberBreachNews(){
  const arts=(d.articles||[]).slice(0,10);
  if(!arts.length){el.innerHTML='<div style="color:var(--dim);font-size:9px;">No current cyber breach intelligence.</div>';return;}
  el.innerHTML=arts.map(function(a){
- const title=(a.title||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,130);
+ const title=_esc(const title=(a.title||'').substring(0,130));
  const src=(a.domain||'').substring(0,30);
  const sd=a.seendate||'';
  const ts=sd?sd.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/,'$1-$2-$3'):'';
@@ -35337,8 +35337,8 @@ async function _fetchReliefWebLive(){
       var alias=f.url_alias||'';
       var link=alias?'https://reliefweb.int'+alias:'https://reliefweb.int';
       return '<div style="border-bottom:1px solid #0f2040;padding:4px 0;">'
-        +'<div><a href="'+link+'" target="_blank" style="color:#e2e8f0;font-size:8px;text-decoration:none;">'+f.title+'</a></div>'
-        +'<div style="color:#475569;font-size:7px;">'+src+' // '+dt.slice(0,10)+'</div>'
+        +'<div><a href="'+_safeUrl(link)+'" target="_blank" style="color:#e2e8f0;font-size:8px;text-decoration:none;">'+_esc(f.title)+'</a></div>'
+        +'<div style="color:#475569;font-size:7px;">'+_esc(src)+' // '+_esc(dt.slice(0,10))+'</div>'
         +'</div>';
     }).join('');
   }catch(e){feed.innerHTML='<div style="color:#475569;font-size:9px;">ReliefWeb feed unavailable.</div>';}
