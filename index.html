@@ -14302,6 +14302,9 @@ function draw(){
  var _liveHotISOs=new Set();
  if(typeof liveHotspots!=='undefined')liveHotspots.forEach(function(h){if(h.country)_liveHotISOs.add(h.country);});
  var _allHSCache=(typeof HOTSPOTS!=='undefined'?HOTSPOTS:[]).concat(typeof liveHotspots!=='undefined'?liveHotspots:[]);
+ // Index hotspots by country for O(1) per-country overlap lookup
+ var _hsByISO=Object.create(null);
+ for(var _hbi=0;_hbi<_allHSCache.length;_hbi++){var _hbh=_allHSCache[_hbi];if(_hbh.country){if(!_hsByISO[_hbh.country])_hsByISO[_hbh.country]=[];_hsByISO[_hbh.country].push(_hbh);}}
  if(geoReady){
  // Pass 1: all non-ME world countries (dim land)
  ctx.strokeStyle='rgba(22,40,70,.50)';ctx.lineWidth=.5;
@@ -14358,7 +14361,8 @@ function draw(){
  if(!isSel&&!isHov){ctx.shadowColor='rgba(0,0,12,0.85)';ctx.shadowBlur=3;}
  /* Skip label if a hotspot core is very near the centroid */
  var _hs_overlap=false;
- for(var _oli=0;_oli<_allHSCache.length;_oli++){if(_allHSCache[_oli].country===c.iso){var _ohp=project(_allHSCache[_oli].lat,_allHSCache[_oli].lng);if(_ohp.visible){var _odx=_ohp.px-ctr.px,_ody=_ohp.py-ctr.py;if(_odx*_odx+_ody*_ody<36){_hs_overlap=true;break;}}}}
+ var _hsForISO=_hsByISO[c.iso];
+ if(_hsForISO){for(var _oli=0;_oli<_hsForISO.length;_oli++){var _ohp=project(_hsForISO[_oli].lat,_hsForISO[_oli].lng);if(_ohp.visible){var _odx=_ohp.px-ctr.px,_ody=_ohp.py-ctr.py;if(_odx*_odx+_ody*_ody<36){_hs_overlap=true;break;}}}}
  if(!_hs_overlap)ctx.fillText(c.name.length>8?c.iso:c.name,ctr.px,ctr.py+(_hasLiveHot?3:0));
  if(scale>520&&c.capital&&!isSel&&!isHov){ctx.font='6px "IBM Plex Mono"';ctx.fillStyle='rgba(100,116,139,0.5)';ctx.fillText(c.capital.slice(0,16),ctr.px,ctr.py+_cLSz+1);}
  if(scale>500&&c.capital&&c.capitalLat&&c.capitalLng&&(!isSel&&!isHov?scale>800:true)){
