@@ -13182,7 +13182,7 @@ function drawUnverifiedLayer(){
  ctx.beginPath();ctx.rect(-5,-5,10,10);
  ctx.fillStyle=`${col},0.88)`;ctx.fill();
  ctx.restore();
- ctx.save();ctx.font='bold 7.5px monospace';ctx.fillStyle='rgba(254,215,170,0.95)';ctx.textAlign='center';
+ ctx.save();ctx.font="bold 7.5px \"IBM Plex Mono\"";ctx.fillStyle='rgba(254,215,170,0.95)';ctx.textAlign='center';
  ctx.fillText(sig.count+' RPT',px,py-19);
  ctx.restore();
  }
@@ -13311,7 +13311,7 @@ function drawSIGINTLayer(){
  ctx.strokeStyle=`${col},0.65)`;ctx.lineWidth=1.5;ctx.stroke();
  ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);
  ctx.fillStyle=`${col},0.92)`;ctx.fill();
- ctx.save();ctx.font='bold 7px monospace';ctx.fillStyle=`${col},0.95)`;ctx.textAlign='center';
+ ctx.save();ctx.font="bold 7px \"IBM Plex Mono\"";ctx.fillStyle=`${col},0.95)`;ctx.textAlign='center';
  ctx.fillText(SIGINT_TYPE_LABEL[node.type]||node.type,px,py-r-4);
  if(node.anomaly){ctx.fillStyle='rgba(239,68,68,0.9)';ctx.fillText('⚠ ANOMALY',px,py+r+10);}
  ctx.restore();
@@ -13547,7 +13547,7 @@ function drawNetDisruptLayer(){
  ctx.fillStyle=sc;ctx.fill();
  }
  ctx.restore();
- ctx.save();ctx.textAlign='center';ctx.font='bold 7px monospace';
+ ctx.save();ctx.textAlign='center';ctx.font="bold 7px \"IBM Plex Mono\"";
  ctx.fillStyle=`${col},0.9)`;
  ctx.fillText(NET_TYPE_LABEL[nd.type]||nd.type,px,py-19);
  if(nd.severity==='critical'){ctx.fillStyle='rgba(239,68,68,0.85)';ctx.fillText('CRITICAL',px,py+23);}
@@ -14775,7 +14775,7 @@ function drawHotspots(){
  // Severity letter in core
  if(r>3.5){
   var _sevLtr=h.severity==='critical'?'C':h.severity==='high'?'H':h.severity==='medium'?'M':'L';
-  ctx.save();ctx.font='bold '+Math.round(r*0.62)+'px monospace';
+  ctx.save();ctx.font='bold '+Math.round(r*0.62)+"px IBM Plex Mono";
   ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillText(_sevLtr,p.px,p.py);
   ctx.textBaseline='alphabetic';ctx.restore();
@@ -14831,7 +14831,7 @@ function drawArcMarker(p1,p2,offFactor,color,label,sev){
   ctx.restore();
  }
  ctx.save();
- ctx.font=(sev==='critical'?'900 9px':'bold 8px')+' monospace';
+ ctx.font=(sev==='critical'?'900 9px':'bold 8px')+' "IBM Plex Mono"';
  ctx.fillStyle='rgba(226,232,240,0.85)';
  ctx.textAlign='center';
  const maxW=60;
@@ -14855,7 +14855,6 @@ function drawArcs(){
  const sevC={critical:'rgba(239,68,68',high:'rgba(249,115,22',medium:'rgba(251,191,36',low:'rgba(34,197,94'};
  const base=sevC[arc.severity]||ARC_COLORS[arc.type]||'rgba(239,68,68';
  const _bothVisible=(p1.visible&&p1.z>0.15&&p2.visible&&p2.z>0.15);
- var _arcDefN2=window._defconN||3;
  const _arcW=(arc.severity==='critical'?1.8:0.8)*(scale<150?1.8:scale<300?1.3:1);
  const mx=(p1.px+p2.px)/2,my=(p1.py+p2.py)/2;
  const dx=p2.px-p1.px,dy=p2.py-p1.py;
@@ -14952,13 +14951,12 @@ function drawTroopMovements(){
  for(const m of list){
  const p1=project(m.fromLat,m.fromLng),p2=project(m.toLat,m.toLng);
  if(!p1.visible&&!p2.visible)continue;
- const sev={critical:'rgba(239,68,68',high:'rgba(245,158,11',medium:'rgba(59,130,246',low:'rgba(34,197,94'}[m.severity]||'rgba(148,163,184';
- const alpha=selectedISO?1:1;
- drawCurvedArc(p1,p2,sev,.08*alpha,7,null,null);
+ const sev={critical:'rgba(239,68,68',high:'rgba(249,115,22',medium:'rgba(251,191,36',low:'rgba(34,197,94'}[m.severity]||'rgba(148,163,184';
+ drawCurvedArc(p1,p2,sev,.08,7,null,null);
  /* Shadow arc for depth */
  drawCurvedArc({px:p1.px+1.5,py:p1.py+1.5,visible:p1.visible,z:p1.z},{px:p2.px+1.5,py:p2.py+1.5,visible:p2.visible,z:p2.z},'rgba(0,0,0',0.15,2.2,null,null);
  var _tmDash=m.type==='air'?[10,6]:m.type==='naval'?[4,4]:[14,3];
- drawCurvedArc(p1,p2,sev,.75*alpha,1.5,_tmDash,-t*50);
+ drawCurvedArc(p1,p2,sev,.75,1.5,_tmDash,-t*50);
  /* Animated head dot traveling along arc */
  {
    var _cpX=(p1.px+p2.px)/2,_cpY=(p1.py+p2.py)/2-Math.sqrt(Math.pow(p2.px-p1.px,2)+Math.pow(p2.py-p1.py,2))*0.2;
@@ -14971,7 +14969,7 @@ function drawTroopMovements(){
      /* Type letter at arc midpoint */
      if(scale>130){
        var _typeLtr=m.type==='air'?'A':m.type==='naval'?'N':m.type==='missile'?'M':'G';
-       ctx.save();ctx.font='bold 6px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+       ctx.save();ctx.font='bold 6px "IBM Plex Mono"';ctx.textAlign='center';ctx.textBaseline='middle';
        ctx.fillStyle=sev+',.65)';ctx.fillText(_typeLtr,_cpX,_cpY);
        ctx.textBaseline='alphabetic';ctx.restore();
      }
@@ -15044,7 +15042,7 @@ function drawFinancialFlows(){
  /* $ symbol at arc midpoint */
  if(p1.visible||p2.visible){
   var _ffMx=(p1.px+p2.px)/2,_ffMy=(p1.py+p2.py)/2-Math.abs(p2.px-p1.px)*0.18;
-  ctx.save();ctx.font='bold 6px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.save();ctx.font="bold 6px \"IBM Plex Mono\"";ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillStyle='rgba(168,85,247,0.35)';ctx.fillText('$',_ffMx,_ffMy);
   ctx.textBaseline='alphabetic';ctx.restore();
  }
@@ -19019,9 +19017,9 @@ function drawSatMap(){
  if(loading===0&&errors>0&&loaded===0){
  ctx.fillStyle='rgba(0,0,0,.72)';ctx.fillRect(0,H/2-46,W,92);
  ctx.textAlign='center';
- ctx.fillStyle='#ef4444';ctx.font='bold 13px monospace';
+ ctx.fillStyle='#ef4444';ctx.font="bold 13px \"IBM Plex Mono\"";
  ctx.fillText('⚠ TILES UNAVAILABLE',W/2,H/2-16);
- ctx.fillStyle='#94a3b8';ctx.font='10px monospace';
+ ctx.fillStyle='#94a3b8';ctx.font="10px \"IBM Plex Mono\"";
  ctx.fillText('Tile server unreachable. Try a different layer or select another location.',W/2,H/2+8);
  ctx.textAlign='left';
  }
@@ -19059,7 +19057,7 @@ function drawSatMap(){
  ctx.beginPath();ctx.arc(cx,cy,3.5,0,Math.PI*2);ctx.fill();
  // ── VIP name tag above crosshair ──
  const tag=satVipLabel.name.toUpperCase();
- ctx.font='bold 13px monospace';
+ ctx.font="bold 13px \"IBM Plex Mono\"";
  const tw=ctx.measureText(tag).width;
  const boxH=26,boxW=tw+20,boxX=cx-boxW/2,boxY=cy-arm-boxH-8;
  // Shadow
@@ -19082,7 +19080,7 @@ function drawSatMap(){
  ctx.setLineDash([]);
  // ── Status label below crosshair ──
  const sub=satVipLabel.status;
- ctx.font='10px monospace';ctx.fillStyle='rgba(148,163,184,.9)';
+ ctx.font="10px \"IBM Plex Mono\"";ctx.fillStyle='rgba(148,163,184,.9)';
  const sw=ctx.measureText(sub).width;
  // Backing pill
  ctx.fillStyle='rgba(3,10,25,.8)';
@@ -30552,7 +30550,7 @@ function drawEnergyPipelines(){
  ctx.fill();
  ctx.globalAlpha=1;
  if(scale>80){
-  ctx.save();ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.save();ctx.font="bold 8px \"IBM Plex Mono\"";ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillText('E',p.px,p.py);
   ctx.textBaseline='alphabetic';ctx.restore();
  }
@@ -45076,7 +45074,7 @@ var _BrainEngine = (function(){
         ctx.fillStyle=_mmIsSelCl?'rgba(255,255,255,0.95)':cl.c;ctx.fill();
         ctx.shadowBlur=0;
         /* Cluster name initial on minimap dot */
-        ctx.save();ctx.font='bold 4px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.save();ctx.font="bold 4px \"IBM Plex Mono\"";ctx.textAlign='center';ctx.textBaseline='middle';
         ctx.fillStyle='rgba(0,0,0,0.7)';
         ctx.fillText((cl.n||'?').charAt(0).toUpperCase(),mx2,my2);
         ctx.restore();
